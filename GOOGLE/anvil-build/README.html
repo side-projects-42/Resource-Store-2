@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h2 id="anvil---a-modern-build-system">Anvil - a modern build system</h2>
+<p><a href="http://travis-ci.org/google/anvil-build"><img src="https://secure.travis-ci.org/google/anvil-build.png" alt="Build Status" /></a></p>
+<p><strong>NOTE</strong>: this project has been deprecated. <a href="https://bazel.build/">Bazel</a> is an open source build system that shares roots with the design of anvil, and is a superset of the functionality available here.</p>
+<p>Anvil is a build system designed to ease the construction of content pipelines, taking many concepts and the rule file syntax that powers Google’s internal build system and making them accessible in a small, open-source Python library. It features a rich and extensible build file format and many built-in rules to get started.</p>
+<p>Modern web apps and games have shifted to be more content than code and older build systems (make/scons/etc) are ill-suited for this shift. Most developers now roll their own shell scripts and hack together tools, but as projects scale in both size and complexity they fall apart. Limiting the engineering robustness of many large games is now this lack of solid content pipeline, not language or browser features. Anvil is designed to help fill this gap and let developers build polished, efficient, and cross-browser applications.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Parallelizable build process</li>
+<li>Eventually distributed</li>
+<li>Rich build files (Python-like)</li>
+<li>Tiny environment, very few assumptions or dependencies</li>
+<li>Build files are generally WYSIWYG, with no hidden state or behavior</li>
+<li>Continuous build server and hosting mode</li>
+<li>Easy to build live-refresh pages and content</li>
+<li>Dependency management for rule types</li>
+<li>Make it simple to checkout and build projects that depend on custom tools or packages</li>
+<li>Extensible rule definitions</li>
+<li>Simple Python to add custom data formats or actions</li>
+</ul>
+<h2 id="javascript-bootstrap">JavaScript Bootstrap</h2>
+<p>Want to use anvil in a new JavaScript project? This is the easiest way:</p>
+<pre><code>wget https://raw.github.com/gist/3814397/anvil-bootstrap.sh
+chmod +x anvil-bootstrap.sh
+./anvil-bootstrap.sh my-project mp &quot;Your Name&quot;
+# this will create my-project/, git init, with &#39;mp&#39; as the namespace for things
+cd my-project/
+anvil build :release</code></pre>
+<h2 id="getting-started">Getting Started</h2>
+<pre><code># Clone (or add as a submodule) and setup a local install
+git clone https://benvanik@github.com/benvanik/anvil-build.git
+cd anvil-build/
+python setup.py develop
+
+# &#39;anvil&#39; is the main app, use it to build, test, or serve your content
+anvil build project:some_output</code></pre>
+<p>Anvil is available via PyPI as ‘<a href="http://pypi.python.org/pypi/anvil-build">anvil-build</a>’ and can be installed via easy_install or pip, however it’s recommeneded that it’s used as a submodule instead.</p>
+<pre><code># Install the master git dev branch
+pip install anvil-build</code></pre>
+<p>Note that bash completion should be enable, but if not use <code>sudo anvil completion --install --bash</code> to install it. You can complete on options, module files, and if you add a <code>:</code> on rules.</p>
+<h2 id="build-files">Build Files</h2>
+<p>TODO: detailed overview</p>
+<p>The base unit in the build system is a rule. Rules describe some action that is performed on input files and produce output files, and they may reference other rules as inputs. Modules are files that contain many rules, and a project may be made up of many modules. When using the ‘anvil’ command line tool one specifies a rule or list of rules to build as targets and the build system takes care of building all of the required rules.</p>
+<p>The naming syntax for rules is <code>/some/path:rule_name</code>, with the colon splitting module file paths from the rule names contained within. The module files should always be called <code>BUILD</code>, which is a special name that the build system treats as the module for the parent directory. This enables one to omit <code>BUILD</code> when referencing rules, auto-expanding <code>/some/path:rule_name</code> to <code>/some/path/BUILD:rule_name</code>. A shorthand is allowed as <code>:rule_name</code> (omitting the path), enabling easy access to rules defined in the same file or, when dealing with rules from the command line, in the BUILD file in the current working directory.</p>
+<p>For example, here’s two simple files:</p>
+<pre><code># in /some/path/BUILD:
+# All txt files under the current path, plus the outputs of foo:rule2
+file_set(name=&#39;rule1&#39;, srcs=glob(&#39;**/*.txt&#39;) + [&#39;foo:rule2&#39;])
+
+# in /some/path/foo/BUILD:
+file_set(name=&#39;rule2&#39;, srcs=[&#39;some_file.js&#39;])</code></pre>
+<p>From the command line when referencing these files:</p>
+<pre><code># if cwd = /some/path, all of these are equivalent:
+anvil build :rule1
+anvil build /some/path:rule1
+anvil build /some/path/BUILD:rule1</code></pre>
+<p>TODO: dumping the build graph</p>
+<h2 id="rules">Rules</h2>
+<p>All rules have a few shared parameters, and most use them exclusively to do their work:</p>
+<ul>
+<li><code>name</code>: The name of the rule when referenced. Some rules will use this as the base name of their output file.</li>
+<li><code>srcs</code>: A list of source files the rule works on. May reference files, globs, or other rules.</li>
+<li><code>deps</code>: A list of rules that must execute before the rule does, but the files are not used.</li>
+</ul>
+<p>TODO: talk about base rules (<code>file_set</code>, <code>copy_files</code>, <code>concat_files</code>, <code>template_files</code>)</p>
+<h2 id="commands">Commands</h2>
+<p>TODO: talk about built-in commands (<code>build</code>, <code>test</code>, <code>clean</code>, <code>depends</code>, <code>deploy</code>, <code>serve</code>)</p>
+<h2 id="custom-rules">Custom Rules</h2>
+<p>TODO: custom rules/.anvilrc files</p>
+</body>
+</html>

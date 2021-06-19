@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<h1 id="cordova-ios">Cordova iOS</h1>
+<p>CordovaLib is a static library that enables users to include Cordova in their iOS application projects easily, and also create new Cordova based iOS application projects. <br /></p>
+<h2 id="pre-requisites">Pre-requisites</h2>
+<p>Make sure you have installed the latest released iOS SDK which comes with Xcode 4. Download it at <a href="http://developer.apple.com/ios">http://developer.apple.com/ios</a>. <br /></p>
+<h2 id="build-and-install-the-installer-package">Build and install the Installer Package</h2>
+<p>You don’t need to do this if you downloaded the installer from <a href="http://incubator.apache.org/cordova/">http://incubator.apache.org/cordova/</a>, this is only for developers that need to compile the source.</p>
+<ol type="1">
+<li>Launch <strong>“Terminal.app”</strong></li>
+<li>Navigate to the folder where the Makefile is</li>
+<li>Type in <strong>“make”</strong> then press Enter</li>
+<li><strong>make</strong> will require you to install <a href="http://mxcl.github.com/homebrew/">Homebrew</a>, <a href="http://code.google.com/p/wkhtmltopdf/">wkhtmltopdf</a> and <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, in that order - you will have to agree to install them manually, we don’t install them automatically. Note for <strong>wkhtmltopdf</strong>, follow the instructions exactly - you’ll have to install version <strong>0.9.9</strong> through <strong>make install-wkhtmltopdf</strong>, NOT <strong>brew install wkhtmltopdf</strong></li>
+</ol>
+<p><br /></p>
+<p>The installer should build “CordovaInstaller.dmg” into the <strong>dist</strong> folder, mount the .dmg, then:</p>
+<ol type="1">
+<li>Quit Xcode</li>
+<li>Launch “CordovaInstaller.pkg” from the mounted .dmg, to install CordovaLib, the Cordova framework and the Cordova Xcode Templates.</li>
+</ol>
+<p><strong>NOTE:</strong> For 2.0.0, the use of Xcode Templates has been removed. If you don’t plan on using older Cordova versions, you should run the uninstaller first.</p>
+<p><br /></p>
+<h2 id="create-a-cordova-project">Create a Cordova project</h2>
+<ol type="1">
+<li>Copy the <strong>bin</strong> subfolder (included in the distribution) to a location on your hard drive.</li>
+<li>Follow the instructions in the <a href="http://docs.phonegap.com/en/edge/guide_command-line_index.md.html#Command-Line%20Usage"><strong>Command-Line Usage</strong> section</a> of <a href="http://docs.phonegap.com">http://docs.phonegap.com</a></li>
+</ol>
+<p>The docs should also have been included in the distribution.</p>
+<p><br /></p>
+<h2 id="uninstalling-cordovalib-cordova.framework-and-the-xcode-templates">Uninstalling CordovaLib, Cordova.framework and the Xcode Templates</h2>
+<p><strong>NOTE:</strong> For 2.0.0, the use of Xcode Templates has been removed. If you don’t plan on using older Cordova versions, you should run the uninstaller first.</p>
+<p>Use the “Uninstall Cordova” app included in the Cordova iOS DMG file, OR:</p>
+<ol type="1">
+<li>Launch “Terminal.app”</li>
+<li>Navigate to the folder where Makefile is (this folder)</li>
+<li>Type in “make uninstall” then press Enter</li>
+</ol>
+<p><br /></p>
+<p><strong>NOTE:</strong></p>
+<p>It will ask you to confirm whether you want to delete the installed CordovaLib directory (just in case you made changes there) as well as the Cordova framework. It will not ask for confirmation in deleting the installed Xcode templates.</p>
+<h2 id="unit-tests">Unit Tests</h2>
+<ol type="1">
+<li><strong>Create</strong> a new Cordova-based Application project</li>
+<li><strong>Download</strong> the code from the <strong><a href="https://github.com/apache/incubator-cordova-mobile-spec">mobile-spec</a></strong> and put all of it in the root of your <strong>www</strong> folder</li>
+<li><strong>Modify cordova.js</strong> to point to your correct cordova-X.X.X.js version</li>
+<li><strong>Run</strong> the project</li>
+</ol>
+<p><br /></p>
+<h2 id="installer-notes">Installer Notes</h2>
+<p>This installer will only install items under your home folder (signified by ~)</p>
+<p>Items that will be installed:</p>
+<ol type="1">
+<li>Xcode global var in <em>~/Library/Preferences/com.apple.Xcode.plist </em> (which will be listed under Xcode Preferences -&gt; Source Trees)</li>
+<li>CordovaLib Xcode static library project under <em>~/Documents/CordovaLib</em></li>
+</ol>
+<p><br /></p>
+<p>To uninstall:</p>
+<p>Delete the files listed above, or use the “Uninstall Cordova” app included in the Cordova iOS DMG file.</p>
+<h2 id="faq">FAQ</h2>
+<p><strong>1. In Xcode 4 (for Cordova versions lesser than 2.0.0) , I get an error that “The Start Page ‘www/index.html’ was not found.”?</strong></p>
+<p>This is a known issue with the Xcode 4 Template - we can’t specify a folder reference. You need to build the project at least once, then go to the folder where your project is in, and drag and drop in the <strong>www</strong> folder, then add it as a <strong>folder reference</strong> (will end up as a <strong>blue</strong> folder, not yellow), then run the project again. Check your project warnings as well for clues.</p>
+<p><strong>2. When I run the Installer, the installation fails?</strong></p>
+<p>Usually it’s a folder permissions issue with the templates folder, changed by other third-party installers. You can trouble-shoot using the <a href="https://issues.apache.org/jira/browse/CB-270">instructions here</a>.</p>
+<p><strong>3. When I add Plugins, they are not found or won’t compile?</strong></p>
+<p>Check your Xcode Console Log for clues.</p>
+<p>This can be because of:</p>
+<ol type="1">
+<li>You did not add the plugin mapping in <strong>Cordova.plist/Plugins</strong> (contact the plugin creator for the proper mapping). The <strong>key</strong> is the service name used in the JavaScript interface and the <strong>value</strong> is the classname used in the Objective-C interface. Often the key and value are the same.</li>
+<li>You did <em>not</em> add the plugin code as a “group” (<strong>yellow</strong> folder) but added it as a “folder reference” (blue folder)</li>
+<li>You are having #import problems - see the <a href="http://docs.phonegap.com/en/edge/guide_upgrading_index.md.html">Upgrading Cordova iOS</a> document</li>
+</ol>
+<p><br /></p>
+<p><strong>4. I get this error in my Xcode Console Log - ‘ERROR whitelist rejection: url=’http://&lt;MYHOSTNAME&gt;/’</strong></p>
+<p>This error occurs because of the new white-list feature in version 1.1.</p>
+<p>You will have to add any hosts your app uses or connects to (hostnames/IP addresses only, <strong>without</strong> the protocol nor the path) in <strong>Cordova.plist/ExternalHosts</strong>. Wildcards are supported.</p>
+<p>This includes external http/https/ftp/ftps links in:</p>
+<ol type="1">
+<li>HTML anchor tags</li>
+<li>connections in JavaScript (i.e through XMLHttpRequest)</li>
+<li>connections through Objective-C plugins</li>
+</ol>
+<p><br /></p>
+<p><strong>5. How do I effectively upgrade my project?</strong></p>
+<p>Starting with Cordova 1.4, follow the instructions in the <a href="http://docs.phonegap.com/en/edge/guide_upgrading_index.md.html"><strong>“Upgrading Cordova iOS”</strong> document</a>.</p>
+<p><br /></p>
+<p><strong>6. I’ve got ‘symbol not found’ errors during runtime? Usually it’s because I’m deploying to an iOS 3.x device.</strong></p>
+<p>With version 0.9.6, we implemented the W3C Media Capture API, which requires use of some iOS 4 APIs and frameworks. If you are deploying to an iOS 3.x device, you will need to “weak/optional” link three frameworks: <strong>UIKit</strong>, <strong>CoreMedia</strong>, and <strong>AVFoundation</strong>.</p>
+<p>If you get a “Symbol not found: <em>NSConcreteGlobalBlock</em>”, you will have to weak link libSystem through a command-line option.</p>
+<p>This is because the LLVM compiler strong links NSConcreteGlobalBlock, but gcc weak links (correctly). Add a linker flag in “Other Linker Flags” in your project target: <em>“-weak-lSystem”</em></p>
+<p>Starting with version 1.1, when creating a new project, the weak-linking is added through a linker flag so you will not need to do this manually.</p>
+<p><strong>7. How do I override the location of the start page www/index.html?</strong></p>
+<p>Starting with Cordova <strong>1.4</strong>, you can set this directly in the function <strong>application:didFinishLaunchingWithOptions:</strong> in your project’s <strong>AppDelegate.m</strong> file.</p>
+<p>Modify these lines appropriately:</p>
+<ol type="1">
+<li>self.viewController.wwwFolderName = @“www”;</li>
+<li>self.viewController.startPage = @“index.html”;</li>
+</ol>
+<p><strong>8. What’s the difference between the two templates?</strong></p>
+<p>Note that Xcode template support has been removed in 2.0.0.</p>
+<p>The CordovaLib static library is only used by the older subproject-based template. The Xcode 4 template uses Cordova.framework (a static framework) because of Xcode 4’s template limitations. Both are based off the same code, just packaged differently.</p>
+<p>Staring with 2.0.0, you must create projects <a href="http://docs.phonegap.com/en/edge/guide_command-line_index.md.html#Command-Line%20Usage">using the command line</a>:</p>
+<p><br /></p>
+<p><strong>9. In the sub-project based Cordova project, I want to have a project-specific copy of CordovaLib for my project, not a global one. How do I do this?</strong></p>
+<p>In your project, there should be a <em>CordovaBuildSettings.xcconfig</em> file. Modify the <em>CORDOVALIB</em> variable in the file to point to your project specific CordovaLib folder. You can use relative paths, off $(PROJECT_DIR).</p>
+<p><strong>10. In a .framework based Cordova project (only supported in Cordova versions lesser than 2.0.0), I want to have a project-specific copy of Cordova.framework for my project, not a global one. How do I do this?</strong></p>
+<p>Remove the existing Cordova.framework from your project, and drag and drop your own Cordova.framework in, that’s all there is to it. To compile your own version of Cordova.framework, go to <em>~/Documents/CordovaLib</em> and run the Xcode project with the <em>UniversalFramework</em> target. You might need to modify the <em>USER_FRAMEWORK_SEARCH_PATHS</em> in your project as well.</p>
+<p><strong>11. I’ve got other Cordova-specific issues not covered here?</strong></p>
+<p>Do a search in the Apache JIRA Issue Tracker <a href="https://issues.apache.org/jira/browse/CB">Apache JIRA</a> or the <a href="http://wiki.apache.org/cordova/">Wiki</a>.</p>
+<p><strong>12. On an iOS 3.2 iPad, and launching an iPhone only app, when I use the Media Capture API, the user interface shown is iPad sized, not iPhone sized?</strong></p>
+<p>You must delete the <em>~ipad.png images from <strong>Capture.bundle</strong> if they want to build an iPhone only app and have captureAudio() display properly on an iPad. This additional fix is just for iPad running iOS 3.2 - if the requested </em>~ipad.png is not available it returns the iPhone sized image.</p>
+<p><strong>13. I get this linker error: “ld: warning: ignoring file libCordova.a, file was built for archive which is not the architecture being linked (armv7)”</strong></p>
+<p>In your project’s Build Settings, set <strong>“Build for Active Architecture Only”</strong> to <strong>NO</strong>. This has been fixed in Cordova 1.2 for newly created projects. This is usually because Xcode 4 will only build for armv7 by default, and not armv6.</p>
+<p><strong>14. I get this runtime error/crash: “dyld: Symbol not found: _NSURLIsExcludedFromBackupKey”</strong></p>
+<p>A. Older iOS versions than 5.1 do not have this symbol defined. You need to add the constant value and weak link the CoreFoundation framework:</p>
+<ol type="1">
+<li><p>Add this line to your AppDelegate.m:</p>
+<pre><code>extern NSString * const NSURLIsExcludedFromBackupKey _attribute_((weak_import));</code></pre></li>
+<li><p>Add a new value for “Other Linker Flags” in your project’s Build Settings:</p>
+<pre><code> -weak_framework CoreFoundation</code></pre></li>
+</ol>
+<h2 id="bugs">BUGS?</h2>
+<p>File them at the <a href="https://issues.apache.org/jira/browse/CB">Cordova Issue Tracker</a><br />
+<br /></p>
+<h2 id="more-info">MORE INFO</h2>
+<ul>
+<li><a href="http://incubator.apache.org/cordova/">http://incubator.apache.org/cordova/</a></li>
+</ul>
+<p><br /></p>
+</body>
+</html>

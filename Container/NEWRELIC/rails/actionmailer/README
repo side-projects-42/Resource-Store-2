@@ -43,7 +43,7 @@ Hello there,
 Mr. david@loudthinking.com
 
 You never actually call the instance methods like signed*up directly. Instead,
-you call class methods like deliver*_ and create\__ that are automatically
+you call class methods like deliver*\_ and create\_\_ that are automatically
 created for each instance method. So if the signed_up method sat on
 ApplicationMailer, it would look like this:
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <meta name="author" content="daniel-beck" />
+    <title>Jenkins 2.0 beta released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Jenkins 2.0 beta released</h1>
+      <p class="author">daniel-beck</p>
+    </header>
+    <p>
+      We released the Jenkins 2.0 beta earlier today.
+      <a href="/2.0/">Download it here and try it!</a>
+    </p>
+    <p>
+      Besides a number of bug fixes and minor improvements, the following
+      changes are new since the last alpha preview release:
+    </p>
+    <h3 id="redesigned-new-item-page">Redesigned “New Item” page</h3>
+    <p>
+      We redesigned the “New Item” page. Item types now have icons to be more
+      visually distinctive.
+    </p>
+    <p>
+      Additionally, item types can now define a category they belong to (such as
+      “Project” or “Folder”). Once the complexity of the “New Item” page reaches
+      a certain threshold, the item types will be grouped into categories to be
+      easier to find. However, for now, it’s unlikely that you will see these
+      categories, as support for this mechanism will need to be added in
+      plugins. This is a new API in core, and we invite plugin developers to
+      support it to make Jenkins easier to use for users with a large number of
+      item types. It doesn’t even require raising the minimum supported Jenkins
+      version.
+    </p>
+    <h3 id="separate-configuration-page-for-tools">
+      Separate configuration page for tools
+    </h3>
+    <p>
+      The length and complexity of the <em>Configure Jenkins</em> page once a
+      few dozen plugins are installed made it unnecessarily difficult to use. To
+      improve that we’re moving the tools configuration (Git, Maven, Gradle,
+      Ant, etc.) out of that page, into the new
+      <em>Global Tools Configuration</em>.
+    </p>
+    <h3 id="upgrade-notice-and-plugin-installer">
+      Upgrade notice and plugin installer
+    </h3>
+    <p>
+      The Pipeline plugin suite is a big part of Jenkins 2. Over the past few
+      weeks, open-source plugins adding support for visualization (Pipeline
+      Stage View), automatic GitHub project creation (GitHub Branch Source
+      Plugin) and Bitbucket project creation (Bitbucket Branch Source Plugin)
+      have been released. However, when upgrading from Jenkins 1.x, users
+      weren’t even given any information on these features.
+    </p>
+    <p>
+      To address this, users upgrading from Jenkins 1.x will now be shown a
+      banner when they first log into Jenkins as administrator, offering them to
+      install the suite of Pipeline plugins.
+    </p>
+  </body>
+</html>

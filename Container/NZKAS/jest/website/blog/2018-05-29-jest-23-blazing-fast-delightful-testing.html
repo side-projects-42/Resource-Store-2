@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2018-05-29-jest-23-blazing-fast-delightful-testing</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Today we are excited to announce Jest 23, our largest major release to
+      date! Together with over 100 contributors, we’ve shipped a ton of features
+      and bug fixes. Thank you to everyone in the community for helping make
+      JavaScript Testing Delightful.
+    </p>
+    <p>
+      We would also like to welcome both
+      <a href="https://babeljs.io/">Babel</a> and
+      <a href="https://webpack.js.org/">Webpack</a> to the Jest community! After
+      converting from Mocha to Jest 23 Beta, Webpack saw their total test suite
+      time reduced 6x from over 13 minutes to 2 minutes 20 seconds.
+      <a href="https://twitter.com/search?q=%23blazingmeansgood"
+        >#blazingmeansgood</a
+      >
+    </p>
+    <p>Here’s are some of the Jest 23 highlights and breaking changes.</p>
+    <!--truncate-->
+    <p>
+      For a full list see the
+      <a href="https://github.com/facebook/jest/blob/master/CHANGELOG.md"
+        >changelog</a
+      >.
+    </p>
+    <h2 id="interactive-snapshot-mode">Interactive Snapshot Mode</h2>
+    <p>
+      We’ve added a new default watch menu option we’re calling Interactive
+      Snapshot Mode. This new mode allows you to step through each failing
+      snapshot in each failing suite to review your failed snapshots and choose
+      to update or skip each individually.
+    </p>
+    <figure>
+      <img
+        src="/img/blog/23-interactive.gif"
+        alt="Interactive snapshot mode in action"
+      />
+      <figcaption>Interactive snapshot mode in action</figcaption>
+    </figure>
+    <p>
+      See the Interactive Snapshot Mode docs
+      <a
+        href="https://jestjs.io/docs/en/snapshot-testing.html#interactive-snapshot-mode"
+        >here</a
+      >.
+    </p>
+    <h2 id="snapshot-property-matchers">Snapshot Property Matchers</h2>
+    <p>
+      Often, objects you’re snapshotting contain generated values like Dates and
+      IDs. Jest now allows you to pass properties to the snapshot matcher which
+      specify the structure of the data instead of the specific values. These
+      property matchers are then verified before serializing the matcher type
+      (instead of the value), giving you consistent snapshot results across test
+      runs.
+    </p>
+    <figure>
+      <img
+        src="/img/blog/23-snapshot-matchers.png"
+        alt="Snapshot Property Matchers"
+      />
+      <figcaption>Snapshot Property Matchers</figcaption>
+    </figure>
+    <p>
+      See the updated <code>toMatchSnapshot</code>
+      <a
+        href="https://jestjs.io/docs/en/expect.html#tomatchsnapshotpropertymatchers-snapshotname"
+        >docs</a
+      >
+      or the Property Matcher
+      <a
+        href="https://jestjs.io/docs/en/snapshot-testing.html#property-matchers"
+        >guide</a
+      >
+      for more information.
+    </p>
+    <h2 id="custom-asynchronous-matchers">Custom Asynchronous matchers</h2>
+    <p>
+      We now support asynchronous matchers with <code>expect.extends</code>!
+      Async matchers return a Promise so that you can <code>await</code> for the
+      matcher to resolve. As an example:
+    </p>
+    <figure>
+      <img
+        src="/img/blog/23-async-matchers.png"
+        alt="Custom asynchronous matchers in action"
+      />
+      <figcaption>Custom asynchronous matchers in action</figcaption>
+    </figure>
+    <p>
+      Docs available
+      <a href="https://jestjs.io/docs/en/expect.html#expectextendmatchers"
+        >here</a
+      >.
+    </p>
+    <h2 id="custom-asymmetric-matchers">Custom Asymmetric Matchers</h2>
+    <p>
+      Asymmetric matchers are a great tool to use when you only care about
+      asymmetric equality. For example, when the left side is expected to be an
+      object with some subset of properties on the right, instead of an exact
+      match. Jest provides a number of asymmetric matchers out of the box, and
+      in this release we’re introducing Custom Asymmetric Matchers.
+    </p>
+    <figure>
+      <img
+        src="/img/blog/23-asymmetric-matchers.png"
+        alt="Custom asymmetric matchers in action"
+      />
+      <figcaption>Custom asymmetric matchers in action</figcaption>
+    </figure>
+    <h2 id="jest-each">Jest Each</h2>
+    <p>
+      <span class="citation" data-cites="mattphillipsio">[@mattphillipsio]</span
+      >(https://twitter.com/mattphillipsio) has donated the
+      <code>jest-each</code> package to Jest Core (thanks Matt!).
+      <code>jest-each</code> is a library inspired by
+      <a href="https://yarnpkg.com/en/package/mocha-each"
+        ><code>mocha-each</code></a
+      >
+      and
+      <a
+        href="http://spockframework.org/spock/docs/1.1/data_driven_testing.html#data-tables"
+        >Spock Data Tables</a
+      >
+      which allows you to define a table of test cases, and then run a test for
+      each row with the specified column values. We support both array types and
+      template literals for all flavors of <code>describe</code> and
+      <code>test</code>. Docs are available
+      <a href="https://jestjs.io/docs/en/api.html#testeachtable-name-fn">here</a
+      >, and for those not on Jest 23 yet, we’re still publishing
+      <a href="https://yarnpkg.com/en/package/jest-each"
+        ><code>jest-each</code></a
+      >
+      separately!
+    </p>
+    <figure>
+      <img src="/img/blog/23-jest-each.png" alt="jest-each in action" />
+      <figcaption>jest-each in action</figcaption>
+    </figure>
+    <p>
+      Huge shout out to Prettier for
+      <a href="https://github.com/prettier/prettier/pull/4423">fixing</a> the
+      table formatting so quickly (<a
+        href="https://prettier.io/blog/2018/05/23/1.13.0.html#format-new-describeeach-table-in-jest-23-4423-by-ikatyang"
+        >see Prettier 1.13</a
+      >)!
+    </p>
+    <h2 id="new-matchers">New Matchers</h2>
+    <p>
+      We only add matchers to core if we believe they will be useful to a large
+      amount of people in the Jest community, and leave the majority of matchers
+      to the community (see
+      <a href="https://yarnpkg.com/en/package/jest-extended">jest-extended</a>).
+      Some matchers make the cut into core, and Jest 23 adds:
+    </p>
+    <ul>
+      <li>nthCalledWith</li>
+      <li>toReturn</li>
+      <li>toReturnTimes</li>
+      <li>toReturnWith</li>
+      <li>lastReturnedWith</li>
+      <li>nthReturnedWith</li>
+      <li>toStrictEqual</li>
+    </ul>
+    <figure>
+      <img src="/img/blog/23-new-matchers.png" alt="New matchers in action" />
+      <figcaption>New matchers in action</figcaption>
+    </figure>
+    <p>
+      See the updated expect docs
+      <a href="https://jestjs.io/docs/en/expect.html">here</a>.
+    </p>
+    <h2 id="debug-hanging-tests">Debug Hanging Tests</h2>
+    <p>
+      A common issue we see on the issue tracker relates to “Jest” hanging after
+      a test run. This is usually due to app code leaving handles open,
+      preventing Jest from exiting. In the past, users have resorted to
+      <code>--forceExit</code> to fix (not recommended).
+    </p>
+    <p>
+      To help debug these issues, we’re now detecting when Jest does not exit:
+    </p>
+    <figure>
+      <img
+        src="/img/blog/23-hanging-before.png"
+        alt="Detecting hanging tests"
+      />
+      <figcaption>Detecting hanging tests</figcaption>
+    </figure>
+    <p>
+      And we offer a new flag <code>--detectOpenHandles</code> to help find the
+      open handles:
+    </p>
+    <figure>
+      <img
+        src="/img/blog/23-hanging-after.png"
+        alt="Running detectOpenHandles"
+      />
+      <figcaption>Running detectOpenHandles</figcaption>
+    </figure>
+    <p>
+      See the updated CLI docs
+      <a href="https://jestjs.io/docs/en/cli.html#detectopenhandles">here</a>.
+    </p>
+    <h2 id="watch-mode-plugins">Watch Mode Plugins</h2>
+    <p>
+      We have completely rewritten the watch mode system to allow adding custom
+      plugins to watch mode. Watch Mode Plugins now make it possible to hook
+      into Jest events and provide custom menu options in the Watch Mode Menu.
+      All of the default Watch Mode prompts are implemented as plugins in this
+      system, and the docs to create your own are available
+      <a href="https://jestjs.io/docs/en/watch-plugins.html">here</a>.
+    </p>
+    <p>
+      With this change, we’re also now able to bring back typeahead support as a
+      Watch Mode Plugin via
+      <a href="https://yarnpkg.com/en/package/jest-watch-typeahead"
+        >jest-watch-typeahead</a
+      >!
+    </p>
+    <figure>
+      <img src="/img/blog/23-typeahead.gif" alt="Typeahead plugin in action" />
+      <figcaption>Typeahead plugin in action</figcaption>
+    </figure>
+    <p>
+      See
+      <a href="https://github.com/jest-community/jest-watch-typeahead"
+        >jest-watch-typeahead</a
+      >
+      for documentation and install instructions. Huge thank you to
+      <span class="citation" data-cites="rogeliog">[@rogeliog]</span
+      >(https://twitter.com/rogeliog) for the new watch mode plugin system and
+      the jest-watch-typeahead plugin!
+    </p>
+    <h2 id="breaking-changes">Breaking Changes</h2>
+    <p>
+      As with every major release, we are making a few breaking changes to make
+      larger changes in the future possible and to push the testing experience
+      to a new level. Here’s a list of the biggest changes you may see:
+    </p>
+    <ul>
+      <li>
+        <strong>Require test descriptions and functions</strong>: We’re now
+        failing tests that do not include both a function and a description.
+      </li>
+      <li>
+        <strong>Remove undefined props from React snapshots</strong>: Smaller
+        snapshots and proper React behavior.
+      </li>
+      <li>
+        <strong>Remove deprecations</strong>: We removed mapCoverage since it’s
+        no longer needed. Additionally, we removed
+        <code>jest.genMockFunction</code> and <code>jest.genMockFn</code> since
+        these are the same as <code>jest.fn</code>.
+      </li>
+      <li>
+        <strong>Add snapshot names to failures</strong>: We added the snapshot
+        name (if provided) to the snapshot failure message so it’s easier to
+        find the snapshot that’s failing.
+      </li>
+      <li>
+        <strong>Replace mock timestamps</strong>: We replaced mock timestamps
+        with invocationCallOrder since two or mocks may often have the same
+        timestamp, making it impossible to test the call order.
+      </li>
+      <li>
+        <strong>Add results to mock snapshots</strong>: We added mock function
+        call results to snapshots so that both the calls and the results of the
+        invocation are tracked.
+      </li>
+    </ul>
+    <h2 id="other-improvements">Other Improvements</h2>
+    <ul>
+      <li>
+        <strong>Watch mode coverage</strong>: Coverage is now limited to only
+        the files tested in watch mode or when using
+        <code>--onlyChanged</code> and <code>--findRelatedTests</code>.
+      </li>
+      <li>
+        <strong>Version documentation</strong>: We added docs for each minor
+        release back to Jest 22, and have removed all of the “Requires Jest
+        X.X+” from the docs.
+      </li>
+      <li>
+        <strong>Better snapshot summaries</strong>: We overhauled the Snapshot
+        Summary output to make obsolete snapshots more informative.
+      </li>
+      <li>
+        <strong>Better stack traces</strong>: We added stack traces to
+        asynchronous errors, timeout errors, expect.assertions, and thrown
+        non-errors. We’re also indicating the column in the code frame!
+      </li>
+      <li>
+        <strong>Better React 16 support</strong>: Adds snapshot support for
+        <code>React.Fragment</code>, <code>React.forwardRef</code>, and
+        <code>React.createContext</code>.
+      </li>
+      <li>
+        <strong>Track mock return and throw values</strong>: Adds
+        <code>mock.results</code> that contains the return value or thrown value
+        for each mock call.
+      </li>
+      <li>
+        <strong>Blazing 🔥</strong>: We’ve added a blazing badge to the README
+        to indicate that Jest is blazing good.
+      </li>
+    </ul>
+    <h2 id="jest-summit">Jest Summit</h2>
+    <p>
+      Last week, the Jest Core Team met for the Jest Summit at Facebook London
+      where worked on and released Jest 23, announced the Jest Open Collective,
+      and gave a number of talks:
+    </p>
+    <ul>
+      <li>
+        <strong>Christoph Nakazawa</strong> –
+        <a href="https://www.youtube.com/watch?v=cAKYQpTC7MA">Intro</a>
+      </li>
+      <li>
+        <strong>Aaron Abramov</strong> –
+        <a href="https://youtu.be/cAKYQpTC7MA?t=440"
+          >Writing Meaningful Tests</a
+        >
+      </li>
+      <li>
+        <strong>Rick Hanlon II</strong> –
+        <a href="https://youtu.be/cAKYQpTC7MA?t=1881"
+          >Blazing Fast Snapshot Testing in Jest 23</a
+        >
+      </li>
+      <li>
+        <strong>Simen Bekkhus</strong> –
+        <a href="https://youtu.be/cAKYQpTC7MA?t=2990"
+          >Jest’s Delightful Error Messages</a
+        >
+      </li>
+      <li>
+        <strong>Matt Phillips</strong> –
+        <a href="https://youtu.be/cAKYQpTC7MA?t=3852"
+          >Level up your Jest experience with community packages</a
+        >
+      </li>
+      <li>
+        <strong>Michele Bertoli</strong> –
+        <a href="https://youtu.be/cAKYQpTC7MA?t=4582"
+          >Snapshot all the things</a
+        >
+      </li>
+      <li>
+        <strong>Jordan Eldredge</strong> –
+        <a href="https://youtu.be/cAKYQpTC7MA?t=5185"
+          >Webamp: Learn by imitating</a
+        >
+      </li>
+    </ul>
+    <p>
+      Full talk is available
+      <a href="https://www.youtube.com/watch?v=cAKYQpTC7MA">here</a>.
+    </p>
+    <p>
+      The turnout was amazing, and we were able to meet a lot of the
+      London-based community in person. Thank you to everyone who joined us and
+      for your continued support! Stay tuned for our next post which will
+      outline the Jest Open Collective and the plans we have for the future.
+    </p>
+    <p>
+      <em
+        >As always, this release couldn’t have been possible without you, the
+        JavaScript community. We are incredibly grateful that we get the
+        opportunity to work on improving JavaScript testing together. If you’d
+        like to contribute to Jest, please don’t hesitate to reach out to us
+        on</em
+      >
+      <em><a href="https://github.com/facebook/jest">GitHub</a> or on</em>
+      <em><a href="https://discord.gg/MWRhKCj">Discord</a>.</em>
+    </p>
+  </body>
+</html>

@@ -1,151 +1,38 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Smarty mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="smarty.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">Smarty</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Smarty mode</h2>
-  <form>
-    <textarea id="code" name="code">
-{extends file="parent.tpl"}
-{include file="template.tpl"}
-
-{* some example Smarty content *}
-{if isset($name) && $name == 'Blog'}
-  This is a {$var}.
-  {$integer = 451}, {$array[] = "a"}, {$stringvar = "string"}
-  {assign var='bob' value=$var.prop}
-{elseif $name == $foo}
-  {function name=menu level=0}
-    {foreach $data as $entry}
-      {if is_array($entry)}
-        - {$entry@key}
-        {menu data=$entry level=$level+1}
-      {else}
-        {$entry}
-      {/if}
-    {/foreach}
-  {/function}
-{/if}</textarea
-    >
-  </form>
-
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      lineNumbers: true,
-      mode: "smarty",
-    });
-  </script>
-
-  <br />
-
-  <h3>Smarty 2, custom delimiters</h3>
-  <form>
-    <textarea id="code2" name="code2">
-{--extends file="parent.tpl"--}
-{--include file="template.tpl"--}
-
-{--* some example Smarty content *--}
-{--if isset($name) && $name == 'Blog'--}
-  This is a {--$var--}.
-  {--$integer = 451--}, {--$array[] = "a"--}, {--$stringvar = "string"--}
-  {--assign var='bob' value=$var.prop--}
-{--elseif $name == $foo--}
-  {--function name=menu level=0--}
-    {--foreach $data as $entry--}
-      {--if is_array($entry)--}
-        - {--$entry@key--}
-        {--menu data=$entry level=$level+1--}
-      {--else--}
-        {--$entry--}
-      {--/if--}
-    {--/foreach--}
-  {--/function--}
-{--/if--}</textarea
-    >
-  </form>
-
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code2"), {
-      lineNumbers: true,
-      mode: {
-        name: "smarty",
-        leftDelimiter: "{--",
-        rightDelimiter: "--}",
-      },
-    });
-  </script>
-
-  <br />
-
-  <h3>Smarty 3</h3>
-
-  <textarea id="code3" name="code3">
-Nested tags {$foo={counter one=1 two={inception}}+3} are now valid in Smarty 3.
-
-<script>
-function test() {
-	console.log("Smarty 3 permits single curly braces followed by whitespace to NOT slip into Smarty mode.");
-}
-</script>
-
-{assign var=foo value=[1,2,3]}
-{assign var=foo value=['y'=>'yellow','b'=>'blue']}
-{assign var=foo value=[1,[9,8],3]}
-
-{$foo=$bar+2} {* a comment *}
-{$foo.bar=1}  {* another comment *}
-{$foo = myfunct(($x+$y)*3)}
-{$foo = strlen($bar)}
-{$foo.bar.baz=1}, {$foo[]=1}
-
-Smarty "dot" syntax (note: embedded {} are used to address ambiguities):
-
-{$foo.a.b.c}      => $foo['a']['b']['c']
-{$foo.a.$b.c}     => $foo['a'][$b]['c']
-{$foo.a.{$b+4}.c} => $foo['a'][$b+4]['c']
-{$foo.a.{$b.c}}   => $foo['a'][$b['c']]
-
-{$object->method1($x)->method2($y)}</textarea
-  >
-
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code3"), {
-      lineNumbers: true,
-      mode: "smarty",
-      smartyVersion: 3,
-    });
-  </script>
-
-  <p>
-    A plain text/Smarty version 2 or 3 mode, which allows for custom delimiter
-    tags.
-  </p>
-
-  <p><strong>MIME types defined:</strong> <code>text/x-smarty</code></p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Smarty mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">Smarty</a></li>
+</ul>
+<h2 id="smarty-mode">Smarty mode</h2>
+<p>{extends file=“parent.tpl”} {include file=“template.tpl”} {* some example Smarty content *} {if isset($name) &amp;&amp; <span class="math inline">$name == 'Blog'} This is a {$</span>var}. {<span class="math inline">$integer = 451}, {$</span>array[] = “a”}, {<span class="math inline">$stringvar = "string"} {assign var='bob' value=$</span>var.prop} {elseif $name == $foo} {function name=menu level=0} {foreach $data as <span class="math inline">$entry} {if is\_array($</span>entry)} - {<span class="math inline">$entry@key} {menu data=$</span>entry level=<span class="math inline">$level+1} {else} {$</span>entry} {/if} {/foreach} {/function} {/if}</p>
+<h3 id="smarty-2-custom-delimiters">Smarty 2, custom delimiters</h3>
+<p>{–extends file=“parent.tpl”–} {–include file=“template.tpl”–} {–* some example Smarty content *–} {–if isset($name) &amp;&amp; <span class="math inline">$name == 'Blog'--} This is a {--$</span>var–}. {–<span class="math inline">$integer = 451--}, {--$</span>array[] = “a”–}, {–<span class="math inline">$stringvar = "string"--} {--assign var='bob' value=$</span>var.prop–} {–elseif $name == $foo–} {–function name=menu level=0–} {–foreach $data as <span class="math inline">$entry--} {--if is\_array($</span>entry)–} - {–<span class="math inline">$entry@key--} {--menu data=$</span>entry level=<span class="math inline">$level+1--} {--else--} {--$</span>entry–} {–/if–} {–/foreach–} {–/function–} {–/if–}</p>
+<h3 id="smarty-3">Smarty 3</h3>
+<p>Nested tags {$foo={counter one=1 two={inception}}+3} are now valid in Smarty 3.</p>
+<p>{assign var=foo value=[1,2,3]} {assign var=foo value=[‘y’=&gt;‘yellow’,‘b’=&gt;‘blue’]} {assign var=foo value=[1,[9,8],3]} {<span class="math inline"><em>f</em><em>o</em><em>o</em>=</span>bar+2} {* a comment *} {<span class="math inline">$foo.bar=1} {\* another comment \*} {$</span>foo = myfunct((<span class="math inline"><em>x</em>+</span>y)*3)} {<span class="math inline"><em>f</em><em>o</em><em>o</em> = <em>s</em><em>t</em><em>r</em><em>l</em><em>e</em><em>n</em>(</span>bar)} {<span class="math inline">$foo.bar.baz=1}, {$</span>foo[]=1} Smarty “dot” syntax (note: embedded {} are used to address ambiguities): {$foo.a.b.c} =&gt; <span class="math inline">$foo\['a'\]\['b'\]\['c'\] {$</span>foo.a.$b.c} =&gt; <span class="math inline">$foo\['a'\]\[$</span>b][‘c’] {<span class="math inline">$foo.a.{$</span>b+4}.c} =&gt; <span class="math inline">$foo\['a'\]\[$</span>b+4][‘c’] {<span class="math inline">$foo.a.{$</span>b.c}} =&gt; <span class="math inline">$foo\['a'\]\[$</span>b[‘c’]] {<span class="math inline">$object-&amp;gt;method1($</span>x)-&gt;method2($y)}</p>
+<p>A plain text/Smarty version 2 or 3 mode, which allows for custom delimiter tags.</p>
+<p><strong>MIME types defined:</strong> <code>text/x-smarty</code></p>
+</body>
+</html>

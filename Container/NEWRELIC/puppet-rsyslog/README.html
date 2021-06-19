@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="puppet-rsyslog">puppet-rsyslog</h1>
+    <p>================</p>
+    <p>Manage rsyslog client and server via Puppet</p>
+    <h2 id="requirements">REQUIREMENTS</h2>
+    <ul>
+      <li>Puppet &gt;=2.6 if using parameterized classes</li>
+      <li>
+        Currently supports Ubuntu &gt;=11.04 &amp; Debian running rsyslog
+        &gt;=4.5
+      </li>
+    </ul>
+    <h2 id="usage">USAGE</h2>
+    <h3 id="client">Client</h3>
+    <h4 id="using-default-values">Using default values</h4>
+    <pre><code>    class { &#39;rsyslog::client&#39;: }</code></pre>
+    <h4 id="variables-and-default-values">Variables and default values</h4>
+    <pre><code>    class { &#39;rsyslog::client&#39;:
+        log_remote     =&gt; true,
+        remote_type    =&gt; &#39;tcp&#39;,
+        log_local      =&gt; false,
+        log_auth_local =&gt; false,
+        custom_config  =&gt; undef,
+        server         =&gt; &#39;log&#39;,
+        port           =&gt; &#39;514&#39;,
+    }</code></pre>
+    <h4 id="logging-to-a-mysql-or-postgresql-database">
+      Logging to a MySQL or PostgreSQL database
+    </h4>
+    <p>
+      Events can also be logged to a MySQL or PostgreSQL database. The database
+      needs to be deployed separately, either locally or remotely. Schema are
+      available from the <code>rsyslog</code> source:
+    </p>
+    <ul>
+      <li>
+        <a
+          href="http://git.adiscon.com/?p=rsyslog.git;a=blob_plain;f=plugins/ommysql/createDB.sql"
+          >MySQL schema</a
+        >
+      </li>
+      <li>
+        <a
+          href="http://git.adiscon.com/?p=rsyslog.git;a=blob_plain;f=plugins/ompgsql/createDB.sql"
+          >PostgreSQL schema</a
+        >
+      </li>
+    </ul>
+    <p>Declare the following to configure the connection:</p>
+    <pre><code>    class { &#39;rsyslog::database&#39;:
+        backend  =&gt; &#39;mysql&#39;,
+        server   =&gt; &#39;localhost&#39;,
+        database =&gt; &#39;Syslog&#39;,
+        username =&gt; &#39;rsyslog&#39;,
+        password =&gt; &#39;secret&#39;,
+    }</code></pre>
+    <h3 id="server">Server</h3>
+    <h4 id="using-default-values-1">Using default values</h4>
+    <pre><code>    class { &#39;rsyslog::server&#39;: }</code></pre>
+    <h4 id="variables-and-default-values-1">Variables and default values</h4>
+    <pre><code>    class { &#39;rsyslog::server&#39;:
+        enable_tcp                =&gt; true,
+        enable_udp                =&gt; true,
+        enable_onefile            =&gt; false,
+        server_dir                =&gt; &#39;/srv/log/&#39;,
+        custom_config             =&gt; undef,
+        high_precision_timestamps =&gt; false,
+    }</code></pre>
+    <p>Both can be installed at the same time.</p>
+    <h2 id="parameters">PARAMETERS</h2>
+    <p>The following lists all the class parameters this module accepts.</p>
+    <pre><code>RSYSLOG::SERVER CLASS PARAMETERS    VALUES              DESCRIPTION
+-------------------------------------------------------------------
+enable_tcp                          true,false          Enable TCP listener. Defaults to true.
+enable_udp                          true,false          Enable UDP listener. Defaults to true.
+enable_onefile                      true,false          Only one logfile per remote host. Defaults to false.
+server_dir                          STRING              Folder where logs will be stored on the server. Defaults to &#39;/srv/log/&#39;
+custom_config                       STRING              Specify your own template to use for server config. Defaults to undef. Example usage: custom_config =&gt; &#39;rsyslog/my_config.erb&#39;
+high_precision_timestamps           true,false          Whether or not to use high precision timestamps.
+
+RSYSLOG::CLIENT CLASS PARAMETERS    VALUES              DESCRIPTION
+-------------------------------------------------------------------
+log_remote                          true,false          Log Remotely. Defaults to true.
+remote_type                         &#39;tcp&#39;,&#39;udp&#39;         Which protocol to use when logging remotely. Defaults to &#39;tcp&#39;.
+log_local                           true,false          Log locally. Defualts to false.
+log_auth_local                      true,false          Just log auth facility locally. Defaults to false.
+custom_config                       STRING              Specify your own template to use for client config. Defaults to undef. Example usage: custom_config =&gt; &#39;rsyslog/my_config.erb
+server                              STRING              Rsyslog server to log to. Will be used in the client configuration file.
+
+RSYSLOG::DATABASE CLASS PARAMETERS  VALUES              DESCRIPTION
+-------------------------------------------------------------------
+backend                             &#39;mysql&#39;,&#39;pgsql&#39;     Database backend (MySQL or PostgreSQL).
+server                              STRING              Database server.
+database                            STRING              Database name.
+username                            STRING              Database username.
+password                            STRING              Database password.</code></pre>
+    <h3 id="other-notes">Other notes</h3>
+    <p>
+      Due to a missing feature in current RELP versions
+      (InputRELPServerBindRuleset option), remote logging is using TCP. You can
+      switch between TCP and UDP. As soon as there is a new RELP version which
+      supports setting Rulesets, I will add support for relp back.
+    </p>
+  </body>
+</html>

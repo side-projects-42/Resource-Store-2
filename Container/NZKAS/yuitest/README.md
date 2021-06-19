@@ -7,15 +7,14 @@ Building
 To build JavaScript files, run this in the javascript directory:
 
     ant all
-    
+
 Building an NPM package
 -----------------------
 
 To build an npm package (output to javascript/build/yuitest/npm), run this in the javascript directory:
 
     ant npmbuild
-    
-    
+
 Build Status
 ------------
 

@@ -1,41 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      function d() {
-        var i = 10;
-      }
-
-      function testFunction() {
-        debugger;
-        d();
-      }
-
-      var test = function () {
-        InspectorTest.startDebuggerTest(step1);
-
-        function step1() {
-          InspectorTest.runTestFunctionAndWaitUntilPaused(step2);
-        }
-
-        var stepCount = 0;
-        function step2(callFrames) {
-          InspectorTest.captureStackTrace(callFrames);
-          if (stepCount < 2) {
-            InspectorTest.addResult("Stepping into...");
-            WebInspector.panels.sources._stepIntoButton.element.click();
-            InspectorTest.waitUntilResumed(
-              InspectorTest.waitUntilPaused.bind(InspectorTest, step2)
-            );
-          } else InspectorTest.completeDebuggerTest();
-          stepCount++;
-        }
-      };
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests "step in" functionality in debugger.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-step-in</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests “step in” functionality in debugger.</p>
+</body>
 </html>

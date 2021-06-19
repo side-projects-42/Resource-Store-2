@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-13</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-04-13">ember-data-weekly-call 2016-04-13</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>pangratz</li>
+<li>bmac</li>
+<li>wecc</li>
+<li>fivetanley</li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="github-issue-template">GitHub Issue Template</h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li>We should add template for issue</li>
+<li>Encourage to attach code (ember-twiddle, JSBin, JSFiddle)</li>
+<li>Used versions</li>
+</ul>
+<h5 id="discussion">Discussion</h5>
+<p>bmac: I like the friendly language of the ember-cli issue template. I don’t have very strong opinions but I don’t want to see an overwhelming barrier to entry for new contributors.</p>
+<p>wecc: what bmac said</p>
+<p>pangratz: shouldn’t be too much text, only a reminder of what should be included (versions, which adapter) and links to preconfigured twiddle/jsbins</p>
+<h5 id="action">Action</h5>
+<p>let’s create PR and get more input on basic template</p>
+<hr />
+<h3 id="possible-to-create-duplicate-records-in-the-store">Possible to create duplicate records in the store</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li>As outlined in <a href="https://github.com/emberjs/data/issues/4262">#4262</a> is it possible that there are duplicate records in the store, by creating a record and <code>store.push()</code> a record with same id while the <code>createRecord</code> request is made</li>
+<li>Showcase via <a href="https://ember-twiddle.com/97ddeca43d6e405ffb5a4356303ade51?fileTreeShown=false&amp;numColumns=2&amp;openFiles=routes.application.js%2Ctemplates.application.hbs">this ember-twiddle</a></li>
+</ul>
+<h5 id="discussion-1">Discussion</h5>
+<p>bmac: I’m surprised this doesn’t error already. This has been a lesser know limitation of Ember Data for a while because Ember Data wants to only have 1 record instance for each type/id combination.</p>
+<p>pangratz: the references RFC might have a solution for this aka <code>store.push</code> returns a <code>RecordReference</code> and not a <code>DS.Model</code></p>
+<p>bmac: I think we should bring back the old assertion for detecting if an id is already in use post save and document this limitation of Ember Data. One work around I’ve used in the past is to use a <code>setTimeout</code> to defer the action of pushing created records so the push happens after the save is resolved <a href="https://github.com/bmac/ember-data-sails-adapter/blob/master/ember-data-sails-adapter.js#L149-L150">https://github.com/bmac/ember-data-sails-adapter/blob/master/ember-data-sails-adapter.js#L149-L150</a></p>
+<h5 id="action-1">Action</h5>
+<p>Add back the assertion and talk about this later when we have Igor, Tom and wycats in the meeting.</p>
+<hr />
+<h3 id="should-ds.stringtransform-etc.-be-importable-via-modules">Should <code>DS.StringTransform</code> etc. be importable via modules?</h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li>The transforms are public since they are available on <code>DS</code> namespace, but they aren’t importable via ES6 modules.</li>
+<li>In <a href="https://github.com/emberjs/data/pull/4125">#4125</a> there was an attempt to make them importable modules, but we decided against since it is not likely that they are re-used.</li>
+<li>This might need to be re-considered since:
+<ul>
+<li>transforms are public via <code>DS</code> namespace
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4305">#4305</a> would be a case where re-using a transform might be needed (though re-implementing <code>DS.StringTransform</code> logic would be ok too)</li>
+</ul></li>
+</ul></li>
+</ul>
+<h5 id="discussion-2">Discussion</h5>
+<p>pangratz: I think it’s an inconsistency that they’re it available on <code>DS</code> but not via modules</p>
+<p>bmac: I think its fine to move these to a public module.</p>
+<h5 id="action-2">Action</h5>
+<p>Move transforms to <code>addon</code>, fix references in the codebase, and make them importable.</p>
+<hr />
+<h3 id="custom-validation-using-ds.errors">Custom validation using <code>DS.Errors</code></h3>
+<h5 id="summary-3">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/3853">PR #3853</a> deprecated transitioning into invalid state when new error is added via <code>DS.Errors#add()</code></li>
+<li><code>add()</code> and <code>clear()</code> have been deprecated but with no proposed alternative</li>
+<li>Should there be a public API for adding / clearing errors on <code>DS.Model</code></li>
+<li>In <a href="https://github.com/emberjs/data/issues/4319">#4319</a> a question is raised on what the replacements for the deprecations are</li>
+</ul>
+<h5 id="discussion-3">Discussion</h5>
+<p>bmac: I believe tchak has this same use case.</p>
+<h5 id="action-3">Action</h5>
+<p>ping tchak about this, since he has more experience with <code>DS.Errors</code></p>
+<hr />
+<h3 id="regression-assertion-for-payload-from-adapter-not-being-empty-called-too-eagerly">Regression: Assertion for payload from <code>adapter</code> not being empty called too eagerly?</h3>
+<h5 id="summary-4">Summary</h5>
+<ul>
+<li>Upgrade from <code>2.3</code> to <code>2.4</code> throws an assertion when <code>queryRecord</code> returns empty payload, reported in <a href="https://github.com/emberjs/data/issues/4310">#4310</a></li>
+<li>The assertion has been added in <a href="https://github.com/emberjs/data/pull/3916">#3916</a> so a more helpful error is thrown very early, instead of the error deep within <code>store.push</code> ( You must include an ‘id’ for undefined in an object passed to ‘push’)</li>
+</ul>
+<h5 id="discussion-4">Discussion</h5>
+<p>pangratz: looks related to <a href="https://github.com/emberjs/data/pull/4300">#4300</a></p>
+<h5 id="action-4">Action</h5>
+<p>pangratz: take a look again at #4300 and maybe address #4310 in the course of #4300</p>
+<hr />
+<h3 id="during-normalization-use-property-lookup-instead-of-hasownproperty-checks">During normalization, use property lookup instead of <code>hasOwnProperty</code> checks</h3>
+<h5 id="summary-5">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4313">PR #4313</a> replace slow <code>hasOwnProperty</code> checks with <code>obj[key] !== undefined</code></li>
+</ul>
+<h5 id="discussion-5">Discussion</h5>
+<p>pangratz: check if <code>undefined</code> is really never a valid use case from payload (non JSON adapters/serializers maybe?)</p>
+<h5 id="action-5">Action</h5>
+<p>follow up with stef on the benchmark</p>
+<p>research test changes</p>
+</body>
+</html>

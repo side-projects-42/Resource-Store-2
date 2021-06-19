@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-07-27-hudson-1-368-released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Regular readers will recognize that I’ve been slacking off quite a bit
+      lately with my release announcements, my apologies. With the release of
+      1.368 on Sunday, which fixed a few fairly important bugs, I figured I’d
+      dusty off my blogging fedora and give this a shot.
+    </p>
+    <p>
+      This release has three bug fixes in it which were causing some issues for
+      some users, particularly those deploying Hudson inside the recently
+      released
+      <a href="http://tomcat.apache.org/tomcat-7.0-doc/changelog.html"
+        >Tomcat 7.0</a
+      >
+      (see
+      <a href="http://issues.hudson-ci.org/browse/HUDSON-6738">issue 6738</a>).
+    </p>
+    <p>
+      Hudson users utilizing the
+      <a href="http://wiki.hudson-ci.org/display/HUDSON/Tool+Auto-Installation"
+        >JDK auto-installation</a
+      >
+      feature between different platforms may have been affected by
+      <a href="http://issues.hudson-ci.org/browse/HUDSON-6880">issue 6880</a>
+      which was also fixed in this release.
+    </p>
+    <p>
+      Bringing up the rear is the fix to
+      <a href="http://issues.hudson-ci.org/browse/HUDSON-7004">issue 7004</a>
+      which detailed a few discrepencies between the
+      <code>/buildWithParameters</code> and the <code>/build</code> remote APIs.
+    </p>
+    <p>
+      If you’re not affected by these issues, you may want to wait for the
+      soon-to-be-released 1.369 which has <strong>even more</strong> juicy bug
+      fixes in it (with a dash of enhancements) to upgrade.
+    </p>
+    <h2 id="section"><!--break--></h2>
+    <p>
+      You can go grab the
+      <a href="http://ftp.osuosl.org/pub/hudson/war/1.368/hudson.war"
+        >latest .war file</a
+      >
+      straight from our <a href="http://www.osuosl.org">OSL mirror</a> or if
+      you’re using a native package, use your package manager to upgrade.
+    </p>
+  </body>
+</html>

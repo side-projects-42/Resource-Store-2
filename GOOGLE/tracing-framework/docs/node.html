@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>node</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="using-the-tracing-framework-with-node.js">Using the tracing-framework with node.js</h1>
+<h2 id="tracing-node-applications">Tracing node applications</h2>
+<h3 id="quickstart">Quickstart</h3>
+<pre><code>$ npm install tracing-framework
+$ node
+&gt; var wtf = require(&#39;tracing-framework&#39;);
+&gt; wtf.trace.node.start();
+&gt; var scope = wtf.trace.enterScope(&#39;hello!&#39;);
+&gt; wtf.trace.leaveScope(scope);
+&gt; process.exit()
+$ wtf-dump node-[time].wtf-trace</code></pre>
+<h3 id="instrumenting">Instrumenting</h3>
+<p>See <a href="api.md">api</a> for the <code>wtf.trace</code> API.</p>
+<h3 id="running">Running</h3>
+<p>Automatic injection from the shell:</p>
+<pre><code># Start a snapshot-on-exit trace:
+wtf-trace myscript.js [args]</code></pre>
+<p>Simple snapshot-on-exit:</p>
+<pre><code>var wtf = require(&#39;tracing-framework&#39;);
+// Begin recording a trace - a snapshot will be taken upon process.exit.
+wtf.trace.node.start({
+  // Any options overrides; see options.md
+});</code></pre>
+<p>Manual control:</p>
+<pre><code>var wtf = require(&#39;tracing-framework&#39;);
+
+// Begin recording a trace...
+wtf.trace.prepare({
+  // Options
+});
+wtf.trace.start();
+
+// Perform a snapshot.
+wtf.trace.snapshot();
+
+// Stop recording.
+wtf.trace.stop();</code></pre>
+<h2 id="loading-and-processing-traces">Loading and processing traces</h2>
+<h3 id="quickstart-1">Quickstart</h3>
+<pre><code>$ npm install tracing-framework
+$ node
+&gt; var wtf = require(&#39;tracing-framework&#39;);
+&gt; var db = wtf.db.load(&#39;test.wtf-trace&#39;, function(db) {
+    db.query(&#39;something&#39;);
+  });</code></pre>
+<h3 id="using-the-tool-runner">Using the Tool Runner</h3>
+<p>TODO</p>
+</body>
+</html>

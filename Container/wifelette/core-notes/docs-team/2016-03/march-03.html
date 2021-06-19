@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>march-03</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="topics">Topics</h1>
+<h3 id="previous-action-items">Previous Action Items</h3>
+<ul>
+<li>[ ] David: still want to contact Trek re: SEO questions, ask for original context</li>
+<li>[x] Matt: will see about having the survey intern help with new styling for header</li>
+<li>[ ] Todd: will check on private api info leaking through on API viewer (waiting on this until next week)</li>
+<li>[ ] Ryan: update on screencast</li>
+</ul>
+<h3 id="agenda">Agenda</h3>
+<ul>
+<li>Template for core-notes minutes
+<ul>
+<li>easier to extract data (possible viewer, or at least for The EmberWatch Times)</li>
+</ul></li>
+<li>Translations
+<ul>
+<li>ongoing language efforts / RFC</li>
+<li>deploy / infrastructure</li>
+</ul></li>
+<li><a href="https://github.com/emberjs/website/pull/2393">Featurex Statusboard</a></li>
+<li><a href="https://github.com/emberjs/guides/issues/1273">Issue / PR template</a></li>
+<li><a href="https://github.com/emberjs/website/issues/2355#issuecomment-170077858">Upgrade section</a></li>
+<li><a href="https://github.com/emberjs/website/pull/2477">Website header</a>
+<ul>
+<li><a href="https://github.com/emberjs/website/pull/2477">new <code>website</code> header</a></li>
+</ul></li>
+<li><a href="https://github.com/emberjs/website/pull/2312">Ember Data builds promoted</a></li>
+<li>Private / behind-the-scenes todos? - Locks</li>
+<li>infrastructure sub-team? blog post mentioning teams</li>
+<li><a href="https://github.com/emberjs/website/pull/2484">ember community survey 2016</a></li>
+<li>API Doc private hiding: rendered vs yuidoc approach <a href="https://github.com/emberjs/website/issues/2452">issue 2452</a></li>
+<li><a href="https://github.com/emberjs/guides/issues/1302">forwarding not going to the right version</a> - ideas on why? (David)</li>
+</ul>
+<h1 id="minutes">Minutes</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Name (Initials) <code>slackid</code></em></p>
+<ul>
+<li>Ricardo (RM) <code>@locks</code></li>
+<li>David (DB) <code>@acorncom</code></li>
+<li>Todd (TJ) <code>@todd.jordan</code></li>
+<li>Ryan T (RT) <code>@rtablada</code></li>
+<li>Ryan L (RL) <code>@ryanlabouve</code></li>
+<li>Matt (MB) <code>@mixonic</code></li>
+<li>Leah (LS) <code>@wifelette</code></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<h3 id="new-action-items">New Action Items</h3>
+<ul>
+<li>[ ] RL to create a combination header/footer restyle PR, consolidate CSS (to eliminate differences with guides, and remove emberconf references)</li>
+<li>[ ] RT continues with consistent voice updates in quickstart (no merge ’til emberconf)</li>
+<li>[ ] TJ to work on filtering private/deprecated from YUIDoc output</li>
+<li>[ ] RM to create a draft guides PR template (and possibly core-notes and RFCs )</li>
+<li>[ ] LS to broach PR template subject with core team</li>
+<li>[ ] DB to work on Build page and feature dashboard website pages, reach out to <code>@miracleblue</code></li>
+<li>[ ] DB to send a guides PR linking to cli upgrade steps</li>
+<li>[ ] RM to create a repo in EmberTown for a living styleguide</li>
+<li>[ ] RM to create a Trello or Waffle site for the docs team</li>
+</ul>
+<h3 id="header-styling">Header Styling</h3>
+<p>Header style: LS: comment on new header style about not using the emberconf brand.</p>
+<p>Header width is different than currently with the guides. This was because the responsive grid used on the site is different than the guides.</p>
+<p>LS: To hesitate to rip it out of the website so that it works. Would rather not deploy with the different widths.</p>
+<p>History (LS) Guides page was done by a third part company and then dropped it. Would be great to finish it off ourselves.</p>
+<p>LS: Could both the guides and the website use the same CSS?</p>
+<p>RL to take restyle forward and and propagate guide style to the rest of the website. Agreed it makes sense to deploy a header and footer restyle together.</p>
+<h3 id="screencast-update-rt">Screencast Update (RT)</h3>
+<p>Bring voice in quickstart (me vs you vs I) into consistency. Trying to align the two (screencast and docs) as close as possible.</p>
+<p>Fine to work on, but RM will not merge any quickstart changes until emberconf because of the translation efforts.</p>
+<h3 id="private-classes-in-api-docs-issue-update">Private Classes in API Docs Issue Update</h3>
+<p>PR from Kris Seldon that updates website to not render private classes. This doesn’t fix privates showing on other renderings of the API.</p>
+<p>Todd to submit a PR removing <span class="citation" data-cites="class">@class</span>, from privates/deprecated, or filtering out from generated YUIDoc JSON to get a discussion going with core.</p>
+<h3 id="template-for-core-notes-minutes">Template for Core Notes Minutes</h3>
+<p>Currently inconsistent across teams. RM would like a template to guide teams, and possible someone (RM can find) to retroactively apply to old minutes.</p>
+<p>LS: make sure it doesn’t add arduous steps, but consistency would be useful. Will bring up the idea to the core team.</p>
+<p>RM: Could be a pull request template on the repository.</p>
+<h3 id="translations">Translations</h3>
+<p>RM: Put out a request for new translators on twitter. No positive responses thusfar.</p>
+<h3 id="website">Website</h3>
+<p>RM: MB is not able to continue at the moment, so if someone wants to pick up the feature dashboard that would be good. DB to look at it.</p>
+<p>RM: a phased approach might be good to get something tangible. (manual-&gt; more automated). DB: Doesn’t want to deal with manual, will work forward on automated.</p>
+<p>Build page redesign/feature dashboard: Someone showed interest about implementing a design that Yehuda mentioned on an issue (vertical layout) (<code>@miracleblue</code>) DB may reach out.</p>
+<h3 id="issuepr-templates">Issue/PR templates</h3>
+<p>Proposing a Pull Request Template (markdown file). RM to create one for RFCs and Core notes, and get comment from core.</p>
+<p>DB proposes doing something for guides and trying it there first.</p>
+<p>LS to chat with Yehuda about concerns over barrier to entry.</p>
+<h3 id="upgrades">Upgrades</h3>
+<p>DB: Propose Step by step section in guides to go from 1.13 to 2</p>
+<p>RM: Doesn’t think its a guides thing. Wants it to start on Ember Watch and make it a testing ground for the website. (wants to do this in general for iterating and experimenting.</p>
+<p>DB: What about a link to the ember-cli release page? RM: Send me a PR and I’ll think about it some.</p>
+<h3 id="styles-more">Styles (More!)</h3>
+<p>RM: If we are going to make the header an ember component, we could but the styles in a bower package for the website now, then any addon made can just import that.</p>
+<p>RL: Style guide would be great to ensure consistency across the ember ecosystem.</p>
+<p>RM: would love that. Thoughtbot broke it down into SASS components. Would be conducive to a style guide.</p>
+<p>RM: Will create a repo under embertown where it could start and “graduate” to Ember. Will use embertown as an incubator for ember projects</p>
+<h3 id="ember-data-build-promotions">Ember Data Build Promotions</h3>
+<p>DB should note in the site/build redesign</p>
+<h3 id="task-tracking-for-docs-team">Task Tracking for Docs team</h3>
+<p>RM: Lets use Trello to coordinate back channel communication amongst the docs team. The docs team is not just guides anymore. Lots of cross cutting concerns that probably shouldn’t be tracked in guides repo.</p>
+<h3 id="infrastructure">Infrastructure</h3>
+<p>Might be a new infrastructure subteam created. Also still some discussion on how they will work, and dissemenate information to the outside world on this. Discussion is happening amongst the core team and will reveal more info by emberconf</p>
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="diner">Diner</h1>
+<p>This example application demonstrates how to build a simple application based on panorama control for Windows Phone using Microsoft Silverlight.</p>
+<p>Support for Windows Phone 8 was made according to guidelines given in article http://www.developer.nokia.com/Resources/Library/Lumia/#!co-development-and-porting-guide.html. The solution consists of two top-level projects sharing the same source code, one targeting WP 7 and the other targeting WP 8. Bing Maps control is used in WP 7 project and the new Map control introduced in Windows Phone is used in WP 8 project.</p>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/diner-wp</p>
+<p>Developed with:</p>
+<ul>
+<li>Microsoft Visual Studio 2010 Express for Windows Phone</li>
+<li>Microsoft Visual Studio Express for Windows Phone 2012.</li>
+</ul>
+<p>Compatible with:</p>
+<ul>
+<li>Windows Phone 7</li>
+<li>Windows Phone 8</li>
+</ul>
+<p>Tested to work on:</p>
+<ul>
+<li>Samsung Omnia 7</li>
+<li>Nokia Lumia 820</li>
+<li>Nokia Lumia 920</li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<p>Make sure you have the following installed:</p>
+<ul>
+<li>Windows 8</li>
+<li>Windows Phone SDK 8.0</li>
+<li>Latest NuGet Package Manager (&gt;2.7.1) from https://nuget.org/ to enable NuGet Package Restore</li>
+</ul>
+<p>To build and run the sample:</p>
+<ul>
+<li>Open the SLN file
+<ul>
+<li>File &gt; Open Project, select the file wprestaurantapp.sln</li>
+</ul></li>
+<li>Install Windows Phone Toolkit for the project.
+<ul>
+<li>Right click solution wprestaurantapp in Solution Explorer -&gt; select Manage NuGet Packages for Solution</li>
+<li>Search for ‘wptoolkit’ and install the ‘Windows Phone toolkit’ package</li>
+</ul></li>
+<li>Depending on whether you want to run the WP7 or WP8 version of the application, select either wprestaurantapp_WP7 or wprestaurantapp_WP8 as a StartUp Project.<br />
+</li>
+<li>Select the target, for example ‘Emulator WVGA’.</li>
+<li>Press F5 to build the project and run it on the Windows Phone Emulator.</li>
+</ul>
+<p>To deploy the sample on Windows Phone device: * See the official documentation for deploying and testing applications on Windows Phone devices at http://msdn.microsoft.com/en-us/library/windowsphone/develop/ff402565(v=vs.105).aspx</p>
+<h2 id="about-the-implementation">About the implementation</h2>
+<p>Important folders:</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+Folder
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+/
+</td>
+<td>
+Contains the project file, the license information and this file (README.md)
+</td>
+</tr>
+<tr class="even">
+<td>
+wprestaurantapp_WP75
+</td>
+<td>
+Root folder for the WP7 implementation files.
+</td>
+</tr>
+<tr class="odd">
+<td>
+wprestaurantapp_WP8
+</td>
+<td>
+Root folder for the WP8 implementation files.
+</td>
+</tr>
+<tr class="even">
+<td>
+wprestaurantapp_WP75/content
+</td>
+<td>
+Graphic files.
+</td>
+</tr>
+<tr class="odd">
+<td>
+wprestaurantapp_WP75/Properties
+</td>
+<td>
+WP7 Application property files.
+</td>
+</tr>
+<tr class="even">
+<td>
+wprestaurantapp_WP75/SampleData
+</td>
+<td>
+Sample data file.
+</td>
+</tr>
+<tr class="odd">
+<td>
+wprestaurantapp_WP75/ViewModels
+</td>
+<td>
+ViewModel implementation files.
+</td>
+</tr>
+<tr class="even">
+<td>
+wprestaurantapp_WP8/Properties
+</td>
+<td>
+WP8 Application property files.
+</td>
+</tr>
+</tbody>
+</table>
+<p>Important files:</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+MainPage.xaml.cs
+</td>
+<td>
+Class responsible for displaying the panorama view of the application.
+</td>
+</tr>
+<tr class="even">
+<td>
+MainViewModel.cs
+</td>
+<td>
+Class responsible for loading restaurant data from disc.
+</td>
+</tr>
+<tr class="odd">
+<td>
+RestaurantData.cs
+</td>
+<td>
+Class describing the restaurant properties shown.
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-issues">Known issues</h2>
+<p>No known issues.</p>
+<h2 id="license">License</h2>
+<p>See the license file delivered with this project.</p>
+<h2 id="version-history">Version history</h2>
+<ul>
+<li>1.5.0 Support for 720p resolution and NuGet package restore.</li>
+<li>1.4.0 Using Pushpin from WPToolkit for WP 8.</li>
+<li>1.3.0 Support for Windows Phone 8.</li>
+<li>1.2.0 Bug fixes and changes based on reviews; published on the Nokia Developer website.</li>
+<li>1.1.1 Support for Windows Phone OS version 7.1.</li>
+<li>1.1.0 New feature: modifying existing reservations.</li>
+<li>1.0.0 First version.</li>
+</ul>
+</body>
+</html>

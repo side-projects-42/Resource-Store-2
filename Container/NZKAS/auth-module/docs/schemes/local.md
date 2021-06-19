@@ -10,58 +10,50 @@ By default `local` scheme is enabled and preconfigured. You can set `strategies.
 
 To do a password based login by sending credentials in request body as a JSON object:
 
-```js
-this.$auth.loginWith("local", {
-  data: {
-    username: "your_username",
-    password: "your_password",
-  },
-});
-```
+    this.$auth.loginWith("local", {
+      data: {
+        username: "your_username",
+        password: "your_password",
+      },
+    });
 
 ## Options
 
 Example for a token based flow:
 
-```js
-auth: {
-  strategies: {
-    local: {
-      endpoints: {
-        login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
-        logout: { url: '/api/auth/logout', method: 'post' },
-        user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
-      },
-      // tokenRequired: true,
-      // tokenType: 'bearer'
+    auth: {
+      strategies: {
+        local: {
+          endpoints: {
+            login: { url: '/api/auth/login', method: 'post', propertyName: 'token' },
+            logout: { url: '/api/auth/logout', method: 'post' },
+            user: { url: '/api/auth/user', method: 'get', propertyName: 'user' }
+          },
+          // tokenRequired: true,
+          // tokenType: 'bearer'
+        }
+      }
     }
-  }
-}
-```
 
 Example for a cookie based flow:
 
-```js
-auth: {
-  strategies: {
-    local: {
-      endpoints: {
-        login: { url: '/api/auth/login', method: 'post' },
-      },
-      tokenRequired: false,
-      tokenType: false
+    auth: {
+      strategies: {
+        local: {
+          endpoints: {
+            login: { url: '/api/auth/login', method: 'post' },
+          },
+          tokenRequired: false,
+          tokenType: false
+        }
+      }
     }
-  }
-}
-```
 
 ### `endpoints`
 
 Each endpoint is used to make requests using axios. They are basically extending Axios [Request Config](https://github.com/axios/axios#request-config).
 
-::: tip
-To disable each endpoint, simply set it's value to `false`.
-:::
+To disable each endpoint, simply set it’s value to `false`.
 
 #### `propertyName`
 
@@ -69,7 +61,7 @@ To disable each endpoint, simply set it's value to `false`.
 
 ### `tokenRequired`
 
-This option can be used to disable all token handling. Useful for Cookie only flows. \(Enabled by default\)
+This option can be used to disable all token handling. Useful for Cookie only flows. (Enabled by default)
 
 ### `tokenType`
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="rich-text-editor">Rich Text Editor</h1>
+<p>The Rich Text Editor is a UI control that allows for the rich formatting of text content, including common structural treatments like lists, formatting treatments like bold and italic text.</p>
+<p>The current release of the Rich Text Editor for YUI 3 is the base utility layers that provide a foundation on which you can create an Editor. <strong>This version of Editor does not contain a GUI of any kind.</strong></p>
+<pre><code>YUI().use(&#39;editor-base&#39;, function(Y) {
+
+    var editor = new Y.EditorBase({
+        content: &#39;&lt;strong&gt;This is &lt;em&gt;a test&lt;/em&gt;&lt;/strong&gt; &lt;strong&gt;This is &lt;em&gt;a test&lt;/em&gt;&lt;/strong&gt; &#39;
+    });
+
+    //Add the BiDi plugin
+    editor.plug(Y.Plugin.EditorBidi);
+
+    //Focusing the Editor when the frame is ready..
+    editor.on(&#39;frame:ready&#39;, function() {
+        this.focus();
+    });
+
+    //Rendering the Editor.
+    editor.render(&#39;#editor&#39;);
+
+});</code></pre>
+</body>
+</html>

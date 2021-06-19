@@ -1,30 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function test() {
-        WebInspector.showPanel("profiles");
-        ProfilerAgent.start(onStart);
-
-        function onStart() {
-          InspectorTest.addResult("ProfilerAgent started.");
-          ProfilerAgent.stop(onStop);
-        }
-
-        function onStop() {
-          InspectorTest.addResult("ProfilerAgent stopped.");
-          ProfilerAgent.clearProfiles(done);
-        }
-
-        function done() {
-          InspectorTest.addResult("ProfilerAgent cleared.");
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Test that ProfilerAgent start/stop doesn't crash.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>cpu-profiler-agent-crash-on-start</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Test that ProfilerAgent start/stop doesn’t crash.</p>
+</body>
 </html>

@@ -1,0 +1,7 @@
+--- :layout: post :title: "Hudson at JavaZone, Meetup in Oslo " :nodeid: 245 :created: 1283241600 :tags: - general - meetup :author: kohsuke ---
+
+[JavaZone](http://jz10.java.no/) is a big Java conference in Scandinavia, and Hudson is well represented there. On September 8th, Håkon Snøtun will be presenting "Top 5 plugins for Hudson and Chuck Norris." and on September 9th, I'll be presenting "Getting more out of your Hudson."
+
+But more importantly, what is a conference without drinking!? So in that spirit, [InfraDNA](http://infradna.com/) will be organizing a Hudson User Meetup at [The Scotsman](http://maps.google.com/maps?hl=en&q=Oslo&ie=UTF8&hq=&hnear=Oslo,+Norway&ll=59.912614,10.743604&spn=0.001589,0.004823&t=h&z=18) from Sep 8th 19:30 ([website](http://www.scotsman.no/).) We'll get together, have some drinks, and enjoy geeky conversations.
+
+So if you are local or visiting Oslo for JavaZone, come join us. If you plan to join us at The Scotsman, please [RSVP](mailto:kohsuke@infradna.com), and watch out for [my twitter updates](http://twitter.com/kohsukekawa) for any last minute time/location changes.

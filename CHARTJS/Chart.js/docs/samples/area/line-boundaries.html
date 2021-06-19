@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>line-boundaries</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="line-chart-boundaries">Line Chart Boundaries</h1>
+<p>```js chart-editor // <block:setup:2> const inputs = { min: -100, max: 100, count: 8, decimals: 2, continuity: 1, };</p>
+<p>const generateLabels = () =&gt; { return Utils.months({ count: inputs.count }); };</p>
+<p>const generateData = () =&gt; Utils.numbers(inputs); // </block:setup></p>
+<p>// <block:data:0> const data = { labels: generateLabels(), datasets: [ { label: “Dataset”, data: generateData(), borderColor: Utils.CHART_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red), fill: false, }, ], }; // </block:data></p>
+<p>// <block:actions:3> let smooth = false;</p>
+<p>const actions = [ { name: “Fill: false (default)”, handler: (chart) =&gt; { chart.data.datasets.forEach((dataset) =&gt; { dataset.fill = false; }); chart.update(); }, }, { name: “Fill: origin”, handler: (chart) =&gt; { chart.data.datasets.forEach((dataset) =&gt; { dataset.fill = “origin”; }); chart.update(); }, }, { name: “Fill: start”, handler: (chart) =&gt; { chart.data.datasets.forEach((dataset) =&gt; { dataset.fill = “start”; }); chart.update(); }, }, { name: “Fill: end”, handler: (chart) =&gt; { chart.data.datasets.forEach((dataset) =&gt; { dataset.fill = “end”; }); chart.update(); }, }, { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = generateData(); }); chart.update(); }, }, { name: “Smooth”, handler(chart) { smooth = !smooth; chart.options.elements.line.tension = smooth ? 0.4 : 0; chart.update(); }, },]; // </block:actions></p>
+<p>// <block:config:1> const config = { type: “line”, data: data, options: { plugins: { filler: { propagate: false, }, title: { display: true, text: (ctx) =&gt; “Fill:” + ctx.chart.data.datasets[0].fill, }, }, interaction: { intersect: false, }, }, }; // </block:config></p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

@@ -8,17 +8,16 @@
 
 - You have to move `auth.endpoints` into `auth.strategies.local.endpoints`:
 
-```diff
-auth: {
-+ strategies: {
+  auth: {
+
+  - strategies: {
     local: {
-      endpoints: {
-        // ...
-      }
+    endpoints: {
+    // ...
     }
-+ }
-}
-```
+    }
+  - }
+    }
 
 - For choosing login strategy a new method `$auth.loginWith(provider[,options])` is available.
 
@@ -54,35 +53,31 @@ Any store actions should be replaced with new global `$auth` instance. The best 
 
 If you were using promise acceptance to redirect users after login and logout like this:
 
-```js
-// Login example
-store
-  .dispatch("auth/login", {
-    fields: {
-      username: "your_username",
-      password: "your_password",
-    },
-  })
-  .then(() => this.$router.replace("/"));
+    // Login example
+    store
+      .dispatch("auth/login", {
+        fields: {
+          username: "your_username",
+          password: "your_password",
+        },
+      })
+      .then(() => this.$router.replace("/"));
 
-// Logout example
-store.dispatch("auth/logout").then(() => this.$router.replace("/login"));
-```
+    // Logout example
+    store.dispatch("auth/logout").then(() => this.$router.replace("/login"));
 
 Now you can do this:
 
-```js
-// Login example
-this.$auth.login({
-  data: {
-    username: "your_username",
-    password: "your_password",
-  },
-});
+    // Login example
+    this.$auth.login({
+      data: {
+        username: "your_username",
+        password: "your_password",
+      },
+    });
 
-// Logout example
-this.$auth.logout();
-```
+    // Logout example
+    this.$auth.logout();
 
 ### Middleware changes
 
@@ -95,71 +90,59 @@ this.$auth.logout();
 
 If you were using the following configuration in 3.x :
 
-```js
-// nuxt.config.js
-router: {
-  middleware: ["auth", "no-auth"];
-}
-```
+    // nuxt.config.js
+    router: {
+      middleware: ["auth", "no-auth"];
+    }
 
 This is the corresponding configuration in 4.x :
 
-```js
-// nuxt.config.js
-router: {
-  middleware: ["auth"];
-}
-```
+    // nuxt.config.js
+    router: {
+      middleware: ["auth"];
+    }
 
 #### Unauthenticated redirection only
 
 If you were using the following configuration in 3.x :
 
-```js
-// nuxt.config.js
-router: {
-  middleware: ["auth"];
-}
-```
+    // nuxt.config.js
+    router: {
+      middleware: ["auth"];
+    }
 
 This is the corresponding configuration in 4.x :
 
-```js
-// nuxt.config.js
-auth: {
-  redirect: {
-    login: false
-  }
-},
-router: {
-  middleware: [
-    'auth',
-  ]
-}
-```
+    // nuxt.config.js
+    auth: {
+      redirect: {
+        login: false
+      }
+    },
+    router: {
+      middleware: [
+        'auth',
+      ]
+    }
 
 #### Authenticated redirection only
 
 If you were using the following configuration in 3.x :
 
-```js
-router: {
-  middleware: ["no-auth"];
-}
-```
+    router: {
+      middleware: ["no-auth"];
+    }
 
 This is the corresponding configuration in 4.x :
 
-```js
-// nuxt.config.js
-auth: {
-  redirect: {
-    home: false
-  }
-},
-router: {
-  middleware: [
-    'auth',
-  ]
-}
-```
+    // nuxt.config.js
+    auth: {
+      redirect: {
+        home: false
+      }
+    },
+    router: {
+      middleware: [
+        'auth',
+      ]
+    }

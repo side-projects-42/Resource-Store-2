@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="android-native-tests">Android Native Tests</h1>
+<p>These tests are designed to verify Android native features and other Android specific features.</p>
+<h2 id="initial-setup">Initial Setup</h2>
+<p>Before running the tests, they need to be set up.</p>
+<ol start="0" type="1">
+<li>Copy cordova-x.y.z.jar into libs directory</li>
+</ol>
+<p>To run from command line:</p>
+<ol start="0" type="1">
+<li>Build by entering <code>ant debug install</code></li>
+<li>Run tests by clicking on “CordovaTest” icon on device</li>
+</ol>
+<p>To run from Eclipse:</p>
+<ol start="0" type="1">
+<li>Import Android project into Eclipse</li>
+<li>Ensure Project properties “Java Build Path” includes the lib/cordova-x.y.z.jar</li>
+<li>Create run configuration if not already created</li>
+<li>Run tests</li>
+</ol>
+<h2 id="automatic-runs">Automatic Runs</h2>
+<p>Once you have installed the test, you can launch and run the tests automatically with the below command:</p>
+<pre><code>adb shell am instrument -w org.apache.cordova.test/android.test.InstrumentationTestRunner</code></pre>
+<p>(Optionally, you can also run in Eclipse)</p>
+</body>
+</html>

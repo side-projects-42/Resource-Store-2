@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-03</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-meeting-agenda-2015-08-03">Ember Meeting Agenda 2015-08-03</h1>
+<h4 id="topics">Topics</h4>
+<ul>
+<li>https://github.com/emberjs/guides/pull/422 (do we include 3rd party resources in guides or not?)</li>
+<li>Where/how do we officially surface great 3rd party resources like http://emberobserver.com/ and http://www.emberaddons.com/ ?</li>
+</ul>
+<h5 id="gono-go-features">Go/No-go Features:</h5>
+<ul>
+<li>ember-routing-core-outlet (kill it with liquid fire)</li>
+<li>ember-routing-route-configured-query-params</li>
+<li>ember-debug-handlers - Previously ’go’ed</li>
+<li>ember-registry-container-reform</li>
+</ul>
+<h5 id="important-issues">Important Issues:</h5>
+<ul>
+<li>https://github.com/emberjs/ember.js/pull/11315 - Changing layout in the</li>
+<li>https://github.com/emberjs/ember.js/pull/11225 - Two way bindings with setter CP’s are not working.</li>
+</ul>
+<h4 id="minutes">Minutes</h4>
+<p>Attendees: Matt, Robert, Tom, Yehuda, Kris, ?</p>
+<p>RJ: remove ember-routing-core-outlet feature, not used by liquid-fire any longer)</p>
+<p>RJ: ember-routing-route-configured-query-params needs more vetting before ’go’ing, lets shoot for 2.2.</p>
+<p>RJ: ember-debug-handlers - go’ed</p>
+<p>RJ: ember-registry-container-reform - go’ed with the caveat that <code>lookupFactory</code> should be underscored.</p>
+<p>YK: Seeing the routable component implementation really helps understand the problem space, and lets us start looking forward to the next stages. No go’ed for 2.1, but no specific negatives.</p>
+<p>MB: Re: 3rd party resources, the main challenge seems to be maintainability. We have low visibility into the content behind a link, and it would be easy to forget to check the content for accuracy after a year or so. Instead we should put effort into encouraging and building up unofficial resources</p>
+<p>MB: Encouraging better discoverability for 3rd party resources goes hand in hand with encouraging video and other content to be found there instead. In the new website design we should be considering how to can surface unofficial resources.</p>
+<p>RB: #11315, where do we stand. This is changing the layout when there is possibly already a block</p>
+<p>TD: I think we explicitly decided not to support this</p>
+<p>YK: We can support this, but the overhead would be non-trivial. We can’t do a real deprecation, but we can flag the breaking change better</p>
+<p>RJ: Use a debug-only error to throw a better message. This is not too common and there component helper (in layout) can be a viable workaround, so that sounds fair.</p>
+<p>RJ: Re #11225</p>
+<p>YK: That is more concerning</p>
+<p>RJ: Yeah, again there are simple user-space workarounds.</p>
+<p>YK: This is why we attempted to have lower level interceptions. They were never shown to catch and error cases but maybe they were needed.</p>
+<p>KS: Binding semantics are different than get/set semantics, and that is what makes this interception difficult to do.</p>
+<p>YK: Let’s talk about this after, I know the implementation really well but you might have more of the problem space in your head.</p>
+<p>RJ: what about the attribute binding plan for angle components?</p>
+<p>YK: Each time this comes up it seems like there are a different people in the room who have different constraints in mind. That applies to everyone.</p>
+<p>MB: Would an RFC help?</p>
+<p>YK: Absolutely. We can chat and lets get something down.</p>
+<p>RJ: An in general, how are angle components?</p>
+<p>YK: We have most of that doc implemented as discussed, but some of the bugs being reported are surprisingly similar to tests that exist. ebryn hit something.</p>
+<p>RJ: Getting it into master and encouraging testing will help suss that stuff out</p>
+<p>RJ: OK I plan to ship beta.5 this week, 2.0 on the 10th. Maybe matt can do a blog post?</p>
+<p>MB: Yeah happy to take a first pass. This will be different than a normal release post</p>
+<p>YK: I’ve been happy with the workflow of Matt taking a first pass then editing.</p>
+<p>TD: We should talk about the release plan for Ember-Data 2.0. I’m working on the blog post, and it sounds like it will drop a week after Ember.</p>
+<p>IT: We will probably take 2.1 to catch up with 2.0</p>
+<p>YK: We should talk about lockstep and the path to getting it better in the future in the 2.0 blog post</p>
+<p>TD: This cycle has had a lot of pain getting ember-data and other libs to sync with ember, it should get better as the delta between each release gets smaller.</p>
+<p>(long meandering discussion about lock-step) emberjs</p>
+</body>
+</html>

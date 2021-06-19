@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-22</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-core-team-2016-07-22">Ember Core Team 2016-07-22</h1>
+<h3 id="agenda">Agenda</h3>
+<ul>
+<li>Router Enhancements RFC - <a href="https://github.com/emberjs/rfcs/pull/154">emberjs/rfcs#154</a></li>
+<li>Router core team champion (<span class="citation" data-cites="locks">@locks</span> via <span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+<li>Issue triage strike team (<span class="citation" data-cites="locks">@locks</span> via <span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+</ul>
+<h3 id="attendees">Attendees</h3>
+<p>YK, MB, DG, AM, TD, EB, GC, IT, MM, RJ, SP, KS, LS</p>
+<h3 id="minutes">Minutes</h3>
+<p>RJ: Update on engines. We had a meeting of “stakeholders” of people working on lazy loading and engines. New RFCs for asset loading and asset packaging. They may not land in Ember proper but they certainly affect the ecosystem, so we wanted to open this as an RFC. Not clear where to put something that has a big impact but doesn’t concern Ember directly.</p>
+<p>RJ: Probably okay for people to start reading through and digesting the stuff here. Looking forward to having an alpha-quality version of this working in the next few months.</p>
+<p>RJ: There’s an RFC from <span class="citation" data-cites="cibernox">@cibernox</span> on general router enhancements. Includes two major features: optional segments, and dynamic segment constraints. Influenced by Rails. A bunch of us have talked about the idea of optional segments. I want to bring this up today is because I know that core team members probably have strong opinions on this. I want to make sure we steer the contributors in the right direction early so there isn’t any wasted work. Would like people to gauge these changes at a high level, no need to fully dive into the details yet.</p>
+<p>RJ: Nathan Hammond has been working on some other nice router things like precomputing the route table.</p>
+<p>YK: I’ve talked with Nathan and generally think he is on the right track</p>
+<p>RJ: I think so too, need to look into details.</p>
+<p>RJ: aside, but as of this morning we enabled flags on Canary.</p>
+<p>TD: Locks pinged re: two things. One is the number of issues is growing. He wants a strike team to help burn them down. But also he has a concern that a number of the issues are things that cannot be closed b/c the relate to router and query params bugs.</p>
+<p>RJ: I looked a month ago, about 10% were router bugs.</p>
+<p>YK: I think nathan is about ready to ship his change with full compat. I think the new primitive is much better than the old primitive (new primitive http://www.nathanhammond.com/route-recognizer)</p>
+<p>TD: Not panicked</p>
+<p>RJ: Most that I reviewed/labelled were not new. There are a lot of hard edge cases that we need to deal with.</p>
+<p>TD: I’m curious to understand what yehuda’s model of what problems people are running into.</p>
+<p>YK: I only have a hunch. Many of the bugs seem conceptually like state machine bugs, or around the lifetimes around controllers. It feels like the arch is ok, but if we look at what people are doing to can adjust. Like Glimmer1.</p>
+<p>TD: You think Nathan will want to tackle a glimmer2 rethink?</p>
+<p>YK: I want to push router.js to better encapsulate all the concerns in one place (like pushing ember concerns into glimmers). We should not stop fixing bugs in Ember, but we will be WAT for a while.</p>
+<p>RJ: I don’t disagree. But. There will be some attempts to whack a mole.</p>
+<p>YK: Many bugs are since inception. But that makes the interactions (timing etc) intimate API. It is easy to fix the bugs and not fix the real problem.</p>
+<p>EB: I’d like to design what we want in a routable components world (API-wise) and migrate people to that</p>
+<p>SP: There exists a large number of things in the existing things that can be solved. We don’t need to wait until the future to resolve outstanding things. I’m not enthusiastic about an 18 month process before we fix anything.</p>
+<p>YK: I object to the framing of there are bugs in glimmer1 that are not fixed in glimmer2. Don’t want to go into it now.</p>
+<p>TD: There is a bigger issue here- many of the biggest issues stem from controller lifecycle and how to keep state around. If we can drop that requirement there is a saner arch we can use. This may not be the right time to make a large change. I think we would need to think about what the thing we want to build is before we attempt a grand unifying theory.</p>
+<p>SP: I’m a little scared now. Without a major rewrite there is tons of code to cleanup in the current system. Whomever did that would have a great understanding of the current system (providing context for the next design). And this can be done without massive thoughtleadering.</p>
+<p>EB: incremental fixes could cause pain for existing users as we break intimate things.</p>
+<p>TD: The API of router JS is not what we wanted in Ember. b/c the microlib was painful we wrapped it in a shell. I think stef is onto something by suggesting that router.js is probably just the wrong API and we can migrate it to have more in common with Ember. And reap those wins.</p>
+<p>RJ: Side thought: It seems like we won’t move query params to routes without a whole rethink. There is a slew of tests and etc trek did to make QP work on the routes. If we won’t be using the same API for QPs, we can perhaps remove that code and feature flag.</p>
+<p>YK: We’ve removed some other flags in the same vein.</p>
+<p>RJ: I can’t fathom moving things wholesale from the controller to the route. So we cannot reuse it.</p>
+<p>YK: The current system has some characteristics of pinning a value to persisted state, which is great. I think that simplicity of API will be a tough design problem.</p>
+<p>KS: query params are global to the URL. There is no base primitive that models that aspect. We don’t namespace anything</p>
+<p>SP: There exist bugs independent of this stuff though. And that the ground is fertile for that work. Would like to nudge people towards that.</p>
+<p>RJ: re: feature flag, should it be removed then?</p>
+<p>SP: Yes, but plz just make nathan and miguel aware of this work.</p>
+<p>RJ: I’ll ping trek to get his thoughts, but yeah it seems good. Thanks.</p>
+<p>RJ: Next, committers is a go.</p>
+<p>TD: Ok looping back to the issue triage thing. Is that team a formal team?</p>
+<p>SP: We discussed it and put people on it.</p>
+<p>TD: So locks has been working on PRs to put more info about subteams on the website?</p>
+<p>YK: yeah issues seems to be more of a subteam than a strike team, but existed before the subteams existed.</p>
+<p>TD: So what is the process for proposing a group?</p>
+<p>YK: I need to work on a proposal that we</p>
+<p>(discussion)</p>
+<p>RJ: I think we should review that email godfrey sent and re-confirm that the issues team is an actual subteam.</p>
+<p>SP: I think members may also cross-cut over time</p>
+<p>TD: Sounds like everyone is onboard about this</p>
+<p>CONSENSUS</p>
+<p>YK: we need to look at getting a better process for this stuff</p>
+<p>TD: I’ll email that team and clarify things</p>
+<p>RJ: They have a friday meeting, and a spreadsheet. No notes though.</p>
+<p>SP: I think you can change the notes for a spreadsheet. Or send out a ping to people of their issues or something. We need to close that loop and see where it goes.</p>
+<p>RJ: They’ve been doing this for a while, so we can ask them about if there is a better way to represent it or something.</p>
+<p>RJ: They only have access on ember so far, but we can add them to other projects if we make them a subteam</p>
+<p>RJ: Serabe has been doing a lot of work as well.</p>
+<p>SP: Bill has been delivering a brief to be for a while now, like a year now.</p>
+<p>RJ: yeah he has been working to contribute.</p>
+<p>TD: I will close the loop.</p>
+<p>RJ: (talks too fast!!)</p>
+<p>TD: I will blog post and email etc</p>
+<p>RJ: Glimmer2! Curious for thoughts of others.</p>
+<p>(discussion)</p>
+</body>
+</html>

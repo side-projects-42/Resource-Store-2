@@ -1,15 +1,4 @@
----
-:layout: post
-:title: This Week in Plugins
-:nodeid: 197
-:created: 1266588600
-:tags:
-  - infrastructure
-  - feedback
-:author: rtyler
----
-
-Last week's TWIP enumerated the release of **26** different plugin, this past week has seen 19 unique releases in comparison. You might be tempted to assume that _less_ plugin development has occurred over the past week, which isn't the case. Last week a number of the releases were "code updates", i.e. plugins being rebuilt against the latest Hudson plugin API as opposed to new features or bug-fixes. With the releases of plugins this past week, it seems a large number of the releases contained new features and bug fixes, including **three new plugins!**
+Last week’s TWIP enumerated the release of **26** different plugin, this past week has seen 19 unique releases in comparison. You might be tempted to assume that _less_ plugin development has occurred over the past week, which isn’t the case. Last week a number of the releases were “code updates”, i.e. plugins being rebuilt against the latest Hudson plugin API as opposed to new features or bug-fixes. With the releases of plugins this past week, it seems a large number of the releases contained new features and bug fixes, including **three new plugins!**
 
 Making their Hudson debut are the following
 
@@ -17,7 +6,7 @@ Making their Hudson debut are the following
 - [Tool Environment plugin](http://wiki.hudson-ci.org/display/HUDSON/Tool+Environment+Plugin)
 - [Ivy plugin](http://wiki.hudson-ci.org/display/HUDSON/Ivy+Plugin)
 
-If you're interested in contributing to an existing plugin, or building your own, I highly recommend checking out the [plugin tutorial](http://wiki.hudson-ci.org/display/HUDSON/Plugin+tutorial) and joining the [dev@ mailing list](https://hudson.dev.java.net/servlets/ProjectMailingListList). That said, here are this week's releases, starting with last Friday.
+If you’re interested in contributing to an existing plugin, or building your own, I highly recommend checking out the [plugin tutorial](http://wiki.hudson-ci.org/display/HUDSON/Plugin+tutorial) and joining the [dev@ mailing list](https://hudson.dev.java.net/servlets/ProjectMailingListList). That said, here are this week’s releases, starting with last Friday.
 
 - **Feb 12th, 2010**
 
@@ -54,4 +43,3 @@ If you're interested in contributing to an existing plugin, or building your own
 - **Feb 17th, 2010**
   - [Ivy plugin 1.0 released](http://wiki.hudson-ci.org/display/HUDSON/Ivy+Plugin)
   - [JBoss Management Plugin 1.0.2 released](http://wiki.hudson-ci.org/display/HUDSON/JBoss+Management+Plugin)
-  <!--break-->

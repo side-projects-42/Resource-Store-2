@@ -1,4 +1,5 @@
-# Vue.js SSR benchmark
+Vue.js SSR benchmark
+====================
 
 This benchmark renders a table of 1000 rows with 10 columns (10k components), with around 30k normal elements on the page. Note this is not something likely to be seen in a typical app. This benchmark is mostly for stress/regression testing and comparing between `renderToString` and `renderToStream`.
 
@@ -8,6 +9,4 @@ To view the results follow the run section. Note that the overall completion tim
 
 ### run
 
-``` bash
-npm run bench:ssr
-```
+    npm run bench:ssr

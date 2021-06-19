@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>radar</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="radar-chart">Radar Chart</h1>
+<p>```js chart-editor // <block:setup:2> const DATA_COUNT = 7; Utils.srand(110);</p>
+<p>const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = generateData(); }); chart.update(); }, },]; // </block:setup></p>
+<p>// <block:data:1> function generateData() { return Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }); }</p>
+<p>const data = { labels: [ [“Eating”, “Dinner”], [“Drinking”, “Water”], “Sleeping”, [“Designing”, “Graphics”], “Coding”, “Cycling”, “Running”, ], datasets: [ { data: generateData(), }, ], }; // </block:data></p>
+<p>// <block:options:0> function getLineColor(ctx) { return Utils.color(ctx.datasetIndex); }</p>
+<p>function alternatePointStyles(ctx) { var index = ctx.dataIndex; return index % 2 === 0 ? “circle” : “rect”; }</p>
+<p>function makeHalfAsOpaque(ctx) { return Utils.transparentize(getLineColor(ctx)); }</p>
+<p>function make20PercentOpaque(ctx) { return Utils.transparentize(getLineColor(ctx), 0.8); }</p>
+<p>function adjustRadiusBasedOnData(ctx) { var v = ctx.parsed.y; return v &lt; 10 ? 5 : v &lt; 25 ? 7 : v &lt; 50 ? 9 : v &lt; 75 ? 11 : 15; }</p>
+<p>const config = { type: “radar”, data: data, options: { plugins: { legend: false, tooltip: false, }, elements: { line: { backgroundColor: make20PercentOpaque, borderColor: getLineColor, }, point: { backgroundColor: getLineColor, hoverBackgroundColor: makeHalfAsOpaque, radius: adjustRadiusBasedOnData, pointStyle: alternatePointStyles, hoverRadius: 15, }, }, }, }; // </block:options></p>
+<p>module.exports = { actions, config, }; ```</p>
+</body>
+</html>

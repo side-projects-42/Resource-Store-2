@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>march-16</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-03-16">ember-data-weekly-call 2016-03-16</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>Tom <span class="citation" data-cites="tomdale">@tomdale</span></li>
+<li>Brendan <span class="citation" data-cites="bmac">@bmac</span></li>
+<li>Clemens <span class="citation" data-cites="pangratz">@pangratz</span></li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="normalizehash"><code>normalizeHash</code></h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li>deprecated in <a href="https://github.com/emberjs/data/blob/v1.13.16/packages/ember-data/lib/serializers/rest-serializer.js#L199-L202">1.13</a></li>
+<li>removed in <a href="https://github.com/emberjs/data/blob/v2.0.0/packages/ember-data/lib/serializers/rest-serializer.js#L124-L126">2.x</a></li>
+<li>but still <a href="https://github.com/emberjs/data/blob/v2.4.0/addon/serializers/rest.js#L158-L160">used within <code>normalize</code></a></li>
+</ul>
+<h5 id="resolution">Resolution</h5>
+<ul>
+<li>lets re-deprecate in 3.0 (tackled in <a href="https://github.com/emberjs/data/pull/4258">#4258</a>)</li>
+</ul>
+<hr />
+<h3 id="should-there-be-a-warning-when-using-embeddedrecordsmixin-with-jsonapiserializer">Should there be a warning when using <code>EmbeddedRecordsMixin</code> with <code>JSONAPISerializer</code>?</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li>People are falling over it and it seems that JSONAPI has no spec for it at the moment</li>
+<li>Issues: <a href="https://github.com/emberjs/data/issues/4212">#4212</a> and <a href="https://github.com/emberjs/data/issues/3720">#3720</a></li>
+<li>use in combination with JSON-API <a href="https://github.com/emberjs/data/issues/3720#issuecomment-137176580">discouraged here</a></li>
+</ul>
+<h5 id="discussion">Discussion</h5>
+<ul>
+<li>discussion about embedded records still open in <a href="https://github.com/json-api/json-api/issues/795">json-api</a></li>
+</ul>
+<h5 id="resolution-1">Resolution</h5>
+<ul>
+<li>have a warning for now when used with JSON-API serializer (tackled in <a href="https://github.com/emberjs/data/pull/4259">#4259</a>)</li>
+</ul>
+<hr />
+<h3 id="regression-in-queryrecord">regression in <code>queryRecord</code></h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li>reports that <code>{ data: null }</code> doesn’t work with <code>queryRecord</code> anymore (because of assertion)</li>
+<li><a href="https://github.com/emberjs/data/issues/4219">Issue #4219</a></li>
+<li>should <code>{ data: [{}] }</code> work with <code>queryRecord</code>?
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4227">#4227</a> reports that it doesn’t work with it</li>
+<li><a href="https://github.com/emberjs/data/issues/3977#issuecomment-163163862">last comment here</a> indicates that this might have worked sometimes (first item of array is used)</li>
+<li>urlForQueryRecord builds like urlForQuery so it’s difficult on backend to shape response</li>
+</ul></li>
+</ul>
+<h5 id="resolution-2">Resolution</h5>
+<ul>
+<li>We should warn if queryRecord returns an array and suggest people use query and firstObject</li>
+</ul>
+<hr />
+<h3 id="modelnamefrompayloadkey-controversy"><code>modelNameFromPayloadKey</code> controversy</h3>
+<h5 id="summary-3">Summary</h5>
+<ul>
+<li><code>modelNameFromPayloadKey</code> / <code>payloadKeyFromModelName</code> used for “value” too (not just key) in json serializer</li>
+<li>brought up in <a href="https://github.com/emberjs/data/pull/4194">#4194</a> and <a href="https://github.com/emberjs/data/issues/3801">#3801</a></li>
+<li>should there be a <code>modelNameFromPayloadType</code> / <code>payloadTypeFromModelName</code> (bikeshedding the name)?</li>
+</ul>
+<h5 id="discussion-1">Discussion</h5>
+<p>Consider the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="st">&quot;blog/post&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="st">&quot;type&quot;</span><span class="op">:</span> <span class="st">&quot;Api::V1::Docs::Post&quot;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="op">}</span></a></code></pre></div>
+<p>then the following hooks are invoked:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="at">modelNameFromPayloadKey</span>(<span class="st">&quot;blog/post&quot;</span>) <span class="op">===</span> <span class="st">&quot;post&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">// payloadKeyFromModelName(&quot;post&quot;) === &quot;blog/post&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="at">modelNameFromPayloadKey</span>(<span class="st">&quot;Api::V1::Docs::Post&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>Proposal of new hooks:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="at">modelNameFromPayloadType</span>(<span class="st">&quot;Api::V1::Docs::Post&quot;</span>) <span class="op">==</span> <span class="st">&quot;post&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="at">payloadTypeFromModelName</span>(<span class="st">&quot;post&quot;</span>) <span class="op">==</span> <span class="st">&quot;Api::V1::Docs::Post&quot;</span><span class="op">;</span></a></code></pre></div>
+<h5 id="resolution-3">Resolution</h5>
+<ul>
+<li>use new hooks as described above</li>
+</ul>
+<hr />
+<h1 id="issues-for-tomhuda">Issues for tomhuda</h1>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/3099">PR #3099</a> <code>[FEATURE ds-improved-ajax]</code>
+<ul>
+<li>Summary: Finer control over customizing a request worth pursuing now that ember-ajax will be used sometimes in the future?</li>
+<li>Resoltion: squash commits and give this a go</li>
+</ul></li>
+</ul>
+</body>
+</html>

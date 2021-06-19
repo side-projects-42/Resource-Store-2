@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>june-23</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-06-23">ember-cli Meeting Notes - 2016-06-23</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Tobias Bieniek</li>
+<li>Katie Gengler</li>
+<li>Kelly Selden</li>
+<li>Tracy Lee</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] All - Think about notification process for first boot perf.</li>
+<li>[x] Tobias - Improve release/branching instructions</li>
+<li>[ ] Nathan - Get Stef’s brain dump on release day coordination.</li>
+<li>[x] Nathan - Confirm 2.7.0 target release date</li>
+<li>[x] Kelly - Port addon output scripts into ember-cli/dev and update docs.</li>
+<li>[x] Nathan - Ask Yehuda about Ember adopting Rust’s Homu fork.</li>
+<li>[ ] Katie - On point for lcov, ask clarifying questions on thread.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="first-boot-perf">First-boot Perf</h3>
+<ul>
+<li>Stef got a new 12" MacBook.</li>
+<li>“Addon slow” alerts.
+<ul>
+<li>Optional "which addons are slow, as opposed to always.</li>
+<li>Only output on Canary/Beta?</li>
+<li>Track it using analytics stuff.</li>
+<li>Make a command that scores it; could appear on Ember Observer.</li>
+</ul></li>
+<li>lodash fork
+<ul>
+<li>Easy to back out of.</li>
+<li>Fine for now.</li>
+</ul></li>
+</ul>
+<h3 id="release-day-coordination">Release Day Coordination</h3>
+<ul>
+<li>Katie’s thoughts on release process. “Simple, easy-to-follow, but branching information was a bit hairy.”</li>
+<li>Need to identify target date for 2.7.0</li>
+</ul>
+<h3 id="this.import-updates---2.7-blocker">this.import() Updates - 2.7 blocker</h3>
+<ul>
+<li>https://github.com/ember-cli/ember-cli/issues/5990</li>
+</ul>
+<h3 id="lcov-code-coverage">lcov Code Coverage</h3>
+<ul>
+<li>How does this fit into ember-cli-code-coverage?</li>
+<li>blanket: does instrumentation at runtime
+<ul>
+<li>does crazy things at runtime.</li>
+</ul></li>
+<li>Istanbul is meant to run in Node.
+<ul>
+<li>better hooks.</li>
+</ul></li>
+<li>ember-cli-code-coverage does instrumentation at build time
+<ul>
+<li>coverage info is done at runtime</li>
+</ul></li>
+<li>Target of lcov is to run against production build.</li>
+<li>Code coverage work with Ember Exam.</li>
+<li>Wants to run tests against a prod build.
+<ul>
+<li>Katie to ask clarifying question about test approach from Stef.</li>
+</ul></li>
+</ul>
+<h3 id="homu">Homu</h3>
+<ul>
+<li>Unstable recently.</li>
+<li><a href="https://github.com/barosl">maintainer</a> seems to be missing</li>
+<li>Can we do anything to improve?
+<ul>
+<li>Get commit privs?</li>
+<li>Run our own instance?</li>
+<li>Assist with their instance?</li>
+<li>Adopt Rust’s version?</li>
+</ul></li>
+</ul>
+</body>
+</html>

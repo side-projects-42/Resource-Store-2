@@ -8,9 +8,7 @@ To manually check a PR, set up a `config.json` with your `githubToken` (next sec
 
 The Auditing scripts require some configuration. Create a `config.json` in the root of this module with the following properties:
 
-- `owner` (default: `"jquery"`): Which GitHub user/organization to audit.
-  When running jquery-license as a webhook server, this property can be specified as an array
-  of strings instead of a single string, to check pull requests against multiple owners/orgs.
+- `owner` (default: `"jquery"`): Which GitHub user/organization to audit. When running jquery-license as a webhook server, this property can be specified as an array of strings instead of a single string, to check pull requests against multiple owners/orgs.
 - `repoDir` (default: `"repos"`): Which directory to clone repositories into.
 - `outputDir` (default: `"output"`): Which directory to store PR results into.
   - Results for all PR checks are stored, whether run through the web hook or through the `jquery-audit-pr` binary.
@@ -25,17 +23,17 @@ The following properties only apply when running the webhook:
 
 ## Adding a new org/repository
 
-1. Add the organization name to the `owner` array in `config.json`
-2. Set up the Webhook in the Settings page of the GitHub org or repo:
-   - Payload URL is the URL to the Webhook server run by `bin/server.js`
-   - Content-type should be `application/x-www-form-urlencoded`
-   - Secret is empty
-   - Event types is “Pull request”
-3. Grant jquerybot write access to all the repositories that you want to apply CLA checks to
+1.  Add the organization name to the `owner` array in `config.json`
+2.  Set up the Webhook in the Settings page of the GitHub org or repo:
+    - Payload URL is the URL to the Webhook server run by `bin/server.js`
+    - Content-type should be `application/x-www-form-urlencoded`
+    - Secret is empty
+    - Event types is “Pull request”
+3.  Grant jquerybot write access to all the repositories that you want to apply CLA checks to
 
 ## Debugging
 
-The [debug](https://www.npmjs.org/package/debug) module is used for debug messages. To enable all debugging, run any script with `DEBUG=*`. You may want to exclude the GitHub requests since they're large and noisy; to do so use `DEBUG=*,-github:*`.
+The [debug](https://www.npmjs.org/package/debug) module is used for debug messages. To enable all debugging, run any script with `DEBUG=*`. You may want to exclude the GitHub requests since they’re large and noisy; to do so use `DEBUG=*,-github:*`.
 
 The following debug names are used:
 
@@ -58,17 +56,15 @@ The main export of this module is a function which audits a single branch from a
 - Returns `Promise`
   - `data`: Object containing audit information.
     - `commits` (Array): An array of all commits that were audited. Each commit object contains `hash`, `name`, and `email` properties.
-    - `neglectedCommits` (Array): An array of all commits that aren't licensed.
-    - `neglectedAuthors` (Array): An array of all authors that haven't signed a license agreement. Each author object contains `email` and `commits` properties, with the `commits` property containing an array of SHAs.
+    - `neglectedCommits` (Array): An array of all commits that aren’t licensed.
+    - `neglectedAuthors` (Array): An array of all authors that haven’t signed a license agreement. Each author object contains `email` and `commits` properties, with the `commits` property containing an array of SHAs.
 
 This module also exposes a binary named `jquery-audit-branch` which just passes its arguments on to the main export for auditing a branch. The usage is as follows:
 
-```sh
-jquery-audit-branch <repo> <branch>
+    jquery-audit-branch <repo> <branch>
 
-# or
-./bin/audit-branch.js <repo> <branch>
-```
+    # or
+    ./bin/audit-branch.js <repo> <branch>
 
 ## PR Auditing
 
@@ -76,18 +72,16 @@ The webhook server can be run via `npm start` and will listen to pull request ho
 
 This module also exposes a binary named `jquery-audit-pr` which performs a manual audit of a PR. The usage is as follows:
 
-```sh
-jquery-audit-pr <repo> <pr>
+    jquery-audit-pr <repo> <pr>
 
-# or
-./bin/audit-pr.js <repo> <pr>
-```
+    # or
+    ./bin/audit-pr.js <repo> <pr>
 
 Make sure to create a `config.json` with the `githubToken` property (see above).
 
 ### Exceptions
 
-While we strive to have proper licensing for all commits, many projects contain contributions that were made prior to the existence of the CLA. When we can't track down the contributors and get them to sign the CLA, we can exclude those commits from the audits by listing them as exceptions.
+While we strive to have proper licensing for all commits, many projects contain contributions that were made prior to the existence of the CLA. When we can’t track down the contributors and get them to sign the CLA, we can exclude those commits from the audits by listing them as exceptions.
 
 **Exceptions should only be used for trivial changes or code that has since been removed from the repository.**
 

@@ -1,0 +1,1 @@
+Tests WebInspector extension API

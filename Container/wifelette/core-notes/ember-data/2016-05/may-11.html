@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>may-11</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-05-11">ember-data-weekly-call 2016-05-11</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>pangratz</li>
+<li>bmac</li>
+<li>igorT</li>
+<li>fivetanley</li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="make-shouldserializehasmany-public">make <code>shouldSerializeHasMany</code> public</h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/2494">Issue #2494</a></li>
+<li><a href="https://github.com/emberjs/data/pull/4279">PR #4279</a></li>
+<li>Make <code>_shouldSerializeHasMany</code> public, so it is possible to specify which <code>hasMany</code> relationship should be serialized</li>
+<li>Open question on specific path for making method <code>@public</code></li>
+</ul>
+<h5 id="discussion">Discussion</h5>
+<ul>
+<li>PR should also add <code>shouldSerializeBelongsTo</code></li>
+<li>Looks good otherwise</li>
+</ul>
+<h5 id="action">Action</h5>
+<ul>
+<li>Ask author of the PR to implement <code>shouldSerializeBelongsTo</code> and use a feature flag.</li>
+<li>Ask author of the PR to change the wording of the deprecation message to indicate that the method has been made public.</li>
+<li>Ask author to use <a href="http://emberjs.com/api/classes/Ember.html#method_deprecateFunc">Ember.deprecateFunc</a> so <code>_super</code> usage doesn’t break</li>
+</ul>
+<hr />
+<h3 id="should-there-be-a-store.hasmodelfor">should there be a <code>store.hasModelFor</code>?</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4377">Issue #4377</a></li>
+<li>API returns types in payload, which might not exist in <code>ember-data</code></li>
+<li>Currently no public way to check if type exists, <code>store._hasModelFor</code> is private</li>
+</ul>
+<h5 id="discussion-1">Discussion</h5>
+<ul>
+<li>basically seems fine to make <code>store.hasModelFor</code> public</li>
+</ul>
+<h5 id="action-1">Action</h5>
+<ul>
+<li>investigate if this might be problematic with lazily loaded stuff on container</li>
+</ul>
+<hr />
+<h3 id="support-for-save-include-abc">support for <code>save({ include: "abc" })</code></h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4354">PR #4354</a></li>
+<li>Adds support for <code>record.save({ include: "author" })</code></li>
+</ul>
+<h5 id="discussion-2">Discussion</h5>
+<ul>
+<li>Is this a bugfix for <code>ds-finder-include</code> or new feature?</li>
+<li>Do we want an explicit hook for building query params, or should this be part of <code>buildURL</code>?</li>
+<li>Seeing <code>record.save({ include: "author" })</code> might be confusing to people as it looks like an API for saying “include xxx for the save”</li>
+</ul>
+<h5 id="action-2">Action</h5>
+<ul>
+<li>ping tomhuda about ideas for the naming situation</li>
+</ul>
+<hr />
+<h3 id="support-other-datatypes-for-ajax-options">Support other <code>dataType</code>s for ajax options</h3>
+<h5 id="summary-3">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4357">PR #4357</a> adds overridable option <code>dataType</code> to private <code>ajaxMethods</code></li>
+<li><a href="https://github.com/emberjs/data/issues/2735">Issue #2735</a> asked for support of <code>JSONP</code></li>
+<li>In the past <code>ember-data</code> team reluctant to expose ajax options</li>
+</ul>
+<h5 id="discussion-3">Discussion</h5>
+<ul>
+<li>Having the transition to <code>ember-ajax</code> in mind, (how) should this be possible?</li>
+</ul>
+<h5 id="action-3">Action</h5>
+<ul>
+<li>check with author of PR for specific use case and suggest <code>ember-ajax</code></li>
+</ul>
+<hr />
+<h3 id="customizing-errors-payload">customizing errors payload</h3>
+<h5 id="summary-4">Summary</h5>
+<ul>
+<li>Currently <code>handleResponse</code> needs to be overwritten when errors payload doesn’t contain root level <code>errors</code> key</li>
+<li><a href="https://github.com/emberjs/data/pull/4373">PR #4373</a> introduces key to customize that via <code>errorKey</code> on adapter</li>
+</ul>
+<h5 id="discussion-4">Discussion</h5>
+<ul>
+<li>Should such customizations be handled in <code>ember-data</code> or in <code>ember-ajax</code>?</li>
+<li><code>ember-data</code> will move to <code>ember-ajax</code> soon(ish), so added hooks in <code>ember-data</code> might then be deprecated so adding them now doesn’t make too much sense?</li>
+</ul>
+<h5 id="action-4">Action</h5>
+<ul>
+<li>ping tchak about this</li>
+</ul>
+</body>
+</html>

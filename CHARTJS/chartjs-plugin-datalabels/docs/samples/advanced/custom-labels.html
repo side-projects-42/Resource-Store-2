@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>custom-labels</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="custom-labels">Custom Labels</h1>
+<p>Displays the data labels instead of the data values, using a <a href="../../guide/formatting.md#custom-labels">custom formatter</a>.</p>
+<p>```js chart-editor // <block:setup:2> var labels = [ “Mercury”, “Venus”, “Earth”, “Mars”, “Jupiter”, “Saturn”, “Uranus”, “Neptune”,];</p>
+<p>var DATA_COUNT = labels.length;</p>
+<p>Utils.srand(0); // </block:setup></p>
+<p>var config = /* <block:config:0> */ { type: “bar”, data: { labels: labels, datasets: [ { backgroundColor: Utils.colors(0), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), }, ], }, options: { plugins: { datalabels: { align: “end”, anchor: “end”, color: function (context) { return context.dataset.backgroundColor; }, font: function (context) { var w = context.chart.width; return { size: w &lt; 512 ? 12 : 14, weight: “bold”, }; }, formatter: function (value, context) { return context.chart.data.labels[context.dataIndex]; }, }, },</p>
+<pre><code>// Core options
+aspectRatio: 5 / 3,
+layout: {
+  padding: {
+    top: 32,
+  },
+},
+elements: {
+  line: {
+    fill: false,
+  },
+},
+scales: {
+  xAxes: [
+    {
+      display: false,
+      offset: true,
+    },
+  ],
+  yAxes: [
+    {
+      ticks: {
+        beginAtZero: true,
+      },
+    },
+  ],
+},</code></pre>
+<p>}, }; /* </block:config> */</p>
+<p>var actions = [ { name: “Randomize”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.data = dataset.data.map(function (value) { return Utils.rand(0, 100); }); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, ];</p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

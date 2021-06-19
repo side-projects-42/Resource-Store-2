@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="puppet-rbenv">Puppet-Rbenv</h1>
+    <p>
+      <a href="http://travis-ci.org/alup/puppet-rbenv"
+        ><img
+          src="https://secure.travis-ci.org/alup/puppet-rbenv.png?branch=master"
+          alt="Build Status"
+      /></a>
+    </p>
+    <h2 id="about">About</h2>
+    <p>
+      This project provides manifests for the installation of
+      <a href="https://github.com/sstephenson/rbenv">rbenv</a> (Ruby Version
+      Management).
+    </p>
+    <h2 id="install">Install</h2>
+    <ol type="1">
+      <li>
+        <p>Install dependencies (Rubygems and Puppet):</p>
+        <pre><code>sudo apt-get install rubygems puppet # Ubuntu/Debian</code></pre>
+      </li>
+      <li>
+        <p>Apply the catalog of chosen modules(serverless install):</p>
+        <pre><code>puppet apply ...</code></pre>
+      </li>
+    </ol>
+    <p>
+      You can also download and install the module from puppet-forge via
+      <code>puppet-module</code> by running:
+    </p>
+    <pre class="shell"><code>puppet-module install alup/rbenv</code></pre>
+    <h2 id="usage">Usage</h2>
+    <p>You can use the module in your manifest with the following code:</p>
+    <pre><code>class { &quot;rbenv&quot;:
+  user      =&gt; &#39;alup&#39;,
+  group     =&gt; &#39;project&#39;
+  home_dir  =&gt; &#39;/project&#39;
+  compile   =&gt; true,
+  version   =&gt; &#39;1.9.3-p125&#39;,
+}</code></pre>
+    <p>
+      This will apply an rbenv installation under “alup” user home dir and will
+      also compile ruby version 1.9.3-p125 to be ready for usage (It will also
+      set it as the global rbenv version for this user).
+    </p>
+    <p>
+      If you want only an rbenv installation without compiling any ruby version,
+      then just set <code>compile</code> parameter to <code>false</code> (It
+      defaults to <code>true</code>).
+    </p>
+    <p>All the variables except for the <code>user</code>, are optional.</p>
+    <h2 id="dry-run">Dry-run</h2>
+    <p>
+      If you want to just simulate (or smoke test) the installation of the
+      module, just clone the repository and use the following command:
+    </p>
+    <pre
+      class="shell"
+    ><code>sudo puppet apply --noop --modulepath=$PWD/../ tests/init.pp</code></pre>
+    <h2 id="testing">Testing</h2>
+    <p>
+      To run the tests, use <code>bundle exec rake</code>. Before running the
+      tests, you should have run <code>bundle install</code> to ensure all the
+      dependencies have been met.
+    </p>
+    <h2 id="todo">Todo</h2>
+    <p>Look at the TODO file.</p>
+    <h2 id="license">License</h2>
+    <p>MIT License. Copyright 2012 Andreas Loupasakis.</p>
+  </body>
+</html>

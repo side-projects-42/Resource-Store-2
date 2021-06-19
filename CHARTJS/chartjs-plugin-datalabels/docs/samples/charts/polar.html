@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>polar</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="polar-area">Polar Area</h1>
+<p>```js chart-editor // <block:setup:2> var DATA_COUNT = 10; var labels = [];</p>
+<p>Utils.srand(16);</p>
+<p>for (var i = 0; i &lt; DATA_COUNT; ++i) { labels.push("" + i); } // </block:setup></p>
+<p>var config = /* <block:config:0> */ { type: “polarArea”, data: { labels: labels, datasets: [ { backgroundColor: Utils.color(0), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), }, { backgroundColor: Utils.color(1), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), }, { backgroundColor: Utils.color(2), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), }, ], }, options: { plugins: { datalabels: { anchor: “end”, backgroundColor: function (context) { return context.dataset.backgroundColor; }, borderColor: “white”, borderRadius: 25, borderWidth: 2, color: “white”, font: { weight: “bold”, }, formatter: Math.round, padding: 6, }, },</p>
+<pre><code>// Core options
+aspectRatio: 4 / 3,
+layout: {
+  padding: 16,
+},
+elements: {
+  line: {
+    fill: false,
+  },
+  point: {
+    hoverRadius: 7,
+    radius: 5,
+  },
+},</code></pre>
+<p>}, }; /* </block:config> */</p>
+<p>var actions = [ { name: “Randomize”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.backgroundColor = Utils.color(); dataset.data = dataset.data.map(function (value) { return Utils.rand(0, 100); }); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Add data”, handler: function (chart) { chart.data.labels.push(chart.data.labels.length); chart.data.datasets.forEach(function (dataset, i) { dataset.data.push(Utils.rand(0, 100)); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Remove data”, handler: function (chart) { chart.data.labels.shift(); chart.data.datasets.forEach(function (dataset, i) { dataset.data.shift(); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, ];</p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>derived-chart-type</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="derived-chart-type">Derived Chart Type</h1>
+<p>```js chart-editor // <block:setup:1> const DATA_COUNT = 7; const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100, rmin: 1, rmax: 20, }; const data = { datasets: [ { label: “My First dataset”, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), borderColor: Utils.CHART_COLORS.blue, borderWidth: 1, boxStrokeStyle: “red”, data: Utils.bubbles(NUMBER_CFG), }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “derivedBubble”, data: data, options: { responsive: true, plugins: { title: { display: true, text: “Derived Chart Type”, }, }, }, };</p>
+<p>// </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h2 id="derivedbubble-implementation">DerivedBubble Implementation</h2>
+<p>&lt;&lt;&lt; @/docs/scripts/derived-bubble.js</p>
+</body>
+</html>

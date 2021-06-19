@@ -1,25 +1,20 @@
 # puppet-newrelic - New Relic Server Monitor
 
-This puppet module will install New Relic's FREE Server monitor
-agent on your servers.
+This puppet module will install New Relic’s FREE Server monitor agent on your servers.
 
-Currently this module only supports rpm-based distributions like rhel/centos.
-Patches for other distributions are welcome.
+Currently this module only supports rpm-based distributions like rhel/centos. Patches for other distributions are welcome.
 
 ## Installation
 
-1. Sign up for an account at http://newrelic.com/signup if you
-   haven't yet.
-2. Copy this directory to your puppet master module path
-3. Set your license key in the `$license_key` var in the `package.pp` file.
-4. Apply the `newrelic` class to any nodes you want the agent installed on.
-5. Login to your New Relic dashboard and you should see your servers show up
-   in a few minutes.
+1.  Sign up for an account at http://newrelic.com/signup if you haven’t yet.
+2.  Copy this directory to your puppet master module path
+3.  Set your license key in the `$license_key` var in the `package.pp` file.
+4.  Apply the `newrelic` class to any nodes you want the agent installed on.
+5.  Login to your New Relic dashboard and you should see your servers show up in a few minutes.
 
 ## Todo
 
-- Add support for .deb based systems. Pull requests very welcome on this
-  since I don't currently run any debian-based systems.
+- Add support for .deb based systems. Pull requests very welcome on this since I don’t currently run any debian-based systems.
 
 ## Contributing
 

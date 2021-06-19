@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>may-12</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="agenda">2016-05-12 Agenda</h1>
+<h1 id="previously">Previously</h1>
+<ul>
+<li>[ ] RM: research using NPM release info (in json file)</li>
+<li>[ ] DB: Algolia, get going on this</li>
+<li>[ ] DB: SEO, link rel=“canonical”, get started</li>
+<li>[ ] TD: write a blog post on subteams</li>
+<li>[ ] RT continues with consistent voice updates in quickstart (no merge ’til emberconf)</li>
+<li>[ ] TJ: Coordinate getting out a quality tutorial in the April-May timeframe</li>
+<li>[ ] TJ: Private API work (on hold)</li>
+<li>[ ] RM: Brain Dump of Controllers with EB</li>
+<li>[x] TJ: Get access, free pro license for his company’s video conferencing</li>
+<li>[ ] Barely any Mixin reference in the Guides</li>
+</ul>
+<h1 id="topics">Topics</h1>
+<ul>
+<li>Collaborate Video Conferencing for Docs Team
+<ul>
+<li>Delaying our pilot until a couple of issues are resolved (I pushed to do it anyways but failed)</li>
+<li>We can use lower scaling video until then (ok with 3-4 users). <a href="https://goo.gl/mGLPuW">Sign up here</a></li>
+<li>Lets try it out</li>
+</ul></li>
+<li>Tutorial https://github.com/emberjs/guides/issues/1374
+<ul>
+<li>autocomplete and service PRs merged</li>
+<li>addon section ready for review, addon published to npm: https://github.com/toddjordan/ember-cli-tutorial-style</li>
+<li>logjam of prs on super rentals</li>
+<li>Starting on acceptance test section next week</li>
+<li><code>@futhey</code> got busy, handed over his work on style addon (great work on styling super rentals). TJ took it to completion.</li>
+</ul></li>
+<li>2 PRs addressing https://github.com/emberjs/guides/issues/1404
+<ul>
+<li>https://github.com/emberjs/guides/pull/1405/files</li>
+<li>https://github.com/emberjs/guides/pull/1410/files</li>
+<li>I (TJ) think actually each has some nuggets to combine into the final solution</li>
+</ul></li>
+<li>When to use <code>let</code> vs <code>const</code> in examples
+<ul>
+<li>For reference https://github.com/emberjs/guides/pull/1399/files</li>
+<li>I propose (TJ) we lean towards <code>let</code> and only use const for true constants, like <code>const DEFAULT_WIDTH = 100</code></li>
+</ul></li>
+<li>Infrastructure discussion
+<ul>
+<li>API viewer - any updates here?</li>
+<li>Help Wanted - DB</li>
+<li>Builds page - RM</li>
+<li>CI / CD for website - RM</li>
+<li>Guides viewer / migration - do we want to work on this any time soon? ask someone else to spearhead?</li>
+</ul></li>
+<li>Ember-learn org update? (RM)
+<ul>
+<li>RFCs if needed?</li>
+</ul></li>
+<li>Responsive work (DB)
+<ul>
+<li>https://github.com/emberjs/website/pull/2583</li>
+</ul></li>
+</ul>
+<h1 id="action-items">Action Items</h1>
+<ul>
+<li>[ ] Move super-rentals to ember-learn</li>
+<li>[ ] Move style addon to ember-learn (TJ)</li>
+<li>[ ] Work out how to get permissions bot going for Ember Learn (DB / RM)</li>
+</ul>
+<h1 id="minutes">Minutes</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>DB: David Baker <span class="citation" data-cites="acorncom">@acorncom</span></li>
+<li>TJ: Todd Jordan <span class="citation" data-cites="toddjordan">@toddjordan</span></li>
+<li>LS: Leah Silber <span class="citation" data-cites="wifelette">@wifelette</span></li>
+<li>RM: Ricardo Mendes <span class="citation" data-cites="locks">@locks</span></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<hr />
+<h2 id="tutorials">Tutorials</h2>
+<ul>
+<li>autocomplete, other tutorial items got merged, merging to super-rentals as well</li>
+</ul>
+<h3 id="conflicting-prs">Conflicting PRs</h3>
+<ul>
+<li>DB: I think locks picked one and merged.</li>
+<li>TJ: Will follow up</li>
+</ul>
+<h3 id="twiddle">Twiddle</h3>
+<ul>
+<li>DB: AWS domain and infra.: Can it move to ember? Would like to be “blessed” as an official ember project.</li>
+<li>LS: reached out to joostdevries (pinged on the call)</li>
+<li>LS: Tomsters: Lots of projects are on hold (ember data, liquid fire, ember-cli)</li>
+<li>DB: could be a sub-project under cli.</li>
+<li>LS: We should chat with Yehuda, and then Steph</li>
+<li>DB: Will have that discussion with Yehuda, how to proceed if its an idea to go forward with.</li>
+</ul>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li>LS: have we been working on getting Roberts brain contents documented?</li>
+<li>RM: not been able to</li>
+<li>LS: he has been having regular meetings with Yehuda and Godfrey. Would be good to see if there is anything coming out of that that should go into docs</li>
+<li>RM: will do</li>
+</ul>
+<h3 id="current-projects">Current Projects</h3>
+<ul>
+<li>DB: Any word from Stanley?</li>
+<li>RM: Pinged him on Slack, been elusive</li>
+<li>DB: What are our most important efforts right now?</li>
+<li>RM: want to get the website CI done and would like help - will open up other improvements once deploy</li>
+<li>RM: CTA merged!</li>
+<li>RM: Search, CI, Tutorial, Translations (tied into the new guides viewer)</li>
+<li>DB: Looked at guides viewer this morning. Robust addon from ed faulkner. Loads guide from current site and handles parsing.</li>
+<li>RM: the guides stuff is more important than getting the permission bot going</li>
+<li>DB: help wanted is working except firebase is a poor place to have the data</li>
+<li>RM: Why not couchdb, where I have the wip guides, stanley’s api stuff</li>
+<li>DB: will it handle the traffic? emberjs gets tons of monthly views, we need to consider that kind of scale for new things we deploy. Will look into it.</li>
+<li>RM: Builds Page: mununum? was willing to help, can outsource.</li>
+<li>DB: last night at denver contribution meetup, someone put in a responsive PR. If we can encourage him, he can do more CSS for us on the website.</li>
+<li>RM: would be good to have screenshots on the PR.</li>
+<li>DB: He is willing and eager to help. Does lots of CSS in his job.</li>
+</ul>
+<h3 id="website-redesign">Website Redesign</h3>
+<ul>
+<li>RM: Acorns posted a redesign on dribble</li>
+<li>RM: found a Designer Developer that wants to take things forward</li>
+<li>RM: Not crazy about the design overall (too much) need to reconcile what is good from the design with what we want him to take forward.</li>
+<li>DB: Could we focus him on the Learn Page?</li>
+<li>RM: there was a big PR for the website that just dropped off the map.</li>
+<li>DB: Have talked to him in past, will follow up.</li>
+</ul>
+</body>
+</html>

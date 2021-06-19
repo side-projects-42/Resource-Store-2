@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="gl-shader-validator">GL Shader Validator</h1>
+<figure>
+<img src="http://aerotwist.com/glshadervalidator/screenshot.png" alt="image" /><figcaption>image</figcaption>
+</figure>
+<p>This is a <a href="http://www.sublimetext.com/">Sublime Text 2 / 3</a> plugin that passes GLSL / ESSL to ANGLE’s preprocessor / compiler for validation. Any errors that ANGLE finds are routed back to Sublime and the tokens in the shader are highlighted for your convenience and debugging joy. To see the details of the error check the status message in the bottom left of the Sublime view.</p>
+<h2 id="installation">Installation</h2>
+<p><strong>You can, and probably should, install GL Shader Validator via <a href="http://wbond.net/sublime_packages/package_control">Package Control</a></strong></p>
+<p>If you would like to install it manually, clone this repo into your packages folder (typically ~/Library/Application Support/Sublime Text 2/Packages).</p>
+<pre><code>cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages
+git clone git://github.com/WebGLTools/GL-Shader-Validator.git &quot;GL Shader Validator&quot;</code></pre>
+<p>If you’re on Windows 7 the path looks more like this, assuming you have Git installed:</p>
+<pre><code>cd c:\users\YOUR_ACCOUNT\AppData\Roaming\Sublime Text 2\Packages
+git clone git://github.com/WebGLTools/GL-Shader-Validator.git &quot;GL Shader Validator&quot;</code></pre>
+<p>Also if you’re using Sublime Text 3 then you just switch the <code>2</code> in the path above to <code>3</code> and you should be all set.</p>
+<h2 id="usage">Usage</h2>
+<p>Assuming that you have a <a href="https://github.com/euler0/sublime-glsl">GLSL / ESSL syntax highlighter</a> installed in Sublime, all you should need to do is install the plugin and your shader code will be validated as expected.</p>
+<p>It’s worth saying that ANGLE expects vertex shaders to have the file suffix <code>.vert</code> and fragment shaders <code>.frag</code>. If you do not name your files with that suffix ANGLE (and therefore the plugin) will not be able to validate your shaders. Sadness will ensue.</p>
+<p>You can set the default specification to use in the settings:</p>
+<pre><code>Preferences &gt; Package Settings &gt; GL Shader Validator &gt; Settings - Default</code></pre>
+<p>This can be overridden in a specific shader by adding comments: <code>/* spec: webgl */</code> for WebGL, <code>/* spec: es2 */</code> for OpenGL ES 2.0 or <code>/* spec: css */</code> for Custom Filters / CSS Shaders</p>
+<h2 id="permissions">Permissions</h2>
+<p>This plugin requires use of a command line utility called essl_to_glsl, which is bundled with the plugin. By default, however, the utility will not have execute permissions. The plugin will attempt to enable those permissions automatically when it loads, but should that fail you will receive the following error message:</p>
+<blockquote>
+<p>GLShaderValidator: permission denied to use essl_to_glsl command</p>
+</blockquote>
+<p>In such instances you should enable execute permissions yourself:</p>
+<pre><code>cd ~/Library/Application Support/Sublime Text 2/Packages/GL\ Shader\ Validator
+chmod +x essl_to_glsl</code></pre>
+<h2 id="settings">Settings</h2>
+<p>You can modify the settings file (<code>GLShaderValidator.sublime-settings</code>) inside the plugin folder. You will find the documentation for the settings in that file. There aren’t many of those right now, but if you want more let us know via the repo’s Issues.</p>
+<h2 id="credits">Credits</h2>
+<ul>
+<li><a href="http://aerotwist.com">Paul Lewis</a></li>
+<li><a href="http://extremelysatisfactorytotalitarianism.com/">Brendan Kenny</a></li>
+</ul>
+</body>
+</html>

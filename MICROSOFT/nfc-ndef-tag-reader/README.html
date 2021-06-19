@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="nfc-ndef-tag-reader">NFC NDEF Tag Reader</h1>
+<p>A simple NFC tag reader application for Windows Phone 8. This example app demonstrates how to use the Proximity API to read NFC Data Exchange Format (NDEF) compliant tags.</p>
+<figure>
+<img src="/doc/nfcndeftagreader-2.png?raw=true" alt="Screenshot" /><figcaption>Screenshot</figcaption>
+</figure>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/nfc-ndef-tag-reader</p>
+<p>For more information on implementation and porting, visit Lumia Developer’s Library: http://developer.nokia.com/Resources/Library/Lumia/#!code-examples/nfc-ndef-tag-reader.html</p>
+<p>The project is compatible with Windows Phone 8. Developed with Microsoft Visual Studio Express 2012 for Windows Phone.</p>
+<h2 id="building-installing-and-running-the-application">1. Building, installing, and running the application</h2>
+<p>You need to have Windows 8 and Windows Phone SDK 8.0 or later installed.</p>
+<p>Using the Windows Phone 8 SDK:</p>
+<ol type="1">
+<li>Open the SLN file: File &gt; Open Project, select the file <code>NfcNdefTagReader.sln</code></li>
+<li>Select the target ‘Device’.</li>
+<li>Press F5 to build the project and run it on the device.</li>
+</ol>
+<p>Please see the official documentation for deploying and testing applications on Windows Phone devices: http://msdn.microsoft.com/en-us/library/gg588378%28v=vs.92%29.aspx</p>
+<h2 id="about-implementation">2. About implementation</h2>
+<p>Important files and classes:</p>
+<ul>
+<li><code>MainPage.cs</code>: Ties the UI and the application logic together. Contains the method for parsing the NDEF data. Shows the log containing the details of each tag read.</li>
+<li><code>NdefRecordUtility.cs</code>: Contains utility methods for handling NDEF tag data.</li>
+<li><code>NdefRecord.cs</code>: Container class for NDEF record data.</li>
+<li><code>NdefRecordTypeDefinitions.cs</code>: Contains the implementation for two Record Type Definitions (RTD) classes: <code>NdefTextRtd</code> and <code>NdefUriRtd</code>. Like the names of the classes indicate, the first is for text and the second for URI types.</li>
+</ul>
+<p>Required capabilities:</p>
+<ul>
+<li><code>ID_CAP_NETWORKING</code></li>
+<li><code>ID_CAP_PROXIMITY</code></li>
+</ul>
+<h2 id="license">3. License</h2>
+<p>See the license text file delivered with this project. The license file is also available online at https://github.com/Microsoft/nfc-ndef-tag-reader/blob/master/Licence.txt</p>
+<h2 id="version-history">4. Version history</h2>
+<ul>
+<li>Version 1.0: The initial release.</li>
+</ul>
+</body>
+</html>

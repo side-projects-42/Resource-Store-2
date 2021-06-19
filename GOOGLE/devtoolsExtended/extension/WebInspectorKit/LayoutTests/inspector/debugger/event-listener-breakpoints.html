@@ -1,75 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-<script src="../../http/tests/inspector/inspector-test.js"></script>
-<script src="../../http/tests/inspector/debugger-test.js"></script>
-<script>
-
-function testElementClicked()
-{
-    return 0;
-}
-
-function addListenerAndClick()
-{
-    var element = document.getElementById("test");
-    element.addEventListener("click", testElementClicked, true);
-    element.click();
-}
-
-function timerFired()
-{
-    return 0;
-}
-
-function test()
-{
-    WebInspector.showPanel("sources");
-    var pane = WebInspector.panels.sources.sidebarPanes.eventListenerBreakpoints;
-    InspectorTest.runDebuggerTestSuite([
-        function testClickBreakpoint(next)
-        {
-            pane._setBreakpoint("listener:click");
-            InspectorTest.waitUntilPaused(paused);
-            InspectorTest.evaluateInPageWithTimeout("addListenerAndClick()");
-
-            function paused(callFrames)
-            {
-                InspectorTest.captureStackTrace(callFrames);
-                pane._removeBreakpoint("listener:click");
-                InspectorTest.resumeExecution(resumed);
-            }
-
-            function resumed()
-            {
-                InspectorTest.evaluateInPage("addListenerAndClick())", next);
-            }
-        },
-
-        function testTimerFiredBreakpoint(next)
-        {
-            pane._setBreakpoint("instrumentation:timerFired");
-            InspectorTest.waitUntilPaused(paused);
-            InspectorTest.evaluateInPage("setTimeout(timerFired, 10)");
-
-            function paused(callFrames)
-            {
-                InspectorTest.captureStackTrace(callFrames);
-                pane._removeBreakpoint("instrumentation:timerFired");
-                InspectorTest.resumeExecution(next);
-            }
-        }
-    ]);
-}
-
-</script>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>event-listener-breakpoints</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
 </head>
-
-<body onload="runTest()">
-<p>
-Tests event listener breakpoints.
-</p>
-
-<input type=button id="test"></input>
-
+<body>
+<p>Tests event listener breakpoints.</p>
 </body>
 </html>

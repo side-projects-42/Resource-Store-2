@@ -1,9 +1,13 @@
-# ember-cli Meeting Notes - YYYY-MM-DD
+ember-cli Meeting Notes - YYYY-MM-DD
+====================================
 
-## Attendees
+Attendees
+---------
 
--
+-   
 
-## Actions
+Actions
+-------
 
-## Discussion Notes
+Discussion Notes
+----------------

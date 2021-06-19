@@ -1,34 +1,19 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      testRunner.setCanOpenWindows();
-
-      function doDialog() {
-        testRunner.closeWebInspector();
-        showModalDialog(
-          "data:text/html,<script>setTimeout(close, 0);%3c/script>"
-        );
-        setTimeout(function () {
-          testRunner.notifyDone();
-        }, 0);
-      }
-
-      function test() {
-        RuntimeAgent.evaluate("doDialog()");
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Test that any long api call from the frontend will not crash the inspected
-      page's renderer if the page is reloaded or frontend is closed in the
-      middle.
-    </p>
-    <a href="https://bugs.webkit.org/show_bug.cgi?id=60616"
-      >https://bugs.webkit.org/show_bug.cgi?id=60616</a
-    >
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-long-eval-crash</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Test that any long api call from the frontend will not crash the inspected page’s renderer if the page is reloaded or frontend is closed in the middle.</p>
+<p><a href="https://bugs.webkit.org/show_bug.cgi?id=60616" class="uri">https://bugs.webkit.org/show_bug.cgi?id=60616</a></p>
+</body>
 </html>

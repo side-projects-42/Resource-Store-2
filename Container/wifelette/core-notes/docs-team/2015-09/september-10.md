@@ -1,11 +1,13 @@
-# September 10, 2015
+September 10, 2015
+==================
 
-## Attendees
+Attendees
+---------
 
-- MKN - Michael
-- LS - Leah
-- YK - Yehuda
-- RM - Locks / Roberto
+-   MKN - Michael
+-   LS - Leah
+-   YK - Yehuda
+-   RM - Locks / Roberto
 
 **MKN**: My staff member who was wanting to help should hopefully get started tomorrow. She wanted to take the first crack of the tutorial; routing, templates, building out some of the basic features. The homepage, listings, etc. The first parts of the outline that Lauren started and Locks and MKN worked on. We should have the beginning of a tutorial by next week. Her name is **Kelly**.
 
@@ -45,18 +47,18 @@
 
 **RM**: Been looking at the new design files for the website. I’ve got RubyConf and RailsGirls coming up, so probably not going to happen until end of next week but I can potentially finish by then.
 
-**MKN**: We shouldn't merge the new design until the main website is ready.
+**MKN**: We shouldn’t merge the new design until the main website is ready.
 
 **LS**: If we update the guides design, it could help drive updating the main website.
 
 **MKN**: Given finite resources, updating design is not a high priority.
 
-_YK joins_
+*YK joins*
 
 **YK**: What did I miss?
 
-**MKN**: Mainly just that we might have a models emergency - if **Bmac** doesn't come through, there is nobody to do it. 2.1 is due in 3 weeks, which means we are supposed to have the Guides done in 1 week.
+**MKN**: Mainly just that we might have a models emergency - if **Bmac** doesn’t come through, there is nobody to do it. 2.1 is due in 3 weeks, which means we are supposed to have the Guides done in 1 week.
 
 **YK**: If nobody else does it, there are people including me who can do it.
 
-**MKN**: I will ask **Bmac** to commit to finishing by Friday. If he can't, I'll tell **YK**.
+**MKN**: I will ask **Bmac** to commit to finishing by Friday. If he can’t, I’ll tell **YK**.

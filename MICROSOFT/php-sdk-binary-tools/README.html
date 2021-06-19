@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="php-sdk">PHP SDK</h1>
+<p>PHP SDK is a tool kit for Windows PHP builds.</p>
+<h1 id="license">License</h1>
+<p>The PHP SDK itself and the SDK own tools and code are licensed under the BSD 2-Clause license. With the usage of the other tools, you accept the respective licenses.</p>
+<h1 id="overview">Overview</h1>
+<p>The toolset consists on a mix of the hand written scripts, selected MSYS2 parts and standalone programs. It supports any workflows, be it a custom, local or a CI build whatsoever.</p>
+<p>The PHP SDK 2.2+ is compatible with PHP 7.2 and above.</p>
+<p>The PHP SDK 2.1 is required to build PHP 7.1 or 7.0.</p>
+<p>The legacy binary tools SDK is available from the <a href="https://github.com/Microsoft/php-sdk-binary-tools/tree/legacy">legacy branch</a> and is suitable to build PHP 5.</p>
+<h1 id="requirements">Requirements</h1>
+<ul>
+<li>A 64-bit build host</li>
+<li>Windows 7 or later</li>
+<li><code>Visual C++ 2017</code> or <code>Visual C++ 2019</code> must be installed prior SDK usage. Required components
+<ul>
+<li>C++ dev</li>
+<li>Windows SDK</li>
+<li>.NET dev</li>
+</ul></li>
+<li>if <code>Cygwin</code>, <code>MingW</code> or any other cross solution is installed, please read notes in the pitfalls section</li>
+</ul>
+<h1 id="tools">Tools</h1>
+<h2 id="sdk">SDK</h2>
+<ul>
+<li>starter scripts, named phpsdk-&lt;crt&gt;-&lt;arch&gt;.bat</li>
+<li><code>phpsdk_buildtree</code> - initialize the development filesystem structure</li>
+<li><code>phpsdk_deps</code> - handle dependency libraries</li>
+<li><code>phpsdk_dllmap</code> - create a JSON listing of DLLs contained in zip files</li>
+<li><code>phpsdk_pgo</code> - run PGO training</li>
+<li><code>phpsdk_version</code> - show SDK version</li>
+<li><code>task.exe</code> - wrapper to hide the given command line</li>
+</ul>
+<h2 id="other-tools">Other tools</h2>
+<ul>
+<li><code>bison</code> 3.3.2, <code>re2c</code> 1.1.1, <code>lemon</code></li>
+<li><code>awk</code>, <code>gawk</code>, <code>sed</code>, <code>grep</code>, <code>jq</code></li>
+<li><code>diff</code>, <code>diff3</code>, <code>patch</code></li>
+<li><code>md5sum</code>, <code>sha1sum</code>, <code>sha224sum</code>, <code>sha256sum</code>, <code>sha384sum</code>, <code>sha512sum</code></li>
+<li><code>7za</code>, <code>zip</code>, <code>unzip</code>, <code>unzipsfx</code></li>
+<li><code>wget</code>, <code>pwgen</code></li>
+</ul>
+<h2 id="optional-not-included">Optional, not included</h2>
+<p>These are not included with the PHP SDK, but might be useful. While Visual C++ is the only required, the others might enable some additional functionality. Care yourself about making them available on your system, if relevant.</p>
+<ul>
+<li><code>Git</code> - useful for PHP source management</li>
+<li><code>Cppcheck</code> - used for static analysis</li>
+<li><code>clang</code> - useful for experimental builds and for static analysis</li>
+<li><code>ICC</code> - useful for experimental builds</li>
+<li><code>ConEmu</code> - console emulator with tabs and more</li>
+</ul>
+<h1 id="usage">Usage</h1>
+<p>The PHP SDK should be unzipped into the shortest possible path, preferably somewhere near the drive root.</p>
+<p>Usually, the first step to start the PHP SDK is by invoking one of the suitable starter scripts. This automatically puts the console on the correct environment relevant for the desired PHP build configuration.</p>
+<p>It is not required to hold the source in the PHP SDK directory. It could be useful, for example, to simplify the SDK updates.</p>
+<h2 id="basic-usage-example">Basic usage example</h2>
+<ul>
+<li><code>git clone https://github.com/Microsoft/php-sdk-binary-tools.git c:\php-sdk</code></li>
+<li><code>cd c:\php-sdk</code></li>
+<li><code>git checkout php-sdk-2.1.9</code> or later</li>
+<li>invoke <code>phpsdk-vc15-x64.bat</code></li>
+<li><code>phpsdk_buildtree phpmaster</code></li>
+<li><code>git clone https://github.com/php/php-src.git &amp;&amp; cd php-src</code>, or fetch a zipball</li>
+<li><code>phpsdk_deps --update --branch master</code>, use <code>phpsdk_deps --update --branch X.Y</code> for a non master branch</li>
+<li>do the build, eg. <code>buildconf &amp;&amp; configure --enable-cli &amp;&amp; nmake</code></li>
+</ul>
+<p>More extensive documentation can be found on the <a href="https://wiki.php.net/internals/windows/stepbystepbuild_sdk_2" title="PHP wiki page">wiki</a>.</p>
+<h2 id="the-old-way">The old way</h2>
+<ul>
+<li><code>git clone https://github.com/Microsoft/php-sdk-binary-tools.git c:\php-sdk</code></li>
+<li>follow the instructions on the PHP <a href="https://wiki.php.net/internals/windows/stepbystepbuild" title="PHP wiki page">wiki page</a></li>
+</ul>
+<h1 id="customizing">Customizing</h1>
+<h2 id="custom-environment-setup">Custom environment setup</h2>
+<p>A script called phpsdk-local.bat has to be put into the PHP SDK root. If present, it will be automatically picked up by the starter script. A template for such a script is included with the PHP SDK. This allows to automatically meet any required preparations, that are not foreseen by the standard PHP SDK startup. Be careful while creating your own phpsdk-local. It’s your responsibility to ensure the regular PHP SDK startup isn’t broken after phpsdk-local.bat was injected into the startup sequence.</p>
+<h2 id="console-emulator-integration">Console emulator integration</h2>
+<p>The starter scripts can be also easy integrated with the consoles other than standard cmd.exe. For the reference, here’s an example ConEmu task</p>
+<p><code>C:\php-sdk\phpsdk-vc15-x64.bat -cur_console:d:C:\php-sdk\php72\vc15\x64\php-src</code></p>
+<h2 id="unattended-builds">Unattended builds</h2>
+<p>An elementary functionality to run unattended builds is included. See an example on how to setup a simple unattended build task in the doc directory.</p>
+<p>Be aware, that starter scripts always start a new shell. Scripts intended to run as a task need to be passed with <code>-t</code> argument to a starter script.</p>
+<h1 id="upgrading">Upgrading</h1>
+<ul>
+<li>backup phpsdk-local.bat</li>
+<li>backup the source trees and any other custom files in the PHP SDK root, if any present</li>
+<li>move the PHP SDK folder into trash</li>
+<li>download, unpack and the new PHP SDK version under the same path</li>
+<li>move the custom files back in their respective places</li>
+</ul>
+<p>If the PHP SDK is kept as a git checkout, merely what is needed instead is to git fetch and to checkout an updated git tag.</p>
+<h1 id="extending">Extending</h1>
+<p>The SDK tools are based on the KISS principle and should be kept so. Basic tools are implemented as simple batch script. The minimalistic <code>PHP</code> is available for internal SDK purposes. It can be used, if more complexity is required. A suitable PHP binary is bound with the PHP SDK. If you have an idea for some useful tool or workflow, please open a ticket or PR, so it can be discussed, implemented and added to the SDK. By contributing an implementation, you should also accept the SDK license.</p>
+<h1 id="pgo">PGO</h1>
+<p>As of the version 2.1.0, the SDK includes a tool for the <a href="https://docs.microsoft.com/en-us/cpp/build/reference/profile-guided-optimizations">PGO</a> optimization. Several training cases are included by default, which are based on the real life opensource applications. The PGO optimization can give an overall speedup up to 30%. The work on adding more training scenarios for the widely used opensource apps is ongoing. If you have a training scenario to share, please create a PR to this repo. Any new training cases are thoroughly validated through the extensive performance tests.</p>
+<h2 id="preparing-pgo-training-environment">Preparing PGO training environment</h2>
+<ul>
+<li>the pgo folder in the SDK root dir contains templates and scenarios for PGO training</li>
+<li>adjust and execute <a href="doc/phpsdk_pgo_prep_elevated.bat.example">doc/phpsdk_pgo_prep_elevated.bat.example</a> to open ports required for PHP SDK training servers</li>
+<li>run <code>phpsdk_pgo --init</code>. Note that composer requires huge amounts of memory, so it may be necessary to set the environment variable <code>COMPOSER_MEMORY_LIMIT=-1</code>. The PGO initialization may not succeed in x86 enviroments.</li>
+</ul>
+<h2 id="creating-pgo-build">Creating PGO build</h2>
+<ul>
+<li>compile PHP configured using <code>--enable-pgi</code></li>
+<li>run <code>phpsdk_pgo --train</code></li>
+<li>run <code>nmake clean-pgo</code></li>
+<li>rebuild PHP <code>--with-pgo</code></li>
+</ul>
+<h2 id="adding-custom-pgo-training-scenario">Adding custom PGO training scenario</h2>
+<p>A custom scenario can be used to produce a custom PHP binary dedicated to an arbitrary application.</p>
+<p>The existing training cases can be found in <a href="pgo/cases">pgo/cases</a>. Assumed the case would be named <code>myapp</code>, the general steps to setup were</p>
+<ul>
+<li>create the case directory under <code>pgo/cases/myapp</code></li>
+<li>create <code>pgo/cases/myapp/phpsdk_pgo.json</code> with the necessary definitions</li>
+<li>create <code>pgo/cases/myapp/nginx.partial.conf</code> with a partial NGINX template</li>
+<li>create <code>pgo/cases/myapp/TrainingCaseHandler.php</code> with a class as defined in the <a href="lib/php/libsdk/SDK/Build/PGO/Interfaces/TrainingCase.php">interface</a></li>
+</ul>
+<p>After a training case is implemented and put under <code>pgo/cases</code>, the work environment needs to be reinitialized. The tool puts all the training data and necessary applications under <code>pgo/work</code>. Rename or remove that directory and rerun <code>phpsdk_pgo --init</code>.</p>
+<p>To skip a training case, add a file named <code>inactive</code> into the case folder.</p>
+<h1 id="debugging-php">Debugging PHP</h1>
+<p>This part covers debugging possibilities for the builds produced by the native VS compilers. For the cross compiled builds produced with toolsets other than VC++, please check the documentation for the corresponding toolsets. In any case, general principles on debugging native programs apply.</p>
+<p>Either a debug build of PHP or enabled debug symbols are required to be able to debug PHP. A debug build is usually more suitable for the development process and can be produced by adding <code>--enable-debug</code> to the configure options. A release build with debug symbols can be produced by adding <code>--enable-debug-pack</code>. These options are mutually exclusive.</p>
+<h2 id="debugging-with-visual-studio">Debugging with Visual Studio</h2>
+<ul>
+<li>Configure with either <code>--enable-debug</code> or <code>--enable-debug-pack</code>.</li>
+<li>A debug build might bring better experience for dev, but sometimes you want to debug a release build.</li>
+<li><code>nmake run ARGS=yourscript.php DEBUGGER=1</code>, that will open a Visual Studio window.</li>
+<li>Any additional runtime options for PHP or the script executed go to ARGS, too.</li>
+<li>Select <code>Debug -&gt; New Breakpoint -&gt; Function Breakpoint</code> and add a function where the debugger should break.</li>
+<li>Click <code>Start</code>.</li>
+</ul>
+<p>Adding a breakpoint before starting debugging might be not necessary, if a crash is debugged. When such a script runs under the debugger, the debugger will stop at the crashing point. In that case, a breakpoint can be added around the crashed code directly.</p>
+<h2 id="debugging-test-suite-with-visual-studio">Debugging test suite with Visual Studio</h2>
+<p>The <a href="https://marketplace.visualstudio.com/items?itemName=vsdbgplat.MicrosoftChildProcessDebuggingPowerTool">Microsoft Child Process Debugging Power Tool</a> plugin for Visual Studio is required. After installing it, following these steps</p>
+<ul>
+<li><code>nmake test TESTS=ext/myext/tests/sometest.phpt DEBUGGER=1</code></li>
+<li>Select <code>Debug -&gt; Other Debug Targets -&gt; Child Process Debugging Settings</code> and enable child process debugging.</li>
+<li>If necessary, add a breakpoint and start debugging as described in the previous section.</li>
+</ul>
+<h2 id="debugging-with-windbg">Debugging with WinDbg</h2>
+<p>PHP can also be debugged with the tools from the WinDbg package. There is currently no way implemented in the Makefile to start the WinDbg integrated, so it needs to de done manually. Either a debug build or a release build with debug symbols is still required, as described previously.</p>
+<h1 id="support">Support</h1>
+<ul>
+<li>Join <code>#winphp-dev</code> on Freenode to discuss any ideas or questions</li>
+<li>File an issue on GitHub</li>
+</ul>
+<h1 id="pitfalls">Pitfalls</h1>
+<ul>
+<li>SDK or PHP sources put into paths including spaces might cause issue.</li>
+<li>SDK or PHP sources put into too long paths, will cause an issue.</li>
+<li>If Cygwin, MSYS2 or MinGW flavors are exposed in global PATH, it might cause issues. If it’s unavoidable, ensure SDK preceeds it on the PATH.</li>
+<li>When fetching the binary SDK from git, git <code>core.autocrlf</code> configuration directive set to <code>false</code> is recommended.</li>
+<li>Tools, based on MSYS2, only accept paths with forward slashes.</li>
+<li>Both Visual C++ toolset and the Windows SDK components have to be installed for the PHP SDK to work properly.</li>
+<li>The VC++ toolset is still required, even if another compiler, fe. clang, is intended to be used.</li>
+<li><code>task.exe</code> is not a console application, some systems might not propagate exit code except the batch is explicitly run from <code>cmd /c</code>, etc.</li>
+<li><code>7za</code> should be preferred over <code>unzip</code> and <code>zip</code> for compatibility reasons.</li>
+<li>If you experience some strange crashes on MSYS2 tools, try the phpsdk_rebase_msys2 tool. MSYS2 tools might be have unstable on ASLR enabled systems.</li>
+</ul>
+<hr />
+<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="mailto:opencode@microsoft.com" class="email">opencode@microsoft.com</a> with any additional questions or comments.</p>
+</body>
+</html>

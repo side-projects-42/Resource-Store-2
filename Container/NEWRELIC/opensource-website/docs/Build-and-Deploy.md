@@ -1,6 +1,6 @@
 # Overview
 
-This site is deployed utilizing Github Actions for continuous integration (CI) combined with AWS Amplify's branch-based continuous deployment (CD).
+This site is deployed utilizing Github Actions for continuous integration (CI) combined with AWS Amplify’s branch-based continuous deployment (CD).
 
 - [GitHub Actions (CI)](https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#github-actions-ci)
   - [Project Stats Generation](https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#project-stats-generation)
@@ -34,28 +34,24 @@ Amplify is connected to the `main` and `deploy` branches, and has webhooks set o
 
 **Production** deployments are exclusively handled through merging a Pull Request into the `main` branch. If an ad-hoc deployment is required, please reach out to a project maintainer.
 
-**Opening a Pull Request**: the direction should be `develop` -> `main`. Once all checks have passed, merge via `Merge Pull Request` option (using `Create a merge commit` as the strategy). This will merge the commits in from develop (effectively "catching" `main` up with `develop`), plus issue the merge commit on top.
+**Opening a Pull Request**: the direction should be `develop` -&gt; `main`. Once all checks have passed, merge via `Merge Pull Request` option (using `Create a merge commit` as the strategy). This will merge the commits in from develop (effectively “catching” `main` up with `develop`), plus issue the merge commit on top.
 
 **Merging**: use a [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/) message indicating this is a release:
 
-```sh
-chore(release): updating production to vX.X.X
-```
+    chore(release): updating production to vX.X.X
 
-The intent is: semantic-release issued a new tag/release on the `develop` branch, so we are now promoting that to production. If for whatever reason there wasn't a release, include what the update is and provide the release at the end of the message:
+The intent is: semantic-release issued a new tag/release on the `develop` branch, so we are now promoting that to production. If for whatever reason there wasn’t a release, include what the update is and provide the release at the end of the message:
 
-```sh
-chore(release): content updates but no new site features [vX.X.X]
-```
+    chore(release): content updates but no new site features [vX.X.X]
 
-> Note: Since semantic-release is only running on the `develop` branch, there won't be a new tag/release cut from the main branch. We might revisit this idea in the future if the tooling evolves.
+> Note: Since semantic-release is only running on the `develop` branch, there won’t be a new tag/release cut from the main branch. We might revisit this idea in the future if the tooling evolves.
 
 ### Staging Deployment
 
 **Staging** deployments will happen frequently, and should be used to QA changes prior to opening a Pull Request to `main`.
 
-These deployments happen automagically every time a commit is made to `develop`. This is handled via Amplify's Git-based continuous deployment.
+These deployments happen automagically every time a commit is made to `develop`. This is handled via Amplify’s Git-based continuous deployment.
 
-If it seems like builds/deploys should be occurring but aren't, please contact a project maintainer.
+If it seems like builds/deploys should be occurring but aren’t, please contact a project maintainer.
 
 > Final Note: PRs that are opened from a branch in this repo (not forks) will generate preview links on Amplify automatically.

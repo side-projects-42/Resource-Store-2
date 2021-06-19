@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>delay</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="delay">Delay</h1>
+<p>This example demonstrates the impact of the <a href="../guide/options.md#delay"><code>delay</code> option</a> when scrolling. The first chart uses the default options (no delay) while the second chart is delayed for one second.</p>
+<div class="head">
+<div>
+Scroll down
+</div>
+<div class="icon">
+⇣
+</div>
+</div>
+<h2 id="no-delay-default">No delay (default)</h2>
+<p>```js chart-editor Utils.srand(0);</p>
+<p>const options = /* <block:options> <em>/ { plugins: { deferred: { // defaults }, }, }; /</em> </block:options> */</p>
+<p>module.exports = { config: { type: “bar”, options: options, data: Utils.generate(), }, }; ```</p>
+<h2 id="delay-1-second">Delay (1 second)</h2>
+<p>```js chart-editor Utils.srand(0);</p>
+<p>const options = /* <block:options> <em>/ { plugins: { deferred: { delay: 1000, }, }, }; /</em> </block:options> */</p>
+<p>module.exports = { config: { type: “bar”, options: options, data: Utils.generate(), }, }; ```</p>
+<div class="foot">
+<p>Reload the page to reset the sample</p>
+</div>
+<style lang="styl" scoped>
+.chart-editor
+  margin 2rem auto 6rem auto
+
+.head
+  display flex
+  align-items center
+  justify-content center
+  flex-direction column
+  font-weight 800
+  font-size 1.5rem
+  min-height 80vh
+  opacity 0.5
+
+  .icon
+    font-size 1.5em
+    opacity 0.5
+
+.foot
+  text-align center
+  font-weight 600
+  padding 16px 0
+</style>
+</body>
+</html>

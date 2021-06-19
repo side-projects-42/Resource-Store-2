@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="datasource-change-history">DataSource Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<h3 id="datasource-polling">datasource-polling</h3>
+<ul>
+<li><code>setInterval</code> fires first <code>sendRequest</code> in a 0ms <code>setTimout</code>, then subsequent calls after the configured timeout. [Ticket #2529182]</li>
+</ul>
+<h3 id="datasource-function">datasource-function</h3>
+<ul>
+<li>success callbacks that throw an error no longer result in the <code>data</code> event being fired again. [Ticket #2529824]</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Un-anonymize <code>DataSource.IO</code> callback functions. [Ticket #2529466]</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li><p>Removed hardcoded <code>DataSource.IO</code> from <code>DataSourceJSONSchema</code>.</p></li>
+<li><p>Added ability to cancel underlying IO and Get transactions.</p></li>
+<li><p>Better <code>DataSource</code> error handling.</p></li>
+<li><p>Added <code>ioConfig</code> Attribute to <code>DataSource.IO</code>.</p></li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>[!] <code>DataSource</code>’s <code>sendRequest()</code> argument signature has changed in a non-backward-compatible way. It now accepts a single object containing the properties <code>request</code>, <code>callback</code>, and <code>cfg</code>.</p></li>
+<li><p><code>DataSource.Get</code> bug fixed where it was trying to delete the proxy callback in the wrong location during cleanup.</p></li>
+<li><p>Changed from array of proxy callbacks to object with guid keys to support services that don’t properly handle array indexes in the callback parameter (Twitter).</p></li>
+<li><p>Code reorganized (API and functionality unaffected).</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li><p><code>DataSource.IO</code> now passes request value to IO.</p></li>
+<li><p><code>DataSource.Function</code> now catches exception and fires error event.</p></li>
+</ul>
+<h2 id="beta1">3.0.0beta1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

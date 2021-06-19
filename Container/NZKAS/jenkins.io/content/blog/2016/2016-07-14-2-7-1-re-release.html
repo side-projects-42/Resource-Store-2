@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <meta name="author" content="daniel-beck" />
+    <title>New packages for Jenkins 2.7.1</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">New packages for Jenkins 2.7.1</h1>
+      <p class="author">daniel-beck</p>
+    </header>
+    <p>
+      We created new native packages for Jenkins 2.7.1 today. These replace the
+      existing packages. Due to a release process issue, the packaging (RPM,
+      etc.) was created the same way as Jenkins 1.x LTS, resulting in problems
+      starting Jenkins on some platforms: While we dropped support for AJP in
+      Jenkins 2.0, some 1.x packages had it enabled by default, resulting in an
+      exception during startup.
+    </p>
+    <p>
+      These new packages for Jenkins 2.7.1, dated July 14, have the same scripts
+      and parameters as Jenkins 2.x and should allow starting up Jenkins without
+      problems. If you notice any further problems with the packaging, please
+      <a
+        href="https://wiki.jenkins-ci.org/display/JENKINS/How+to+report+an+issue"
+        >report</a
+      >
+      them in the <code>packaging</code> component.
+    </p>
+  </body>
+</html>

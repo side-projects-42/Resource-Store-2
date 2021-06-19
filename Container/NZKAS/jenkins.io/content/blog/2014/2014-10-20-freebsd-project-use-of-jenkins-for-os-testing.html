@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2014-10-20-freebsd-project-use-of-jenkins-for-os-testing</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>This is a guest post by Craig Rodrigues</p>
+    <hr />
+    <p>
+      The <a href="http://www.freebsd.org">FreeBSD project</a> produces a modern
+      operating system derived from
+      <a href="http://en.wikipedia.org/wiki/Berkeley_Software_Distribution"
+        >BSD Unix</a
+      >.
+    </p>
+    <p>
+      In the past 6 months, we have set up Jenkins at
+      <a href="http://jenkins.freebsd.org/">http://jenkins.freebsd.org/</a>, to
+      continuously build FreeBSD as developers add new code to the project. This
+      has helped us identify and fix build breaks very quickly.
+    </p>
+    <p>
+      We have gone even farther by integrating Jenkins,
+      <a href="https://github.com/jmmv/kyua#readme">Kyua</a>, and
+      <a href="http://bhyve.org/">Bhyve</a>.
+      <a href="https://github.com/jmmv/kyua#readme">Kyua</a> is a testing
+      framework for infrastructure software.
+      <a href="http://bhyve.org/">Bhyve</a> is the native hypervisor that comes
+      with FreeBSD (similar to KVM on Linux).
+    </p>
+    <p>
+      We use the
+      <a href="https://wiki.jenkins-ci.org/display/JENKINS/Build+Flow+Plugin"
+        >Build Flow plugin</a
+      >
+      in this
+      <a
+        href="https://jenkins.freebsd.org/jenkins/view/FreeBSD_src_stable/job/FreeBSD_stable_10/848/BuildGraph/"
+        >example Build flow</a
+      >
+      to do the following:
+    </p>
+    <ol type="1">
+      <li>
+        Build the FreeBSD kernel and userland on amd64 whenever someone checks
+        in new code to http://svn.freebsd.org
+      </li>
+      <li>
+        Create a bootable FreeBSD disk image with
+        <a href="https://www.freebsd.org/cgi/man.cgi?query=makefs">makefs</a>
+      </li>
+      <li>Boot the image under bhyve</li>
+      <li>Run these commands inside the bhyve VM:</li>
+    </ol>
+    <pre><code>    cd /usr/tests; kyua test; kyua report-junit --output=test-output.xml</code></pre>
+    <ol start="5" type="1">
+      <li>Shut down the bhyve VM</li>
+      <li>Imports test-output.xml into Jenkins.</li>
+      <li>
+        Produces a
+        <a
+          href="https://jenkins.freebsd.org/jenkins/job/FreeBSD_stable_10-tests/4/testReport/"
+          >full native test report in Jenkins</a
+        >
+      </li>
+    </ol>
+    <p>
+      The results of this work were presented at the
+      <a href="http://bafug.org">Bay Area FreeBSD Users Group</a> in
+      <a href="http://www.slideshare.net/CraigRodrigues1/kyua-jenkins"
+        >this presentation</a
+      >
+      in October 2014.
+    </p>
+    <p>
+      Jenkins has been very easy to set up and use under FreeBSD. We hope that
+      by using Jenkins to run OS-level unit tests, we will be able to improve
+      the quality of FreeBSD. For further information, please feel free to
+      contact us at
+      <a href="mailto:freebsd-testing@FreeBSD.org" class="email"
+        >freebsd-testing@FreeBSD.org</a
+      >
+      .
+    </p>
+  </body>
+</html>

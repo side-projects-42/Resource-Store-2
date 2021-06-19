@@ -4,23 +4,19 @@
 
 ## Usage
 
-```js
-auth: {
-  strategies: {
-      'laravel.passport': {
-        url: '...',
-        client_id: '...',
-        client_secret: '...'
-      },
-  }
-}
-```
+    auth: {
+      strategies: {
+          'laravel.passport': {
+            url: '...',
+            client_id: '...',
+            client_secret: '...'
+          },
+      }
+    }
 
 Anywhere in your application logic:
 
-```js
-this.$auth.loginWith("laravel.passport");
-```
+    this.$auth.loginWith("laravel.passport");
 
 💁 This provider is based on [oauth2 scheme](../schemes/oauth2.md) and supports all scheme options.
 

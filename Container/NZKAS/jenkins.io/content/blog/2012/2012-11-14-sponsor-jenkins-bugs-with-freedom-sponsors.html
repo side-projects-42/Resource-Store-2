@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>2012-11-14-sponsor-jenkins-bugs-with-freedom-sponsors</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>(This is a guest post by Tony França)</p>
+<div style="float:right">
+<p><img src="http://jenkins-ci.org/sites/default/files/images/FS_vertical_logo_colored_512x347.png" width="128" height="87"></p>
+</div>
+<p>Hi all, my name is Tony, I’m the creator of (<a href="http://www.freedomsponsors.org/">FreedomSponsors</a>) and today I want to talk how Jenkins has inspired me to build it.</p>
+<p>Before starting, I’d like to thank the Jenkins crew for letting me publish this guest post in their blog. On top of that, thank you for maintaining Jenkins as well - I’m a big fan and a heavy user. Jenkins potential to make peoples lives easier is really amazing. You guys are amazing. And Kohsuke, you’re my personal hero :-)</p>
+<p>All right, that being said, let’s move on with the story.</p>
+<p>Most people who like FreedomSponsors probably don’t know that Jenkins is sort of the reason it exists in the first place. That’s right, if it wasn’t for Jenkins I’d probably never had the idea for FS.</p>
+<p>This is how it happened.</p>
+<p>I was playing with the (<a href="https://wiki.jenkins-ci.org/display/JENKINS/OpenID+plugin">Jenkins OpenID plugin</a>), and I was having some trouble with it. After a little research, I found that there was a JIRA bug for it - (<a href="https://issues.jenkins-ci.org/browse/JENKINS-9216">JENKINS-9216: Make OpenID work with Google Apps accounts</a>).</p>
+<p>“Bummer” - I thought - “Maybe I can try to debug it. Oh boy, but I don’t know anything about Jenkins code. That would be too… expensive! I bet there are a few people out there that would be willing to even pay a few bucks to the Jenkins crew to prioritize this.”</p>
+<p>The moment I thought that, a storm of ideas came rushing into my head. It was like a conversation with myself in my mind.</p>
+<ul>
+<li>“Wait a minute… why can’t people actually do just that?! They should be able to.”</li>
+<li>“Maybe a JIRA plugin could let them…”</li>
+<li>“But what about other projects, ones that don’t use JIRA?”</li>
+<li>“Maybe there could be a central place for all those offers. If many people ‘sponsor’ the same issue, the developer who solve it might get a decent piece of gold - rightfully deserved. That could even free up more of their time to work on the projects they love :-)”</li>
+<li>“The sponsors would pay the developers out of gratitude, and for the sake of keeping their word.”</li>
+<li>“This has the <a href="http://agilemanifesto.org/">Agile</a> spirit in it: Customer collaboration over contract negotiation”</li>
+</ul>
+<p>And I kept thinking, and it didn’t took very long until I had the whole “sponsoring model” in my head. I realised that that was one of the best ideas I had in my life. I was very excited and I had to act on it.</p>
+<p>I started studying <a href="https://www.djangoproject.com/">Django</a> on that same day. I had already learned some Python before and Django had been on my queue for some time. And I’m glad I did it. I’ve been building JavaEE (Java web) applications for about 8 years now, and, oh boy, Django makes things soooo much easier, and simpler, and faster to code - I’m in love with it… Okay, but I’m missing the point here.</p>
+<p>So, I started building “it” alone on my free time. It took me a few days to pick a name for “it”. The “FreedomSponsors” name came very naturally - it rightfully conveys what the platform would do, and the spirit of software freedom that I’d like to encourage.</p>
+<p>Seven weeks later it was done. I had already bought the domain and created an account at Amazon AWS. So I put it up and started bugging everyone about it. And guess who was the first person I wanted to tell? Kohsuke Kawaguchi :-) It was just fair. So I sent him this email.</p>
+<blockquote>
+<p>On Sun, Jul 8, 2012 at 3:36 AM, Tony França <a href="mailto:tonylampada@gmail.com" class="email">tonylampada@gmail.com</a> wrote:</p>
+<p>Hi Kohsuke. My name is Tony, I’m a Software Architect. I’m a big fan and a (very) heavy user of Hudson - Jenkins. It has really been enabling our company to move towards a “continuous delivery”-like development process in the past couple of years.</p>
+<p>So, thank you for that.</p>
+<p>Also, if it wasn’t for Jenkins, maybe I would never had the idea to build the FreedomSponsors web site. That’s my personal project - an idea that I had about six weeks ago.</p>
+<p>You see, most of the time I was developing it, I had you in mind. I have always felt that “Jenkins is so great, that Kohsuke really deserves to get rich for it”.</p>
+<p>I just launched FreedomSponsors - a few minutes ago. It just felt right to come here and tell you about it :-)</p>
+<p>Let’s see if I can get you rich now :-).</p>
+<p>Cheers! Tony Lâmpada</p>
+</blockquote>
+<p>And his reply just made my day</p>
+<blockquote>
+<p>On Thu, Jul 12, 2012 at 5:19 PM, Kohsuke Kawaguchi <kk at kohsuke dot org> wrote:</p>
+<p>Congratulations for launching your service.</p>
+<p>I thought about a similar idea long time ago over a lunch with my colleagues, but my hats off to you for actually making it real. I can imagine a lot of obstacles (most of those you already note in FAQ), but if this works out I think it’d be great.</p>
+<p>By the way, I wonder if you have considered open-sourcing this, say under Aflo GPL. With the network effect and being the dominant contributor, it’s very difficult for anyone else to run the same code on public internet to compete with you, and it does let other people contribute small changes, and given your audience is open-source developers, I think it sends the right message as well as help you boost your development. It also seeds the ecosystem (of Bugzilla plugin, JIRA plugin, dashboard, etc.), too.</p>
+<p>Just my 2 cents.</p>
+</blockquote>
+<p>You see, FS’s code was still closed when I launched it. I was worried about competition indeed. But his arguments were very convincing. Specially when he talked about sending the right message to the Free Software community. I thought about it for while and came to the conclusion that he has absolutely right. It still took me a few weeks until I moved <a href="https://github.com/freedomsponsors/www.freedomsponsors.org">the code to Github</a>. I’m glad I did it. The feedback loop has been great.</p>
+<p>And that was not his only contribution. He also gave us this very useful piece of feeback: (<a href="http://www.freedomsponsors.org/core/issue/12/jira-plugin-to-link-from-tickets-to-freedomsponsors">JIRA plugin to link from tickets to FreedomSponsors</a>)</p>
+<p>Indeed, that was a great idea. My friend and associate Arthur is the one who built it. Kohsuke suggested that I joined the Jenkins crew at the (<a href="https://wiki.jenkins-ci.org/display/JENKINS/Governance+Meeting+Agenda">Jenkins Governance meeting</a>) to see if everyone would agree about installing it on Jenkins JIRA. Everyone liked the idea and had no ojections.</p>
+<p>I can’t say enough how trilled and honored I felt knowing that Jenkins would be the first project to install our plugin. Thank you folks. Thanks Kohsuke. You guys are awesome :-)</p>
+<p>Now FreedomSponsors is growing, slowly but steadily. And what makes us really happy is that almost every developer we tell about it just loves the idea. We’ve received valuable, constructive feedback from a lot of people who want to see us moving forward. That’s the best incentive that I could wish for.</p>
+<p>We still have a lot of challenges ahead of us. The biggest and closest one in the horizon is to start a “movement” that will help spread within companies a culture of contributing more to the free software projects they depend on, by making they realise that that’s what’s best for everyone. If we can achieve that then we’ll have made the free software world even better.</p>
+<p>So, everything I wrote so far is, hopefully, only the begginning of this story. And I’m really excited and looking forward to see it unfold. Being a part of it is even more exciting.</p>
+<p>What about you? If you want to be updated about, or even help write the next chapters, then <a href="http://www.freedomsponsors.org/core/login/">join</a>, <a href="http://twitter.com/freedomsponsors">follow</a>, <a href="http://www.facebook.com/freedomsponsors">like</a>, <a href="http://blog.freedomsponsors.org/">read</a>, <a href="https://twitter.com/intent/tweet?hashtags=freedomsponsors&amp;original_referer=http%3A%2F%2Fblog.freedomsponsors.org%2F&amp;source=tweetbutton&amp;text=Check%20this%20out!%20FreedomSponsors%20-%20Crowdfunding%20Open%20Source%2C%20one%20issue%20at%20a%20time&amp;url=http%3A%2F%2Fwww.freedomsponsors.org&amp;via=freedomsponsors">spread the word</a>, give <a href="http://www.freedomsponsors.org/core/feedback">feedback</a> and <a href="https://github.com/freedomsponsors/www.freedomsponsors.org">contribute</a> with code or new issues.</p>
+<p>Thank you Jenkins crew, thank you Kohsuke. We wouldn’t have made it here without you.</p>
+</body>
+</html>

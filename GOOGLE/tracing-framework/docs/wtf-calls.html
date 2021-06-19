@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>wtf-calls</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="wtf-calls-file-format">wtf-calls File Format</h1>
+<h2 id="structure">Structure</h2>
+<p>All values in little-endian.</p>
+<pre><code>4b  header length = HL
+HL  utf8-encoded JSON header
+[padding to align to 4b]
+*   repeated 4b values indicating function</code></pre>
+<h2 id="header">Header</h2>
+<p>The header currently contains a map of modules by module ID. Module IDs are randomly assigned and are just used for differentiation.</p>
+<p>Each module contains a list of its function types and the range of the function in the unmodified source document. This can be used to look up function code either in the source file or through the source map.</p>
+<p>Functions are assigned IDs that should be treated as opaque. Function IDs will change on each recording, and cannot be correlated across files. Instead, use the function name and range to match functions.</p>
+<pre><code>{
+  &quot;version&quot;: 1,
+  &quot;context&quot;: {
+    &quot;uri&quot;: &quot;http://...&quot;,
+    &quot;title&quot;: &quot;Some Title&quot;
+  },
+  &quot;metadata&quot;: {
+    #
+  },
+  &quot;modules&quot;: {
+    0: {
+      &quot;src&quot;: &quot;http://.....&quot;,
+      &quot;fns&quot;: [
+        [function id], [function name], [start range], [end range],
+        ...
+      ]
+    }
+  }
+}</code></pre>
+<h2 id="calls">Calls</h2>
+<p>Calls in the file are paired enter-exits, similar to scopes in the WTF format. Enters are the function ID being entered, and exits are the negative of the function ID. Each ID is 4b.</p>
+<p>For example:</p>
+<pre><code> 1000 # enter function 1000
+ 1001 # enter function 1001
+-1001 # leave function 1001
+-1000 # leave function 1000</code></pre>
+</body>
+</html>

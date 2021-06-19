@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-04</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="agenda">2016-08-04 Agenda</h1>
+<p>Previously</p>
+<ul>
+<li>[ ] RM: talk to <span class="citation" data-cites="ebryn">@ebryn</span> about controllers</li>
+<li>[x] RM: fix sidebar in blog page - (will revisit when we get back to website stuff)</li>
+<li>[ ] RM: Learning Team Blog Post</li>
+<li>[x] RM: Invite Teddy to Learning team (will need schedule a meeting)</li>
+<li>[x] RM: Research Team Page</li>
+<li>[x] TJ: Subroutes on remote branch</li>
+</ul>
+<p>Topics</p>
+<ul>
+<li>Advanced Ember documentation (how do we handle this?) - DB (and Erik Bryn?)</li>
+<li>Tutorial (TJ)</li>
+<li>Ember Hearth</li>
+<li>Translations</li>
+<li>bors</li>
+<li>Gavin + Learning Team</li>
+</ul>
+<h1 id="action-items">Action Items</h1>
+<ul>
+<li>[ ] RM: Schedule meeting with Teddy</li>
+<li>[ ] ??: Expand Learn page
+<ul>
+<li>[ ] Add Deep Dive videos</li>
+<li>[ ] Advanced Ember topics -&gt; ping mike/LI (nathan)/Netflix (sugarpirate?)</li>
+</ul></li>
+<li>[ ] RM: Recruit translation infrastructure workers</li>
+<li>[ ] GJ: Ember Inspector videos</li>
+</ul>
+<h1 id="minutes">Minutes</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>TJ: Todd Jordan <span class="citation" data-cites="toddjordan">@toddjordan</span></li>
+<li>RM: Ricardo Mendes <span class="citation" data-cites="locks">@locks</span></li>
+<li>GJ: Gavin Joyce <span class="citation" data-cites="gavinjoyce">@gavinjoyce</span></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<hr />
+<h3 id="advanced-docs">Advanced Docs</h3>
+<p>RM: was thinking about creating a page and linking Gavin’s deep dive videos.</p>
+<p>RM: Hardest part is getting people with in depth source knowledge to pass that info along. Will likely be a slow process.</p>
+<p>GJ: what areas should we focus on here</p>
+<p>RM: views, run loop, getting extra documentation from netflix, linked in</p>
+<p>GJ: talked to rwjblue about deep dive videos in the past. if there were obvious topics I could try setting up with him</p>
+<p>TJ: I’ve heard in a couple occasions Ember-cli</p>
+<p>RM: Mike North has some thoughts about this and should ping him, as well as netflix and linked in</p>
+<h3 id="tutorial">Tutorial</h3>
+<p>TJ: 2 items of feedback I’d like on the tutorial subroutes. PR is opened agains super-rentals.</p>
+<ul>
+<li>Changed the use of “slugs” to just using id routing</li>
+<li>used mirage to mock http requests (as opposed to stubbing the store)</li>
+</ul>
+<p>RM: I’m for just using id routing</p>
+<p>TJ: My next part of the tutorial will be creating a reservations form. Will likely put the tutorial down a bit to work on API Doc improvements. Will task what’s next if other want to pick it up.</p>
+<h3 id="ember-hearth">Ember Hearth</h3>
+<p>RM: munumunum and I are picking it up again. He did a restyling that looks good, still tweaking UI. I’m setting up continuous deployment based on tags. We have osx and linux builds. Trying to get a different packager in ember electron to make it easier to create installers. Also need to understand auto-updates. Will wait for Leah and next meeting to discuss.</p>
+<h3 id="translations">Translations</h3>
+<p>RM: Couple of problems:</p>
+<ol type="1">
+<li>People are getting a bit demoralized</li>
+<li>We dont have a good workflow to publish updates to guides</li>
+</ol>
+<p>RM: Want to pull translations out into another repo because:</p>
+<ul>
+<li>confuses people (some try to update all)</li>
+<li>too many files</li>
+<li>want to kill the sync bots: too many commits on the source repo
+<ul>
+<li>want crowdin to trigger sync, not the other way.</li>
+<li>need to figure out a better way for versioning</li>
+<li>find someone trustworthy to see it through. Some are interested, but not sure of their availability.</li>
+</ul></li>
+</ul>
+<h3 id="borshomu">BORS/Homu</h3>
+<p>RM: Stalled because person working on it set up heroku and bot/webhooks, but the bot wouldn’t recognize the r+ command. Since then that dev has moved on. Need someone to pick up the torch.</p>
+<h3 id="gavin">Gavin</h3>
+<p>RM: Everyone is on board with Gavin joining. Need to understand process of adding new members. Would love to bring Gavin’s access and video content into our core learning and docs.</p>
+<p>GJ: Planned on completing videos for guides next. Hoping to do 1 per week. Would love feedback on that. My focus atm is with Glimmer 2 in Alpha and increasing my Ember role at the company. Post Glimmer 2 my learning capacity should increase as it dovetails with my company’s goal of providing better ember resources to employees.</p>
+</body>
+</html>

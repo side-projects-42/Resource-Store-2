@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>june-20</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-06-20">ember-data-weekly-call-2016-06-20</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>Clemens <span class="citation" data-cites="pangratz">@pangratz</span></li>
+<li>Tom <span class="citation" data-cites="tomdale">@tomdale</span></li>
+<li>Eric <span class="citation" data-cites="heroiceric">@heroiceric</span></li>
+<li>Brendan <span class="citation" data-cites="bmac">@bmac</span></li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="should-ds-improved-ajax-call-ajax-if-it-is-overridden">Should <code>ds-improved-ajax</code> call <code>ajax</code> if it is overridden?</h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li>feature added in <a href="https://github.com/emberjs/data/pull/3099">PR #3099</a></li>
+</ul>
+<h5 id="resolution">Resolution</h5>
+<ul>
+<li>Test if <code>ajax</code> or <code>ajaxOptions</code> has been overridden and if they have then we should fallback and log a deprecation warning.</li>
+</ul>
+<hr />
+<h3 id="feature-ds-adapter-jqxhr-enable-adapter-to-have-access-to-full-jqxhr-in-response">[FEATURE ds-adapter-jqxhr] Enable adapter to have access to full jqXHR in response</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4406">PR #4406</a></li>
+</ul>
+<h5 id="resolution-1">Resolution</h5>
+<ul>
+<li>Lets wait for Igor and Stanly to argue this case.</li>
+</ul>
+<hr />
+<h3 id="bugfix-beta-use-lower-case-header-fields-4400">[BUGFIX beta] Use lower-case header fields #4400</h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4400">PR #4400</a></li>
+</ul>
+<h5 id="resolution-2">Resolution</h5>
+<ul>
+<li>Implement something similar to how it is done <a href="https://github.com/ember-fastboot/fastboot/blob/master/lib/fastboot-headers.js">in ember-fastboot</a>, where a custom <code>Headers</code> object is used instead (see <a href="https://developer.mozilla.org/en-US/docs/Web/API/Headers">Headers</a>), which has the headers set as keys to keep the current behavior</li>
+</ul>
+</body>
+</html>

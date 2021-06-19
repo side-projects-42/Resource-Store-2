@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-03</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="july-3-2015">July 3 2015</h3>
+<h5 id="topics">Topics</h5>
+<ul>
+<li>Docs Sub-Team - <span class="citation" data-cites="tomdale">@tomdale</span> (https://beta.usecanvas.com/trek/emberjs-guides-and-documentation/73e1b6a7-622d-4d45-83a8-51557193b4e1)</li>
+<li>API’s marked as <code>@private</code> by <a href="https://github.com/emberjs/ember.js/pull/11362">emberjs/ember.js#11362</a></li>
+<li>issue backlog is filling (for all repos) we need some help triaging</li>
+<li>some migration steps Sortable -&gt; AC/RC are hampered unless we backport AC/RC to 1.13…. But this is risky. What do</li>
+</ul>
+<h5 id="rfcs-to-discuss">RFCS to Discuss</h5>
+<ul>
+<li>Final :thumbsup: on <a href="https://github.com/emberjs/rfcs/pull/65">deprecation hooks</a>. Please review and raise issues with Matt before the meeting if you have any.</li>
+<li>Try to get consensus on <a href="https://github.com/emberjs/rfcs/pull/46">registry/container reform</a>. 2.0 is our last chance to make something stable out of a quasi-public, messy API that is de-facto public already.</li>
+</ul>
+<h5 id="gono-go">Go/No-Go</h5>
+<ul>
+<li><code>ember-htmlbars-component-generation</code> - Angle Bracket Components (without fragments, but with documented lifecycle hooks and public <code>attrs</code>)
+<ul>
+<li>How coupled is this to shipping an API for <code>&lt;ember-component is={{someComponentName}}&gt;</code>? They should land together in 2.1</li>
+</ul></li>
+</ul>
+<h5 id="issues">Issues</h5>
+<p><a href="https://github.com/emberjs/ember.js/issues/11590">#11590 - delete stale branches</a></p>
+<ul>
+<li>people should review there own stale branches, and clean them up: https://github.com/emberjs/ember.js/branches/stale</li>
+</ul>
+<p><a href="https://github.com/tildeio/htmlbars/pull/374">htmlbars#374</a></p>
+<ul>
+<li>propsFirst bugfix needs review</li>
+<li>issue: https://github.com/tildeio/htmlbars/pull/374</li>
+</ul>
+<p>All those private -&gt; public API PRs</p>
+<ul>
+<li>would be nice if people submitted a single issue with a checklist (i recommend that in an issue)</li>
+<li>the future of enumerable is uncertain, but it will survive 2 -&gt; 3 based on timeline. Should we make it public? I would like to still kill the enumerable change events though…</li>
+</ul>
+<p><a href="https://github.com/emberjs/ember.js/issues/11567">#11567 - ArrangedContent Bug</a></p>
+<ul>
+<li>do we fix or try to fix? Or do we just close as WONTFIX, and tell people to use sort + glimmer ?</li>
+</ul>
+<p><a href="https://github.com/emberjs/ember.js/pull/11576">#11576 - Experiment with a more pay as you go ember</a></p>
+<ul>
+<li>30-40% reduction in execution of ember.js</li>
+<li>HTMLBars code is still the largest offender</li>
+<li>could see as good as 2x faster execution times if we take this further</li>
+<li>need someone to help / champion</li>
+</ul>
+<h4 id="minutes">Minutes</h4>
+<p>Attendees: Robert, Trek, Matt, Martin, Tom, Igor, Stefan</p>
+<p>Several people not attending due to the holiday. Some last minute confusion about if the meeting was still going to occur.</p>
+<p>SP: Assume no meetings on US National Holidays (or observed days).</p>
+<p>RJ: First topic: docs team.</p>
+<p>TD: Can we invite locks + michael?</p>
+<p>TG: Sounds good, we clearly need community help. Delegating is good, but we need to solidify the and share the vision.</p>
+<p>TD &amp; TG: Let’s be sure they are invited.</p>
+<p>RJ: We should refresh our understanding of what parts of the API docs need work. EG versioned API Docs etc.</p>
+<p>MB: What’s up with the 1.13 API docs?</p>
+<p>RJ: It’s my fault, haven’t had time to confirm my understanding of the release steps.</p>
+<p>TG: I’ll help with this one today.</p>
+<p>RW+TG: Let’s set aside time.</p>
+<p>RJ: We need a way to keep track of missing API and guide entries.</p>
+<p>TG: We need to be sure the guides don’t turn into a dumping ground.</p>
+<p>SP: Contributors should feel welcome to provide API documentation. It’s trickier to accept large guide contributions, although good intentioned historically these have resulted in a confusing and shaded narrative,. Hopefully with the doc team, we can expand the group of users who understand the vision.</p>
+<p>MB: We need to clean up the documentation for helpers. I’ll create an Ember.Helper.helpers and move built-in helpers there.</p>
+<p>RJ+TG: Should make sure to consider other solutions like modules, try to better organize them than they were before.</p>
+<p>RJ: We now enforce that all YUI docs are marked <span class="citation" data-cites="public">@public</span> or <span class="citation" data-cites="private">@private</span>. There may have been some misclassifications and there are some outstanding PR’s that need to be addressed requesting API’s to be marked as <span class="citation" data-cites="public">@public</span>.</p>
+<p>RJ+TD+SP: We can move the documentation for enumerable utilities to support prototype extensions (using <span class="citation" data-cites="for">@for</span>) but we don’t necessarily need to mark Enumerable as <span class="citation" data-cites="public">@public</span>.</p>
+<p>TD+SP: Should we move Enumerable to an add-on?</p>
+<p>SP: I’ll submit a PR that will deprecate Enumerable 1.13. leave private + deprecated in 2.0 to ease upgrades. It will be dropped after the first LTS in 2.0</p>
+<p>SP: Tom, can you review PRs with public/private changes?</p>
+<p>TD: Seems good bro, I can do it on the plane on Sunday.</p>
+<p>SP+TD+RJ: We need to triage a bit more. Please take a little time to look through issues today.</p>
+<p>TD: Maybe we are at the point where a triage team (a la Rails) makes sense.</p>
+<p>SP: Perhaps we can experiment with individual office hours.</p>
+<p>SP: RC removal is gated on a solution for sorting. Possibly we can backport the 2.0 sorting semantics into 1.13 inside an addon</p>
+<p>RJ: Ember.View is deprecated, users cannot add class names application view elements.</p>
+<p>TD: They can just put another div in the template.</p>
+<p>SP: It could create a non-minimal refactoring cost to 2.0.</p>
+<p>MB: It seems like a painful 2.0 breaking edge case that we are stuck with.</p>
+<p>TG: They can ask Tom for help. He loves facetime calls.</p>
+<p>TG: This will be blocker for 2.0 upgrade, but those users can use the addon until 2.4 and migrate to routable components when they land</p>
+<p>SP: So the addon should silence the deprecation in 1.13</p>
+<p>RJ: Yup, and it already does. ember-legacy-views</p>
+<p>TG: We need good terms and guides for these ugly left-over edge cases (basically “how do we explain route -&gt; route driven templates -&gt; action passing in a way that doesn’t raise too many WATs”)</p>
+<p>RJ: Deprecation RFC &amp; API, seems to have general approval</p>
+<p>MB: I have general approval from wycats on this</p>
+<p>RJ: I plan to have a polyfill for this API on 1.13, which will allow people to customize the tooling for 2.0 upgrades</p>
+<p>MB: I will do the final checks and merge the RFC. Cory or Clemens can possibly pick up the implementation.</p>
+<p>RJ: Dropping branches. How?</p>
+<p>TD: (starts deleting old stuff)</p>
+<p>SP: The lazy execution PR has basically stalled, needs a lot more work to be a finished product. Will leave the PR around for people to look at and review, but someone else would need to take it across the finish line.</p>
+</body>
+</html>

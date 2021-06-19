@@ -1,67 +1,19 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        WebInspector.showPanel("elements");
-        InspectorTest.selectNodeAndWaitForStyles("inspected", step1);
-
-        var treeElement;
-        var section;
-
-        function step1() {
-          InspectorTest.addResult("Before append:");
-          InspectorTest.dumpSelectedElementStyles(true);
-          section =
-            WebInspector.panels.elements.sidebarPanes.styles.sections[0][1];
-          section.expand();
-
-          // Create and increment.
-          treeElement = section.addNewBlankProperty();
-          treeElement.startEditing();
-          treeElement.nameElement.textContent = "color";
-          treeElement.nameElement.dispatchEvent(
-            InspectorTest.createKeyEvent("Enter")
-          );
-
-          // Update incrementally to a valid value.
-          treeElement.valueElement.textContent = "rgb(";
-          treeElement.kickFreeFlowStyleEditForTest();
-          InspectorTest.runAfterPendingDispatches(step2);
-        }
-
-        function step2() {
-          // Commit invalid value.
-          treeElement.valueElement.textContent = "rgb(1";
-          treeElement.valueElement.dispatchEvent(
-            InspectorTest.createKeyEvent("Enter")
-          );
-          InspectorTest.runAfterPendingDispatches(step3);
-        }
-
-        function step3() {
-          InspectorTest.selectNodeWithId("other");
-          InspectorTest.runAfterPendingDispatches(step4);
-        }
-
-        function step4() {
-          InspectorTest.selectNodeAndWaitForStyles("inspected", step5);
-        }
-
-        function step5() {
-          InspectorTest.addResult("After append:");
-          InspectorTest.dumpSelectedElementStyles(true);
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests that adding an invalid property retains its syntax.</p>
-
-    <div id="inspected" style="font-size: 12px">Text</div>
-    <div id="other"></div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>styles-add-invalid-property</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that adding an invalid property retains its syntax.</p>
+<p>Text</p>
+</body>
 </html>

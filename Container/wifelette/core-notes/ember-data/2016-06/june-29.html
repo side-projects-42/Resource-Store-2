@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>june-29</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-06-29">ember-data-weekly-call-2016-06-29</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>bmac</li>
+<li>igor</li>
+<li>pangratz</li>
+<li>heroiceric</li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="documentation-of-features-for-the-next-release">Documentation of features for the next release</h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li>feature added in <a href="https://github.com/emberjs/data/pull/3099">PR #3099</a></li>
+</ul>
+<h5 id="resolution">Resolution</h5>
+<ul>
+<li>Test if <code>ajax</code> or <code>ajaxOptions</code> has been overridden and if they have then we should fallback and log a deprecation warning.</li>
+<li>pangratz will be trying to work on the guides for this one next week</li>
+</ul>
+<hr />
+<h3 id="feature-ds-adapter-jqxhr-enable-adapter-to-have-access-to-full-jqxhr-in-response">[FEATURE ds-adapter-jqxhr] Enable adapter to have access to full jqXHR in response</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4406">PR #4406</a></li>
+</ul>
+<h5 id="resolution-1">Resolution</h5>
+<ul>
+<li>Lets try and figure out what properties from the jqhxr users need but are not exposed.</li>
+<li>Think about exposing the concept of the request/response in the adapter lifecycle.</li>
+</ul>
+<hr />
+<h3 id="bugfix-beta-use-lower-case-header-fields-4400">[BUGFIX beta] Use lower-case header fields #4400</h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4400">PR #4400</a></li>
+<li><a href="https://github.com/emberjs/data/pull/4456">PR implementing the Headers approach</a> mentioned below</li>
+</ul>
+<h5 id="resolution-2">Resolution</h5>
+<ul>
+<li>Get some more input from the Ember Core team to see if we should also be using a Headers instance when building the request.</li>
+</ul>
+</body>
+</html>

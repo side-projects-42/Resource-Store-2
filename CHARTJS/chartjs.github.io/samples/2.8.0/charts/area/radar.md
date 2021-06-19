@@ -1,0 +1,5 @@
+Propagate
+
+Smooth
+
+Randomize

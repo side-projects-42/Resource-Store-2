@@ -1,4 +1,5 @@
-# Sponsorships
+Sponsorships
+============
 
 The Sponsorships app is designed to help Event Planners organize their sponsorship packages across events. Create as many different events, sponsorships, perks and configurations as you need.
 
@@ -18,6 +19,7 @@ This project is intended to be a safe, welcoming space for collaboration, and co
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
 
-## Design / Planning
+Design / Planning
+-----------------
 
 ![Database Diagram](DB.png)

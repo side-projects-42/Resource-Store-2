@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="multiverse">Multiverse</h1>
+    <h2 id="testing-in-a-multitude-of-environments">
+      Testing in a multitude of environments
+    </h2>
+    <p>
+      Multiverse was created to solve a specific problem experienced by the
+      Agent team. Not only does the New Relic Agent run in a wide variety of
+      environments, but its expected behavior <em>changes</em> based on the
+      environment. Instrumentation is toggled on and off based on the presence
+      of certain libraries, and some of these libraries are incompatible with
+      each other. Effective testing requires us to specify different
+      environments for different tests; Multiverse aims to make this painless.
+    </p>
+    <h2 id="getting-started">Getting started</h2>
+    <p>You can invoke this via rake</p>
+    <pre><code>rake test:multiverse</code></pre>
+    <p>
+      The first time you run this command on a new Ruby installation, it will
+      take quite a long time (up to 1 hour). This is because bundler must
+      download and install each tested version of each 3rd-party dependency.
+      After the first run through, almost all external gem dependencies will be
+      cached, so things won’t take as long.
+    </p>
+    <h2 id="running-specific-tests-and-environments">
+      Running Specific Tests and Environments
+    </h2>
+    <p>
+      Multiverse tests live in the test/multiverse directory and are organized
+      into ‘suites’. Generally speaking, a suite is a group of tests that share
+      a common 3rd-party dependency (or set of dependencies). You can run a
+      specific suite by providing a parameter (which gets loosely matched
+      against suite names)
+    </p>
+    <pre><code>rake test:multiverse[agent_only]</code></pre>
+    <p>
+      You can pass additional parameters to the test:multiverse rake task to
+      control how tests are run:
+    </p>
+    <ul>
+      <li>name= only tests with names matching string will be executed</li>
+      <li>
+        env= only the Nth environment will be executed (may be specified
+        multiple times)
+      </li>
+      <li>file= only tests in specified file will be executed</li>
+      <li>
+        debug environments for each suite will be executed in serial rather than
+        parallel (the default), and the pry gem will be automatically included,
+        so that you can use it to help debug tests.
+      </li>
+    </ul>
+    <pre><code>rake test:multiverse[agent_only,name=test_resets_event_report_period_on_reconnect,env=0,debug]</code></pre>
+    <h3 id="cleanup">Cleanup</h3>
+    <p>
+      Occasionally, it may be necessary to clean up your environment when
+      migration scripts change or Gemfile lock files get out of sync. Similar to
+      Rails’ rake assets:clobber, multiverse has a clobber task that will drop
+      all multiverse databases in MySQL and remove all Gemfile._ and
+      Gemfile._.lock files housed under test/multiverse/suites/**
+    </p>
+    <pre><code>rake test:multiverse:clobber</code></pre>
+    <h2 id="adding-a-test-suite">Adding a test suite</h2>
+    <p>
+      To add tests add a directory to the <code>suites</code> directory. This
+      directory should contain at least two files.
+    </p>
+    <h3 id="envfile">Envfile</h3>
+    <p>
+      The Envfile is a meta gem file. It allows you to specify one or more
+      gemset that the tests in this directory should be run against. For
+      example:
+    </p>
+    <pre><code>gemfile &lt;&lt;-GEMFILE
+  gem &quot;rails&quot;, &quot;~&gt;3.2.0&quot;
+GEMFILE
+
+gemfile &lt;&lt;-GEMFILE
+  gem &quot;rails&quot;, &quot;~&gt;3.1.0&quot;
+GEMFILE</code></pre>
+    <p>
+      This will run these tests against 2 environments, one running rails 3.1,
+      the other running rails 3.2.
+    </p>
+    <p>
+      New Relic is automatically included in the environment. Specifying it in
+      the Envfile will trigger an error. You can override where newrelic is
+      loaded from using two environment variables.
+    </p>
+    <p>The default gemfile line is</p>
+    <pre><code>gem &#39;newrelic_rpm&#39;, :path =&gt; &#39;../../../ruby_agent&#39;</code></pre>
+    <p>
+      <code>ENV['NEWRELIC_GEMFILE_LINE']</code> will specify the full line for
+      the gemfile
+    </p>
+    <p>
+      <code>ENV['NEWRELIC_GEM_PATH']</code> will override the
+      <code>:path</code> option in the default line.
+    </p>
+    <h3 id="test-files">Test files</h3>
+    <p>
+      All files in a test suite directory that end with .rb will be executed as
+      test files. These should use test unit.
+    </p>
+    <p>For example:</p>
+    <pre><code>require &#39;test/unit&#39;
+class ATest &lt; Test::Unit::TestCase
+  def test_json_is_loaded
+    assert JSON
+  end
+
+  def test_haml_is_not_loaded
+    assert !defined?(Haml)
+  end
+end</code></pre>
+    <h2 id="testing-multiverse">Testing Multiverse</h2>
+    <p>You can run tests of multiverse itself with</p>
+    <pre><code>rake test:multiverse:self</code></pre>
+  </body>
+</html>

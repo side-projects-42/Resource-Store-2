@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>chrome_tracing</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="importing-chrometracing-data">Importing chrome:tracing data</h1>
+<p>WARNING: this feature is experimental and may stop working at any time!</p>
+<p>On very recent Chrome builds (assume Chromium nightlies) it’s possible to grab the chrome:tracing data relevant to a page via WTF.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="use-a-chromium-nightly">Use a Chromium Nightly</h3>
+<p>This feature uses undocumented functionality inside of Chrome, and it seems to change rather frequently. If it stops working on a recent Chrome, file an issue. Older Chrome releases are unsupported.</p>
+<h3 id="launch-chromium-with-remote-debugging">Launch Chromium with Remote Debugging</h3>
+<p>Check the documentation for <a href="http://www.chromium.org/developers/how-tos/run-chromium-with-flags">running Chromium with flags</a>. Make sure all previous instances of Chromium have been closed.</p>
+<pre><code>~/chrome-linux/chrome --remote-debugging-port=9222</code></pre>
+<h3 id="enable-the-feature-in-wtf">Enable the Feature in WTF</h3>
+<p>By default if you have <code>--remote-debugging-port</code> set correctly the feature will be enabled. If not, check the below:</p>
+<ul>
+<li>On a page that has WTF embedded, open the settings with the gear icon.</li>
+<li>Click ‘Providers’, scroll to ‘Chrome Debugging’.</li>
+<li>Make sure ‘Enabled’ is checked.</li>
+<li>If <code>--remote-debugging-port</code> is set correctly then ‘chrome:tracing’ will be checked automatically.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>When supported a new icon appears in the on-page WTF HUD. It doesn’t look like it yet, but it’s a toggle button.</p>
+<ul>
+<li>Load your page</li>
+<li>Click once on the button to start tracing
+<ul>
+<li>You should see a ‘tracing…’ status message in the top right corner</li>
+</ul></li>
+<li>After a few seconds, click the button again to stop
+<ul>
+<li>The status will change to ‘waiting’ while the data is being retrieved</li>
+</ul></li>
+<li>Once the status disappears, snapshot or save the trace</li>
+</ul>
+<h2 id="caveats">Caveats</h2>
+<h3 id="times-dont-line-up">Times Don’t Line Up</h3>
+<p>The chrome:tracing reports do not include absolute timestamps meaning that some guesswork is required to try to line them up. This isn’t perfect, and times of the zones sourced from chrome:tracing will be shifted either early or late relative to the WTF track. <a href="https://code.google.com/p/chromium/issues/detail?id=174451">bug</a></p>
+<h3 id="tracing-overhead-is-not-hidden">Tracing Overhead is Not Hidden</h3>
+<p>Once a trace is requested the tail-end of the tracing is included in the data. You’ll see this as a long string of OnTraceDataCollected events. Just ignore these for now. Filed as issue 252.</p>
+</body>
+</html>

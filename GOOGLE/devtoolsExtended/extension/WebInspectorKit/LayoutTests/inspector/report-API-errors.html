@@ -1,32 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function test() {
-        console.error = function () {
-          InspectorTest.addResult(String.sprintf.apply(this, arguments));
-        };
-
-        ConsoleAgent.setMonitoringXHREnabled(1);
-        ConsoleAgent.setMonitoringXHREnabled();
-        ConsoleAgent.setMonitoringXHREnabled(false, "not a function");
-        ConsoleAgent.setMonitoringXHREnabled(false, undefined);
-        RuntimeAgent.evaluate("true", "test");
-        RuntimeAgent.evaluate("true", "test", function () {});
-        RuntimeAgent.evaluate("true", "test", undefined, function () {});
-        InspectorBackend.dispatch(
-          '{"method": "wrongDomain.something-strange", "params": {}}'
-        );
-        InspectorBackend.dispatch(
-          '{"method": "Inspector.something-strange", "params": {}}'
-        );
-
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests that InspectorBackendStub is catching incorrect arguments.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>report-API-errors</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that InspectorBackendStub is catching incorrect arguments.</p>
+</body>
 </html>

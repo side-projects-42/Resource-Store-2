@@ -1,36 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      Object.prototype.cyclicRef = Object.prototype;
-
-      function testFunction() {
-        var o = new Object();
-        debugger;
-      }
-
-      var test = function () {
-        InspectorTest.startDebuggerTest(step1);
-
-        function step1() {
-          InspectorTest.runTestFunctionAndWaitUntilPaused(step2);
-        }
-
-        function step2() {
-          InspectorTest.completeDebuggerTest();
-        }
-      };
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that debugging a page where Object prototype has a cyclic reference
-      won't crash the browser.<a
-        href="https://bugs.webkit.org/show_bug.cgi?id=43558"
-        >Bug 43558</a
-      >
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-cyclic-ref</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that debugging a page where Object prototype has a cyclic reference won’t crash the browser.<a href="https://bugs.webkit.org/show_bug.cgi?id=43558">Bug 43558</a></p>
+</body>
 </html>

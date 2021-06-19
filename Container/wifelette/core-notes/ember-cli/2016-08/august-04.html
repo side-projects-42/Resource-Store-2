@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-04</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-08-04">ember-cli Meeting Notes - 2016-08-04</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>David Hamilton</li>
+<li>Tobias Bieniek</li>
+<li>Jake Bixby</li>
+<li>Stefan Penner</li>
+<li>Chad Hietala</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Nathan - <code>EmberModulesApp</code> broccoli-fixturify spec.</li>
+<li>[ ] Tobias - Add CI to output repos.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="heimdall-landing">Heimdall Landing</h3>
+<ul>
+<li><a href="https://github.com/heimdalljs/heimdalljs-lib">Repo.</a></li>
+<li>Functionality: In the ecosystem projects, but hasn’t landed in Ember CLI yet.</li>
+<li>Don’t want to check compat against a global version.</li>
+<li>Landing the improved compat check today-ish.</li>
+</ul>
+<h3 id="ember-engines-build">ember-engines build</h3>
+<ul>
+<li>Had to hack most of <code>lib/broccoli/ember-app.js</code> to pieces.</li>
+<li>Tons of pain.</li>
+<li><code>EmberModulesApp</code> and then fold back-compat into it?</li>
+<li>Make sure that the boundaries in which we pass items from the next steps.</li>
+<li>Make it possible to work with linker/packager.</li>
+<li>Need clear boundaries.</li>
+<li><code>broccoli-fixturify</code> all the things in advance.</li>
+</ul>
+<h3 id="broccoli-pit-of-success">Broccoli Pit of Success</h3>
+<ul>
+<li>Starting place for broccoli plugins which include example tests.
+<ul>
+<li>Include rebuild tests that monitor stability.</li>
+</ul></li>
+<li>Test it in our community-owned addons first and then extract out into community tools.</li>
+<li>Flesh out a few common scenarios.</li>
+<li>Start in on documentation afterward.</li>
+</ul>
+<h3 id="file-count">File Count</h3>
+<ul>
+<li>Capture in Ember Observer for addons?</li>
+<li>Tie it into CI, possibly in shell.</li>
+<li>Looking for community support in this endeavor.</li>
+</ul>
+<h3 id="ember-newaddon-output"><code>ember-(new|addon)-output</code></h3>
+<ul>
+<li>Enable CI for these.</li>
+<li>Enable Greenkeeper to help us keep our blueprints up-to-date.</li>
+</ul>
+</body>
+</html>

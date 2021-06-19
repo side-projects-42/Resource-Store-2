@@ -918,11 +918,9 @@ Effect.SlideDown = function (element) {
           effect.element.makeClipping().setStyle({ height: "0px" }).show();
         },
         afterUpdateInternal: function (effect) {
-          effect.element
-            .down()
-            .setStyle({
-              bottom: effect.dims[0] - effect.element.clientHeight + "px",
-            });
+          effect.element.down().setStyle({
+            bottom: effect.dims[0] - effect.element.clientHeight + "px",
+          });
         },
         afterFinishInternal: function (effect) {
           effect.element.undoClipping().undoPositioned();
@@ -962,11 +960,9 @@ Effect.SlideUp = function (element) {
           effect.element.makeClipping().show();
         },
         afterUpdateInternal: function (effect) {
-          effect.element
-            .down()
-            .setStyle({
-              bottom: effect.dims[0] - effect.element.clientHeight + "px",
-            });
+          effect.element.down().setStyle({
+            bottom: effect.dims[0] - effect.element.clientHeight + "px",
+          });
         },
         afterFinishInternal: function (effect) {
           effect.element.hide().undoClipping().undoPositioned();

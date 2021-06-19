@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>database</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="database-access">Database Access</h1>
+<p><em>Some information about database access in MediaWiki. By Tim Starling, January 2006.</em></p>
+<h2 id="database-layout">Database Layout</h2>
+<p>For information about the MediaWiki database layout, such as a description of the tables and their contents, please see:</p>
+<ul>
+<li><a href="https://www.mediawiki.org/wiki/Manual:Database_layout">The manual</a></li>
+<li><a href="https://phabricator.wikimedia.org/diffusion/MW/browse/master/maintenance/tables.sql">https://phabricator.wikimedia.org/diffusion/MW/browse/master/maintenance/tables.sql</a></li>
+</ul>
+<h2 id="api">API</h2>
+<p>To make a read query, something like this usually suffices:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">$dbr</span> = wfGetDB<span class="ot">(</span> <span class="kw">DB_REPLICA</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">$res</span> = <span class="kw">$dbr</span>-&gt;select<span class="ot">(</span> <span class="co">/* ...see docs... */</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">foreach</span> <span class="ot">(</span> <span class="kw">$res</span> <span class="kw">as</span> <span class="kw">$row</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="st">...</span></a>
+<a class="sourceLine" id="cb1-5" title="5">}</a></code></pre></div>
+<p>For a write query, use something like:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">$dbw</span> = wfGetDB<span class="ot">(</span> <span class="kw">DB_PRIMARY</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">$dbw</span>-&gt;insert<span class="ot">(</span> <span class="co">/* ...see docs... */</span> <span class="ot">);</span></a></code></pre></div>
+<p>We use the convention <code>$dbr</code> for read and <code>$dbw</code> for write to help you keep track of whether the database object is a replica (read-only) or a primary (read/write). If you write to a replica, the world will explode. Or to be precise, a subsequent write query which succeeded on the primary may fail when propagated to the replica due to a unique key collision. Replication will then stop and it may take hours to repair the database and get it back online. Setting <code>read_only</code> in <code>my.cnf</code> on the replica will avoid this scenario, but given the dire consequences, we prefer to have as many checks as possible.</p>
+<p>We provide a <code>query()</code> function for raw SQL, but the wrapper functions like <code>select()</code> and <code>insert()</code> are usually more convenient. They take care of things like table prefixes and escaping for you. If you really need to make your own SQL, please read the documentation for <code>tableName()</code> and <code>addQuotes()</code>. You will need both of them.</p>
+<h2 id="basic-query-optimisation">Basic query optimisation</h2>
+<p>MediaWiki developers who need to write DB queries should have some understanding of databases and the performance issues associated with them. Patches containing unacceptably slow features will not be accepted. Unindexed queries are generally not welcome in MediaWiki, except in special pages derived from <code>QueryPage</code>. It’s a common pitfall for new developers to submit code containing SQL queries which examine huge numbers of rows. Remember that <code>COUNT(*)</code> is <strong>O(N)</strong>, counting rows in a table is like counting beans in a bucket.</p>
+<h2 id="replication">Replication</h2>
+<p>The largest installation of MediaWiki, Wikimedia, uses a large set of replica MySQL servers replicating writes made to a primary MySQL server. It is important to understand the issues associated with this setup if you want to write code destined for Wikipedia.</p>
+<p>It’s often the case that the best algorithm to use for a given task depends on whether or not replication is in use. Due to our unabashed Wikipedia-centrism, we often just use the replication-friendly version, but if you like, you can use <code>LoadBalancer::getServerCount() &gt; 1</code> to check to see if replication is in use.</p>
+<h2 id="lag">Lag</h2>
+<p>Lag primarily occurs when large write queries are sent to the primary. Writes on the primary are executed in parallel, but they are executed in serial when they are replicated to the replicas. The primary writes the query to the binlog when the transaction is committed. The replicas poll the binlog and start executing the query as soon as it appears. They can service reads while they are performing a write query, but will not read anything more from the binlog and thus will perform no more writes. This means that if the write query runs for a long time, the replicas will lag behind the primary for the time it takes for the write query to complete.</p>
+<p>Lag can be exacerbated by high read load. MediaWiki’s load balancer will stop sending reads to a replica when it is lagged by more than 30 seconds. If the load ratios are set incorrectly, or if there is too much load generally, this may lead to a replica permanently hovering around 30 seconds lag.</p>
+<p>If all replicas are lagged by more than 30 seconds, MediaWiki will stop writing to the database. All edits and other write operations will be refused, with an error returned to the user. This gives the replicas a chance to catch up. Before we had this mechanism, the replicas would regularly lag by several minutes, making review of recent edits difficult.</p>
+<p>In addition to this, MediaWiki attempts to ensure that the user sees events occurring on the wiki in chronological order. A few seconds of lag can be tolerated, as long as the user sees a consistent picture from subsequent requests. This is done by saving the primary binlog position in the session, and then at the start of each request, waiting for the replica to catch up to that position before doing any reads from it. If this wait times out, reads are allowed anyway, but the request is considered to be in “lagged replica mode”. Lagged replica mode can be checked by calling <code>LoadBalancer::getLaggedReplicaMode()</code>. The only practical consequence at present is a warning displayed in the page footer.</p>
+<h2 id="lag-avoidance">Lag avoidance</h2>
+<p>To avoid excessive lag, queries which write large numbers of rows should be split up, generally to write one row at a time. Multi-row <code>INSERT ... SELECT</code> queries are the worst offenders should be avoided altogether. Instead do the select first and then the insert.</p>
+<h2 id="working-with-lag">Working with lag</h2>
+<p>Despite our best efforts, it’s not practical to guarantee a low-lag environment. Lag will usually be less than one second, but may occasionally be up to 30 seconds. For scalability, it’s very important to keep load on the primary low, so simply sending all your queries to the masprimaryter is not the answer. So when you have a genuine need for up-to-date data, the following approach is advised:</p>
+<ol type="1">
+<li>Do a quick query to the primary for a sequence number or timestamp</li>
+<li>Run the full query on the replica and check if it matches the data you got from the primary</li>
+<li>If it doesn’t, run the full query on the primary</li>
+</ol>
+<p>To avoid swamping the primary every time the replicas lag, use of this approach should be kept to a minimum. In most cases you should just read from the replica and let the user deal with the delay.</p>
+<h2 id="lock-contention">Lock contention</h2>
+<p>Due to the high write rate on Wikipedia (and some other wikis), MediaWiki developers need to be very careful to structure their writes to avoid long-lasting locks. By default, MediaWiki opens a transaction at the first query, and commits it before the output is sent. Locks will be held from the time when the query is done until the commit. So you can reduce lock time by doing as much processing as possible before you do your write queries.</p>
+<p>Often this approach is not good enough, and it becomes necessary to enclose small groups of queries in their own transaction. Use the following syntax:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">$dbw</span> = wfGetDB<span class="ot">(</span> <span class="kw">DB_PRIMARY</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">$dbw</span>-&gt;begin<span class="ot">(</span> <span class="kw">__METHOD__</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">/* Do queries */</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">$dbw</span>-&gt;commit<span class="ot">(</span> <span class="kw">__METHOD__</span> <span class="ot">);</span></a></code></pre></div>
+<p>Use of locking reads (e.g. the <code>FOR UPDATE</code> clause) is not advised. They are poorly implemented in InnoDB and will cause regular deadlock errors. It’s also surprisingly easy to cripple the wiki with lock contention.</p>
+<p>Instead of locking reads, combine your existence checks into your write queries, by using an appropriate condition in the <code>WHERE</code> clause of an <code>UPDATE</code>, or by using unique indexes in combination with <code>INSERT IGNORE</code>. Then use the affected row count to see if the query succeeded.</p>
+<h2 id="query-groups">Query groups</h2>
+<p>MediaWiki supports database query groups, a way to indicate a preferred group of database hosts to use for a given query. Query groups are only supported for connections to child (non-primary) databases, making them only viable for read operations. It should be noted that using query groups does not <em>guarantee</em> a given group of hosts will be used, but rather that the query prefers such group. Making use of query groups can be benficial in many cases.</p>
+<p>One benefit is a reduction of cache misses. Directing reads for a category of queries (e.g. all logging queries) to a given host can result in more deterministic and faster performing queries.</p>
+<p>Another benefit is that it allows high-traffic wikis to configure some of their database hosts to handle some types of queries more optimally than others. For example, optimizing with different table indices for faster performance.</p>
+<p>Query groups are especially beneficial for queries expected to have a long execution time. Such queries can exhaust a database of its resources (e.g. cache space and I/O time), so targeting a specific group of hosts prevents more urgent queries from suffering a performance decrease.</p>
+<p>Additionally, expensive queries can delay database maintenance operations which may increase latency for other queries. For example, while a database read is executing, if other queries have performed updates to any tables those tables must retain all stale versions of its rows until the read is complete. Now, other potentially unrelated queries must now spend additional time scanning over obsolete rows that are waiting to be purged. Directing these long running queries to dedicated hosts helps prevent other queries in suffering a performance hit.</p>
+<p>MediaWiki currently supports the following query groups:</p>
+<ul>
+<li>api
+<ul>
+<li>Only use for queries specific to api.php requests; the method ApiBase::getDB() is provided for this purpose.</li>
+</ul></li>
+<li>dump
+<ul>
+<li>Only use in MediaWiki dump maintenance scripts. In such scripts, all queries, even fast ones, should use this group.</li>
+</ul></li>
+<li>vslow
+<ul>
+<li>Only use for queries that are expected to have a long execution time. For example, when calculating per-wiki site statistics.</li>
+</ul></li>
+</ul>
+<p>Use the below example syntax to connect to a database when your query falls into one of the above 3 categories:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">$lb</span> = MediaWikiServices::getInstance<span class="ot">()</span>-&gt;getDBLoadBalancer<span class="ot">();</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">$lb</span>-&gt;getConnectionRef<span class="ot">(</span> <span class="kw">DB_REPLICA</span><span class="ot">,</span> <span class="st">&#39;vslow&#39;</span> <span class="ot">);</span></a></code></pre></div>
+<h2 id="supported-dbmss">Supported DBMSs</h2>
+<p>MediaWiki is written primarily for use with MySQL. Queries are optimized for it and its schema is considered the canonical version. However, MediaWiki does support the following other DBMSs to varying degrees:</p>
+<ul>
+<li>PostgreSQL</li>
+<li>SQLite</li>
+</ul>
+<p>More information can be found about each of these databases (known issues, level of support, extra configuration) in the <code>databases</code> subdirectory in this folder.</p>
+<h2 id="use-of-group-by">Use of <code>GROUP BY</code></h2>
+<p>MySQL supports <code>GROUP BY</code> without checking anything in the <code>SELECT</code> clause. Other DBMSs (especially Postgres) are stricter and require that all the non-aggregate items in the <code>SELECT</code> clause appear in the <code>GROUP BY</code>. For this reason, it is highly discouraged to use <code>SELECT *</code> with <code>GROUP BY</code> queries.</p>
+</body>
+</html>

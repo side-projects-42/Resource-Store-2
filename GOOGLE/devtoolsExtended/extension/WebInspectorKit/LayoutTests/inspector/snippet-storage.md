@@ -1,0 +1,1 @@
+Tests snippet storage.

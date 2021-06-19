@@ -1,5 +1,4 @@
 Pjax
 ====
 
-The pjax utility provides seamless, gracefully degrading pjax (pushState + Ajax)
-functionality.
+The pjax utility provides seamless, gracefully degrading pjax (pushState + Ajax) functionality.

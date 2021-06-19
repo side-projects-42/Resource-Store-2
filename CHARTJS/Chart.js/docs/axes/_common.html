@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>_common</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="common-options-to-all-axes">Common options to all axes</h3>
+<p>Namespace: <code>options.scales[scaleId]</code></p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 12%" />
+<col style="width: 3%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Type of scale being employed. Custom scales can be created and registered with a string key. This allows changing the type of an axis for a chart.</td>
+</tr>
+<tr class="even">
+<td><code>alignToPixels</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Align pixel values to device pixels.</td>
+</tr>
+<tr class="odd">
+<td><code>backgroundColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td></td>
+<td>Background color of the scale area.</td>
+</tr>
+<tr class="even">
+<td><code>display</code></td>
+<td><code>boolean</code>|<code>string</code></td>
+<td><code>true</code></td>
+<td>Controls the axis global visibility (visible when <code>true</code>, hidden when <code>false</code>). When <code>display: 'auto'</code>, the axis is visible only if at least one associated dataset is visible.</td>
+</tr>
+<tr class="odd">
+<td><code>grid</code></td>
+<td><code>object</code></td>
+<td></td>
+<td>Grid line configuration. <a href="/axes/styling.md#grid-line-configuration">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>min</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>User defined minimum number for the scale, overrides minimum value from data. <a href="/axes/index.md#axis-range-settings">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>max</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>User defined maximum number for the scale, overrides maximum value from data. <a href="/axes/index.md#axis-range-settings">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>reverse</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Reverse the scale.</td>
+</tr>
+<tr class="odd">
+<td><code>stacked</code></td>
+<td><code>boolean</code>|<code>string</code></td>
+<td><code>false</code></td>
+<td>Should the data be stacked. <a href="/axes/index.md#stacking">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>suggestedMax</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>Adjustment used when calculating the maximum data value. <a href="/axes/index.md#axis-range-settings">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>suggestedMin</code></td>
+<td><code>number</code></td>
+<td></td>
+<td>Adjustment used when calculating the minimum data value. <a href="/axes/index.md#axis-range-settings">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>ticks</code></td>
+<td><code>object</code></td>
+<td></td>
+<td>Tick configuration. <a href="/axes/index.md#tick-configuration">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>weight</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>The weight used to sort the axis. Higher weights are further away from the chart area.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

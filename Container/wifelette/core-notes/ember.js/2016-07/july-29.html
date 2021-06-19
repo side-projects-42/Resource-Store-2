@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-29</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-core-team-2016-07-29">Ember Core Team 2016-07-29</h1>
+<h3 id="agenda">Agenda</h3>
+<ul>
+<li>Advanced Documentation (LS)</li>
+<li>FastBoot 1.0 (TD)
+<ul>
+<li>Blog post</li>
+</ul></li>
+<li>Glimmer 2 Alpha (GC)</li>
+<li>Chrome Canary M54 break (resolved) TL;DR</li>
+<li>TC39 update: decorators stage 2, cancellation, async function</li>
+<li>Async await stage 4 (are we ok, with enabling by default in ember-cli + guides etc?)</li>
+</ul>
+<h3 id="attendees">Attendees</h3>
+<p>DG, YK, GC, LS, EF, EB, KS, RJ, SP, TD, MB, IT</p>
+<h3 id="minutes">Minutes</h3>
+<h4 id="advanced-docs">Advanced Docs</h4>
+<p>LS: bringing up that there is some desire for advanced documentation bubbling to the learning team. There’s a lack of docs in a lot of areas once you get to the more advanced topics.</p>
+<p>YK: I want someone to expand that argument into something I can understand, are there specifics?</p>
+<p>TD: I think Ember-CLI is a good example: People want to change the build pipeline but don’t understand broccoli (poor documentation). I’ve had people evaluating Ember express that they don’t know how to extend Ember-CLI.</p>
+<p>LS: Stef and Mike worked on training materials, and there was some suggestion that the docs could be donated.</p>
+<p>YK: I seems good to donate time/resources to a thing that they think is lacking.</p>
+<p>TD: I’d be interested if they could assemble a list of topic they think are not covered (or are covered). I think we could put some marketing muscle into Broccoli and fixing that whole story.</p>
+<p>SP: I think the issues is more across the whole ecosystem, only a little bit of broccoli.</p>
+<p>YK: The general statement that we lack advanced docs is pretty correct. We need to find an avenue.</p>
+<p>TD: The balance is how to add advanced stuff without intimidating new users. We used to have a complex routing guide that just scared people off.</p>
+<p>YK: IMO having clear guides that show people how to do things we need in the real world is good.</p>
+<p>YK: Blog posts generally don’t end up being maintained enough.</p>
+<p>SP: I talked to the Safari/Spidermonkey/v8 teams about this etc, and they suggest they cannot possible document all their internals but they can share their tool-chest for success and provide a trailhead for people to start on.</p>
+<p>YK: I think that would be a small thing to do. Seems like good things would be: Guide to the guides, work on broccoli as a standalone guide, and last some docs for build process at big companies.</p>
+<p>LS: I’ll pass this along to David and try to see what he can do.</p>
+<p>SP: I think it doesn’t need to be part of the guides (possibly), doesn’t need to be newbie friendly, etc.</p>
+<p>YK: We can do this in stages. Seems like a good time to do it.</p>
+<h4 id="fastboot-1.0">FastBoot 1.0</h4>
+<p>TD: We plan on shipping! One issues left with reloading and watching, there was a recent regression. I’ll try to fix it this weekend but if not we will defer the issues.</p>
+<p>YK: I asked that FastBoot 1.0 make all deprecations errors.</p>
+<p>TD: Ah I have not done that.</p>
+<p>YK: As a conservative measure I would like to do this. It does not seem like a violation of semver to have this happen (for example the render re-flush stuff)</p>
+<p>YK: In glimmer we’ve had a lot of trouble dealing with deprecated behavior, just in the browser. I worry we will box ourselves in if we need to support it in another env as well.</p>
+<p>YK: perhaps not permanently, but if we make all deprecations allow but later it could make things hard if we allow everything.</p>
+<p>SP: One part of the FastBoot thing I’m concerned about is FastBoot watch. I’ve thought it was just a thing you could enable with <code>ember s</code>. I’m nervous about 1.0 having <code>fastboot watch</code></p>
+<p>RJ: Issue with using <code>ember s</code> is that we need to replace the express server with our own. And there are not Ember-CLI hooks to do that right now.</p>
+<p>SP: b/c of this I think it needs exploration. Having these two worlds makes me nervous. Addons need to support both things, etc.</p>
+<p>YK: You’re suggesting the current solution is temporary but we should deprecate and get on a happier path soon? Tom?</p>
+<p>TD: I want it. I didn’t merge the watch PR but I remember pushing the person who worked on it to just make <code>ember s</code> just fastbootified. Given that everyone knew it was a goal and it didn’t happen I’m sure it isn’t easily feasible.</p>
+<p>SP: By shipping 1.0 w/ that feature we need to support it in the long term.</p>
+<p>TD: What kinds of things do addons need to do in fastboot mode. You developer in <code>ember s</code>, but you verify with <code>fastboot watch</code>.</p>
+<p>YK: Tom can we not just put fastboot watch behind a FF and ship 1.0 without it?</p>
+<p>SP: how about postponing 1.0 a week and I’ll find time to try and make the issue go away.</p>
+<p>TD: I think seems good?</p>
+<p>GC: I am already nervous about FB and glimmer at the same time. I think we will blow attention spans.</p>
+<p>TD: I need to blog anyway, so with all these concerns in mind sounds good. We need to push glimmer alpha in the next hour to not miss the PR window.</p>
+<p><strong>Action Items</strong>:</p>
+<p>TD and SP to pair next week on unifying <code>watch</code> infrastructure into <code>ember s</code>, fix remaining watch-related bugs. Ship next week with feature disabled if we’re unable to resolve the issues.</p>
+<h4 id="glimmer-2-alpha">Glimmer 2 alpha</h4>
+<p>GC: first plan was ship on Tuesday, and we’re here today. We can release any moment. So far: LinkedIn and Intercom and Skylight are basically working (compatibility). I’m not sure if anyone is ambitious enough to run tests yet.</p>
+<p>SP: It is promising. I’m sure hacks do not work totally.</p>
+<p>GC: I had to disable some minor liquid-fire things for example, but the UI is working and interactive. Bad news is that it is not faster yet. I have been triaging issues and I think more are tractable. If we get the compat stuff done we can focus on performance.</p>
+<p>SP: It is risky to publish a blog post when the goal of this effort is largely perf?</p>
+<p>GC: The point of the alpha is to boot the app and compat. We can’t optimize without apps running so we can profile and have tooling etc.</p>
+<p>SP: As long as the messaging is like that seems good.</p>
+<p>GC: I have a draft of the post I can share.</p>
+<p>YK: we should be clear that perf is an area we will work on. The basis is there for good perf. There are scenarios with good perf. Real apps need to be looked at to better analyze performance concerns.</p>
+<h4 id="m54">M54</h4>
+<p>SP: error.attach stack trace started throwing when you attached a stack track . I found the issues yesterday and benedict got it resolved over the night. The code we have here is kind of lol-codeish, so I will follow up to clean up our code. Chrome’s next canary should fix this.</p>
+<h4 id="tc39-update-decorators-stage-2-cancellation-async-function">TC39 Update: decorators stage 2, cancellation, async function</h4>
+<p>SP: Now that async function is stage 4, can we document and work with them for testing etc?</p>
+<p>YK: The thing to worry about is cancellation.</p>
+<p>SP: It is similar to the problem we have today.</p>
+<p>YK: yeah but it will feel even less good than it did before. If you have an async with a bunch of methods and a context that might be destroyed you need to think about it.</p>
+<p>SP: In testing it is less of a concern.</p>
+<p>MB: Documenting for testing is good</p>
+<p>YK: We should be aware they will start using it in apps once they are documented.</p>
+<p>SP: right we can document in testing and warn about the concerns for app-space. At yahoo there were whole categories of bugs that moving to async/await helped to resolve.</p>
+<p>YK: we should just document the caveats.</p>
+<p>SP: it should be RFC’d, I propose.</p>
+<p>(some discussion)</p>
+<p>MB: perhaps it can be coupled to Robert’s testing RFC</p>
+<p>RJ: right it already does cover async await and it a concern, so we can edit that away</p>
+<p>SP: Next decorators, stage 2. Can we explore the path for ember with decorators?</p>
+<p>YK: I think we should adopt, as we need an ES6 class story and we need to push the process along. Someone needs to use this to move the process forward.</p>
+<p>SP: Right, so it is a bit of a chicken and egg problem.</p>
+<p>YK: Right there is usage, however Ember’s community is so homogenous that when we choose to adopt something it is instantly used by a lot of people.</p>
+<p>RJ: I don’t think we should deprecated existing features etc</p>
+<p>YK: We actually need to move to classes before we can use them. I don’t want the react thing where there is different behaviors for the two systems and people gain opinions.</p>
+<p>SP: Perhaps we can iterate in private?</p>
+<p>YK: I just want to get modules landing first, before we create another strike team.</p>
+<p>RJ: I consider it a bug that you cannot register plain classes anyway.</p>
+<p>EF: the question is do we migrate to a new programming model when you swap to ES6 classes</p>
+<p>SP: so after modules lets build a strike team to move this forward.</p>
+<p>YK: I feel strongly we should not have a different programming model, but we can make some specific small semantic changes.</p>
+<p>YK: last was cancellation. I think we need to figure out what our opinion on cancellation is so we can represent a position (as Ember) to the committee.</p>
+<p>YK+SP: yeah lack of cancellation is fatal</p>
+<p>YK: having an ember approach helps to shape conversations. The cancellation design is moving quickly so we need to have a position.</p>
+</body>
+</html>

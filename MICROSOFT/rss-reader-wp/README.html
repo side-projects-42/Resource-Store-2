@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="rss-reader">RSS Reader</h1>
+<p>This example application demonstrates how to build a simple RSS reader for Windows Phone using Microsoft Silverlight.</p>
+<p>While testing for compatibility with Windows Phone 8, it was found out that the previous implementation did not work after upgrading the project to Windows Phone 8.0. It seems that there is some kind of a bug in the Panorama control, causing problems if PanoramaItems are created dynamically using ItemsSource property. For example, the Panorama’s SelectedIndex does not work while using ItemsSource and also, when navigating back to the panorama, it always resets back to the first PanoramaItem, not the one which was visible when navigating deeper.</p>
+<p>For this reason, there are now four explicitly defined PanoramaItems in the main panorama (News, Leisure, Sports, and Tech), and there is a DataMember in RSSCache for retrieving contents for each of the four pages. Bug report has been filed to Microsoft regarding the issue.</p>
+<p><img src="doc/screenshots/small_main_screen_newbg.jpg?raw=true" alt="Main screen" />  <img src="doc/screenshots/item_screen.jpg?raw=true" alt="Item screen" /></p>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/rss-reader-wp</p>
+<p>Developed with: * Microsoft Visual Studio 2010 Express for Windows Phone * Microsoft Visual Studio Express for Windows Phone 2012.</p>
+<p>Compatible with:</p>
+<ul>
+<li>Windows Phone 7</li>
+<li>Windows Phone 8</li>
+</ul>
+<p>Tested to work on:</p>
+<ul>
+<li>Nokia Lumia 820</li>
+<li>Nokia Lumia 920</li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<p>Make sure you have the following installed:</p>
+<ul>
+<li>Windows 8</li>
+<li>Windows Phone SDK 8.0</li>
+<li>NuGet Package Manager (https://nuget.org/), Visual Studio extension to install and update third-party libraries and tools in Visual Studio</li>
+</ul>
+<p>To build and run the sample:</p>
+<ul>
+<li>Open the SLN file
+<ul>
+<li>File &gt; Open Project, select the file RSSReader.sln</li>
+</ul></li>
+<li>Install Windows Phone Toolkit for the project.
+<ul>
+<li>Right click solution RSSReader in Solution Explorer -&gt; select Manage NuGet Packages for Solution</li>
+<li>Search for ‘wptoolkit’ and install the ‘Windows Phone toolkit’ package</li>
+</ul></li>
+<li>Select the target, for example ‘Emulator WVGA’.</li>
+<li>Press F5 to build the project and run it on the Windows Phone Emulator.</li>
+</ul>
+<p>To deploy the sample on Windows Phone device: * See the official documentation for deploying and testing applications on Windows Phone devices at http://msdn.microsoft.com/en-us/library/windowsphone/develop/ff402565(v=vs.105).aspx</p>
+<h2 id="about-the-implementation">About the implementation</h2>
+<p>Important folders:</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+Folder
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+/
+</td>
+<td>
+Contains the project file, the license information and this file (README.md)
+</td>
+</tr>
+<tr class="even">
+<td>
+RSSReader_WP7
+</td>
+<td>
+Root folder for the WP7 implementation files.
+</td>
+</tr>
+<tr class="odd">
+<td>
+RSSReader_WP8
+</td>
+<td>
+Root folder for the WP8 implementation files.
+</td>
+</tr>
+<tr class="even">
+<td>
+RSSReader_WP7/Dependencies
+</td>
+<td>
+DLLs needed by the WP7 application.
+</td>
+</tr>
+<tr class="odd">
+<td>
+RSSReader_WP7/Model
+</td>
+<td>
+Model implementation.
+</td>
+</tr>
+<tr class="even">
+<td>
+RSSReader_WP7/Properties
+</td>
+<td>
+WP7 Application property files.
+</td>
+</tr>
+<tr class="odd">
+<td>
+RSSReader_WP7/Resources
+</td>
+<td>
+Graphic files.
+</td>
+</tr>
+<tr class="even">
+<td>
+RSSReader_WP7/Views
+</td>
+<td>
+Views of the application (panorama, pivot, pages).
+</td>
+</tr>
+<tr class="odd">
+<td>
+RSSReader_WP8/Dependencies
+</td>
+<td>
+DLLs needed by the WP8 application.
+</td>
+</tr>
+<tr class="even">
+<td>
+RSSReader_WP8/Properties
+</td>
+<td>
+WP8 Application property files.
+</td>
+</tr>
+</tbody>
+</table>
+<p>Important files:</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+FeedPivot.xaml.cs
+</td>
+<td>
+Class responsible for displaying available RSS feeds in a pivot.
+</td>
+</tr>
+<tr class="even">
+<td>
+RSSService.cs
+</td>
+<td>
+Class responsible for parsing RSS feeds and creating feed pages formatted as HTML.
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="known-issues">Known issues</h2>
+<p>No known issues.</p>
+<h2 id="license">License</h2>
+<p>See the license file delivered with this project. The license is also available online at https://github.com/Microsoft/rss-reader-wp/blob/master/License.txt</p>
+<h2 id="version-history">Version history</h2>
+<ul>
+<li>1.3.0 Add support for 720p resolution and NuGet Package Restore.</li>
+<li>1.2.0 Changes in implementation to support upgrading the application to Windows Phone 8.0.</li>
+<li>1.1.0 Bug fixes and changes based on reviews; published on the Nokia Developer website.</li>
+<li>1.0.3 Support for Windows Phone OS version 7.1.</li>
+<li>1.0.2 Layout changes and bug fixes.</li>
+<li>1.0.1 Bug fixes.</li>
+<li>1.0.0 First version.</li>
+</ul>
+</body>
+</html>

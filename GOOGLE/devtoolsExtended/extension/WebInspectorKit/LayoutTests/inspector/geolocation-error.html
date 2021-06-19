@@ -1,47 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      var mockLatitude = 51.478;
-      var mockLongitude = -0.166;
-      var mockAccuracy = 100;
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>geolocation-error</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
 
-      if (window.testRunner) {
-        testRunner.setGeolocationPermission(true);
-        testRunner.setMockGeolocationPosition(
-          mockLatitude,
-          mockLongitude,
-          mockAccuracy
-        );
-      } else debug("This test can not be run without the LayoutTestController");
-
-      function getGeolocation() {
-        function printLocation(pos) {
-          console.log(
-            "lat: " + pos.coords.latitude + ", long: " + pos.coords.longitude
-          );
-        }
-        function printError(err) {
-          console.log("Error: " + err.code);
-        }
-        navigator.geolocation.getCurrentPosition(printLocation, printError, []);
-      }
-
-      function test() {
-        function callbackComplete() {
-          InspectorTest.completeTest();
-        }
-        function callback() {
-          PageAgent.clearGeolocationOverride();
-          InspectorTest.evaluateInPage("getGeolocation()", callbackComplete);
-        }
-        PageAgent.setGeolocationOverride();
-        InspectorTest.evaluateInPage("getGeolocation()", callback);
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p></p>
-  </body>
+</body>
 </html>

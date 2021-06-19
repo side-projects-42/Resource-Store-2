@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="dial-change-history">Dial Change History</h1>
+<h2 id="section">3.5.0</h2>
+<ul>
+<li><p>Changed method name from _recalculateDialCenter to _calculateDialCenter</p></li>
+<li><p>Changed property name from _centerXOnPage to _dialCenterX and from _centerYOnPage to _dialCenterY</p></li>
+<li><p>Known issue: On IE7, when browser is zoomed, clicking on dial gives the wrong value.</p></li>
+</ul>
+<h2 id="section-1">3.4.1</h2>
+<ul>
+<li><p>Changed method name from _getNewValueFromMousedown to _handleMousedown</p></li>
+<li><p>Improved mousedown on ring handling [Ticket #2530597]</p></li>
+<li><p>Improved handling of dragging the handle past max/min and around multiple revolutions. [Ticket #2530766]</p></li>
+<li><p>Fixed problem with Dial having incorrect center X and Y following a browser resize. [Ticket #2531111]</p></li>
+</ul>
+<h2 id="section-2">3.4.0</h2>
+<ul>
+<li><p>Names of 3 configuration attributes have changed: stepsPerRev -&gt; stepsPerRevolution handleDist -&gt; handleDistance centerButtonDia -&gt; centerButtonDiameter</p></li>
+<li><p>New configuration attributes: markerDiameter handleDiameter</p></li>
+<li><p>Enhancement: In addition to setting the Dial by dragging the handle as it was in 3.3.0, Dial now supports setting the value by clicking on the Ring. This does not cross value “wrapping” boundries. For example: If a Dial has 0 degrees = value 0, and the Dial’s current handle position is 10 degrees with a value = 10, then a mousedown at 355 degrees will result in a value of 355 not -10. In this case all mousedown events will result in values between 0 and 355. This is within current value “wrapping” boundries. Moving across value wrapping boundaries, must be done by dragging the handle or using the keyboard.</p></li>
+<li>Changed the name of class marker-max-min
+<ul>
+<li>to - yui3-dial-marker-max-min</li>
+</ul></li>
+<li><p>Enhancement: In 3.3.0, when the user dragged the handle past the min or max, the Marker displayed as red to indicate min/max. When the cursor was released, the marker was no longer displayed. There remained no user feedback indicating max/min. When the keyboard was used to change the value, no min/max indication was displayed, except that the handle stopped moving. In this release, the Marker display state of red remains as long as the Dial is at min/max, regardless of mouse or keyboard use. If you don’t want min/max feedback, CSS class yui3-dial-marker-max-min can be overridden.</p></li>
+<li><p>When mousedown is used to set its value, Dial now has intuitive handling of different configurations of min, max where stepsPerRevolution is greater than or less than one revolution. [Ticket #2530306]</p></li>
+</ul>
+<h2 id="section-3">3.3.0</h2>
+<ul>
+<li>New Beta Component Deprecated _setLabelString, _setTooltipString, _setResetString. Instead, use DialObjName.set(‘strings’,{‘label’:‘My new label’, ‘resetStr’;‘My New Reset’}); before DialObjName.render(); One or more strings can be changed at a time. Removed _setXYResetString. Now done through CSS. Not called by Dial.js anymore.</li>
+</ul>
+</body>
+</html>

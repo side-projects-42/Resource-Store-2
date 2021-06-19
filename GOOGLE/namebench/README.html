@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="namebench-2.0">namebench 2.0</h1>
+<p>namebench provides personalized DNS server recommendations based on your browsing history.</p>
+<p>WARNING: This tool is in the midst of a major rewrite. The “master” branch is currently in experimental form and currently lacks a user interface, nor does it support any command-line options.</p>
+<p>For stable binaries, please see https://code.google.com/p/namebench/</p>
+<p>What can one expect in namebench 2.0?</p>
+<ul>
+<li>Faster</li>
+<li>Simpler interface</li>
+<li>More comprehensive results</li>
+<li>CDN benchmarking</li>
+<li>DNSSEC support</li>
+</ul>
+<h1 id="building">BUILDING:</h1>
+<p>Building requires Go 1.2 to be installed: http://golang.org/</p>
+<ul>
+<li>Create a workspace directory, and cd into it.</li>
+<li>Prepare your workspace directory:</li>
+</ul>
+<!-- -->
+<pre><code>    export GOPATH=`pwd`
+    git clone https://github.com/google/namebench.git src/github.com/google/namebench
+    go get github.com/mattn/go-sqlite3
+    go get golang.org/x/net/publicsuffix
+    go get github.com/miekg/dns</code></pre>
+<ul>
+<li>Build it.</li>
+</ul>
+<!-- -->
+<pre><code>    cd src/github.com/google/namebench
+    go build namebench.go</code></pre>
+<p>You should have an executable named ‘namebench’ in the current directory.</p>
+<h1 id="running">RUNNING:</h1>
+<ul>
+<li>End-user: run ./namebench, which should open up a UI window.</li>
+<li>Developer, run ./namebench_dev_server.sh for an auto-reloading webserver at http://localhost:9080/</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="has_secure_password">has_secure_password</h1>
+<h2 id="objectives">Objectives</h2>
+<p>We’re going to make a Rails app that covers a simple authentication flow: users can create accounts, log in, and log out.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Our app has three pages:</p>
+<ol type="1">
+<li>A signup page, where the user enters their username (as <code>name</code>), password, and password confirmation.</li>
+<li>A login page, where the user submits their username (as <code>name</code>) and password and are logged in.</li>
+<li>A user homepage, which says, “Hi, #{name}.”</li>
+</ol>
+<p>We’re not covering validations in this lab, so don’t worry about those. (Password validations are hard to get right anyway; it’s surprisingly easy to produce rules which decrease password security rather than enhance it.)</p>
+<p>Users should not be able to log in if they enter an incorrect password. Just redirect them back to the login page. If you want to present an error, you can either return an HTTP error from the controller and catch it with Javascript, or set a <a href="http://api.rubyonrails.org/classes/ActionDispatch/Flash.html"><code>flash</code></a>.</p>
+<h2 id="instructions">Instructions</h2>
+<ol type="1">
+<li><p>Create a User model and migrations.</p></li>
+<li><p>Create a Users controller. It should respond to <code>new</code> with the signup form, and respond to <code>create</code> by creating a new user.</p></li>
+<li><p>Create a Sessions controller and the appropriate actions.</p></li>
+<li><p>Create a user homepage. You can either create a controller for it (a <code>WelcomeController</code> is a reasonable thing that you’ll see frequently), or you can make it an action in the User’s controller.</p></li>
+</ol>
+<p>Happy coding.</p>
+</body>
+</html>

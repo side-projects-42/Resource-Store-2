@@ -1,0 +1,1 @@
+Tests network panel timing.

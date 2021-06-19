@@ -1,50 +1,20 @@
-<html>
-  <head>
-    <style>
-      h1 {
-        background-color: red;
-      }
-    </style>
-
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        InspectorTest.runTestSuite([
-          function testShowUserAgentStyles(next) {
-            WebInspector.settings.showUserAgentStyles.set(true);
-            selectNodeAndDumpStyles("inspected", next);
-          },
-
-          function testShowUserAgentStyles(next) {
-            WebInspector.settings.showUserAgentStyles.set(false);
-            selectNodeAndDumpStyles("other", next);
-          },
-        ]);
-
-        function selectNodeAndDumpStyles(nodeId, next) {
-          InspectorTest.addResult(
-            "WebInspector.settings.showUserAgentStyles = " +
-              WebInspector.settings.showUserAgentStyles.get()
-          );
-          InspectorTest.selectNodeAndWaitForStyles(nodeId, step1);
-
-          function step1() {
-            InspectorTest.dumpSelectedElementStyles(true, false, true);
-            WebInspector.settings.showUserAgentStyles.set(true);
-            next();
-          }
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that user agent styles are shown based on the setting:
-      https://bugs.webkit.org/show_bug.cgi?id=37766.
-    </p>
-    <h1 id="inspected">I'm red.</h1>
-    <h1 id="other">I'm also red.</h1>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>show-user-agent-styles</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that user agent styles are shown based on the setting: https://bugs.webkit.org/show_bug.cgi?id=37766.</p>
+<h1 id="im-red.">I’m red.</h1>
+<h1 id="im-also-red.">I’m also red.</h1>
+</body>
 </html>

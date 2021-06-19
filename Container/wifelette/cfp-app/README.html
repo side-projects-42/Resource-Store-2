@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="about">About</h1>
+<p>The EmberConf cfp-app is a fork of the one originally developed by Ruby Central for RailsConf and RubyConf. When changes are not specific to EmberConf, we aim to submit them back to RubyCentral for possible inclusion.</p>
+<p>At a high level the CFP App allows speakers to submit and manage their proposals for your event. Organizers can create a group of reviewers that blindly review and rate talks. Organizers can then select talks to be accepted into the program including a waitlist of proposals. Finally organizers can create a schedule and slot confirmed talks. Down below, I’ll give a detailed description of the features and workflows of the CFP App under the section ‘How to use the CFP App’</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>Make sure you have Ruby 2.1 and Postgres installed in your environment. This is a Rails 4.1 app and uses bundler to install all required gems. We are also making the assumption that you’re familiar with how Rails apps and setup and deployed. If this is not the case then you’ll want to refer to documentation that will bridge any gaps in the instructions below.</p>
+<ol type="1">
+<li>Install gem requirements</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">bundle</span> install</a></code></pre></div>
+<p>NOTE: You may need to install Qt/<code>qmake</code> to get Capybara to work; with Homebrew you can run <code>brew install qt</code>.</p>
+<ol type="1">
+<li>Duplicate and edit environment variables</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">cp</span> env-sample .env</a></code></pre></div>
+<p><a href="http://intridea.github.io/omniauth/">Omniauth</a> is set up to use Twitter and Github for logins in production. You’ll want to put your own key and secret in for both. Other environment variables will include your postgres user and Rails’ secret_token.</p>
+<ol type="1">
+<li>Duplicate and edit database.yml</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">cp</span> config/database_example.yml config/database.yml</a></code></pre></div>
+<ol type="1">
+<li>Build dev database</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">bundle</span> exec rake db:create db:migrate db:seed</a></code></pre></div>
+<p>NOTE: Seed will make an admin user with an email of an@admin.com to get started. There is a special, development only login method in Omniauth that you can use to test it out.</p>
+<p><strong>NOTE</strong>: To test, log in via the <em>Developer</em> link (not either OAuth option) with the following credentials:</p>
+<ul>
+<li><strong>Username</strong>: Admin</li>
+<li><strong>Email</strong>: an@admin.com</li>
+</ul>
+<p>This user is an organizer/admin, not a reviewer or submitter. If you need other users to test, this admin has the right permissions to create them.</p>
+<ol type="1">
+<li>Start the server</li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">bundle</span> exec rails server</a></code></pre></div>
+<h3 id="environment-variables">Environment variables</h3>
+<pre><code>TIMEZONE (defaults to Pacific if not set)
+POSTGRES_USER (dev/test only)
+MAIL_HOST (production only - from host)
+MAIL_FROM (production only - from address)
+SECRET_TOKEN (production only)
+GITHUB_KEY
+GITHUB_SECRET
+TWITTER_KEY
+TWITTER_SECRET</code></pre>
+<h2 id="deployment-on-heroku">Deployment on Heroku</h2>
+<p>The app was written with a Heroku deployment stack in mind. You can easily deploy the application using the button below, or you can deploy it anywhere assuming you can run Ruby 2.1.2 and Rails 4.1.2 with a postgres database and an SMTP listener.</p>
+<p>The Heroku stack will use the free SendGrid Starter and Heroku postgreSQL addons.</p>
+<p><a href="https://heroku.com/deploy"><img src="https://www.herokucdn.com/deploy/button.png" alt="Deploy to Heroku" /></a></p>
+<p>Upon deploying to Heroku you will probably want to log in using Twitter or GitHub and then run <code>heroku run console</code> to update the first Person object to be an admin like this:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">p</span> = Person.first</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="ex">p.admin</span> = true</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="ex">p.save</span></a></code></pre></div>
+<p>Do make sure that the Person record you pull back is indeed your newly created user and the one that should get admin permissions!</p>
+<h2 id="how-to-use-the-cfp-app">How to use the CFP App</h2>
+<h3 id="creating-your-event">Creating your event</h3>
+<p>You must login as an admin to create an event. As touched on above in the deploy section you will want to either login to the app or work directly in the console. Find your Person record or create a new one. I do recommend you create the admin via login and then find the record via console since the Person record uses Services for authentication. Once you find your record assign true to the admin attribute such as this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">p</span> = Person.first</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="ex">p.admin</span> = true</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="ex">p.save</span></a></code></pre></div>
+<p>One note, in development mode you have a special testing login called ‘developer’. With this you can login and seed a new Person record by entering name and email. Very handy for testing things locally.</p>
+<p>One logged in you should see your user’s name with a dropdown arrow in the top right of the nav bar. In that dropdown click on the ‘Manage Events’ link. The Events page will show you all events on the system, which should be blank initially. Click ‘Add Event’ to create your event. Ideally you can fill out all this information though only name and contact email are required.</p>
+<h3 id="managing-your-event">Managing your event</h3>
+<p>Once done you should land on your event’s organizers page. This is the hub of managing your event. I will briefly touch on the things you can do here.</p>
+<ol type="1">
+<li><p>You will likely want to add other organizers and reviewers to the event. This is at the bottom of the page in a section called ‘Participants’. Click ‘Add/Invite New Participant’ to add them. You will use their email address to get them added. The system will add any existing users if their email address matches the invite. You can fully manage who has access to your event in that section.</p></li>
+<li><p>The next order of business will be to draft up your conference guidelines via the ‘Edit Guidelines’ button. Guidelines are the instructions speakers see before submitting a proposal. This is where you give them any information and instructions before they submit a talk. You can preview the guidelines with a link to the public guidelines page after they’ve been set.</p></li>
+<li><p>‘Edit Tags’ will keep a list of tags that can be used by speakers (proposal tags) and by reviewers (review tags). Above the ‘Edit Tags’ button is the list of both tag groups. Speakers and Reviewers can only tag their proposals from these choices.</p></li>
+<li><p>‘Edit Event’ allows you to change any of the details you initially set when creating the event. If you didn’t set the opening and closing dates on your event, you can do that under ‘CFP Dates’. Additionally, you will want to indicate the dates for your conference under ‘Event Dates’. These dates are required to create a schedule. Finally, the status of the CFP, such as open or closed, is listed under ‘State’. It must be in the open state to accept proposals. If you need to delete your event, you can do it on the edit page.</p></li>
+<li><p>‘Edit Speaker Notifications’ allows you to craft the email content that goes out to speakers when their talks are accepted, waitlisted or rejected. The app does have defaults but we recommend you draft your own email bodies. On the right side there is a markup legend with some custom tags for making the emails dynamic such as including proposal title and confirmation link.</p></li>
+</ol>
+<h3 id="navigation">Navigation</h3>
+<p>The nav bar has several parts to it. On the far left we have the ‘CFPApp’ link which takes you to a public-facing events page. There you would see all events active on the site.</p>
+<p>Next to the right is the ‘Speaking’ dropdown. All users get this and from there you can navigate to your proposals. That page has links to each proposal you have submitted to all events as well as any speaker invitations you may have received. We’ll touch on speaker invitations under ‘Submitting a Proposal’.</p>
+<p>If you have Reviewer access you will see a ‘Review’ dropdown next to the right. Each event you have reviewer access to will show up there, which takes you to the proposals page. We will talk about that in detail under ‘Reviewing Proposals’</p>
+<p>If you have Organizer access you will see an ‘Organize’ dropdown will give you three links per event you have organizer access to: Proposal, Program and Schedule. We cover each of these in the Organizer section.</p>
+<p>The ‘Notifications’ dropdown will display a count of any in app notifications you haven’t read. Clicking the dropdown will show you a list of these notifications such as ‘Marty Haught has commented on <talk title>’. You have a ‘Mark all as read’ and ‘View all notifications’ options as well.</p>
+<p>We briefly touched on the user dropdown on the far right. This is visible to all users. From there they can sign out or visit their profile. Their profile is how they edit their name, email or bio, allow them to connect to various services such as Github or Twitter. If you are an admin, you will also have a People link. This is where you manage all Person records.</p>
+<h3 id="submitting-a-proposal">Submitting a Proposal</h3>
+<p>The primary way to submit a talk is to visit the public guidelines page and click ‘Submit a proposal’ to get started. This does require the event’s CFP to be open.</p>
+<p>The heart of the proposal is the title and abstract. These two will show up in your program and schedule. They are required fields and have limits on how long they can be. The details field is for reviewers/organizers only and is there to allow the speaker to show ‘what’s behind the curtain’ like an outline or other explanations that don’t belong in the abstract. The pitch is there to allow the speaker to sell you on why this talk should be in your event.</p>
+<p>On the right column there is a section for the speaker to select what tags they feel are appropriate, assuming your event is using tags. Next it will show the speaker’s name, email and bio. The bio can be modified per proposal in case the speaker wants to tweak the bio to sound better for the specific topic. Name, email and bio are hidden from reviewers and only visible to organizers at a later stage of the CFP.</p>
+<p>Finally there is a preview on the bottom right of the page. Assuming everything looks good go ahead and hit ‘Submit Proposal’ at the bottom right.</p>
+<p>You can get back to your proposal by going to the ‘My Proposals’ link under ‘Speaking’ nav dropdown. You will be able to see its status, which should be ‘submitted’ until either you withdraw the talk or the organizers make a decision on your talk.</p>
+<p>Returning to your proposal page, you will see both an ‘Edit’ and either ‘Delete Proposal’ or ‘Withdraw’ button. If you need to make edits, feel free to do so up until the organizers have decided if your talk is in or out. Once it has been accepted or waitlisted, you cannot edit the proposal. At that point you reach out directly to the organizers to edit it. We did this on purpose so talks can’t be changed without organizer awareness and permission.</p>
+<p>Another feature on the proposal page is the ability to invite additional speakers. If your talk has more than one speaker, you would now invite them via their email to your talk. They will get an email with instructions on how to accept your invitation. This is important so that their information will be associated with the talk.</p>
+<p>Additionally, you can make comments to the reviewers on your talk. You will remain anonymous, identified only as ‘speaker’, though any replies from the reviewers will indicate which reviewer made the comment.</p>
+<p>You can see how many reviews your talk has received but not details on what sort of rating it received. Finally, you can see if your talk status has changed from ‘submitted’.</p>
+<h3 id="reviewing-proposals">Reviewing Proposals</h3>
+<p>As a reviewer or organizer, you will use the ‘Review’ dropdown to get to the proposals page for your event. It is the hub for going through and rating all the proposals submitted. It has a Statistics section up top where it will show you how many proposals you have rated versus how many have been submitted. Below that is a count of how many unrated proposals are left.</p>
+<p>The list of proposals can be filtered and sorted as you see fit. This is very important so that you can either focus on a certain tag or look at the oldest proposals that you have not rated. The list shows the following fields:</p>
+<p>Score: the average score across all ratings Your Score: how you rated the proposal Ratings: how many ratings total a talk has received Title: which is also the link to view the proposal Proposal Tags: the tags the speaker(s) associated with the proposal Reviewer Tags: the tags the reviewers have added Comments: a total count of public comments including reviewers and speakers Submitted On: the original submission date and time Updated At: The last time the speaker updated the proposal</p>
+<p>The sort order is sticky and you can use the shift key to sort by more than one column. Use the ‘Reset Sort Order’ button to clear this out.</p>
+<p>By clicking the proposal title you can view the proposal details page. Here you can see the title, abstract, details and pitch fields for the talk. If any comments have been made, you can view those as well as make a comment yourself. The Review column on the far right is only visible to other reviewers and organizers. You will not be able to see any other ratings or internal comments until you have rated the talk. This is to keep the reviewer from being biased by what others have said on their reviews. You can set or modify review tags at any point and this again is visible only to other reviewers.</p>
+<p>The rating scale is 1 through 5. At RubyCentral we consider a 1 as a strong no, 2 is a likely not, 3 is a good talk and certainly in the running, 4 is a great talk and a fit for the event and 5 as a top notch and ideal talk for the event. We also like to get at least three ratings for each talk, preferrably more. Once you have rated the talk you will see an average rating along with the other ratings the proposal received.</p>
+<p>Finally internal comments can be viewed below, once you have rated the talk. These comments will only be visible to fellow reviewers and is a place for any commentary that can help determine how suitable the talk is for your event without the speaker seeing the discussion.</p>
+<p>One note, at this point updating the review tags or posting a comment in either comment box will refresh the page and lose changes in the other comment box. Only Rating is an ajax call that will not disturb the rest of the page.</p>
+<p>One thing that will happen is you will get notifications showing you what talks have been updated after this point. You only get notifications for talks you have reviewed though. We added a flag in the participants sections which defaults to true for reviewers to receive an email when comments have been left on the talk. You will not receive an email for an update though notifications for updates do appear in the Notifications nav list.</p>
+<h3 id="organizing-duties">Organizing Duties</h3>
+<p>…Coming Soon…</p>
+<h2 id="customizing-and-contributing">Customizing and Contributing</h2>
+<p>It is likely you may want to customize or change how the CFP App works. Feel free to fork and modify as you see it, as long as you respect the MIT license. If you feel any of your customizations are appropriate to contribute back to the project, please review our CONTRIBUTING.md file to see the guidelines on how to work with us to make the CFP App better.</p>
+<h3 id="contributors">Contributors</h3>
+<p>The CFP App was initially authored by Ben Scofield. Marty Haught took over the project and lead development for the CFP for RailsConf 2014. Below are the others that participated on the project while it was a private project.</p>
+<ul>
+<li>Matt Garriott</li>
+<li>Andy Kappen</li>
+<li>Timothy King</li>
+<li>Ryan McDonald</li>
+<li>Scott Meade</li>
+<li>Sarah Mei</li>
+</ul>
+<p>It was open sourced in May 2014 and moved to its new home. Please view the contributor graph for those that have contributed since it was open sourced.</p>
+<p>The EmberConf fork has been coded and maintained by:</p>
+<ul>
+<li>Ryan MdDonald</li>
+<li>Leah Silber</li>
+<li>Robert Jackson</li>
+</ul>
+</body>
+</html>

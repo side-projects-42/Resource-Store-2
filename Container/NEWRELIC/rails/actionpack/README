@@ -341,16 +341,19 @@ request from the web-server (like to be Apache).
 And the templates look like this:
 
 weblog/layout.html.erb:
+
 <html><body>
 <%= yield %>
 </body></html>
 
 weblog/index.html.erb:
 <% for post in @posts %>
+
 <p><%= link_to(post.title, :action => "show", :id => post.id) %></p>
 <% end %>
 
 weblog/show.html.erb:
+
 <p>
 <b><%= @post.title %></b><br/>
 <b><%= @post.content %></b>

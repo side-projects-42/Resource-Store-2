@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="your-first-lab">Your First Lab</h1>
+<p>On Learn, labs are exercises you have to complete.</p>
+<p>The goal of this lab is to practice the workflow to complete a lab and to see if you can make a new file or directory using terminal.</p>
+<p>To complete this lab you will have to:</p>
+<ol type="1">
+<li>Fork the lab via github.</li>
+<li>Clone your fork.</li>
+<li>Solve the Lab</li>
+<li>Push that commit to your fork.</li>
+<li>Open a Pull Request for your fork.</li>
+</ol>
+<h2 id="forking-from-github">1. Forking from Github</h2>
+<p>Forking is the process of making a personal remote copy of the Learn lab.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/git-workflow-1.png" alt="Git Workflow 1"></p>
+<p>To get started, in Learn click the title of the lab to go to Flatiron School’s copy of the lab on Github.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-0.jpg" alt="Ironboard Labs Step 0"></p>
+<p>Next on Flatiron’s Github page for the lab click the Fork button.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-1.jpg" alt="Ironboard Labs Step 1"></p>
+<p>Then select your personal Github account as the location to fork to.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-1b.jpg" alt="Ironboard Labs Step 1B"></p>
+<h2 id="clone-your-fork">2. Clone Your Fork</h2>
+<p>Cloning is the process of making a local copy of the lab from your personal remote on Github.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/git-workflow-2.png" alt="Git Workflow 2"></p>
+<p>To clone, make sure you’ve first clicked on the SSH link, then click the copy button next to the Clone URL to copy it to your clipboard.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-2.jpg" alt="Ironboard Labs Step 2"></p>
+<p>Next, in Terminal navigate to the parent directory where you would like to place this lab. Then type: <code>git clone &lt;paste the clone URL here&gt;</code></p>
+<p>Note: You should replace the &lt;paste the clone URL here&gt; including the &lt; and &gt; symbols in the snippet above with your actual clone URL by pressing command+v on mac or ctrl+v on windows. Example: git clone git@github.com:jongrover/first-lab-000.git</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-2b.png" alt="Ironboard Labs Step 2b"></p>
+<h2 id="solving-this-lab">3. Solving this Lab</h2>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/git-workflow-3.png" alt="Git Workflow 3"></p>
+<p>Now that you have forked and cloned your fork, your goal is simple. Just create a new file within this lab.</p>
+<p>Go into this lab’s directory by typing ‘cd first-lab-000’. Confirm that your working directory in terminal is this lab by typing: <code>pwd</code></p>
+<p>You should see something like: <code>/Users/avi/first-lab-000</code></p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/4h2yls40mf9femj/2015-05-03%20at%209.05%20PM.png" alt="1" /><figcaption>1</figcaption>
+</figure>
+<p>Now, try to run the <code>learn</code> CLI by typing <code>learn</code> in the lesson’s directory. You’ll see output similar to this, with failing tests (that’s fine, don’t panic).</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/9ob3cey1lpeb6ql/2015-05-03%20at%209.10%20PM.png" alt="Failing Tests" /><figcaption>Failing Tests</figcaption>
+</figure>
+<ol start="2" type="1">
+<li><p>Simply create a file. It doesn’t matter what you call it.</p></li>
+<li><p>Once you’ve done that, run <code>learn</code> on your terminal, which will run one test that’s in the <code>spec/</code> folder. This test is looking to see that you’ve added a new file. If you have the test passing on your computer, you should see something like this on Learn, indicating the local build is passing:</p></li>
+</ol>
+<p><code>touch my-new-file.txt</code></p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/rfs3onevx3l2o21/2015-05-03%20at%209.10%20PM%20%281%29.png" alt="1" /><figcaption>1</figcaption>
+</figure>
+<ol start="4" type="1">
+<li>Add it to the repo, staging it for commit.</li>
+</ol>
+<p><code>git add my-new-file.txt</code></p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/kesh225ztp4owbk/2015-05-03%20at%209.12%20PM.png" alt="1" /><figcaption>1</figcaption>
+</figure>
+<ol start="5" type="1">
+<li>Commit the file.</li>
+</ol>
+<p><code>git commit -am "My first commit"</code></p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/9y3zt153pvaabh0/2015-05-03%20at%209.14%20PM.png" alt="1" /><figcaption>1</figcaption>
+</figure>
+<h2 id="push-your-code-to-github">4. Push Your Code to Github</h2>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/git-workflow-4.png" alt="Git Workflow 4"></p>
+<p>After adding and commiting your most recent work next we want to push our work up to our personal Github remote (origin).</p>
+<p><code>git push origin master</code></p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/7qta395mpnmst7x/2015-05-03%20at%209.15%20PM.png" alt="1" /><figcaption>1</figcaption>
+</figure>
+<p>Go to github and confirm the push.</p>
+<figure>
+<img src="http://flatiron-videos.s3.amazonaws.com/ironboard/ironboard-tutorial/7-solving-the-lab.png" alt="1" /><figcaption>1</figcaption>
+</figure>
+<h2 id="opening-a-pull-request">5. Opening a Pull Request</h2>
+<p>Submitting a pull request can be described as the process of asking the maintainer of the Learn lab (upstream remote) to consider pulling (fetching &amp; merging) in your work from your personal remote copy (origin remote). This enables your instructor to see your solution for the lab.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/git-workflow-5.png" alt="Git Workflow 5"></p>
+<p>To do so, in Learn click the title of the lab to go to your forked copy on Github.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-0b.jpg" alt="Ironboard Labs Step 0b"></p>
+<p>Then click the green Pull Request button.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-4.jpg" alt="Ironboard Labs Step 4"></p>
+<p>After reviewing the comparison code and making sure it shows your solution, click the Create pull request button.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-4e.jpg" alt="Ironboard Labs Step 4e"></p>
+<p>Then click Create pull request button again.</p>
+<p><img width="100%" height="auto" src="http://ironboard-curriculum-content.s3.amazonaws.com/front-end/lab-assets/ironboard-labs-step-4f.jpg" alt="Ironboard Labs Step 4f"></p>
+<p>That’s it, you’re done! Now go back to Learn and you should see the Pull Request flip to green, and the remote build will be kicked off. Once it passes, you will be able to proceed to the Next Lesson.</p>
+</body>
+</html>

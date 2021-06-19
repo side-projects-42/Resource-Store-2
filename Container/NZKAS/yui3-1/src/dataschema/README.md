@@ -1,8 +1,7 @@
 DataSchema Utility
 ==================
 
-Use the DataSchema Utility to translate data in various input formats into a
-standard record-based structure like this:
+Use the DataSchema Utility to translate data in various input formats into a standard record-based structure like this:
 
     {
         results: [
@@ -20,13 +19,12 @@ standard record-based structure like this:
 Available processors
 ====================
 
-1. `Y.DataSchema.Array` - (`dataschema-array`) Input is an Array
-2. `Y.DataSchema.JSON` - (`dataschema-json`) Input is an Object or JSON string
-3. `Y.DataSchema.XML` - (`dataschema-xml`) Input is an XML node
-4. `Y.DataSchema.Text` - (`dataschema-text`) Input is a delimited text string
+1.  `Y.DataSchema.Array` - (`dataschema-array`) Input is an Array
+2.  `Y.DataSchema.JSON` - (`dataschema-json`) Input is an Object or JSON string
+3.  `Y.DataSchema.XML` - (`dataschema-xml`) Input is an XML node
+4.  `Y.DataSchema.Text` - (`dataschema-text`) Input is a delimited text string
 
-The important method for each processor is the `apply(schema, data)` method, so
-for example:
+The important method for each processor is the `apply(schema, data)` method, so for example:
 
     var results = Y.DataSchema.JSON.apply({ schema config }, dataObject);
 

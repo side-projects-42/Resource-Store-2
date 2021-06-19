@@ -1,0 +1,2997 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="anim-change-history">Anim Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>no change</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>no change</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Bug fix: A glitch occurred when an reversing a previously reversed animation. [Ticket 2528581]</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>Bug fix: Better cleanup on destroy. [Ticket 2528820]</li>
+<li>Bug fix: Was not resuming properly from pause. [Ticket 2528938]</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>no change</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li>Now firing the resume event.</li>
+<li>Added a boolean arg for stop() to force it to skip to the last frame.</li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="app-framework-change-history">App Framework Change History</h1>
+<h2 id="section-7">3.4.1</h2>
+<ul>
+<li><p>Controller: Added a workaround for an iOS 4 bug that causes the previous URL to be displayed in the location bar after calling <code>save()</code> or <code>replace()</code> with a new URL.</p></li>
+<li><p>Controller: Fixed a bug that caused the controller to get stuck in a “dispatching” state if <code>save()</code> was called with no routes defined.</p></li>
+<li><p>Model: The <code>validate()</code> method is now only called when <code>save()</code> is called, rather than on every attribute change. If validation fails, the save operation will be aborted.</p></li>
+</ul>
+<h2 id="section-8">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="arraysort-change-history">ArraySort Change History</h1>
+<h2 id="section-9">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-10">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-11">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="asyncqueue-change-history">AsyncQueue Change History</h1>
+<h2 id="section-12">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-13">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-14">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-15">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-16">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-17">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-18">3.0.0</h2>
+<ul>
+<li><p>[!] <code>queue-base</code> is now part of <code>yui</code>.</p></li>
+<li><p>[!] <code>queue-run</code> was renamed <code>async-queue</code> and both <code>async-queue</code> and <code>queue-promote</code> are now independent modules.</p></li>
+<li><p><code>AsyncQueue</code> defaults to asynchronous callback execution (again).</p></li>
+</ul>
+<h2 id="beta1">3.0.0beta1</h2>
+<ul>
+<li>Overhaul. Broken into <code>queue-base</code>, <code>queue-promote</code>, and <code>queue-run</code>.</li>
+</ul>
+<h2 id="pr2">3.0.0pr2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="pr1">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="attribute-change-history">Attribute Change History</h1>
+<h2 id="section-19">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-20">3.4.0</h2>
+<ul>
+<li><p>Added params to constructor, to support call to addAttrs on construction with user values, when augmenting and invoking constructor manually.</p>
+<p>Also broke out addAttrs logic on construction (introduced for Node), into it’s own _initAttrs method to facilitate customization.</p></li>
+</ul>
+<h2 id="section-21">3.3.0</h2>
+<ul>
+<li>Changed instanceof to Y.instanceOf, to prevent leaks in IE7</li>
+</ul>
+<h2 id="section-22">3.2.0</h2>
+<ul>
+<li>Added protected helper method (_getAttrCfg) to return the configuration for a given attribute.</li>
+</ul>
+<h2 id="section-23">3.1.1</h2>
+<ul>
+<li>Fixed ticket #2528753 : Sub attribute value crashed after setting another sub attribute.</li>
+</ul>
+<h2 id="section-24">3.1.0</h2>
+<ul>
+<li><p>writeOnce can be set to “initOnly”, which can be used to prevent the user from setting the value outside of the initial configuration when using the addAttrs.</p>
+<p>When used with Base, this means that the user can only define a value for the Attribute during construction.</p></li>
+<li><p>Attribute change events are now published with the defaultTargetOnly property set to true.</p></li>
+<li><p>newVal property of event object passed to change event listeners will now be the value returned from the Attribute’s getter (if defined)</p></li>
+<li><p>setter, getter, validator and valueFn can now be specified as strings, referring to the method names to be invoked on the Attribute instance.</p></li>
+</ul>
+<h2 id="section-25">3.0.0</h2>
+<ul>
+<li><p>set/get can now be called for ad-hoc attributes (attributes which have not been added/configured).</p></li>
+<li><p>Fixed issue where custom getters were being called with undefined values, for the initial set.</p></li>
+<li><p>Limited the case for which an attribute will not notify after listeners, if the value is unchanged after a set, to primitive values (values for which Lang.isObject(newVal) returns false).</p>
+<p>This allows after listeners to be invoked, when resetting the value to the same object reference, which has properties updated, or arrays with elements modified.</p></li>
+<li><p>Attribute broken up into attribute-base and attribute-complex submodules.</p>
+<p>attribute-complex adds support for complex attributes ({x.y.z : 5}) to addAttrs.</p></li>
+</ul>
+<h2 id="beta-1">3.0.0 beta 1</h2>
+<ul>
+<li><p>Removed Attribute.CLONE support in the interests of simplicity. Was not being used. Can re-evaluate support if real world demand for it exists.</p></li>
+<li><p>Changed “set” and “get” configuration properties for setter and getter methods to “setter” and “getter” respectively.</p></li>
+<li><p>Added support for setter to return Attribute.INVALID_VALUE to prevent attribute state from being changed.</p>
+<p>This allows developers to combine setter and validator functionality into one method if performance optimization is required.</p></li>
+<li><p>“validator” is now invoked before “setter”.</p></li>
+<li><p>Renamed xxxAtt and xxxAtts methods to xxxAttr, xxxAttrs for consistency.</p></li>
+<li><p>“after” listeners are only notified if attribute value really changes (preVal !== newVal).</p></li>
+<li><p>Extending classes can now overwrite ATTRS configuration properties from super classes, including writeOnce and readOnly attributes.</p>
+<p>The ATTRS configurations are merged across the class hierarchy, before they are used to initialize the attributes.</p></li>
+<li><p>addAttr now prevents re-adding attributes which are already configured in order to maintain consistent state.</p></li>
+<li><p>Event prefix wrapper functions (on, after etc.) removed - Event.Target now accepts an event prefix configuration value</p></li>
+<li><p>Added additional log messages to assist with debugging.</p></li>
+<li><p>Attribute change events are no longer fired for initial set.</p></li>
+<li><p>Split up State add/get/remove into add/addAll, get/getAll, remove/removeAll to avoid having to create object literals for critical path [ add/get single key values ].</p></li>
+<li><p>Attribute getter, setter, validator now also receive attribute name as the 2nd arg (val, name).</p></li>
+<li><p>If Attributes initialized through addAttrs have a user provided value which is not valid, the initial attribute value will revert to the default value in the attribute configuration, if it exists.</p></li>
+<li><p>reset() no longer resets readOnly or writeOnce attributes. Only publically settable values are reset.</p></li>
+<li><p>Added modifyAttr method, to allow component developer to modify configuration of an attribute which has already been added. The set of attribute configuration properties which can be modified after it has been added are limited to getter, readOnly, writeOnce and broadcast.</p></li>
+<li><p>Added support for lazy attribute configuration. Base uses this feature to lazily intialize all Attributes on the first call to get/set, for performance optimization.</p>
+<p>lazyAdd:true/false can be used to over-ride this behavior for a particular attribute.</p></li>
+</ul>
+<h2 id="pr2-1">3.0.0PR2</h2>
+<ul>
+<li><p>Added valueFn support, to allowing static attribute values configuration to set instance based values.</p></li>
+<li><p>Added reset method.</p></li>
+<li><p>Added private setter for use by class implementation code to set readOnly, writeOnce values.</p></li>
+</ul>
+<h2 id="pr1---initial-release">3.0.0PR1 - Initial release</h2>
+<h1 id="autocomplete-change-history">AutoComplete Change History</h1>
+<h2 id="section-26">3.4.1</h2>
+<ul>
+<li><p>The “combobox” ARIA role is no longer automatically added to an AutoCompleteList input node. After consulting with the Y! Accessibility team, we felt that the combobox role doesn’t accurately represent the out-of-the-box interactions that AutoCompleteList provides. Implementers can still apply this role (or any other ARIA role) to the input node manually if desired.</p></li>
+<li><p>Fixed a bug that prevented the autocomplete list from being hidden after right-clicking on the list and then clicking elsewhere in the document. [Ticket #2531009]</p></li>
+</ul>
+<h2 id="section-27">3.4.0</h2>
+<ul>
+<li><p>Added the ability to use a <code>&lt;select&gt;</code> node as a result source.</p></li>
+<li><p>Function sources may now be either asynchronous or synchronous. Returning an array of results from a function source will cause it to be treated as synchronous (same as in 3.3.0). For async operation, don’t return anything, and pass an array of results to the provided callback function when the results become available. [Ticket #2529974]</p></li>
+<li><p>Added a <code>sourceType</code> attribute to <code>AutoCompleteBase</code>, which may be used to force a specific source type, overriding the automatic source type detection. [Ticket #2529974]</p></li>
+<li><p>The <code>scrollIntoView</code> config option is now much smarter. It will only scroll if the selected result isn’t fully visible. If the result is already entirely within the visible area of the viewport, no scrolling will occur.</p></li>
+<li><p>A pre-existing <code>listNode</code> may now be specified at initialization time.</p></li>
+<li><p>Added <code>subWordMatch</code> filters and highlighters. [Contributed by Tobias Schultze]</p></li>
+<li><p>The <code>this</code> object now refers to the current AutoComplete instance instead of the window in list locators, text locators, filters, formatters, highlighters, and requestTemplate functions.</p></li>
+<li><p>Added an <code>originEvent</code> property to the event facade of <code>select</code> events. It contains an event facade of the DOM event that triggered the selection if the selection was triggered by a DOM event.</p></li>
+<li><p>Small performance improvement for filters operating on empty query strings. [Ticket #2529949]</p></li>
+<li><p>Result list alignment is now updated both when results change and when the window is resized instead of only when the list becomes visible. This makes right-aligned lists with dynamic widths less awkward.</p></li>
+<li><p>Fixed a bug that prevented CSS-based z-index values from taking effect on the AutoComplete list and required the z-index to be set via JS. The <code>.yui3-aclist</code> class now provides a default z-index of 1, and this can be overridden with custom CSS. Specifying a <code>zIndex</code> attribute value via JS no longer has any effect.</p></li>
+<li><p>Fixed a bug that caused the IE6 iframe shim under the AutoComplete list to be sized incorrectly the first time the list was displayed.</p></li>
+<li><p>Fixed a bug in which the <code>requestTemplate</code> would sometimes be used as the query instead of being appended to the source URL. This affected XHR and JSONP sources that used both a <code>{query}</code> placeholder in the source string and a custom <code>requestTemplate</code> value. [Ticket #2529895]</p></li>
+<li><p>Fixed a bug that caused the <code>requestTemplate</code> function to be called twice for an XHR request instead of just once.</p></li>
+<li><p>Fixed a bug in which JSONP, XHR, and YQL requests were cached solely based on the query rather than on the complete request. This could result in cache collisions when two requests with the same query but different parameters (provided by a requestTemplate) were made. [Ticket #2530410]</p></li>
+<li><p>Fixed a bug that caused the <code>&amp;</code> character to be treated as an up arrow key in Firefox. [Ticket #2530455]</p></li>
+<li><p>Removed the “beta” label. Hooray!</p></li>
+</ul>
+<h2 id="section-28">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="base-change-history">Base Change History</h1>
+<h2 id="section-29">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-30">3.4.0</h2>
+<ul>
+<li><p>Base now destroys plugins before destroying itself</p></li>
+<li><p>Base.create/mix extensions can now define initializer and destructor prototype functions, which will get invoked after the initializer for the host class into which they are mixed and before it’s destructor.</p></li>
+<li><p>Use a hash version of whitelist mix for improved performance. Also removed non-required hasOwnProperty check and delete.</p></li>
+</ul>
+<h2 id="section-31">3.3.0</h2>
+<ul>
+<li><p>Fixed Base.mix when used on a class created using Base.create</p></li>
+<li><p>toString no longer inadvertently stamps the object, however, we now stamp Base objects in the constructor, to support use cases where the “toString” stamping was implicitly being relied upon (e.g. in DD, as hashkeys).</p></li>
+</ul>
+<h2 id="section-32">3.2.0</h2>
+<ul>
+<li>Fixed Base.create to properly isolate ATTRS on extensions</li>
+</ul>
+<h2 id="section-33">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-34">3.1.0</h2>
+<ul>
+<li><p>As the final step in the destroy phase, Base now does a detachAll() to avoid invoking listeners which may be waiting to be in an async. step which occurs after destruction.</p></li>
+<li><p>“init” and “destroy” events are now published with the defaultTargetOnly property set to true</p></li>
+<li><p>Added support for MyClass.EVENT_PREFIX to allow developers to define their own event prefix</p></li>
+<li><p>Made “init” and “destroy” events fireOnce:true (along with “render” in Widget), so that subscriptions made after the events are fired, are notified immediately.</p></li>
+<li><p>Dynamic and non-dynamically built classes now have their extensions instantiated the same way - during _initHierarchy.</p></li>
+<li><p>Updated ATTRS handling for Base.build, so that ATTRS are also aggregated at the attribute configuration object level, allowing extensions to add to, or overwrite, attribute configuration properties on the host.</p></li>
+<li><p>Added sugar Base.create and Base.mix methods on top of Base.build, to simplify the 2 main use cases:</p>
+<ol type="1">
+<li>Creating a completely new class which uses extensions.</li>
+<li>Mixing in extensions to an existing class.</li>
+</ol></li>
+<li><p>Documented non-attribute on, after, bubbleTargets and plugins property support in the Base constructor config argument</p></li>
+</ul>
+<h2 id="section-35">3.0.0</h2>
+<ul>
+<li><p>Fixed hasImpl method on built classes, to look up the class hierarchy for applied extensions.</p></li>
+<li><p>Plugin.Host removed from base-base module and delivered as it’s own module - “pluginhost”</p></li>
+<li><p>base broken up into..</p>
+<p>base-base: Provides class hierarchy support for ATTRS and initialization</p>
+<p>base-build: Provides Extension support in the form of Base.build</p>
+<p>base-pluginhost: Augments Plugin.Host to Base, adding plugin support</p></li>
+</ul>
+<h2 id="beta-1-1">3.0.0 beta 1</h2>
+<ul>
+<li><p>Config argument for init event now merged into the event facade, instead of being passed separately (available as e.cfg).</p></li>
+<li><p>Removed Base.create. On review, considered to be overkill. Users can easily create new instances, using Base.build</p></li>
+<li><p>Moved PluginHost down from Widget to Base, since utils and Node will also support Plugins.</p></li>
+<li><p>PluginHost.plug and unplug now accept the plugin class as arguments [plug(pluginClass, cfg) and unplug(pluginClass)].</p></li>
+<li><p>Split base module up into base-base and base-build.</p></li>
+<li><p>Added lazy attribute initialization support, to improve performance.</p>
+<p>This also removes order dependency when processing ATTRS for a particular class.</p>
+<p>If a get/set call is made for an uninitialized attribute A, in the getter/setter/validator or valueFns of another attribute B, A will be intiailized on the fly.</p></li>
+<li><p>Added ability to subscribe to on/after events through the constructor config object, e.g.:</p>
+<p>new MyBaseObject({ on: { init: handlerFn, myAttrChange: handlerFn }, after: { init: handlerFn, myAttrChange: handlerFn }, … });</p></li>
+<li><p>Developers can now override the default clone behavior we use to isolate default ATTRS config values, using cloneDefaultValue, e.g.:</p>
+<p>ATTRS = { myAttr : { value: AnObjectOrArrayReference cloneDefaultValue: true|false|“deep”|“shallow” } }</p>
+<p>If the cloneDefaultValue property is not defined, Base will clone any Arrays or Object literals which are used as default values when configuring attributes for an instance, so that updates to instance values do not modify the default value.</p>
+<p>This behavior can be over-ridden using the cloneDefaultValue property:</p>
+<p>true, deep:</p>
+<p>Use Y.clone to protect the default value.</p>
+<p>shallow:</p>
+<p>Use Y.merge, to protect the default value.</p>
+<p>false:</p>
+<p>Don’t clone Arrays or Object literals. The value is intended to be used by reference, for example, when it points to a utility object.</p></li>
+<li><p>Base.plug and Base.unplug used to add static Plugins (default plugins for a class). Replaces static PLUGINS array, allowing subclasses to easily unplug static plugins added higher up in the hierarchy.</p></li>
+<li><p>Base adds all attributes lazily. This means attributes don’t get initialized until the first call to get/set, speeding up construction of Base based objects.</p>
+<p>Attributes which have setters which set some other state in the object, can configure the attribute to disable lazy initialization, by setting lazyAdd:false as part of their attribute configuration, so that the setter gets invoked during construction.</p></li>
+</ul>
+<h2 id="pr1---initial-release-1">3.0.0PR1 - Initial release</h2>
+<h1 id="cache-change-history">Cache Change History</h1>
+<h2 id="section-36">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-37">3.4.0</h2>
+<ul>
+<li>Added support to flush a specific request from the cache. [Pat Cavit]</li>
+</ul>
+<h2 id="section-38">3.3.0</h2>
+<ul>
+<li>Wrap access to <code>win.localStorage</code> in try/catch in case it has been disabled. [Ticket #2529572]</li>
+</ul>
+<h2 id="section-39">3.2.0</h2>
+<ul>
+<li><p>Added <code>cache-offline</code> submodule. The <code>cache</code> submodule is renamed to <code>cache-base</code> and the <code>cache</code> module is now a rollup.</p></li>
+<li><p>The <code>Cache</code> class no longer extends <code>Plugin.Base</code>. <code>Cache</code> now extends <code>Base</code>, and <code>CacheOffline</code> extends <code>Cache</code>. Implementers who wish to use <code>Cache</code> as a plugin should use <code>Plugin.Cache</code> in the <code>cache-plugin</code> submodule.</p></li>
+<li><p>Added <code>expires</code> Attribute to <code>Cache</code>. Cached entries now include <code>expires</code> and <code>cached</code> values.</p></li>
+</ul>
+<h2 id="section-40">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-41">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-42">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="calendar-change-history">Calendar Change History</h1>
+<h2 id="bug-fix-release">3.4.1 - Bug Fix Release</h2>
+<ul>
+<li>Calendar now supports Japanese language internationalization</li>
+<li>Multiple calendars can now be used on the same page [Ticket #2530925]</li>
+<li>When individual dates are clicked in Firefox, they are not text-selected [Ticket #2530754]</li>
+<li>Multiple date selection now works correctly when it spans the Daylight Savings Time change date [Ticket #2530979]</li>
+<li>A few documentation issues have been fixed [Tickets #2530929 and #2530930]</li>
+</ul>
+<h2 id="initial-release">3.4.0 - Initial release</h2>
+<h1 id="charts-change-history">Charts Change History</h1>
+<h2 id="section-43">3.4.1</h2>
+<ul>
+<li>#2530109 Fixed issue in which the NumericAxis roundingMethod was not always being respected when a number was specified.</li>
+<li>#2531100 Fixed issue in which the NumericAxis was not correctly calculating its data range when a minimum or maximum was explicitly set.</li>
+<li>#2530127 Added originEvent, pageX and pageY properties to the event facade for marker and planar events.</li>
+<li>#2530591 Added ability to accept custom series classes.</li>
+<li>#2530592 Fixed errors resulting from empty series.</li>
+<li>#2530810 Removed hard-coded class prefixes.</li>
+<li>#2530908 Fixed issue in which the NumericAxis was not respecting explicitly set minimum and maximum values in some cases.</li>
+<li>#2530969 Ensure underlying dom nodes of markers have unique ids.</li>
+<li>#2530984 Fixed issue in which PieChart was not resizing properly.</li>
+<li>#2531024 Fixed issue in which PieChart did not draw from center when width and height were not equal.</li>
+<li>#2530985 Fixed issue in which PieChart failed to always render in MSIE 8.</li>
+<li>#2531020 Fixed issue in which gridlines could be hidden by other elements.</li>
+<li>#2531040 Fixed issue in which missing data broke stacked histograms.</li>
+<li>#2531071 Fixed issue in which charts would not render if one of the series was empty.</li>
+</ul>
+<h2 id="section-44">3.4.0</h2>
+<ul>
+<li>Charts only requires datatype-number and datatype-date instead of the datatype rollup.</li>
+<li>#2530413 Position axis labels with transform instead of css styles.<br />
+</li>
+<li>#2530533 Fixed issue in which stacked bar/column displayed inaccurated data on mouseover when zero values appeared in the series.<br />
+</li>
+<li>#2530404 Fix issue in which markers were incorrectly omitted from graphs.<br />
+</li>
+<li>#2530395 SplineSeries extends LineSeries instead of CartesianSeries.</li>
+<li>#2529841 Add axis title.<br />
+</li>
+<li>#2530143 Refactor to use Graphics API</li>
+<li>#2530223 Fixed bug in which negative value markers were not displayed in column/bar series.</li>
+<li>#2529849 Fixed styles documentation bug</li>
+<li>#2530115 Fixed bug preventing tooltip’s node from being overwritten.</li>
+<li>#2529972 Fixed issue in which zero/null values were falsely creating markers in stacked bar and column series.</li>
+<li>#2529926 Fixed issue in which null values were being treated as zero.</li>
+<li>#2529925 Fixed bug in which dashed line was not drawn in combo and line series.</li>
+<li>#2529926 Fixed issue in which null values in data provider are treated as 0.</li>
+<li>#2529927 Addressed issue in which primitive value strings were not being parsed correctly in the TimeAxis.</li>
+<li>#2529971 Force range on a NumericAxis when all values are zero.</li>
+<li>#2529842 Ensure Numeric axis has at least on negative and positive tick when minimum is less than zero and maximum is greater than zero.</li>
+<li>#2529840 Changed stacked bar and column series to handle cases in which the item value is at or rounded to zero.</li>
+</ul>
+<h2 id="section-45">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="classname-manager-change-history">ClassName Manager Change History</h1>
+<h2 id="section-46">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-47">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-48">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-49">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-50">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-51">3.1.0</h2>
+<ul>
+<li><p>IMPORTANT: Changed default prefix to “yui3-” to avoid collisions with yui2 code, which uses “yui-”. Bundled CSS has also been updated.</p></li>
+<li><p>getClassName can now be invoked with a boolean skipPrefix argument set to true to avoid adding the default prefix when creating the class name.</p></li>
+<li><p>Whitespace is no longer replaced in the generated class name.</p></li>
+</ul>
+<h2 id="section-52">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="beta-1-2">3.0.0 beta 1</h2>
+<ul>
+<li>Now uses Y.cached</li>
+<li>All white space is stripped from incoming arguments</li>
+</ul>
+<h2 id="pr2-2">3.0.0 PR2</h2>
+<ul>
+<li>Initial 3.0 revision</li>
+</ul>
+<h1 id="collection-change-history">Collection Change History</h1>
+<h2 id="section-53">3.4.1</h2>
+<ul>
+<li>Sparse arrays are now handled correctly in the non-native fallback implementation of <code>Y.Array.lastIndexOf()</code>. [Ticket #2530966]</li>
+</ul>
+<h2 id="section-54">3.4.0</h2>
+<ul>
+<li>Sparse arrays are now handled correctly in the non-native implementations of <code>Array.every</code>, <code>Array.filter</code>, <code>Array.find</code>, <code>Array.map</code>, and <code>Array.reduce</code>. [Ticket #2530376]</li>
+</ul>
+<h2 id="section-55">3.3.0</h2>
+<ul>
+<li>[!] The <code>sort</code> parameter of <code>Array.unique</code> has been deprecated. It still works, but you’re encouraged not to use it as it will be removed from a future version of YUI.</li>
+<li><code>Array.lastIndexOf</code> now supports the <code>fromIndex</code> parameter as specified in ES5.</li>
+<li>Improved the performance of <code>Array.filter</code>, <code>Array.map</code>, <code>Array.reduce</code>, and <code>Array.unique</code>, especially in browsers without native ES5 array extras.</li>
+</ul>
+<h2 id="section-56">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-57">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-58">3.1.0</h2>
+<ul>
+<li><code>array-extras</code> is the base submodule for the package.</li>
+<li>Added <code>ArrayList</code> for generic iterable objects.</li>
+<li><code>Array.forEach</code> is an alias for <code>Array.each</code>.</li>
+<li>Added <code>Array.invoke</code> to execute a named method on an array of objects.</li>
+</ul>
+<h2 id="section-59">3.0.0</h2>
+<ul>
+<li><code>unique</code> with <code>sort</code> works.</li>
+</ul>
+<h2 id="b1">3.0.0b1</h2>
+<ul>
+<li>Fixed load time fork assumptions.</li>
+</ul>
+<h2 id="pr1-1">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="console-change-history">Console Change History</h1>
+<h2 id="section-60">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-61">3.4.0</h2>
+<ul>
+<li>CSS classes generated from the <code>style</code> attribute changed from, e.g., <code>yui3-inline-console</code> to <code>yui3-console-inline</code>.</li>
+</ul>
+<h2 id="section-62">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-63">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-64">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-65">3.1.0</h2>
+<ul>
+<li><p>CSS class references updated from <code>yui-*</code> to <code>yui3-*</code>.</p></li>
+<li><p>Internal reorganization (API and functionality unaffected)</p></li>
+<li><p>Fixed double escapement of <code>&amp;</code> when used with ConsoleFilters and hiding and showing content with HTML entities.</p></li>
+<li><p>Strings broken out into Intl. language resource bundles. English (en, default) and Spanish (es) supported.</p></li>
+</ul>
+<h2 id="section-66">3.0.0</h2>
+<ul>
+<li><p>Added attribute <code>style</code> to allow <code>inline-block</code>, <code>block</code>, or <code>absolute</code> positioning.</p></li>
+<li><p>Moved the hidden state CSS to the sam skin and increased rule specificity.</p></li>
+<li><p><code>printBuffer</code> no longer throws an error when called against an empty buffer.</p></li>
+<li><p>Removed <code>label</code> property from normalized message object since it was just a copy of category.</p></li>
+<li><p>Moved <code>collapsed</code> CSS class to the <code>boundingBox</code> and now <code>collapse()</code> resizes the <code>boundingBox</code> accordingly.</p></li>
+<li><p>Added <code>useBrowserConsole</code> attribute as a pass through to the YUI config. Default to <code>false</code> so when a <code>Console</code> is instantiated, messages are redirected to <code>Console</code> rather than duplicated there.</p></li>
+<li><p><code>collapse()</code>, <code>expand()</code>, and <code>log()</code> are now chain-able.</p></li>
+</ul>
+<h2 id="beta1-1">3.0.0beta1</h2>
+<ul>
+<li><p><code>logSource</code> attribute added to configure listening for events from a specific target. Also useful for subscribing to all log events across multiple YUI instances.</p></li>
+<li><p>Lowered <code>consoleLimit</code> default to 300.</p></li>
+<li><p><code>printLimit</code> attribute added to limit the number of entries from the buffer to output in a given <code>printBuffer()</code> call.</p></li>
+<li><p><code>printBuffer(max)</code> argument added to limit the number of entries to print in this cycle.</p></li>
+<li><p>Changed from <code>setTimeout</code> to <code>setInterval</code> to chunk DOM output.</p></li>
+<li><p><code>logLevel</code> constants changed to strings and categories outside info, warn, and error are not treated as info.</p></li>
+<li><p>CSS updates.</p></li>
+<li><p>Support for <code>height</code> and <code>width</code> attribute configuration.</p></li>
+<li><p>Changed <code>&lt;input type="button"&gt;</code> to <code>&lt;button type="button"&gt;</code>.</p></li>
+<li><p>Added <code>collapse()</code>/<code>expand()</code>.</p></li>
+<li><p>Entry addition and removal now occurs off DOM.</p></li>
+<li><p>Entry removal checks that the target Node is present before removing it.</p></li>
+<li><p><code>Y.config.debug</code> explicitly set to false during print cycle to avoid infinite loops.</p></li>
+</ul>
+<h2 id="pr2-3">3.0.0pr2</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="consolefilters-plugin-change-history">ConsoleFilters Plugin Change History</h1>
+<h2 id="section-67">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-68">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-69">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-70">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-71">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-72">3.1.0</h2>
+<ul>
+<li>Internal reorganization (API and functionality unaffected).</li>
+</ul>
+<h2 id="section-73">3.0.0</h2>
+<ul>
+<li>Adding attribute <code>cacheLimit</code> to limit memory overrun from holding onto all log messages.</li>
+</ul>
+<h2 id="beta1-2">3.0.0beta1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="cookie-change-history">Cookie Change History</h1>
+<h2 id="section-74">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-75">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-76">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-77">3.2.0</h2>
+<ul>
+<li>Introduced a private method for setting the document to use in tests.</li>
+<li>Updated tests to run without setting cookies to <code>document.cookie</code>.</li>
+</ul>
+<h2 id="section-78">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-79">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-80">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="b1-1">3.0.0b1</h2>
+<ul>
+<li>Synchronized with the 2.x version of cookie:
+<ul>
+<li>Changes formatting of date from <code>toGMTString()</code> to <code>toUTCString()</code> (trac# 2527892).</li>
+<li>Updated <code>remove()</code> so that it no longer modifies the options object that is passed in (trac# 2527838).</li>
+<li>Changed behavior for Boolean cookies (those that don’t contain an equals sign). Previously, calling <code>Cookie.get()</code> on a Boolean cookie would return the name of the cookie. Now, it returns an empty string. This is necessary because IE doesn’t store an equals sign when the cookie value is empty (“info=” becomes just “info”).</li>
+<li>Added <code>Cookie.exists()</code> to allow for easier Boolean cookie detection.</li>
+<li>Removed check for cookie value before parsing. Previously, parsing checked for <code>name=value</code>, now it parses anything that is passed in.</li>
+<li>Removing the last subcookie with <code>removeSub()</code> now removes the cookie if the <code>removeIfEmpty</code> option is set to <code>true</code>. (trac# 2527954)</li>
+<li>Added option to disable url encoding/decoding by passing <code>options.raw</code> to <code>set()</code> and <code>get()</code>. (trac# 2527953).</li>
+<li>Changed <code>get()</code> to take an options object with <code>raw</code> and <code>converter</code> properties. If a function is passed instead of an object then it is used as the converter for backward compatibility (trac# 2527953).</li>
+</ul></li>
+</ul>
+<h2 id="pr2-4">3.0.0pr2</h2>
+<ul>
+<li>Synchronized with latest 2.x version of cookie.</li>
+</ul>
+<h2 id="pr1-2">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="css-base-change-history">CSS Base Change History</h1>
+<h2 id="section-81">3.4.1</h2>
+<ul>
+<li>Bug fix: Nested mixed list types were incorrectly styled. [Ticket 2530302]</li>
+</ul>
+<h2 id="section-82">3.4.0</h2>
+<ul>
+<li>No code changes.</li>
+</ul>
+<h2 id="section-83">3.3.0</h2>
+<ul>
+<li>No code changes.</li>
+</ul>
+<h2 id="section-84">3.2.0</h2>
+<ul>
+<li>No code changes.</li>
+</ul>
+<h2 id="section-85">3.1.1</h2>
+<ul>
+<li>No code changes.</li>
+</ul>
+<h2 id="section-86">3.1.0</h2>
+<ul>
+<li>No code changes.</li>
+</ul>
+<h2 id="section-87">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="css-fonts-change-history">CSS Fonts Change History</h1>
+<h2 id="section-88">3.4.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-89">3.4.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-90">3.3.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-91">3.2.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-92">3.1.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-93">3.1.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-94">3.0.0</h2>
+<ul>
+<li>Initial release. 3.0.0PR1 - Initial release</li>
+</ul>
+<p>Module Name: “cssfonts” Documentation: http://developer.yahoo.com/yui/3/cssfonts</p>
+<p>The foundational CSS Fonts provides cross-browser typographical normalization and control while still allowing users to choose and adjust their font size. Both Standards and Quirks modes are supported in A-grade browsers.</p>
+<h1 id="css-grids-change-history">CSS Grids Change History</h1>
+<h2 id="section-95">3.4.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-96">3.4.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-97">3.3.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-98">3.2.0</h2>
+<ul>
+<li><p>[!] The pre-3.2.0 CSS Grids Utility has been deprecated, and its module has been renamed to <code>cssgrids-deprecated</code>. It will be removed completely in a future release.</p></li>
+<li><p>Initial release of the new CSS Grids Utility.</p></li>
+</ul>
+<h2 id="section-99">3.1.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-100">3.1.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-101">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<p>**** version 3.0.0 ***<br />
+* deprecated for YUI 3</p>
+<p>**** version 3.0.0 beta 1 ***<br />
+* deprecated for YUI 3</p>
+<p>**** version 3.0.0 PR2 ***</p>
+<pre><code>* Added self-clearing for templates (e.g. div.yui-t1) for 
+  cases when they are not within #bd. Per ticket 2201115
+* Corrected ordering issue for &quot;gb&quot; per internal ticket 
+  2251219 and Sourceforge ticket 2131681
+* Enabled nesting of gf within gc per internal ticket 
+  1458071 and Sourceforget ticket 1786723</code></pre>
+<p>3.0.0PR1 - Initial release</p>
+<p>Module Name: “cssgrids” Documentation: http://developer.yahoo.com/yui/3/cssgrids</p>
+<p>The foundational CSS Grids offers four preset page widths, six preset two-column source-order-independent content templates, and the ability to stack and nest subdivided regions of two, three, or four columns. The file provides over 1000 page layout combinations. Other features include:</p>
+<pre><code>* Supports fluid 100-percent layouts, fluid- and 
+  fixed-width layouts at 750px, 950px, and 974px 
+  centered, and the ability to easily customize the 
+  width.
+* Flexible in response to user initiated font-size 
+  adjustments.
+* Template columns are source-order independent; put
+  your most important content earlier in your markup
+  for improved accessibility and SEO.
+* Self-clearing footer. No matter which column is
+  longer, the footer stays below the longest.
+* Accommodates IAB&#39;s Ad Unit Guidelines for common 
+  ad dimensions.</code></pre>
+<p>*** NOTE: This module is deprecated. This functionality will be provided in a future release.</p>
+<h1 id="css-reset-change-history">CSS Reset Change History</h1>
+<h2 id="section-102">3.4.1</h2>
+<ul>
+<li>Moved list-type to list declaration.</li>
+</ul>
+<h2 id="section-103">3.4.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-104">3.3.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-105">3.2.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-106">3.1.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-107">3.1.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-108">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="dataschema-change-history">DataSchema Change History</h1>
+<h2 id="section-109">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-110">3.4.0</h2>
+<h3 id="dataschema-json"><code>dataschema-json</code></h3>
+<ul>
+<li>Added support to accept the results array as input, leaving <code>schema.resultListLocator</code> as optional.</li>
+<li>Field locators that contain . or [???] now fail over to look for that locator as a single property name rather than a nested value. For example, a locator <code>"not.nested"</code> would look for <code>inputRecord.not.nested</code> for a value, but if it doesn’t find one, it will look for <code>inputRecord["not.nested"]</code>. If it finds a value there, it will not look for a nested value for subsequent records.</li>
+<li><code>getPath</code> is far more tolerant of locator strings. In particular, it considered utf-8 characters that didn’t match the <code>\w</code> regex group to be invalid. This is fixed.</li>
+</ul>
+<h2 id="section-111">3.3.0</h2>
+<ul>
+<li>Bug 2528429: Added support for locator property to DataSchema.JSON resultFields.</li>
+<li>Known Android issues (bugs 2529621, 2529758, 2529775): XML parsing is buggy on the Android WebKit browser.</li>
+</ul>
+<h2 id="section-112">3.2.0</h2>
+<ul>
+<li>Set custom parser execution scope to be DataSchema instance.</li>
+</ul>
+<h2 id="section-113">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-114">3.1.0</h2>
+<ul>
+<li>Added support for nested schemas.</li>
+<li>Added support for XPath resultListLocator, instead of requiring the use of ‘getElementsByTagName’.</li>
+<li>Improved support for DOM elements in DataSchema.XML when IE xmldoc.selectNodes(String) fails.</li>
+<li>Field list is now optional for DataSchema.JSON. If omitted, all response data is returned.</li>
+<li>Fixed a bug in field resolution where null might be discovered along the resolution path. Now exits gracefully rather than throwing an error.</li>
+</ul>
+<h2 id="section-115">3.0.0</h2>
+<ul>
+<li>Support for DOM elements in DataSchema.XML.</li>
+</ul>
+<h2 id="beta-1-3">3.0.0 beta 1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="datasource-change-history">DataSource Change History</h1>
+<h2 id="section-116">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-117">3.4.0</h2>
+<h3 id="datasource-polling">datasource-polling</h3>
+<ul>
+<li><code>setInterval</code> fires first <code>sendRequest</code> in a 0ms <code>setTimout</code>, then subsequent calls after the configured timeout. [Ticket #2529182]</li>
+</ul>
+<h3 id="datasource-function">datasource-function</h3>
+<ul>
+<li>success callbacks that throw an error no longer result in the <code>data</code> event being fired again. [Ticket #2529824]</li>
+</ul>
+<h2 id="section-118">3.3.0</h2>
+<ul>
+<li>Un-anonymize <code>DataSource.IO</code> callback functions. [Ticket #2529466]</li>
+</ul>
+<h2 id="section-119">3.2.0</h2>
+<ul>
+<li><p>Removed hardcoded <code>DataSource.IO</code> from <code>DataSourceJSONSchema</code>.</p></li>
+<li><p>Added ability to cancel underlying IO and Get transactions.</p></li>
+<li><p>Better <code>DataSource</code> error handling.</p></li>
+<li><p>Added <code>ioConfig</code> Attribute to <code>DataSource.IO</code>.</p></li>
+</ul>
+<h2 id="section-120">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-121">3.1.0</h2>
+<ul>
+<li><p>[!] <code>DataSource</code>’s <code>sendRequest()</code> argument signature has changed in a non-backward-compatible way. It now accepts a single object containing the properties <code>request</code>, <code>callback</code>, and <code>cfg</code>.</p></li>
+<li><p><code>DataSource.Get</code> bug fixed where it was trying to delete the proxy callback in the wrong location during cleanup.</p></li>
+<li><p>Changed from array of proxy callbacks to object with guid keys to support services that don’t properly handle array indexes in the callback parameter (Twitter).</p></li>
+<li><p>Code reorganized (API and functionality unaffected).</p></li>
+</ul>
+<h2 id="section-122">3.0.0</h2>
+<ul>
+<li><p><code>DataSource.IO</code> now passes request value to IO.</p></li>
+<li><p><code>DataSource.Function</code> now catches exception and fires error event.</p></li>
+</ul>
+<h2 id="beta1-3">3.0.0beta1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="datatable-change-history">DataTable Change History</h1>
+<h2 id="section-123">3.4.1</h2>
+<ul>
+<li><p>Removed the <code>td</code> property from the object passed to cell formatters by default. Implementers should return innerHTML or modify the <code>tdTemplate</code> and set properties on the <code>o</code> object passed to the formatter for template substitution. For implementers that <em>must</em> have a Node for the cell, a new prototype method <code>createCell(o)</code> may be called from formatters. The method creates a Node using the standard template substitution of <code>tdTemplate</code> + values stored in <code>o</code>. It then adds the cell Node to the <code>td</code> property on <code>o</code> and returns the created Node. That said, using strings will make the table faster (maybe not in this release, but in 3.5.0). [Ticket #2529920]</p></li>
+<li><p>Added a column attribute <code>emptyCellValue</code> to populate cells without content values. In your column definition, specify a value you want to show in the rendered cell in the case of missing data. The default <code>emptyCellValue</code> is the empty string, so no more “{value}” showing up in tables. [Ticket #2529921]</p></li>
+</ul>
+<h2 id="section-124">3.4.0</h2>
+<ul>
+<li><p>Render cycle revamped to avoid calls through the Attribute API for each cell. This should improve render performance somewhat. More performance improvements to come in 3.5.0. The object passed through the render loops’ supporting methods now has additional properties and many properties are added earlier. o.td still refers to the cell added by the previous loop iteration–a proper fix is coming in 3.5.0. Look in the Gallery for a patch module.</p></li>
+<li><p>Now creates a new <code>RecordSet</code> for each instance rather than reusing the same one. [Ticket #2529980]</p></li>
+<li><p>Captions are only added if a value is set for the <code>caption</code> attribute [Ticket #2529968]</p></li>
+</ul>
+<h2 id="section-125">3.3.0</h2>
+<ul>
+<li><p>Initial release.</p></li>
+<li><p>Known Android issue (Ticket #2529761): Scrolling is currently not supported on the Android WebKit browser.</p></li>
+</ul>
+<h1 id="datatype-change-history">DataType Change History</h1>
+<h2 id="section-126">3.4.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-127">3.4.0</h2>
+<ul>
+<li><p>Languages are no longer fetch-able for the <code>datatype-date</code> module, only for the <code>datatype-date-format</code> module:</p>
+<pre><code>var availLangs = Y.Intl.getAvailableLangs(&quot;datatype-date-format&quot;);</code></pre></li>
+</ul>
+<h2 id="section-128">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-129">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-130">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-131">3.1.0</h2>
+<ul>
+<li>Changed to use YUI language resource bundles rather than proprietary infrastructure.</li>
+</ul>
+<h2 id="section-132">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="beta1-4">3.0.0beta1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="drag-and-drop-change-history">Drag and Drop Change History</h1>
+<h3 id="section-133">3.4.1</h3>
+<ul>
+<li>No changes.</li>
+</ul>
+<h3 id="section-134">3.4.0</h3>
+<ul>
+<li>#2529889 Example for Delegate Drag and Drop has wrong parameters</li>
+<li>#2529905 Using DDNodeScroll with DDDelegate causes JS error in Safari</li>
+<li>#2530050 Incorrect documentation</li>
+<li>#2530451 DragDrop enhancement - ability to use dd with non-node objects.</li>
+<li>#2530576 change notest needed in history file</li>
+</ul>
+<h3 id="section-135">3.3.0</h3>
+<ul>
+<li>#2529382 DD Delegate breaks when a draggable is nested and uses a handle</li>
+<li>#2529407 Add tickAlignX and tickAlignY events to Y.Plugin.DDConstrained</li>
+<li>#2529409 [Pull Request] - #2529407 Add tickAlignX and tickAlignY events to Y.Plugin.DDConstrained</li>
+<li>#2529463 Screen goes red in some YUI 3 D&amp;D examples in IE=8 doc mode</li>
+<li>#2529469 Reset _lastTickYFired/_lastTickXFired on drag end</li>
+<li>#2529470 [Pull Request] - #2529469 Reset _lastTickYFired/_lastTickXFired on drag end</li>
+<li>#2529484 DD example not working when run from local directory or hosted on YUIbuild</li>
+<li>#2529577 Slider thumb frozen on mousedown+mousemove in IE9</li>
+</ul>
+<h3 id="section-136">3.2.0</h3>
+<p><strong>IMPORTANT</strong> dd-plugin and dd-plugin-drop are no longer bundled with the dd module. They are now official plugins and need to be “used” on their own.</p>
+<p>Moved to new Gesture support. DD now works off both mouse events and touch events natively with the “drag-gestures” plugin that is conditionally loaded when touch events are found on the page.</p>
+<ul>
+<li>#2528693 3.1.0PR1 DD Examples fail in Opera 10.5</li>
+<li>#2528765 DD uses window references</li>
+<li>#2528797 Drag and drop breaks input text select()</li>
+<li>#2528959 Mouseenter event bubbles up when using both modules dd-plugin and dd-constrain</li>
+<li>#2529070 Drop destroy is throwing errors when the node is removed with .remove(true) using dd delegate</li>
+<li>#2529094 DD hard codes CSS prefix</li>
+</ul>
+<h3 id="section-137">3.1.0</h3>
+<ul>
+<li>#2527964 DD constrain2node cached position causes misalignment when that node is moved</li>
+<li>#2528229 Configuration to override region caching in Constrain plugin</li>
+<li>#2528395 Add a DD.Drag delegate class</li>
+<li>#2528457 Add invalid selector check to Delegate</li>
+<li>#2528488 Delegate errors without Drop plugin</li>
+<li>#2528509 Drag and drop slow on linux ff3.5.6</li>
+<li>#2528539 drag:start should fire before drag:enter</li>
+<li>#2528540 DDConstrained using cacheRegion set to false throws js errors when drag starts</li>
+<li>#2528560 drag:over event is not firing when useShim is false</li>
+<li>#2528578 DDConstrained has no default constraining config</li>
+<li>#2528585 drag:dropmiss being fired on simple click</li>
+<li>#2528592 Add throttle support to DD mousemove</li>
+<li>#2528596 Support Node instances as handles in Drag</li>
+<li>#2528607 Drop events not firing when attached to a Drag target</li>
+<li>#2528608 Default Drag throttleTime should be -1</li>
+<li>#2528613 dragNode XY not sync with the mouse if it has its dimensions changed on drag:start</li>
+</ul>
+<h3 id="section-138">3.0.0</h3>
+<ul>
+<li>#2528096 Updated initialization routine so plugins load before DD attachs to the node.</li>
+<li>#2528119 Added SELECT selector to invalidHandles.</li>
+<li>#2528124 Fixed issue with creating more than one DD instance on a node.</li>
+<li>#2528149 Fixed _noShim use case</li>
+</ul>
+<h3 id="beta1-5">3.0.0 Beta1</h3>
+<p>Added a plugin to support Window and Node based scrolling</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDWinScroll);
+
+var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDNodeScroll, {
+    node: &#39;#some-parent-with-scroll&#39;
+});</code></pre>
+<p>Proxy and Constrained were moved to the plugin modal, there are some syntax changes:</p>
+<p>PR2 - Proxy:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;,
+    proxy: true,
+    moveOnEnd: false
+});</code></pre>
+<p>Current - Proxy:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDProxy, {
+    moveOnEnd: false
+});</code></pre>
+<p>PR2 - Constrained:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;,
+    constrain2node: &#39;#wrap&#39;
+});</code></pre>
+<p>Current - Constrained:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDConstrained, {
+    constrain2node: &#39;#wrap&#39;
+});</code></pre>
+<p>Converted Everything to use setXY now that FF2 is not supported. Performance tweaks to dragging over a target.</p>
+<h3 id="pr2-5">3.0.0 PR2</h3>
+<p>Added bubbles config option to help with extending later. Updated _checkRegion to perform Bottom, Top, Left, Right validation instead of Top, Bottom, Left, Right</p>
+<h3 id="pr1-3">3.0.0 PR1</h3>
+<p>Known Issues:</p>
+<ul>
+<li><p>Firefox 2.x: Proxy Drags with handles inside an element with overflow: hidden will not target properly.</p></li>
+<li><p>All: Scrolling Module not available as of this release.</p></li>
+</ul>
+<h1 id="dial-change-history">Dial Change History</h1>
+<h2 id="section-139">3.4.1</h2>
+<ul>
+<li><p>Changed method name from _getNewValueFromMousedown to _handleMousedown</p></li>
+<li><p>Improved mousedown on ring handling [Ticket #2530597]</p></li>
+<li><p>Improved handling of dragging the handle past max/min and around multiple revolutions. [Ticket #2530766]</p></li>
+<li><p>Fixed problem with Dial having incorrect center X and Y following a browser resize. [Ticket #2531111]</p></li>
+</ul>
+<h2 id="section-140">3.4.0</h2>
+<ul>
+<li><p>Names of 3 configuration attributes have changed: stepsPerRev -&gt; stepsPerRevolution handleDist -&gt; handleDistance centerButtonDia -&gt; centerButtonDiameter</p></li>
+<li><p>New configuration attributes: markerDiameter handleDiameter</p></li>
+<li><p>Enhancement: In addition to setting the Dial by dragging the handle as it was in 3.3.0, Dial now supports setting the value by clicking on the Ring. This does not cross value “wrapping” boundries. For example: If a Dial has 0 degrees = value 0, and the Dial’s current handle position is 10 degrees with a value = 10, then a mousedown at 355 degrees will result in a value of 355 not -10. In this case all mousedown events will result in values between 0 and 355. This is within current value “wrapping” boundries. Moving across value wrapping boundaries, must be done by dragging the handle or using the keyboard.</p></li>
+<li>Changed the name of class marker-max-min
+<ul>
+<li>to - yui3-dial-marker-max-min</li>
+</ul></li>
+<li><p>Enhancement: In 3.3.0, when the user dragged the handle past the min or max, the Marker displayed as red to indicate min/max. When the cursor was released, the marker was no longer displayed. There remained no user feedback indicating max/min. When the keyboard was used to change the value, no min/max indication was displayed, except that the handle stopped moving. In this release, the Marker display state of red remains as long as the Dial is at min/max, regardless of mouse or keyboard use. If you don’t want min/max feedback, CSS class yui3-dial-marker-max-min can be overridden.</p></li>
+<li><p>When mousedown is used to set its value, Dial now has intuitive handling of different configurations of min, max where stepsPerRevolution is greater than or less than one revolution. [Ticket #2530306]</p></li>
+</ul>
+<h2 id="section-141">3.3.0</h2>
+<ul>
+<li>New Beta Component Deprecated _setLabelString, _setTooltipString, _setResetString. Instead, use DialObjName.set(‘strings’,{‘label’:‘My new label’, ‘resetStr’;‘My New Reset’}); before DialObjName.render(); One or more strings can be changed at a time. Removed _setXYResetString. Now done through CSS. Not called by Dial.js anymore.</li>
+</ul>
+<h1 id="dom-change-history">DOM Change History</h1>
+<h2 id="section-142">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-143">3.4.0</h2>
+<ul>
+<li>The ancestor/ancestors methods now accept an optional stopAt function.</li>
+</ul>
+<h2 id="section-144">3.3.0</h2>
+<ul>
+<li>IE alpha filter for opacity no longer affects existing filters.</li>
+<li>Fixes for IE9, Firefox 4, and Chrome creators.</li>
+<li>setStyle(node, ’’) now clears inline styles.</li>
+<li>adds ancestors method.</li>
+</ul>
+<h2 id="section-145">3.2.0</h2>
+<ul>
+<li>CSS “transform” vendor prefix is now optional with set/getStyle.</li>
+<li>Bug fix: IE6/IE7 were failing inDoc checks for cloned nodes. [Ticket 2529232]</li>
+</ul>
+<h2 id="section-146">3.1.1</h2>
+<ul>
+<li>Bug fix: viewportRegion() was incorrectly documented. [Ticket 2528756]</li>
+</ul>
+<h2 id="section-147">3.1.0</h2>
+<ul>
+<li>adds support for hypenated attributes.</li>
+<li>Bug fix: iOS already includes scroll amount. [Ticket 2528390]</li>
+</ul>
+<h2 id="section-148">3.0.0</h2>
+<ul>
+<li>initial release.</li>
+</ul>
+<h1 id="dump-change-history">Dump Change History</h1>
+<h2 id="section-149">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-150">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-151">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-152">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-153">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-154">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-155">3.0.0</h2>
+<ul>
+<li>Better handling of HTML elements.</li>
+</ul>
+<h2 id="beta1-6">3.0.0beta1</h2>
+<ul>
+<li>Added <code>/regexp/</code> formatting.</li>
+</ul>
+<h2 id="pr2-6">3.0.0pr2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="pr1-4">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="rich-text-editor-change-history">Rich Text Editor Change History</h1>
+<p>###3.4.1</p>
+<p>No changes.</p>
+<h3 id="section-156">3.4.0</h3>
+<p>Third release of EditorBase. Considerable work was done on this component, but there are no public tickets associated with the issues that were resolved. This version of EditorBase is the current version being used in the new Yahoo! Mail. It’s production stable and ready to be used with the proper skins and GUI.</p>
+<h3 id="section-157">3.3.0</h3>
+<p>Second release of EditorBase. Considerable work was done on this component, but there are no public tickets associated with the issues that were resolved.</p>
+<h3 id="section-158">3.2.0</h3>
+<p>Initial Release</p>
+<p>This release is a core utility release, the Editor instance that is created contains no GUI. It’s only the iframe rendering and event system.</p>
+<h1 id="escape-change-history">Escape Change History</h1>
+<h2 id="section-159">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-160">3.4.0</h2>
+<ul>
+<li>Non-string arguments to <code>html()</code> and <code>regex()</code> are now coerced to strings. [Ticket #2530408]</li>
+</ul>
+<h2 id="section-161">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="event-infrastructure-change-history">Event Infrastructure Change History</h1>
+<h2 id="section-162">3.4.1</h2>
+<ul>
+<li><p>Calling Y.on(‘syntheticEvent’, callback) without a context/selector argument now defaults to <code>window</code> (or the global object) [Ticket #2530081]</p></li>
+<li><p>event-resize, a.k.a. Y.on(‘windowresize’, …) migrated to synthetic event infrastructure. Now detachable, etc. Also properly throttles the resize event on newer Gecko engines. That browser sniff was old! [Ticket #2530805]</p></li>
+</ul>
+<h2 id="section-163">3.4.0</h2>
+<ul>
+<li><p><code>event-outside</code> added for “outside” events.</p></li>
+<li><p><code>Y.Event.define(name)</code> adds name to <code>DOM_EVENTS</code> whitelist. Accepts event name string or array of string names.</p></li>
+<li><p><code>event-hover</code> properly pulls in required module <code>event-mouseenter</code>.</p></li>
+<li><p>DOM event subscriptions are now removed and objects cleaned up after last subscription is detached; same for synthetic events.</p></li>
+<li><p><code>key</code> synthetic event migrated to official synth infrastructure; and now supports delegation.</p></li>
+<li><p><code>key</code> event spec param now supports letters and named keys. E.g.: <code>'enter+ctrl' == '13+ctrl'</code>, <code>'up:a' == 'up:65'</code> and <code>'A' == '65+shift'</code>.</p></li>
+<li><p>Added experimental config <code>YUI({ lazyEventFacade: true })</code> that triggers a mode for DOM EventFacades in IE8 to use getters to access event properties that involve any calculation, such as <code>e.target</code> and <code>e.currentTarget</code>; this should also improve performance.</p></li>
+<li><p><code>mouseenter</code> and <code>mouseleave</code> events now filter the native event rather than the generated <code>DOMEventFacades</code> for <code>mouseover</code>/<code>mouseout</code>. This results in fewer calls to <code>Y.one</code> (<code>e.target</code>, <code>currentTarget</code>, <code>relatedTarget</code>) as well, so should improve performance.</p></li>
+<li><p>Added <code>onceAfter()</code> method to do a self-detaching <code>after()</code> subscription. [Ticket #2529464]</p></li>
+<li><p><code>Y.on(type, callback, HTMLElement[], COMPAT)</code> subscriptions to attach to multiple elements in one call now correctly use native DOM elements instead of Nodes for all subscriptions. [Ticket #2529807]</p></li>
+<li><p>Plugged the leaked global <code>GLOBAL_ENV</code>. [Ticket #2530227]</p></li>
+<li><p>Fixed synth architecture to properly resubscribe to synths that use <code>processArgs</code> if the target is not available at the time of subscription. [Ticket #2530293]</p></li>
+</ul>
+<h2 id="section-164">3.3.0</h2>
+<ul>
+<li><p>Added support for <code>delegate({ click: fn, keyup: fn2 }, …)</code> and <code>delegate(['click', 'keyup'], fn, …)</code>.</p></li>
+<li><p>Delegation containers are now potential matches for the filter.</p></li>
+<li><p>Nested delegate matches will now have callback executed for all matching targets in bubbling order.</p></li>
+<li><p><code>e.stopPropagation()</code> in nested delegate matches now works as expected.</p></li>
+<li><p>The raw DOM event is no longer double wrapped (i.e. was: <code>e._event._event</code>).</p></li>
+<li><p><code>event-focus</code> now uses XHTML-friendly feature test to fork for IE.</p></li>
+<li><p>New <code>event-hover</code> module providing <code>node.on('hover', in, out)</code>.</p></li>
+<li><p><code>e.button</code>/<code>e.which</code> normalization.</p></li>
+<li><p><code>e.which</code> normalized for key operations as well.</p></li>
+<li><p>Split out IE-specific code into <code>event-base-ie</code> conditional module.</p></li>
+</ul>
+<h2 id="section-165">3.2.0</h2>
+<ul>
+<li><p>Added event and facade support for touch.</p></li>
+<li><p>Synthetic event infrastructure rebuilt. Changes include:</p>
+<ul>
+<li><p>Support for delegation.</p></li>
+<li><p>Passing <code>DOMEventFacade</code> to <code>notifier.fire(e)</code> now recommended.</p></li>
+<li><p>Fixed issue where firing the notifier from inside DOM event subs would result in duplicate synth sub execution if the same synth was subscribed multiple times on the same Node.</p></li>
+<li><p>Synths can now be detached with <code>node.purge(t|f, 'synthName')</code>.</p></li>
+<li><p><code>Event.define(type, config, *force*)</code> third arg added to override existing events. Only use this if you really know what you’re doing.</p></li>
+<li><p>Changed <code>allowDups</code> to <code>preventDups</code>, <code>true</code> by default to mimic existing behavior elsewhere in the event system.</p></li>
+</ul></li>
+<li><p><code>delegate()</code> now defers to synthetic event def more intelligently.</p></li>
+<li><p>Added support for passing filter function to delegate.</p></li>
+<li><p><code>delegate()</code> now executes callback for each filter match up the bubble path.</p></li>
+<li><p>Added detach category support to <code>delegate()</code>.</p></li>
+<li><p>Migrate <code>mouseenter</code>, <code>mouseleave</code>, <code>focus</code>, and <code>blur</code> to <code>Event.define</code>.</p></li>
+<li><p><code>focus</code> and <code>blur</code> now guarantee execution order of subs matches bubble order when multiple delegates are created from different levels.</p></li>
+<li><p><code>event-synthetic</code> added to ‘event’ rollup module.</p></li>
+</ul>
+<h2 id="section-166">3.1.1</h2>
+<ul>
+<li>fired <code>fireOnce()</code> listeners are executed synchronously.</li>
+</ul>
+<h2 id="section-167">3.1.0</h2>
+<ul>
+<li><p>Removed deprecated <code>delegate</code> custom event. As of 3.1.0 use the <code>delegate()</code> method on a <code>Node</code> instance or <code>Y</code> instance.</p></li>
+<li><p>Updated the <code>event-focus</code> submodule so that the specialized <code>focus</code> and <code>blur</code> events that enable the <code>focus</code> and <code>blur</code> events to bubble do not apply when adding <code>focus</code> and <code>blur</code> events to the <code>window</code> object.</p></li>
+<li><p>Synthetic event creation API added.</p></li>
+<li><p><code>delegate</code> enhancements.</p></li>
+<li><p><code>unload</code> event fix.</p></li>
+<li><p>Compatibility with Firefox’s untouchable anonymous <code>div</code>.</p></li>
+</ul>
+<h2 id="section-168">3.0.0</h2>
+<ul>
+<li><p>Added <code>onreadystatechange</code> fork in <code>domready</code> to handle the event in IE when YUI is hosted in an <code>iframe</code>.</p></li>
+<li><p>Added <code>mousewheel</code> support.</p></li>
+<li><p>Added <code>Y.delegate()</code> function that is a bit easier to use than <code>Y.on('delegate', …)</code>.</p></li>
+<li><p>Default scope of <code>mouseenter</code> and <code>mouseleave</code> events is the <code>Node</code> instance to which the listener is attached.</p></li>
+<li><p>Default scope of delegated event listeners is the <code>Node</code> instance that matched the supplied CSS selector.</p></li>
+<li><p>All special DOM event handlers (<code>focus</code>, <code>blur</code>, <code>mousewheel</code>, <code>resize</code>, <code>delegate</code>, etc.) are broken down into submodules. Core DOM event functionality is provided in event-base.js, and all of the functionality is rolled into event.js.</p></li>
+<li><p>Additional Safari key remapping.</p></li>
+<li><p>Special DOM events can now be routed through <code>delegate()</code>.</p></li>
+<li><p><code>Y.on()</code> can target <code>Node</code> and <code>NodeList</code> references correctly.</p></li>
+<li><p>Fixed <code>onAvailable()</code> lazy DOM listener detach handles.</p></li>
+<li><p>When configured to return a detach handle, a single object is always returned. Previously requests that resolved to multiple listeners returned an array.</p></li>
+</ul>
+<h2 id="beta1-7">3.0.0beta1</h2>
+<ul>
+<li><p>DOM event, custom event, and simulate event moved to separate modules.</p></li>
+<li><p>Added an event for DOM event delegation. It only fires if the target or its descendants match a supplied selector.</p>
+<pre><code>Y.on(&#39;delegate&#39;, fn, el, &#39;click&#39;, &#39;selector&#39;, …)</code></pre>
+<p>The event facade sets the following properties:</p>
+<ul>
+<li><code>target</code>: the target of the event.</li>
+<li><code>currentTarget</code>: the element that the selector matched.</li>
+<li><code>container</code>: the bound element (the delegation container).</li>
+</ul></li>
+<li><p>Added <code>mouseenter</code>/<code>mouseleave</code> events:</p>
+<ul>
+<li><code>Y.on('mouseenter', fn, el, 'click', 'selector', …)</code></li>
+<li><code>Y.on('mouseleave', fn, el, 'click', 'selector', …)</code></li>
+</ul></li>
+<li><p>Added <code>Y.on('windowresize', fn)</code>, which attempts to normalize when the event fires across all browsers (once at the end of the resize rather than continuously during the resize).</p></li>
+<li><p>Fixed <code>unsubscribeAll()</code> return value.</p></li>
+<li><p>Added ability to skip facade creation where performance is a concern.</p></li>
+<li><p>Moved <code>DOMReady</code> core to <code>yui-base</code>.</p></li>
+<li><p>Focus/blur abstraction works in Opera when the bound element is the target.</p></li>
+<li><p><code>purgeElement</code> only reads element guids, it does not create new ones for elements without one.</p></li>
+<li><p><code>Event.attach()</code> returns a single handle if the result from collection processing is a single item.</p></li>
+</ul>
+<h2 id="pr2-7">3.0.0pr2</h2>
+<ul>
+<li><p>Fixed IE notification error when no arguments are supplied.</p></li>
+<li><p>Added <code>event-simulate</code>.</p></li>
+<li><p><code>getListeners()</code> works when the element has no listeners defined.</p></li>
+<li><p><code>Event.addListener()</code> removed. Exists only in compat layer.</p></li>
+<li><p><code>addListerer()</code> triggers 2.x event behavior.</p></li>
+<li><p>Removed extra undefined parameter passed to DOM event listeners.</p></li>
+<li><p>Compat layer contains <code>Event.on()</code>.</p></li>
+<li><p>Event adapter support added to <code>Y.on()</code>.</p></li>
+<li><p>Added <code>focus</code> and <code>blur</code> event adaptors (support for propagation of these events.)</p></li>
+<li><p>publish and subscribe support an object for the type, allowing for multiple events/subscriptions.</p></li>
+<li><p>subscriber failures throw an error by default rather than log.</p></li>
+<li><p>subscriber failures are not routed through <code>Y.fail</code> in order to improve the debug experience.</p></li>
+<li><p>New facades created every <code>fire()</code>.</p></li>
+<li><p><code>before()</code> method re-added to <code>EventTarget</code>, which delegates to <code>Do.before()</code> or <code>subscribe()</code>.</p></li>
+<li><p><code>EventTarget.after()</code> will delegate to <code>Do.after()</code> if type is a function.</p></li>
+<li><p>Added keylistener: <code>Y.on('key', fn, element, 'down:13,65+ctrl+shift')</code>.</p></li>
+<li><p><code>event:ready</code> event deprecated in favor of <code>domready</code>.</p></li>
+</ul>
+<h2 id="pr1-5">3.0.0pr1</h2>
+<ul>
+<li>Initial Release.</li>
+</ul>
+<h1 id="custom-event-infrastructure-change-history">Custom Event Infrastructure Change History</h1>
+<h2 id="section-169">3.4.1</h2>
+<ul>
+<li>onceAfter (added in 3.4.0) now works for array and object signatures. [Ticket #2531121]</li>
+</ul>
+<h2 id="section-170">3.4.0</h2>
+<ul>
+<li>Custom events published from <code>Y</code> no longer bubble by default.</li>
+</ul>
+<h2 id="section-171">3.3.0</h2>
+<ul>
+<li><p>Undocumented and poorly named <code>each()</code> method on EventHandle changed to <code>batch()</code>.</p></li>
+<li><p>After listeners for events fired in a <code>defaultFn</code> or listener are queued in the correct order.</p></li>
+<li><p>Added <code>Y.Do.originalRetVal</code> and <code>Y.Do.currentRetVal</code> statics accessible by <code>Y.Do.after()</code> subscribers.</p></li>
+<li><p>Exposed the previously private <code>EventTarget.parseType</code>.</p></li>
+</ul>
+<h2 id="section-172">3.2.0</h2>
+<ul>
+<li><p>Fixed <code>defaultTargetOnly</code> publish configuration.</p></li>
+<li><p><code>detach()</code> now decrements <code>subCount</code>/<code>afterCount</code>.</p></li>
+<li><p>Detaching via category no longer affects subscriptions on other objects.</p></li>
+</ul>
+<h2 id="section-173">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-174">3.1.0</h2>
+<ul>
+<li><p>Wildcard prefix subscriptions supported: <code>target.on('*:click', …)</code> will be notified when <code>tree:click</code>, <code>tab:click</code>, etc are fired.</p></li>
+<li><p>Added <code>EventTarget::once</code>, which is equivalent to <code>on()</code>, except the listener automatically detaches itself once executed.</p></li>
+<li><p>Added event monitoring. When configured, an <code>EventTarget</code> will emit events for <code>publish()</code>, <code>attach()</code>, <code>fire()</code>, and <code>detach()</code> operations on the hosted events.</p></li>
+<li><p><code>EventTarget::on</code>’s <code>type</code> parameter is overloaded to accept arrays and objects for attaching multiple types at once.</p></li>
+<li><p><code>EventTarget::detach</code> returns the event target like the API docs already stated.</p></li>
+<li><p>Events can now be configured to execute the <code>defaultFn</code> only on the targeted object, not on the bubble targets.</p></li>
+<li><p>The event order has been reworked so that the after listeners for the entire event stack execute after all <code>defaultFn</code> across the entire bubble stack.</p></li>
+</ul>
+<h2 id="section-175">3.0.0</h2>
+<ul>
+<li><p>Broken into core base and complex modules.</p></li>
+<li><p><code>broadcast</code> works for simple events.</p></li>
+<li><p>If configured to return an <code>EventHandle</code>, the return value will always be a single object, regardless of how many listeners were attached. Previously, multiple listeners provided an array of detach handles.</p></li>
+</ul>
+<h2 id="beta1-8">3.0.0beta1</h2>
+<ul>
+<li><p>[!] Exposed methods are <code>on()</code> for the before moment, <code>after()</code> for the after moment, and <code>detach()</code> for unsubscribe. <code>subscribe()</code>, <code>before()</code>, <code>unsubscribe()</code>, and corresponding methods are deprecated.</p></li>
+<li><p>Implemented the <code>broadcast</code> flag:</p>
+<ul>
+<li><code>broadcast = 1</code>: local, accessible via <code>Y.on('prefix:event')</code>.</li>
+<li><code>broadcast = 2</code>: global, accessible via <code>Y.on()</code> or globally via <code>Y.Global.on('prefix:event')</code>.</li>
+</ul>
+<p>Broadcast listeners cannot effect the <code>defaultFn</code> or host subscribers (so are in effect, after listeners), although this is still possible by added either <code>Y</code> or <code>Y.Global</code> as <code>EventTarget</code>s.</p></li>
+<li><p>Moved <code>event-custom</code> out of <code>event</code> package.</p></li>
+<li><p><code>EventTarget</code> accepts a <code>prefix</code> configuration. This is used in all exposed methods to handle shortcuts to event names, e.g., <code>'click'</code> and <code>'menu:click'</code> are the same if the prefix is <code>'menu'</code>.</p></li>
+<li><p>Event type accepts a event category which can be used to detach events:</p>
+<pre><code>Y.on(&#39;category|prefix:event&#39;, fn);
+Y.detach(&#39;category|prefix:event&#39;);
+Y.detach(&#39;category|*&#39;);</code></pre></li>
+<li><p>Added <code>chain</code> config to events that makes the return value the event target rather than a detach handle. Use with the detach category prefix.</p></li>
+<li><p>The <code>type</code> parameter can be an object containing multiple events to attach:</p>
+<pre><code>Y.on({ &#39;event1&#39;: fn1, &#39;event2&#39;: fn2 });</code></pre></li>
+<li><p><code>Y.fire</code> payload for event facades can be another facade or a custom event.</p></li>
+</ul>
+<h1 id="gestures-change-history">Gestures Change History</h1>
+<h2 id="section-176">3.4.1</h2>
+<ul>
+<li>Fixed preventDefault:true for flick</li>
+</ul>
+<h2 id="section-177">3.4.0</h2>
+<ul>
+<li>For flick, reset start time on first move, to handle case where user mousesdown/touchstarts but then doesn’t move their finger for 5s leading to inaccurate velocity.</li>
+</ul>
+<h2 id="section-178">3.3.0</h2>
+<ul>
+<li><p>Use touches current target if already set, as opposed to over-riding it with touch current target</p></li>
+<li><p>Flick “y” axis param now handled correctly.</p></li>
+</ul>
+<h2 id="section-179">3.2.0</h2>
+<ul>
+<li>New beta component</li>
+</ul>
+<h1 id="valuechange-change-history">ValueChange Change History</h1>
+<h2 id="section-180">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-181">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-182">3.3.0</h2>
+<ul>
+<li><p>Focus is now used (in addition to keyboard and mouse events) as a sign that we should begin polling for value changes. [Ticket #2529294]</p></li>
+<li><p>If the value changes while an element is not focused, that change will no longer be reported the next time polling is started (since it couldn’t have been user input).</p></li>
+</ul>
+<h2 id="section-183">3.2.0</h2>
+<ul>
+<li><p>Module renamed to <code>event-valuechange</code> and refactored to be a true synthetic event.</p></li>
+<li><p>The <code>value</code> and <code>oldValue</code> event facade properties were renamed to <code>newVal</code> and <code>prevVal</code> respectively, for consistency with other change event facades throughout the library.</p></li>
+<li><p>Performance improvements.</p></li>
+</ul>
+<h2 id="section-184">3.1.2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-185">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-186">3.1.0</h2>
+<ul>
+<li>Initial release as <code>value-change</code>.</li>
+</ul>
+<h1 id="graphics-change-history">Graphics Change History</h1>
+<h2 id="section-187">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-188">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="highlight-change-history">Highlight Change History</h1>
+<h2 id="section-189">3.4.1</h2>
+<ul>
+<li>Now using ClassNameManager to get the CSS class name for the highlight element, so custom class prefixes other than “yui3” will be respected. [Ticket #2530811]</li>
+</ul>
+<h2 id="section-190">3.4.0</h2>
+<ul>
+<li><p>Fixed a bug that resulted in invalid escaped HTML when running a highlighter with an empty needle. [Ticket #2529945]</p></li>
+<li><p>Fixed an off-by-one bug in which an unhighlighted single char at the end of a highlighted string would be discarded when using <code>allFold()</code>. [Ticket #2530529]</p></li>
+</ul>
+<h2 id="section-191">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="history-change-history">History Change History</h1>
+<h2 id="section-192">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-193">3.4.0</h2>
+<ul>
+<li><p>[!] The <code>history-deprecated</code> module, which was deprecated in YUI 3.2.0, has been removed from the library.</p></li>
+<li><p>HistoryHTML5 now uses the new <code>window.history.state</code> property (which showed up in Firefox 4 and the HTML5 spec after YUI 3.3.0 was released) to get the current HTML5 history state.</p></li>
+<li><p>Removed the <code>enableSessionStorage</code> config option that was previously used to work around the lack of an HTML5 API for getting the current state.</p></li>
+<li><p>Added a <code>force</code> config parameter to History constructors. If set to <code>true</code>, a <code>history:change</code> event will be fired whenever the URL changes, even if there is no associated state change.</p></li>
+<li><p>Bug fix: On a page with a <code>&lt;base&gt;</code> element, replacing a hash-based history state resulted in a broken URL. [Contributed by Ben Joffe] [Ticket #2530305]</p></li>
+<li><p>Bug fix: In IE6 and IE7, navigating to a page with a hash state could result in endlessly repeating <code>history:change</code> events. [Ticket #2529990]</p></li>
+<li><p>Bug fix: In IE6 and IE7, replacing a history state would actually result in a new history entry being added. [Ticket #2530301]</p></li>
+</ul>
+<h2 id="section-194">3.3.0</h2>
+<ul>
+<li><p>Bug fix: Setting an improperly encoded hash value outside of HistoryHash resulted in two history entries being created. [Ticket #2529399]</p></li>
+<li><p>Bug fix: Changes to the URL hash (as opposed to the iframe hash) are now reflected in the history state in IE6 and IE7. [Ticket #2529400]</p></li>
+</ul>
+<h2 id="section-195">3.2.0</h2>
+<ul>
+<li><p>[!] The pre-3.2.0 Browser History Utility has been deprecated, and its module has been renamed to <code>history-deprecated</code>. It will be removed completely in a future release.</p></li>
+<li><p>Initial release of the new History Utility.</p></li>
+</ul>
+<h1 id="imageloader-change-history">ImageLoader Change History</h1>
+<h2 id="section-196">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-197">3.4.0</h2>
+<ul>
+<li>Added classNameAction option for ImgGroup. Setting to “enhanced” means that when using className on an <img> element, the src attribute is replaced rather than simply removing the class name. [Ticket #2530087]</li>
+</ul>
+<h2 id="section-198">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-199">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-200">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-201">3.1.0</h2>
+<ul>
+<li>PNG image fix for IE6 [Ticket #2528448]</li>
+<li>Convert deprecated Y.get calls to Y.one</li>
+</ul>
+<h2 id="section-202">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="beta-1-4">3.0.0 beta 1</h2>
+<ul>
+<li>3.0 conversion</li>
+<li>New features:
+<ul>
+<li>Fold groups indicated by a distance from the fold, and images are loaded in cascading fashion as each reaches that distance Scroll and resize triggers are set automatically for these groups</li>
+<li>Custom triggers can belong to the global Y instance or to any local event target</li>
+<li>Bg, Src, and Png images are all registered with groups via the same “registerImage” method, and differentiated by attribute parameters</li>
+</ul></li>
+</ul>
+<h1 id="intl-change-history">Intl Change History</h1>
+<h2 id="section-203">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-204">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-205">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-206">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-207">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-208">3.1.0</h2>
+<ul>
+<li>Initial Release.</li>
+</ul>
+<h1 id="io-utility-change-history">IO Utility Change History</h1>
+<h2 id="section-209">3.4.1</h2>
+<ul>
+<li><p>HTTP 304 now treated as a success condition. [Ticket #2530931]</p></li>
+<li><p>Fixed transport creation error when both io-xdr and io-upload-iframe modules are in use [Ticket #2530999]</p></li>
+<li><p>Querystring stringify added to io-upload-iframe. [Ticket #2531037]</p></li>
+<li><p>Fixed request abort error in IE. [Ticket #2531038]</p></li>
+<li><p>Add try/catch to io-upload-iframe response to handle failure cases where the document may be inaccessible. [Ticket #2531041]</p></li>
+<li><p>Add IO support for XHR basic user authentication. [Ticket #2530023]</p></li>
+<li><p>Revert Y.mix usage for synchronous requests. [Ticket #2531056]</p></li>
+<li><p>Fixed io-upload-iframe transport destruction. [Ticket #2531058]</p></li>
+</ul>
+<h2 id="section-210">3.4.0</h2>
+<ul>
+<li><p>Added ability to get the configuration of a transaction. [Ticket #2528240]</p></li>
+<li><p>Instantiable IO. [Ticket #2529314]</p></li>
+<li><p>IO now uses <code>event-custom</code> and event facades. [Ticket #2529317]</p></li>
+<li><p>Exposed more of the internals of IO for extensibility. [Ticket #2529447]</p></li>
+<li><p>Fixed IO iframe upload to reset form attributes. [Ticket #2529553]</p></li>
+<li><p>Add IO support for XHR basic user authentication. [Ticket #2530023]</p></li>
+<li><p>IO will not send <code>data</code> for <code>GET</code>, <code>HEAD</code> and <code>DELETE</code> HTTP methods. [Ticket #2530091]</p></li>
+<li><p>Fixed issue with IO doubling the URL query-params on a HTTP <code>GET</code> request when sending <code>data</code> together with form serialization. [Ticket #2530494]</p></li>
+</ul>
+<h2 id="section-211">3.3.0</h2>
+<ul>
+<li><p>When using <code>io-xdr</code> to load <code>io.swf</code>, a date-time stamp will appended, as a query-string, to the transport source for IE. [Ticket #2528898]</p></li>
+<li><p>Implemented default HTTP headers can be suppressed in the transaction’s configuration object by setting the header with a value of <code>disable</code>. [Ticket #2529324]</p>
+<p>For example:</p>
+<pre><code>var config = { headers: { &quot;X-Requested-With&quot;: &quot;disable&quot; } };</code></pre></li>
+<li><p>Use Y.io without listening for the <code>io:xdrReady</code> event. [Ticket #2528710]</p></li>
+<li><p>Fixed native XDR detection for IE8 in <code>io-xdr</code>. [Ticket #2529290]</p></li>
+</ul>
+<h2 id="section-212">3.2.0</h2>
+<ul>
+<li><p>Fixed malformed HTML entities in JSON response, when using <code>io-upload-iframe</code>. [Ticket #2528646]</p></li>
+<li><p>Fixed configuration HTTP headers should override preset HTTP headers, when identical. [Ticket #2528893]</p></li>
+</ul>
+<h2 id="section-213">3.1.2</h2>
+<ul>
+<li><p>[!] Fixed security vulnerability in <code>io-xdr</code> when using the Flash transport. Removed: <code>Security.allowDomain("*")</code> setting from <code>io.as</code> (source) and <code>io.swf</code> (compiled). The implementation reverts back to the version in 3.0.0.</p>
+<p>This reversion prevents third-party sites from being able to load <code>io.swf</code> from a disparate domain, and make HTTP requests with the SWF’s domain privileges, and passing the domain’s credentials. Only the domain serving <code>io.swf</code> will be permitted to load it, and call its fields.</p>
+<p>See the “Security Bulletin” for more details: http://yuilibrary.com/yui/docs/io/#security-bulletin</p></li>
+</ul>
+<h2 id="section-214">3.1.1</h2>
+<ul>
+<li>Fixed broken synchronous IO requests in IE. [Ticket #2528739]</li>
+</ul>
+<h2 id="section-215">3.1.0</h2>
+<ul>
+<li><p>YUI io now supports synchronous transactions for same-domain requests. To enable synchronous transactions, set the configuration property <code>sync</code> to <code>true</code>; the default behavior is <code>false</code>. During a synchronous request, all io events will fire, and response data are accessible through the events. Response data are also returned by io, as an alternative. [Ticket #2528181]</p>
+<p>For example:</p>
+<pre><code>var request = Y.io(uri, { sync: true });</code></pre>
+<p><code>request</code> will contain the following fields, when the tx is complete:</p>
+<ul>
+<li><code>id</code></li>
+<li><code>status</code></li>
+<li><code>statusText</code></li>
+<li><code>getResponseHeader()</code></li>
+<li><code>getAllResponseHeaders()</code></li>
+<li><code>responseText</code></li>
+<li><code>responseXML</code></li>
+<li><code>arguments</code></li>
+</ul>
+<p>When making synchronous requests:</p>
+<ul>
+<li>The transaction cannot be aborted,</li>
+<li>The transaction’s progress cannot be monitored.</li>
+</ul></li>
+<li><p><code>arguments</code> defined in the configuration object are now passed to io global event handlers, as well. [Ticket #2528393]</p></li>
+<li><p>Only pass the value of the <code>arguments</code> property to listeners if defined. [Ticket #2528313]</p></li>
+</ul>
+<h2 id="section-216">3.0.0</h2>
+<ul>
+<li><p>Native cross-domain transactions are now supported in <code>io-xdr</code>. To specify an XDR transaction, set the config object with the following properties:</p>
+<ul>
+<li><p><code>use</code>: Specify either <code>native</code> or <code>flash</code> as the desired XDR transport.</p></li>
+<li><p><code>credentials</code>: Set to <code>true</code> if cookies are to be sent with the request. Does not work with XDomainRequest (e.g., IE8) or the Flash transport.</p></li>
+<li><p><code>datatType</code>: Set to <code>xml</code> if the response is an XML document.</p></li>
+</ul>
+<p>For example:</p>
+<pre><code>var configuration.xdr = {
+    use         : &#39;flash&#39;,  // Required -- &#39;flash` or &#39;native&#39;.
+    credentials : true,     // Optional.
+    dataType    : &#39;xml&#39;     // Optional.
+};</code></pre>
+<p>The <code>use</code> property is required. The others are optional or functionality- specific.</p>
+<p>When using the native transport, io will fallback to the Flash transport if the browser is not capable of supporting the native mode. Make sure the resource responds with the correct <code>Access-Control-Allow-Origin</code> header before attempting a native XDR request.</p></li>
+<li><p>The sub-module <code>datatype-xml</code> is now a dependency for <code>io-xdr</code>, to support XML response data in XDR transactions.</p></li>
+<li><p>XDR transport initialization is simplified to one required value – the path to Flash transport. For example:</p>
+<pre><code>Y.io.transport({ src:&#39;io.swf&#39; });</code></pre></li>
+</ul>
+<h2 id="beta1-9">3.0.0beta1</h2>
+<ul>
+<li><p>The <code>io-queue</code> sub-module now implements YUI <code>Queue</code>. The io queue interface allows transaction callback handlers to be processed in the order the transactions were sent, regardless of actual server response order. For example:</p>
+<ul>
+<li><p>io queue is used to make three requests.</p></li>
+<li><p>The actual server response order happens to be: transaction 2, 1, 3.</p></li>
+<li><p>However, using the queue interface, the transaction callbacks are processed in the order of: transaction 1, 2, 3.</p></li>
+</ul></li>
+<li><p>All transaction event flows now resolves to <code>success</code> or <code>failure</code>; the abort event is removed. Transaction abort and timeout conditions resolve to <code>failure</code>, and is distinguishable in the response data. Specifically, the response object’s <code>status</code> and <code>statusText</code> properties will be populated as:</p>
+<ul>
+<li><p><code>response.status</code> will be 0.</p></li>
+<li><p><code>response.statusText</code> will be set to <code>timeout</code> or <code>abort</code> to differentiate the two possible conditions.</p></li>
+</ul></li>
+<li><p>A new <code>end</code> event is introduced in the transaction event flow; this is the terminal event for all transactions. Its event handler signature is the same as the <code>start</code> event, receiving the transaction id and user-defined arguments.</p>
+<ul>
+<li><p>The global event name is <code>io:end</code>.</p></li>
+<li><p>To subscribe to the transaction event, define the <code>end</code> property in the transaction’s configuration object. <code>{on: {end: function(){…} } }</code>.</p></li>
+</ul></li>
+</ul>
+<h2 id="pr2-8">3.0.0 PR2</h2>
+<ul>
+<li><p>YUI <code>io</code> is now comprised of several modules, allowing users to specify and implement only the needed modules. These modules are:</p>
+<ul>
+<li><p><code>io-base</code>: This is the IO base class, using <code>XMLHttpRequest</code> as the transport.</p></li>
+<li><p><code>io-xdr</code>: This sub-module extends IO to enable cross-domain transactions using Flash as the transport.</p></li>
+<li><p><code>io-form</code>: This sub-module extends IO to enable the serialization of an HTML form as transaction data.</p></li>
+<li><p><code>io-upload-iframe</code>: This sub-module extends IO, to allow file uploads with an HTML form, using an <code>iframe</code> transport.</p></li>
+<li><p><code>io-queue</code>: This sub-module extends IO to add transaction queuing capabilities.</p></li>
+</ul></li>
+<li><p>If defined in the configuration object, user-specified, HTTP <code>Content-Type</code> headers will correctly override POST default headers, for HTTP POST transactions. [Ticket #SF2262707]</p></li>
+<li><p>XML is not supported as a response datatype when using sub-modules <code>io-xdr</code> and <code>io-upload-iframe</code>.</p></li>
+</ul>
+<h2 id="pr1-6">3.0.0 PR1</h2>
+<ul>
+<li>Initial Release.</li>
+</ul>
+<h1 id="json-utility-change-history">JSON Utility Change History</h1>
+<h2 id="section-217">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-218">3.4.0</h2>
+<ul>
+<li>Remove indirect <code>eval()</code>. [Ticket #2530295]</li>
+</ul>
+<h2 id="section-219">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-220">3.2.0</h2>
+<ul>
+<li><p>Convert parse input to a string before processing.</p></li>
+<li><p><code>eval()</code> now referenced indirectly to allow for better compression.</p></li>
+<li><p><code>dateToString</code> deprecated; use a <code>replacer</code>. A Date function extension is in the works.</p></li>
+</ul>
+<h2 id="section-221">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-222">3.1.0</h2>
+<ul>
+<li><p>useNative___ disabled for browsers with <em>very</em> broken native APIs (FF3.1beta1-3).</p></li>
+<li><p>Assumption of <code>window</code> removed to support browser-less environment.</p></li>
+</ul>
+<h2 id="section-223">3.0.0</h2>
+<ul>
+<li><p>Leverages native <code>JSON.stringify</code> if available.</p></li>
+<li><p>Added <code>Y.JSON.useNativeParse</code> and <code>useNativeStringify</code> properties that can be set to <code>false</code> to use the JavaScript implementations. Use these if your use case triggers an edge-case bug in one of the native implementations. Hopefully these will be unnecessary in a few minor versions of the A-grade browsers.</p></li>
+<li><p>Added support for <code>toJSON()</code> methods on objects being stringified.</p></li>
+<li><p>Moved Date stringification before replacer to be in accordance with ES5.</p></li>
+</ul>
+<h2 id="beta1-10">3.0.0beta1</h2>
+<ul>
+<li><p>Leverages native <code>JSON.parse</code> if available.</p></li>
+<li><p>Stringify API change. Third argument changed from depth control to indent (Per the ECMA 5 spec).</p></li>
+<li><p>Stringify now throws an <code>Error</code> if the object has cyclical references (Per the ECMA 5 spec).</p></li>
+<li><p>Restructured <code>stringify()</code> to leverage <code>Y.Lang.type</code>.</p></li>
+</ul>
+<h2 id="pr2-9">3.0.0pr2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="pr1-7">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="jsonp-change-history">JSONP Change History</h1>
+<h2 id="section-224">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-225">3.4.0</h2>
+<ul>
+<li>Support added to specify charset or additional attributes to add to the script tag.</li>
+<li>Success and failure callbacks are no longer executed if the request takes longer than the configured timeout</li>
+</ul>
+<h2 id="section-226">3.3.0</h2>
+<ul>
+<li>allowCache config option added to use the same function proxy for generated requests. Useful to benefit from YQL caching.</li>
+</ul>
+<h2 id="section-227">3.2.0</h2>
+<p>Initial release</p>
+<h1 id="yui-loader-change-history">YUI Loader Change History</h1>
+<h3 id="section-228">3.4.1</h3>
+<ul>
+<li>No changes.</li>
+</ul>
+<h3 id="section-229">3.4.0</h3>
+<ul>
+<li>Added Alias support and flattened the module structure.</li>
+<li>Alias support: When asking for: “dd” Loader actually asks for: “dd-ddm-base,dd-ddm,dd-ddm-drop,dd-drag,dd-proxy,dd-constrain,dd-drop,dd-scroll,dd-drop-plugin”</li>
+<li>Better RLS support</li>
+</ul>
+<h3 id="section-230">3.3.0</h3>
+<ul>
+<li>‘when’ config for conditional modules (before, after, or instead).</li>
+</ul>
+<h3 id="section-231">3.2.0</h3>
+<ul>
+<li>Conditional module support based on user agent detection or test function.</li>
+<li>Added gallery css support</li>
+<li>performance optimizations, cached yui metadata, shared instances, etc</li>
+</ul>
+<h3 id="section-232">3.1.1</h3>
+<ul>
+<li>Fixed ticket #2528771 : Loader has incorrect default for “base” - uses Y.Env, instead of Y.Env.base</li>
+<li>Fixed ticket #2528784 : Regression requesting language packs using Y.use(“lang/datatype-date_xx”, fn) in build yui3-2029</li>
+</ul>
+<h3 id="section-233">3.1.0</h3>
+<ul>
+<li>Added a ‘patterns’ property. Modules that are not predefined will be created with the default values if it matches one of the patterns defined for the instance.</li>
+<li>Added module groups. This allows for specifying the base path and the combo properties for a group of modules. The combo support now allows for multiple combo domains.</li>
+<li>Handles simultaneous bootstrapping and loading better.</li>
+<li>Added support for dynamically loading language packs along with modules that have them.</li>
+<li>Intrinsic support for loading yui3-gallery modules.</li>
+<li>Intrinsic support for loading yui2 modules via the 2in3 project.</li>
+<li>Submodule breakdown to allow use of loader without all of the YUI3 metadata.</li>
+<li>Metadata is managed per component instead of centrally.</li>
+<li>Extremely long combo urls are split into multiple requests.</li>
+<li>Loader defends itself against metadata that creates circular dependencies.</li>
+</ul>
+<h3 id="section-234">3.0.0</h3>
+<ul>
+<li>Extracted from the YUI seed. Now fetched dynamically if there are missing dependencies if not included.</li>
+<li>Reads metadata from on-page modules registered via Y.add if the module is not already known.</li>
+<li>Many new modules, many modules reorganized, dependency information has been tuned.</li>
+</ul>
+<h1 id="node-change-history">Node Change History</h1>
+<h2 id="section-235">3.4.1</h2>
+<ul>
+<li><p>Bug fix: Calling insert(null) was throwing an error. [Ticket 2529991]</p></li>
+<li><p>Bug fix: The removeAttribute method was not chainable in IE &lt; 9. [Ticket 2529230]</p></li>
+<li><p>Bug fix: Calling Y.all() without arguments was failing to return an empty NodeList. [Ticket 2530164]</p></li>
+<li><p>Added optional stopAt function/selector argument for ancestor/ancestors().</p></li>
+</ul>
+<h2 id="section-236">3.4.0</h2>
+<ul>
+<li><p>[!] The empty() method now always does a recursive purge. [Ticket 2529829]</p></li>
+<li><p>Added the getDOMNode() and getDOMNodes() methods to Node and NodeList prototypes.</p></li>
+<li><p>The one() method now accepts IDs that begin with a number. [Ticket 2529376]</p></li>
+<li><p>Bug fix: NodeList show()/hide() methods were broken with Transition. [Ticket 2529908]</p></li>
+<li><p>Bug fix: Some NodeList array methods were returning incorrectly. [Ticket 2529942]</p></li>
+</ul>
+<h2 id="section-237">3.3.0</h2>
+<ul>
+<li><p>Added wrap()/unwrap(), show()/hide(), empty(), and load() methods.</p></li>
+<li><p>Added Array 1.5 methods to NodeList.</p></li>
+<li><p>Added the destroy() method to NodeList. [Ticket 2529256]</p></li>
+<li><p>Added the once() method to NodeList. [Ticket 2529369]</p></li>
+<li><p>The appendChild() and insertBefore() methods now accept HTML. [Ticket 2529301]</p></li>
+<li><p>Added the appendTo() method. [Ticket 2529299]</p></li>
+<li><p>Added the ancestors() method. [Ticket 2528610]</p></li>
+<li><p>The setStyle() method now ignores undefined values.</p></li>
+<li><p>Bug fix: Enable querying cloned nodes in IE 6/7. [Ticket 2529487]</p></li>
+</ul>
+<h2 id="section-238">3.2.0</h2>
+<ul>
+<li><p>Added the transition() method.</p></li>
+<li><p>Bug fix: checked pseudo-class for IE input elements. [Ticket 2528895]</p></li>
+<li><p>Bug fix: Fixed IE8 input element rendering. [Ticket 2529035]</p></li>
+</ul>
+<h2 id="section-239">3.1.1</h2>
+<ul>
+<li>Bug fix: The setContent() method incorrectly handled falsey values. [Ticket 2528740]</li>
+</ul>
+<h2 id="section-240">3.1.0</h2>
+<ul>
+<li><p>Added support for invalid IDs. [Ticket 2528195]</p></li>
+<li><p>Fix duplicate IDs across YUI instances. [Ticket 2528199]</p></li>
+<li><p>Allow empty setContent() call to remove content. [Ticket 2528269]</p></li>
+<li><p>Bug fix: Arguments passed to next() were being incorrectly handled. [Ticket 2528295]</p></li>
+</ul>
+<h2 id="section-241">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="flick-node-plugin-change-history">Flick Node Plugin Change History</h1>
+<h2 id="section-242">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-243">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-244">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-245">3.2.0</h2>
+<ul>
+<li>New beta component</li>
+</ul>
+<h1 id="focus-manager-change-history">Focus Manager Change History</h1>
+<h2 id="section-246">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-247">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-248">3.3.0</h2>
+<ul>
+<li>Fixed an issue with next/previous behavior that could cause focus to get stuck at the beginning or end of a control set when the <code>circular</code> attribute was set to <code>false</code>. [Ticket #2529353]</li>
+</ul>
+<h2 id="section-249">3.2.0</h2>
+<ul>
+<li>Fixed an issue that prevented arrow keys from working properly in form input fields and textareas inside a focused node. [Ticket #2529041]</li>
+</ul>
+<h2 id="section-250">3.1.2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-251">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-252">3.1.0</h2>
+<ul>
+<li>Updated the “refresh” method so that it will set up event listeners if they haven’t yet been set up, enabling the Focus Manager to be plugged into an empty Node with the focusable descendants to be added later.</li>
+</ul>
+<h2 id="section-253">3.0.0</h2>
+<ul>
+<li>Fixed an issue where mousing down on a child node of a descendant would result in the descendant losing focus.</li>
+</ul>
+<h2 id="beta-1-5">3.0.0 beta 1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="menunav-change-history">MenuNav Change History</h1>
+<h2 id="section-254">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-255">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-256">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-257">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-258">3.1.2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-259">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-260">3.1.0</h2>
+<ul>
+<li><p>Fixed issue where moving the mouse from a submenu label directly out of the document to the browser chrome would trigger a JS error in IE.</p></li>
+<li><p>Fixed issue where submenus would not appear if the user landed on a submenu label by moving the mouse diagonally from the parent menu.</p></li>
+</ul>
+<h2 id="section-261">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="beta-1-6">3.0.0 beta 1</h2>
+<ul>
+<li>Now lives on the <code>Plugin</code> namespace, as opposed to the <code>plugin</code> namespace.</li>
+<li>Now requires the Focus Manager Node Plugin (<code>Y.Plugin.NodeFocusManager</code>).</li>
+<li>Now extends <code>Y.Base</code>.</li>
+</ul>
+<h2 id="pr2-10">3.0.0pr2</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="oop-change-history">OOP Change History</h1>
+<h2 id="section-262">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-263">3.4.0</h2>
+<ul>
+<li><p>Significant performance improvements for <code>augment()</code>.</p></li>
+<li><p>Bug fix: <code>augment()</code> handled the <code>whitelist</code> parameter incorrectly when augmenting a function. [Ticket #2530036]</p></li>
+</ul>
+<h2 id="section-264">3.3.0</h2>
+<ul>
+<li><code>clone()</code> no longer fails on DOM objects in IE.</li>
+</ul>
+<h2 id="section-265">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-266">3.1.1</h2>
+<ul>
+<li><code>clone()</code> passes functions through.</li>
+</ul>
+<h2 id="section-267">3.1.0</h2>
+<ul>
+<li><p>Added <code>Y.some()</code>.</p></li>
+<li><p>Improved iterators over native objects and YUI list object.</p></li>
+<li><p>Improved deep clone, particularly when dealing with self-referencing objects.</p></li>
+<li><p>Fixed complex property merge when doing a deep aggregation.</p></li>
+</ul>
+<h2 id="section-268">3.0.0</h2>
+<ul>
+<li>No functional changes.</li>
+</ul>
+<h2 id="beta1-11">3.0.0 beta1</h2>
+<ul>
+<li><p><code>bind()</code> now adds the arguments supplied to bind before the arguments supplied when the function is executed. Added <code>rbind()</code> to provide the old functionality (arguments supplied to bind are appended to the arguments collection supplied to the function when executed).</p></li>
+<li><p><code>bind()</code> supports a string representing a function on the context object in order to allow overriding methods on superclasses that are bound to a function displaced by AOP.</p></li>
+<li><p>Fixed array handling in <code>clone()</code>.</p></li>
+</ul>
+<h2 id="pr2-11">3.0.0pr2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="pr1-8">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="overlay-change-history">Overlay Change History</h1>
+<h2 id="section-269">3.4.1</h2>
+<ul>
+<li>No changes, see Widget and extensions for changes to dependencies.</li>
+</ul>
+<h2 id="section-270">3.4.0</h2>
+<ul>
+<li>No changes, see Widget and extensions for changes to dependencies.</li>
+</ul>
+<h2 id="section-271">3.3.0</h2>
+<ul>
+<li>No changes, see Widget and extensions for changes to dependencies.</li>
+</ul>
+<h2 id="section-272">3.2.0</h2>
+<ul>
+<li>No changes, see Widget and extensions for changes to dependencies.</li>
+</ul>
+<h2 id="section-273">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-274">3.1.0</h2>
+<ul>
+<li><p>Added WidgetConstrain support to the packaged Overlay class.</p></li>
+<li><p>Fixed centering when content is set in constructor.</p></li>
+</ul>
+<h2 id="section-275">3.0.0</h2>
+<ul>
+<li><p>Initial release.</p></li>
+<li><p>Modified progressive enhancement use case, to use Document Fragments instead of <code>innerHTML</code> to preserve event listeners.</p></li>
+<li><p>Fixed use of <code>centered</code>, <code>x</code> and <code>y</code> in the constructor. These all needed <code>lazyAdd</code> configuration since they had setters which modified other attribute state.</p></li>
+</ul>
+<h1 id="panel-change-history">Panel Change History</h1>
+<h2 id="section-276">3.4.1</h2>
+<ul>
+<li><p>Panel’s CSS related to WidgetButtons has been improved. The styling for Panel’s header is now much more flexible, while maintaining the position of the close button across browsers and varying amounts of content. [Ticket #2530978]</p></li>
+<li><p>Panel now has a working Night skin. [Ticket #2530937]</p></li>
+<li><p>The sprite image assets for the “close” button on Panels have moved into the WidgetButtons extension’s assets. [Ticket #2530952]</p></li>
+<li><p>See also Widget and extensions for changes to dependencies.</p></li>
+</ul>
+<h2 id="section-277">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="plugin-change-history">Plugin Change History</h1>
+<h2 id="section-278">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-279">3.4.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-280">3.3.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-281">3.2.0</h2>
+<ul>
+<li>Fixed onHostEvent to actually use on (was using after)</li>
+<li>Plugin.Base can now be mixed in as an extension</li>
+</ul>
+<h2 id="section-282">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-283">3.1.0</h2>
+<ul>
+<li>Added separate host method and host event specific subscription methods, to resolve inconsistency when using doBefore/doAfter in cases where the host supported both an event and a method of the same name.</li>
+</ul>
+<h2 id="section-284">3.0.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="beta-1-7">3.0.0 beta 1</h2>
+<ul>
+<li><p>Moved Y.Plugin to Y.Plugin.Base</p></li>
+<li><p>Host/Owner object now available through public “host” attribute, as opposed to protected _owner property (this.get(“host”))</p></li>
+</ul>
+<h2 id="pr2---initial-release">3.0.0PR2 - Initial release</h2>
+<h1 id="plugin-host-change-history">Plugin Host Change History</h1>
+<h2 id="section-285">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-286">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-287">3.3.0</h2>
+<ul>
+<li><p>Broke pluginhost into pluginhost-base, pluginhost-config</p>
+<p>pluginhost-base provides the core plug/unplug methods.</p>
+<p>pluginhost-config provides support for constructor configuration and static configuration of plugins.</p></li>
+<li><p>Added log statement if an invalid plugin is provided</p></li>
+</ul>
+<h2 id="section-288">3.2.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-289">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-290">3.1.0</h2>
+<ul>
+<li>Plugins now destroyed correctly, when host is destroyed.</li>
+</ul>
+<h2 id="section-291">3.0.0</h2>
+<ul>
+<li>Split out of “base” as a standalone module, for use by Node.</li>
+</ul>
+<h1 id="querystring-utility-change-history">QueryString Utility Change History</h1>
+<h2 id="section-292">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-293">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-294">3.3.0</h2>
+<ul>
+<li><p>The stringify method in querystring-stringify and querystring-stringify-simple now accepts a configuration object in the second argument. All configuration properties are optional.</p>
+<p>For querystring-stringify-simple, the configuration object contains only one property: arrayKey. The default value is false.</p>
+<p>For querystring-stringify, the configuration object can be defined with three properties (default values are in parenthesis): arrayKey (false), eq (=), and sep (&amp;).</p></li>
+</ul>
+<h2 id="section-295">3.2.0</h2>
+<ul>
+<li><p>Fixed malformed HTML entities in JSON response, when using <code>io-upload-iframe</code>. [Ticket #2528646]</p></li>
+<li><p>Fixed configuration HTTP headers should override preset HTTP headers, when identical. [Ticket #2528893]</p></li>
+</ul>
+<h2 id="section-296">3.1.2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-297">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-298">3.1.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="queue-promote-change-history">Queue Promote Change History</h1>
+<h2 id="section-299">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-300">3.4.0</h2>
+<ul>
+<li>Fixed bug in <code>promote()</code> method where the item moved to the head of the queue was wrapped in an array.</li>
+</ul>
+<h2 id="section-301">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-302">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-303">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-304">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-305">3.0.0</h2>
+<ul>
+<li><code>queue-base</code> is now part of <code>YUI</code>. <code>queue-run</code> was renamed <code>async-queue</code> and both it and <code>queue-promote</code> are now independent modules.</li>
+</ul>
+<h2 id="beta1-12">3.0.0beta1</h2>
+<ul>
+<li>Overhaul: Broken into <code>queue-base</code>, <code>queue-promote</code>, and <code>queue-run</code>.</li>
+</ul>
+<h2 id="pr2-12">3.0.0pr2</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<p>3.0.0pr1</p>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="recordset-change-history">Recordset Change History</h1>
+<h2 id="section-306">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-307">3.4.0</h2>
+<ul>
+<li>No Changes.</li>
+</ul>
+<h2 id="section-308">3.3.0</h2>
+<ul>
+<li>Initial Release.</li>
+</ul>
+<h1 id="resize-utility-change-history">Resize Utility Change History</h1>
+<h3 id="section-309">3.4.1</h3>
+<p>No changes.</p>
+<h3 id="section-310">3.4.0</h3>
+<ul>
+<li>#2529992 Allow Resizable nodes be used with DD.Delegate</li>
+<li>#2530007 [Pull Request] - #2529992 Allow Resizable nodes be used with DD.Delegate</li>
+</ul>
+<h3 id="section-311">3.3.0</h3>
+<p>Initial release</p>
+<h1 id="scrollview-change-history">ScrollView Change History</h1>
+<h2 id="section-312">3.4.1</h2>
+<ul>
+<li><p>Fixed incorrect scroll width/height calculations to account for translate (for real this time) on Chrome, and now Safari.</p>
+<p>translateZ applied for h/w acceleration was resulting in the incorrect scroll values.</p></li>
+<li><p>Removed fallback to cb.scrollWidth/Height, when determining scroll dimensions. This was masking the real problem with translate impacting boundingBox scroll width/height calcs mentioned above.</p></li>
+<li><p>Fixed scrollbar racing ahead of scroll position on FF 5+ with native transition support enabled.</p></li>
+<li><p>Added ability to disable scrollview completely, disable flick or disable drag</p>
+<p>// Stops SV from moving through flick/drag or the API. sv.set(“disabled”, true);</p>
+<p>// Stops SV from reacting to flick. Can still drag/scroll through API sv.set(“flick”, false);</p>
+<p>// Stops SV from reacting to drag. Can still flick, scroll through API sv.set(“drag”, false);</p></li>
+<li><p>Resync UI on scrollview-list class application.</p></li>
+</ul>
+<h2 id="section-313">3.4.0</h2>
+<ul>
+<li><p>Fixed _uiDimensionsChange code which was looking explicitly for the “width” attribute. Just plain wrong.</p></li>
+<li><p>Added vertical paging support.</p></li>
+<li><p>Removed DOMSubtreeModified event listening which was only really kicking in for Webkit and was too heavy handed. User now needs to call syncUI() manually on all browsers, if the content of the scrollview is changed, and may potentially result in dimension changes.</p></li>
+<li><p>Broke out use of transform3d into a seperate method, and added a protected flag, _forceHWTransforms, to allow for customization if required (H/W acceleration related glitches or changing the set of browsers for which we attempt to force it).</p></li>
+<li><p>Created Scrollview-List plugin to provide out-of-the-box handling of List (LI) content inside horizontal and vertical ScrollViews.</p></li>
+<li><p>Fixed incorrect scroll width/height calculations on Chrome 9+, FF when syncUI() [ or _uiDimensionsChange() ] was called when the ScrollView was scrolled over.</p></li>
+<li><p>Protected state flags are now reset if _uiDimensionsChange results in flipped orientation.</p></li>
+<li><p>Use the larger of bb.scrollWidth/Height or cb.scrollWidth/Height, to calculate scroll dimensions to account for FF (which clips cb.scrollWidth) and Chrome/MacOS (which clips bb.scrollWidth when translated even after incorrect scroll calcs above).</p></li>
+</ul>
+<h2 id="section-314">3.3.0</h2>
+<ul>
+<li><p>Fixed shared scrollbar node across multiple instances.</p></li>
+<li><p>Changed async call to _uiDimensionsChange after render, to a sync call.</p></li>
+<li><p>Corrected skin prefix to be yui3-skin-sam instead yui-skin-sam.</p></li>
+<li><p>Refactored for kweight, and broke out scrollview-base-ie conditional module.</p></li>
+<li><p>Don’t prevent default on gesturemoveend, so that click listeners on elements inside the scrollview respond reliably. Panning is still prevented by preventing gesturemousemove.</p></li>
+<li><p>Removed generic CSS in scrollview-base.css targeting UL/LI content. The rules were added to support the common use case, but were too broad, and in general, scrollview is content agnostic.</p></li>
+<li><p>The same support can be achieved by adding cssreset to the page (to remove LI bullets, padding, margin), and adding inline block rules, when providing horizontal scrollview content as a list. These rules are provided below:</p>
+<p>/* To layout horizontal LIs <em>/ #my-horiz-scrollview-content li { display: inline-block; </em>display: inline; *zoom:1; }</p>
+<p>/* For IE - needs a non-transparent background to pick up events <em>/ #my-scrollview-content li { </em>zoom:1; background-color:#fff; }</p></li>
+<li><p>Added prefix-less border radius scrollbar styles for IE9.</p></li>
+<li><p>Made scrollbar-paginator skinnable:false. It has no CSS which is applied, out of the box currently. The paginator CSS shipped in 3.2.0, was not actively applied.</p></li>
+</ul>
+<h2 id="section-315">3.2.0</h2>
+<ul>
+<li>New beta component</li>
+</ul>
+<h1 id="simple-yui-change-history">Simple YUI Change History</h1>
+<h2 id="section-316">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-317">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-318">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-319">3.2.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="slider-change-history">Slider Change History</h1>
+<h2 id="section-320">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-321">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-322">3.3.0</h2>
+<ul>
+<li>Default <code>thumbUrl</code> no longer broken when using the seed file from the combo service.</li>
+</ul>
+<h2 id="section-323">3.2.0</h2>
+<ul>
+<li><p>Leverages touch events when the UA supports them.</p></li>
+<li><p>(un)Swapped skin files for <code>audio</code> and <code>audio-light</code> skins.</p></li>
+</ul>
+<h2 id="section-324">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-325">3.1.0</h2>
+<ul>
+<li><p>[!] Major refactoring. Broken into <code>SliderBase</code>, <code>ClickableRail</code>, and <code>SliderValueRange</code> classes, and <code>Y.Slider</code> is the product of <code>Y.Base.build(…)</code> of these. <code>SliderBase</code> is responsible for rendering the UI and broadcasting <code>slideStart</code>, <code>slideEnd</code>, and <code>thumbMove</code> events. <code>ClickableRail</code> adds support for clicking on the <code>rail</code> to move the <code>thumb</code>. <code>SliderValueRange</code> adds support for <code>min</code>, <code>max</code>, and <code>value</code> attributes. Values are integers ranging from 0 to 100 by default. <code>Base.build()</code> in different value algorithms or extensions to specialize from <code>SliderBase</code>.</p></li>
+<li><p>[!] <code>railSize</code> attribute renamed to <code>length</code>.</p></li>
+<li><p>[!] <code>maxGutter</code> and <code>minGutter</code> attributes removed. Use CSS and/or apply manually via <code>slider._dd.con.set('gutter', …);</code>.</p></li>
+<li><p>[!] <code>rail</code>, <code>thumb</code>, <code>thumbImg</code> <code>Node</code> attributes removed, as well as <code>HTML_PARSER</code> support. Progressive enhancement stems from a value source, not a markup source. Various progressive enhancement extensions will arrive in future versions.</p></li>
+<li><p>Sam skin updated and 7 new skins added (<code>sam-dark</code>, <code>round</code>, <code>round-dark</code>, <code>capsule</code>, <code>capsule-dark</code>, <code>audio</code>, <code>audio-light</code>).</p></li>
+<li><p>New markup and CSS structure including separate shadow image (set to same image as thumb, positioned via CSS ala sprite.</p></li>
+<li><p>Thumb placement method changed from <code>setXY()</code> and <code>DD</code> positioning methods to simpler <code>setStyle('left', x)</code> or <code>top</code> for vertical Sliders. Allows rendering and modifying in hidden containers without the need to <code>syncUI()</code> when making visible. Still recommended to call <code>syncUI()</code> if rendered off DOM, but may not be necessary if using Sam skin. YMMV.</p></li>
+</ul>
+<h2 id="section-326">3.0.0</h2>
+<ul>
+<li><p>Removed noop <code>_setValueFn()</code> and the setter config for the <code>value</code> attribute.</p></li>
+<li><p>Renamed static protected <code>AXIS_KEYS</code> to <code>_AXIS_KEYS</code>.</p></li>
+<li><p>Renamed <code>_defUpdateValueFromDD</code> to <code>_defThumbDragFn</code> per naming conventions.</p></li>
+<li><p>Added <code>_convertOffsetToValue</code> to mirror <code>_convertValueToOffset</code>.</p></li>
+</ul>
+<h2 id="beta1-13">3.0.0beta1</h2>
+<ul>
+<li><p>Renamed the <code>valueSet</code> custom event to <code>positionThumb</code> and rejiggered the logic of the default function and support methods.</p></li>
+<li><p>renamed <code>_defSyncUI</code> to <code>_defSyncFn</code> for library nomenclature consistency.</p></li>
+<li><p>Added protected <code>_convertValueToOffset</code> to help position the thumb.</p></li>
+<li><p>Set <code>bubble: false</code> on the <code>DD.Drag</code> instance.</p></li>
+</ul>
+<h2 id="pr2-13">3.0.0pr2</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="sortable-utility-change-history">Sortable Utility Change History</h1>
+<h3 id="section-327">3.4.1</h3>
+<p>No changes.</p>
+<h3 id="section-328">3.4.0</h3>
+<p>No changes.</p>
+<h3 id="section-329">3.3.0</h3>
+<ul>
+<li>#2529220 Sortable does not allow dragging from original container to a different container back to original i…</li>
+</ul>
+<h3 id="section-330">3.2.0</h3>
+<ul>
+<li>#2529063 Sortable: add getOrdering method</li>
+<li>#2528754 Sortable with nested lists</li>
+<li>#2528761 Request for Sortables to provide events from-&gt;to</li>
+<li>#2528769 Scroll Sortables</li>
+<li>#2528819 Sortable allows child div to move outside parent div</li>
+<li>#2529061 Sortable.destroy removes node</li>
+</ul>
+<h3 id="section-331">3.1.1</h3>
+<p>No changes.</p>
+<h3 id="section-332">3.1.0</h3>
+<p>Initial Release</p>
+<h1 id="stylesheet-change-history">StyleSheet Change History</h1>
+<h2 id="section-333">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-334">3.4.0</h2>
+<ul>
+<li>No Changes.</li>
+</ul>
+<h2 id="section-335">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-336">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-337">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-338">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-339">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="beta1-14">3.0.0beta1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="substitute-utility-change-history">Substitute Utility Change History</h1>
+<h2 id="section-340">3.4.1</h2>
+<ul>
+<li>Now replaces everything if not undefined instead of only objects, strings and numbers (<span class="citation" data-cites="satyam">@satyam</span>)</li>
+<li>Added <code>{LBRACE}</code> and <code>{RBRACE}</code> as possible replacement strings so that braces can be included in the resulting string (<span class="citation" data-cites="satyam">@satyam</span>)</li>
+<li>Improved the restoration of undefined replacements (<span class="citation" data-cites="satyam">@satyam</span>)</li>
+</ul>
+<h2 id="section-341">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-342">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-343">3.2.0</h2>
+<ul>
+<li>No change to this utility, but <code>Y.Lang.sub()</code> was added to the YUI core. This is a lightweight version of the substitute utility that follows the same templating syntax, but lacks recursive replacements, object dumping, and string formatting. The advantage is that it is very small, and available in the YUI core – perhaps the regular expression implementation will be faster than the string manipulation that happens in substitute in some situations.</li>
+</ul>
+<h2 id="section-344">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-345">3.1.0</h2>
+<ul>
+<li>Substitute has a <code>recurse</code> option to support nested templates (the previous default behavior). Normal operation is now a single level substitution which is tolerant of brackets in the replacement string.</li>
+</ul>
+<h2 id="section-346">3.0.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="beta1-15">3.0.0beta1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="pr1-9">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="swf-utility-change-history">SWF Utility Change History</h1>
+<h2 id="section-347">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-348">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-349">3.3.0</h2>
+<ul>
+<li>Fixed an undefined variable bug</li>
+<li>Fixes to documentation</li>
+</ul>
+<h2 id="section-350">3.2.0</h2>
+<ul>
+<li>Added allowedDomain flashvar to pass the security settings to YUIBridge.</li>
+</ul>
+<h2 id="section-351">3.1.2</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-352">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-353">3.1.0</h2>
+<ul>
+<li>Initial Release</li>
+</ul>
+<h1 id="swfdetect-utility-change-history">SWFDetect Utility Change History</h1>
+<h2 id="section-354">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-355">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-356">3.3.0</h2>
+<ul>
+<li>Added API documentation</li>
+</ul>
+<h2 id="section-357">3.2.0</h2>
+<ul>
+<li>Contribution by Ryan Cannon: #2529113 fixed logic in isFlashVersionAtLeast() to account for omitted minor and revision versions of the Flash player.</li>
+</ul>
+<h2 id="section-358">3.1.2</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-359">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-360">3.1.0</h2>
+<ul>
+<li>Initial Release</li>
+</ul>
+<h1 id="tabview-change-history">TabView Change History</h1>
+<h2 id="section-361">3.4.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-362">3.4.0</h2>
+<ul>
+<li>Now accepts a Node instance for the Tab <code>content</code> attribute. [Ticket 2529830]</li>
+</ul>
+<h2 id="section-363">3.3.0</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-364">3.2.0</h2>
+<ul>
+<li>Bug fix: No longer requesting non-existent tabview-plugin.css. [Ticket 2529830]</li>
+</ul>
+<h2 id="section-365">3.1.1</h2>
+<ul>
+<li>Bug fix: Allow for nested TabView widgets. [Ticket 2528737]</li>
+<li>Bug fix: Removed default styling from core CSS. [Ticket 2528782]</li>
+</ul>
+<h2 id="section-366">3.1.0</h2>
+<ul>
+<li>Initial release</li>
+</ul>
+<h1 id="text-change-history">Text Change History</h1>
+<h2 id="section-367">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-368">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-369">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="transition-change-history">Transition Change History</h1>
+<h2 id="section-370">3.4.1</h2>
+<ul>
+<li>No change.</li>
+</ul>
+<h2 id="section-371">3.4.0</h2>
+<ul>
+<li><p>The transition module now conditionally loads transition-timer as needed.</p></li>
+<li><p>Native transitions are now used when possible for Firefox.</p></li>
+</ul>
+<h2 id="section-372">3.3.0</h2>
+<ul>
+<li><p>Removed transition events in favor of config/callback.</p></li>
+<li><p>Added workaround for webkit transition issue with “auto” values. [Ticket 2529354]</p></li>
+<li><p>Bug fix: Added workaround for Native callbacks failing to fire when transitioning to current value. [Ticket 2529397]</p></li>
+<li><p>Bug fix: Timer-based were throwing errors if the node is removed AND destroyed. [Ticket 2529519]</p></li>
+</ul>
+<h2 id="section-373">3.2.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="uploader-utility-change-history">Uploader Utility Change History</h1>
+<h2 id="section-374">3.4.1</h2>
+<ul>
+<li>No changes in source code</li>
+<li>Minor example changes</li>
+</ul>
+<h2 id="section-375">3.4.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-376">3.3.0</h2>
+<ul>
+<li>Minor changes in documentation</li>
+</ul>
+<h2 id="section-377">3.2.0</h2>
+<ul>
+<li>Initial release</li>
+</ul>
+<h1 id="widget-change-history">Widget Change History</h1>
+<h2 id="section-378">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-379">3.4.0</h2>
+<ul>
+<li><p>Added workaround in destructor for single box widgets (contentBox === boundingBox) Also extracted DOM removal into separate method, which can be overridden if custom widgets don’t want rendered DOM removed.</p></li>
+<li><p>Fixed UI_EVENTS js exception when dealing with nested widgets rendered by different Y instances.</p></li>
+<li><p>Fixed UI_EVENTS invoking nested widget listeners more than once (also fixed regression to Parent-Child as a result of this change).</p></li>
+<li><p>Added support for destroy(true) to Widget, which will remove and destroy all child nodes (not just the boundingBox and contentBox) contained within the Widget’s boundingBox in order to help control Node cache size over long-running applications.</p>
+<p>destroy() will maintain its current behavior due to the potentially high run-time cost of destroying all child nodes.</p>
+<p>Widget developers still need to continue with the best practice of destroying explicit node references they create, in their destructors to support the destroy() case.</p></li>
+</ul>
+<h2 id="section-380">3.3.0</h2>
+<ul>
+<li><p>HTML_PARSER now return null instead of an empty node list, if no nodes are found, when using the [selector] syntax, so that the default value will be applied for the attribute.</p></li>
+<li><p>UI_EVENTS support and skin util methods (only getSkinName currently) broken out of widget-base into separate submodules, widget-uievents and widget-skin.</p></li>
+<li><p>widget-base-ie broken out as conditional module.</p></li>
+<li><p>Fixed widget-locale support. Needed lazyAdd:false, for strings attribute</p></li>
+<li><p>Changed widget UI_EVENTS type parsing, to use EventTarget.parseType and removed after() override, since everything ends up going through on() eventually.</p></li>
+</ul>
+<h2 id="section-381">3.2.0</h2>
+<ul>
+<li><p>Minimized widget dependencies from the complete node, base rollups, to only the node and base submodules widget actually uses</p></li>
+<li><p>Fixed issue in UI_EVENTS handling, where removing the last listener for a ui event, didn’t clear out the _delegates hash even though the handler was detached (for example, in tabview, if you remove all tabs, and then add a new tab, clicking on the new tab didn’t work.)</p></li>
+</ul>
+<h2 id="section-382">3.1.1</h2>
+<ul>
+<li>Fixed ticket #2528758 : using widget’s DOM event facade ends with error during destroy</li>
+<li>Fixed ticket #2528760 : _applyParsedConfig merges arrays, instead of letting user config win</li>
+<li>“init, render and destroy listeners now called synchronously, if event already fired (see Event README)”</li>
+</ul>
+<h2 id="section-383">3.1.0</h2>
+<ul>
+<li><p>“render” event now published with the defaultTargetOnly set to true.</p></li>
+<li><p>Added support for MyWidget.CSS_PREFIX static property to let developers define their own CSS PREFIX instead of yui-&lt;MyWidget.NAME&gt;.</p></li>
+<li><p>Changed default value for the tabIndex attribute to null, meaning by default a Widget’s bounding box will not be a focusable element.</p></li>
+<li><p>Widget now has built-in support for Progressive Enhancement.</p>
+<ol type="1">
+<li><p>The document element (HTML) is now stamped with a class name (yui-js-enabled) indicating that JS is enabled allowing for the creation of JS-aware Widget CSS style rules for Progressive Enhancement.</p></li>
+<li><p>Widget has support for a class name representing the “loading” state that can be used in combination with the “yui-js-enabled” class name to create style rules for widgets that are in the process of loading.<br />
+There is support for use of both a generic Widget and type-specific Widget class name by default (for example: “yui-widget-loading” and “yui-tabview-loading”).</p></li>
+<li><p>Widget’s renderer will remove the “loading” class names from the bounding box allowing the fully rendered and functional widget to be revealed.</p></li>
+</ol>
+<p>Developer Usage / Requirements</p>
+<p>Developers can take advantage of the system by following two steps:</p>
+<ol type="1">
+<li><p>Simply stamping the bounding box of their widgets with the corresponding “loading” state class name. The idea being that the markup for this widget is already on the page, and the JS components required to transform/bring the widget to life are in the process of loading.</p></li>
+<li><p>Providing the definition of the loading style for the widget(s).</p></li>
+</ol></li>
+<li><p>Removed parentNode.inDoc() check from render, to allow implementations to render to parentNodes which are document fragments. If rendering to a document fragment, the implementation is responsible for adding the document fragment to the document during the render lifecycle phase.</p></li>
+<li><p>Split widget module into the following sub-modules</p>
+<ol type="1">
+<li>widget-base : Core lifecycle and API support.</li>
+<li>widget-htmlparser : HTML parser support.</li>
+</ol>
+<p>The “widget” module, is a roll up of the widget-base and widget-htmlparser submodules.</p>
+<p>The widget-locale is a standalone module, which contains the deprecated Internationalization support and has been replaced by the Y.Intl language pack support, to allow strings to be defined separately from code.</p></li>
+<li><p>Removed moveStyles support for 3.1. Can be re-added if required, but currently does not seem to be in use.</p></li>
+<li><p>Made render event fireOnce (along with init and destroy in Base)</p></li>
+<li><p>Widget will now fire user-generated events like DOM elements do (e.g.  ‘click’, ‘mouseover’). Like all other Widget events, these events are prefixed with the Widget name (e.g. ‘menuitem:click’) and the default context of the event listener will be the Widget that fired the event.</p>
+<p>The goals/purpose of the Widget UI events are:</p>
+<ol type="1">
+<li><p>Provide developers with the ability to listen for UI events as though the Widget is an atomic element, as opposed to DOM events that will bubble up through all of the elements that compose a Widget’s UI.</p></li>
+<li><p>These are events that many Widget instances are going to want to publish and fire, so Widget does this by default to ensure that these events are fired in a performant, consistent way across Widget implementations.</p></li>
+</ol>
+<p>Additional info:</p>
+<ol type="1">
+<li><p>Widget developers don’t have to explicitly publish a given UI event in order for Widget consumers to listen for them. By default UI events are only published and fired if someone is listening for them.</p></li>
+<li><p>Widget developers can choose to publish a given UI event in order to explicitly control some aspect of the event. The most likely use case is the desire to provide the default implementation/handler for a given event. For example: a developer might want to publish a click event for a Menu Widget with the goal of providing the default click implementation/function (what gets canceled if a listener calls the preventDefault() method.)</p></li>
+<li><p>The set of user-generated events published by widget is defined by the UI_EVENTS prototype property. Widget developers can use this property to pair down or extend the number of events that are published and fired automatically.</p></li>
+<li><p>For performance, these events are only created when someone is listening, and the actual firing of these events is facilitated by a single, delegated DOM event listener.</p></li>
+</ol></li>
+<li><p>content box now expands to fill bounding box. CSS is used for browsers which support box-sizing:border-box. Expansion is handled programmatically for others (currently IE6 &amp; IE7). Maybe some edge cases which need resolution.</p></li>
+<li><p>Added an “id” attribute.</p></li>
+<li><p>Added support for auto-rendering of widgets at the end of construction, using the “render” attribute.</p></li>
+<li><p>Added support for single-box widgets (contentBox and boundingBox can point to same node).</p>
+<p>Widget developers can set CONTENT_TEMPLATE to null if they have a widget which doesn’t need dual-box support.</p></li>
+<li><p>Added _bindAttrUI and _syncAttrUI sugar methods, to bind after listeners and sync methods, by attribute name.</p></li>
+<li><p>The widget’s bounding box is now removed from the DOM and destroyed when the widget it destroyed.</p></li>
+<li><p>Added “srcNode” attribute, which acts as the root for HTML_PARSER.</p>
+<p>This allows widgets to support progressive enhancement, without having to put the burden on the user to create and point to bounding boxes, or content boxes.</p></li>
+<li><p>Added protected _getSrcNode and _applyParsedConfig methods to allow for HTML_PARSER customization, by allowing Widget developers to customize the node passed into _parseNode on the input side, and the final merged configuration on the output side of the srcNode parsing process.</p>
+<p>The default Widget _getSrcNode implementation uses “srcNode” if set, otherwise falls back to “contentBox”, for 3.0.0 compatibility.</p>
+<p>The default Widget _applyParsedConfig implementation aggregates the user configuration literal, with the configuration output from parsed node, with the user configuration taking precedence.</p>
+<p>NOTE: All HTML_PARSER related changes are backward compatible.</p>
+<p>Existing Widget implementations should still work. However HTML_PARSER implementations based on contentBox being the root node should be modified to work off of srcNode before the 3.1.0 release.</p></li>
+</ul>
+<h2 id="section-384">3.0.0</h2>
+<ul>
+<li>No Changes</li>
+</ul>
+<h2 id="beta-1-8">3.0.0 beta 1</h2>
+<ul>
+<li><p>PluginHost moved down to Base.</p></li>
+<li><p>Render event args added to event facade instead of being passed across separately (e.parentNode).</p></li>
+<li><p>“hasFocus” attribute renamed to “focused”</p></li>
+<li><p>“focused” attribute is read only</p></li>
+<li>“focused” attribute is set via:
+<ol type="1">
+<li>user interaction</li>
+<li>the “focus” and “blur” methods</li>
+</ol></li>
+<li><p>Only one DOM focus event handler is used now (two for WebKit) and it is bound to the widget’s ownerDocument. This allows modal widgets to maintain a reference to the element in the document that previously had focus and to be able to restore that focus when the modal widget is hidden.</p></li>
+<li>“tabIndex” attribute was updated
+<ol type="1">
+<li>accepts a number or null</li>
+<li>more documentation</li>
+</ol></li>
+</ul>
+<h2 id="pr2---initial-release-1">3.0.0PR2 - Initial release</h2>
+<h1 id="widget-anim-change-history">Widget Anim Change History</h1>
+<h2 id="section-385">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-386">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-387">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-388">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-389">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-390">3.1.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="widget-autohide-change-history">Widget Autohide Change History</h1>
+<h2 id="section-391">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-392">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="widget-buttons-change-history">Widget Buttons Change History</h1>
+<h2 id="section-393">3.4.1</h2>
+<ul>
+<li><p>Added support for <code>classNames</code> property for button configurations which will add the CSS class names to the button Node. The default “close” button uses this, adding a <code>yui3-button-close</code> CSS class to itself. [Ticket #2531091]</p></li>
+<li><p>Fixed the default template for the “close” button to not contain malformed HTML by replacing the <code>&lt;div&gt;</code> element inside of a <code>&lt;span&gt;</code> with a <code>&lt;span&gt;</code>. The in-lined CSS in the style attribute on the button was moved into an external CSS file which provides the basic styling for the default “close” button for both the Sam and Night skins. The CSS class <code>yui3-widget-buttons</code> is now applied to the <code>boundingBox</code> of Widgets which use WidgetButtons. [Ticket #2530952]</p></li>
+<li><p>Fixed a bug where instance-level properties were not being initialized causing references to bubble-up the chain to the prototype incorrectly. [Ticket #2530998]</p></li>
+</ul>
+<h2 id="section-394">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="widget-child-change-history">Widget Child Change History</h1>
+<h2 id="section-395">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-396">3.4.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-397">3.3.0</h2>
+<ul>
+<li>Changed instanceof to Y.instanceOf, to prevent leaks in IE7</li>
+</ul>
+<h2 id="section-398">3.2.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-399">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-400">3.1.0</h2>
+<ul>
+<li><p>Add new ROOT_TYPE property to constrain the behavior of the “root” attribute to instances of a specified type</p></li>
+<li><p>Fixes to remove method so that it always returns a reference to the child removed</p></li>
+</ul>
+<h1 id="widget-modality-change-history">Widget Modality Change History</h1>
+<h2 id="section-401">3.4.1</h2>
+<ul>
+<li><p>Fixed focus-contention issues which caused infinite recursion when multiple modal Panels were visible on the page at the same time. [Ticket #2530953]</p></li>
+<li><p>It is now possible to instantiate a Widget that uses the WidgetModality extension without needing to pass in a configuration Object. [Contributed by Jakub Kuźma] [Ticket #2531086]</p></li>
+<li><p>Replaced references to <code>document</code> with <code>Y.config.doc</code>. [Ticket #2531220]</p></li>
+</ul>
+<h2 id="section-402">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="widget-parent-change-history">Widget Parent Change History</h1>
+<h2 id="section-403">3.4.1</h2>
+<ul>
+<li><p>Fixed issue with children not being destroyed, when parent.destroy() is called.</p></li>
+<li><p>Added if (sibling.get(“rendered”)) check before trying to insert children after/before siblings. This is not required for the out of the box Parent/Child implementation, but is useful for custom implementations which customize children to render asynchronously.</p>
+<p>See #2529863</p></li>
+<li><p>Fixed issue where previously rendered children, added to an empty parent, would not get rendered into the parent’s child container node.</p>
+<p>Based on the pull request from andreas-karlsson, with the root fix <em>and</em> unit test (nicely done): https://github.com/yui/yui3/pull/25</p></li>
+</ul>
+<h2 id="section-404">3.4.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-405">3.3.0</h2>
+<ul>
+<li>Changed instanceof to Y.instanceOf, to prevent leaks in IE7</li>
+<li><p>Renamed “type” in child configuration, to “childType”, so that children can have a “type” attribute for it’s own context (A FormElement widget for examplei, with a “type”).</p>
+“type” is still supported but deprecated for backward compatibility, so it’s only used to define a child widget type if “childType” is not provided.</li>
+<li><p>Fixed remove(), to actually remove child from DOM also.</p></li>
+</ul>
+<h2 id="section-406">3.2.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-407">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-408">3.1.0</h2>
+<ul>
+<li>“childAdded” event renamed to “addChild”</li>
+<li>“childRemoved” event renamed to “removeChild”</li>
+<li>Now augmented with Y.ArrayList</li>
+<li>“selection” attribute now returns an Y.ArrayList or Widget</li>
+<li>Removed “children” attribute since that functionality is provided by Y.ArrayList
+<ul>
+<li>Can retrieve # of child via the size() method</li>
+<li>Can iterate children via this.each()</li>
+<li>Can retrieve a individual child via the item() method</li>
+</ul></li>
+<li>add method will always return a Y.ArrayList instance for easy chaining</li>
+<li>removeAll method will always return a Y.ArrayList instance for easy chaining</li>
+<li>added selectAll() and deselectAll() methods</li>
+<li>widget UI will render children added/inserted children after widget is rendered</li>
+<li>widget UI will update when a child is removed</li>
+</ul>
+<h1 id="widget-position-change-history">Widget Position Change History</h1>
+<h2 id="section-409">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-410">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-411">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-412">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-413">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-414">3.1.0</h2>
+<ul>
+<li>Relatively positioned bounding boxes, will default to page position instead of 0,0</li>
+</ul>
+<h2 id="section-415">3.0.0</h2>
+<ul>
+<li><p>Initial release.</p></li>
+<li><p>Fixed ability to set individual x, y values.</p></li>
+</ul>
+<h1 id="widget-position-align-change-history">Widget Position Align Change History</h1>
+<h2 id="section-416">3.4.1</h2>
+<ul>
+<li><p>The widget’s alignment is now re-synced to the DOM every time the widget’s <code>visible</code> Attribute is changed to <code>true</code>. [Ticket #2530779]</p></li>
+<li><p>Syncing the current alignment to the DOM is now supported in the public API by calling <code>align()</code> with no arguments. [Ticket #2529911]</p></li>
+</ul>
+<h2 id="section-417">3.4.0</h2>
+<ul>
+<li>Added <code>alignOn</code> attribute which allows the implementer to specify when the Widget should be re-aligned.</li>
+</ul>
+<h2 id="section-418">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-419">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-420">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-421">3.1.0</h2>
+<ul>
+<li>Renamed module from <code>widget-position-ext</code> to <code>widget-position-align</code>.</li>
+</ul>
+<h2 id="section-422">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="widget-position-constrain-change-history">Widget Position Constrain Change History</h1>
+<h2 id="section-423">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-424">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-425">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-426">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-427">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-428">3.1.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="widget-stack-change-history">Widget Stack Change History</h1>
+<h2 id="section-429">3.4.1</h2>
+<ul>
+<li>The shim element is now sizing correctly the first time a widget is shown after it was instantiated with the <code>visible</code> Attribute set to <code>false</code>. Note: The shim element is only used with IE 6 by default. [Ticket #2529127]</li>
+</ul>
+<h2 id="section-430">3.4.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-431">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-432">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-433">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-434">3.1.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-435">3.0.0</h2>
+<ul>
+<li><p>Initial release.</p></li>
+<li><p>Recreate iframe shim from <code>TEMPLATE</code> for each instance, instead of cloning a class level cached Node instance, so that <code>ownerDocument</code> can be set to match the <code>boundingBox</code>.</p></li>
+</ul>
+<h1 id="widget-std-mod-change-history">Widget Std Mod Change History</h1>
+<h2 id="section-436">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-437">3.4.0</h2>
+<ul>
+<li>Move attribute event listeners to <code>_renderUIStdMod()</code> method so that <code>setStdModContent()</code> can be called on <code>renderUI()</code>.</li>
+</ul>
+<h2 id="section-438">3.3.0</h2>
+<ul>
+<li><p>[!] Removed <code>_addNodeHTML()</code>, and renamed <code>_addNodeRef()</code> to <code>_addStdModContent()</code> (both private), since one method now handles both Strings and Node/NodeLists.</p></li>
+<li><p>Changed instanceof to Y.instanceOf, to prevent leaks in IE7.</p></li>
+<li><p>Moved to <code>node.insert()</code> for content management, since it now handles Strings, Nodes and NodeLists. This also fixes an issue where resetting the content to the existing content (e.g. calling <code>syncUI()</code>), would blow away the content in IE.</p></li>
+</ul>
+<h2 id="section-439">3.2.0</h2>
+<ul>
+<li>Setting content to <code>null</code> (or <code>undefined</code>, or <code>NaN</code>), will remove section from the std mod.</li>
+</ul>
+<h2 id="section-440">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-441">3.1.0</h2>
+<ul>
+<li><p>Changed widget stdmod <code>renderUI()</code>/<code>syncUI()</code>/<code>bindUI()</code> to <code>Y.before</code>, so that they are called before the Widget implementation, and setup the <code>header</code>/<code>body</code>/<code>footer</code> Node references for the Widget impl to use.</p></li>
+<li><p>Setting section content to <code>""</code> will now create the respective section.</p></li>
+<li><p>Fixed <code>fillHeight</code>, to work with <code>contentBox</code> height, now that it fills <code>boundingBox</code>.</p></li>
+<li><p>Fixed <code>setStdModContent("markupString", AFTER | BEFORE)</code> so that it uses <code>node.append()</code>, <code>node.prepend()</code> instead of <code>innerHTML</code> to maintain event listeners.</p></li>
+<li><p><code>fillHeight</code> is now invoked when <code>height</code> is changed. It was not being invoked because of a typo in the event name.</p></li>
+</ul>
+<h2 id="section-442">3.0.0</h2>
+<ul>
+<li><p>Initial release.</p></li>
+<li><p>Cleaned up the way <code>headerContent</code>, <code>bodyContent</code>, <code>footerContent</code> are configured, so that the actual stored value is always accurate, without the need for a getter which talks to the DOM directly.</p></li>
+<li><p>Recreate sections from <code>TEMPLATE</code> string for each instance, instead of cloning a class level cached Node instance, so that <code>ownerDocument</code> can be set to match the <code>contentBox</code>.</p></li>
+<li><p>Replaced use of <code>innerHTML</code> for progressive enhancement use case with a Document Fragment when parsing and then setting <code>headerContent</code>, <code>bodyContent</code>, <code>footerContent</code> in <code>HTML_PARSER</code> impl, to maintain event listeners etc.</p></li>
+</ul>
+<h1 id="yql-change-history">YQL Change History</h1>
+<h3 id="section-443">3.4.1</h3>
+<pre><code>No changes.</code></pre>
+<h3 id="section-444">3.4.0</h3>
+<pre><code>#2530246 - Fixed bug in yql module where options (&#39;opts&#39;) were not actually being used.  This prevented use YQL calls over SSL, which some tables require.</code></pre>
+<h3 id="section-445">3.3.0</h3>
+<pre><code>#2529504 - Added support for JSONP allowCache setting to make YQL requests use the same callback</code></pre>
+<h3 id="section-446">3.2.0</h3>
+<pre><code>Initial Release</code></pre>
+<h1 id="yui-core-change-history">YUI Core Change History</h1>
+<h2 id="section-447">3.4.1</h2>
+<ul>
+<li><p>Sparse arrays are now handled correctly in the non-native fallback implementation of <code>Y.Array.indexOf()</code>. [Ticket #2530966]</p></li>
+<li><p><code>Y.mix()</code> will no longer shadow prototype properties on the receiver unless the <code>overwrite</code> parameter is true. This was the pre-3.4.0 behavior, but was changed in 3.4.0. We’re changing it back to preserve backwards compatibility. [Ticket #2530501]</p></li>
+<li><p>The non-native fallback implementation of <code>Y.Object.keys()</code> now contains a workaround for buggy browsers that treat function <code>prototype</code> properties as enumerable in violation of the ES5 spec.</p></li>
+<li><p><code>Y.Object.size()</code> now returns <code>0</code> for non-objects. This was the pre-3.4.0 behavior, but regressed in 3.4.0. [Ticket #2531069]</p></li>
+</ul>
+<h2 id="section-448">3.4.0</h2>
+<ul>
+<li>Added <code>Y.Array.dedupe()</code>, which provides an optimized solution for deduping arrays of strings. When you know an array contains only strings, use <code>dedupe</code>, since it’s faster than <code>unique</code>.</li>
+<li><code>Y.Lang.isArray()</code> now uses the native ES5 <code>Array.isArray()</code> method when possible.</li>
+<li><code>Y.Object()</code> now uses the native ES5 <code>Object.create()</code> method when possible.</li>
+<li><code>Y.Object.keys()</code> now uses the native ES5 <code>Object.keys()</code> method when possible.</li>
+<li>Sparse arrays are now handled correctly in the non-native fallback implementations of <code>Y.Array.each</code>, <code>Y.Array.hash</code>, and <code>Y.Array.some</code>. [Ticket #2530376]</li>
+<li>Added async:true support to Get, to dispatch scripts/link nodes in parallel. NOTE: Order of execution is not guaranteed (it’s not required for the YUI Module use case, for which this feature was introduced - to improve performance). onSuccess is called once, after all files are loaded.</li>
+<li>Added onProgress callback support to Get, which is useful when dispatching multiple scripts using the [] syntax. onProgress is called when each script is done loading.</li>
+</ul>
+<h2 id="section-449">3.3.0</h2>
+<ul>
+<li>Added fast path for repeat calls to <code>use()</code> with the same arguments.</li>
+<li>Added a <code>Y.destroy()</code> method, which destroys the YUI instance.</li>
+<li>Added <code>Y.Lang.now()</code>, which returns the current time in milliseconds.</li>
+<li>Added <code>YUI.GlobalConfig</code> to allow three stages of configuration (<code>YUI.GlobalConfig</code> –&gt; <code>YUI_Config</code> –&gt; instance configs). This is helpful in non-browser environments for supplying a global config for the YUI container.</li>
+</ul>
+<h2 id="section-450">3.2.0</h2>
+<ul>
+<li>Added <code>Y.Lang.sub()</code>, which is a very lightweight version of <code>Y.substitute()</code>.</li>
+<li><code>Y.Array.hash()</code> no longer skips falsy values.</li>
+<li>Script errors in module and <code>use()</code> callback functions are caught and routed through <code>Y.error</code>.</li>
+<li><code>Y.error</code> invokations can be monitored with the <code>errorFn</code> configuration.</li>
+<li>Returning <code>true</code> from the <code>errorFn</code> will prevent the script error from halting further script execution.</li>
+<li>Added UA properties for mobile devices and ensured that UA is only evaluated once.</li>
+<li>The YUI global will overwrite itself when included again, while attempting to preserve the global environment of previous instances.</li>
+<li>Added a remote loader service submodule.</li>
+<li>Added a features submodule. This is used by the capability-based loader when dispatching to a remote loader service.</li>
+</ul>
+<h2 id="section-451">3.1.1</h2>
+<ul>
+<li>Removed the limit on the number of config objects you can supply to the <code>YUI</code> constructor.</li>
+</ul>
+<h2 id="section-452">3.1.0</h2>
+<ul>
+<li>YUI will attempt to fetch newly discovered dependencies after a module is dynamically loaded.</li>
+<li>The <code>documentElement</code> (<code>&lt;html&gt;</code>) is now stamped with a <code>yui3-js-enabled</code> classname to indicate that JS is enabled. This allows for the creation of JS-aware CSS style rules that progressively enhance the page.</li>
+<li>Added the ability to define a global configuration object (<code>YUI_config</code>).</li>
+<li>Added <code>Y.Object.some()</code> and <code>Y.some()</code>, which are analogous to <code>Y.Array.some()</code>.</li>
+<li>UA refinements for Chrome, Android and other browsers/platforms.</li>
+<li>Inserted script nodes get <code>charset="utf-8"</code> by default.</li>
+<li>Added <code>last()</code> to <code>Queue</code> for LIFO support.</li>
+<li>Added throttle utility to buffer expensive functions that are called frequently.</li>
+<li>The <code>YUI.add()</code> callback now gets the module name as the second parameter for generic processing of similar modules.</li>
+<li>Added <code>intl-base</code> submodule to process the decision tree for selecting language packs when dynamically loading internationalized modules.</li>
+<li><code>Y.guid()</code> generates identifiers that are safe to use as HTML attributes.</li>
+<li>Improved persistent messaging for missing modules/functionality.</li>
+<li>Bootstrapping improved to prevent simultaneous loading of resources when multiple instances are launched at the same moment.</li>
+<li>The YUI script source URL is read in order to try to dynamically determine the base path for loading resources on demand.</li>
+<li>The core loads without errors in non-browser environments.</li>
+</ul>
+<h2 id="section-453">3.0.0</h2>
+<ul>
+<li>Extracted the loader from the seed file. If loader is not available, but <code>get</code> is and dependencies are missing, the loader will be fetched before continuing.</li>
+<li>User agent detection is more granular. For example, Firefox 3.5 reports Gecko 1.91 rather than 1.9.</li>
+<li>Fixed <code>Y.UA.os</code>.</li>
+<li>Added additional mobile device detection.</li>
+<li>Get utility cleans up attribues before purging nodes.</li>
+<li><code>Y.cached</code> accepts a parameter to refresh a cached value.</li>
+<li><code>yui-log</code> and <code>yui-later</code> are now optional modules that are included with <code>yui.js</code>.</li>
+<li><code>queue-base</code> is no longer a submodule of <code>queue</code> – it’s now part of <code>yui-base</code>.</li>
+<li>All YUI submodules end up in the <code>yui</code> build directory.</li>
+<li>Dynamic loading can be disabled by setting the <code>bootstrap</code> config to <code>false</code>.</li>
+</ul>
+<h2 id="beta-1-9">3.0.0 beta 1</h2>
+<h3 id="core">Core</h3>
+<ul>
+<li><code>Y.fail</code> has been renamed to <code>Y.error</code> so that <code>Y.fail</code> can be used for the assertion engine.</li>
+<li><code>Y.stamp</code> now accepts a <code>readOnly</code> parameter to be used when you are only interested in reading an existing guid rather than creating a new one.</li>
+<li><code>Y.stamp</code> defends against stamping items that can’t be stamped.</li>
+<li>Added to <code>Y.Object</code>: <code>values()</code>, <code>hasKey()</code>, <code>hasValue()</code>, <code>size()</code>, <code>getValue()</code>, <code>setValue()</code> (the latter two are for manipulating nested values).</li>
+<li><code>Y.use</code> calls are queued during dynamic loading.</li>
+<li>Added <code>Y.cached</code> for function memoizing</li>
+<li>Added <code>numericSort</code> to <code>Y.Array</code>.</li>
+<li>The <code>yui:log</code> event broadcasts globally.</li>
+</ul>
+<h3 id="lang">Lang</h3>
+<ul>
+<li>Added <code>Y.Lang.type</code> (<code>typeof</code> abstraction) and refactored some ‘is’ methods to use it.</li>
+</ul>
+<h3 id="get">Get</h3>
+<ul>
+<li>Accepts an attribute collection config to apply to inserted nodes.</li>
+<li><code>id</code> attributes are globally unique</li>
+<li>Now accepts <code>purgethreshold</code> as a config option. This will set the number of transactions required before auto removing nodes from previous transactions (default is 20).</li>
+</ul>
+<h3 id="loader">Loader</h3>
+<ul>
+<li><code>yuitest</code> renamed to <code>test</code>, now requires <code>collection</code>.</li>
+<li>Lots of new module metadata.</li>
+<li>Added <code>onCSS</code>.</li>
+<li>Loader requests are queued globally.</li>
+<li>Accepts <code>jsAttributes</code> and <code>cssAttributes</code> configs for adding attributes to inserted nodes</li>
+<li>Added <code>force</code> config.</li>
+</ul>
+<h3 id="ua">UA</h3>
+<ul>
+<li>Added <code>secure</code> property for SSL detection.</li>
+<li>Added <code>os</code> property for OS detection.</li>
+<li>Added Adobe Air and Google Caja detection.</li>
+</ul>
+<h2 id="pr2-14">3.0.0pr2</h2>
+<h3 id="core-1">Core</h3>
+<ul>
+<li>The initial dependency calculation should not allow automatic rollup.</li>
+<li><code>Y.fail</code> will throw/rethrow errors by default (<code>throwFail</code> is now <code>true</code>).</li>
+<li><code>Y.namespace</code> reverted to scrub <code>YAHOO</code> out if included as the first level of the namespace.</li>
+<li><code>useConsole</code> config changed to <code>useBrowserConsole</code>.</li>
+</ul>
+<h3 id="array">Array</h3>
+<ul>
+<li>Added <code>Y.Array.some()</code>.</li>
+</ul>
+<h3 id="get-1">Get</h3>
+<ul>
+<li>Protects against trailing commas in the array of files to load.</li>
+</ul>
+<h3 id="loader-1">Loader</h3>
+<ul>
+<li><code>get</code> requires <code>yui-base</code>.</li>
+<li><code>loader</code> requires <code>get</code>.</li>
+<li>Combo URL build process defends against undefined modules.</li>
+<li>Added combo handler support for CSS.</li>
+<li>Filters are correctly applied to combo and fullpath URLs.</li>
+<li>Added <code>compat</code>, <code>profiler</code>, <code>yuitest</code>, <code>widget</code>, <code>stylesheet</code>, <code>classnamemanager</code>, <code>overlay</code>, <code>plugin</code>, <code>slider</code>, and <code>console</code> modules.</li>
+<li>Added <code>io</code> submodules.</li>
+<li><code>queue</code> requires <code>event</code>.</li>
+<li>Added submodule metadata logic.</li>
+<li>Added plugin metadata logic.</li>
+<li>Added skin metadata logic.</li>
+</ul>
+<h2 id="pr1-10">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+<h1 id="yui-throttle-change-history">YUI Throttle Change History</h1>
+<h2 id="section-454">3.4.1</h2>
+<p>No changes.</p>
+<h2 id="section-455">3.4.0</h2>
+<p>Removed from yui-core and bumped to a stand alone module.</p>
+</body>
+</html>

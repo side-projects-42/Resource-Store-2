@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p><a href="https://www.npmjs.com/package/oojs"><img src="https://img.shields.io/npm/v/oojs.svg?style=flat" alt="npm" /></a></p>
+<h1 id="oojs">OOjs</h1>
+<p>OOjs is a JavaScript library for working with objects.</p>
+<p>Key features include inheritance, mixins and utilities for working with objects.</p>
+<pre lang="javascript">
+/* Example */
+function Animal() {}
+function Magic() {}
+function Unicorn() {
+    Animal.call( this );
+    Magic.call( this );
+}
+OO.inheritClass( Unicorn, Animal );
+OO.mixinClass( Unicorn, Magic );
+</pre>
+<h2 id="quick-start">Quick start</h2>
+<p>This library is available as an <a href="https://npmjs.org/">npm</a> package! Install it right away:</p>
+<pre lang="bash">
+npm install oojs
+</pre>
+<p>Or clone the repo, <code>git clone https://gerrit.wikimedia.org/r/oojs/core</code>.</p>
+<h2 id="ecmascript-5">ECMAScript 5</h2>
+<p>OOjs requires a modern ECMAScript 5 environment. It is not necessarily compatible with ES3 engines (such as for IE 6-8). For ES3 environments, the old 1.x releases are available but not recommended.</p>
+<h2 id="versioning">Versioning</h2>
+<p>We use the Semantic Versioning guidelines as much as possible.</p>
+<p>Releases will be numbered in the following format:</p>
+<p><code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code></p>
+<p>For more information on SemVer, please visit http://semver.org/.</p>
+<h2 id="bug-tracker">Bug tracker</h2>
+<p>Found a bug? Please report it in the <a href="https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=OOjs">issue tracker</a>!</p>
+</body>
+</html>

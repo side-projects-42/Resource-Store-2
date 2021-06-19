@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-21</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-04-21">ember-cli Meeting Notes - 2016-04-21</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Tobias Bieniek</li>
+<li>Katie Gengler</li>
+<li>Kelly Selden</li>
+<li>Jake Bixby</li>
+<li>Stefan Penner</li>
+<li>David Hamilton</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Nathan - Cherry-pick core-object over to beta branch.</li>
+<li>[ ] Stefan - Release new 2.6-beta</li>
+<li>[ ] Stefan - Core team meeting: ember cli betas bundle release or beta channel.</li>
+<li>[ ] Stefan - Review <code>base</code> tag PR</li>
+<li>[ ] Tobias - Publish YUIDocs to ember-cli.com/api</li>
+<li>[ ] Jake - Refocus on slow tests. npm fixes first.</li>
+<li>[ ] Stefan - push npm module for ember to completion (could use help)</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="ember-module-migrator">ember module migrator</h3>
+<ul>
+<li><a href="https://github.com/rwjblue/ember-module-migrator">https://github.com/rwjblue/ember-module-migrator</a></li>
+<li>Single purpose, migrates from existing structures to new modules structure</li>
+<li>Currently only does file-rename for classic structure.</li>
+<li>Working on pod structure, and mixed structure.</li>
+</ul>
+<h3 id="updates-on-base-tobias">Updates on base (Tobias)</h3>
+<ul>
+<li>Mostly ready to be merged.</li>
+<li>Seems like it works.</li>
+<li>Push into Canary (2.7) and see what happens.</li>
+</ul>
+<h3 id="private-pre-concat-hooks-nathan">Private pre-concat hook(s) (Nathan)</h3>
+<ul>
+<li>Open RFC</li>
+<li>Multiple times vs. one time, which trees, and more.</li>
+<li>Possibly slow to expose.</li>
+</ul>
+<h2 id="beta-release">Beta release</h2>
+<ul>
+<li>ember-cli betas, do they include stable ember by default, or also ember betas?
+<ul>
+<li>general seems to believe we should stick to stable releases of ember.</li>
+<li>release final ember-cli beta with new stable releases of ember and ember-data?</li>
+</ul></li>
+</ul>
+<h3 id="yuidoc-output">YUIDoc output</h3>
+<ul>
+<li>Publish the YUIDocs to ember-cli.com/api? <strong>Yes.</strong></li>
+<li>Versioned docs will come later–one step at a time.
+<ul>
+<li>Can we rope in the learning team?</li>
+</ul></li>
+<li>We should start to enforce clearer documentation of things in PRs.</li>
+<li>No need to link them at first, let’s start by getting them published at all.</li>
+</ul>
+<h3 id="emberobserver.com-running-top-100-addons-against-ember-canary-nightly.">emberobserver.com running top 100 addons against Ember Canary nightly.</h3>
+<ul>
+<li>Some addons just break the process.</li>
+<li>Once it’s more resilient then we can push it to a dashboard.</li>
+<li>Alert email to core@ if things start failing.</li>
+</ul>
+</body>
+</html>

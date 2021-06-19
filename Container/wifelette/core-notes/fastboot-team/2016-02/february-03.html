@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-03</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-02-03">FastBoot Meeting Notes 2016-02-03</h1>
+<h2 id="attendees">Attendees</h2>
+<p>Robert Jackson, Ron White, Ruslan Zavacky, Terence Lee, Tom Dale, Miguel Camba</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li>Introductions
+<ul>
+<li>Who are you, how are you using FastBoot, how would you like to contribute?</li>
+<li>Minute notes will be public</li>
+</ul></li>
+<li><a href="https://github.com/tildeio/ember-cli-fastboot/issues/98">Road to 1.0</a>
+<ul>
+<li>People should claim work in that thread</li>
+<li>EmberConf plans</li>
+</ul></li>
+<li>Meta tags / Open Graph / Twitter cards</li>
+<li>Use default value for <code>configInMeta</code> (rwjblue)</li>
+<li>Deployment &amp; revision keys (rwjblue)</li>
+<li>Expose HTTP as <code>FastBoot.request</code>
+<ul>
+<li>Low-level primitive</li>
+<li><code>ember-cookies</code> - universal addon for accessing cookies
+<ul>
+<li>Needs champion</li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="minutes">Minutes</h2>
+<ul>
+<li>Robert Jackson, random things on the internet, works at Twitch. Questions about caching etc. at scale. Specific pet peeves and bones to pick.</li>
+<li>Ron White, engineering manager at Ibotta, love to have website use FastBoot. Using prerender.io but would love to use FastBoot instead. Wrote an ember-addon that does meta tags for FB, Twitter.</li>
+<li>Ruslan Zavacky - Frontend Software Engineer @ Kayako. Doing pet project - Vetoza. I want Google to be able to index it. I use prerender now but it’s not great.</li>
+<li>Terence Lee, Heroku, want a great experience for FastBoot users</li>
+</ul>
+<p>RW: Got an existing addon that exposes a <code>head</code> service. Trying to get this to work in FastBoot.</p>
+<p>(discussion about how to render component in FastBoot page’s <code>&lt;head&gt;</code>)</p>
+<p>RJ: Long-term, I hope support for <code>&lt;head&gt;</code> stuff should be baked into the FastBoot addon.</p>
+<p>RJ: Last week, “my friend” made some changes and deployed to QA. QA approved deploy, we promoted it to prod, and by the nature of npm, my builds were broken and the thing that was approved does not match the asset output at all. And I broke production. :’(</p>
+<p>RJ: <code>storeConfigInMeta</code> is set to false by FastBoot addon, because we don’t want to take the meta tag out of the <code>index.html</code> compiled to disk. That causes the config to be written into the app.js file. That means that promoting one asset from one environment to another means you have to recompile, and there’s no guarantee that you are getting a similar build.</p>
+<p>RJ: My plan is change Ember CLI to generate the config as a JSON file. The <code>&lt;meta&gt;</code> config should be generated from the JSON; the opposite of current solutions that actually reverse engineer JSON by parsing the <code>&lt;meta&gt;</code> tag. It’s useful for way more stuff than just FastBoot.</p>
+<p>RJ: This should be useful for Heroku as well.</p>
+<p>MG: Maybe it’s useful to have a crawler that hits various pages of your Ember app to verify they all work without failing in FastBoot.</p>
+<p>TD: I think we should just rely on automated tests, especially those generated automatically for each route.</p>
+<p>MC: <code>ember-cli-fastboot</code> should hook in to generators and add a FastBoot-specific test.</p>
+<p>RZ: I’ve been testing stripping script tags from FastBoot pages, for people who are targeting just SEO/Googlebot. All the JavaScript does is increase load time. I will work on an option to disable script tags for that case.</p>
+<h3 id="action-items">Action Items</h3>
+<ul>
+<li>[ ] Ron is going to update the <code>ember-cli-head</code> to try to render-a-component approach.</li>
+<li>[ ] Robert is going to work on ember-cli internals to make generating the config to JSON as the primitive instead of generating index.html.</li>
+<li>[ ] Miguel is collecting pain points for dual testing addons in both FastBoot and the browser</li>
+<li>[ ] Tom will expose <code>FastBoot.request</code></li>
+<li>[ ] Ruslan will submit a PR for disabling <code>&lt;script&gt;</code> tags that point at the JavaScript payload for the SEO case</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="audiorecorder">AudioRecorder</h1>
+<p>AudioRecorder example application demonstrates how to record and play audio on Windows Phone 8 devices. XNA Framework Audio API and Windows Audio Session API (WASAPI) are covered by the application.</p>
+<p><img src="/doc/audio_recorder_main_page_small.png?raw=true" alt="Main page" />  <img src="/doc/audio_recorder_files_page_small.png?raw=true" alt="Audio files page" /></p>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/audio-recorder</p>
+<p>Developed with:</p>
+<ul>
+<li>Microsoft Visual Studio Express for Windows Phone 2012.</li>
+</ul>
+<p>Compatible with:</p>
+<ul>
+<li>Windows Phone 8</li>
+</ul>
+<p>Tested to work on:</p>
+<ul>
+<li>Nokia Lumia 920</li>
+<li>Nokia Lumia 925</li>
+<li>Nokia Lumia 1520</li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<p>Make sure you have the following installed:</p>
+<ul>
+<li>Windows 8</li>
+<li>Windows Phone SDK 8.0</li>
+</ul>
+<p>To build and run the sample:</p>
+<ul>
+<li>Open the SLN file
+<ul>
+<li>File &gt; Open Project, select the file AudioRecorder.sln</li>
+</ul></li>
+<li>Select the target, for example ‘Emulator WXGA’.</li>
+<li>Press F5 to build the project and run it on the Windows Phone Emulator.</li>
+</ul>
+<p>To deploy the sample on Windows Phone device: * See the official documentation for deploying and testing applications on Windows Phone devices at http://msdn.microsoft.com/en-us/library/windowsphone/develop/ff402565(v=vs.105).aspx</p>
+<h2 id="about-the-implementation">About the implementation</h2>
+<p>Important folders:</p>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 64%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+Folder
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+/
+</td>
+<td>
+Contains the project file, the license information and this file (README.md)
+</td>
+</tr>
+<tr class="even">
+<td>
+AudioRecorder
+</td>
+<td>
+Root folder for the implementation files.
+</td>
+</tr>
+<tr class="odd">
+<td>
+AudioRecorder/Assets
+</td>
+<td>
+Graphic assets like icons and tiles.
+</td>
+</tr>
+<tr class="even">
+<td>
+AudioRecorder/Properties
+</td>
+<td>
+Application property files.
+</td>
+</tr>
+<tr class="odd">
+<td>
+AudioRecorder/Resources
+</td>
+<td>
+Application resources.
+</td>
+</tr>
+<tr class="even">
+<td>
+WasapiAudioComp
+</td>
+<td>
+Root folder of Windows Phone Runtime component for WASAPI implementation files.
+</td>
+</tr>
+</tbody>
+</table>
+<p>Important classes:</p>
+<table>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+MainPage
+</td>
+<td>
+This class is the main UI of the app.
+</td>
+</tr>
+<tr class="even">
+<td>
+AudioManager
+</td>
+<td>
+Handles all the UI related audio actions.
+</td>
+</tr>
+<tr class="odd">
+<td>
+XnaAudio
+</td>
+<td>
+Handles the recording and playback of audio using XNA Audio API.
+</td>
+</tr>
+<tr class="even">
+<td>
+WasapiAudio
+</td>
+<td>
+Handles the audio capturing and rendering using WASAPI.
+</td>
+</tr>
+</tbody>
+</table>
+<p>For more information about audio handling in Windows Phone 8 devices, see an article available at http://developer.nokia.com/Community/Wiki/Audio_recording_and_playback_options_in_Windows_Phone.</p>
+<h2 id="known-issues">Known issues</h2>
+<p>No known issues.</p>
+<h2 id="license">License</h2>
+<p>See the license file delivered with this project. The license is also available online at https://github.com/Microsoft/audio-recorder/blob/master/License.txt</p>
+<h2 id="version-history">Version history</h2>
+<ul>
+<li>0.3.0.0 Added 720p resolution support and yet another missing dependency fix.</li>
+<li>0.2.0.0 Added a missing dependency affecting others than ARM device builds.</li>
+<li>0.1.0.0 First beta release.</li>
+</ul>
+</body>
+</html>

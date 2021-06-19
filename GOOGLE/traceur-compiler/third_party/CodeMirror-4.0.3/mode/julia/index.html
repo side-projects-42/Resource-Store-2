@@ -1,193 +1,32 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Julia mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="julia.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">Julia</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Julia mode</h2>
-
-  <div>
-    <textarea id="code" name="code">
-#numbers
-1234
-1234im
-.234
-.234im
-2.23im
-2.3f3
-23e2
-0x234
-
-#strings
-'a'
-"asdf"
-r"regex"
-b"bytestring"
-
-"""
-multiline string
-"""
-
-#identifiers
-a
-as123
-function_name!
-
-#literal identifier multiples
-3x
-4[1, 2, 3]
-
-#dicts and indexing
-x=[1, 2, 3]
-x[end-1]
-x={"julia"=>"language of technical computing"}
-
-#exception handling
-try
-  f()
-catch
-  @printf "Error"
-finally
-  g()
-end
-
-#types
-immutable Color{T<:Number}
-  r::T
-  g::T
-  b::T
-end
-
-#functions
-function change!(x::Vector{Float64})
-  for i = 1:length(x)
-    x[i] *= 2
-  end
-end
-
-#function invocation
-f('b', (2, 3)...)
-
-#operators
-|=
-&=
-^=
-\-
-%=
-*=
-+=
--=
-<=
->=
-!=
-==
-%
-*
-+
--
-<
->
-!
-=
-|
-&
-^
-\
-?
-~
-:
-$
-<:
-.<
-.>
-<<
-<<=
->>
->>>>
->>=
->>>=
-<<=
-<<<=
-.<=
-.>=
-.==
-->
-//
-in
-...
-//
-:=
-.//=
-.*=
-./=
-.^=
-.%=
-.+=
-.-=
-\=
-\\=
-||
-===
-&&
-|=
-.|=
-<:
->:
-|>
-<|
-::
-x ? y : z
-
-#macros
-@spawnat 2 1+1
-@eval(:x)
-
-#keywords and operators
-if else elseif while for
- begin let end do
-try catch finally return break continue
-global local const 
-export import importall using
-function macro module baremodule 
-type immutable quote
-true false enumerate
-
-
-    </textarea>
-  </div>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      mode: { name: "julia" },
-      lineNumbers: true,
-      indentUnit: 4,
-      matchBrackets: true,
-    });
-  </script>
-
-  <p><strong>MIME types defined:</strong> <code>text/x-julia</code>.</p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Julia mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">Julia</a></li>
+</ul>
+<h2 id="julia-mode">Julia mode</h2>
+<p>#numbers 1234 1234im .234 .234im 2.23im 2.3f3 23e2 0x234 #strings ‘a’ “asdf” r“regex” b“bytestring” """ multiline string """ #identifiers a as123 function_name! #literal identifier multiples 3x 4[1, 2, 3] #dicts and indexing x=[1, 2, 3] x[end-1] x={“julia”=&gt;“language of technical computing”} #exception handling try f() catch <span class="citation" data-cites="printf">@printf</span> “Error” finally g() end #types immutable Color{T&lt;:Number} r::T g::T b::T end #functions function change!(x::Vector{Float64}) for i = 1:length(x) x[i] *= 2 end end #function invocation f(‘b’, (2, 3)…) #operators |= &amp;= ^= \- %= *= += -= &lt;= &gt;= != == % * + - &lt; &gt; ! = | &amp; ^ \ ? ~ : $ &lt;: .&lt; .&gt; &lt;&lt; &lt;&lt;= &gt;&gt; &gt;&gt;&gt;&gt; &gt;&gt;= &gt;&gt;&gt;= &lt;&lt;= &lt;&lt;&lt;= .&lt;= .&gt;= .== -&gt; // in … // := .//= .*= ./= .^= .%= .+= .-= \= \\= || === &amp;&amp; |= .|= &lt;: &gt;: |&gt; &lt;| :: x ? y : z #macros <span class="citation" data-cites="spawnat">@spawnat</span> 2 1+1 <span class="citation" data-cites="eval">@eval</span>(:x) #keywords and operators if else elseif while for begin let end do try catch finally return break continue global local const export import importall using function macro module baremodule type immutable quote true false enumerate</p>
+<p><strong>MIME types defined:</strong> <code>text/x-julia</code>.</p>
+</body>
+</html>

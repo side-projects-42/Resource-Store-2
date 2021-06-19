@@ -1,0 +1,12 @@
+`Y.Plugin.Modal` Manual Tests
+=============================
+
+`Y.Plugin.Modal` is a widget-level plugin that can be used by any widget. It makes that widget appear modally. This means that you cannot interact with any elements on the page apart from the widget. It fires events when the mask is opened and closed.
+
+Here's some content that should go into a modal overlay. Let's see if it works...
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elit mi, tempus in tincidunt non, imperdiet sed augue. Nullam turpis magna, gravida vel venenatis at, dignissim non augue. Phasellus posuere erat nec ligula consectetur nec facilisis purus consectetur. Integer ipsum nisi, aliquam at ultrices quis, dictum a mauris. Ut posuere ultrices justo non convallis. Nunc a diam et est pretium fermentum. Nunc eget nunc non odio vestibulum vehicula et faucibus neque. Praesent turpis ligula, pharetra id vehicula a, sollicitudin sit amet lectus. Pellentesque pellentesque ante sed leo congue ullamcorper. Praesent at metus nisl. Vivamus at tortor sed sapien aliquet volutpat. Suspendisse vehicula, dolor ac vestibulum dapibus, nisi nulla ultrices odio, ac fermentum dolor risus congue tortor. Sed vel ligula in justo lacinia condimentum vel id est. Suspendisse interdum ligula quis odio congue consequat. Suspendisse potenti. Cras id accumsan eros. Duis gravida metus ac diam volutpat et dignissim justo pulvinar. Duis semper ornare dui, non condimentum nibh pretium id. Aenean dapibus purus eu nisl hendrerit a malesuada dolor vehicula.
+
+Nullam et enim id lectus rhoncus convallis. Vivamus molestie diam sed est hendrerit condimentum. Phasellus fringilla libero a ligula aliquet placerat. Aliquam consectetur dignissim purus non scelerisque. Integer vel sem eu lacus tincidunt auctor. Vivamus vitae lobortis urna. Suspendisse potenti. Donec hendrerit viverra felis, in faucibus odio scelerisque eu. Vestibulum sem velit, posuere at pulvinar semper, ornare ut felis. Etiam at consectetur mi. Sed id nisi est, ac feugiat eros. Nulla facilisi. Ut porttitor tellus sit amet diam consequat ac sagittis lacus porta. Suspendisse nibh justo, fringilla a congue id, faucibus sed nibh. Sed vitae lorem mattis lectus ultrices suscipit eu ac mauris.
+
+<a href="#a" class="randomLinks">Random Link 1</a> <a href="#b" class="randomLinks">Random Link 2</a> <a href="#c" class="randomLinks">Random Link 3</a> <a href="#d" class="randomLinks">Random Link 4</a>

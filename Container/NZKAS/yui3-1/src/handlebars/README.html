@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="handlebars">Handlebars</h1>
+<p>Handlebars is a simple template language inspired by Mustache.</p>
+<p>This is a YUI port of the original Handlebars project, which can be found at <a href="https://github.com/wycats/handlebars.js" class="uri">https://github.com/wycats/handlebars.js</a>.</p>
+<h2 id="differences">Differences</h2>
+<p>YUI-specific changes are minimal. We just wrap the Handlebars code into two YUI modules:</p>
+<ul>
+<li><p>handlebars-base: The bare minimum code necessary to render pre-parsed Handlebars templates.</p></li>
+<li><p>handlebars-compiler: The additional code necessary to parse and compile Handlebars templates.</p></li>
+</ul>
+<p>The ‘handlebars’ module is an alias that can be used to load both modules.</p>
+<p>Apart from the YUI wrapper code, the only other change is that we use YUI’s own <code>Y.Escape.html()</code> method to escape strings rather than using Handlebars’s built-in escaping. This is done because Handlebars’s built-in HTML escaper avoids double-escaping existing <code>&amp;amp;</code> entities, which can lead to unexpected output, especially when using Handlebars templates to render code snippets in which double-escaping is necessary to properly display the literal text “&amp;”.</p>
+<h2 id="code-organization">Code Organization</h2>
+<p>The upstream Handlebars code YUI uses is maintained in a fork of the original Handlebars.js project on GitHub, which we’re trying to keep closely in sync with the original Handlebars.js project.</p>
+<p>The YUI fork can be found at <a href="https://github.com/rgrove/handlebars.js/tree/yui" class="uri">https://github.com/rgrove/handlebars.js/tree/yui</a>. The “yui” branch on that fork will contain any changes we’ve made that haven’t yet been integrated upstream, but we do our best to get changes integrated upstream as quickly as possible to avoid diverging.</p>
+<p>Code from this Handlebars.js repo is imported into the YUI 3 repo by a Makefile in the <code>src/handlebars</code> directory. Running <code>make import</code> will copy Handlebars source files from the separate Handlebars repo into the <code>src/handlebars/js</code> directory in the YUI 3 repo.</p>
+<p>Handlebars files imported into <code>src/handlebars/js</code> are prefixed with <code>handlebars-</code> and should not be edited, while YUI-specific files that live in that directory are prefixed with <code>yui-handlebars</code> and may be edited.</p>
+<p>After importing Handlebars files, run <code>ant all</code> to build the final YUI modules. The Handlebars API will be available at <code>Y.Handlebars</code> when you use one of the Handlebars modules.</p>
+<h1 id="license">License</h1>
+<p>Copyright (C) 2011 by Yehuda Katz <a href="https://github.com/wycats/handlebars.js" class="uri">https://github.com/wycats/handlebars.js</a></p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</body>
+</html>

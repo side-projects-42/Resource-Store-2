@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ios-webkit-debug-proxy">iOS WebKit Debug Proxy</h1>
+<p>The ios<em>webkit_debug_proxy (aka _iwdp</em>) proxies requests from usbmuxd daemon over a websocket connection, allowing developers to send commands to MobileSafari and UIWebViews on real and simulated iOS devices.</p>
+<h2 id="installation">Installation</h2>
+<p>iOS WebKit Debug Proxy works on Linux, MacOS &amp; Windows.</p>
+<h3 id="macos">MacOS</h3>
+<p>It’s easiest to install with <a href="http://brew.sh/">homebrew</a>:</p>
+<pre><code>brew install ios-webkit-debug-proxy</code></pre>
+<h3 id="windows">Windows</h3>
+<p>It’s easiest to install with <a href="http://scoop.sh/">scoop</a>:</p>
+<pre><code>scoop bucket add extras
+scoop install ios-webkit-debug-proxy</code></pre>
+<p>Note: you also need the latest version of <a href="https://www.apple.com/il/itunes/download/">iTunes</a> installed.</p>
+<h3 id="linux">Linux</h3>
+<p>Install dependencies available in apt repository:</p>
+<pre><code>sudo apt-get install autoconf automake libusb-dev libusb-1.0-0-dev libplist-dev libtool libssl-dev</code></pre>
+<p>Build and install dependencies that require more recent versions:</p>
+<ul>
+<li><a href="https://github.com/libimobiledevice/libimobiledevice">libmobiledevice</a></li>
+<li><a href="https://github.com/libimobiledevice/libusbmuxd">libusbmuxd</a></li>
+<li><a href="https://github.com/libimobiledevice/usbmuxd">usbmuxd</a></li>
+<li><a href="https://github.com/libimobiledevice/libplist">libplist</a></li>
+</ul>
+<p>Build and install <code>ios-webkit-debug-proxy</code>:</p>
+<pre><code>git clone https://github.com/google/ios-webkit-debug-proxy.git
+cd ios-webkit-debug-proxy
+
+./autogen.sh
+make
+sudo make install</code></pre>
+<h2 id="usage">Usage</h2>
+<p>On Linux, you must run the <code>usbmuxd</code> daemon. The above install adds a /lib/udev rule to start the daemon whenever a device is attached.</p>
+<p>To verify that usbmuxd can list your attached device(s), ensure that <code>libimobiledevice-utils</code> is installed and then run <code>idevice_id -l</code>.</p>
+<h3 id="start-the-simulator-or-device">Start the simulator or device</h3>
+<p>The iOS Simulator is supported, but it must be started <strong>before</strong> the proxy. The simulator can be started in XCode, standalone, or via the command line:</p>
+<pre><code># Xcode changes these paths frequently, so doublecheck them
+SDK_DIR=&quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs&quot;
+SIM_APP=&quot;/Applications/Xcode.app/Contents/Developer/Applications/Simulator.app/Contents/MacOS/Simulator&quot;
+$SIM_APP -SimulateApplication $SDK_DIR/iPhoneSimulator8.4.sdk/Applications/MobileSafari.app/MobileSafari</code></pre>
+<h4 id="enable-the-inspector">Enable the inspector</h4>
+<p>Your attached iOS devices must have ≥1 open browser tabs and the inspector enabled via: <code>Settings &gt; Safari &gt; Advanced &gt; Web Inspector = ON</code></p>
+<h3 id="start-the-proxy">Start the proxy</h3>
+<pre><code>ios_webkit_debug_proxy</code></pre>
+<ul>
+<li><code>--debug</code> for verbose output.</li>
+<li><code>--frontend</code> to specify a frontend</li>
+<li><code>--help</code> for more options.</li>
+<li><code>Ctrl-C</code> to quit. Also, the proxy can be left running as a background process.</li>
+</ul>
+<h3 id="using-with-devtools">Using with DevTools</h3>
+<p>ios_webkit_debug_proxy can be used with many tools such as Chrome DevTools and Safari Web Inspector.</p>
+<h4 id="chrome-devtools">Chrome Devtools</h4>
+<p>To use Chrome DevTools it’s the recommendation to use the <a href="https://github.com/RemoteDebug/remotedebug-ios-webkit-adapter">RemoteDebug/remotedebug-ios-webkit-adapter</a> project, which has instructions on how to setup Chrome to remote debug iOS devices, much similar to Android debugging.</p>
+<p>The reason is that in recent versions of Chrome and Safari there’re major discrepancies between <a href="https://developer.chrome.com/devtools/docs/debugger-protocol">Chrome Remote Debugging Protocol</a> and <a href="https://github.com/WebKit/webkit/tree/master/Source/JavaScriptCore/inspector/protocol">Webkit Inspector Protocol</a>, which means that newer versions of Chrome DevTools aren’t compatible with Safari.</p>
+<h4 id="safari-web-inspector">Safari Web Inspector</h4>
+<p>You can use Safari Web Inspector extracted from Webkit sources, e.g. <a href="https://github.com/artygus/webkit-webinspector">artygus/webkit-webinspector</a>.</p>
+<h4 id="firefox-devtools-via-valence">Firefox DevTools via Valence</h4>
+<p>Another option is <a href="https://github.com/mozilla/valence">mozilla/valence</a> which enables Firefox DevTools to be used with iOS.</p>
+<h2 id="configuration">Configuration</h2>
+<h3 id="view-and-inspect-debuggable-tabs">View and inspect debuggable tabs</h3>
+<p>Navigate to <a href="http://localhost:9221">localhost:9221</a>. You’ll see a listing of all connected devices.</p>
+<p>Click through to view tabs available on each, and click through again to open the DevTools for a tab.</p>
+<h3 id="setting-the-devtools-ui-url">Setting the DevTools UI URL</h3>
+<p><a href="https://developers.google.com/chrome-developer-tools/">Chrome DevTools UI</a> used as a default frontend:</p>
+<pre><code>http://chrome-devtools-frontend.appspot.com/static/27.0.1453.93/devtools.html</code></pre>
+<p>You can use the <code>-f</code> argument to specify different frontend source, like Chrome’s local DevTools, a local <a href="https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/devtools/">Chromium checkout</a> or another URL:</p>
+<pre><code># examples:
+ios_webkit_debug_proxy -f chrome-devtools://devtools/bundled/inspector.html
+ios_webkit_debug_proxy -f ~/chromium/src/third_party/WebKit/Source/devtools/front_end/inspector.html
+ios_webkit_debug_proxy -f http://foo.com:1234/bar/inspector.html</code></pre>
+<p>If you use <code>-f chrome-devtools://devtools/bundled/inspector.html</code>, you won’t be able to click the links shown in <code>localhost:9222</code> as Chrome blocks clicking these URLs. However, you can copy/paste them into the address bar.</p>
+<p>Just the same, you can apply the appropriate port (9222) and page (2) values below.</p>
+<pre><code>chrome-devtools://devtools/bundled/inspector.html?ws=localhost:9222/devtools/page/1</code></pre>
+<p>The <code>-f</code> value must end in “.html”. Due to security reasons, <code>https</code> URLs will not work; use <code>http</code> or force-allow with the URL bar’s shield icon. As of Chrome 45, the primary URL <a href="https://codereview.chromium.org/1144393004/">changed</a> from <code>devtools.html</code> to <code>inspector.html</code>.</p>
+<p>To disable the frontend proxy, use the <code>--no-frontend</code> argument.</p>
+<h4 id="port-assigment">Port assigment</h4>
+<p>The default configuration works well for most developers. The device_id-to-port assignment defaults to:</p>
+<pre><code>:9221 for the device list
+:9222 for the first iOS device that is attached
+:9223 for the second iOS device that is attached
+...
+:9322 for the max device</code></pre>
+<p>If a port is in use then the next available port will be used, up to the range limit.</p>
+<p>The port assignment is first-come-first-serve but is preserved if a device is detached and reattached, assuming that the proxy is not restarted, e.g.:</p>
+<ol type="1">
+<li>start the proxy</li>
+<li>the device list gets :9221</li>
+<li>attach A gets :9222</li>
+<li>attach B gets :9223</li>
+<li>detach A, doesn’t affect B’s port</li>
+<li>attach C gets :9224 (not :9222)</li>
+<li>reattach A gets :9222 again (not :9225)</li>
+</ol>
+<p>The port assignment rules can be set via the command line with <code>-c</code>. The default is equivalent to:</p>
+<pre><code>ios_webkit_debug_proxy -c null:9221,:9222-9322</code></pre>
+<p>where “null” represents the device list. The following example restricts the proxy to a single device and port:</p>
+<pre><code>ios_webkit_debug_proxy -c 4ea8dd11e8c4fbc1a2deadbeefa0fd3bbbb268c7:9227</code></pre>
+<h3 id="troubleshooting">Troubleshooting</h3>
+<h5 id="undefined-reference-to-symbol-log10glibc_2.2.5">undefined reference to symbol ‘log10@<span class="citation" data-cites="GLIBC_2.2.5"><span class="citation" data-cites="GLIBC">@GLIBC</span>_2.2.5</span>’</h5>
+<pre><code>/usr/bin/ld: ios_webkit_debug_proxy-char_buffer.o: undefined reference to symbol &#39;log10@@GLIBC_2.2.5&#39;
+//lib/x86_64-linux-gnu/libm.so.6: error adding symbols: DSO missing from command line</code></pre>
+<p>Run this before <code>make</code>: <code>./configure LIBS="-lm"</code></p>
+<h5 id="error-while-loading-shared-libraries-libimobiledevice.so.6">error while loading shared libraries: libimobiledevice.so.6</h5>
+<pre><code>ios_webkit_debug_proxy: error while loading shared libraries: libimobiledevice.so.6: cannot open shared object file: No such file or directory</code></pre>
+<p>Run <code>sudo ldconfig</code></p>
+<h5 id="ssl-sendq-retry-failed-undefined-error-0">ssl sendq retry failed: Undefined error: 0</h5>
+<p>should only happen with versions &gt; 1.8.5, make sure ios-webkit-debug-proxy is built with same version of libssl that libimobildevice was built with</p>
+<h5 id="idevice_id-not-found">idevice_id not found</h5>
+<p>The <code>idevice_id</code> executable may be found as part of the libimobiledevice-utils package.</p>
+<h5 id="could-not-start-com.apple.webinspector-success">could not start com.apple.webinspector! success</h5>
+<p><a href="https://github.com/google/ios-webkit-debug-proxy/issues/82#issuecomment-74205898">Remove and rebuild libimobiledevice</a>.</p>
+<h5 id="could-not-connect-to-lockdownd-or-doesnt-work-with-ios10">Could not connect to lockdownd (or doesn’t work with iOS10+)</h5>
+<blockquote>
+<p>Could not connect to lockdownd. Exiting.: No such file or directory. Unable to attach inspector ios_webkit_debug_proxy</p>
+</blockquote>
+<p>Check the device for <a href="http://i.stack.imgur.com/hPaqX.png">a prompt to trust the connected computer</a>. Choose “Trust” and try again.</p>
+<blockquote>
+<p>Could not connect to lockdownd. Exiting.: Broken pipe. Unable to attach inspector</p>
+</blockquote>
+<p>or</p>
+<blockquote>
+<p>Could not connect to lockdownd, error code -&lt;number&gt;. Exiting.</p>
+</blockquote>
+<p>Make sure you’re using latest version of ios-webkit-debug-proxy</p>
+<h5 id="inspectable-pages-list-is-empty-for-ios-12.2">Inspectable pages list is empty for iOS &gt;= 12.2</h5>
+<p>Make sure you’re using latest version of ios-webkit-debug-proxy</p>
+<h5 id="can-not-see-simulator">Can not see Simulator</h5>
+<ul>
+<li>Make sure you started simulator before the proxy</li>
+<li>Check that webinspector switch is enabled (Settings -&gt; Safari -&gt; Advanced -&gt; Web Inspector)</li>
+<li>Most likely simulator’s web inspector daemon listens on ipv6 interface, check that you have <code>::1 localhost</code> line in <code>/etc/hosts</code></li>
+</ul>
+<h5 id="if-no-luck-so-far">If no luck so far…</h5>
+<p>Lastly, always try replugging in the USB cable.</p>
+<h2 id="iwdp-clients">IWDP Clients</h2>
+<p>JSON-formatted APIs are provided for programmatic clients.</p>
+<ul>
+<li><a href="http://localhost:9221/json" class="uri">http://localhost:9221/json</a> will list all devices</li>
+<li><a href="http://localhost:9222/json" class="uri">http://localhost:9222/json</a> to list device “:9222”’s tabs</li>
+<li><a href="">ws://localhost:9222/devtools/page/1</a> to inspect a tab.</li>
+</ul>
+<p>See the <a href="examples/README.md">examples/README</a> for example clients: NodeJS, C, clientside JS, websocket and more.</p>
+<h2 id="design">Design</h2>
+<figure>
+<img src="overview.png" title="Overview" alt="Alt overview" /><figcaption>Alt overview</figcaption>
+</figure>
+<p>View the <a href="design.md">design document</a> for an overview of the source layout and architecture.</p>
+<h2 id="license-and-copyright">License and Copyright</h2>
+<p>Google BSD license <a href="https://developers.google.com/google-bsd-license" class="uri">https://developers.google.com/google-bsd-license</a> Copyright 2012 Google Inc. <a href="mailto:wrightt@google.com" class="email">wrightt@google.com</a></p>
+<p>The proxy uses the following open-source packages:</p>
+<ul>
+<li><a href="http://cgit.sukimashita.com/libplist.git">libplist 2.2.0</a></li>
+<li><a href="http://cgit.sukimashita.com/usbmuxd.git/">libusbmuxd 2.0.0</a></li>
+<li><a href="http://cgit.sukimashita.com/libimobiledevice.git">libimobiledevice 1.3.0</a></li>
+</ul>
+</body>
+</html>

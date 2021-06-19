@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="intro-to-redux-reading-data-from-state">Intro to Redux: Reading Data from State</h1>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>Use the <code>createStore()</code> method provided by the redux library.</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>In the previous section, we have been building using a <strong>createStore()</strong> method that we wrote, and passing a reducer to it. We have been using the <strong>dispatch</strong> method from the store, to dispatch actions and update the state.</p>
+<p>Now let’s think about which part of our application would belong in the official Redux library – that is, which part of our codebase would be common to all applications. Well, probably not the reducer as our reducers seem unique to each React &amp; Redux application. The reducers are unique because sometimes we have reducers that would add or remove items, or add or remove users, or edit users, etc. What these actions are and how the reducer manages the state is customized. Thus, the reducer would not be part of the redux library that other developers would use to build their application.</p>
+<p>The <strong>createStore()</strong>, method however is generic across Redux applications. It always returns a store (given a reducer) that will have a dispatch method and a getState method.</p>
+<p>So from now on, we will import our <strong>createStore()</strong> method from the official Redux library. Normally, to install Redux into a React application, you need to install two packages, <code>redux</code> and <code>react-redux</code> by running <code>npm install redux &amp;&amp; npm install react-redux</code>. These are already included in this lesson’s <code>package.json</code> file, so all you need to do is run <code>npm install &amp;&amp; npm start</code> to get started.</p>
+<p>In this code along, we’ll be building a simple shopping list application that will allow a user to view an existing shopping list.</p>
+<h3 id="step-1-setting-up-the-store">Step 1: Setting Up The Store</h3>
+<p>First things first, we’ll use Redux to initialize our store and pass it down to our top-level container component.</p>
+<p>Redux provides a function, <code>createStore()</code>, that, when invoked, returns an instance of the Redux store for us. So we can use that method to create a store. We want to import <code>createStore()</code> in our <code>src/index.js</code> file, where ReactDOM renders our application.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// ./src/index.js</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="im">import</span> React <span class="im">from</span> <span class="st">&quot;react&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="im">import</span> ReactDOM <span class="im">from</span> <span class="st">&quot;react-dom&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="im">import</span> <span class="op">{</span> createStore <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;redux&quot;</span><span class="op">;</span> <span class="co">/* code change */</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="im">import</span> shoppingListItemReducer <span class="im">from</span> <span class="st">&quot;./reducers/shoppingListItemReducer.js&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="im">import</span> App <span class="im">from</span> <span class="st">&quot;./App&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="im">import</span> <span class="st">&quot;./index.css&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">const</span> store <span class="op">=</span> <span class="at">createStore</span>(shoppingListItemReducer)<span class="op">;</span> <span class="co">/* code change */</span></a>
+<a class="sourceLine" id="cb1-11" title="11"></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="va">ReactDOM</span>.<span class="at">render</span>(<span class="op">&lt;</span>App /<span class="op">&gt;,</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;root&quot;</span>))<span class="op">;</span></a></code></pre></div>
+<p>Notice that we are importing the <code>createStore</code> function from Redux. Now, with the above set up, we <em>could</em> pass <code>store</code> down through App and we would be able to access the <strong>Redux</strong> store.</p>
+<p>However, reducing the need for passing props is part of why <strong>Redux</strong> works well with React. To avoid passing <code>store</code> as a prop, we use the <code>Provider</code> component, which is imported from <code>react-redux</code>. The <code>Provider</code> component wraps the top level component, App, in this case, and is the only component where <code>store</code> is passed in:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// ./src/index.js</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="im">import</span> React <span class="im">from</span> <span class="st">&quot;react&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="im">import</span> ReactDOM <span class="im">from</span> <span class="st">&quot;react-dom&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="im">import</span> <span class="op">{</span> createStore <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="im">import</span> <span class="op">{</span> Provider <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;react-redux&quot;</span><span class="op">;</span> <span class="co">/* code change */</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="im">import</span> shoppingListItemReducer <span class="im">from</span> <span class="st">&quot;./reducers/shoppingListItemReducer.js&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="im">import</span> App <span class="im">from</span> <span class="st">&quot;./App&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="im">import</span> <span class="st">&quot;./index.css&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-10" title="10"></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="kw">const</span> store <span class="op">=</span> <span class="at">createStore</span>(shoppingListItemReducer)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="co">// code change - added Provider to wrap around App</span></a>
+<a class="sourceLine" id="cb2-14" title="14"><span class="va">ReactDOM</span>.<span class="at">render</span>(</a>
+<a class="sourceLine" id="cb2-15" title="15">  <span class="op">&lt;</span>Provider store<span class="op">={</span>store<span class="op">}&gt;</span></a>
+<a class="sourceLine" id="cb2-16" title="16">    <span class="op">&lt;</span>App /<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb2-17" title="17">  &lt;/Provider<span class="op">&gt;</span> <span class="co">/* code change */</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-18" title="18">  <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;root&quot;</span>)</a>
+<a class="sourceLine" id="cb2-19" title="19">)<span class="op">;</span></a></code></pre></div>
+<p>By including the <code>Provider</code>, we’ll be able to access our <strong>Redux</strong> store and/or dispatch actions from any component we want, regardless of where it is on the component tree.</p>
+<p>So, to recap, just like we did previously, we call our <strong>createStore()</strong> method in <code>src/index.js</code>. We pass our <strong>createStore()</strong> method a reducer, and then we pass our newly created store to our <strong>App</strong> component as a prop. You can find the reducer in <code>./src/reducers/shoppingListItemReducer.js</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// ./src/reducers/shoppingListItemReducer.js</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> <span class="at">shoppingListItemReducer</span>(</a>
+<a class="sourceLine" id="cb3-4" title="4">  state <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">items</span><span class="op">:</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-7" title="7">  action</a>
+<a class="sourceLine" id="cb3-8" title="8">) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-9" title="9">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-10" title="10">    <span class="cf">case</span> <span class="st">&quot;INCREASE_COUNT&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb3-11" title="11">      <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-12" title="12">        ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-13" title="13">        <span class="dt">items</span><span class="op">:</span> <span class="va">state</span>.<span class="va">items</span>.<span class="at">concat</span>(<span class="va">state</span>.<span class="va">items</span>.<span class="at">length</span> <span class="op">+</span> <span class="dv">1</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-14" title="14">      <span class="op">};</span></a>
+<a class="sourceLine" id="cb3-15" title="15"></a>
+<a class="sourceLine" id="cb3-16" title="16">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb3-17" title="17">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-18" title="18">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="op">}</span></a></code></pre></div>
+<p>Ok so effectively, our reducer is just producing a counter. It adds a new item to the list each time it is called, and that item is one more than the last item.</p>
+<p>Instead of having all of our functions encapsulated in a closure within <code>index.js</code> as we did while building our own redux set up, we’ve now separated out the reducer function, giving it a relevant name, <code>shoppingListItemReducer</code>, and let the Redux library take care of our <code>createStore</code> function. These two pieces are both imported into <code>src/index.js</code> and used to create <code>store</code>.</p>
+<p>This <code>store</code> value is then passed in as a prop to <code>Provider</code>.</p>
+<p>To gain access to the <code>store</code> somewhere in our app, we use a second function provided by <code>react-redux</code>, <code>connect</code>. By modifying a component’s export statement and included <code>connect</code>, we are able to take data from our <strong>Redux</strong> store and map them to a component’s props. Similarly, we can <em>also</em> take actions, and by wrapping them in a dispatch and an anonymous function, be able pass them as props as well:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="co">// ./src/App.js</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="im">import</span> React<span class="op">,</span> <span class="op">{</span> Component <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;react&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="im">import</span> <span class="op">{</span> connect <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;react-redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="im">import</span> <span class="st">&quot;./App.css&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="kw">class</span> App <span class="kw">extends</span> Component <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-8" title="8">  handleOnClick <span class="op">=</span> (event) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-9" title="9">    <span class="kw">this</span>.<span class="va">props</span>.<span class="at">increaseCount</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-10" title="10">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12">  <span class="at">render</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-13" title="13">    <span class="cf">return</span> (</a>
+<a class="sourceLine" id="cb4-14" title="14">      <span class="op">&lt;</span>div className<span class="op">=</span><span class="st">&quot;App&quot;</span><span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb4-15" title="15">        <span class="op">&lt;</span>button onClick<span class="op">={</span><span class="kw">this</span>.<span class="at">handleOnClick</span><span class="op">}&gt;</span>Click&lt;/button<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb4-16" title="16">        <span class="op">&lt;</span>p<span class="op">&gt;{</span><span class="kw">this</span>.<span class="va">props</span>.<span class="va">items</span>.<span class="at">length</span><span class="op">}</span>&lt;/p<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb4-17" title="17">      &lt;/div<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb4-18" title="18">    )<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-19" title="19">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-20" title="20"><span class="op">}</span></a>
+<a class="sourceLine" id="cb4-21" title="21"></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="kw">const</span> mapStateToProps <span class="op">=</span> (state) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-23" title="23">  <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-24" title="24">    <span class="dt">items</span><span class="op">:</span> <span class="va">state</span>.<span class="at">items</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-25" title="25">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-26" title="26"><span class="op">};</span></a>
+<a class="sourceLine" id="cb4-27" title="27"></a>
+<a class="sourceLine" id="cb4-28" title="28"><span class="kw">const</span> mapDispatchToProps <span class="op">=</span> (dispatch) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-29" title="29">  <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-30" title="30">    <span class="dt">increaseCount</span><span class="op">:</span> () <span class="kw">=&gt;</span> <span class="at">dispatch</span>(<span class="op">{</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;INCREASE_COUNT&quot;</span> <span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb4-31" title="31">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="op">};</span></a>
+<a class="sourceLine" id="cb4-33" title="33"></a>
+<a class="sourceLine" id="cb4-34" title="34"><span class="im">export</span> <span class="im">default</span> <span class="at">connect</span>(mapStateToProps<span class="op">,</span> mapDispatchToProps)(App)<span class="op">;</span></a></code></pre></div>
+<p>Ok, so this code places a button on the page with an <code>onClick</code> event listener pointed to <code>this.handleOnClick</code>. When <code>this.handleOnClick</code> is invoked, it calls a function, <code>this.props.increaseCount</code>. Well.. <code>increaseCount</code> is actually being provided by the new function below our App component: <code>mapDispatchToProps</code>.</p>
+<p>Meanwhile, we’ve also got <code>this.props.items.length</code>, which is <em>also</em> a prop created from our <strong>Redux</strong> store. As the store’s <code>items</code> property increases, App will display a different number!</p>
+<p>If you boot up the app, you should see a button on the page, followed by a zero, using the core above for <code>index.js</code> and <code>App.js</code>, we can see <strong>Redux</strong> in action. Every button click dispatches an action to our store, causing it to change. Since data (<code>items</code>) from that store is being accessed in App, App will re-render and display the updated counter.</p>
+<h4 id="add-logging-to-our-reducer">Add Logging to Our Reducer</h4>
+<p>Ok, so getting our application to re-render takes a bit of work, and were going to go into greater depth in the next sections. In the meantime, let’s get some feedback. First, let’s log our action and the new state. So we’ll change the reducer to the following:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// ./src/reducers/shoppingListItemReducer</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> <span class="at">shoppingListItemReducer</span>(</a>
+<a class="sourceLine" id="cb5-4" title="4">  state <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">items</span><span class="op">:</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-7" title="7">  action</a>
+<a class="sourceLine" id="cb5-8" title="8">) <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-9" title="9">  <span class="va">console</span>.<span class="at">log</span>(action)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-10" title="10">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-11" title="11">    <span class="cf">case</span> <span class="st">&quot;INCREASE_COUNT&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb5-12" title="12">      <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Current state.items length %s&quot;</span><span class="op">,</span> <span class="va">state</span>.<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-13" title="13">      <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Updating state.items length to %s&quot;</span><span class="op">,</span> <span class="va">state</span>.<span class="va">items</span>.<span class="at">length</span> <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-14" title="14">      <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-15" title="15">        ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-16" title="16">        <span class="dt">items</span><span class="op">:</span> <span class="va">state</span>.<span class="va">items</span>.<span class="at">concat</span>(<span class="va">state</span>.<span class="va">items</span>.<span class="at">length</span> <span class="op">+</span> <span class="dv">1</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-17" title="17">      <span class="op">};</span></a>
+<a class="sourceLine" id="cb5-18" title="18"></a>
+<a class="sourceLine" id="cb5-19" title="19">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb5-20" title="20">      <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Initial state.items length: %s&quot;</span><span class="op">,</span> <span class="va">state</span>.<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-21" title="21">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-22" title="22">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-23" title="23"><span class="op">}</span></a></code></pre></div>
+<p>Ok, so this may look like a lot, but really all were doing is adding some logging behavior. At the top of the function, we are logging the action. After the case statement, we are storing our state as current state first. Then we are logging the updating state value. Then under the default case statement, we just can log the previous state because this state is unchanged.</p>
+<p>Now, refresh your app, and give it a shot. You should see the correct action being dispatched, as well as an update to the state. While we aren’t getting our state directly from the store, we know that we are dispatching actions. We know this because each time we click a button, we call store.dispatch({ type: ‘INCREASE_COUNT’ }) and somehow this is hitting our reducer. So things are happening.</p>
+<h4 id="redux-devtools">Redux DevTools</h4>
+<p>There is this amazing piece of software that allows us to nicely view the state of our store and each action that is dispatched. The software does a lot more than that. I’ll let you read about it here: <a href="https://github.com/zalmoxisus/redux-devtools-extension">redux-devtools-extension</a>. Ok, so let’s get to incorporating this. In fact, every time we use the Redux library going forward, we should make sure we incorporate devtools. Otherwise, you are flying blind.</p>
+<p>First, just Google for Redux Devtools Chrome. There you will find the Chrome extension for Redux. Please download it, and refresh Chrome. You will know that you have installed the extension if you go to your developer console in Google Chrome (press command+shift+c to pull it up), and then at the top bar you will see a couple of arrows. Click those arrows, and if you see Redux as your dropdown, you properly installed the Chrome extension. Step one is done.</p>
+<p>Second, we need to tell our application to communicate with this extension. Doing so is pretty easy. Now we change the arguments to our createStore method to the following:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// ./src/index.js</span></a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="im">import</span> React <span class="im">from</span> <span class="st">&quot;react&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="im">import</span> ReactDOM <span class="im">from</span> <span class="st">&quot;react-dom&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="im">import</span> <span class="op">{</span> createStore <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="im">import</span> <span class="op">{</span> Provider <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;react-redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="im">import</span> shoppingListItemReducer <span class="im">from</span> <span class="st">&quot;./reducers/shoppingListItemReducer&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="im">import</span> App <span class="im">from</span> <span class="st">&quot;./App&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="im">import</span> <span class="st">&quot;./index.css&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-10" title="10"></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="kw">const</span> store <span class="op">=</span> <span class="at">createStore</span>(</a>
+<a class="sourceLine" id="cb6-12" title="12">  shoppingListItemReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb6-13" title="13">  <span class="va">window</span>.<span class="at">__REDUX_DEVTOOLS_EXTENSION__</span> <span class="op">&amp;&amp;</span> <span class="va">window</span>.<span class="at">__REDUX_DEVTOOLS_EXTENSION__</span>()</a>
+<a class="sourceLine" id="cb6-14" title="14">)<span class="op">;</span> <span class="co">/* code change */</span></a>
+<a class="sourceLine" id="cb6-15" title="15"></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="va">ReactDOM</span>.<span class="at">render</span>(</a>
+<a class="sourceLine" id="cb6-17" title="17">  <span class="op">&lt;</span>Provider store<span class="op">={</span>store<span class="op">}&gt;</span></a>
+<a class="sourceLine" id="cb6-18" title="18">    <span class="op">&lt;</span>App /<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb6-19" title="19">  &lt;/Provider<span class="op">&gt;,</span></a>
+<a class="sourceLine" id="cb6-20" title="20">  <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;root&quot;</span>)</a>
+<a class="sourceLine" id="cb6-21" title="21">)<span class="op">;</span></a></code></pre></div>
+<p>Ok, notice that we are still passing through our reducer to the createStore method. The second argument is accessing our browser to find a method called <code>__REDUX_DEVTOOLS_EXTENSION__</code>. If that method is there, the method is executed. Now if you have your Chrome console opened, make sure the Redux Devtools Inspector is open (press command+shift+c, click on the arrows at the top right, and the dropdown for the extension). Now click on the tab that says state. You should see <code>{ items: [] }</code>. If you do, it means that your app is now communicating with the devtool. Click on the button in your application, to see if the state changes. Now for each time you click on it, you should see an action in the devtools that has the name of that action. If you are looking at the last state, you should see the changes in our state.</p>
+<p>Whew!</p>
+<h3 id="summary">Summary</h3>
+<p>In this lesson, we saw how to use the <strong>createStore()</strong> method. We saw that we can rely on the Redux library to provide this method, and that we still need to write our own reducer to tell the store what the new state will be given a particular action. We saw that when using the <strong>createStore()</strong> method, and passing through a reducer, we are able to change the state just as we did previously. We were able to see these changes by hooking our application up to a Chrome extension called Redux Devtools, and then providing the correct configuration.</p>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/intro-to-redux-library-codealong'>Intro To Redux Library Codealong</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

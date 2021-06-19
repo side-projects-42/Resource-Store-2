@@ -6,17 +6,15 @@ Internally creates a weak reference to the object, and forces garbage collection
 
 ## Example
 
-```javascript
-let reference = {};
+    let reference = {};
 
-const detector = new LeakDetector(reference);
+    const detector = new LeakDetector(reference);
 
-// Reference is held in memory.
-console.log(detector.isLeaked()); // true
+    // Reference is held in memory.
+    console.log(detector.isLeaked()); // true
 
-// We destroy the only reference to the object.
-reference = null;
+    // We destroy the only reference to the object.
+    reference = null;
 
-// Reference is gone.
-console.log(detector.isLeaked()); // false
-```
+    // Reference is gone.
+    console.log(detector.isLeaked()); // false

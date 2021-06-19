@@ -1,24 +1,11 @@
----
-:layout: post
-:title: "Upcoming in office hours: FOSDEM Planning Session"
-:nodeid: 635
-:created: 1445283302
-:tags:
-  - general
-  - news
-  - video
-  - office hours
-:author: rtyler
----
-
-For the past several years we've been attending [FOSDEM](https://fosdem.org), a massive free and open source event in Brussels, Belgium. In preparation for this upcoming FOSDEM (2016) event, we will be hosting an open planning meeting via Google Hangouts during this week's "[Office Hours](https://wiki.jenkins-ci.org/display/JENKINS/Office+Hours)."
+For the past several years we’ve been attending [FOSDEM](https://fosdem.org), a massive free and open source event in Brussels, Belgium. In preparation for this upcoming FOSDEM (2016) event, we will be hosting an open planning meeting via Google Hangouts during this week’s “[Office Hours](https://wiki.jenkins-ci.org/display/JENKINS/Office+Hours).”
 
 **Agenda:**
 
 - Gauge who can participate and at what capacity.
 - Pre-FOSDEM Contributor Summit
 - After-hours meetup/happy hour
-- Plans for a Jenkins stand (assuming we're accepted):
+- Plans for a Jenkins stand (assuming we’re accepted):
 - What demo materials
 - Schwag
 - Revised [Jenkins Flyer](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+Flyer)

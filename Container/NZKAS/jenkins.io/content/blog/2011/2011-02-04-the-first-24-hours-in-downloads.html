@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2011-02-04-the-first-24-hours-in-downloads</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      As I had mentioned in
+      <a
+        href="http://jenkins-ci.org/content/installing-plugins-has-always-been-easy-now-its-fast-too"
+        >a previous post</a
+      >
+      back when Jenkins was called something else, who can remember what
+      anymore, I spent a lot of time working on a mirroring network. With our
+      departure from any and all Oracle infrastructure, this mirroring network
+      has now become our sole distribution mechanism for pushing out
+      <strong>all</strong> releases and <strong>all</strong> plugins, in short,
+      <strong>lots and lots of bits</strong>.
+    </p>
+    <p>
+      Just how much data are we now distributing through the Jenkins mirror
+      network?
+    </p>
+    <p>
+      <strong><big>Over 52GB in 24 hours</big></strong>
+    </p>
+    <p>
+      Here’s the following in terms of a loose breakdown of the number of files
+      served over the past day:
+    </p>
+    <ul>
+      <li>788 <code>.war</code></li>
+      <li>447 <code>.deb</code></li>
+      <li>290 <code>.rpm</code></li>
+      <li>1759 <code>.hpi</code> (plugins)</li>
+    </ul>
+    <p>
+      We’re off to a great start! I’d like to extend my thanks again to the
+      <a href="http://www.osuosl.org">OSUOSL</a> and
+      <a href="http://mirrors.xmission.com">XMission</a> for their help getting
+      the Jenkins mirrors functional as soon as possible
+    </p>
+    <!--break-->
+  </body>
+</html>

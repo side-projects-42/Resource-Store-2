@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Spec</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="spec-for-the-railsreact-assessment">Spec for the Rails+React Assessment</h1>
+<h2 id="overview">Overview</h2>
+<ul>
+<li>[x] The code should be written in ES6 as much as possible</li>
+<li>[x] Use the <a href="https://github.com/facebook/create-react-app"><code>create-react-app</code></a> generator to start your project</li>
+<li>[x] Your app should have one HTML page to render your <code>react-redux</code> application</li>
+</ul>
+<h3 id="details">Details</h3>
+<ul>
+<li>[x] There should be 2 container components.
+<ul>
+<li><em>Provider</em>, <em>Router</em> <em>(In general, having read more modern React materials, React’s hooks supercede this sort of structure.)</em></li>
+</ul></li>
+<li>[x] There should be 5 stateless components.
+<ul>
+<li><em>Nav</em>, <em>ScrollToTop</em>, <em>Footer</em>, <em>Content</em>, <em>Toggle</em>, <em>HeaderBar</em> and more.</li>
+</ul></li>
+<li>[x] There should be 3 routes.
+<ul>
+<li><em>Dashboard, Materials, Activities</em></li>
+</ul></li>
+<li>[x] The Application must make use of <code>react-router</code> and proper RESTful routing.</li>
+<li>[x] Use Redux middleware to respond to and modify state change.
+<ul>
+<li><em>According to the curriculum, <code>connect()</code> and <code>Provider</code> are Redux middleware, but they’re actually just higher order components. So I’m assuming that’s what this requirement means as well.</em></li>
+</ul></li>
+<li>[x] Make use of async actions and <code>redux-thunk</code> middleware to send data to and receive data from a server.
+<ul>
+<li><em>Used <code>thunk</code> to <code>fetch</code> on the Dashboard, Materials and Activities pages.</em></li>
+</ul></li>
+<li>[x] Rails API backend that handles data persistence with a database. Use <code>fetch()</code> within your actions to <code>GET</code> and <code>POST</code> data from your API. Do not use jQuery methods.
+<ul>
+<li><em>async functions create, destroy, update, etc.</em> in <em>jsonapi.js</em></li>
+</ul></li>
+<li>[x] Your client-side application should handle the display of data with minimal data manipulation.</li>
+<li>[x] Your application should have some minimal styling: react-bootstrap or hand-written are fine</li>
+<li>[x] Once your app is complete, <a href="https://docs.google.com/forms/d/e/1FAIpQLSfX7qH_FqFqJ9vMMhtlHSYxhhafKJm8fe01IvsFNFitFC2nOA/viewform">fill out this checklist</a>.</li>
+</ul>
+<h2 id="concepts">Concepts</h2>
+<ul>
+<li>[x] Good understanding of the react/redux state flow</li>
+<li>[x] Good understanding of state and props in React</li>
+<li>[x] Knowledge of async JS with Promises</li>
+</ul>
+<h3 id="things-the-reviewer-may-ask-about">Things the Reviewer may ask about</h3>
+<ul>
+<li>[x] Who is your User? What is their pain point? How do they use our solution to overcome this problem?
+<ul>
+<li><em>The user of this app is a parent home with their children during the pandemic, to help schedule activities for days of the week, and keep track of needed materials.</em></li>
+</ul></li>
+</ul>
+</body>
+</html>

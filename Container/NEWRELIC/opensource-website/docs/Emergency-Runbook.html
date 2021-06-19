@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Emergency-Runbook</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="emergency-runbook-opensource.newrelic.com">
+      Emergency Runbook – opensource.newrelic.com
+    </h1>
+    <p>
+      This site is hosted on
+      <a href="https://aws.amazon.com/amplify/">AWS Amplify</a> by New Relic’s
+      OpenSource team and is maintained and supported by New Relic’s developer
+      experience team. If you have any questions or comments, please reach out
+      to opensource@newrelic.com.
+    </p>
+    <h2 id="alerts">Alerts</h2>
+    <p>
+      <a
+        href="https://staging-one.newrelic.com/launcher/nrai.launcher?launcher=eyJhY2NvdW50SWQiOjEwMTc1MTA2fQ==&amp;pane=eyJuZXJkbGV0SWQiOiJhbGVydGluZy11aS1jbGFzc2ljLnBvbGljaWVzIiwibmF2IjoiUG9saWNpZXMiLCJwb2xpY3lJZCI6IjUzNjE3In0=&amp;sidebars%5B0%5D=eyJuZXJkbGV0SWQiOiJucmFpLm5hdmlnYXRpb24tYmFyIiwibmF2IjoiUG9saWNpZXMifQ=="
+        >Alerts</a
+      >
+    </p>
+    <p>
+      To diagnose a particular alert, we’ve started a
+      <a href="#Common-Issues">Common Issues</a>
+    </p>
+    <h2 id="rollback-a-release">Rollback a release</h2>
+    <p>
+      Use the Amplify Console UI to select a previous build and redeploy that
+      build.
+    </p>
+    <p>First, determine the desired previous build:</p>
+    <ol type="1">
+      <li>
+        Navigate to the
+        <a href="https://github.com/newrelic/opensource-website/releases"
+          >Releases</a
+        >
+        tab in the opensource-website repo.
+      </li>
+      <li>
+        Determine which release to rollback to. Typically, this should be
+        <code>latest_release - 1</code>. However, you might need to go back
+        further. Click the commit hash (in this case, <code>12f5187</code>).
+        <img
+          src="https://github.com/newrelic/opensource-website/blob/develop/docs/images/screenshot_01.png"
+          alt="Releases"
+        />
+      </li>
+      <li>
+        Use this commit message/hash value to locate the corresponding build in
+        the Amplify Console.
+        <img
+          src="https://github.com/newrelic/opensource-website/blob/develop/docs/images/screenshot_02.png"
+          alt="Commits"
+        />
+      </li>
+    </ol>
+    <p>Steps to redeploy in Amplify:</p>
+    <ol type="1">
+      <li>Log into the Amplify Console via nr-prod okta.</li>
+      <li>
+        Select the <code>opensource-website</code> app. Under
+        <code>Frontend environments</code>, select <code>main</code>.
+        <img
+          src="https://github.com/newrelic/opensource-website/blob/develop/docs/images/screenshot_03.png"
+          alt="Amplify Console"
+        />
+      </li>
+      <li>
+        Click the <code>View build history</code> button to see all the previous
+        builds that have run.
+      </li>
+      <li>
+        Find the appropriate build corresponding to the release you located from
+        the repo releases. This is the build to roll back to. Click
+        <code>Build #xxx</code> to select that build. In this case, you’d select
+        <code>Build #10</code>.
+        <img
+          src="https://github.com/newrelic/opensource-website/blob/develop/docs/images/screenshot_04.png"
+          alt="Builds"
+        />
+      </li>
+      <li>
+        Click <code>Redeploy this version</code>. Validate once the deploy is
+        finished.
+      </li>
+      <li>
+        Notify
+        <a href="https://newrelic.slack.com/archives/GNR5YH7HP"
+          >The Open Source Team</a
+        >
+        and the
+        <span class="citation" data-cites="hero"
+          >[@hero in #help-opensource]</span
+        >(https://newrelic.slack.com/archives/C2XN6HL2G) of the rollback so we
+        can address the underlying issue.
+      </li>
+    </ol>
+    <h2 id="environments">Environments</h2>
+    <p>
+      This project supports three environments, local development, staging
+      (a.ka. development), and production.
+    </p>
+    <p>
+      Note: When building the site, Gatsby coerces anything you’ve set in
+      <code>NODE_ENV</code> to <code>production</code>
+    </p>
+    <h3 id="production">Production</h3>
+    <p>
+      Corresponds to the
+      <a href="https://github.com/newrelic/opensource-website/main/develop"
+        ><code>main</code></a
+      >
+      branch
+    </p>
+    <p>
+      New Relic Domains:
+      <a href="https://opensource.newrelic.com"
+        >https://opensource.newrelic.com</a
+      >
+    </p>
+    <p>
+      <a
+        href="https://staging-one.newrelic.com/launcher/nr1-core.explorer?launcher=eyJVTlNUQUJMRV9maWx0ZXJzIjpbeyJ0eXBlIjoic2VhcmNoUXVlcnkiLCJ2YWx1ZSI6Im9wZW5zb3VyY2UifV0sInRhZ3MiOnt9LCJ0aW1lUmFuZ2UiOnsiYmVnaW5fdGltZSI6bnVsbCwiZW5kX3RpbWUiOm51bGwsImR1cmF0aW9uIjoxODAwMDAwfSwiJGlzRmFsbGJhY2tUaW1lUmFuZ2UiOnRydWV9&amp;pane=eyJuZXJkbGV0SWQiOiJicm93c2VyLWVudGl0eS1wcmV2aWV3LmJyb3dzZXItYXBwbGljYXRpb24tcHJldmlldyIsImlzT3ZlcnZpZXciOnRydWUsImVudGl0eUlkIjoiTVRBeE56VXhNRFo4UWxKUFYxTkZVbnhCVUZCTVNVTkJWRWxQVG53eU1UVTBOemsyTkEifQ==&amp;sidebars%5B0%5D=eyJuZXJkbGV0SWQiOiJucjEtY29yZS5hY3Rpb25zIiwiZW50aXR5SWQiOiJNVEF4TnpVeE1EWjhRbEpQVjFORlVueEJVRkJNU1VOQlZFbFBUbnd5TVRVME56azJOQSIsInNlbGVjdGVkTmVyZGxldCI6eyJuZXJkbGV0SWQiOiJicm93c2VyLWVudGl0eS1wcmV2aWV3LmJyb3dzZXItYXBwbGljYXRpb24tcHJldmlldyIsImlzT3ZlcnZpZXciOnRydWV9fQ=="
+        >New Relic Browser monitoring</a
+      >
+    </p>
+    <h3 id="staging-development">Staging (Development)</h3>
+    <p>
+      Corresponds to the
+      <a href="https://github.com/newrelic/opensource-website/tree/develop"
+        ><code>develop</code></a
+      >
+      branch
+    </p>
+    <p>
+      Amplify Domain:
+      <a href="https://develop.d2pwh5nf8rvczf.amplifyapp.com/"
+        >https://develop.d2pwh5nf8rvczf.amplifyapp.com/</a
+      >
+      New Relic Domains:
+    </p>
+    <ul>
+      <li>
+        <a href="https://beta-opensource.newrelic-external.com"
+          >https://beta-opensource.newrelic-external.com</a
+        >
+      </li>
+      <li>
+        <a href="https://staging-opensource.newrelic.com"
+          >https://staging-opensource.newrelic.com</a
+        >
+      </li>
+    </ul>
+    <p>
+      <a
+        href="https://staging-one.newrelic.com/launcher/nr1-core.explorer?launcher=eyJVTlNUQUJMRV9maWx0ZXJzIjpbeyJ0eXBlIjoic2VhcmNoUXVlcnkiLCJ2YWx1ZSI6Im9wZW5zb3VyY2UifV0sInRhZ3MiOnt9LCJ0aW1lUmFuZ2UiOnsiYmVnaW5fdGltZSI6bnVsbCwiZW5kX3RpbWUiOm51bGwsImR1cmF0aW9uIjoxODAwMDAwfSwiJGlzRmFsbGJhY2tUaW1lUmFuZ2UiOnRydWV9&amp;pane=eyJuZXJkbGV0SWQiOiJicm93c2VyLWVudGl0eS1wcmV2aWV3LmJyb3dzZXItYXBwbGljYXRpb24tcHJldmlldyIsImlzT3ZlcnZpZXciOnRydWUsImVudGl0eUlkIjoiTVRBeE56VXhNRFo4UWxKUFYxTkZVbnhCVUZCTVNVTkJWRWxQVG53eU1UVTBPREl3TWciLCJhZ2dyZWdhdG9yIjoiQXZlcmFnZSJ9&amp;sidebars%5B0%5D=eyJuZXJkbGV0SWQiOiJucjEtY29yZS5hY3Rpb25zIiwiZW50aXR5SWQiOiJNVEF4TnpVeE1EWjhRbEpQVjFORlVueEJVRkJNU1VOQlZFbFBUbnd5TVRVME9ESXdNZyIsInNlbGVjdGVkTmVyZGxldCI6eyJuZXJkbGV0SWQiOiJicm93c2VyLWVudGl0eS1wcmV2aWV3LmJyb3dzZXItYXBwbGljYXRpb24tcHJldmlldyIsImlzT3ZlcnZpZXciOnRydWV9fQ=="
+        >New Relic Browser monitoring</a
+      >
+    </p>
+    <h3 id="local-development">Local Development</h3>
+    <p>
+      To run, execute <code>yarn start</code> from the root of this repository.
+    </p>
+    <p>
+      Should you want New Relic Browser instrumentation while developing
+      locally, you will need to add an additional configuration option to
+      <code>gatsby-config.js</code> for the
+      <code>gatsby-plugin-newrelic</code> plugin.
+    </p>
+    <h2 id="architecture">Architecture</h2>
+    <p>
+      The site is a combination of
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/src/templates"
+        >template-generated pages</a
+      >
+      and
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/src/pages"
+        >single pages</a
+      >
+      built using React, markup, and <a href="https://mdxjs.com/">MDX</a>.
+    </p>
+    <p>
+      Beyond the CI/CD automation, GitHub Actions are used to keep the
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/src/data/project-stats"
+        >stats data</a
+      >
+      related to each
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/src/data/projects"
+        >project</a
+      >
+      updated on a
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/.github/workflows/ci.yml#L4"
+        >scheduled basis</a
+      >. Some of the architecture consequences of that change are described
+      <a
+        href="https://github.com/newrelic/opensource-website#design-choice-project-stats-automation-commits-will-appear-out-of-sync"
+        >here</a
+      >.
+    </p>
+    <h2 id="common-issues">Common Issues</h2>
+    <p>No issues yet!</p>
+    <h2 id="helpsupport-channels">Help/Support Channels</h2>
+    <ul>
+      <li>
+        <a href="https://newrelic.slack.com/archives/GNR5YH7HP"
+          >The Open Source Team</a
+        >
+      </li>
+      <li>
+        <span class="citation" data-cites="hero"
+          >[@hero in #help-opensource]</span
+        >(https://newrelic.slack.com/archives/C2XN6HL2G)
+      </li>
+    </ul>
+  </body>
+</html>

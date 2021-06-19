@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-11</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-02-11">ember-cli Meeting Notes - 2016-02-11</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Jake Bixby</li>
+<li>Stefan Penner</li>
+<li>Kelly Selden</li>
+<li>Katie Gengler</li>
+<li>Robert Jackson</li>
+<li>Nathan Hammond</li>
+</ul>
+<h2 id="resolutions">Resolutions</h2>
+<ul>
+<li>Decision to use mocha for ember-cli <code>node</code> tests.</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<h3 id="unclaimed">Unclaimed</h3>
+<ul>
+<li>[ ] Upgrade our bundled npm version.</li>
+</ul>
+<h3 id="katie-gengler">Katie Gengler</h3>
+<ul>
+<li>[ ] Issue/RFC for <code>package.json</code> upgrade merge hell on <code>ember init</code>.</li>
+</ul>
+<h3 id="nathan">Nathan</h3>
+<ul>
+<li>[ ] Publicize what’s going on with this group..</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="stefan-penner">Stefan Penner</h3>
+<ul>
+<li>Trying to not be the single point of failure for Broccoli plugins. Maintains most of the ecosystem.</li>
+<li>Remove the need for symlink problems.</li>
+<li>Build a baseline that default makes authors fall into a pit of success.</li>
+<li>Pre-cursor for revisiting packager/linker work.</li>
+</ul>
+<h3 id="kelly-selden">Kelly Selden</h3>
+<ul>
+<li>Mocha test runner for JSCS on commits (one rule for now, just getting the tooling in place).</li>
+<li>Investigating AppVeyor issues appear to be .gitattributes.</li>
+<li>Didn’t enable Hound for now, see how JSCS tests go first.</li>
+<li>Brought up the thought of upgrading internal NPM.</li>
+<li>On the lookout for a non-code person/project manager.</li>
+</ul>
+<h3 id="jake-bixby">Jake Bixby</h3>
+<ul>
+<li>ember-cli-internal-test-helpers =&gt; want to land in ember-cli</li>
+<li>blueprint-test-helpers =&gt; sounds good. Ready to cut release.</li>
+<li><span class="citation" data-cites="mmun">@mmun</span> has a PR for Qunit test helpers. Defer.</li>
+</ul>
+<h3 id="npm">npm</h3>
+<ul>
+<li>We should upgrade our bundled <code>npm</code>.</li>
+<li><code>ember version</code> should be clear that it bundles an internal npm.</li>
+<li>Alternative npm clients are popping up, we should follow them closely…</li>
+</ul>
+<h3 id="qunit-or-mocha">QUnit or Mocha?</h3>
+<ul>
+<li>Test helpers for both, but we’re opinionated, so pick one.</li>
+<li>Addon authors want to be able to test <code>node</code> stuff.</li>
+<li>Criteria: debuggability, ergonomics, good output on failure.</li>
+<li>Resolution: use Mocha for <code>node</code> tests.</li>
+</ul>
+<h3 id="katie-gengler-1">Katie Gengler</h3>
+<ul>
+<li><code>ember-try</code> supports <code>npm</code>!</li>
+<li>Make it more flexible?</li>
+<li>Different package managers: separate package file for <code>init</code> vs. inclusion.</li>
+</ul>
+<h3 id="robert-jackson">Robert Jackson</h3>
+<ul>
+<li>Submitted an RFC for the testing unification story.</li>
+<li>Big impact is <code>async</code>/<code>await</code>.</li>
+<li>Requires ESLint, need to identify approach to shepherd the community forward.</li>
+<li>Unified testing structure in Fastboot. Requires babel runtime stuff in node land.</li>
+</ul>
+<h3 id="nathan-hammond">Nathan Hammond</h3>
+<ul>
+<li>Investigating route pre-compilation at build time.</li>
+<li>Investing async router stuff for engines.</li>
+<li>Trent Willis is posting three related RFCs today and tomorrow.</li>
+</ul>
+</body>
+</html>

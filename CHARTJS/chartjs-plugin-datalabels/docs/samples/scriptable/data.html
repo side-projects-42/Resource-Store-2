@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>data</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="data">Data</h1>
+<p>Use <a href="../../guide/options.md#scriptable-options">scriptable options</a> to display increasing values and decreasing values differently.</p>
+<p>```js chart-editor // <block:setup:2> var DATA_COUNT = 16; var labels = [];</p>
+<p>Utils.srand(4);</p>
+<p>for (var i = 0; i &lt; DATA_COUNT; ++i) { labels.push("" + i); } // </block:setup></p>
+var config = /* <block:config:0> */ { type: “line”, data: { labels: labels, datasets: [ { backgroundColor: Utils.color(0), borderColor: Utils.color(0), data: Utils.numbers({ count: DATA_COUNT, min: -100, max: 100, }), }, ], }, options: { plugins: { datalabels: { align: function (context) { var index = context.dataIndex; var curr = context.dataset.data[index]; var prev = context.dataset.data[index - 1]; var next = context.dataset.data[index + 1]; return prev &lt; curr &amp;&amp; next &lt; curr ? “end” : prev &gt; curr &amp;&amp; next &gt; curr ? “start” : “center”; }, backgroundColor: “rgba(255, 255, 255, 0.7)”, borderColor: “rgba(128, 128, 128, 0.7)”, borderRadius: 4, borderWidth: 1, color: function (context) { var i = context.dataIndex; var value = context.dataset.data[i]; var prev = context.dataset.data[i - 1]; var diff = prev !== undefined ? value - prev : 0; return diff &lt; 0 ? Utils.color(0) : diff &gt; 0 ? Utils.color(1) : “gray”; }, font: { size: 11, weight: “bold”, }, offset: 8, formatter: function (value, context) { var i = context.dataIndex; var prev = context.dataset.data[i - 1]; var diff = prev !== undefined ? prev - value : 0; var glyph = diff &lt; 0 ? "
+</body>
+</html>

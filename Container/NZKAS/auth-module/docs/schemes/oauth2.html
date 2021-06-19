@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>oauth2</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="oauth2">Oauth2</h1>
+    <p>
+      <a
+        href="https://github.com/nuxt-community/auth-module/blob/dev/lib/schemes/oauth2.js"
+        >Source Code</a
+      >
+    </p>
+    <p>
+      <code>oauth2</code> supports various oauth2 login flows. There are many
+      pre-configured <a href="../providers/README.md">providers</a> that you may
+      use instead of directly using this scheme.
+    </p>
+    <h2 id="usage">Usage</h2>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">loginWith</span>(<span class="st">&quot;social&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h2 id="options">Options</h2>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1">auth<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">strategies</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="dt">social</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">      <span class="dt">_scheme</span><span class="op">:</span> <span class="st">&#39;oauth2&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">      <span class="dt">authorization_endpoint</span><span class="op">:</span> <span class="st">&#39;https://accounts.google.com/o/oauth2/auth&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="dt">userinfo_endpoint</span><span class="op">:</span> <span class="st">&#39;https://www.googleapis.com/oauth2/v3/userinfo&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7">      <span class="dt">scope</span><span class="op">:</span> [<span class="st">&#39;openid&#39;</span><span class="op">,</span> <span class="st">&#39;profile&#39;</span><span class="op">,</span> <span class="st">&#39;email&#39;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-8" title="8">      <span class="dt">access_type</span><span class="op">:</span> <span class="kw">undefined</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-9" title="9">      <span class="dt">access_token_endpoint</span><span class="op">:</span> <span class="kw">undefined</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-10" title="10">      <span class="dt">response_type</span><span class="op">:</span> <span class="st">&#39;token&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-11" title="11">      <span class="dt">token_type</span><span class="op">:</span> <span class="st">&#39;Bearer&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-12" title="12">      <span class="dt">redirect_uri</span><span class="op">:</span> <span class="kw">undefined</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-13" title="13">      <span class="dt">client_id</span><span class="op">:</span> <span class="st">&#39;SET_ME&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-14" title="14">      <span class="dt">token_key</span><span class="op">:</span> <span class="st">&#39;access_token&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-15" title="15">      <span class="dt">state</span><span class="op">:</span> <span class="st">&#39;UNIQUE_AND_NON_GUESSABLE&#39;</span></a>
+<a class="sourceLine" id="cb2-16" title="16">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-17" title="17">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-18" title="18"><span class="op">}</span></a></code></pre>
+    </div>
+    <h3 id="authorization_endpoint"><code>authorization_endpoint</code></h3>
+    <p>
+      <strong>REQUIRED</strong> - Endpoint to start login flow. Depends on oauth
+      service.
+    </p>
+    <h3 id="userinfo_endpoint"><code>userinfo_endpoint</code></h3>
+    <p>
+      While not a part of oauth2 spec, almost all oauth2 providers expose this
+      endpoint to get user profile.
+    </p>
+    <p>
+      If a <code>false</code> value is set, we only do login without fetching
+      user profile.
+    </p>
+    <h3 id="scope"><code>scope</code></h3>
+    <p><strong>REQUIRED</strong> - Oauth2 access scopes.</p>
+    <h3 id="response_type"><code>response_type</code></h3>
+    <p>
+      By default is <code>token</code>. If you use <code>code</code> you may
+      have to implement a server side logic to sign the response code.
+    </p>
+    <h3 id="access_type"><code>access_type</code></h3>
+    <p>
+      If using Google code authorization flow (<code>response_type: 'code'</code
+      >) set to <code>offline</code> to ensure a refresh token is returned in
+      the initial login request. (See
+      <a
+        href="https://developers.google.com/identity/protocols/OpenIDConnect#refresh-tokens"
+        >Google documentation</a
+      >)
+    </p>
+    <h3 id="access_token_endpoint"><code>access_token_endpoint</code></h3>
+    <p>
+      If using Google code authorization flow (<code>response_type: 'code'</code
+      >) provide a URI for a service that accepts a POST request with JSON
+      payload containing a <code>code</code> property, and returns tokens
+      <a
+        href="https://developers.google.com/identity/protocols/OpenIDConnect#exchangecode"
+        >exchanged by provider</a
+      >
+      for <code>code</code>. See
+      <a
+        href="https://github.com/nuxt-community/auth-module/blob/dev/lib/schemes/oauth2.js"
+        >source code</a
+      >
+    </p>
+    <h3 id="token_type"><code>token_type</code></h3>
+    <p>
+      By default is <code>Bearer</code>. It will be used in
+      <code>Authorization</code> header of axios requests.
+    </p>
+    <h3 id="redirect_uri"><code>redirect_uri</code></h3>
+    <p>
+      By default it will be inferred from <code>redirect.callback</code> option.
+      (Defaults to <code>/login</code>)
+    </p>
+    <p>
+      Should be same as login page or relative path to welcome screen. (<a
+        href="https://github.com/nuxt-community/auth-module/blob/dev/examples/demo/pages/callback.vue"
+        >example</a
+      >)
+    </p>
+    <h3 id="client_id"><code>client_id</code></h3>
+    <p><strong>REQUIRED</strong> - oauth2 client id.</p>
+    <h3 id="token_key"><code>token_key</code></h3>
+    <p>
+      By default is set to <code>token_key: 'access_token'</code>. If you need
+      to use the IdToken instead of the AccessToken, set this option to
+      <code>token_key: 'id_token'</code>.
+    </p>
+    <h3 id="refresh_token_key"><code>refresh_token_key</code></h3>
+    <p>
+      By default is set to <code>refresh_token_key: 'refresh_token'</code>. It
+      automatically store the refresh_token, if it exists.
+    </p>
+    <h3 id="state"><code>state</code></h3>
+    <p>By default is set to random generated string.</p>
+    <p>
+      The primary reason for using the state parameter is to mitigate CSRF
+      attacks. (<a href="https://auth0.com/docs/protocols/oauth2/oauth-state"
+        >read more</a
+      >)
+    </p>
+  </body>
+</html>

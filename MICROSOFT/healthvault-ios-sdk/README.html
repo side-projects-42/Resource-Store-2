@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="healthvault-ios-sdk">healthvault-ios-sdk</h1>
+<p>[<img src="https://microsofthealth.visualstudio.com/_apis/public/build/definitions/f8da5110-49b1-4e9f-9022-2f58b6124ff9/194/badge" alt="CI Status" />] <a href="https://cocoapods.org/pods/HealthVault"><img src="https://img.shields.io/cocoapods/v/HealthVault.svg?style=flat" alt="Version" /></a> <a href="https://cocoapods.org/pods/HealthVault"><img src="https://img.shields.io/cocoapods/l/HealthVault.svg?style=flat" alt="License" /></a> <a href="https://cocoapods.org/pods/HealthVault"><img src="https://img.shields.io/cocoapods/p/HealthVault.svg?style=flat" alt="Platform" /></a></p>
+<h1 id="about">About</h1>
+<p><strong>healthvault-ios-sdk</strong> is an iOS framework you can use to build applications that leverage the Microsoft HealthVault platform. <strong>healthvault-ios-sdk</strong> is actively used by the <a href="https://itunes.apple.com/us/app/microsoft-healthvault/id546835834?mt=8">Microsoft HealthVault for iPhone app</a>.</p>
+<h3 id="features">Features</h3>
+<ul>
+<li>Handling of user authentication and secure credential storage.</li>
+<li>Serialization/Deserialization of all HeathVault data types.</li>
+<li>Caching and offline support for HealthVault Thing types.</li>
+</ul>
+<h2 id="example">Example</h2>
+<p>The example project demonstrates how to:</p>
+<ul>
+<li>Authenticate with HealthVault.</li>
+<li>View, create, update and delete most core HealthVault types, including blood pressure, medication, conditions, procedures, immunizations, blood glucose, exercise and diet.</li>
+<li>manage files - view, download and upload files in HealthVault.</li>
+<li>De-authorize your application from HealthVault.</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<h3 id="using-cocoapods">Using CocoaPods</h3>
+<p>The healthvault-ios-sdk is available through <a href="http://cocoapods.org">CocoaPods</a>. To install it, simply add the following line to your Podfile:</p>
+<pre><code>pod &quot;HealthVault&quot;</code></pre>
+<p>If offline support and caching for HealthVault Thing types is not needed, you can install just the ‘Core’ subspec. This will remove the dependencies on EncryptedCoreData and SQLCipher.</p>
+<pre><code>pod &quot;HealthVault/Core&quot;</code></pre>
+<h3 id="using-carthage">Using Carthage</h3>
+<p>Add this line to your Cartfile:</p>
+<pre><code>github &quot;Microsoft/healthvault-ios-sdk&quot;</code></pre>
+<p>and then follow the steps described in the <a href="https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos">Carthage documentation</a>.</p>
+<h2 id="setup">Setup</h2>
+<h3 id="objective-c">Objective-C</h3>
+<pre><code>@import HealthVault;</code></pre>
+<h3 id="swift">Swift</h3>
+<pre><code>import HealthVault</code></pre>
+<h2 id="registering-your-applications">Registering your applications</h2>
+<p>All applications must be registered with the <a href="https://go.microsoft.com/fwlink/?linkid=838954">HealthVault Application Configuration Center</a> (ACC) before they can connect to the service. During registration, the ACC will request that you upload an appropriate certificate which will be used subsequently to secure communications between your app and the service. For more information on how to obtain an appropriate certificate, please see <a href="https://docs.microsoft.com/en-us/healthvault/concepts/connectivity/creating-key-pairs">Creating Key Pairs</a>.</p>
+<h1 id="contribute">Contribute</h1>
+<p>Contributions to the <strong>healthvault-ios-sdk</strong> are welcome. Here is how you can contribute:</p>
+<ul>
+<li><a href="https://github.com/Microsoft/healthvault-ios-sdk/issues">Submit bugs</a> and help us verify fixes</li>
+<li><a href="https://github.com/Microsoft/healthvault-ios-sdk/pulls">Submit pull requests</a> for bug fixes and features</li>
+</ul>
+<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="mailto:opencode@microsoft.com" class="email">opencode@microsoft.com</a> with any additional questions or comments.</p>
+</body>
+</html>

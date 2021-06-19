@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-18</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-02-18">ember-cli Meeting Notes - 2016-02-18</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Tobias Bieniek</li>
+<li>Stefan Penner</li>
+<li>Robert Jackson</li>
+<li>Katie Gengler</li>
+<li>Jake Bixby</li>
+<li>Martin Muñoz</li>
+<li>Kelly Selden</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<h3 id="rfc-review">RFC Review</h3>
+<p>Each week we will specify the RFCs we’ll review in the following meeting. These two RFCs will be reviewed next week.</p>
+<ul>
+<li><a href="https://github.com/ember-cli/rfcs/pull/4">https://github.com/ember-cli/rfcs/pull/4</a></li>
+<li><a href="https://github.com/ember-cli/rfcs/pull/35">https://github.com/ember-cli/rfcs/pull/35</a></li>
+</ul>
+<h3 id="jake">Jake</h3>
+<ul>
+<li>Fix <a href="https://github.com/ember-cli/ember-cli-blueprint-test-helpers/issues/19">ember-cli-blueprint-test-helpers #19</a> and release 0.8.2.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="released">2.3.0 Released</h3>
+<ul>
+<li>Hooray!</li>
+<li>We were holding this back because we wanted to protect “lockstep SemVer.”</li>
+<li>Not releasing was creating more confusion, so we’ll deal with a Major version bump if necessary.</li>
+<li>Most likely culprit is getting rid of Bower which would result in 3.X bump.</li>
+</ul>
+<h3 id="ember-i"><code>ember i</code></h3>
+<ul>
+<li>Fix <code>ember i</code> to mean <code>ember install</code> not <code>ember init</code>.</li>
+<li>Nathan filed a <a href="https://github.com/ember-cli/ember-cli/issues/5489">bug</a>.</li>
+</ul>
+<h3 id="eslint">ESLint</h3>
+<ul>
+<li>Internal to ember-cli we have mostly replaced JSHint/JSCS with ESLint.</li>
+<li>Custom ESLint rule has already found a few broken test cases, working to fix those.</li>
+<li>This applies only to ember-cli itself, tooling doesn’t currently support ESLint for app side code.</li>
+<li>ESLint is the future, too hard to get necessary changes into JSHint upstream.
+<ul>
+<li>Decision did account for the cost of moving all of our users compared to trying to get <code>async</code>/<code>await</code> support (and other future features) into JSHint.</li>
+</ul></li>
+</ul>
+<h3 id="ember-init-treemerge"><code>ember init</code> TreeMerge</h3>
+<ul>
+<li>Based upon the TreeMerge stuff that Stef did for Broccoli.</li>
+<li>Presents a three-way merge.</li>
+<li>Solves one of the most painful processes in ember-cli with upgrading.</li>
+<li>Robert is working on this.</li>
+</ul>
+<h3 id="blueprint-hooks">Blueprint Hooks</h3>
+<ul>
+<li>Nathan created an issue on RFCs repo which covers the details we discussed: <a href="https://github.com/ember-cli/rfcs/issues/36">Blueprint Hooks</a></li>
+<li>Well-positioned with extracted blueprints.</li>
+</ul>
+<h3 id="ember-data-test-blueprints">ember-data test blueprints</h3>
+<ul>
+<li>extract logic back up into the blueprint model (or separate package for backwards compat)</li>
+<li>Jake needs to fix <a href="https://github.com/ember-cli/ember-cli-blueprint-test-helpers/issues/19">ember-cli-blueprint-test-helpers #19</a> and release 0.8.2</li>
+</ul>
+<h3 id="uninstall-command">Uninstall Command</h3>
+<ul>
+<li>Should we stub uninstall command</li>
+<li>We very much want this, but it needs to be paired with a full envisioning of what the installation story should be.</li>
+<li>Our current approach should be shored up with what we know now.</li>
+<li><a href="https://github.com/ember-cli/rfcs/issues/34">https://github.com/ember-cli/rfcs/issues/34</a></li>
+</ul>
+<h3 id="ember-try">ember-try</h3>
+<ul>
+<li>Katie and Rob continue chatting.</li>
+<li>Progress is happening to run <code>ember try</code> within Docker containers</li>
+<li>Also desire to be able to pass flags to npm and bower.</li>
+<li>Interest in running tests without separate scenarios.</li>
+</ul>
+<h3 id="miscellany">Miscellany</h3>
+<ul>
+<li>RFC for precompiling router.js, accounting for engines.</li>
+<li>ember-data test blueprints need to extract logic back up into the blueprint model (or maybe a separate package for backwards compat)</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="node-change-history">Node Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li><p>Bug fix: Calling insert(null) was throwing an error. [Ticket 2529991]</p></li>
+<li><p>Bug fix: The removeAttribute method was not chainable in IE &lt; 9. [Ticket 2529230]</p></li>
+<li><p>Bug fix: Calling Y.all() without arguments was failing to return an empty NodeList. [Ticket 2530164]</p></li>
+<li><p>Added optional stopAt function/selector argument for ancestor/ancestors().</p></li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li><p>[!] The empty() method now always does a recursive purge. [Ticket 2529829]</p></li>
+<li><p>Added the getDOMNode() and getDOMNodes() methods to Node and NodeList prototypes.</p></li>
+<li><p>The one() method now accepts IDs that begin with a number. [Ticket 2529376]</p></li>
+<li><p>Bug fix: NodeList show()/hide() methods were broken with Transition. [Ticket 2529908]</p></li>
+<li><p>Bug fix: Some NodeList array methods were returning incorrectly. [Ticket 2529942]</p></li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li><p>Added wrap()/unwrap(), show()/hide(), empty(), and load() methods.</p></li>
+<li><p>Added Array 1.5 methods to NodeList.</p></li>
+<li><p>Added the destroy() method to NodeList. [Ticket 2529256]</p></li>
+<li><p>Added the once() method to NodeList. [Ticket 2529369]</p></li>
+<li><p>The appendChild() and insertBefore() methods now accept HTML. [Ticket 2529301]</p></li>
+<li><p>Added the appendTo() method. [Ticket 2529299]</p></li>
+<li><p>Added the ancestors() method. [Ticket 2528610]</p></li>
+<li><p>The setStyle() method now ignores undefined values.</p></li>
+<li><p>Bug fix: Enable querying cloned nodes in IE 6/7. [Ticket 2529487]</p></li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li><p>Added the transition() method.</p></li>
+<li><p>Bug fix: checked pseudo-class for IE input elements. [Ticket 2528895]</p></li>
+<li><p>Bug fix: Fixed IE8 input element rendering. [Ticket 2529035]</p></li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>Bug fix: The setContent() method incorrectly handled falsey values. [Ticket 2528740]</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>Added support for invalid IDs. [Ticket 2528195]</p></li>
+<li><p>Fix duplicate IDs across YUI instances. [Ticket 2528199]</p></li>
+<li><p>Allow empty setContent() call to remove content. [Ticket 2528269]</p></li>
+<li><p>Bug fix: Arguments passed to next() were being incorrectly handled. [Ticket 2528295]</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

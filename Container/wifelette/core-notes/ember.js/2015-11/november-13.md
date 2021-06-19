@@ -1,12 +1,13 @@
-# Ember.js Core Team 2015-11-13
+Ember.js Core Team 2015-11-13
+=============================
 
 #### Agenda
 
-- LS: A few things
-- GC: Glimmer2
-- SP KS, V8 team
-- MB: 2.3 branch
-- SP: ember-cli
+-   LS: A few things
+-   GC: Glimmer2
+-   SP KS, V8 team
+-   MB: 2.3 branch
+-   SP: ember-cli
 
 #### Minutes
 
@@ -62,8 +63,7 @@ MB: last thing is 2.3 branches this weekend and early next week
 
 YK: I’ve like to land GC’d instrumentation stuff, it is very small
 
-YK: The only things we added were per-user interaction
-KS: there is overhead from the helper labels that is noticeable
+YK: The only things we added were per-user interaction KS: there is overhead from the helper labels that is noticeable
 
 SP: Their work isn’t in a hot loop, even if it is 10x worse it won’t be too bad
 
@@ -81,7 +81,7 @@ KS: There is some overlap with the angular team’s work. They have their own me
 
 SP: They have a diffing step, I think further work removes the need for diffing and they seem less sure. I think we can do all these performance improvements without changing the public APIs and overhauling, we can slowly improve, their team has a similar end destination but is maybe less interested in migrating to it incrementally.
 
-SP: One last thing on broccoli is merge trees work, it is done, but not merged yet. I need to rewrite it for Jo. Ember’s build goes from 800 -> 300ms with it.
+SP: One last thing on broccoli is merge trees work, it is done, but not merged yet. I need to rewrite it for Jo. Ember’s build goes from 800 -&gt; 300ms with it.
 
 KS: what about my sourcemap thing?
 
@@ -91,6 +91,6 @@ KS: meanders into: wanting to make the run loops not flush sync, users cannot in
 
 GC: last week we had to revert our build for ember-cli, still not sure why
 
-SP: yeah just upgrade ember-cli and npm shinkwrap --dev with npm 3, and things should work
+SP: yeah just upgrade ember-cli and npm shinkwrap –dev with npm 3, and things should work
 
 SP: feature.json needs to be in the babel cache for ember builds. Rob was going to do this, I’ll maybe take a look.

@@ -1,47 +1,18 @@
-<html>
-  <head>
-    <script src="inspector-test.js"></script>
-    <script src="resources-test.js"></script>
-
-    <script>
-      function submit() {
-        document.getElementById("submit").click();
-      }
-
-      function test() {
-        InspectorTest.evaluateInPage("submit()");
-        WebInspector.networkManager.addEventListener(
-          WebInspector.NetworkManager.EventTypes.RequestFinished,
-          onRequestFinished
-        );
-
-        function onRequestFinished(event) {
-          var request = event.data;
-          if (
-            request.url !==
-            "http://localhost:8000/inspector/resources/post-target.cgi?queryParam1=queryValue1&queryParam2="
-          )
-            return;
-          InspectorTest.addObject(
-            new WebInspector.HAREntry(request).build(),
-            InspectorTest.HARPropertyFormatters
-          );
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests that resources panel shows form data parameters.</p>
-    <form
-      target="target-iframe"
-      method="POST"
-      action="http://localhost:8000/inspector/resources/post-target.cgi?queryParam1=queryValue1&queryParam2=#fragmentParam1=fragmentValue1&fragmentParam2="
-    >
-      <input name="formParam1" value="formValue1" />
-      <input name="formParam2" />
-      <input id="submit" type="submit" />
-    </form>
-    <iframe name="target-iframe"></iframe>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>resource-parameters</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that resources panel shows form data parameters.</p>
+</body>
 </html>

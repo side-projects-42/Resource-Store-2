@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>line</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="line-annotations">Line Annotations</h1>
+<p>Line annotations are used to draw lines on the chart area. This can be useful for highlighting information such as a threshold.</p>
+<p>```js chart-editor /* <block:options:0> <em>/ const options = { plugins: { autocolors: false, annotation: { annotations: { line1: { type: “line”, yMin: 60, yMax: 60, borderColor: “rgb(255, 99, 132)”, borderWidth: 2, }, }, }, }, }; /</em> </block:options> */</p>
+<p>/* <block:config:1> <em>/ const config = { type: “line”, data: { labels: [“January”, “February”, “March”, “April”, “May”, “June”, “July”], datasets: [ { label: “My First Dataset”, data: [65, 59, 80, 81, 56, 55, 40], fill: false, borderColor: “rgb(75, 192, 192)”, tension: 0.1, }, ], }, options, }; /</em> </block:config> */</p>
+<p>module.exports = { config, }; ```</p>
+<h2 id="configuration">Configuration</h2>
+<p>The following options are available for line annotations. All of these options can be .</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th><a href="../options#scriptable-options">Scriptable</a></th>
+<th style="text-align: center;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#general"><code>display</code></a></td>
+<td><code>boolean</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>true</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>adjustScaleRange</code></a></td>
+<td><code>boolean</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>true</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>drawTime</code></a></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>'afterDatasetsDraw'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#positioning"><code>scaleID</code></a></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#positioning"><code>value</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="even">
+<td><a href="#positioning"><code>endValue</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#positioning"><code>xScaleID</code></a></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>'x'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#positioning"><code>yScaleID</code></a></td>
+<td><code>string</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>'y'</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#positioning"><code>xMin</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="even">
+<td><a href="#positioning"><code>xMax</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#positioning"><code>yMin</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="even">
+<td><a href="#positioning"><code>YMax</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>undefined</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>borderColor</code></a></td>
+<td><a href="../options#color"><code>Color</code></a></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>options.color</code></td>
+</tr>
+<tr class="even">
+<td><a href="#styling"><code>borderWidth</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>1</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>borderDash</code></a></td>
+<td><code>number[]</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>[]</code></td>
+</tr>
+<tr class="even">
+<td><a href="#styling"><code>borderDashOffset</code></a></td>
+<td><code>number</code></td>
+<td>Yes</td>
+<td style="text-align: center;"><code>0</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#label"><code>label</code></a></td>
+<td><code>object</code></td>
+<td>Yes</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h3 id="general">General</h3>
+<p>If one of the axes does not match an axis in the chart, the box will take the entire chart dimension. The 4 coordinates, xMin, xMax, yMin, yMax are optional. If not specified, the box is expanded out to the edges in the respective direction.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>display</code></td>
+<td>Whether or not this annotation is visible</td>
+</tr>
+<tr class="even">
+<td><code>adjustScaleRange</code></td>
+<td>Should the scale range be adjusted if this annotation is out of range</td>
+</tr>
+<tr class="odd">
+<td><code>drawTime</code></td>
+<td>See <a href="../options#draw-time">drawTime</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="positioning">Positioning</h3>
+<p>The line can be positioned in two different ways. If <code>scaleID</code> is set, then <code>value</code> and <code>endValue</code> must also be set to indicate the endpoints of the line. The line will be perpendicular to the axis identified by <code>scaleID</code>.</p>
+<p>If <code>scaleID</code> is unset, then <code>xScaleID</code> and <code>yScaleID</code> are used to draw a line from <code>(xMin, yMin)</code> to <code>(xMax, yMax)</code>.</p>
+<table>
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>scaleID</code></td>
+<td>ID of the scale in single scale mode. If unset, <code>xScaleID</code> and <code>yScaleID</code> are used.</td>
+</tr>
+<tr class="even">
+<td><code>value</code></td>
+<td>End one of the line when a single scale is specified.</td>
+</tr>
+<tr class="odd">
+<td><code>endValue</code></td>
+<td>End two of the line when a single scale is specified.</td>
+</tr>
+<tr class="even">
+<td><code>xScaleID</code></td>
+<td>ID of the X scale to bind onto, default is ‘x’.</td>
+</tr>
+<tr class="odd">
+<td><code>yScaleID</code></td>
+<td>ID of the Y scale to bind onto, default is ‘y’.</td>
+</tr>
+<tr class="even">
+<td><code>xMin</code></td>
+<td>X coordinate of end one of the line in units along the x axis.</td>
+</tr>
+<tr class="odd">
+<td><code>xMax</code></td>
+<td>X coordinate of end two of the line in units along the x axis.</td>
+</tr>
+<tr class="even">
+<td><code>yMin</code></td>
+<td>Y coordinate of end one of the line in units along the y axis.</td>
+</tr>
+<tr class="odd">
+<td><code>yMax</code></td>
+<td>Y coordinate of end two of the line in units along the y axis.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="styling">Styling</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>borderColor</code></td>
+<td>Stroke color</td>
+</tr>
+<tr class="even">
+<td><code>borderWidth</code></td>
+<td>Stroke width</td>
+</tr>
+<tr class="odd">
+<td><code>borderDash</code></td>
+<td>Length and spacing of dashes. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash">MDN</a>.</td>
+</tr>
+<tr class="even">
+<td><code>borderDashOffset</code></td>
+<td>Offset for line dashes. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset">MDN</a>.</td>
+</tr>
+<tr class="odd">
+<td><code>backgroundColor</code></td>
+<td>Fill color</td>
+</tr>
+<tr class="even">
+<td><code>cornerRadius</code></td>
+<td>Radius of box rectangle</td>
+</tr>
+</tbody>
+</table>
+<h3 id="label">Label</h3>
+<p>Namespace: <code>options.annotations[annotationID].label</code>, it defines options for the line annotation label.</p>
+<p>All of these options can be <a href="../options#scriptable-options">Scriptable</a></p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 26%" />
+<col style="width: 5%" />
+<col style="width: 62%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;">Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>backgroundColor</code></td>
+<td><a href="../options#color"><code>Color</code></a></td>
+<td style="text-align: center;"><code>'rgba(0,0,0,0.8)'</code></td>
+<td>Background color of the label container.</td>
+</tr>
+<tr class="even">
+<td><code>color</code></td>
+<td><a href="../options#color"><code>Color</code></a></td>
+<td style="text-align: center;"><code>'#fff'</code></td>
+<td>Text color.</td>
+</tr>
+<tr class="odd">
+<td><code>content</code></td>
+<td><code>string</code>|<a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/Image"><code>Image</code></a></td>
+<td style="text-align: center;"><code>null</code></td>
+<td>The content to show in the label.</td>
+</tr>
+<tr class="even">
+<td><code>cornerRadius</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"><code>6</code></td>
+<td>Radius of label box in pixels.</td>
+</tr>
+<tr class="odd">
+<td><code>drawTime</code></td>
+<td><code>string</code></td>
+<td style="text-align: center;"><code>options.drawTime</code></td>
+<td>See <a href="../options#draw-time">drawTime</a>. Defaults to the line annotation draw time if unset</td>
+</tr>
+<tr class="even">
+<td><code>enabled</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"><code>false</code></td>
+<td>Whether or not the label is shown.</td>
+</tr>
+<tr class="odd">
+<td><code>font</code></td>
+<td><a href="../options#font"><code>Font</code></a></td>
+<td style="text-align: center;"><code>{ style: 'bold' }</code></td>
+<td>Label font</td>
+</tr>
+<tr class="even">
+<td><code>xPadding</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"><code>6</code></td>
+<td>Padding of label to add left/right.</td>
+</tr>
+<tr class="odd">
+<td><code>yPadding</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"><code>6</code></td>
+<td>Padding of label to add top/bottom.</td>
+</tr>
+<tr class="even">
+<td><code>xAdjust</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Adjustment along x-axis (left-right) of label relative to computed position. Negative values move the label left, positive right.</td>
+</tr>
+<tr class="odd">
+<td><code>yAdjust</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Adjustment along y-axis (top-bottom) of label relative to computed position. Negative values move the label up, positive down.</td>
+</tr>
+<tr class="even">
+<td><code>position</code></td>
+<td><code>string</code></td>
+<td style="text-align: center;"><code>'center'</code></td>
+<td>Anchor position of label on line. Possible options are: <code>'start'</code>, <code>'center'</code>, <code>'end'</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>textAlign</code></td>
+<td><code>string</code></td>
+<td style="text-align: center;"><code>'center'</code></td>
+<td>Text alignment of label content when there’s more than one line. Possible options are: <code>'start'</code>, <code>'center'</code>, <code>'end'</code>.</td>
+</tr>
+<tr class="even">
+<td><code>width</code></td>
+<td><code>number</code>|<code>string</code></td>
+<td style="text-align: center;"><code>undefined</code></td>
+<td>Overrides the width of the image. Could be set in pixel by a number, or in percentage of current width of image by a string. If undefined, uses the width of the image. It is used only when the content is an image.</td>
+</tr>
+<tr class="odd">
+<td><code>height</code></td>
+<td><code>number</code>|<code>string</code></td>
+<td style="text-align: center;"><code>undefined</code></td>
+<td>Overrides the height of the image. Could be set in pixel by a number, or in percentage of current height of image by a string. If undefined, uses the height of the image. It is used only when the content is an image.</td>
+</tr>
+<tr class="even">
+<td><code>rotation</code></td>
+<td><code>number</code>|<code>'auto'</code></td>
+<td style="text-align: center;"><code>0</code></td>
+<td>Rotation of label, in degrees, or ‘auto’ to use the degrees of the line</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

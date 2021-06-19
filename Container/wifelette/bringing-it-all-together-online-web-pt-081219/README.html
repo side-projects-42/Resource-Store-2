@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="basic-dog-orm">Basic Dog ORM</h1>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>Understand what an Object Relational Mapper(ORM) is.</li>
+<li>Gain ability to implement characteristics of an ORM when using a relational database management system (RDBMS) in a ruby program.</li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<p>This lab involves building a basic ORM for a Dog object. The <code>Dog</code> class defined in <code>lib/dog.rb</code> implements behaviors of a basic ORM.</p>
+<h3 id="environment"><strong>Environment</strong></h3>
+<p>Our environment is going to be a single point of requires and loads. It is also going to define a constant, <code>DB</code>, whose sole responsibility is setting up and maintaining connection to our application’s database.</p>
+<ul>
+<li><code>DB = {:conn =&gt; SQLite3::Database.new("db/dogs.db")}</code> <code>DB</code> is set equal to a hash, which has a single key, <code>:conn</code>. The key, <code>:conn</code>, will have a value of a connection to a sqlite3 database in the db directory.</li>
+</ul>
+<p>However, in our <code>spec_helper</code>, which is our testing environment, we’re going to redefine the value of that key (not of the constant) to point to an in-memory database. This will allow our tests to run in isolation of our production database. Whenever we want to refer to the application’s connection to the database, we will simply rely on <code>DB[:conn]</code>.</p>
+<h2 id="solving-the-lab-the-spec-suite">Solving The Lab: The Spec Suite</h2>
+<h3 id="start-with-these-methods">Start with these methods</h3>
+<ul>
+<li><strong><code>#attributes</code></strong></li>
+</ul>
+<p>The first test is concerned solely with making sure that our dogs have all the required attributes and that they are readable and writable.</p>
+<p>The <code>#initialize</code> method accepts a hash or keyword argument value with key-value pairs as an argument. key-value pairs need to contain id, name, and breed.</p>
+<ul>
+<li><strong><code>::create_table</code></strong></li>
+</ul>
+<p>Your task here is to define a class method on Dog that will execute the correct SQL to create a dogs table.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">describe <span class="st">&#39;::create_table&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  it <span class="st">&#39;creates a dogs table&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="dt">DB</span>[<span class="st">:conn</span>].execute(<span class="st">&#39;DROP TABLE IF EXISTS dogs&#39;</span>)</a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">Dog</span>.create_table</a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">    table_check_sql = <span class="st">&quot;SELECT tbl_name FROM sqlite_master WHERE type=&#39;table&#39; AND tbl_name=&#39;dogs&#39;;&quot;</span></a>
+<a class="sourceLine" id="cb1-7" title="7">    expect(<span class="dt">DB</span>[<span class="st">:conn</span>].execute(table_check_sql)[<span class="dv">0</span>]).to eq([<span class="st">&#39;dogs&#39;</span>])</a>
+<a class="sourceLine" id="cb1-8" title="8">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">end</span></a></code></pre></div>
+<p>Our test first makes sure that we are starting with a clean database by executing the SQL command <code>DROP TABLE IF EXISTS dogs</code>.</p>
+<p>Next we call the soon-to-be defined <code>create_table</code> method, which is responsible for creating a table called dogs with the appropriate columns.</p>
+<ul>
+<li><strong><code>::drop_table</code></strong></li>
+</ul>
+<p>This method will drop the dogs table from the database.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">  describe <span class="st">&#39;::drop_table&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    it <span class="st">&quot;drops the dogs table&quot;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-3" title="3">        <span class="dt">Dog</span>.drop_table</a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">      table_check_sql = <span class="st">&quot;SELECT tbl_name FROM sqlite_master WHERE type=&#39;table&#39; AND tbl_name=&#39;dogs&#39;;&quot;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      expect(<span class="dt">DB</span>[<span class="st">:conn</span>].execute(table_check_sql)[<span class="dv">0</span>]).to be_nil</a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="kw">end</span></a></code></pre></div>
+<p>It is basically the exact opposite of the previous test. Your job is to define a class method on <code>Dog</code> that will execute the correct SQL to drop a dogs table.</p>
+<ul>
+<li><strong><code>::new_from_db</code></strong></li>
+</ul>
+<p>This is an interesting method. Ultimately, the database is going to return an array representing a dog’s data. We need a way to cast that data into the appropriate attributes of a dog. This method encapsulates that functionality. You can even think of it as <code>new_from_array</code>. Methods like this, that return instances of the class, are known as constructors, just like <code>.new</code>, except that they extend the functionality of <code>.new</code> without overwriting <code>initialize</code>.</p>
+<ul>
+<li><strong><code>::find_by_name</code></strong></li>
+</ul>
+<p>This spec will first insert a dog into the database and then attempt to find it by calling the find_by_name method. The expectations are that an instance of the dog class that has all the properties of a dog is returned, not primitive data.</p>
+<p>Internally, what will the <code>find_by_name</code> method do to find a dog; which SQL statement must it run? Additionally, what method might <code>find_by_name</code> use internally to quickly take a row and create an instance to represent that data?</p>
+<ul>
+<li><strong><code>#update</code></strong></li>
+</ul>
+<p>This spec will create and insert a dog, and afterwards, it will change the name of the dog instance and call update. The expectations are that after this operation, there is no dog left in the database with the old name. If we query the database for a dog with the new name, we should find that dog and the ID of that dog should be the same as the original, signifying this is the same dog, they just changed their name.</p>
+<ul>
+<li><strong><code>#save</code></strong></li>
+</ul>
+<p>This spec ensures that given an instance of a dog, simply calling <code>save</code> will trigger the correct operation. To implement this, you will have to figure out a way for an instance to determine whether it has been persisted into the DB.</p>
+<p>In the first test, we create an instance. Since it has never been saved before, specify that the instance will receive a method call to <code>insert</code>.</p>
+<p>In the next test, we create an instance, save it, change its name, and then specify that a call to the save method should trigger an <code>update</code>.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/bringing-it-all-together' title='Basic Dog ORM'>ORMs Lab: Bringing It All Together</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

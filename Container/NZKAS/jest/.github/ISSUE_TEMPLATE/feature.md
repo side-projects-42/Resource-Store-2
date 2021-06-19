@@ -1,11 +1,3 @@
----
-name: 🚀 Feature Proposal
-labels: ':rocket: Feature Request'
-about: Submit a proposal for a new feature
----
-
-<!-- Love Jest? Please consider supporting our collective: 👉  https://opencollective.com/jest/donate -->
-
 ## 🚀 Feature Proposal
 
 A clear and concise description of what the feature is.

@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="intro-to-capybara">Intro To Capybara</h1>
+<h2 id="overview">Overview</h2>
+<p>In this lesson, we’ll discuss integration testing with Capybara.</p>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Define an integration test and compare it to unit and controller tests.</li>
+<li>Use Capybara for integration tests by including it in the testing environment.</li>
+<li>Use the Capybara methods <code>visit</code> and <code>page</code> when writing tests.</li>
+<li>Read a Capybara test of response HTML.</li>
+<li>Read a Capybara test that interacts with HTML.</li>
+<li>Read a Capybara test that submits an HTML form.</li>
+</ol>
+<h2 id="the-mvc-framework">The MVC Framework</h2>
+<p>There are three basic levels of testing that correspond to the different levels of our application stack in Model-View-Controller architecture.</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/k2ypcn86btb6ajo/2015-09-29%20at%204.14%20PM.png" alt="Web Application Stack and Tests" /><figcaption>Web Application Stack and Tests</figcaption>
+</figure>
+<p><strong>Database:</strong> Databases persist or save data from our application.</p>
+<p><strong>Models:</strong> Models provide an object-oriented abstraction or metaphor for the data in our application. Our models do the job of interacting with the database for us. Our model can talk to the database by asking for certain data and using that data to create a new instance of our class. We can then interact with that data by using the methods and properties of the instance of that class.</p>
+<p><strong>Controllers:</strong> Controllers provide the main interface and application logic. They deal with things like: “What data should I show a user in response to certain input from that user” or “What HTML should be sent to the user when they visit the /about page?”. In large scale MVC applications, controllers are represented by classes, but really, lots of <code>bin</code> files could be considered controllers.</p>
+<p><strong>Views:</strong> Views present information to the user. Any code that is responsible for presenting data or output to the user, from methods that use a bunch of <code>puts</code>, to HTML, to ERB templates, could be considered a View. In web applications, Views are generally represented by ERB templates that generate HTML.</p>
+<p><strong>User/Browser:</strong> The top of our application pyramid is finally the user. Whether describing the people using our application, the interface they use such as a Command Line, Voice, or HTML, or the program they use to even access our application, such as a Browser like Chrome or Safari, or a Native app, our application is responsible for delivering the user an experience on some sort of pre-existing platform.</p>
+<h4 id="basic-mvc-flow">Basic MVC Flow</h4>
+<p>Let’s take a look at how it all fits together. We’ll use an example of a social networking application.</p>
+<ol type="1">
+<li>The user interacts with our application’s view(s) via the command line or a web browser. The user enters some input that asks our application to show them a list of all of their friends who are using the application.</li>
+<li>The controller receives this request and looks at it. The controller says, “Okay, this user wants to see a list of their friends.”</li>
+<li>The controller then asks the <code>Friend</code> model to go into the database and return all of the user’s friends.</li>
+<li>The model goes to the database, retrieves all of the requested data, and gives it to the controller.</li>
+<li>The controller passes that data to a view, and the view displays it to the user.</li>
+</ol>
+<h2 id="the-three-levels-of-testing">The Three Levels of Testing</h2>
+<p>Refer to the graphic. Each MVC layer is associated with a type of test: Models to Unit; Controllers to Controller; Views to Integration. Just as the MVC layers higher up make use of the MVC layers lower down the pyramid, testing at higher layers will also “exercise” or “flex” the layers lower down. Consider that if you want to test a user’s perspective by browsing to a page and performing some action (say, subscribing to a newsletter) you’re going to test views (“Is there a field for adding my email address?”) )<em>explicitly</em>, but <em>also</em> implicitly test the Controller (“Did my submit button click POST to <code>subscribers#create</code>”) as well as the Model (“Is the number of <code>Subscriber</code> instances 1 larger than it was <em>before</em> I made this request?”)</p>
+<h3 id="unit-tests">Unit Tests</h3>
+<p>Unit tests test the models in our application and how they interact with our database.</p>
+<h3 id="controller-tests">Controller Tests</h3>
+<p>Controller tests test that the code responsible for delivering the appropriate data to a user is working properly. In a web app, a controller test is responsible for making sure that an HTTP request returns the expected HTTP response. Controller tests should test not HTML or forms but, rather, that the controller is behaving as expected.</p>
+<h3 id="integration-tests">Integration Tests</h3>
+<p>Integration tests are the highest-level test, and they are closest to describing how a user will actually interact with our application. Commonly referred to as ‘End-to-End’ tests, integration tests should flex your entire application stack (i.e., all of the MVC components) and rarely isolate components or behaviors. They are perfect for spec’ing high level user interactions with HTML and forms. We’re going to be learning how to write and read an integration test using a library called Capybara within an RSpec test suite.</p>
+<p><em>Note: While you will generally not be required to write tests in Learn, you will be required to read a test and understand what functionality the test suite is anticipating and testing. If you can read a test, we believe you can also write a test.</em></p>
+<h2 id="integration-testing-with-capybara">Integration Testing with Capybara</h2>
+<h3 id="what-is-capybara">What is Capybara?</h3>
+<p>Capybara is a library of code that we can include in our application via the Capybara gem. The Capybara library allows us to write code that simulates how a user interacts with our app. We can write such code in our integration tests and thus test the functionality of our application.</p>
+<h3 id="capybara-setup">Capybara Setup</h3>
+<p>To use Capybara for integration tests in Rails or Sinatra, we need to include it in our testing environment. In our <code>spec/spec_helper.rb</code> file, we add the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Load RSpec and Capybara</span></a>
+<a class="sourceLine" id="cb1-2" title="2">require <span class="st">&#39;rspec&#39;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">require <span class="st">&#39;capybara/rspec&#39;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">require <span class="st">&#39;capybara/dsl&#39;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># Configure RSpec</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="dt">RSpec</span>.configure <span class="kw">do</span> |config|</a>
+<a class="sourceLine" id="cb1-8" title="8">  <span class="co"># Mixin the Capybara functionality into Rspec</span></a>
+<a class="sourceLine" id="cb1-9" title="9">  config.include <span class="dt">Capybara</span>::<span class="dt">DSL</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  config.order = <span class="st">&#39;default&#39;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="co"># Define the application we&#39;re testing</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="kw">def</span> app</a>
+<a class="sourceLine" id="cb1-15" title="15">  <span class="co"># Load the application defined in config.ru</span></a>
+<a class="sourceLine" id="cb1-16" title="16">  <span class="dt">Rack</span>::<span class="dt">Builder</span>.parse_file(<span class="st">&#39;config.ru&#39;</span>).first</a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-18" title="18"></a>
+<a class="sourceLine" id="cb1-19" title="19"><span class="co"># Configure Capybara to test against the application above.</span></a>
+<a class="sourceLine" id="cb1-20" title="20"><span class="dt">Capybara</span>.app = app</a></code></pre></div>
+<p>The above code might look long and confusing. All you need to know is that it is configuring <code>RSpec</code> and our tests to be able to use all the wonderful methods and interactions Capybara provides.</p>
+<p>The most important part of the configuration is the last line where we explicitly tell <code>Capybara</code> that the <code>app</code> we’re testing against is defined in <code>config.ru</code>.</p>
+<h2 id="our-application">Our Application</h2>
+<p>Consider a simple web application that shows the user a form asking for their name. When the user submits the form, the application will greet the user based on the name they provided.</p>
+<p>Our homepage, at <code>'/'</code>, will display the form:</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/1zocl86jv9qguth/2015-09-29%20at%206.00%20PM%20%281%29.png" alt="Form" /><figcaption>Form</figcaption>
+</figure>
+<p>Upon submitting the form, the application sends a <code>POST</code> request to the <code>POST '/greet'</code> route. Then, the user should see the following page:</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/83o4onopkwquuve/2015-09-29%20at%206.01%20PM.png" alt="Response" /><figcaption>Response</figcaption>
+</figure>
+<p>Colloquially we could express the tests for this application as follows:</p>
+<pre><code>When a user visits &#39;/&#39;
+  they should see a greeting
+  they should see a form with a name field
+
+When a user submits the greeting form
+  they should fill in the name with &quot;Avi&quot;
+  they should click submit
+  they should see &quot;Hi Avi, it&#39;s nice to meet you!&quot;</code></pre>
+<p>It is exactly these sorts of behaviors, conditions, and expectations that Capybara makes very easy to describe and test.</p>
+<h2 id="testing-our-application">Testing our Application</h2>
+<p>Now that our test suite is set up to use Capybara, let’s start writing some tests for our application.</p>
+<h3 id="get"><code>GET '/'</code></h3>
+<p>We want our root path to show our greeting form:</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/1zocl86jv9qguth/2015-09-29%20at%206.00%20PM%20%281%29.png" alt="Form" /><figcaption>Form</figcaption>
+</figure>
+<p>We want to have a test that checks that the <code>get '/'</code> route brings the user to that page.</p>
+<p>Look at this test in <code>spec/application_integration_spec.rb</code>.</p>
+<p>File: <code>spec/application_integration_spec.rb</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">require <span class="st">&#39;spec_helper&#39;</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">describe <span class="st">&quot;GET &#39;/&#39; - Greeting Form&quot;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  it <span class="st">&#39;welcomes the user&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    visit <span class="ch">&#39;/&#39;</span></a>
+<a class="sourceLine" id="cb3-6" title="6">    expect(page.body).to include(<span class="st">&quot;Welcome!&quot;</span>)</a>
+<a class="sourceLine" id="cb3-7" title="7">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="kw">end</span></a></code></pre></div>
+<p>Most of that code is actually vanilla RSpec. Capybara provides two new methods, <code>visit</code> and <code>page</code>.</p>
+<h4 id="capybara-visit">Capybara <code>visit</code></h4>
+<p>The <code>visit</code> method navigates the test’s browser to a specific URL. It is equivalent to a user typing a URL into their browser’s location bar. The argument it accepts is a string for the URL you want to test. Since we want to test our <code>'/'</code> root URL, we say <code>visit '/'</code>, and Capybara will load that page within our test.</p>
+<h4 id="capybara-page">Capybara <code>page</code></h4>
+<p>The <code>page</code> method in Capybara exposes the “session” or “browser” that is conceptually (and literally) being used during the test. The <code>page</code> method gives you a <code>Capybara::Session</code> object that represents the browser page the user would actually be looking at if they navigated to <code>'/'</code> (or whichever route was last passed to <code>visit</code>).</p>
+<p>As such, <code>page</code> responds to a lot of methods that represent actions a user could take on a page, such as <code>click_link</code>, <code>fill_in</code>, and <code>body</code>.</p>
+<p>The <code>page.body</code> method will dump out all of the HTML in the current page as a string.</p>
+<p>Our test is telling Capybara to visit the <code>/</code> URL. It then sets the expectation that the body of the page returned should include at least the text <code>Welcome!</code> somewhere.</p>
+<h3 id="passing-the-first-test">Passing the First Test</h3>
+<p>File: <code>./config.ru</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">require <span class="st">&#39;sinatra&#39;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">require_relative <span class="st">&#39;./app&#39;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5">run <span class="dt">Application</span></a></code></pre></div>
+<p>In a basic application like this example, our <code>config.ru</code> <code>require</code>s the <code>sinatra</code> gem. It then <code>require_relative</code>s the required file <code>app.rb</code> that defines our main <code>Application</code> controller. Finally, we <code>run</code> our <code>Application</code> controller to start our web application. When we run <code>shotgun</code>, the gem will look for a <code>config.ru</code> file if no other file is specified. This file acts as the entry point for starting up your application.</p>
+<p>File: <code>./app.rb</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">class</span> <span class="dt">Application</span> &lt; <span class="dt">Sinatra</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  get <span class="ch">&#39;/&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    erb <span class="st">:index</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">end</span></a></code></pre></div>
+<p><code>./app.rb</code> is our main application file, defining the controller that will power this web application. We create an <code>Application</code> class and inherit from <code>Sinatra::Base</code> to give it all of the web superpowers needed to transform the standard Ruby class into a Sinatra controller.</p>
+<p>Within our <code>Application</code> controller, we use the Sinatra DSL to create a <code>GET</code> route at the <code>/</code> URL. We tell our application to respond to <code>HTTP GET</code> requests to <code>/</code> by rendering the designated ERB template or HTML.</p>
+<p>The line <code>erb :index</code> tells the application to render, or deliver to the user’s browser, the file in <code>views/index.erb</code>. This is a Sinatra-provided functionality that renders ERB templates located in the <code>views</code> directory. Let’s look at that view file.</p>
+<p>File: <code>views/index.erb</code></p>
+<pre class="erb"><code>&lt;h1&gt;Welcome!&lt;/h1&gt;</code></pre>
+<p>Our ERB file at <code>views/index.erb</code> (Sinatra will automatically look for the <code>.erb</code> extension when you call <code>erb</code> in the controller) contains the necessary HTML to make our test pass.</p>
+<p>The final piece of the puzzle is a <code>config.ru</code> file to put everything together and start our Sinatra application. This is the file <code>shotgun</code> or <code>rackup</code> will read to start your local application server, and it’s also the file our test suite is using to define our application –– remember <code>Rack::Builder.parse_file('config.ru').first</code>?</p>
+<p>If we now start our application with <code>shotgun</code> and open <code>http://localhost:9393</code> in our browser, we’ll see our welcome message.</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/bue5icj3yuz6iol/2015-09-29%20at%208.56%20PM.png" alt="Welcome" /><figcaption>Welcome</figcaption>
+</figure>
+<p>And when we run our test suite, we’ll see:</p>
+<pre><code>$ rspec
+
+GET &#39;/&#39; - Greeting Form
+  welcomes the user
+
+Finished in 0.03438 seconds (files took 0.43261 seconds to load)
+1 example, 0 failures</code></pre>
+<p><em>Note: If you’re getting an error about conflicting gems, you may need to run <code>bundle exec rspec</code> (or <code>bundle exec learn</code>). Prepending a command with <code>bundle exec</code> forces your terminal to run the process with the version of the gems specified in the gem file rather than just using the most recent versions on your machine. If this still does not fix the error, try <code>bundle update</code></em></p>
+<p>If you receive an error output, don’t worry, read it and see if you can figure out what’s going on and fix it. If not, just move on. <strong>This lesson is about understanding how to read a Capybara test</strong>; not how to write or debug them.</p>
+<h3 id="passing-the-second-test-adding-the-greeting-form-requirement">Passing the Second Test: Adding the Greeting Form Requirement</h3>
+<p>Great, step 1, to get a basic test and application working, is done! Let’s now add tests for the HTML form that will allow users to provide their name for the greeting. When our tests pass, our form at <code>/</code> will look like:</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/1zocl86jv9qguth/2015-09-29%20at%206.00%20PM%20%281%29.png" alt="Form" /><figcaption>Form</figcaption>
+</figure>
+<p>So let’s describe an expectation for that HTML in our test.</p>
+<p>Edit: <code>spec/application_integration_spec.rb</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">require <span class="st">&#39;spec_helper&#39;</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">describe <span class="st">&quot;GET &#39;/&#39; - Greeting Form&quot;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-4" title="4">  <span class="co"># Code from previous example</span></a>
+<a class="sourceLine" id="cb8-5" title="5">  it <span class="st">&#39;welcomes the user&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-6" title="6">    visit <span class="ch">&#39;/&#39;</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    expect(page.body).to include(<span class="st">&quot;Welcome!&quot;</span>)</a>
+<a class="sourceLine" id="cb8-8" title="8">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb8-9" title="9"></a>
+<a class="sourceLine" id="cb8-10" title="10">  <span class="co"># New test</span></a>
+<a class="sourceLine" id="cb8-11" title="11">  it <span class="st">&#39;has a greeting form with a user_name field&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb8-12" title="12">    visit <span class="ch">&#39;/&#39;</span></a>
+<a class="sourceLine" id="cb8-13" title="13"></a>
+<a class="sourceLine" id="cb8-14" title="14">    expect(page).to have_selector(<span class="st">&quot;form&quot;</span>)</a>
+<a class="sourceLine" id="cb8-15" title="15">    expect(page).to have_field(<span class="st">:user_name</span>)</a>
+<a class="sourceLine" id="cb8-16" title="16">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="kw">end</span></a></code></pre></div>
+<p>Our new test has a similar setup to the first test– we tell Capybara to visit the page at <code>'/'</code>. Once that is done, we set some expectations against the <code>page</code> object that represent the user looking at the page in their browser. We can simply assert that the <code>page</code> has an HTML selector for <code>form</code>, meaning that the page contains an HTML element that matches the <code>form</code> tag.</p>
+<p>Where does this magic <code>have_selector</code> matcher come from? That’s right, Capybara has added that to RSpec. Capybara <code>page</code> objects respond to methods that relate intimately to HTML and the DOM (Document Object Model) that defines web applications. You can literally ask the <code>page</code> object: “Hey, do you have HTML that matches the following selector?” Pretty amazing, right?</p>
+<p>The second expectation is similar: <code>expect(page).to have_field(:user_name)</code>. We’re saying that we expect the <code>page</code> to have a form field called <code>user_name</code>. We get to be even more semantic with the <code>have_field</code> matcher, making sure that the HTML in <code>page</code> contains a form input with either an <code>ID</code> or <code>name</code> attribute that matches the argument, in this case <code>:user_name</code>.</p>
+<p>After editing and saving the integration test, running our tests according to the current code should produce:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">rspec</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="ex">GET</span> <span class="st">&#39;/&#39;</span> - Greeting Form</a>
+<a class="sourceLine" id="cb9-4" title="4">  <span class="ex">welcomes</span> the user</a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="ex">has</span> a greeting form with a user_name field (FAILED - 1)</a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="ex">Failures</span>:</a>
+<a class="sourceLine" id="cb9-8" title="8"></a>
+<a class="sourceLine" id="cb9-9" title="9">  <span class="ex">1</span>) <span class="ex">GET</span> <span class="st">&#39;/&#39;</span> - Greeting Form has a greeting form with a name field</a>
+<a class="sourceLine" id="cb9-10" title="10">     <span class="ex">Failure</span>/Error: <span class="ex">expect</span>(page)<span class="ex">.to</span> have_selector(<span class="st">&quot;form&quot;</span>)</a>
+<a class="sourceLine" id="cb9-11" title="11">       <span class="ex">expected</span> <span class="co">#has_selector?(&quot;form&quot;) to return true, got false</span></a>
+<a class="sourceLine" id="cb9-12" title="12">     <span class="co"># ./spec/application_integration_spec.rb:12:in `block (2 levels) in &lt;top (required)&gt;&#39;</span></a>
+<a class="sourceLine" id="cb9-13" title="13"></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="ex">Finished</span> in 0.03963 seconds (files took 0.42466 seconds to load)</a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="ex">2</span> examples, 1 failure</a>
+<a class="sourceLine" id="cb9-16" title="16"></a>
+<a class="sourceLine" id="cb9-17" title="17"><span class="ex">Failed</span> examples:</a>
+<a class="sourceLine" id="cb9-18" title="18"></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="ex">rspec</span> ./spec/application_integration_spec.rb:9 <span class="co"># GET &#39;/&#39; - Greeting Form has a greeting form with a name field</span></a></code></pre></div>
+<p>Our first test for welcoming the user still passes, but our new test fails. Let’s zoom in on the meaningful part of the failure message.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">Failure</span>/Error: <span class="ex">expect</span>(page)<span class="ex">.to</span> have_selector(<span class="st">&quot;form&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="ex">expected</span> <span class="co">#has_selector?(&quot;form&quot;) to return true, got false</span></a></code></pre></div>
+<p>The failure message is telling us that we expected the page to have an HTML form and it doesn’t, so it’s failing. Let’s add our HTML form to our view and make this test pass.</p>
+<p>Edit: <code>views/index.erb</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">&lt;h1&gt;</span>Welcome!<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw">&lt;form</span><span class="ot"> action=</span><span class="st">&quot;/greet&quot;</span><span class="ot"> method=</span><span class="st">&quot;POST&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;user_name&quot;</span><span class="kw">&gt;</span>Name:<span class="kw">&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb11-5" title="5"></a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="kw">&lt;p&gt;&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> name=</span><span class="st">&quot;user_name&quot;</span><span class="ot"> id=</span><span class="st">&quot;user_name&quot;</span> <span class="kw">/&gt;&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb11-7" title="7"></a>
+<a class="sourceLine" id="cb11-8" title="8">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value=</span><span class="st">&quot;Submit&quot;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="kw">&lt;/form&gt;</span></a></code></pre></div>
+<p>Don’t worry about the specifics of the HTML form. Just know that it is building an HTML form that, when submitted, will create an <code>HTTP POST</code> request to <code>/greet</code>. The <code>POST</code> request will contain whatever the user typed into the form’s <code>&lt;input&gt;</code> field, which is nested within the form and has a name value of <code>user_name</code>, matching our Capybara test expectation.</p>
+<p>Run your tests now or reload your browser, and you should see the form and your tests passing.</p>
+<h3 id="post-greet"><code>POST '/greet'</code></h3>
+<h4 id="passing-the-third-test-processing-the-form-and-greeting-the-user">Passing the Third Test: Processing the Form and Greeting the User</h4>
+<p>The final step of our greeting application is to teach our application how to accept the form that a user submits. We know that we want the outcome to be a custom greeting message based on what they type into the <code>user_name</code> field in the form. If you typed in <code>Avi</code> and clicked submit, we’d expect the page in our browser to look like:</p>
+<figure>
+<img src="https://dl.dropboxusercontent.com/s/83o4onopkwquuve/2015-09-29%20at%206.01%20PM.png" alt="Response" /><figcaption>Response</figcaption>
+</figure>
+<p>Let’s write those tests.</p>
+<p>Add the following to the end of the <code>spec/application_integration_spec.rb</code> file (below the closing <code>end</code> of the first <code>describe</code> block).</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb12-1" title="1">describe <span class="st">&quot;POST &#39;/greet&#39; - User Greeting&quot;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb12-2" title="2">  it <span class="st">&#39;greets the user personally based on their user_name in the form&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb12-3" title="3">    visit <span class="ch">&#39;/&#39;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"></a>
+<a class="sourceLine" id="cb12-5" title="5">    fill_in(<span class="st">:user_name</span>, <span class="st">:with</span> =&gt; <span class="st">&quot;Avi&quot;</span>)</a>
+<a class="sourceLine" id="cb12-6" title="6">    click_button <span class="st">&quot;Submit&quot;</span></a>
+<a class="sourceLine" id="cb12-7" title="7"></a>
+<a class="sourceLine" id="cb12-8" title="8">    expect(page).to have_text(<span class="st">&quot;Hi Avi, nice to meet you!&quot;</span>)</a>
+<a class="sourceLine" id="cb12-9" title="9">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="kw">end</span></a></code></pre></div>
+<p>This new test is trying to mimic what a user should see when they visit the greeting form, fill in the name ‘Avi’, and click the ‘Submit’ button. Because of the amazing <code>RSpec</code> DSL mixed in with <code>Capybara</code>, our test is able to clearly and simply describe that behavior.</p>
+<p>We <code>visit '/'</code> to load the form into the <code>page</code> object.</p>
+<p>Then we use the Capybara method <code>fill_in</code> to fill in the input field <code>user_name</code> with ‘Avi’.</p>
+<p>Finally, we <code>click_button "Submit"</code> to submit the form. That HTML interaction, submitting a form, will trigger a new HTTP request in the Capybara session and <code>page</code> object.</p>
+<p>When a user submits a form, the browser loads a new page, and they see new content. Similarly, when Capybara submits a form, the <code>page</code> object is appropriately updated. <code>page</code> no longer contains the original greeting form, but, rather, after <code>click_button</code> is called, <code>page</code> now contains the response to the greeting form.</p>
+<p>In response to Capybara’s submission of the greeting form, we can <code>expect</code> the <code>page</code> to <code>have_text</code> <code>"Hi Avi, nice to meet you!"</code>. Our test user filled in their <code>user_name</code> as ‘Avi’, and the resulting greeting should mention that. <code>have_text</code> is another really friendly and semantic Capybara matcher for testing HTML text value explicitly.</p>
+<p>After adding this test, if we run our test suite, we’ll see:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">GET</span> <span class="st">&#39;/&#39;</span> - Greeting Form</a>
+<a class="sourceLine" id="cb13-2" title="2">  <span class="ex">welcomes</span> the user</a>
+<a class="sourceLine" id="cb13-3" title="3">  <span class="ex">has</span> a greeting form with a user_name field</a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="ex">POST</span> <span class="st">&#39;/greet&#39;</span> - User Greeting</a>
+<a class="sourceLine" id="cb13-6" title="6">  <span class="ex">greets</span> the user personally based on their user_name in the form (FAILED - 1)</a>
+<a class="sourceLine" id="cb13-7" title="7"></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="ex">Failures</span>:</a>
+<a class="sourceLine" id="cb13-9" title="9"></a>
+<a class="sourceLine" id="cb13-10" title="10">  <span class="ex">1</span>) <span class="ex">POST</span> <span class="st">&#39;/greet&#39;</span> - User Greeting greets the user personally based on their user_name in the form</a>
+<a class="sourceLine" id="cb13-11" title="11">     <span class="ex">Failure</span>/Error: <span class="ex">expect</span>(page)<span class="ex">.to</span> have_text(<span class="st">&quot;Hi Avi, nice to meet you!&quot;</span>)</a>
+<a class="sourceLine" id="cb13-12" title="12">       <span class="ex">expected</span> <span class="co">#has_text?(&quot;Hi Avi, nice to meet you!&quot;) to return true, got false</span></a>
+<a class="sourceLine" id="cb13-13" title="13">     <span class="co"># ./spec/application_integration_spec.rb:24:in `block (2 levels) in &lt;top (required)&gt;&#39;</span></a>
+<a class="sourceLine" id="cb13-14" title="14"></a>
+<a class="sourceLine" id="cb13-15" title="15"><span class="ex">Finished</span> in 0.05962 seconds (files took 0.42668 seconds to load)</a>
+<a class="sourceLine" id="cb13-16" title="16"><span class="ex">3</span> examples, 1 failure</a>
+<a class="sourceLine" id="cb13-17" title="17"></a>
+<a class="sourceLine" id="cb13-18" title="18"><span class="ex">Failed</span> examples:</a>
+<a class="sourceLine" id="cb13-19" title="19"></a>
+<a class="sourceLine" id="cb13-20" title="20"><span class="ex">rspec</span> ./spec/application_integration_spec.rb:18 <span class="co"># POST &#39;/greet&#39; - User Greeting greets the user personally based on their user_name in the form</span></a></code></pre></div>
+<p>Our first two tests relating to <code>GET '/'</code> pass, but our new test is failing. Zooming in on the failure:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="ex">1</span>) <span class="ex">POST</span> <span class="st">&#39;/greet&#39;</span> - User Greeting greets the user personally based on their user_name in the form</a>
+<a class="sourceLine" id="cb14-2" title="2">   <span class="ex">Failure</span>/Error: <span class="ex">expect</span>(page)<span class="ex">.to</span> have_text(<span class="st">&quot;Hi Avi, nice to meet you!&quot;</span>)</a>
+<a class="sourceLine" id="cb14-3" title="3">     <span class="ex">expected</span> <span class="co">#has_text?(&quot;Hi Avi, nice to meet you!&quot;) to return true, got false</span></a></code></pre></div>
+<p>When submitting a <code>POST</code> request to <code>/greet</code>, if the <code>user_name</code> was filled in with <code>Avi</code>, we expected the resulting page to contain the text <code>"Hi Avi, nice to meet you!"</code>. Unfortunately, at this point, it does not.</p>
+<p>To make this pass we need to add two things. Currently, our Sinatra application only responds to a single HTTP request type, <code>GET</code> requests to <code>/</code>. We need to teach it to respond to <code>POST</code> requests to <code>/greet</code>. Let’s do that.</p>
+<p>Edit: <code>./app.rb</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">class</span> <span class="dt">Application</span> &lt; <span class="dt">Sinatra</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb15-2" title="2">  <span class="co"># Old route from previous tests</span></a>
+<a class="sourceLine" id="cb15-3" title="3">  get <span class="ch">&#39;/&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb15-4" title="4">    erb <span class="st">:index</span></a>
+<a class="sourceLine" id="cb15-5" title="5">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb15-6" title="6"></a>
+<a class="sourceLine" id="cb15-7" title="7">  <span class="co"># New route to respond to the form submission</span></a>
+<a class="sourceLine" id="cb15-8" title="8">  post <span class="st">&#39;/greet&#39;</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb15-9" title="9">    erb <span class="st">:greet</span></a>
+<a class="sourceLine" id="cb15-10" title="10">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="kw">end</span></a></code></pre></div>
+<p>Using the Sinatra <code>post</code> method, we create a response for requests to <code>POST '/greet'</code>. That response should be the HTML contained in the <code>views/greet.erb</code> template, just like the HTML response of our first route was contained in <code>views/index.erb</code>.</p>
+<p>The next step is to build our view in <code>views/greet.erb</code>. The point of this view is to use the data the user submitted in the previous form within our HTML to produce a personalized greeting for the user.</p>
+<p>File: <code>views/greet.erb</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">&lt;h1&gt;</span>Hi <span class="er">&lt;</span>%= params[:user_name] %&gt;, nice to meet you!<span class="kw">&lt;/h1&gt;</span></a></code></pre></div>
+<p>That HTML and ERB will satisfy our test.</p>
+<p>If you are unfamiliar with the <code>params</code> object and how it relates to form and inputs, that’s totally fine. The TL;DR is that all the information the user submitted in the form is available to your code within a hash named <code>params</code>. <code>params[:user_name]</code> returns the text the user typed into the form input field <code>user_name</code>. <code>&lt;%= params[:user_name] %&gt;</code> uses ERB’s embedded ruby to dynamically insert the value of <code>params[:user_name]</code> into the HTML of the response.</p>
+<p>With this code in place, our tests should pass, and, if we refresh our browser and submit the form, it should behave as expected.</p>
+<p>That’s it, you totally crushed Capybara and integration testing.</p>
+<h2 id="summary">Summary</h2>
+<p>We learned about:</p>
+<ol type="1">
+<li>Integration Tests – Tests that exercise the outermost part of our application code from the user’s perspective, simulating user interactions with the application via its interface (in this example, a web browser and HTML).</li>
+<li>Capybara – A Ruby library that works with RSpec to allow you to write extremely powerful, simple, and semantic integration tests for web applications.</li>
+<li><code>visit</code> &amp; <code>page</code> – Capybara methods for controlling the test user’s browser and examining the current state of the page as they ‘see’ it.</li>
+<li><code>have_selector</code>, <code>have_field</code>, &amp; <code>have_text</code> – Capybara matchers for ensuring that the page contains certain matching HTML or text.</li>
+<li><code>fill_in</code> &amp; <code>click_button</code> – Capybara methods for mimicking user activities, such as filling in form fields or clicking buttons.</li>
+<li>A simple Sinatra form application with two routes, <code>GET</code> and <code>POST</code>, and a working form that accepts input and sends a dynamic response.</li>
+</ol>
+<p>Great job!</p>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/intro-to-capybara'>Intro to Capybara Tests</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

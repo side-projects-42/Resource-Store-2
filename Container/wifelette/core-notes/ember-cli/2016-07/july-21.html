@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-21</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-07-21">ember-cli Meeting Notes - 2016-07-21</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Katie Gengler</li>
+<li>Jake Bixby</li>
+<li>Kelly Selden</li>
+<li>Robert Jackson</li>
+<li>Stefan Penner</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Nathan - Document merging <code>[BUGFIX master/beta]</code> back on a timeline.</li>
+<li>[ ] Nathan - 2.7.0 major release, 2.8.0-beta.1 release
+<ul>
+<li>[ ] Include baseURL post link in CHANGELOG.md.</li>
+</ul></li>
+<li>[ ] Stef - Fix watcher code for BASH on Ubuntu on Windows.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="assetgraph">AssetGraph</h3>
+<ul>
+<li>Played with it for a while.</li>
+<li>Seems like it will do what we want to do.</li>
+<li>Haven’t reviewed its speed.</li>
+<li>Builds graph that you need and exposes a mechanism to do depth-first.</li>
+<li>Addon to do build stuff, but we can use it just for graphing and traversing the tree.</li>
+<li>It does have a way to feed in changes about what changed without it having to re-build the world.</li>
+</ul>
+<h3 id="heimdall">Heimdall</h3>
+<ul>
+<li>Existing story for doing instrumenting and logging is poor.</li>
+<li>Instead of ad hoc all of the time combine existing ideas into one library.</li>
+<li>It moves all instrumentation into a library.</li>
+<li>Usable for general things, not just Broccoli. Hoping to embed it in Ember itself.</li>
+<li>Shared tooling for analyzing these pieces can be built around the standardized library.</li>
+<li>Eventually consolidate all of the rules and information into one place.</li>
+</ul>
+<h3 id="section">2.7.0</h3>
+<ul>
+<li>All systems go!</li>
+<li>Release ember-cli-legacy-blueprints version bump at some point.</li>
+</ul>
+</body>
+</html>

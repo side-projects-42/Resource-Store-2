@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>html</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="html-legend">HTML Legend</h1>
+<p>This example shows how to create a custom HTML legend using a plugin and connect it to the chart in lieu of the default on-canvas legend.</p>
+<div id="legend-container">
+
+</div>
+<p>```js chart-editor // <block:plugin:0> const getOrCreateLegendList = (chart, id) =&gt; { const legendContainer = document.getElementById(id); let listContainer = legendContainer.querySelector(“ul”);</p>
+<p>if (!listContainer) { listContainer = document.createElement(“ul”); listContainer.style.display = “flex”; listContainer.style.flexDirection = “row”; listContainer.style.margin = 0; listContainer.style.padding = 0;</p>
+<pre><code>legendContainer.appendChild(listContainer);</code></pre>
+<p>}</p>
+<p>return listContainer; };</p>
+<p>const htmlLegendPlugin = { id: “htmlLegend”, afterUpdate(chart, args, options) { const ul = getOrCreateLegendList(chart, options.containerID);</p>
+<pre><code>// Remove old legend items
+while (ul.firstChild) {
+  ul.firstChild.remove();
+}
+
+// Reuse the built-in legendItems generator
+const items = chart.options.plugins.legend.labels.generateLabels(chart);
+
+items.forEach((item) =&gt; {
+  const li = document.createElement(&quot;li&quot;);
+  li.style.alignItems = &quot;center&quot;;
+  li.style.cursor = &quot;pointer&quot;;
+  li.style.display = &quot;flex&quot;;
+  li.style.flexDirection = &quot;row&quot;;
+  li.style.marginLeft = &quot;10px&quot;;
+
+  li.onclick = () =&gt; {
+    const { type } = chart.config;
+    if (type === &quot;pie&quot; || type === &quot;doughnut&quot;) {
+      // Pie and doughnut charts only have a single dataset and visibility is per item
+      chart.toggleDataVisibility(item.index);
+    } else {
+      chart.setDatasetVisibility(
+        item.datasetIndex,
+        !chart.isDatasetVisible(item.datasetIndex)
+      );
+    }
+    chart.update();
+  };
+
+  // Color box
+  const boxSpan = document.createElement(&quot;span&quot;);
+  boxSpan.style.background = item.fillStyle;
+  boxSpan.style.borderColor = item.strokeStyle;
+  boxSpan.style.borderWidth = item.lineWidth + &quot;px&quot;;
+  boxSpan.style.display = &quot;inline-block&quot;;
+  boxSpan.style.height = &quot;20px&quot;;
+  boxSpan.style.marginRight = &quot;10px&quot;;
+  boxSpan.style.width = &quot;20px&quot;;
+
+  // Text
+  const textContainer = document.createElement(&quot;p&quot;);
+  textContainer.style.color = item.fontColor;
+  textContainer.style.margin = 0;
+  textContainer.style.padding = 0;
+  textContainer.style.textDecoration = item.hidden ? &quot;line-through&quot; : &quot;&quot;;
+
+  const text = document.createTextNode(item.text);
+  textContainer.appendChild(text);
+
+  li.appendChild(boxSpan);
+  li.appendChild(textContainer);
+  ul.appendChild(li);
+});</code></pre>
+<p>}, }; // </block:plugin></p>
+<p>// <block:data:1> const NUM_DATA = 7; const NUM_CFG = { count: NUM_DATA, min: 0, max: 100 }; const data = { labels: Utils.months({ count: NUM_DATA }), datasets: [ { label: “Dataset: 1”, data: Utils.numbers(NUM_CFG), borderColor: Utils.CHART_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), fill: false, }, { label: “Dataset: 1”, data: Utils.numbers(NUM_CFG), borderColor: Utils.CHART_COLORS.blue, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), fill: false, }, ], }; // </block:data></p>
+<p>// <block:setup:2> const config = { type: “line”, data: data, options: { plugins: { htmlLegend: { // ID of the container to put the legend in containerID: “legend-container”, }, legend: { display: false, }, }, }, plugins: [htmlLegendPlugin], }; // </block:setup></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-11</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="agenda">2016-08-11 Agenda</h1>
+<p>Previously</p>
+<ul>
+<li>[x] GJ: Ember Inspector videos</li>
+<li>[x] TJ: Subroutes on remote branch</li>
+<li>[ ] RM: talk to <span class="citation" data-cites="ebryn">@ebryn</span> about controllers</li>
+<li>[ ] RM: Learning Team Blog Post</li>
+<li>[ ] Schedule meeting with Teddy RM</li>
+<li>[ ] Expand Learn page
+<ul>
+<li>[ ] Add Deep Dive videos</li>
+<li>[ ] Advanced Ember topics -&gt; ping mike/LI (nathan)/Netflix (sugarpirate?)</li>
+</ul></li>
+<li>[ ] RM: Recruit translation infrastructure workers</li>
+</ul>
+<p>Topics</p>
+<ul>
+<li>2.3 - 2.6 Ember Data imports, other imports - DB</li>
+<li>Algolia update - DB</li>
+<li>Firebase upgrade (from email LS got)</li>
+<li>Advanced Ember documentation (how do we handle this?) - DB (and Erik Bryn?)</li>
+<li>Search API</li>
+<li>from last meeting (still need to discuss?)
+<ul>
+<li>Tutorial (TJ)</li>
+<li>Ember Hearth</li>
+<li>Translations</li>
+<li>bors</li>
+</ul></li>
+</ul>
+<h1 id="action-items">Action Items</h1>
+<ul>
+<li>[ ] GJ: Will review the Quick Start video, come with ideas next week</li>
+<li>[ ] TJ: Get video chat fix so people don’t get booted</li>
+<li>[ ] TJ: PR to super rentals to have maps working OOTB</li>
+<li>[ ] DB: work with siva about pemissions tool issues</li>
+</ul>
+<h1 id="minutes">Minutes</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>TJ: Todd Jordan <span class="citation" data-cites="toddjordan">@toddjordan</span></li>
+<li>DB: David Baker <span class="citation" data-cites="acorncom">@acorncom</span></li>
+<li>LS: Leah Silber <span class="citation" data-cites="wifette">@wifette</span></li>
+<li>GJ: Gavin Joyce <span class="citation" data-cites="gavinjoyce">@gavinjoyce</span></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<hr />
+<h3 id="ember-inspector-video">Ember Inspector video</h3>
+<ul>
+<li>GJ: video is done (https://www.youtube.com/watch?v=laxMyrk9P10)</li>
+</ul>
+<h3 id="getting-startedquick-start-video">getting started/quick start video</h3>
+<p>DB: would like to have a video like we did in 1.10. Was a nice thing we lost in newer versions</p>
+<p>GJ: would be up for it. Will do some research/thought and continue discussion next time</p>
+<h3 id="firebase-upgrade">Firebase upgrade</h3>
+<p>DB: Email to Leah about upgrading, asking us to use latest infrastructure… Lets try while here.</p>
+<p><em>(also gave todd access to firebase)</em></p>
+<p>DB: If we can get free SSL that would be great for docs.</p>
+<p>LS: Blocked because asking for money… emailing back</p>
+<h3 id="search-api">Search API</h3>
+<p>TJ: Request brought up by <span class="citation" data-cites="ladyleet">@ladyleet</span>. Could we conceivably proxy the algolia search through our own api service</p>
+<p>DB: Yes we could. Would open up things like browser search bar</p>
+<p>TJ: will get back and let her know its a possibility</p>
+<h3 id="ember-data-guides-pr">Ember data Guides PR</h3>
+<p>DB: Reverting back to use old imports. Can we merge.</p>
+<p>TJ: Only thing to do would be to include the old imports</p>
+<p>DB: Needs to be done quickly because its wrong now</p>
+<p>TJ: ok with merging for now <em>(merged)</em></p>
+<h3 id="api-docs-effort">API Docs Effort</h3>
+<p>TJ: Would like to help when I roll off of tutorial. Should be next week after subroutes is merged</p>
+<p>DB: The core piece is making it fastboot because Algolia needs a statically generated page. We are working with heroku</p>
+<p>DB: also will have to consider incorporation into the website (engine?) Its becoming a complicated effort.</p>
+<p>TJ: want to start rolling things out a little at a time and have a roadmap.</p>
+<h3 id="maps-tutorial">Maps tutorial</h3>
+<p>DB: couple reports about google maps not working</p>
+<p>TJ: Because of 2 things… something about the curl of the google library doesn’t work across machines, so when you download super-rentals, you have to recurl. Could also run out of map requests. It should be fine going through the tutorial from scratch</p>
+<p>DB: would be nice to have working when you install super rentals out of the box.</p>
+<p>TJ: Will insert a script tag for it on super-rentals and explain in the readme. Will keep the curl command in the tutorial as an intro to the vendor directory.</p>
+<h3 id="repo-moves-to-ember-learn">Repo moves to ember-learn</h3>
+<p>DB: Permissions (gh-team-copy) tool is ready. Need Blessing/Admin on both sides for this to happen (LS).</p>
+<p>LS: ok, will do now <em>(doing)</em> … Found some issues with the tool, feeding back to the repo. Super rentals moved</p>
+</body>
+</html>

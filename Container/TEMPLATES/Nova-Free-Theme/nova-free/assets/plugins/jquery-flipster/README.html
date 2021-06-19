@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="jquery.flipster">jQuery.Flipster</h1>
+<p>Flipster is a CSS3 3D transform-based jQuery plugin built to replicate the familiar ‘cover flow’ effect, but also supports a variety of styles. Not only is it gorgeous to look at, Flipster is also:</p>
+<ul>
+<li><strong>Responsive</strong>: From desktop to mobile, Flipster automatically centers and scales to fit the area provided.</li>
+<li><strong>Lightweight</strong>: Javascript and CSS combined are only 5kb gzipped (13kb uncompressed). Only dependency is jQuery.</li>
+<li><strong>Touch/Scrollwheel/Trackpad/Keyboard Friendly</strong> Swipe on touch devices, scroll via trackpad or mousewheel, and use your arrow keys to fly through items!</li>
+<li><strong>Flexible:</strong> Flip an image gallery or any HTML content. Links and dynamic content work great!</li>
+<li><strong>Customizable:</strong> Four built in styles (coverflow, carousel, wheel and flat) with plenty of options to configure Flipster the way you want.</li>
+</ul>
+<p>Live demo: http://brokensquare.com/Code/jquery-flipster/demo/</p>
+<h2 id="browser-support">Browser Support</h2>
+<ul>
+<li>[x] Chrome (latest)</li>
+<li>[x] Safari &amp; iOS Safari (latest)</li>
+<li>[x] Firefox (latest)</li>
+<li>[x] IE 10+ full support</li>
+<li>[x] IE 8-9 limited support</li>
+</ul>
+<h2 id="basic-usage">Basic Usage</h2>
+<p><strong>Step 1</strong>: Include Flipster’s CSS, typically in the <code>&lt;head&gt;</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> href=</span><span class="st">&quot;css/flipster.min.css&quot;</span><span class="kw">&gt;</span></a></code></pre></div>
+<p><em>Tip: Use the un-minified <code>flipster.css</code> or the LESS files in the <code>src/less</code> folder to make your own Flipster styles!</em></p>
+<p><strong>Step 2</strong>: Set up your content:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;my-flipster&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="kw">&lt;li&gt;&lt;img</span><span class="ot"> src=</span><span class="st">&quot;&quot;</span> <span class="kw">/&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="kw">&lt;li&gt;&lt;p&gt;</span>Plain ol&#39; <span class="kw">&lt;abbr&gt;</span>HTML<span class="kw">&lt;/abbr&gt;</span>!<span class="kw">&lt;/p&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    ...</a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">&lt;/div&gt;</span></a></code></pre></div>
+<p><em>Tip: Set the <code>itemContainer</code> and <code>itemSelector</code> options to fit your markup. Flipster only requires an outer container and inner container; you aren’t restricted to <code>&lt;div&gt;</code>, <code>&lt;ul&gt;</code>, and <code>&lt;li&gt;</code>s. </em></p>
+<p><strong>Step 3</strong>: Include Flipster’s Javascript after jQuery (ideally at the bottom of the page before the <code>&lt;/body&gt;</code> tag) and initialize Flipster on your element:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;/js/jquery.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;/js/jquery.flipster.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">&lt;script&gt;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="at">$</span>(<span class="st">&#39;.my-flipster&#39;</span>).<span class="at">flipster</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">&lt;/script&gt;</span></a></code></pre></div>
+<p><strong>Step 4</strong>: Start flippin’!</p>
+<h2 id="options">Options</h2>
+<p>Configure your options when first initializing Flipster. Default values and descriptions are shown below.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="at">$</span>(<span class="st">&#39;.my-flipster&#39;</span>).<span class="at">flipster</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="dt">itemContainer</span><span class="op">:</span> <span class="st">&#39;ul&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="co">// [string|object]</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="co">// Selector for the container of the flippin&#39; items.</span></a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6">    <span class="dt">itemSelector</span><span class="op">:</span> <span class="st">&#39;li&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="co">// [string|object]</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="co">// Selector for children of `itemContainer` to flip</span></a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10">    <span class="dt">start</span><span class="op">:</span> <span class="st">&#39;center&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-11" title="11">    <span class="co">// [&#39;center&#39;|number]</span></a>
+<a class="sourceLine" id="cb4-12" title="12">    <span class="co">// Zero based index of the starting item, or use &#39;center&#39; to start in the middle</span></a>
+<a class="sourceLine" id="cb4-13" title="13"></a>
+<a class="sourceLine" id="cb4-14" title="14">    <span class="dt">fadeIn</span><span class="op">:</span> <span class="dv">400</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-15" title="15">    <span class="co">// [milliseconds]</span></a>
+<a class="sourceLine" id="cb4-16" title="16">    <span class="co">// Speed of the fade in animation after items have been setup</span></a>
+<a class="sourceLine" id="cb4-17" title="17"></a>
+<a class="sourceLine" id="cb4-18" title="18">    <span class="dt">loop</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-19" title="19">    <span class="co">// [true|false]</span></a>
+<a class="sourceLine" id="cb4-20" title="20">    <span class="co">// Loop around when the start or end is reached</span></a>
+<a class="sourceLine" id="cb4-21" title="21"></a>
+<a class="sourceLine" id="cb4-22" title="22">    <span class="dt">autoplay</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-23" title="23">    <span class="co">// [false|milliseconds]</span></a>
+<a class="sourceLine" id="cb4-24" title="24">    <span class="co">// If a positive number, Flipster will automatically advance to next item after that number of milliseconds</span></a>
+<a class="sourceLine" id="cb4-25" title="25"></a>
+<a class="sourceLine" id="cb4-26" title="26">    <span class="dt">pauseOnHover</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-27" title="27">    <span class="co">// [true|false]</span></a>
+<a class="sourceLine" id="cb4-28" title="28">    <span class="co">// If true, autoplay advancement will pause when Flipster is hovered</span></a>
+<a class="sourceLine" id="cb4-29" title="29"></a>
+<a class="sourceLine" id="cb4-30" title="30">    <span class="dt">style</span><span class="op">:</span> <span class="st">&#39;coverflow&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-31" title="31">    <span class="co">// [coverflow|carousel|flat|...]</span></a>
+<a class="sourceLine" id="cb4-32" title="32">    <span class="co">// Adds a class (e.g. flipster--coverflow) to the flipster element to switch between display styles</span></a>
+<a class="sourceLine" id="cb4-33" title="33">    <span class="co">// Create your own theme in CSS and use this setting to have Flipster add the custom class</span></a>
+<a class="sourceLine" id="cb4-34" title="34"></a>
+<a class="sourceLine" id="cb4-35" title="35">    <span class="dt">spacing</span><span class="op">:</span> <span class="fl">-0.6</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-36" title="36">    <span class="co">// [number]</span></a>
+<a class="sourceLine" id="cb4-37" title="37">    <span class="co">// Space between items relative to each item&#39;s width. 0 for no spacing, negative values to overlap</span></a>
+<a class="sourceLine" id="cb4-38" title="38"></a>
+<a class="sourceLine" id="cb4-39" title="39">    <span class="dt">click</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-40" title="40">    <span class="co">// [true|false]</span></a>
+<a class="sourceLine" id="cb4-41" title="41">    <span class="co">// Clicking an item switches to that item</span></a>
+<a class="sourceLine" id="cb4-42" title="42"></a>
+<a class="sourceLine" id="cb4-43" title="43">    <span class="dt">keyboard</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-44" title="44">    <span class="co">// [true|false]</span></a>
+<a class="sourceLine" id="cb4-45" title="45">    <span class="co">// Enable left/right arrow navigation</span></a>
+<a class="sourceLine" id="cb4-46" title="46"></a>
+<a class="sourceLine" id="cb4-47" title="47">    <span class="dt">scrollwheel</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-48" title="48">    <span class="co">// [true|false]</span></a>
+<a class="sourceLine" id="cb4-49" title="49">    <span class="co">// Enable mousewheel/trackpad navigation; up/left = previous, down/right = next</span></a>
+<a class="sourceLine" id="cb4-50" title="50"></a>
+<a class="sourceLine" id="cb4-51" title="51">    <span class="dt">touch</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-52" title="52">    <span class="co">// [true|false]</span></a>
+<a class="sourceLine" id="cb4-53" title="53">    <span class="co">// Enable swipe navigation for touch devices</span></a>
+<a class="sourceLine" id="cb4-54" title="54"></a>
+<a class="sourceLine" id="cb4-55" title="55">    <span class="dt">nav</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-56" title="56">    <span class="co">// [true|false|&#39;before&#39;|&#39;after&#39;]</span></a>
+<a class="sourceLine" id="cb4-57" title="57">    <span class="co">// If not false, Flipster will build an unordered list of the items</span></a>
+<a class="sourceLine" id="cb4-58" title="58">    <span class="co">// Values true or &#39;before&#39; will insert the navigation before the items, &#39;after&#39; will append the navigation after the items</span></a>
+<a class="sourceLine" id="cb4-59" title="59"></a>
+<a class="sourceLine" id="cb4-60" title="60">    <span class="dt">buttons</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-61" title="61">    <span class="co">// [true|false|&#39;custom&#39;]</span></a>
+<a class="sourceLine" id="cb4-62" title="62">    <span class="co">// If true, Flipster will insert Previous / Next buttons with SVG arrows</span></a>
+<a class="sourceLine" id="cb4-63" title="63">    <span class="co">// If &#39;custom&#39;, Flipster will not insert the arrows and will instead use the values of `buttonPrev` and `buttonNext`</span></a>
+<a class="sourceLine" id="cb4-64" title="64"></a>
+<a class="sourceLine" id="cb4-65" title="65">    <span class="dt">buttonPrev</span><span class="op">:</span> <span class="st">&#39;Previous&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-66" title="66">    <span class="co">// [text|html]</span></a>
+<a class="sourceLine" id="cb4-67" title="67">    <span class="co">// Changes the text for the Previous button</span></a>
+<a class="sourceLine" id="cb4-68" title="68"></a>
+<a class="sourceLine" id="cb4-69" title="69">    <span class="dt">buttonNext</span><span class="op">:</span> <span class="st">&#39;Next&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-70" title="70">    <span class="co">// [text|html]</span></a>
+<a class="sourceLine" id="cb4-71" title="71">    <span class="co">// Changes the text for the Next button</span></a>
+<a class="sourceLine" id="cb4-72" title="72"></a>
+<a class="sourceLine" id="cb4-73" title="73">    <span class="dt">onItemSwitch</span><span class="op">:</span> <span class="kw">false</span></a>
+<a class="sourceLine" id="cb4-74" title="74">    <span class="co">// [function]</span></a>
+<a class="sourceLine" id="cb4-75" title="75">    <span class="co">// Callback function when items are switched</span></a>
+<a class="sourceLine" id="cb4-76" title="76">    <span class="co">// Arguments received: [currentItem, previousItem]</span></a>
+<a class="sourceLine" id="cb4-77" title="77"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h2 id="methods">Methods</h2>
+<p>Once an element has been initialized with Flipster, you can call methods to control it:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">var</span> myFlipster <span class="op">=</span> <span class="at">$</span>(<span class="st">&#39;.my-flipster&#39;</span>).<span class="at">flipster</span>()<span class="op">;</span> <span class="co">// It&#39;s best to store the element as a variable for easy reference.</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;next&#39;</span>)<span class="op">;</span> <span class="co">// Next item</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;prev&#39;</span>)<span class="op">;</span> <span class="co">// Previous item</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;jump&#39;</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span> <span class="co">// Jump to a specific index</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;jump&#39;</span><span class="op">,</span> <span class="at">$</span>(<span class="st">&#39;.my-item&#39;</span>))<span class="op">;</span> <span class="co">// Jump to a specific item</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;play&#39;</span>)<span class="op">;</span> <span class="co">// Resume autoplay</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;play&#39;</span><span class="op">,</span> <span class="dv">5000</span>)<span class="op">;</span> <span class="co">// Set autoplay duration</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;pause&#39;</span>)<span class="op">;</span> <span class="co">// Pause the autoplay until next jump</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;stop&#39;</span>)<span class="op">;</span> <span class="co">// Stop the autoplay entirely</span></a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="va">myFlipster</span>.<span class="at">flipster</span>(<span class="st">&#39;index&#39;</span>)<span class="op">;</span> <span class="co">// If items are added or removed, you can tell Flipster to reindex </span></a></code></pre></div>
+<h2 id="navigation">Navigation</h2>
+<p>Set <code>nav: true</code> in the options and Flipster can build an unordered list of links to each item to let users jump around.</p>
+<p>The navigation list will use each item’s <code>data-flip-title</code> attribute as the text. If an item does not have a <code>data-flip-title</code>, Flipster will try to grab the <code>title</code> attribute, or will default to the item’s index.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;my-flipster&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb6-2" title="2">    <span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb6-3" title="3">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 1 Title&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 2 Title&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb6-5" title="5">        ...</a>
+<a class="sourceLine" id="cb6-6" title="6">    <span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="kw">&lt;/div&gt;</span></a></code></pre></div>
+<h2 id="categories">Categories</h2>
+<p>Include <code>data-flip-category</code> attributes on your items, and the navigation list will group items into categories, allowing for basic filtering and quicker navigation.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;my-flipster&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb7-2" title="2">    <span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb7-3" title="3">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 1 Title&quot;</span><span class="ot"> data-flip-category=</span><span class="st">&quot;Category 1&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb7-4" title="4">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 2 Title&quot;</span><span class="ot"> data-flip-category=</span><span class="st">&quot;Category 1&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb7-5" title="5">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 3 Title&quot;</span><span class="ot"> data-flip-category=</span><span class="st">&quot;Category 2&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb7-6" title="6">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 4 Title&quot;</span><span class="ot"> data-flip-category=</span><span class="st">&quot;Category 2&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb7-7" title="7">        <span class="kw">&lt;li</span><span class="ot"> data-flip-title=</span><span class="st">&quot;Item 5 Title&quot;</span><span class="kw">&gt;</span>...<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb7-8" title="8">    <span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="kw">&lt;/div&gt;</span></a></code></pre></div>
+<h2 id="contributing">Contributing</h2>
+<p>If you run into a problem or have an idea, <a href="https://github.com/drien/jquery-flipster/issues">make an issue</a> on Github.</p>
+<p>See room for improvement? Don’t be shy! Fork this repo and I’ll be happy to merge pull requests provided they keep Flipster lightweight, simple, and free of dependencies beyond jQuery. Make sure that you run <a href="http://gruntjs.com"><code>grunt</code></a> to generate minified files for distribution before making a pull request!</p>
+<h2 id="version-history">Version History</h2>
+<ul>
+<li>1.1.3 - Nov 10 2017
+<ul>
+<li>Improvements to touch swiping on mobile devices, thanks to <span class="citation" data-cites="fjmusick">@fjmusick</span></li>
+</ul></li>
+<li>1.1.2 - Mar 3 2016
+<ul>
+<li>Bower &amp; package.json fixes</li>
+</ul></li>
+<li>1.1.1 - Mar 3 2016
+<ul>
+<li>Fix for maximum callstack errors when not visible. #74 #79</li>
+</ul></li>
+<li>1.1.0 - Mar 3 2016
+<ul>
+<li><code>stop</code> method added for issues like #75</li>
+</ul></li>
+<li>1.0.1 - Nov 1 2015
+<ul>
+<li>Fixed issue #63 where the active nav class was added to all nav items.</li>
+</ul></li>
+<li>1.0.0 - Oct 23 2015
+<ul>
+<li>Special thanks to <span class="citation" data-cites="shshaw">[@shshaw]</span>(http://twitter.com/shshaw)</a> for major additions leading to version 1.0!</li>
+<li>Massive rewrite for performance optimization and simplification</li>
+<li><em>Some option names have changed</em>; be sure to check the documentation to update your code</li>
+<li>Better scrollwheel, keyboard and touch events</li>
+<li><a href="http://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/">BEM syntax</a> for all Flipster classes</li>
+<li>Added <code>autoplay</code> option to automatically advance through items; <code>pauseOnHover</code> option will prevent items from switching automatically while hovered</li>
+<li>Added <code>fadeIn</code> option for controlling duration of fade-in animation after Flipster has been setup</li>
+</ul></li>
+<li>0.3.4 - July 23 2014
+<ul>
+<li>Some additional options available</li>
+<li>Cleaned up code and normalized whitespace</li>
+<li>Added Grunt support for minifying css and js for distribution</li>
+</ul></li>
+<li>0.3.2 - February 4 2014
+<ul>
+<li>Added public access for <code>jump</code> method and functionality for exposing other methods. (Thanks <span class="citation" data-cites="JoeWagner">@JoeWagner</span>!)</li>
+<li>A number of bug fixes.</li>
+</ul></li>
+<li>0.3.1 - July 18 2013
+<ul>
+<li>Better demos ( See http://brokensquare.com/Code/jquery-Flipster/demo/ )</li>
+</ul></li>
+<li>0.3.0 - July 17 2013
+<ul>
+<li><span class="citation" data-cites="shshaw">@shshaw</span> forked from <span class="citation" data-cites="drien">@drien</span>’s <a href="https://github.com/drien/jquery-Flipster">jQuery.Flipster</a></li>
+<li>Added new Carousel style! Shows 5 items at a time in a looping carousel</li>
+<li>Added <code>itemContainer</code>, <code>itemSelector</code>, <code>style</code>, and <code>start</code> options for basic configuration</li>
+<li>Added <code>enableKeyboard</code>, <code>enableMousewheel</code>, and <code>enableTouch</code> options to enable/disable features</li>
+<li>Added <code>enableNav</code> and <code>enableNavButtons</code> options to insert controls into the container</li>
+<li>Added <code>onItemSwitch</code> callback</li>
+</ul></li>
+<li>0.2.1 - July 11 2013
+<ul>
+<li>Fixed bug where all keyboard input was being suppressed.</li>
+</ul></li>
+<li>0.2.0 - June 27 2013
+<ul>
+<li>Added automatic height adjustment for the container element, which used to just overflow.</li>
+<li>A few minor code improvements.</li>
+<li>Added minified versions of the js and css files.</li>
+</ul></li>
+<li>0.1.3 - March 25 2013
+<ul>
+<li>Strong men also cry, strong men also cry.</li>
+</ul></li>
+<li>0.1.0 - March 25 2013
+<ul>
+<li>Improvements in fallbacks for old version of IE and basic fixes to make it actually work.</li>
+</ul></li>
+<li>0.0.0 - March 22 2013
+<ul>
+<li>LIFE ON THE BLEEDING EDGE BABY</li>
+</ul></li>
+</ul>
+<h2 id="license">License</h2>
+<p>The MIT License (MIT)</p>
+<p>Copyright (c) 2013-2019 Adrien Delessert</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</body>
+</html>

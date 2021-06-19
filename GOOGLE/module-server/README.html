@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="module-server">Module Server</h1>
+<p>Module server is a system for efficient serving of CommonJS modules to web browsers. The core feature is that it supports <em>incremental loading</em> of modules and their dependencies with exactly 1 HTTP request per incremental load.</p>
+<p>This is a <em>reference implementation</em> that has not been battle-tested in production use. See our <a href="https://docs.google.com/presentation/d/1Q44eWLI2qvZnmCF5oD2jCw-FFql9dYg36FE5CpbMlw4/preview">presentation from JSConf EU 2012</a> for more details.</p>
+<p>The serving system implements the following constraints:</p>
+<ul>
+<li>Requesting a module initiates exactly 1 HTTP request</li>
+<li>This single requests contains the requested module and all its dependencies.</li>
+<li>Incremental loading (every module request after the first one) of additional modules only downloads dependencies that have not been requested already.</li>
+<li>The client does not need to download a dependency tree to decide which additional dependencies to download.</li>
+</ul>
+<p>For many web applications serving all JavaScript in a single compiled binary may be a good enough, simple solution, more complex apps with large JS code bases will profit from only downloading code when it is needed. While AMD loaders such as <a href="http://requirejs.org/">require.js</a> implement incremental loading as well, they often do so through recursive downloading of dependencies which may significantly degrade latency.</p>
+<p>Closure compiler supports both compilation of CommonJS and AMD modules. It should thus be possible to use this system as a production frontend for projects that use other systems such as require.js or browserify today.</p>
+<h2 id="source-maps">Source Maps</h2>
+<p>By default all JS responses support <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/">source maps</a> for optimal debugging with Chrome Dev Tools (Don’t forget to activate source map support in the Dev Tools settings). We recommend to deactivate this for production use, if you only want to provide clients access to obfuscated JS</p>
+<h2 id="setup">Setup</h2>
+<p>See <a href="demo-server.js">demo-server.js</a> for an example server. You may want to adapt this to your individual serving stack (such as as for use within express). We recommend doing actual serving through a caching reverse proxy CDN network for minimal latency.</p>
+<h3 id="demo">Demo</h3>
+<p>Run <code>node demo-server.js</code> then drag <a href="clients/test/demo.html">clients/test/demo.html</a> to a browser window.</p>
+<h2 id="client">Client</h2>
+<p><a href="clients/module-client.js">clients/module-client.js</a> provides the in-browser module loader. It depends on $LAB.js but should be easily adaptable to most JS loaders.</p>
+<p>This will get you started:</p>
+<pre><code>&lt;script src=&quot;../third-party/LABjs/LAB.src.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;../module-client.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+window.loadModule = ModuleServer(&#39;http://127.0.0.1:1337/&#39;);
+&lt;/script&gt;</code></pre>
+<p>Whenever you want to do an incremental load of a module, replace <code>require('foo')</code> with <code>loadModule('foo', function(foo) { … })</code> and you are all set.</p>
+<h2 id="compiler">Compiler</h2>
+<p><a href="module-compiler/bin.js">module-compiler/bin.js</a> is a wrapper around closure compiler for compiling JS for serving with Module Server. Run with –help for usage. It supports watching a directory tree for automatic compilation when you change your sources and it ships with closure compiler for easy installation.</p>
+<p>Make sure you have the java binary in your path :)</p>
+<p>Example:</p>
+<pre><code>node module-compiler/bin.js  --module_path=./test/fixtures/sample-module --entry_module=app --output_path=../build/</code></pre>
+<p>See the <a href="module-compiler/INSTALL.md">INSTALL</a> instructions.</p>
+<h3 id="compilation">Compilation</h3>
+<p>Create a file called <code>app.js</code> (or whatever you like) and require all of your top-level modules in it (the ones you actually want to request from your application). This will ensure that everything gets compiled in one go.</p>
+<h2 id="fine-print">Fine print</h2>
+<p>Pull requests are very much appreciated. Please sign the <a href="http://code.google.com/legal/individual-cla-v1.0.html">Google Code contributor license agreement</a> (There is a convenient online form) before submitting.</p>
+<p>Author<br />
+<a href="https://github.com/cramforce">Malte Ubl (Google Inc.)</a></p>
+<p>Copyright<br />
+Copyright © 2012 Google, Inc.</p>
+<p>License<br />
+Apache 2.0</p>
+</body>
+</html>

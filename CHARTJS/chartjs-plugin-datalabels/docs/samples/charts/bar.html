@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>bar</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="bar">Bar</h1>
+<p>```js chart-editor // <block:setup:2> var DATA_COUNT = 10; var labels = [];</p>
+<p>Utils.srand(2);</p>
+<p>for (var i = 0; i &lt; DATA_COUNT; ++i) { labels.push("" + i); } // </block:setup></p>
+<p>var config = /* <block:config:0> */ { type: “bar”, data: { labels: labels, datasets: [ { backgroundColor: Utils.color(0), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), datalabels: { align: “end”, anchor: “start”, }, }, { backgroundColor: Utils.color(1), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), datalabels: { align: “center”, anchor: “center”, }, }, { backgroundColor: Utils.color(2), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), datalabels: { anchor: “end”, align: “start”, }, }, ], }, options: { plugins: { datalabels: { color: “white”, display: function (context) { return context.dataset.data[context.dataIndex] &gt; 15; }, font: { weight: “bold”, }, formatter: Math.round, }, },</p>
+<pre><code>// Core options
+aspectRatio: 5 / 3,
+layout: {
+  padding: {
+    top: 24,
+    right: 16,
+    bottom: 0,
+    left: 8,
+  },
+},
+elements: {
+  line: {
+    fill: false,
+  },
+  point: {
+    hoverRadius: 7,
+    radius: 5,
+  },
+},
+scales: {
+  xAxes: [
+    {
+      stacked: true,
+    },
+  ],
+  yAxes: [
+    {
+      stacked: true,
+    },
+  ],
+},</code></pre>
+<p>}, }; /* </block:config> */</p>
+<p>var actions = [ { name: “Randomize”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.backgroundColor = Utils.color(); dataset.data = dataset.data.map(function (value) { return Utils.rand(0, 100); }); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Add data”, handler: function (chart) { chart.data.labels.push(chart.data.labels.length); chart.data.datasets.forEach(function (dataset, i) { dataset.data.push(Utils.rand(0, 100)); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Remove data”, handler: function (chart) { chart.data.labels.shift(); chart.data.datasets.forEach(function (dataset, i) { dataset.data.shift(); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, ];</p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

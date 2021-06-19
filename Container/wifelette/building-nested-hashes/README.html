@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="code-along-exercise-building-nested-hashes">Code Along Exercise: Building Nested Hashes</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Learn the usefulness of nested hashes.</li>
+<li>Build a nested hash.</li>
+<li>Access and manipulate data in nested hashes.</li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>So far, we’ve seen hashes that store values in associated keys. In the hashes we’ve built up until now, each key points to a single value. Hashes are so useful, however, because they can be multi-dimensional, or nested. A key in a hash can point to a value that is a <em>collection of objects</em>, i.e. an array or even another hash. Let’s take a look:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">flatiron_school = {</a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="st">instructors: </span>[<span class="st">&quot;Avi&quot;</span>, <span class="st">&quot;Jeff&quot;</span>, <span class="st">&quot;Rose&quot;</span>],</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="st">dev_team: </span>[<span class="st">&quot;Jonas&quot;</span>, <span class="st">&quot;Yeti&quot;</span>, <span class="st">&quot;Seiji&quot;</span>],</a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="st">students: </span>[<span class="st">&quot;Sarah&quot;</span>, <span class="st">&quot;you&quot;</span>, <span class="st">&quot;John&quot;</span>, <span class="st">&quot;David&quot;</span>]</a>
+<a class="sourceLine" id="cb1-5" title="5">}</a></code></pre></div>
+<p>In the above example, each key points to an array of names. Let’s say we wanted to access that array of instructors. We can do it using the same syntax we’ve used to access the values of hash keys in single-layer hashes. Let’s get the <code>:instructors</code> array:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">flatironschool[<span class="st">:instructors</span>]</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="co">#  =&gt; [&quot;Avi&quot;, &quot;Jeff&quot;, &quot;Rose&quot;]</span></a></code></pre></div>
+<p>What if I wanted to grab <em>just the first name</em> in the instructor’s array? We use the same methods for accessing array index items that we’ve been using all along:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">flatironschool[<span class="st">:instructors</span>][<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co">#  =&gt; &quot;Avi&quot;</span></a></code></pre></div>
+<p>Nested hashes can get pretty complicated. You could have a key that points to a value of a hash and that hash can have keys that point to values of still more hashes and so on and so on. You can think of a nested hash as a tree. Let’s take a closer look.</p>
+<h2 id="code-along-challenge-epic-tragedy">Code Along Challenge: Epic Tragedy</h2>
+<p>You’re 16 years old and back in high school english class. Luckily for us, our teacher is kind of lazy and we get to watch the <em>Romeo and Juliet</em> movie from the ’90s starring Leonardo DiCaprio and Claire Danes.</p>
+<p><img src="http://readme-pics.s3.amazonaws.com/RomeoandJuliet5.jpg" /></p>
+<p><em>If you have not seen this movie, I would recommend watching it before proceeding with this course or anything else in your life!</em></p>
+<p>We need to get ready for the Romeo and Juliet quiz our teacher has scheduled for us. We will definitely be required to answer some questions on the cast of characters and their attributes and relationships to one another. Let’s map out that information:</p>
+<p><img src="http://readme-pics.s3.amazonaws.com/hash_intro_shakespeare%20(2).png" /></p>
+<p>What we have here is a nested data structure. There are different levels or tiers of information. On the top tier, we have the family names, beneath that we have key characters, and beneath that we have their attributes. We have an additional layer on the hero/heroine’s friends because there are multiple friends. Now that we have a sense of the structure that our collection of information is taking, we’re going to build a nested hash that displays it in the same nested way. Our end result will look like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1"></a>
+<a class="sourceLine" id="cb4-2" title="2">epic_tragedy = {</a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="st">:montague</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="st">:patriarch</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-5" title="5">      <span class="st">:name</span> =&gt; <span class="st">&quot;Lord Montague&quot;</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">      <span class="st">:age</span> =&gt; <span class="st">&quot;53&quot;</span></a>
+<a class="sourceLine" id="cb4-7" title="7">  },</a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="st">:matriarch</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-9" title="9">      <span class="st">:name</span> =&gt; <span class="st">&quot;Lady Montague&quot;</span>,</a>
+<a class="sourceLine" id="cb4-10" title="10">      <span class="st">:age</span> =&gt; <span class="st">&quot;54&quot;</span></a>
+<a class="sourceLine" id="cb4-11" title="11">  },</a>
+<a class="sourceLine" id="cb4-12" title="12">    <span class="st">:hero</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-13" title="13">      <span class="st">:name</span> =&gt; <span class="st">&quot;Romeo&quot;</span>,</a>
+<a class="sourceLine" id="cb4-14" title="14">      <span class="st">:age</span> =&gt; <span class="st">&quot;15&quot;</span></a>
+<a class="sourceLine" id="cb4-15" title="15">  },</a>
+<a class="sourceLine" id="cb4-16" title="16">    <span class="st">:hero_friends</span> =&gt; [</a>
+<a class="sourceLine" id="cb4-17" title="17">      {</a>
+<a class="sourceLine" id="cb4-18" title="18">         <span class="st">:name</span> =&gt; <span class="st">&quot;Benvolio&quot;</span>,</a>
+<a class="sourceLine" id="cb4-19" title="19">         <span class="st">:age</span> =&gt; <span class="st">&quot;17&quot;</span>,</a>
+<a class="sourceLine" id="cb4-20" title="20">         <span class="st">:attitude</span> =&gt; <span class="st">&quot;worried&quot;</span></a>
+<a class="sourceLine" id="cb4-21" title="21">      },</a>
+<a class="sourceLine" id="cb4-22" title="22">      {</a>
+<a class="sourceLine" id="cb4-23" title="23">        <span class="st">:name</span> =&gt; <span class="st">&quot;Steven&quot;</span>,</a>
+<a class="sourceLine" id="cb4-24" title="24">        <span class="st">:age</span> =&gt; <span class="st">&quot;30&quot;</span>,</a>
+<a class="sourceLine" id="cb4-25" title="25">        <span class="st">:attitude</span> =&gt; <span class="st">&quot;confused&quot;</span></a>
+<a class="sourceLine" id="cb4-26" title="26">      }</a>
+<a class="sourceLine" id="cb4-27" title="27">    ]</a>
+<a class="sourceLine" id="cb4-28" title="28">  },</a>
+<a class="sourceLine" id="cb4-29" title="29">  <span class="st">:capulet</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-30" title="30">    <span class="st">:patriarch</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-31" title="31">      <span class="st">:name</span> =&gt; <span class="st">&quot;Lord Capulet&quot;</span>,</a>
+<a class="sourceLine" id="cb4-32" title="32">      <span class="st">:age</span> =&gt; <span class="st">&quot;50&quot;</span></a>
+<a class="sourceLine" id="cb4-33" title="33">    },</a>
+<a class="sourceLine" id="cb4-34" title="34">    <span class="st">:matriarch</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-35" title="35">      <span class="st">:name</span> =&gt; <span class="st">&quot;Lady Capulet&quot;</span>,</a>
+<a class="sourceLine" id="cb4-36" title="36">      <span class="st">:age</span> =&gt; <span class="st">&quot;51&quot;</span></a>
+<a class="sourceLine" id="cb4-37" title="37">    },</a>
+<a class="sourceLine" id="cb4-38" title="38">    <span class="st">:heroine</span> =&gt; {</a>
+<a class="sourceLine" id="cb4-39" title="39">      <span class="st">:name</span> =&gt; <span class="st">&quot;Juliet&quot;</span>,</a>
+<a class="sourceLine" id="cb4-40" title="40">      <span class="st">:age</span> =&gt; <span class="st">&quot;15&quot;</span>,</a>
+<a class="sourceLine" id="cb4-41" title="41">      <span class="st">:status</span> =&gt; <span class="st">&quot;alive&quot;</span></a>
+<a class="sourceLine" id="cb4-42" title="42">    },</a>
+<a class="sourceLine" id="cb4-43" title="43">    <span class="st">:heroine_friends=</span>&gt; [</a>
+<a class="sourceLine" id="cb4-44" title="44">      {</a>
+<a class="sourceLine" id="cb4-45" title="45">        <span class="st">:name</span> =&gt; <span class="st">&quot;Mercutio&quot;</span>,</a>
+<a class="sourceLine" id="cb4-46" title="46">        <span class="st">:age</span> =&gt; <span class="st">&quot;18&quot;</span>,</a>
+<a class="sourceLine" id="cb4-47" title="47">        <span class="st">:attitude</span> =&gt; <span class="st">&quot;hot-headed&quot;</span></a>
+<a class="sourceLine" id="cb4-48" title="48">      },</a>
+<a class="sourceLine" id="cb4-49" title="49">      {</a>
+<a class="sourceLine" id="cb4-50" title="50">        <span class="st">:name</span> =&gt; <span class="st">&quot;Nurse&quot;</span>,</a>
+<a class="sourceLine" id="cb4-51" title="51">        <span class="st">:age</span> =&gt; <span class="st">&quot;44&quot;</span>,</a>
+<a class="sourceLine" id="cb4-52" title="52">        <span class="st">:attitude</span> =&gt; <span class="st">&quot;worried&quot;</span></a>
+<a class="sourceLine" id="cb4-53" title="53">      }</a>
+<a class="sourceLine" id="cb4-54" title="54">    ]</a>
+<a class="sourceLine" id="cb4-55" title="55">  }</a>
+<a class="sourceLine" id="cb4-56" title="56">}</a></code></pre></div>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>You might notice that we are storing ages as strings. That is because the ages here are not numbers that we need to frequently do math with. If a hash value was a number, let’s say the price of an item, that we needed to manipulate, let’s say calcuate the tax on, then we would store it as an integer. Otherwise, it is conventional to store information like a person’s age as a string.</li>
+<li>Remember that the <code>key: value</code> syntax is the same as the <code>:key =&gt; value</code> syntax used above. Get ready to see them both used in different applications and sources.</li>
+</ul>
+<h3 id="instructions">Instructions</h3>
+<p>This is a complicated data structure, so we’re going to build it up one step at a time. In the upcoming code along challenge, we’ll be stepping through the lab, one test at a time. Start by forking and cloning this lab. Then follow along with the walk-through below.</p>
+<h3 id="code-along-challenge-i-family-names">Code Along Challenge I: Family Names</h3>
+<p>In <code>lib/first_challenge.rb</code>, you’re going to fill out the content of the <code>epic_tragedy</code> hash. The first level of our nested hash are the keys for the family names, “Montague” and “Capulet”. We’ve made them symbols above, because symbols make better hash keys than strings.</p>
+<ul>
+<li>Set the <code>epic_tragedy</code> variable equal to a hash with two key/value pairs. The keys should be symbols of the family names (<code>:montague</code> and <code>:capulet</code>) and the values should be empty hashes.</li>
+</ul>
+<p>At this point, we have a hash that looks like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1">epic_tragedy = {<span class="st">:montague</span> =&gt; {}, <span class="st">:capulet</span> =&gt; {}}</a></code></pre></div>
+<p>Now it’s time to fill out the second level of our hash—the collection of data that constitutes the value hashes of each family name key.</p>
+<h3 id="code-along-challenge-ii-character-roles">Code Along Challenge II: Character Roles</h3>
+<p>In <code>lib/second_challenge.rb</code>, you’ll find the hash you built in the previous challenge.</p>
+<p>Fill out the empty hash that is the value of the <code>:montague</code> key. There are four keys in this hash:</p>
+<ul>
+<li><code>:patriarch</code></li>
+<li><code>:matriarch</code></li>
+<li><code>:hero</code></li>
+<li><code>:hero_friends</code>.</li>
+</ul>
+<p>The first three of these keys point to a value of any empty hash. The fourth key <code>:hero_friends</code> has a value of an empty array.</p>
+<p>Then, do the same for the empty hash that is the value of the <code>:capulet</code> key. This time, your keys are:</p>
+<ul>
+<li><code>:patriarch</code></li>
+<li><code>:matriarch</code></li>
+<li><code>:heroine</code></li>
+<li><code>:heroine_friends</code></li>
+</ul>
+<p>The values are the same as described above. Once you get this test passing, you should have a hash that looks like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">epic_tragedy = {</a>
+<a class="sourceLine" id="cb6-2" title="2">   <span class="st">:montague</span> =&gt; {</a>
+<a class="sourceLine" id="cb6-3" title="3">      <span class="st">:patriarch</span> =&gt; {},</a>
+<a class="sourceLine" id="cb6-4" title="4">      <span class="st">:matriarch</span> =&gt; {},</a>
+<a class="sourceLine" id="cb6-5" title="5">      <span class="st">:hero</span> =&gt; {},</a>
+<a class="sourceLine" id="cb6-6" title="6">      <span class="st">:hero_friends</span> =&gt; []</a>
+<a class="sourceLine" id="cb6-7" title="7">   },</a>
+<a class="sourceLine" id="cb6-8" title="8">   <span class="st">:capulet</span> =&gt; {</a>
+<a class="sourceLine" id="cb6-9" title="9">      <span class="st">:patriarch</span> =&gt; {},</a>
+<a class="sourceLine" id="cb6-10" title="10">      <span class="st">:matriarch</span> =&gt; {},</a>
+<a class="sourceLine" id="cb6-11" title="11">      <span class="st">:heroine</span> =&gt; {},</a>
+<a class="sourceLine" id="cb6-12" title="12">      <span class="st">:heroine_friends</span> =&gt; []</a>
+<a class="sourceLine" id="cb6-13" title="13">   }</a>
+<a class="sourceLine" id="cb6-14" title="14">}</a></code></pre></div>
+<p>Now we’re ready to fill out the empty hashes that constitute the values for the <code>:patriarch</code>, <code>:matriarch</code> and <code>:hero</code>/<code>:heroine</code> keys, nested inside the family name keys of our epic <code>epic_tragedy hash</code>.</p>
+<h3 id="code-along-challenge-iii-character-attributes">Code Along Challenge III: Character Attributes</h3>
+<p>According to the diagram that we saw at the very beginning of this exercise, each character has a set of attributes. Matriarch and Patriarchs have a name and an age. The hero and heroine each have a name, age and a status.</p>
+<p>In <code>lib/third_challenge</code>, you’ll find the hash that you built in the previous challenge. Fill out the empty hashes that are the values of the <code>:patriarch</code>, <code>:matriarch</code>, and <code>:hero</code>/<code>:heroine</code> keys with the following key/value pairs.</p>
+<ul>
+<li>The Montague <code>:patriarch</code> has
+<ul>
+<li>a <code>:name</code> of “Lord Montague” and</li>
+<li>an <code>:age</code> of “53”.</li>
+</ul></li>
+<li>The Montague <code>:matriarch</code> has
+<ul>
+<li>a <code>:name</code> of “Lady Montague” and</li>
+<li>an <code>:age</code> of “54”.</li>
+</ul></li>
+<li>The Montague <code>:hero</code> has
+<ul>
+<li>a <code>:name</code> of “Romeo”,</li>
+<li>an <code>:age</code> of “15”, and</li>
+<li>a <code>:status</code> of “alive”.</li>
+</ul></li>
+<li>The Capulet <code>:patriarch</code> has
+<ul>
+<li>a <code>:name</code> of “Lord Capulet” and</li>
+<li>an <code>:age</code> of “50”.</li>
+</ul></li>
+<li>The Capulet <code>:matriarch</code> has
+<ul>
+<li>a <code>:name</code> of “Lady Capulet” and</li>
+<li>an <code>:age</code> of “51”.</li>
+</ul></li>
+<li>The Capulet <code>:heroine</code> has
+<ul>
+<li>a <code>:name</code> of “Juliette”,</li>
+<li>an <code>:age</code> of “15”, and</li>
+<li>a <code>:status</code> of “alive”.</li>
+</ul></li>
+</ul>
+<p>Once you get this test passing, you should have the following hash:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">epic_tragedy = {</a>
+<a class="sourceLine" id="cb7-2" title="2">   <span class="st">:montague</span> =&gt; {</a>
+<a class="sourceLine" id="cb7-3" title="3">      <span class="st">:patriarch</span> =&gt; {<span class="st">name: &quot;Lord Montague&quot;</span>, <span class="st">age: &quot;53&quot;</span>},</a>
+<a class="sourceLine" id="cb7-4" title="4">      <span class="st">:matriarch</span> =&gt; {<span class="st">name: &quot;Lady Montague&quot;</span>, <span class="st">age: &quot;54&quot;</span>},</a>
+<a class="sourceLine" id="cb7-5" title="5">      <span class="st">:hero</span> =&gt; {<span class="st">name: &quot;Romeo&quot;</span>, <span class="st">age: &quot;15&quot;</span>, <span class="st">status: &quot;alive&quot;</span>},</a>
+<a class="sourceLine" id="cb7-6" title="6">      <span class="st">:hero_friends</span> =&gt; []</a>
+<a class="sourceLine" id="cb7-7" title="7">   },</a>
+<a class="sourceLine" id="cb7-8" title="8">   <span class="st">:capulet</span> =&gt; {</a>
+<a class="sourceLine" id="cb7-9" title="9">      <span class="st">:patriarch</span> =&gt; {<span class="st">name: &quot;Lord Capulet&quot;</span>, <span class="st">age: &quot;50&quot;</span>},</a>
+<a class="sourceLine" id="cb7-10" title="10">      <span class="st">:matriarch</span> =&gt; {<span class="st">name: &quot;Lady Capulet&quot;</span>, <span class="st">age: &quot;51&quot;</span>},</a>
+<a class="sourceLine" id="cb7-11" title="11">      <span class="st">:heroine</span> =&gt; {<span class="st">name: &quot;Juliette&quot;</span>, <span class="st">age: &quot;15&quot;</span>, <span class="st">status: &quot;alive&quot;</span>},</a>
+<a class="sourceLine" id="cb7-12" title="12">      <span class="st">:heroine_friends</span> =&gt; []</a>
+<a class="sourceLine" id="cb7-13" title="13">   }</a>
+<a class="sourceLine" id="cb7-14" title="14">}</a></code></pre></div>
+<p>We’re almost done. Our hero and heroine have two friends each. That constitutes a collection of friends. Since they each have a collection of friends, it makes sense to collect those friends in an array. Since each friend will have his or her own attributes (name, age, etc), our array will be <em>an array of hashes</em>!</p>
+<p>%%%</p>
+<h3 id="code-along-challenge-iv-nesting-friends-and-attributes">Code Along Challenge IV: Nesting Friends and Attributes</h3>
+<p>The values of the <code>:hero_friends</code> and <code>:heroine_friends</code> keys currently point to empty arrays. Fill out these empty arrays with a series of hashes that will contain key/value pairs describing these friends.</p>
+<p>The hero’s two friends are Benvolio and Steven. So, the <code>:hero_friends</code> array will contain two hashes. Each of these two hashes have the following three keys:</p>
+<ul>
+<li><code>:name</code></li>
+<li><code>:age</code></li>
+<li><code>:attitude</code></li>
+</ul>
+<p>The hero’s first friend has</p>
+<ul>
+<li>a name of “Benvolio”,</li>
+<li>an age of “17”, and</li>
+<li>an attitude of “worried”.</li>
+</ul>
+<p>The hero’s second friend has</p>
+<ul>
+<li>a name of “Steven”,</li>
+<li>an age of “30”, and</li>
+<li>an attitude of “confused”.</li>
+</ul>
+<p>The heroine’s two friends are Mercutio and Nurse. So, the <code>:heroine_friends</code> array will contain two hashes. Each of these two hashes have the following three keys:</p>
+<ul>
+<li><code>:name</code></li>
+<li><code>:age</code></li>
+<li><code>:attitude</code></li>
+</ul>
+<p>The heroine’s first friend has</p>
+<ul>
+<li>a name of “Mercutio”,</li>
+<li>an age of “18”, and</li>
+<li>an attitude of “hot-headed”.</li>
+</ul>
+<p>The heroine’s second friend has</p>
+<ul>
+<li>a name of “Nurse”,</li>
+<li>an age of “44”, and</li>
+<li>an attitude of “worried”.</li>
+</ul>
+<p>Once you get this test passing, your hash should look like this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">epic_tragedy = {</a>
+<a class="sourceLine" id="cb8-2" title="2">   <span class="st">:montague</span> =&gt; {</a>
+<a class="sourceLine" id="cb8-3" title="3">      <span class="st">:patriarch</span> =&gt; {<span class="st">name: &quot;Lord Montague&quot;</span>, <span class="st">age: &quot;53&quot;</span>},</a>
+<a class="sourceLine" id="cb8-4" title="4">      <span class="st">:matriarch</span> =&gt; {<span class="st">name: &quot;Lady Montague&quot;</span>, <span class="st">age: &quot;54&quot;</span>},</a>
+<a class="sourceLine" id="cb8-5" title="5">      <span class="st">:hero</span> =&gt; {<span class="st">name: &quot;Romeo&quot;</span>, <span class="st">age: &quot;15&quot;</span>, <span class="st">status: &quot;alive&quot;</span>},</a>
+<a class="sourceLine" id="cb8-6" title="6">      <span class="st">:hero_friends</span> =&gt; [</a>
+<a class="sourceLine" id="cb8-7" title="7">         {<span class="st">name: &quot;Benvolio&quot;</span>, <span class="st">age: &quot;17&quot;</span>, <span class="st">attitude: &quot;worried&quot;</span>},</a>
+<a class="sourceLine" id="cb8-8" title="8">         {<span class="st">name: &quot;Steven&quot;</span>, <span class="st">age: &quot;30&quot;</span>, <span class="st">attitude: &quot;confused&quot;</span>}</a>
+<a class="sourceLine" id="cb8-9" title="9">      ]</a>
+<a class="sourceLine" id="cb8-10" title="10">   },</a>
+<a class="sourceLine" id="cb8-11" title="11">   <span class="st">:capulet</span> =&gt; {</a>
+<a class="sourceLine" id="cb8-12" title="12">      <span class="st">:patriarch</span> =&gt; {<span class="st">name: &quot;Lord Capulet&quot;</span>, <span class="st">age: &quot;50&quot;</span>},</a>
+<a class="sourceLine" id="cb8-13" title="13">      <span class="st">:matriarch</span> =&gt; {<span class="st">name: &quot;Lady Capulet&quot;</span>, <span class="st">age: &quot;51&quot;</span>},</a>
+<a class="sourceLine" id="cb8-14" title="14">      <span class="st">:heroine</span> =&gt; {<span class="st">name: &quot;Juliette&quot;</span>, <span class="st">age: &quot;15&quot;</span>, <span class="st">status: &quot;alive&quot;</span>},</a>
+<a class="sourceLine" id="cb8-15" title="15">      <span class="st">:heroine_friends</span> =&gt; [</a>
+<a class="sourceLine" id="cb8-16" title="16">          {<span class="st">name: &quot;Mercutio&quot;</span>, <span class="st">age: &quot;18&quot;</span>, <span class="st">attitude: &quot;hot-headed&quot;</span>},</a>
+<a class="sourceLine" id="cb8-17" title="17">          {<span class="st">name: &quot;Nurse&quot;</span>, <span class="st">age: &quot;44&quot;</span>, <span class="st">attitude: &quot;worried&quot;</span>}</a>
+<a class="sourceLine" id="cb8-18" title="18">      ]</a>
+<a class="sourceLine" id="cb8-19" title="19">   }</a>
+<a class="sourceLine" id="cb8-20" title="20">}</a></code></pre></div>
+<h2 id="bonus-manipulating-the-hash">Bonus: Manipulating the Hash</h2>
+<p>In the previous lesson we learned that you can access a value in a hash like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">hash = {<span class="st">first: &quot;first value!&quot;</span>, <span class="st">second: &quot;second value!&quot;</span>}</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">hash[<span class="st">:first</span>]</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co">#  =&gt; &quot;first value!&quot;</span></a></code></pre></div>
+<p>To access the values in our nested hash, we simply tack on additional keys, until we have the last key that points to the value we want to access.</p>
+<p>For example, to access the Montague patriarch’s name, I use the hash name, <code>epic_tragedy</code>, followed by a chained list of all of the key names that precede the value of his name, enclosed in brackets:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">epic_tragedy[<span class="st">:montague</span>][<span class="st">:patriarch</span>][<span class="st">:name</span>]</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">#  =&gt; &quot;Lord Montague&quot;</span></a></code></pre></div>
+<p>We can even use this method to change the value of a particular key. If we wanted to reset the Montague patriarch’s name to “Michael Jordan”, we would do it in the following way:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb11-1" title="1">epic_tragedy[<span class="st">:montague</span>][<span class="st">:patriarch</span>][<span class="st">:name</span>] = <span class="st">&quot;Michael Jordan&quot;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3">puts epic_tragedy</a>
+<a class="sourceLine" id="cb11-4" title="4"></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co">#  =&gt;</span></a>
+<a class="sourceLine" id="cb11-6" title="6">{</a>
+<a class="sourceLine" id="cb11-7" title="7">   <span class="st">:montague</span> =&gt; {</a>
+<a class="sourceLine" id="cb11-8" title="8">      <span class="st">:patriarch</span> =&gt; {<span class="st">name: &quot;Michael Jordan&quot;</span>, <span class="st">age: &quot;53&quot;</span>},</a>
+<a class="sourceLine" id="cb11-9" title="9">      <span class="st">:matriarch</span> =&gt; {<span class="st">name: &quot;Lady Montague&quot;</span>, <span class="st">age: &quot;54&quot;</span>},</a>
+<a class="sourceLine" id="cb11-10" title="10">      <span class="st">:hero</span> =&gt; {<span class="st">name: &quot;Romeo&quot;</span>, <span class="st">age: &quot;15&quot;</span>, <span class="st">status: &quot;alive&quot;</span>},</a>
+<a class="sourceLine" id="cb11-11" title="11">      <span class="st">:hero_friends</span> =&gt; [</a>
+<a class="sourceLine" id="cb11-12" title="12">         {<span class="st">name: &quot;Benvolio&quot;</span>, <span class="st">age: &quot;17&quot;</span>, <span class="st">attitude: &quot;worried&quot;</span>},</a>
+<a class="sourceLine" id="cb11-13" title="13">         {<span class="st">name: &quot;Steven&quot;</span>, <span class="st">age: &quot;30&quot;</span>, <span class="st">attitude: &quot;confused&quot;</span>}</a>
+<a class="sourceLine" id="cb11-14" title="14">      ]</a>
+<a class="sourceLine" id="cb11-15" title="15">   },</a>
+<a class="sourceLine" id="cb11-16" title="16">   <span class="st">:capulet</span> =&gt; {</a>
+<a class="sourceLine" id="cb11-17" title="17">      <span class="st">:patriarch</span> =&gt; {<span class="st">name: &quot;Lord Capulet&quot;</span>, <span class="st">age: &quot;50&quot;</span>},</a>
+<a class="sourceLine" id="cb11-18" title="18">      <span class="st">:matriarch</span> =&gt; {<span class="st">name: &quot;Lady Capulet&quot;</span>, <span class="st">age: &quot;51&quot;</span>},</a>
+<a class="sourceLine" id="cb11-19" title="19">      <span class="st">:heroine</span> =&gt; {<span class="st">name: &quot;Juliette&quot;</span>, <span class="st">age: &quot;15&quot;</span>, <span class="st">status: &quot;alive&quot;</span>},</a>
+<a class="sourceLine" id="cb11-20" title="20">      <span class="st">:heroine_friends</span> =&gt; [</a>
+<a class="sourceLine" id="cb11-21" title="21">          {<span class="st">name: &quot;Mercutio&quot;</span>, <span class="st">age: &quot;18&quot;</span>, <span class="st">attitude: &quot;hot-headed&quot;</span>},</a>
+<a class="sourceLine" id="cb11-22" title="22">          {<span class="st">name: &quot;Nurse&quot;</span>, <span class="st">age: &quot;44&quot;</span>, <span class="st">attitude: &quot;worried&quot;</span>}</a>
+<a class="sourceLine" id="cb11-23" title="23">      ]</a>
+<a class="sourceLine" id="cb11-24" title="24">   }</a>
+<a class="sourceLine" id="cb11-25" title="25">}</a></code></pre></div>
+<h3 id="bonus-code-along-challenge">Bonus Code Along Challenge</h3>
+<p>In <code>lib/bonus.rb</code> you’ll see our completed <code>epic_tragedy hash</code>. We’re coming to the end of the epic tragedy of Romeo and Juliet. At this point in the story, Romeo and Juliet are—as in every good tragedy—quite dead. Use the above method to change the status of our hero Romeo and our heroine Juliet from “alive” to “dead”.</p>
+</body>
+</html>

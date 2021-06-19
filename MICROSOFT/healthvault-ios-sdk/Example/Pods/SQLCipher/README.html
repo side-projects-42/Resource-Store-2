@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h2 id="sqlcipher">SQLCipher</h2>
+<p>SQLCipher extends the <a href="https://www.sqlite.org">SQLite</a> database library to add security enhancements that make it more suitable for encrypted local data storage such as on-the-fly encryption, tamper evidence, and key derivation. Based on SQLite, SQLCipher closely tracks SQLite and periodically integrates stable SQLite release features.</p>
+<p>SQLCipher is maintained by Zetetic, LLC, the official site can be found <a href="https://www.zetetic.net/sqlcipher/">here</a>.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Fast performance with as little as 5-15% overhead for encryption on many operations</li>
+<li>100% of data in the database file is encrypted</li>
+<li>Good security practices (CBC mode, HMAC, key derivation)</li>
+<li>Zero-configuration and application level cryptography</li>
+<li>Algorithms provided by the peer reviewed OpenSSL crypto library.</li>
+<li>Configurable crypto providers</li>
+</ul>
+<h2 id="contributions">Contributions</h2>
+<p>We welcome contributions, to contribute to SQLCipher, a <a href="https://www.zetetic.net/contributions/">contributor agreement</a> needs to be submitted. All submissions should be based on the <code>prerelease</code> branch.</p>
+<h2 id="compiling">Compiling</h2>
+<p>Building SQLCipher is almost the same as compiling a regular version of SQLite with two small exceptions:</p>
+<ol type="1">
+<li>You <em>must</em> define <code>SQLITE_HAS_CODEC</code> and <code>SQLITE_TEMP_STORE=2</code> when building sqlcipher.</li>
+<li>If compiling against the default OpenSSL crypto provider, you will need to link libcrypto</li>
+</ol>
+<p>Example Static linking (replace /opt/local/lib with the path to libcrypto.a). Note in this example, <code>--enable-tempstore=yes</code> is setting <code>SQLITE_TEMP_STORE=2</code> for the build.</p>
+<pre><code>$ ./configure --enable-tempstore=yes CFLAGS=&quot;-DSQLITE_HAS_CODEC&quot; \
+    LDFLAGS=&quot;/opt/local/lib/libcrypto.a&quot;
+$ make</code></pre>
+<p>Example Dynamic linking</p>
+<pre><code>$ ./configure --enable-tempstore=yes CFLAGS=&quot;-DSQLITE_HAS_CODEC&quot; \
+    LDFLAGS=&quot;-lcrypto&quot;
+$ make</code></pre>
+<h2 id="encrypting-a-database">Encrypting a database</h2>
+<p>To specify an encryption passphrase for the database via the SQL interface you use a pragma. The passphrase you enter is passed through PBKDF2 key derivation to obtain the encryption key for the database</p>
+<pre><code>PRAGMA key = &#39;passphrase&#39;;</code></pre>
+<p>Alternately, you can specify an exact byte sequence using a blob literal. If you use this method it is your responsibility to ensure that the data you provide a 64 character hex string, which will be converted directly to 32 bytes (256 bits) of key data without key derivation.</p>
+<pre><code>PRAGMA key = &quot;x&#39;2DD29CA851E7B56E4697B0E1F08507293D761A05CE4D1B628663F411A8086D99&#39;&quot;;</code></pre>
+<p>To encrypt a database programatically you can use the <code>sqlite3_key</code> function. The data provided in <code>pKey</code> is converted to an encryption key according to the same rules as <code>PRAGMA key</code>.</p>
+<pre><code>int sqlite3_key(sqlite3 *db, const void *pKey, int nKey);</code></pre>
+<p><code>PRAGMA key</code> or <code>sqlite3_key</code> should be called as the first operation when a database is open.</p>
+<h2 id="changing-a-database-key">Changing a database key</h2>
+<p>To change the encryption passphrase for an existing database you may use the rekey pragma after you’ve supplied the correct database password;</p>
+<pre><code>PRAGMA key = &#39;passphrase&#39;; -- start with the existing database passphrase
+PRAGMA rekey = &#39;new-passphrase&#39;; -- rekey will reencrypt with the new passphrase</code></pre>
+<p>The hex rekey pragma may be used to rekey to a specific binary value</p>
+<pre><code>PRAGMA rekey = &quot;x&#39;2DD29CA851E7B56E4697B0E1F08507293D761A05CE4D1B628663F411A8086D99&#39;&quot;;</code></pre>
+<p>This can be accomplished programtically by using sqlite3_rekey;</p>
+<pre><code>sqlite3_rekey(sqlite3 *db, const void *pKey, int nKey)</code></pre>
+<h2 id="support">Support</h2>
+<p>The primary avenue for support and discussions is the SQLCipher discuss site:</p>
+<p>https://discuss.zetetic.net/c/sqlcipher</p>
+<p>Issues or support questions on using SQLCipher should be entered into the GitHub Issue tracker:</p>
+<p>https://github.com/sqlcipher/sqlcipher/issues</p>
+<p>Please DO NOT post issues, support questions, or other problems to blog posts about SQLCipher as we do not monitor them frequently.</p>
+<p>If you are using SQLCipher in your own software please let us know at support@zetetic.net!</p>
+<h2 id="license">License</h2>
+<p>Copyright (c) 2016, ZETETIC LLC All rights reserved.</p>
+<p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution. * Neither the name of the ZETETIC LLC nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</p>
+<p>THIS SOFTWARE IS PROVIDED BY ZETETIC LLC ‘’AS IS’’ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL ZETETIC LLC BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+</body>
+</html>

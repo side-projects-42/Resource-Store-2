@@ -1,17 +1,12 @@
+npm
 ---
-title: Installation
+
+[![npm](https://img.shields.io/npm/v/chart.js.svg?style=flat-square&maxAge=600)](https://npmjs.com/package/chart.js) [![npm](https://img.shields.io/npm/dm/chart.js.svg?style=flat-square&maxAge=600)](https://npmjs.com/package/chart.js)
+
+    npm install chart.js
+
+CDN
 ---
-
-## npm
-
-[![npm](https://img.shields.io/npm/v/chart.js.svg?style=flat-square&maxAge=600)](https://npmjs.com/package/chart.js)
-[![npm](https://img.shields.io/npm/dm/chart.js.svg?style=flat-square&maxAge=600)](https://npmjs.com/package/chart.js)
-
-```sh
-npm install chart.js
-```
-
-## CDN
 
 ### CDNJS
 
@@ -19,7 +14,7 @@ npm install chart.js
 
 Chart.js built files are available on [CDNJS](https://cdnjs.com/):
 
-<https://cdnjs.com/libraries/Chart.js>
+<a href="https://cdnjs.com/libraries/Chart.js" class="uri">https://cdnjs.com/libraries/Chart.js</a>
 
 ### jsDelivr
 
@@ -27,9 +22,10 @@ Chart.js built files are available on [CDNJS](https://cdnjs.com/):
 
 Chart.js built files are also available through [jsDelivr](https://www.jsdelivr.com/):
 
-<https://www.jsdelivr.com/package/npm/chart.js?path=dist>
+<a href="https://www.jsdelivr.com/package/npm/chart.js?path=dist" class="uri">https://www.jsdelivr.com/package/npm/chart.js?path=dist</a>
 
-## Github
+Github
+------
 
 [![github](https://img.shields.io/github/release/chartjs/Chart.js.svg?style=flat-square&maxAge=600)](https://github.com/chartjs/Chart.js/releases/latest)
 

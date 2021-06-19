@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-17</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-02-17">FastBoot Meeting Notes 2016-02-17</h1>
+<h2 id="attendees">Attendees</h2>
+<p>Ron White, Miguel Camba</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li>[x] Last week AI recap
+<ul>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to expose <code>_request</code> on FastBoot</li>
+<li>[ ] <span class="citation" data-cites="ef4">@ef4</span> to design API for “session” service that uses cookies to sync stateful info across browser and FastBoot server</li>
+<li>[x] <span class="citation" data-cites="ronco">@ronco</span> to add automated testing for <code>ember-cli-head</code></li>
+<li>[x] <span class="citation" data-cites="cibernox">@cibernox</span> will try to create generic harness for FastBoot extracted from ember-power-select</li>
+<li>[ ] <span class="citation" data-cites="krati">@krati</span> to update sandbox adapter PR</li>
+</ul></li>
+<li>[x] Mode specific initializers</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>MC: created <code>ember-fastboot-test-helpers</code> allows clients to include lib that supports a <code>visit</code> api similar to standard acceptance tests. Very basic jsdom selectors for assertion. No jquery to keep testng jquery free.</p>
+<p>MC: looking for help to get ES6 support in this node code to achieve: <code>let [status, headers, document] = await visit('/foobar')</code>. Will reach out to <span class="citation" data-cites="krisselden">@krisselden</span> for help here.</p>
+<p>MC: Ideally fastboot compatibility becomes an extra score in ember-observer.</p>
+<p>RW: changes needed for <code>ember-cli-head</code> merged to <code>ember-cli-fastboot</code> and <code>ember-fastboot-server</code> this past week + acceptance tests done.</p>
+<p>RW: overview of <a href="https://github.com/tildeio/ember-cli-fastboot/pull/110#issuecomment-184680878">filter-initializers issues</a>, I’m working on extracting addon <code>ember-cli-fastboot-support</code> for this filtering</p>
+<p>MC: we could add this as a default ember-cli blueprint dep when it’s working.</p>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] <span class="citation" data-cites="cibernox">@cibernox</span> to contact <span class="citation" data-cites="krisselden">@krisselden</span> on es6 support</li>
+<li>[ ] <span class="citation" data-cites="ronco">@ronco</span> to continue working on fastboot filtering</li>
+<li>[ ] <span class="citation" data-cites="cibernox">@cibernox</span> Decide if <code>ember-fastboot-test-helpers</code> should be framework agnostic (like <code>ember-test-helpers</code>) and have <code>ember-fastboot-qunit</code> and <code>ember-fastboot-mocha</code> with specific flavours. Right now focusing only on qunit.</li>
+</ul>
+</body>
+</html>

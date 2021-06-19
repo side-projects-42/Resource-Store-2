@@ -1,171 +1,33 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: SCSS mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="css.js"></script>
-<style>
-  .CodeMirror {
-    background: #f8f8f8;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">SCSS</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>SCSS mode</h2>
-  <form>
-    <textarea id="code" name="code">
-/* Some example SCSS */
-
-@import "compass/css3";
-$variable: #333;
-
-$blue: #3bbfce;
-$margin: 16px;
-
-.content-navigation {
-  #nested {
-    background-color: black;
-  }
-  border-color: $blue;
-  color:
-    darken($blue, 9%);
-}
-
-.border {
-  padding: $margin / 2;
-  margin: $margin / 2;
-  border-color: $blue;
-}
-
-@mixin table-base {
-  th {
-    text-align: center;
-    font-weight: bold;
-  }
-  td, th {padding: 2px}
-}
-
-table.hl {
-  margin: 2em 0;
-  td.ln {
-    text-align: right;
-  }
-}
-
-li {
-  font: {
-    family: serif;
-    weight: bold;
-    size: 1.2em;
-  }
-}
-
-@mixin left($dist) {
-  float: left;
-  margin-left: $dist;
-}
-
-#data {
-  @include left(10px);
-  @include table-base;
-}
-
-.source {
-  @include flow-into(target);
-  border: 10px solid green;
-  margin: 20px;
-  width: 200px; }
-
-.new-container {
-  @include flow-from(target);
-  border: 10px solid red;
-  margin: 20px;
-  width: 200px; }
-
-body {
-  margin: 0;
-  padding: 3em 6em;
-  font-family: tahoma, arial, sans-serif;
-  color: #000;
-}
-
-@mixin yellow() {
-  background: yellow;
-}
-
-.big {
-  font-size: 14px;
-}
-
-.nested {
-  @include border-radius(3px);
-  @extend .big;
-  p {
-    background: whitesmoke;
-    a {
-      color: red;
-    }
-  }
-}
-
-#navigation a {
-  font-weight: bold;
-  text-decoration: none !important;
-}
-
-h1 {
-  font-size: 2.5em;
-}
-
-h2 {
-  font-size: 1.7em;
-}
-
-h1:before, h2:before {
-  content: "::";
-}
-
-code {
-  font-family: courier, monospace;
-  font-size: 80%;
-  color: #418A8A;
-}
-</textarea
-    >
-  </form>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      lineNumbers: true,
-      matchBrackets: true,
-      mode: "text/x-scss",
-    });
-  </script>
-
-  <p>
-    The SCSS mode is a sub-mode of the
-    <a href="index.html">CSS mode</a> (defined in <code>css.js</code>.
-  </p>
-
-  <p>
-    <strong>Parsing/Highlighting Tests:</strong>
-    <a href="../../test/index.html#scss_*">normal</a>,
-    <a href="../../test/index.html#verbose,scss_*">verbose</a>.
-  </p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>scss</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: SCSS mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">SCSS</a></li>
+</ul>
+<h2 id="scss-mode">SCSS mode</h2>
+<p>/* Some example SCSS */ <span class="citation" data-cites="import">@import</span> “compass/css3”; $variable: #333; $blue: #3bbfce; $margin: 16px; .content-navigation { #nested { background-color: black; } border-color: <span class="math inline"><em>b</em><em>l</em><em>u</em><em>e</em>; <em>c</em><em>o</em><em>l</em><em>o</em><em>r</em> : <em>d</em><em>a</em><em>r</em><em>k</em><em>e</em><em>n</em>(</span>blue, 9%); } .border { padding: $margin / 2; margin: $margin / 2; border-color: <span class="math inline">$blue; } @mixin table-base { th { text-align: center; font-weight: bold; } td, th {padding: 2px} } table.hl { margin: 2em 0; td.ln { text-align: right; } } li { font: { family: serif; weight: bold; size: 1.2em; } } @mixin left($</span>dist) { float: left; margin-left: $dist; } #data { <span class="citation" data-cites="include">@include</span> left(10px); <span class="citation" data-cites="include">@include</span> table-base; } .source { <span class="citation" data-cites="include">@include</span> flow-into(target); border: 10px solid green; margin: 20px; width: 200px; } .new-container { <span class="citation" data-cites="include">@include</span> flow-from(target); border: 10px solid red; margin: 20px; width: 200px; } body { margin: 0; padding: 3em 6em; font-family: tahoma, arial, sans-serif; color: #000; } <span class="citation" data-cites="mixin">@mixin</span> yellow() { background: yellow; } .big { font-size: 14px; } .nested { <span class="citation" data-cites="include">@include</span> border-radius(3px); <span class="citation" data-cites="extend">@extend</span> .big; p { background: whitesmoke; a { color: red; } } } #navigation a { font-weight: bold; text-decoration: none !important; } h1 { font-size: 2.5em; } h2 { font-size: 1.7em; } h1:before, h2:before { content: “::”; } code { font-family: courier, monospace; font-size: 80%; color: #418A8A; }</p>
+<p>The SCSS mode is a sub-mode of the <a href="index.html">CSS mode</a> (defined in <code>css.js</code>.</p>
+<p><strong>Parsing/Highlighting Tests:</strong> <a href="../../test/index.html#scss_*">normal</a>, <a href="../../test/index.html#verbose,scss_*">verbose</a>.</p>
+</body>
+</html>

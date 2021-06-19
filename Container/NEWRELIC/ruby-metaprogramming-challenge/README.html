@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a
+        href="https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#archived"
+        ><img
+          src="https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Archived.png"
+          alt="Archived header"
+      /></a>
+    </p>
+    <h1 id="metaprogramming-challenge">Metaprogramming Challenge</h1>
+    <p>
+      This repo contains solutions to a metaprogramming challenge created at New
+      Relic, as well as a test and benchmark suite for the solutions.
+    </p>
+    <p>You can test and benchmark all of the included solutions by running:</p>
+    <pre><code>rake</code></pre>
+    <p>
+      You can test and benchmark a specific solution by invoking rake with the
+      solution author’s github name. For example:
+    </p>
+    <pre><code>rake samg</code></pre>
+    <h2 id="the-challenge-is">The challenge is:</h2>
+    <p>
+      <strong
+        >Your challenge, should you choose to accept it, is to write a Ruby
+        library that will modify an existing program to output the number of
+        times a specific method is called.</strong
+      >
+    </p>
+    <p>
+      You solution library should be required at the top of the host program, or
+      via ruby’s -r flag (i.e. <code>ruby -r ./solution.rb host_program.rb</code
+      >)
+    </p>
+    <p>
+      Your solution library should read the environment variable
+      <code>COUNT_CALLS_TO</code> to determine the method it should count. Valid
+      method signatures are <code>Array#map!</code>,
+      <code>ActiveRecord::Base#find</code>, <code>Base64.encode64</code>, etc.
+    </p>
+    <p>
+      Your solution library should count calls to that method, and print the
+      method signature and the number of times it was called when the program
+      exits.
+    </p>
+    <p>
+      Also, your solution should have a minimal impact on the program’s running
+      time. Sorry <code>set_trace_func</code>.
+    </p>
+    <p>
+      Here is an example of a one line program which is altered to count calls
+      to <code>String#size</code>
+    </p>
+    <pre><code>COUNT_CALLS_TO=&#39;String#size&#39; ruby -r ./solution.rb -e &#39;(1..100).each{|i| i.to_s.size if i.odd? }&#39;
+String#size called 50 times</code></pre>
+    <p>Here’s another more complex example:</p>
+    <pre><code>COUNT_CALLS_TO=&#39;B#foo&#39; ruby -r ./solution.rb -e &#39;module A; def foo; end; end; class B; include A; end; 10.times{B.new.foo}&#39;
+B#foo called 10 times</code></pre>
+    <h2 id="your-solution">Your solution:</h2>
+    <p>
+      If you have a novel or interesting solution to this challenge feel free to
+      fork and send a pull request.
+    </p>
+  </body>
+</html>

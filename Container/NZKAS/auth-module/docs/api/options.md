@@ -6,24 +6,21 @@ General options shared with all strategies. See [defaults.js](https://github.com
 
 Default:
 
-```js
-auth: {
-  redirect: {
-    login: '/login',
-    logout: '/',
-    callback: '/login',
-    home: '/'
-  }
-}
-```
+    auth: {
+      redirect: {
+        login: '/login',
+        logout: '/',
+        callback: '/login',
+        home: '/'
+      }
+    }
 
 - `login`: User will be redirected to this path if _login is required_.
 - `logout`: User will be redirected to this path if _after logout, current route is protected_.
 - `home`: User will be redirect to this path _after login_. (`rewriteRedirects` will rewrite this path)
 - `callback`: User will be redirect to this path by the identity provider _after login_. (Should match configured `Allowed Callback URLs` (or similar setting) in your app/client with the identity provider)
 
-Each redirect path can be disabled by setting to `false`.
-Also you can disable all redirects by setting `redirect` to `false`
+Each redirect path can be disabled by setting to `false`. Also you can disable all redirects by setting `redirect` to `false`
 
 ## `watchLoggedIn`
 
@@ -37,13 +34,11 @@ Auth tokens are stored in various storage providers (cookie, localStorage, vuex)
 
 Default:
 
-```js
-auth: {
-  token: {
-    prefix: "_token.";
-  }
-}
-```
+    auth: {
+      token: {
+        prefix: "_token.";
+      }
+    }
 
 - **prefix** - Default prefix used in building a key for token storage across all storage providers.
 
@@ -51,23 +46,19 @@ auth: {
 
 Default:
 
-```js
-auth: {
-  localStorage: {
-    prefix: "auth.";
-  }
-}
-```
+    auth: {
+      localStorage: {
+        prefix: "auth.";
+      }
+    }
 
-- **prefix** - Default token prefix used in building a key for token storage in the browser's localStorage.
+- **prefix** - Default token prefix used in building a key for token storage in the browser’s localStorage.
 
 You can disable use of localStorage by setting `localStorage` to `false`, like so:
 
-```js
-auth {
-  localStorage: false
-}
-```
+    auth {
+      localStorage: false
+    }
 
 Otherwise the auth token will be stored in localStorage at a default key of: `auth._token.{provider}`.
 
@@ -75,20 +66,18 @@ Otherwise the auth token will be stored in localStorage at a default key of: `au
 
 Default:
 
-```js
-auth: {
-  cookie: {
-    prefix: 'auth.',
-    options: {
-      path: '/'
+    auth: {
+      cookie: {
+        prefix: 'auth.',
+        options: {
+          path: '/'
+        }
+      }
     }
-  }
-}
-```
 
-- **prefix** - Default token prefix used in building a key for token storage in the browser's localStorage.
+- **prefix** - Default token prefix used in building a key for token storage in the browser’s localStorage.
 - **options** - Additional cookie options, passed to [cookie](https://www.npmjs.com/package/cookie).
-  - `path` - path where the cookie is visible. Default is '/'.
+  - `path` - path where the cookie is visible. Default is ‘/’.
   - `expires` - can be used to specify cookie lifetime in `Number` of days or specific `Date`. Default is session only.
   - `maxAge` - Specifies the number (in seconds) to be the value for the `Max-Age` (preferred over `expires`)
   - `domain` - domain (and by extension subdomain/s) where the cookie is visible. Default is domain and all subdomains.
@@ -98,11 +87,9 @@ Note: Using cookies is **required** for SSR requests to work with JWT tokens.
 
 You can disable use of cookie storage by setting `cookie` to `false`, like so:
 
-```js
-auth: {
-  cookie: false;
-}
-```
+    auth: {
+      cookie: false;
+    }
 
 Otherwise the auth token will be stored in a cookie named by default as: `auth._token.{provider}`.
 

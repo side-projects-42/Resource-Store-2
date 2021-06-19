@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="array-overview">Array Overview</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Understand the purpose of arrays.</li>
+<li>Create and populate an array.</li>
+<li>Manipulate an array.</li>
+<li>Reference the Ruby documentation on arrays.</li>
+<li>Retrieve data from an array.</li>
+</ol>
+<h2 id="what-is-an-array">What is an Array?</h2>
+<p>So far, we’ve used variables to store information. For example, I could create a variable called <code>my_name</code> and set it equal to my name: <code>my_name = "Severus Snape"</code>. However, variables only allow us to store one piece of information at a time.</p>
+<p>What if my boss, Headmaster Dumbledore, asks me to deliver the names of all of my students? I could create a bunch of variables like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">student1 = <span class="st">&quot;Harry Potter&quot;</span></a>
+<a class="sourceLine" id="cb1-2" title="2">student2 = <span class="st">&quot;Ron Weasley&quot;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">student3 = <span class="st">&quot;Hermione Granger&quot;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">student4 = <span class="st">&quot;Draco Malfoy&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">etc...</a></code></pre></div>
+<p>Then, I could write a program that passes around these variables <em>one at a time</em>. This seems messy though. I could easily forget about a student, for example. Or need to create a new student and then have to hunt through my program for every place I ever passed around all of these individual variables.</p>
+<p>If this was real life, Professor Snape would probably just write down all the students in list form and hand that list to Dumbledore. Well, in Ruby, we can do the same thing using an array.</p>
+<p>An array is like a list but in code form. It is a way for your program to store pieces of data as a <em>collection</em>. Arrays can contain any data types in any combination––strings, integers, other arrays, hashes, etc.</p>
+<p>Arrays are declared by listing variable names or literals separated by commas (<code>,</code>) and wrapped in square brackets <code>[``]</code>. To save our four student from above into an array, we write that in our code like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">students = [<span class="st">&quot;Harry Potter&quot;</span>, <span class="st">&quot;Ron Weasley&quot;</span>, <span class="st">&quot;Hermione Granger&quot;</span>, <span class="st">&quot;Draco Malfoy&quot;</span>]</a></code></pre></div>
+<h2 id="creating-an-array">Creating an Array</h2>
+<p>There are a few different ways to make a new array. You can use the literal constructor or the class constructor.</p>
+<h5 id="the-literal-constructor">The Literal Constructor</h5>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">my_array = []</a></code></pre></div>
+<h5 id="the-class-constructor">The Class Constructor</h5>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">my_array = <span class="dt">Array</span>.new</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">#  └── []</span></a></code></pre></div>
+<p><strong>Advanced:</strong> <em>A class is like a template for creating objects in Ruby. There is an array class from which every array you create is inherited, making all arrays capable of certain shared behaviors/responsive to certain methods. Don’t worry about understanding classes yet, we’ll be learning much more about them later.</em></p>
+<p>To make an array that isn’t empty, you can separate each item, known as an element, by a <code>,</code> (“comma”) and wrap all the elements inside <code>[``]</code> (“square brackets”).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1">puppies = [<span class="st">&quot;bulldog&quot;</span>, <span class="st">&quot;terrier&quot;</span>, <span class="st">&quot;poodle&quot;</span>]</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="co">#  └── [&quot;bulldog&quot;, &quot;terrier&quot;, &quot;poodle&quot;]</span></a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4">random_numbers = [ <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">30050</span>]</a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co">#  └── [ 2, 5, 6, 8, 30050]</span></a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7">mixed = [<span class="st">&quot;this&quot;</span>, <span class="st">&quot;array&quot;</span>, <span class="dv">7</span>, <span class="dv">20</span>, <span class="st">&quot;has&quot;</span>, <span class="dv">45</span>, <span class="st">&quot;integers&quot;</span>, <span class="st">&quot;&amp;&quot;</span>, <span class="st">&quot;strings&quot;</span>, <span class="dv">309</span>]</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co">#  └── [&quot;this&quot;, &quot;array&quot;, 7, 20, &quot;has&quot;, 45, &quot;integers&quot;, &quot;&amp;&quot;, &quot;strings&quot;, 309]</span></a></code></pre></div>
+<p>It is possible to create an array that contains disparate data types, but that is generally discouraged. It’s best to keep your arrays populated with only one kind of element.</p>
+<h2 id="manipulating-arrays">Manipulating Arrays</h2>
+<p>If an array is a storage container for a list of data, then we can imaging adding and removing individual items from it. There are several ways to accomplish either.</p>
+<h3 id="adding-items-to-an-array">Adding Items to an Array</h3>
+<h4 id="shovel-method">Shovel Method</h4>
+<p>The shovel method employs the “shovel” operator (<code>&lt;&lt;</code>) and allows you to add (“shovel”) items onto the <em>end</em> of an array:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3">famous_cats &lt;&lt; <span class="st">&quot;nala cat&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5">puts famous_cats.inspect</a>
+<a class="sourceLine" id="cb6-6" title="6">  =&gt; [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>, <span class="st">&quot;nala cat&quot;</span>]</a></code></pre></div>
+<p><strong>Note:</strong> <em>The</em> <code>.inspect</code> <em>method returns a string containing a human-readable representation of an object. In this case, the list of the strings held in the array.</em></p>
+<p>The shovel method (<code>&lt;&lt;</code>) is the preferred syntax for adding elements to an array, however you might see other methods used in examples online:</p>
+<h4 id="the-.push-method">The <code>.push</code> Method</h4>
+<p>Calling <code>.push</code> on an array with an argument of the element you wish to add to that array, will also add that element to the <em>end</em> of the array. It has the same effect as the shovel method explained above:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3">famous_cats.push(<span class="st">&quot;nala cat&quot;</span>)</a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">puts famous_cats.inspect</a>
+<a class="sourceLine" id="cb7-6" title="6">  =&gt; [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>, <span class="st">&quot;nala cat&quot;</span>]</a></code></pre></div>
+<h4 id="the-.unshift-method">The <code>.unshift</code> Method</h4>
+<p>To add an element to the <em>front</em> of an array, you can call the <code>.unshift</code> method on it with an argument of the element you wish to add:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">famous_cats.unshift(<span class="st">&quot;nala cat&quot;</span>)</a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5">puts famous_cats.inspect</a>
+<a class="sourceLine" id="cb8-6" title="6">  =&gt; [<span class="st">&quot;nala cat&quot;</span>, <span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a></code></pre></div>
+<h3 id="removing-items-from-an-array">Removing Items From an Array</h3>
+<h4 id="the-.pop-method">The <code>.pop</code> Method</h4>
+<p>Calling <code>.pop</code> on an array will remove the <em>last</em> item from the <em>end</em> of the array. The <code>.pop</code> method will also supply the removed element as its return:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb9-2" title="2">maru_cat = famous_cats.pop</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4">puts famous_cats.inspect</a>
+<a class="sourceLine" id="cb9-5" title="5"> =&gt; [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>]</a>
+<a class="sourceLine" id="cb9-6" title="6">puts maru_cat</a>
+<a class="sourceLine" id="cb9-7" title="7"> =&gt; <span class="dt">Maru</span></a></code></pre></div>
+<h4 id="the-.shift-method">The <code>.shift</code> Method</h4>
+<p>Calling <code>.shift</code> on an array will remove the <em>first</em> item from the <em>front</em> of the array. The <code>.shift</code> method will also supply the removed element as a return:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb10-2" title="2">lil_bub = famout_cats.shift</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4">puts famous_cats.inspect</a>
+<a class="sourceLine" id="cb10-5" title="5">  =&gt; [<span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb10-6" title="6">puts lil_bub</a>
+<a class="sourceLine" id="cb10-7" title="7">  =&gt; lil<span class="st">&#39; bub</span></a></code></pre></div>
+<h3 id="operating-on-arrays">Operating on Arrays</h3>
+<p>There are a number of other methods available for manipulating arrays. You can learn more about them <a href="http://ruby-doc.org/core-2.2.0/Array.html">here</a>, but we’ll look at just a few examples together.</p>
+<h4 id="the-.sort-method">The <code>.sort</code> Method</h4>
+<p>This method rearranges the contents of the array by, well, sorting them. For strings, this means alphabetically, for numerical values, this means from smallest number to highest number.</p>
+<p><strong>Advanced:</strong> <em>The</em> <code>.sort</code> <em>method works by implicitly comparing elements with the “spaceship” operator</em> <code>&lt;=&gt;</code> <em>(because it looks like a flying saucer, swoosh!) and moving them accordingly.</em></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb11-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3">famout_cats.sort</a>
+<a class="sourceLine" id="cb11-4" title="4">  =&gt; [<span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a></code></pre></div>
+<h4 id="the-.reverse-method">The <code>.reverse</code> Method</h4>
+<p>This method reverses an array.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb12-1" title="1">famous_wizards = [<span class="st">&quot;Dumbledore&quot;</span>, <span class="st">&quot;Gandalf&quot;</span>, <span class="st">&quot;Merlin&quot;</span>]</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3">famous_wizards.reverse</a>
+<a class="sourceLine" id="cb12-4" title="4">  =&gt; [<span class="st">&quot;Merlin&quot;</span>, <span class="st">&quot;Gandalf&quot;</span>, <span class="st">&quot;Dumbledore&quot;</span>]</a></code></pre></div>
+<h4 id="the-.include-method">The <code>.include?()</code> Method</h4>
+<p>This method will return a boolean of whether or not the array contains (or <em>includes</em>) the element submitted to it inside the parentheses:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1">famous_cats = [<span class="st">&quot;lil&#39; bub&quot;</span>, <span class="st">&quot;grumpy cat&quot;</span>, <span class="st">&quot;Maru&quot;</span>]</a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3">famous_cats.include?(<span class="st">&quot;Garfield&quot;</span>)</a>
+<a class="sourceLine" id="cb13-4" title="4">  =&gt; <span class="dv">false</span></a>
+<a class="sourceLine" id="cb13-5" title="5"></a>
+<a class="sourceLine" id="cb13-6" title="6">famous_cats.include?(<span class="st">&quot;Maru&quot;</span>)</a>
+<a class="sourceLine" id="cb13-7" title="7">  =&gt; <span class="dv">true</span></a></code></pre></div>
+<h2 id="retrieving-items-from-array">Retrieving Items from Array</h2>
+<p>When you write out a list on a notepad, you typically write each item on its own line. Whether or not the list is explicitly numbered, the list has a numerology to it based on the sequence of the lines that the items are listed upon.</p>
+<p>Just like the items in our notepad lists, elements in an array are associated with a number that represents their order. In programming, this number is called an <strong>index</strong>. While humans typically start their lists at “1.”, arrays begin their indexes at <code>0</code> (zero). So, the first item in array will always be “at index <code>0</code>”. If we have an array of famous (fictional) cats:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb14-1" title="1">famous_cats = [<span class="st">&quot;Cheshire Cat&quot;</span>, <span class="st">&quot;Puss in Boots&quot;</span>, <span class="st">&quot;Garfield&quot;</span>]</a></code></pre></div>
+<p>The <code>"Cheshire Cat"</code> is at index <code>0</code> in the array, <code>"Puss in Boots"</code> is a index <code>1</code>, and <code>"Garfield"</code> is at index <code>2</code>. Indexes will always be <em>one less</em> than the <strong>count</strong>.</p>
+<p>To access one of these items in the <code>famous_cats</code> array, we can type the name of the array immediately followed by the relevant index number wrapped in square brackets (<code>[]</code>).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb15-1" title="1">famous_cats =  [<span class="st">&quot;Cheshire Cat&quot;</span>, <span class="st">&quot;Puss in Boots&quot;</span>, <span class="st">&quot;Garfield&quot;</span>]</a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3">famous_cats[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="co">#  └── &quot;Puss in Boots&quot;</span></a>
+<a class="sourceLine" id="cb15-5" title="5"></a>
+<a class="sourceLine" id="cb15-6" title="6">famous_cats[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co">#  └── &quot;Cheshire Cat&quot;</span></a>
+<a class="sourceLine" id="cb15-8" title="8"></a>
+<a class="sourceLine" id="cb15-9" title="9">famous_cats[<span class="dv">2</span>]</a>
+<a class="sourceLine" id="cb15-10" title="10"><span class="co">#  └── &quot;Garfield&quot;</span></a>
+<a class="sourceLine" id="cb15-11" title="11"></a>
+<a class="sourceLine" id="cb15-12" title="12">famous_cats[<span class="dv">20</span>]</a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="co">#  └── nil</span></a></code></pre></div>
+<h5 id="advanced-finding-an-elements-index-with-.index">Advanced: Finding An Element’s Index With <code>.index()</code></h5>
+<p>To discover the index number of an element within an array, we can use the <code>.index()</code> method. Calling <code>.index()</code> on an array with an argument inside the parentheses will return the <em>first</em> index number of an element matching that argument. If no elements match the argument, then this method will return <code>nil</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb16-1" title="1">famous_cats = [<span class="st">&quot;Cheshire Cat&quot;</span>, <span class="st">&quot;Puss in Boots&quot;</span>, <span class="st">&quot;Garfield&quot;</span>]</a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3">famous_cats.index(<span class="st">&quot;Puss in Boots&quot;</span>)</a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="co">#  └── 1</span></a>
+<a class="sourceLine" id="cb16-5" title="5"></a>
+<a class="sourceLine" id="cb16-6" title="6">famous_cats.index(<span class="st">&quot;Maru&quot;</span>)</a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="co">#  └── nil</span></a></code></pre></div>
+<p>This is not an operation you will perform very often. Arrays are used to store data and usually you will use the index number of an item to access it, not the other way around.</p>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>september-11</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-meeting-agenda-2015-09-11">Ember Meeting Agenda 2015-09-11</h1>
+<h3 id="attendees">Attendees</h3>
+<p>Leah Silber, Trek Glowacki, Edward Faulkner, Matt Beale, Kris Selden, Yehuda Katz, Robert Jackson, Martin Munoz, Erik Bryn, Alex Matchneer, Stef Penner</p>
+<h3 id="agenda">Agenda</h3>
+<ul>
+<li><code>Ember.GlimmerComponent</code> - Time is running out to hit 2.2, where are we at?</li>
+<li>Upgrade Blocking Issues (re: <a href="https://github.com/emberjs/ember.js/issues/12296">#12296</a>)</li>
+<li>EmberCamp Updates</li>
+<li>Large Issue with “Trust of Test Suite” – https://github.com/emberjs/ember.js/pull/12318</li>
+</ul>
+<h3 id="minutes">Minutes</h3>
+<p>LS: EmberCamp London: embercamp.com very excited! Tickets went on sale today.</p>
+<p>LS: Most of the speakers have been nailed down. We’re finalizing the last little bit and Jamie is working with all the speakers on finalizing topics.</p>
+<p>LS: The docs call this week was small but went well, we talked about the current state of everything and <a href="https://github.com/emberjs/core-notes/blob/master/docs-team/2015-09/september-10.md">the transcripts are already merged into the repo</a>. There were a few things that core team folk had signed up to do (I think Matt, Igor and Trek), and there were no updates on those. If you committed to something, please update the other Docs folks.</p>
+<p>LS: LS will file an issue in the EmberCLI repo to get the new logo up there. She’s also working on getting a page up on the Ember site for downloading logos, but doesn’t have design help, so it might take a bit.</p>
+<hr />
+<p>RJ: Glimmer Components… where are you?</p>
+<p>YK: Godfrey has been working. He’s found a bunch of questions while writing the docs—which is why you write docs first. Tl;DR YK will be back on Monday and will work through these questions with people who are motivated and interested. Expect a GH Issue soon.</p>
+<p>RJ: How has the refactor for HTMLBars and morph-range been going?</p>
+<p>YK: Very well! The project has been focused on trying to allow us to specialize specific paths so that we don’t do extra work to be “generic”. I suspect that the integration effort in Ember will be somewhat straightforward.</p>
+<p>~~ Long discussion about refactor and change in internal semantics ~~</p>
+<p>notable points:</p>
+<ul>
+<li>faster rendering</li>
+<li>faster re-rendering</li>
+<li>more specialized internals (should help reduce bugs)</li>
+<li>Ember vs HTMLBars misalignments will be improved, TL;DR make HTMLBars do more of the work when it knows best.</li>
+<li>better tests (more aligned with how ember uses HTMLBars)</li>
+<li>will help rehydration</li>
+</ul>
+<hr />
+<p>RJ: is troubled – tests are always run with legacy flags on. We likely need to run with both on and off. We need to port the tests. The plan is to use the ember-test-helpers, so we can use <code>moduleForComponent</code> and friends in embers own tests.</p>
+<p>MB: I may have some time to help this weekend</p>
+<p>RJ: Awesome, but I need to get the machinery in place first. Then we can create a burn-down chart.</p>
+<hr />
+<p>SP: We need a upgrade hazard plan</p>
+<p>blocking issues (without reasonable work-around) should be labeled as “Upgrade Hazard” “Help Wanted” “backport needed”</p>
+<p>this messages our intent correctly:</p>
+<ul>
+<li>will accept reasonable backport</li>
+<li>want to minimize upgrade pains</li>
+</ul>
+<p>RJ: We absolutely need to message that we care and are willing to accept backport PR’s, but I am not in favor of keeping these issues open forever.</p>
+<p>SP: We can set a time-frame, and age them out when that threshold is met. That threshold should be largely based on the ability for our community to upgrade. Rationale being, a small fix may make the difference between a successful upgrade or painful transition.</p>
+<p>RJ: We can try it for a time, but I am unlikely to continue to work issue triage on a regular basis.</p>
+<p>SP: feel free to ignore issues branded as such then.</p>
+<hr />
+<p>#emberjs</p>
+</body>
+</html>

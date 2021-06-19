@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="app-framework-change-history">App Framework Change History</h1>
+<h2 id="section">3.5.0</h2>
+<h3 id="model">Model</h3>
+<ul>
+<li><p>[!] The <code>validate()</code> method is now asynchronous, and is expected to call a callback function on success or failure. Old-style synchronous <code>validate()</code> methods will still work, but are deprecated. [Ticket #2531218]</p></li>
+<li><p><code>load()</code> now fires a <code>load</code> event after the operation completes successfully, or an <code>error</code> event on failure. The <code>load()</code> callback (if provided) will still be called in both cases. [Ticket #2531207]</p></li>
+<li><p><code>save()</code> now fires a <code>save</code> event after the operation completes successfully, or an <code>error</code> event on failure. The <code>save()</code> callback (if provided) will still be called in both cases. [Ticket #2531207]</p></li>
+</ul>
+<h3 id="modellist">ModelList</h3>
+<ul>
+<li>Added a <code>filter()</code> method that returns a filtered array of models. [Ticket #2531250]</li>
+</ul>
+<h3 id="router-formerly-controller">Router (formerly Controller)</h3>
+<ul>
+<li><p>[!] The <code>Controller</code> class and <code>controller</code> module have been renamed to <code>Router</code> and <code>router</code> respectively. The old names are deprecated, but have been retained as aliases for backwards compatibility. They will be removed in a future version of YUI.</p></li>
+<li><p>[!] The <code>html5</code>, <code>root</code>, and <code>routes</code> properties are now attributes, and <code>routes</code> may be set both during and after init. Code that refers to the old properties, like <code>myController.root</code> and <code>myController.root = '/foo'</code>, must be updated to use the attribute syntax instead: <code>myRouter.get('root')</code> and <code>myRouter.set('root', '/foo')</code>.</p></li>
+<li><p>[!] The signature for route handlers has changed. Route handlers now receive three arguments: <code>req</code>, <code>res</code>, and <code>next</code>. To preserve backcompat, <code>res</code> is a function that, when executed, calls <code>next()</code>. This behavior is deprecated and will be removed in a future version of YUI, so please update your route handlers to expect <code>next</code> as the third param.</p></li>
+<li><p>"*" can now be used to create a wildcard route that will match any path (previously it was necessary to use a regex to do this).</p></li>
+<li><p>The <code>hasRoute()</code> method now accepts full URLs as well as paths.</p></li>
+<li><p>The hashes used when <code>html5</code> is <code>false</code> are now root-less; the router’s <code>root</code> is removed from the hash before it is set on the URL.</p></li>
+<li><p>When multiple Router instances exist on a page, calling <code>save()</code> in one will now cause matching routes to be dispatched in all routers, rather than only the router that was the source of the change.</p></li>
+<li><p>Added <code>url</code> and <code>src</code> properties to the request object that’s passed to route handlers.</p></li>
+<li><p>Made the <code>html5</code> config attribute writable. This allows you to force a router to use (<code>true</code>) or not use (<code>false</code>) HTML5 history. Please don’t set it to <code>false</code> unless you understand the consequences.</p></li>
+</ul>
+<h3 id="view">View</h3>
+<ul>
+<li><p>[!] The <code>container</code>, <code>model</code>, and <code>modelList</code> properties are now attributes. Code that refers to the old properties, like <code>myView.model</code> and <code>myView.model = model</code>, must be updated to use the attribute syntax instead: <code>myView.get('model')</code> and <code>myView.set('model', model)</code>.</p></li>
+<li><p>[!] The <code>container</code> attribute now treats string values as CSS selectors. Previously, it assumed string values represented raw HTML. To get the same functionality as the old behavior, pass your HTML string through <code>Y.Node.create()</code> before passing it to <code>container</code>.</p></li>
+</ul>
+<h2 id="section-1">3.4.1</h2>
+<h3 id="controller">Controller</h3>
+<ul>
+<li><p>Added a workaround for an iOS 4 bug that causes the previous URL to be displayed in the location bar after calling <code>save()</code> or <code>replace()</code> with a new URL.</p></li>
+<li><p>Fixed a bug that caused the controller to get stuck in a “dispatching” state if <code>save()</code> was called with no routes defined.</p></li>
+</ul>
+<h3 id="model-1">Model</h3>
+<ul>
+<li>The <code>validate()</code> method is now only called when <code>save()</code> is called, rather than on every attribute change. If validation fails, the save operation will be aborted.</li>
+</ul>
+<h2 id="section-2">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

@@ -2,55 +2,49 @@
 
 Generic configuration validation tool that helps you with warnings, errors and deprecation messages as well as showing users examples of correct configuration.
 
-```bash
-npm install --save jest-validate
-```
+    npm install --save jest-validate
 
 ## Usage
 
-```js
-import {validate} from 'jest-validate';
+    import {validate} from 'jest-validate';
 
-validate((config: Object), (options: ValidationOptions)); // => {hasDeprecationWarnings: boolean, isValid: boolean}
-```
+    validate((config: Object), (options: ValidationOptions)); // => {hasDeprecationWarnings: boolean, isValid: boolean}
 
 Where `ValidationOptions` are:
 
-```js
-type ValidationOptions = {
-  blacklist?: Array<string>,
-  comment?: string,
-  condition?: (option: any, validOption: any) => boolean,
-  deprecate?: (
-    config: Object,
-    option: string,
-    deprecatedOptions: Object,
-    options: ValidationOptions,
-  ) => true,
-  deprecatedConfig?: {[key: string]: Function},
-  error?: (
-    option: string,
-    received: any,
-    defaultValue: any,
-    options: ValidationOptions,
-  ) => void,
-  exampleConfig: Object,
-  recursive?: boolean,
-  title?: Title,
-  unknown?: (
-    config: Object,
-    exampleConfig: Object,
-    option: string,
-    options: ValidationOptions,
-  ) => void,
-};
+    type ValidationOptions = {
+      blacklist?: Array<string>,
+      comment?: string,
+      condition?: (option: any, validOption: any) => boolean,
+      deprecate?: (
+        config: Object,
+        option: string,
+        deprecatedOptions: Object,
+        options: ValidationOptions,
+      ) => true,
+      deprecatedConfig?: {[key: string]: Function},
+      error?: (
+        option: string,
+        received: any,
+        defaultValue: any,
+        options: ValidationOptions,
+      ) => void,
+      exampleConfig: Object,
+      recursive?: boolean,
+      title?: Title,
+      unknown?: (
+        config: Object,
+        exampleConfig: Object,
+        option: string,
+        options: ValidationOptions,
+      ) => void,
+    };
 
-type Title = {|
-  deprecation?: string,
-  error?: string,
-  warning?: string,
-|};
-```
+    type Title = {|
+      deprecation?: string,
+      error?: string,
+      warning?: string,
+    |};
 
 `exampleConfig` is the only option required.
 
@@ -67,7 +61,7 @@ Almost anything can be overwritten to suite your needs.
 - `condition` – an optional function with validation condition.
 - `deprecate`, `error`, `unknown` – optional functions responsible for displaying warning and error messages.
 - `deprecatedConfig` – optional object with deprecated config keys.
-- `exampleConfig` – the only **required** option with configuration against which you'd like to test.
+- `exampleConfig` – the only **required** option with configuration against which you’d like to test.
 - `recursive` - optional boolean determining whether recursively compare `exampleConfig` to `config` (default: `true`).
 - `title` – optional object of titles for errors and messages.
 
@@ -77,117 +71,103 @@ You will find examples of `condition`, `deprecate`, `error`, `unknown`, and `dep
 
 `exampleConfig` should be an object with key/value pairs that contain an example of a valid value for each key. A configuration value is considered valid when:
 
-- it matches the JavaScript type of the example value, e.g. `string`, `number`, `array`, `boolean`, `function`, or `object`
+- it matches the JavaScript type of the example value, e.g. `string`, `number`, `array`, `boolean`, `function`, or `object`
 - it is `null` or `undefined`
 - it matches the Javascript type of any of arguments passed to `MultipleValidOptions(...)`
 
-The last condition is a special syntax that allows validating where more than one type is permissible; see example below. It's acceptable to have multiple values of the same type in the example, so you can also use this syntax to provide more than one example. When a validation failure occurs, the error message will show all other values in the array as examples.
+The last condition is a special syntax that allows validating where more than one type is permissible; see example below. It’s acceptable to have multiple values of the same type in the example, so you can also use this syntax to provide more than one example. When a validation failure occurs, the error message will show all other values in the array as examples.
 
 ## Examples
 
 Minimal example:
 
-```js
-validate(config, {exampleConfig});
-```
+    validate(config, {exampleConfig});
 
 Example with slight modifications:
 
-```js
-validate(config, {
-  comment: '  Documentation: http://custom-docs.com',
-  deprecatedConfig,
-  exampleConfig,
-  title: {
-    deprecation: 'Custom Deprecation',
-    // leaving 'error' and 'warning' as default
-  },
-});
-```
+    validate(config, {
+      comment: '  Documentation: http://custom-docs.com',
+      deprecatedConfig,
+      exampleConfig,
+      title: {
+        deprecation: 'Custom Deprecation',
+        // leaving 'error' and 'warning' as default
+      },
+    });
 
 This will output:
 
 #### Warning:
 
-```bash
-● Validation Warning:
+    ● Validation Warning:
 
-  Unknown option transformx with value "<rootDir>/node_modules/babel-jest" was found.
-  This is either a typing error or a user mistake. Fixing it will remove this message.
+      Unknown option transformx with value "<rootDir>/node_modules/babel-jest" was found.
+      This is either a typing error or a user mistake. Fixing it will remove this message.
 
-  Documentation: http://custom-docs.com
-```
+      Documentation: http://custom-docs.com
 
 #### Error:
 
-```bash
-● Validation Error:
+    ● Validation Error:
 
-  Option transform must be of type:
-    object
-  but instead received:
-    string
+      Option transform must be of type:
+        object
+      but instead received:
+        string
 
-  Example:
-  {
-    "transform": {
-      "^.+\\.js$": "<rootDir>/preprocessor.js"
-    }
-  }
+      Example:
+      {
+        "transform": {
+          "^.+\\.js$": "<rootDir>/preprocessor.js"
+        }
+      }
 
-  Documentation: http://custom-docs.com
-```
+      Documentation: http://custom-docs.com
 
 ## Example validating multiple types
 
-```js
-import {multipleValidOptions} from 'jest-validate';
+    import {multipleValidOptions} from 'jest-validate';
 
-validate(config, {
-  // `bar` will accept either a string or a number
-  bar: multipleValidOptions('string is ok', 2),
-});
-```
+    validate(config, {
+      // `bar` will accept either a string or a number
+      bar: multipleValidOptions('string is ok', 2),
+    });
 
 #### Error:
 
-```bash
-● Validation Error:
+    ● Validation Error:
 
-  Option foo must be of type:
-    string or number
-  but instead received:
-    array
+      Option foo must be of type:
+        string or number
+      but instead received:
+        array
 
-  Example:
-  {
-    "bar": "string is ok"
-  }
+      Example:
+      {
+        "bar": "string is ok"
+      }
 
-  or
+      or
 
-  {
-    "bar": 2
-  }
+      {
+        "bar": 2
+      }
 
-  Documentation: http://custom-docs.com
-```
+      Documentation: http://custom-docs.com
 
 #### Deprecation
 
 Based on `deprecatedConfig` object with proper deprecation messages. Note custom title:
 
-```bash
-Custom Deprecation:
+    Custom Deprecation:
 
-  Option scriptPreprocessor was replaced by transform, which support multiple preprocessors.
+      Option scriptPreprocessor was replaced by transform, which support multiple preprocessors.
 
-  Jest now treats your current configuration as:
-  {
-    "transform": {".*": "xxx"}
-  }
+      Jest now treats your current configuration as:
+      {
+        "transform": {".*": "xxx"}
+      }
 
-  Please update your configuration.
+      Please update your configuration.
 
-  Documentation: http://custom-docs.com
-```
+      Documentation: http://custom-docs.com

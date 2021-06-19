@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h2 id="objectives">Objectives</h2>
+<p>Create a checkout method to calculate the total cost of a cart of items and apply discounts and coupons as necessary.</p>
+<p>Dr. Steve Bruhle, your green grocer, isn’t ready, but you are!</p>
+<h2 id="instructions">Instructions</h2>
+<p>Implement a method <code>checkout</code> to calculate total cost of a cart of items and apply discounts and coupons as necessary. The checkout method will rely on the <code>consolidate_cart</code>, <code>apply_coupons</code>, and the <code>apply_clearance</code> methods.</p>
+<h4 id="the-consolidate_cart-method">The <code>consolidate_cart</code> method</h4>
+<p>The cart starts as an array of individual items. Translate it into a hash that includes the counts for each item with the <code>consolidate_cart</code> method.</p>
+<p>For instance, if the method is given the array below:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">[</a>
+<a class="sourceLine" id="cb1-2" title="2">  {<span class="st">&quot;AVOCADO&quot;</span> =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span> }},</a>
+<a class="sourceLine" id="cb1-3" title="3">  {<span class="st">&quot;AVOCADO&quot;</span> =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span> }},</a>
+<a class="sourceLine" id="cb1-4" title="4">  {<span class="st">&quot;KALE&quot;</span>    =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">false</span>}}</a>
+<a class="sourceLine" id="cb1-5" title="5">]</a></code></pre></div>
+<p>then the method should return the hash below:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">{</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="st">&quot;AVOCADO&quot;</span> =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span>, <span class="st">:count</span> =&gt; <span class="dv">2</span>},</a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="st">&quot;KALE&quot;</span>    =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">false</span>, <span class="st">:count</span> =&gt; <span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb2-4" title="4">}</a></code></pre></div>
+<h4 id="the-apply_coupons-method">The <code>apply_coupons</code> method</h4>
+<p>If the method is given a cart that looks like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">{</a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="st">&quot;AVOCADO&quot;</span> =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span>, <span class="st">:count</span> =&gt; <span class="dv">3</span>},</a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="st">&quot;KALE&quot;</span>    =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.0</span>, <span class="st">:clearance</span> =&gt; <span class="dv">false</span>, <span class="st">:count</span> =&gt; <span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb3-4" title="4">}</a></code></pre></div>
+<p>and a coupon for avocados that looks like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">[{<span class="st">:item</span> =&gt; <span class="st">&quot;AVOCADO&quot;</span>, <span class="st">:num</span> =&gt; <span class="dv">2</span>, <span class="st">:cost</span> =&gt; <span class="fl">5.0</span>}]</a></code></pre></div>
+<p>then <code>apply_coupons</code> should return the following hash:</p>
+<pre><code>{
+  &quot;AVOCADO&quot; =&gt; {:price =&gt; 3.0, :clearance =&gt; true, :count =&gt; 1},
+  &quot;KALE&quot;    =&gt; {:price =&gt; 3.0, :clearance =&gt; false, :count =&gt; 1},
+  &quot;AVOCADO W/COUPON&quot; =&gt; {:price =&gt; 5.0, :clearance =&gt; true, :count =&gt; 1},
+}</code></pre>
+<p>Notice how there were three avocados in the cart, but the coupon only applied to two of them. This left one un-couponed avocado in the cart at $3.00 and one “bundle” of discounted avocados totalling $5.00.</p>
+<h4 id="the-apply_clearance-method">The <code>apply_clearance</code> method</h4>
+<p>This method should discount the price of every item on clearance by twenty percent.</p>
+<p>For instance, if this method was given this cart:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">{</a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="st">&quot;PEANUTBUTTER&quot;</span> =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.00</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span>,  <span class="st">:count</span> =&gt; <span class="dv">2</span>},</a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="st">&quot;KALE&quot;</span>         =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.00</span>, <span class="st">:clearance</span> =&gt; <span class="dv">false</span>, <span class="st">:count</span> =&gt; <span class="dv">3</span>}</a>
+<a class="sourceLine" id="cb6-4" title="4">  <span class="st">&quot;SOY MILK&quot;</span>     =&gt; {<span class="st">:price</span> =&gt; <span class="fl">4.50</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span>,  <span class="st">:count</span> =&gt; <span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb6-5" title="5">}</a></code></pre></div>
+<p>it should return a cart with clearance applied to peanutbutter and soy milk:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">{</a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="st">&quot;PEANUTBUTTER&quot;</span> =&gt; {<span class="st">:price</span> =&gt; <span class="fl">2.40</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span>,  <span class="st">:count</span> =&gt; <span class="dv">2</span>},</a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="st">&quot;KALE&quot;</span>         =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.00</span>, <span class="st">:clearance</span> =&gt; <span class="dv">false</span>, <span class="st">:count</span> =&gt; <span class="dv">3</span>}</a>
+<a class="sourceLine" id="cb7-4" title="4">  <span class="st">&quot;SOY MILK&quot;</span>     =&gt; {<span class="st">:price</span> =&gt; <span class="fl">3.60</span>, <span class="st">:clearance</span> =&gt; <span class="dv">true</span>,  <span class="st">:count</span> =&gt; <span class="dv">1</span>}</a>
+<a class="sourceLine" id="cb7-5" title="5">}</a></code></pre></div>
+<h3 id="the-checkout-method">The <code>checkout</code> method</h3>
+<p>Create a <code>checkout</code> method that calculates the total cost of the consolidated cart.</p>
+<p>When checking out, follow these steps <em>in order</em>:</p>
+<ul>
+<li><p>Apply coupon discounts if the proper number of items are present.</p></li>
+<li><p>Apply 20% discount if items are on clearance.</p></li>
+<li><p>If, after applying the coupon discounts and the clearance discounts, the cart’s total is over $100, then apply a 10% discount.</p></li>
+</ul>
+<h3 id="named-parameters">Named Parameters</h3>
+<p>The method signature for the checkout method is <code>consolidate_cart(cart:[])</code>. This, along with the checkout method uses a ruby 2.0 feature called <a href="http://brainspec.com/blog/2012/10/08/keyword-arguments-ruby-2-0/">Named Parameters</a>.</p>
+<p>Named parameters give you more expressive code since you are specifying what each parameter is for. Another benefit is the order you pass your parameters doesn’t matter! <code>checkout(cart: [], coupons: [])</code> is the same as <code>checkout(coupons: [], cart: [])</code></p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="http://brainspec.com/blog/2012/10/08/keyword-arguments-ruby-2-0/">Named Parameters</a></li>
+</ul>
+<h2 id="reward">Reward</h2>
+<ul>
+<li><a href="http://www.adultswim.com/videos/tim-and-eric-awesome-show-great-job/dr-brule-your-green-grocer/">Dr. Brule</a></li>
+</ul>
+</body>
+</html>

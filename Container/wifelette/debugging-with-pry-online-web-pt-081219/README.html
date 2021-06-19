@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="debugging-with-pry">Debugging with Pry</h1>
+<h2 id="overview">Overview</h2>
+<p>We’ll cover Pry, a type of REPL, and discuss how to install and use it to debug a program.</p>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Explain how Pry is a more flexible REPL than IRB.</li>
+<li>Install Pry on your computer. (already installed for IDE users)</li>
+<li>Debug a program using binding.pry within the body of your file.</li>
+</ol>
+<h2 id="what-is-a-repl">What Is a REPL?</h2>
+<p>You’ve already been introduced to REPLs through using IRB (Interactive Ruby). REPL stands for <em>Read, Evaluate, Print, Loop</em>. It is an interactive programming environment that takes a user’s input, evaluates it and returns the result to the user.</p>
+<p>Ruby installs with its own REPL, which is IRB, that you’ve already been using. Every time you type <code>irb</code> into your terminal, you’re entering into a REPL.</p>
+<h2 id="what-is-pry">What Is Pry?</h2>
+<p>Pry is another Ruby REPL with some added functionality. When you enter IRB, you are entering a brand new interactive environment. Any code you want to play with in IRB, you have to write in IRB or copy and paste into IRB. Pry, on the other hand, is like a REPL that you can inject into your program.</p>
+<p>Pry is far more flexible than IRB. Once you install the Pry library (via the Pry gem—we’ll walk through installation in a bit), you can use the following line <code>binding.pry</code> anywhere in your code.</p>
+<h2 id="wait-whats-binding">Wait… What’s ‘binding’?</h2>
+<p>Binding is a built-in ruby class whose objects can encapsulate the context of your current scope (variables, methods etc.), and retain them for use outside of that context.</p>
+<p>Calling <code>binding.pry</code> is essentially ‘prying’ into the current binding or context of the code, from outside your file.</p>
+<p>So when you place the line <code>binding.pry</code> in your code, that line will get interpreted at runtime (as your program is executed). When the interpreter hits that line, your program will actually <em>freeze</em> and your terminal will turn into a REPL that exists right in the middle of your program, wherever you added the <code>binding.pry</code> line.</p>
+<p>Let’s take a look. In this repository, you’ll see a file called <code>pry_is_awesome.rb</code>.</p>
+<h2 id="instructions-part-i">Instructions Part I</h2>
+<div class="readme-content-test--show-when-active">
+<ol type="1">
+<li><p>Ensure that you’re in the project “root” directory by issuing <code>cd</code> into the cloned directory.</p></li>
+<li><p>Verify that ‘pry’ is installed: <code>gem list pry</code>: you should see something like <code>pry (0.11.3)</code>. The LearnIDE already has PRY installed.</p></li>
+</ol>
+</div>
+<div class="readme-content-test--hide-when-active">
+<ol type="1">
+<li><p>Fork and clone this repository.</p></li>
+<li>Install Pry on your computer by navigating to your home directory (<code>cd ~</code> in your terminal) and execute <code>gem install pry</code>. (again, no need to do this if you are working in the IDE)</li>
+</ol>
+</div>
+<ol start="3" type="1">
+<li>Look at the code in <code>lib/pry_is_awesome.rb</code></li>
+</ol>
+<p>You should see the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">require <span class="st">&#39;pry&#39;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">def</span> prying_into_the_method</a>
+<a class="sourceLine" id="cb1-4" title="4">    inside_the_method = <span class="st">&quot;We&#39;re inside the method&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">    puts inside_the_method</a>
+<a class="sourceLine" id="cb1-6" title="6">    puts <span class="st">&quot;We&#39;re about to stop because of pry!&quot;</span></a>
+<a class="sourceLine" id="cb1-7" title="7">    binding.pry</a>
+<a class="sourceLine" id="cb1-8" title="8">    this_variable_hasnt_been_interpreted_yet = <span class="st">&quot;The program froze before it could read me!&quot;</span></a>
+<a class="sourceLine" id="cb1-9" title="9">    puts this_variable_hasnt_been_interpreted_yet</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-11" title="11"></a>
+<a class="sourceLine" id="cb1-12" title="12">prying_into_the_method</a></code></pre></div>
+<p>Here we are requiring <code>pry</code>, <em>which you must do to use pry</em>, defining a method, and then calling that method.</p>
+<ol start="4" type="1">
+<li>In the directory of this repo, in your terminal, run the file by typing <code>ruby lib/pry_is_awesome.rb</code>. Now, look at your terminal. You should see something like this:</li>
+</ol>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">  <span class="dv">3</span>: <span class="kw">def</span> prying_into_the_method</a>
+<a class="sourceLine" id="cb2-2" title="2">     <span class="dv">4</span>:     inside_the_method = <span class="st">&quot;We&#39;re inside the method&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">     <span class="dv">5</span>:     puts inside_the_method</a>
+<a class="sourceLine" id="cb2-4" title="4">     <span class="dv">6</span>:     puts <span class="st">&quot;We&#39;re about to stop because of pry!&quot;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"> =&gt;  <span class="dv">7</span>:     binding.pry</a>
+<a class="sourceLine" id="cb2-6" title="6">     <span class="dv">8</span>:     this_variable_hasnt_been_interpreted_yet = <span class="st">&quot;The program froze before it could read me!&quot;</span></a>
+<a class="sourceLine" id="cb2-7" title="7">     <span class="dv">9</span>:     puts this_variable_hasnt_been_interpreted_yet</a>
+<a class="sourceLine" id="cb2-8" title="8">    <span class="dv">10</span>: <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-9" title="9">[<span class="dv">1</span>] pry(main)&gt;</a></code></pre></div>
+<p>You have frozen your program <em>as it executes</em> and are now inside a REPL <em>inside your program</em>. You basically just stopped time! How cool is that?</p>
+<ol start="5" type="1">
+<li>In the terminal, in your pry console, type the variable name <code>inside_the_method</code> and hit enter. You should see a return value of <code>"We're inside the method"</code></li>
+</ol>
+<p>You are actually able to explore and manipulate the data <em>inside</em> the method in which you’ve placed your binding.</p>
+<p>Now, in the terminal, in your pry console, type the variable name <code>this_variable_hasnt_been_interpreted_yet</code>. You should see a return value of <code>nil</code>. That’s because the binding you placed on line 7 actually froze the program on line 7 and the variable you just called hasn’t been interpreted yet. Consequently, our REPL doesn’t know about it. Now, in the terminal, type <code>exit</code>, and you’ll leave your pry console and the program will continue to execute.</p>
+<h2 id="instructions-part-ii-using-pry-to-debug">Instructions Part II: Using Pry to Debug</h2>
+<p>You can imagine how helpful it will be to use Pry to freeze programs and to “pry” methods open in order to solve tests and debug your code. Let’s walk through an example together. In this repository that you’ve forked and cloned down onto your computer, you’ll see a <code>spec</code> folder containing a file <code>pry_debugging_spec.rb</code>. This is a test for the file <code>lib/pry_debugging.rb</code>.</p>
+<p>In <code>pry_debugging.rb</code>, we have a broken method. Run <code>learn</code> to see the failing test.</p>
+<p>Oh no! A broken program! Luckily, we have Pry required at the top of our <code>spec/pry_debugging_spec.rb</code> file, and we know how to use it. Let’s place a <code>binding.pry</code> right before the <code>end</code> keyword like this.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">def</span> plus_two(num)</a>
+<a class="sourceLine" id="cb3-2" title="2">    num + <span class="dv">2</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    num</a>
+<a class="sourceLine" id="cb3-4" title="4">    binding.pry</a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">end</span></a></code></pre></div>
+<p>Now, run the test suite again and drop into your Pry console. Your terminal should look like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1"><span class="dt">From</span>: <span class="ot">/Users/</span>sophiedebenedetto/<span class="dt">Desktop</span>/<span class="dt">Dev</span>/<span class="dt">Ruby</span>-<span class="dt">Methods_and_Variables</span>/pry-readme/lib/pry_debugging.rb @ line <span class="dv">4</span> <span class="dt">Object</span><span class="co">#plus_two:</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="dv">1</span>: <span class="kw">def</span> plus_two(num)</a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="dv">2</span>:  num + <span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="dv">3</span>:  num</a>
+<a class="sourceLine" id="cb4-6" title="6"> =&gt; <span class="dv">4</span>:  binding.pry</a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="dv">5</span>: <span class="kw">end</span></a>
+<a class="sourceLine" id="cb4-8" title="8"></a>
+<a class="sourceLine" id="cb4-9" title="9">[<span class="dv">1</span>] pry(<span class="co">#&lt;RSpec::ExampleGroups::PlusTwo&gt;)&gt;</span></a></code></pre></div>
+<p>The test is calling our <code>plus_two</code> method with the argument, <code>num</code>, the value of <code>num</code> set to <code>3</code>, and the expected return value of <code>5</code>. We remember that the return value of a method in Ruby is generally the value of the last line of the method. Let’s check our current return value by typing <code>num</code> into our Pry console. You should see something like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1">[<span class="dv">1</span>] pry(<span class="co">#&lt;RSpec::ExampleGroups::PlusTwo&gt;)&gt; num</span></a>
+<a class="sourceLine" id="cb5-2" title="2">=&gt; <span class="dv">3</span></a>
+<a class="sourceLine" id="cb5-3" title="3">[<span class="dv">2</span>] pry(<span class="co">#&lt;RSpec::ExampleGroups::PlusTwo&gt;)&gt;</span></a></code></pre></div>
+<p>By checking the value of the variable on the last line of our method inside our pry console, we can see that <code>num</code> is set to <code>3</code> and therefore the method is returning <code>3</code>.</p>
+<p>How can we fix this method so that it behaves in the expected way? This method is called <code>plus_two</code> and the test is expecting a return value of <code>5</code>, given a <code>num</code> of <code>3</code>. Looks like our method should return the <em>sum</em> of the original number (<code>3</code>) plus 2. But our method, as it currently stands, is returning the original number. Play around with it inside your Pry console and get the test to pass. Remember to type <code>exit</code> in your terminal and then remove your <code>binding.pry</code> when you think your test will pass.</p>
+<p>Once you have your test passing, make sure the <code>binding.pry</code> line has been removed and add commit and push your changes. Then open a pull request.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="http://pryrepl.org/">Pry documentation</a></li>
+</ul>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/debugging-with-pry' title='Debugging with Pry'>Debugging with Pry</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

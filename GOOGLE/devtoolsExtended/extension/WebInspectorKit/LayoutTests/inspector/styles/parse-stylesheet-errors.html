@@ -1,159 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        WebInspector.showPanel("elements");
-
-        CSSAgent.getAllStyleSheets(headersCallback);
-
-        function headersCallback(error, headers) {
-          if (error) {
-            InspectorTest.addResult(
-              "Error loading stylesheet headers: " + error
-            );
-            InspectorTest.completeTest();
-            return;
-          }
-
-          for (var i = 0; i < headers.length; ++i)
-            CSSAgent.getStyleSheet(
-              headers[i].styleSheetId,
-              styleSheetCallback.bind(null, i === headers.length - 1)
-            );
-        }
-
-        function styleSheetCallback(isLast, error, styleSheet) {
-          if (error) {
-            InspectorTest.addResult("Error loading stylesheet body: " + error);
-            InspectorTest.completeTest();
-            return;
-          }
-
-          InspectorTest.dumpRulesArray(styleSheet.rules);
-          if (isLast) InspectorTest.completeTest();
-        }
-      }
-    </script>
-
-    <style>
-      body {
-          color: black;
-      }
-
-      font-family: serif;
-      }
-
-      body:hover {
-          color: #CDE;
-      }
-
-      body {
-          background-color: broken-declaration;
-      }
-    </style>
-    <style>
-      @import 12;
-      body {
-        color: import-error;
-      }
-    </style>
-    <style>
-      @import 12 {
-      }
-      body {
-        color: import-error-block;
-      }
-    </style>
-    <style>
-      @media;
-      body {
-        color: media-empty;
-      }
-    </style>
-    <style>
-      @page;
-      body {
-        color: page-error;
-      }
-    </style>
-    <style>
-      @page {
-      }
-      body {
-        color: page-block;
-      }
-    </style>
-    <style>
-      body {
-        color: before-import;
-      }
-      @import "foo";
-      body {
-        color: after-import;
-      }
-    </style>
-    <style>
-      body {
-        color: before-viewport;
-      }
-      @viewport {
-      }
-      body {
-        color: after-viewport;
-      }
-    </style>
-    <style>
-      @font-face {
-        font-family: initial;
-      }
-      body {
-        color: after-invalid-font-face;
-      }
-    </style>
-    <style>
-      @-webkit-region %^% {
-      }
-      body {
-        color: after-invalid-region;
-      }
-    </style>
-    <style>
-      body {
-        margin-left: 1px;
-        #;
-        margin-left: 2px;
-      }
-    </style>
-    <style>
-      body {
-        margin-right: 1px;
-         {
-        }
-        margin-right: 2px;
-      }
-    </style>
-    <style>
-      body {
-        #;
-        margin-top: 1px;
-      }
-    </style>
-    <style>
-      body {
-         {
-        }
-        margin-bottom: 2px;
-      }
-    </style>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that CSSParser produces source data consistent with CSSOM when
-      parsing broken stylesheets.
-      <a href="https://bugs.webkit.org/show_bug.cgi?id=98246">Bug 98246</a>
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>parse-stylesheet-errors</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that CSSParser produces source data consistent with CSSOM when parsing broken stylesheets. <a href="https://bugs.webkit.org/show_bug.cgi?id=98246">Bug 98246</a></p>
+</body>
 </html>

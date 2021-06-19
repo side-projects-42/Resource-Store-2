@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="jquery.scrollto">jQuery.scrollTo</h1>
+<p>Lightweight, cross-browser and highly customizable animated scrolling with jQuery</p>
+<p><a href="http://flattr.com/thing/2081384/fleslerjquery-scrollTo-on-GitHub"><img src="http://api.flattr.com/button/flattr-badge-large.png" /></a> <a href="http://badge.fury.io/gh/flesler%2Fjquery.scrollTo"><img src="https://badge.fury.io/gh/flesler%2Fjquery.scrollTo.svg" alt="GitHub version" /></a> <a href="http://libscore.com/#jQuery.fn.scrollTo"><img src="http://img.shields.io/badge/libscore-31656-brightgreen.svg?style=flat-square" alt="libscore" /></a></p>
+<h2 id="installation">Installation</h2>
+<p>The plugin requires jQuery 1.8 or higher.</p>
+<p>Via <a href="https://github.com/flesler/jquery.scrollTo/blob/master/bower.json">bower</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">bower</span> install jquery.scrollTo</a></code></pre></div>
+<p>Via <a href="https://www.npmjs.com/package/jquery.scrollto">npm</a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">npm</span> install jquery.scrollto</a></code></pre></div>
+<p>Via <a href="https://packagist.org/packages/flesler/jquery.scrollTo">packagist</a>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb3-1" title="1">php composer.<span class="kw">phar</span> <span class="kw">require</span> --prefer-dist flesler/jquery.scrollto <span class="st">&quot;*&quot;</span></a></code></pre></div>
+<h3 id="using-a-public-cdn">Using a public CDN</h3>
+<p>CDN provided by <a href="http://www.jsdelivr.com/#!jquery.scrollto">jsdelivr</a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
+<p>CDN provided by <a href="https://cdnjs.com/libraries/jquery-scrollTo">cdnjs</a></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
+<h3 id="downloading-manually">Downloading Manually</h3>
+<p>If you want the latest stable version, get the latest release from the <a href="https://github.com/flesler/jquery.scrollTo/releases">releases page</a>.</p>
+<h2 id="section">2.0</h2>
+<p>Version 2.0 has been recently released. It is mostly backwards compatible, if you have any issue first check <a href="https://github.com/flesler/jquery.scrollTo/wiki/Migrating-to-2.0">this link</a>. If your problem is not solved then go ahead and <a href="https://github.com/flesler/jquery.scrollTo/issues/new">report the issue</a>.</p>
+<h2 id="usage">Usage</h2>
+<p>jQuery.scrollTo’s signature is designed to resemble <a href="http://api.jquery.com/animate/">$().animate()</a>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="at">$</span>(element).<span class="at">scrollTo</span>(target[<span class="op">,</span>duration][<span class="op">,</span>settings])<span class="op">;</span></a></code></pre></div>
+<h3 id="element"><em>element</em></h3>
+<p>This must be a scrollable element, to scroll the whole window use <code>$(window)</code>.</p>
+<h3 id="target"><em>target</em></h3>
+<p>This defines the position to where <code>element</code> must be scrolled. The plugin supports all these formats: * A number with a fixed position: <code>250</code> * A string with a fixed position with px: <code>"250px"</code> * A string with a percentage (of container’s size): <code>"50%"</code> * A string with a relative step: <code>"+=50px"</code> * An object with <code>left</code> and <code>top</code> containining any of the aforementioned: <code>{left:250, top:"50px"}</code> * The string <code>"max"</code> to scroll to the end. * A string selector that will be relative to the element to scroll: <code>".section:eq(2)"</code> * A DOM element, probably a child of the element to scroll: <code>document.getElementById("top")</code> * A jQuery object with a DOM element: <code>$("#top")</code></p>
+<h3 id="settings"><em>settings</em></h3>
+<p>The <code>duration</code> parameter is a shortcut to the setting with the same name. These are the supported settings: * <strong>axis</strong>: The axes to animate: <code>xy</code> (default), <code>x</code>, <code>y</code>, <code>yx</code> * <strong>interrupt</strong>: If <code>true</code> will cancel the animation if the user scrolls. Default is <code>false</code> * <strong>limit</strong>: If <code>true</code> the plugin will not scroll beyond the container’s size. Default is <code>true</code> * <strong>margin</strong>: If <code>true</code>, subtracts the margin and border of the <code>target</code> element. Default is <code>false</code> * <strong>offset</strong>: Added to the final position, can be a number or an object with <code>left</code> and <code>top</code> * <strong>over</strong>: Adds a % of the <code>target</code> dimensions: <code>{left:0.5, top:0.5}</code> * <strong>queue</strong>: If <code>true</code> will scroll one <code>axis</code> and then the other. Default is <code>false</code> * <strong>onAfter(target, settings)</strong>: A callback triggered when the animation ends (jQuery’s <code>complete()</code>) * <strong>onAfterFirst(target, settings)</strong>: A callback triggered after the first axis scrolls when queueing</p>
+<p>You can add any setting supported by <a href="http://api.jquery.com/animate/#animate-properties-options">$().animate()</a> as well:</p>
+<ul>
+<li><strong>duration</strong>: Duration of the animation, default is <code>0</code> which makes it instantaneous</li>
+<li><strong>easing</strong>: Name of an easing equation, you must register the easing function: <code>swing</code></li>
+<li><strong>fail()</strong>: A callback triggered when the animation is stopped (f.e via <code>interrupt</code>)</li>
+<li><strong>step()</strong>: A callback triggered for every animated property on every frame</li>
+<li><strong>progress()</strong>: A callback triggered on every frame</li>
+<li>And more, check jQuery’s <a href="http://api.jquery.com/animate/#animate-properties-options">documentation</a></li>
+</ul>
+<h3 id="window-shorthand">window shorthand</h3>
+<p>You can use <code>$.scrollTo(...)</code> as a shorthand for <code>$(window).scrollTo(...)</code>.</p>
+<h3 id="changing-the-default-settings">Changing the default settings</h3>
+<p>As with most plugins, the default settings are exposed so they can be changed.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="va">$</span>.<span class="at">extend</span>(<span class="va">$</span>.<span class="va">scrollTo</span>.<span class="at">defaults</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">axis</span><span class="op">:</span> <span class="st">&#39;y&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">duration</span><span class="op">:</span> <span class="dv">800</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="stopping-the-animation">Stopping the animation</h3>
+<p>jQuery.scrollTo ends up creating ordinary animations which can be stopped by calling <a href="http://api.jquery.com/stop/">$().stop()</a> or <a href="http://api.jquery.com/finish/">$().finish()</a> on the same element you called <code>$().scrollTo()</code>, including the <code>window</code>. Remember you can pass a <code>fail()</code> callback to be called when the animation is stopped.</p>
+<h3 id="onafter-and-requestanimationframe">onAfter and requestAnimationFrame</h3>
+<p>jQuery.scrollTo has a <code>onAfter</code> callback for work that runs after the animation finishes. It will be called before the <code>scroll</code> event fires. To combat this you can use <a href="http://caniuse.com/#feat=requestanimationframe">requestAnimationFrame</a> to do work on the next tick. It is available in many browsers, but you may want to <a href="https://github.com/chrisdickinson/raf">polyfill</a> for the few it does not support.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="va">$</span>.<span class="at">scrollTo</span>(<span class="dv">100</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">onAfter</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="at">requestAnimationFrame</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-4" title="4">        <span class="at">$</span>(<span class="st">&quot;.result&quot;</span>).<span class="at">addClass</span>(<span class="st">&quot;selected&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-6" title="6">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h2 id="demo">Demo</h2>
+<p>Check the <a href="http://demos.flesler.com/jquery/scrollTo/">demo</a> to see every option in action.</p>
+<h2 id="complementary-plugins">Complementary plugins</h2>
+<p>There are two plugins, also created by me that depend on jQuery.scrollTo and aim to simplify certain use cases.</p>
+<h3 id="jquery.localscroll"><a href="https://github.com/flesler/jquery.localScroll">jQuery.localScroll</a></h3>
+<p>This plugin makes it very easy to implement anchor navigation. If you don’t want to include another plugin, you can try using something like <a href="https://gist.github.com/flesler/3f3e1166690108abf747">this minimalistic gist</a>.</p>
+<h3 id="jquery.serialscroll"><a href="https://github.com/flesler/jquery.serialScroll">jQuery.serialScroll</a></h3>
+<p>This plugin simplifies the creation of scrolling slideshows.</p>
+<h2 id="license">License</h2>
+<p>(The MIT License)</p>
+<p>Copyright (c) 2007 Ariel Flesler <a href="mailto:aflesler@gmail.com" class="email">aflesler@gmail.com</a></p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</body>
+</html>

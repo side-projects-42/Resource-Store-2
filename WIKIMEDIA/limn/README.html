@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="limn-a-gui-visualization-toolkit">Limn — a GUI Visualization Toolkit</h1>
+<p>Limn is a GUI for constructing beautiful visualizations without need of programming skills.</p>
+<center>
+<a href="http://reportcard.wmflabs.org" title="The Wikimedia Foundation Monthly Reportcard"><img src="https://raw.github.com/wikimedia/limn/master/static/img/limn-screenshot.png" title="Limn Screenshot" alt="Limn Screenshot" /></a>
+</center>
+<p><a href="http://reportcard.wmflabs.org/graphs/sample_graph/edit" title="Limn Sample Graph">Play with it!</a> The <a href="http://reportcard.wmflabs.org" title="The Wikimedia Foundation Monthly Reportcard">Wikimedia Reportcard</a> site is powered by Limn — check it out!</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Graphical interface to create and customize visualizations</li>
+<li>Beautiful results, easy to use</li>
+<li>Easily added to any existing project as either a single script tag, or via <a href="http://nodejs.org/" title="node.js">node</a> middleware</li>
+<li>Works with a simple data format that is agnostic to the backing data-source</li>
+</ul>
+<p>Check out the <a href="https://github.com/wikimedia/limn/wiki/Feature-Walkthrough" title="Limn Feature Walkthrough">Feature Walkthrough</a> for more info!</p>
+<h2 id="why-limn">Why Limn?</h2>
+<p>There are a great many JavaScript graphing libraries, and Limn isn’t one: if you’re a programmer looking to stick some graphs on your site, you already have a ton of options (ps. use <a href="http://d3js.org" title="d3.js">d3.js</a>).</p>
+<p>But what about your non-programmers? They don’t have many options: they email somebody, maybe try some shoddy web tools, and eventually reach for Excel. Ew. Worse, the time and energy expended in getting a single chart is so great that they’re seriously discouraged from playing around. In the age of big data, this is a big problem. Exploration is a huge component of success. You need to iterate. You need to be open to inspiration. If you think you know what you’re looking for, you’re probably wrong. This is the niche Limn aims to fill: a drop-in component that enables self-service visualizations for your team.</p>
+<p>The “drop-in” part is important: we want it to be easy for programmers to enable these features in existing applications with minimal changes. If you already have a datasource that provides data in CSV or JSON format (be it files on disk or a REST API) you’re mostly good to go. Limn can run entirely as a client-side application simply by including <code>limn.js</code>, or as <a href="http://nodejs.org/" title="node.js">node.js</a> middleware using either <a href="http://senchalabs.org/connect" title="Connect">Connect</a> or <a href="http://expressjs.com" title="Express">Express</a>, in which case graphs can be persisted on disk. The only real work is to <a href="https://github.com/wikimedia/limn/wiki/Datasource-Metadata" title="Describing DataSources">configure Limn to know about your datasources</a>, though in the future we aim for the client to be able introspect this information from the data.</p>
+<h2 id="work-in-progress">Work in Progress</h2>
+<p>Limn is a work-in-progress. This means it some things are harder than they should be (though it’s still pretty easy to use!); it means it’s missing some otherwise sensible features and configuration options; it means there’s some code that probably needs to be cleaned up. When you find these things, help us out by <a href="https://github.com/wikimedia/limn/issues">opening a ticket</a> (or, if you’re feeling ambitious, a pull request <code>;)</code>). It means you probably shouldn’t use Limn in production unless you’re ready to submit patches. We work on the <a href="https://github.com/wikimedia/limn/tree/develop">develop branch</a> and promote to master only when we have significant progress.</p>
+<h2 id="learn-more">Learn More</h2>
+<p>Excited? Here are some good places to go from here:</p>
+<ul>
+<li>Curious how Limn could help your team visualize data? Check out the <a href="https://github.com/wikimedia/limn/wiki/Feature-Walkthrough" title="Limn Feature Walkthrough">Feature Walkthrough</a> for a better idea of what Limn can do, or the <a href="https://github.com/wikimedia/limn/wiki/Roadmap" title="Limn Development Roadmap">Roadmap</a> for where we’re going.</li>
+<li>Want to run Limn? Read over the docs available on <a href="https://github.com/wikimedia/limn/wiki" title="Limn Wiki">the Limn wiki</a>. “<a href="https://github.com/wikimedia/limn/wiki/Getting-Started" title="Getting Started with Limn">Getting Started</a>” seems like it might be a good place to start.</li>
+<li>Once you’ve done that, <a href="https://gerrit.wikimedia.org/r/p/analytics/reportcard/data.git" title="WMF Reportcard source code">the source</a> to WMF’s production instance of Limn, <a href="http://reportcard.wmflabs.org" title="The Wikimedia Foundation Monthly Reportcard">the monthly Reportcard</a>, might serve as a useful guide.</li>
+<li>Finally, if you’re interested in hacking on Limn (♥!), check out the notes on <a href="https://github.com/wikimedia/limn/wiki/Contributing" title="Contributing to Limn">Contributing</a> and on <a href="https://github.com/wikimedia/limn/wiki/Internals" title="Limn Internals">Project Internals</a>.</li>
+</ul>
+<h2 id="install">Install</h2>
+<p>The fastest way to get Limn up and running:</p>
+<ul>
+<li>On Mac or Linux, make sure you have <a href="http://nodejs.org/" title="node.js">nodejs</a> and <a href="http://npmjs.org/" title="npm">npm</a> installed</li>
+</ul>
+<pre><code>git clone git@github.com:wikimedia/limn.git
+cd limn
+npm install
+npm i -g coco
+npm start</code></pre>
+<ul>
+<li>Configure one or more of the following data repositories:</li>
+<li><a href="https://github.com/wikimedia/limn-data" title="Limn Example Data">Limn Example Data</a></li>
+<li><a href="https://github.com/wikimedia/limn-editor-engagement" title="Limn Editor Engagement Data">Limn Editor Engagement Data</a></li>
+</ul>
+<h2 id="feedback">Feedback</h2>
+<p>Limn is made with love by <a href="https://www.mediawiki.org/wiki/Analytics" title="Wikimedia Analytics team">the Wikimedia Foundation’s Analytics team</a>, and <a href="mailto:dsc@wikimedia.org">we’d love to hear from you</a>, whether it’s because you found a bug, have suggestions, or want to contribute! For mundane things, open a ticket (or fork the project!) on <a href="https://github.com/wikimedia/limn" title="Limn on GitHub">GitHub</a>. You can also send Dave a charming email at <a href="mailto:dsc@wikimedia.org">dsc@wikimedia.org</a>.</p>
+<p>–</p>
+<p>Limn is open-source software, freely available under the MIT License.</p>
+</body>
+</html>

@@ -1,0 +1,9 @@
+--- :layout: post :title: "Office hours next week: metadata plugin" :nodeid: 410 :created: 1355425387 :tags: - development - core - plugins :author: kohsuke ---
+
+[The last Jenkins office hour of the year](https://wiki.jenkins-ci.org/display/JENKINS/Office+Hours) hosts Robert Sandell and Tomas Westling, who will go over [newly open-sourced metadata plugin](https://wiki.jenkins-ci.org/display/JENKINS/Metadata+plugin) from Sony Mobile Communications ([more about this story on their website](http://developer.sonymobile.com/2012/11/22/sony-contributes-to-jenkins-software-tool/)). This team from Sony Mobile has been known for several other popular plugins, including [the Gerrit trigger plugin](https://wiki.jenkins-ci.org/display/JENKINS/Gerrit+Trigger). And I think this latest batch of plugins will not disappoint!
+
+As I understand, this plugin is a [library plugin](https://wiki.jenkins-ci.org/label/JENKINS/plugin-library), which is primarily meant to be consumed by other plugins. With help of other plugins using this plugin, it can classify jobs and slaves by adding metadata tags to them. This in turn enables more intelligent scheduling, views, access control, and so on.
+
+Personally, I'm very interested in integrating [the iOS device connector plugin](https://wiki.jenkins-ci.org/display/JENKINS/iOS+Device+Connector+Plugin), so that one could say "run this job on a Mac where iPad2 is connected", etc. The other piece is to integrate this with [the external resource dispatcher](https://wiki.jenkins-ci.org/display/JENKINS/External+Resource+Dispatcher) so that Jenkins can grant exclusive device access to jobs while they are running so that tests don't end up trying to use the same device.
+
+If you are a plugin developer, hopefully this gets you excited. See you [Dec 19th 11am PST](http://www.timeanddate.com/worldclock/fixedtime.html?msg=Jenkins+Office+Hours&iso=20121219T11&p1=283&ah=1).

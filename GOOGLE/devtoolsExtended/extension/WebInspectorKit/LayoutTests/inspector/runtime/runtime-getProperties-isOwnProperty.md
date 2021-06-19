@@ -1,0 +1,1 @@
+Tests RemoteObject.getProperties.

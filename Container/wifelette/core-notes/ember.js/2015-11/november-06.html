@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>november-06</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember.js-core-team-2015-11-06">Ember.js Core Team 2015-11-06</h1>
+<h4 id="agenda">Agenda</h4>
+<ul>
+<li>application-visit [GC]
+<ul>
+<li>Already “go”-ed in the last meeting but we missed it on the minutes, would like to reconfirm</li>
+<li>How to deal with remaining DOM-helper patches
+<ul>
+<li>URL protocol parsing (for escaping?)</li>
+<li>{{{ … }}}</li>
+</ul></li>
+</ul></li>
+<li>improved-instrumentation [YK &amp; GC]
+<ul>
+<li>Not quite ready atm, but what would we need for a “go”?</li>
+<li>Aim to get to that ^^^ state by next week</li>
+</ul></li>
+<li>Glimmer 2 integration [YK]</li>
+<li><code>getOwner</code> feature</li>
+<li>ember-cli 1.13.x + ember-cli 2.x releases</li>
+</ul>
+<h4 id="notes">Notes</h4>
+<p>Attendees: MB, YK, GC, KS, AM, EB, LS, RJ, TD, IT, SP</p>
+<p>GC: We go’d visit in last meeting, but want to make sure, wasn’t in the minutes</p>
+<p>YK: While it is not done, we think the things we need to do in the future need to be done now</p>
+<p>RJ: Are there docs?</p>
+<p>YK: There are API docs, there should always be docs for new features. I don’t think it needs guides since it is a poweruser feature.</p>
+<p>GC: They are written in the style of guide, using highlevel scenarios. We can extract it later when it stops being a power-user feature.</p>
+<p>GC: https://github.com/emberjs/ember.js/blob/master/packages/ember-application/lib/system/application.js#L985-L1174</p>
+<p>GC: there are two patches requires for DOM helper for the visit API to work.</p>
+<p>GC: First thing is it uses the dom to parse URLs</p>
+<p>YK+RJ: We use the DOM to parse URLs so we can ensure the correct contextual protocol. An “a” tag</p>
+<p>GC: To ship this the options are to tell people to patch it (the dom helper instance), but that is bad. The second option is to expose it as a public API. (some third option?!)</p>
+<p>YK: the dom helper is basically already a service. But we don’t want to expose it, so a service would have this slim subset.</p>
+<p>TD: That seems a small feature pushing us to make a public API</p>
+<p>YK: for example having a routing service is OK even though we have router.js</p>
+<p>SP: If we need this env at eval time, then it just cannot be a service.</p>
+<p>TD: Because everything on the env we know of that needs to be replaced today is for runtime, services could work for parts</p>
+<p>SP: We can use the module system to ensure modules providing functionality can be loaded before Ember. I think its something that belongs before the container, which means the module system.</p>
+<p>YK: We’re not going to do a full extensibility discussion on this call, so lets stop.</p>
+<p>YK: auto-detect or passing the protocol for lookup are on fallbacks.</p>
+<p>GC: instrumentation PR- it is pretty small and I’d like to land that</p>
+<p>RJ: you addressed the concern I had. This would help with some of the inspector stuff.</p>
+<p>YK: Glimmer2, we have many tests passing, waiting on Robert for some work</p>
+<p>RJ: Yeah I’ve been feeling crappy, but we should pair up today and can get you guys unblocked.</p>
+<p>RJ: getOwner. it deprecates access to the container and provides a function returning the owner object</p>
+<p>RJ: You can call lookup etc on it.</p>
+<p>RJ: the thing it returns is an application instance, in test we make something else but in apps it returns an app instance</p>
+<p>RJ: I need to do some feature detect stuff in ember-test-helpers to make it work there, but I plan to do it this weekend</p>
+<p>RJ: The only API that people sometimes use that we don’t have public is lookupFactory, it is underscored and private, based on concerns we might want to change it in the future.</p>
+<p>SP: Don’t say Ember-Clee.</p>
+<p>SP: We’re going to release 1.13.9 and 2.2 next week. It will be out of sync at the patch level.</p>
+<p>SP: Next week with RJ’s help we can finish addonify ember.js</p>
+<p>RJ: local lookup, I should be ready for eyes next week.</p>
+<p>MB: 2.4?</p>
+<p>RJ: yeah 2.4, we will have a WIP shortly.</p>
+<p>SP: I’m going to try and update the weakmap stuff to get that landed internally soon</p>
+<p>RJ: It is related to a sorting bug?</p>
+<p>SP: Right. For people who want to try it there is an addon that polyfills it.</p>
+<p>SP: On the Ember-CLI front as well I got a bunch of performance work it. We got a lot of work on merge trees in. the next release of Ember-CLI everything except SASS will be much faster. The caveat is that npm need to be up to date, we can make a guide for that.</p>
+<p>SP: There are some addons that do crazy monkey patching, and those may need to be rewritten entirely.</p>
+</body>
+</html>

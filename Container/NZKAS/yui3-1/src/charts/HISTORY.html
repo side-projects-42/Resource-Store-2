@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="charts-change-history">Charts Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>#2531234 Fixed issue in which axis titles were not positioned properly in IE 6 and 7.</li>
+<li>#2531233 Fixed issue in which axis line and tick styles were overriding each other.</li>
+<li>#2531232 Fixed issue in which inner axis ticks did not display.</li>
+<li>#2531231 Fixed issue in which the top axis line was not positioned properly.</li>
+<li>#2530109 Fixed issue in which the NumericAxis roundingMethod was not always being respected when a number was specified.</li>
+<li>#2531100 Fixed issue in which the NumericAxis was not correctly calculating its data range when a minimum or maximum was explicitly set.</li>
+<li>#2530127 Added originEvent, pageX and pageY properties to the event facade for marker and planar events.</li>
+<li>#2530591 Added ability to accept custom series classes.</li>
+<li>#2530592 Fixed errors resulting from empty series.</li>
+<li>#2530810 Removed hard-coded class prefixes.</li>
+<li>#2530908 Fixed issue in which the NumericAxis was not respecting explicitly set minimum and maximum values in some cases.</li>
+<li>#2530969 Ensure underlying dom nodes of markers have unique ids.</li>
+<li>#2530984 Fixed issue in which PieChart was not resizing properly.</li>
+<li>#2531024 Fixed issue in which PieChart did not draw from center when width and height were not equal.</li>
+<li>#2530985 Fixed issue in which PieChart failed to always render in MSIE 8.</li>
+<li>#2531020 Fixed issue in which gridlines could be hidden by other elements.</li>
+<li>#2531040 Fixed issue in which missing data broke stacked histograms.</li>
+<li>#2531071 Fixed issue in which charts would not render if one of the series was empty.</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>Charts only requires datatype-number and datatype-date instead of the datatype rollup.</li>
+<li>#2530413 Position axis labels with transform instead of css styles.<br />
+</li>
+<li>#2530533 Fixed issue in which stacked bar/column displayed inaccurated data on mouseover when zero values appeared in the series.<br />
+</li>
+<li>#2530404 Fix issue in which markers were incorrectly omitted from graphs.<br />
+</li>
+<li>#2530395 SplineSeries extends LineSeries instead of CartesianSeries.</li>
+<li>#2529841 Add axis title.<br />
+</li>
+<li>#2530143 Refactor to use Graphics API</li>
+<li>#2530223 Fixed bug in which negative value markers were not displayed in column/bar series.</li>
+<li>#2529849 Fixed styles documentation bug</li>
+<li>#2530115 Fixed bug preventing tooltip’s node from being overwritten.</li>
+<li>#2529972 Fixed issue in which zero/null values were falsely creating markers in stacked bar and column series.</li>
+<li>#2529926 Fixed issue in which null values were being treated as zero.</li>
+<li>#2529925 Fixed bug in which dashed line was not drawn in combo and line series.</li>
+<li>#2529926 Fixed issue in which null values in data provider are treated as 0.</li>
+<li>#2529927 Addressed issue in which primitive value strings were not being parsed correctly in the TimeAxis.</li>
+<li>#2529971 Force range on a NumericAxis when all values are zero.</li>
+<li>#2529842 Ensure Numeric axis has at least on negative and positive tick when minimum is less than zero and maximum is greater than zero.</li>
+<li>#2529840 Changed stacked bar and column series to handle cases in which the item value is at or rounded to zero.</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

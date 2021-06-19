@@ -1,59 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/timeline-test.js"></script>
-    <script>
-      function performActions() {
-        var iframe = document.createElement("iframe");
-        iframe.src = "resources/timeline-iframe-data.html";
-        document.body.appendChild(iframe);
-      }
-
-      function test() {
-        InspectorTest.startTimeline(step1);
-        function step1() {
-          InspectorTest.addConsoleSniffer(step2);
-          InspectorTest.evaluateInPage("performActions()");
-        }
-
-        function step2() {
-          InspectorTest.stopTimeline(step3);
-        }
-
-        function step3() {
-          function format(record) {
-            if (
-              record.type ===
-              WebInspector.TimelineModel.RecordType.EvaluateScript
-            )
-              InspectorTest.printTimelineRecordProperties(record);
-            else if (
-              record.type === WebInspector.TimelineModel.RecordType.ParseHTML
-            ) {
-              var children = [];
-              var skipCategories = { rendering: true, painting: true };
-              for (var i = 0; i < record.children.length; ++i) {
-                if (
-                  !skipCategories[
-                    WebInspector.TimelinePresentationModel.categoryForRecord(
-                      record.children[i]
-                    ).name
-                  ]
-                )
-                  children.push(record.children[i]);
-              }
-              record.children = children;
-              InspectorTest.dumpTimelineRecord(record);
-            }
-          }
-          InspectorTest.printTimelineRecords(null, format);
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests the Timeline API instrumentation of an HTML script tag.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timeline-script-tag-1</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests the Timeline API instrumentation of an HTML script tag.</p>
+</body>
 </html>

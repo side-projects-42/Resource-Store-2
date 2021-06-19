@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>00-Introduction</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="introduction">Introduction</h1>
+<p>The JavaScript core language features are defined in a standard called ECMA-262. The language defined in this standard is called ECMAScript. What you know as JavaScript in browsers and Node.js is actually a superset of ECMAScript. Browsers and Node.js add more functionality through additional objects and methods, but the core of the language remains as defined in ECMAScript. The ongoing development of ECMA-262 is vital to the success of JavaScript as a whole, and this book covers the changes brought about by the most recent major update to the language: ECMAScript 6.</p>
+<h2 id="the-road-to-ecmascript-6">The Road to ECMAScript 6</h2>
+<p>In 2007, JavaScript was at a crossroads. The popularity of Ajax was ushering in a new age of dynamic web applications, while JavaScript hadn’t changed since the third edition of ECMA-262 was published in 1999. TC-39, the committee responsible for driving the ECMAScript development process, put together a large draft specification for ECMAScript 4. ECMAScript 4 was massive in scope, introducing changes both small and large to the language. Updated features included new syntax, modules, classes, classical inheritance, private object members, optional type annotations, and more.</p>
+<p>The scope of the ECMAScript 4 changes caused a rift to form in TC-39, with some members feeling that the fourth edition was trying to accomplish too much. A group of leaders from Yahoo, Google, and Microsoft created an alternate proposal for the next version of ECMAScript that they initially called ECMAScript 3.1. The “3.1” was intended to show that this was an incremental change to the existing standard.</p>
+<p>ECMAScript 3.1 introduced very few syntax changes, instead focusing on property attributes, native JSON support, and adding methods to already-existing objects. Although there was an early attempt to reconcile ECMAScript 3.1 and ECMAScript 4, this ultimately failed as the two camps had difficulty with the very different perspectives on how the language should grow.</p>
+<p>In 2008, Brendan Eich, the creator of JavaScript, announced that TC-39 would focus its efforts on standardizing ECMAScript 3.1. They would table the major syntax and feature changes of ECMAScript 4 until after the next version of ECMAScript was standardized, and all members of the committee would work to bring the best pieces of ECMAScript 3.1 and 4 together after that point into an effort initially nicknamed ECMAScript Harmony.</p>
+<p>ECMAScript 3.1 was eventually standardized as the fifth edition of ECMA-262, also described as ECMAScript 5. The committee never released an ECMAScript 4 standard to avoid confusion with the now-defunct effort of the same name. Work then began on ECMAScript Harmony, with ECMAScript 6 being the first standard released in this new “harmonious” spirit.</p>
+<p>ECMAScript 6 reached feature complete status in 2015 and was formally dubbed “ECMAScript 2015.” (But this text still refers to it as ECMAScript 6, the name most familiar to developers.) The features vary widely from completely new objects and patterns to syntax changes to new methods on existing objects. The exciting thing about ECMAScript 6 is that all of its changes are geared toward solving problems that developers actually face.</p>
+<h2 id="about-this-book">About This Book</h2>
+<p>A good understanding of ECMAScript 6 features is key for all JavaScript developers going forward. The language features introduced in ECMAScript 6 represent the foundation upon which JavaScript applications will be built for the foreseeable future. That’s where this book comes in. My hope is that you’ll read this book to learn about ECMAScript 6 features so that you’ll be ready to start using them as soon as you need to.</p>
+<h3 id="browser-and-node.js-compatibility">Browser and Node.js Compatibility</h3>
+<p>Many JavaScript environments, such as web browsers and Node.js, are actively working on implementing ECMAScript 6. This book doesn’t attempt to address the inconsistencies between implementations and instead focuses on what the specification defines as the correct behavior. As such, it’s possible that your JavaScript environment may not conform to the behavior described in this book.</p>
+<h3 id="who-this-book-is-for">Who This Book is For</h3>
+<p>This book is intended as a guide for those who are already familiar with JavaScript and ECMAScript 5. While a deep understanding of the language isn’t necessary to use this book, it will help you understand the differences between ECMAScript 5 and 6. In particular, this book is aimed at intermediate-to-advanced JavaScript developers programming for a browser or Node.js environment who want to learn about the latest developments in the language.</p>
+<p>This book is not for beginners who have never written JavaScript. You will need to have a good basic understanding of the language to make use of this book.</p>
+<h3 id="overview">Overview</h3>
+<p>Each of this book’s thirteen chapters covers a different aspect of ECMAScript 6. Many chapters start by discussing problems that ECMAScript 6 changes were made to solve, to give you a broader context for those changes, and all chapters include code examples to help you learn new syntax and concepts.</p>
+<p><strong>Chapter 1: How Block Bindings Work</strong> talks about <code>let</code> and <code>const</code>, the block-level replacement for <code>var</code>.</p>
+<p><strong>Chapter 2: Strings and Regular Expressions</strong> covers additional functionality for string manipulation and inspection as well as the introduction of template strings.</p>
+<p><strong>Chapter 3: Functions in ECMAScript 6</strong> discusses the various changes to functions. This includes the arrow function form, default parameters, rest parameters, and more.</p>
+<p><strong>Chapter 4: Expanded Object Functionality</strong> explains the changes to how objects are created, modified, and used. Topics include changes to object literal syntax, and new reflection methods.</p>
+<p><strong>Chapter 5: Destructuring for Easier Data Access</strong> introduces object and array destructuring, which allow you to decompose objects and arrays using a concise syntax.</p>
+<p><strong>Chapter 6: Symbols and Symbol Properties</strong> introduces the concept of symbols, a new way to define properties. Symbols are a new primitive type that can be used to obscure (but not hide) object properties and methods.</p>
+<p><strong>Chapter 7: Sets and Maps</strong> details the new collection types of <code>Set</code>, <code>WeakSet</code>, <code>Map</code>, and <code>WeakMap</code>. These types expand on the usefulness of arrays by adding semantics, de-duping, and memory management designed specifically for JavaScript.</p>
+<p><strong>Chapter 8: Iterators and Generators</strong> discusses the addition of iterators and generators to the language. These features allow you to work with collections of data in powerful ways that were not possible in previous versions of JavaScript.</p>
+<p><strong>Chapter 9: Introducing JavaScript Classes</strong> introduces the first formal concept of classes in JavaScript. Often a point of confusion for those coming from other languages, the addition of class syntax in JavaScript makes the language more approachable to others and more concise for enthusiasts.</p>
+<p><strong>Chapter 10: Improved Array Capabilities</strong> details the changes to native arrays and the interesting new ways they can be used in JavaScript.</p>
+<p><strong>Chapter 11: Promises and Asynchronous Programming</strong> introduces promises as a new part of the language. Promises were a grassroots effort that eventually took off and gained in popularity due to extensive library support. ECMAScript 6 formalizes promises and makes them available by default.</p>
+<p><strong>Chapter 12: Proxies and the Reflection API</strong> introduces the formalized reflection API for JavaScript and the new proxy object that allows you to intercept every operation performed on an object. Proxies give developers unprecedented control over objects and, as such, unlimited possibilities for defining new interaction patterns.</p>
+<p><strong>Chapter 13: Encapsulating Code with Modules</strong> details the official module format for JavaScript. The intent is that these modules can replace the numerous ad-hoc module definition formats that have appeared over the years.</p>
+<p><strong>Appendix A: Smaller ECMAScript 6 Changes</strong> covers other changes implemented in ECMAScript 6 that you’ll use less frequently or that didn’t quite fit into the broader major topics covered in each chapter.</p>
+<p><strong>Appendix B: Understanding ECMAScript 7 (2016)</strong> describes the two additions to the standard that were implemented for ECMAScript 7, which didn’t impact JavaScript nearly as much as ECMAScript 6.</p>
+<h3 id="conventions-used">Conventions Used</h3>
+<p>The following typographical conventions are used in this book:</p>
+<ul>
+<li><em>Italics</em> introduces new terms</li>
+<li><code>Constant width</code> indicates a piece of code or filename</li>
+</ul>
+<p>Additionally, longer code examples are contained in constant width code blocks such as:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">function</span> <span class="at">doSomething</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="co">// empty</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="op">}</span></a></code></pre></div>
+<p>Within a code block, comments to the right of a <code>console.log()</code> statement indicate the output you’ll see in the browser or Node.js console when the code is executed, for example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Hi&quot;</span>)<span class="op">;</span>      <span class="co">// &quot;Hi&quot;</span></a></code></pre></div>
+<p>If a line of code in a code block throws an error, this is also indicated to the right of the code:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="at">doSomething</span>()<span class="op">;</span>          <span class="co">// error!</span></a></code></pre></div>
+<h3 id="help-and-support">Help and Support</h3>
+<p>You can file issues, suggest changes, and open pull requests against this book by visiting: <a href="https://github.com/nzakas/understandinges6">https://github.com/nzakas/understandinges6</a></p>
+<!-- I would suggest leaving the note above out of the print version, since readers
+won't be able to file issues on it. /JG -->
+<p>If you have questions as you read this book, please send a message to my mailing list: <a href="http://groups.google.com/group/zakasbooks">http://groups.google.com/group/zakasbooks</a>.</p>
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>Thanks to Jennifer Griffith-Delgado, Alison Law, and everyone at No Starch Press for their support and help with this book. Their understanding and patience as my productivity slowed to a crawl during my extended illness is something I will never forget.</p>
+<p>I’m grateful for the watchful eye of Juriy Zaytsev as tech editor and to Dr. Axel Rauschmayer for his feedback and several conversations that helped to clarify some of the concepts discussed in this book.</p>
+<p>Thanks to everyone who submitted fixes to the version of this book that is hosted on GitHub: ShMcK, Ronen Elster, Rick Waldron, blacktail, Paul Salaets, Lonniebiz, Igor Skuhar, jakub-g, David Chang, Kevin Sweeney, Kyle Simpson, Peter Bakondy, Philip Borisov, Shaun Hickson, Steven Foote, kavun, Dan Kielp, Darren Huskie, Jakub Narębski, Jamund Ferguson, Josh Lubaway, Marián Rusnák, Nikolas Poniros, Robin Pokorný, Roman Lo, Yang Su, alexyans, robertd, 404, Aaron Dandy, AbdulFattah Popoola, Adam Richeimer, Ahmad Ali, Aleksandar Djindjic, Arjunkumar, Ben Regenspan, Carlo Costantini, Dmitri Suvorov, Kyle Pollock, Mallory, Erik Sundahl, Ethan Brown, Eugene Zubarev, Francesco Pongiluppi, Jake Champion, Jeremy Caney, Joe Eames, Juriy Zaytsev, Kale Worsley, Kevin Lozandier, Lewis Ellis, Mohsen Azimi, Navaneeth Kesavan, Nick Bottomley, Niels Dequeker, Pahlevi Fikri Auliya, Prayag Verma, Raj Anand, Ross Gerbasi, Roy Ling, Sarbbottam Bandyopadhyay, and Shidhin.</p>
+<p>Also, thanks to everyone who supported this book on Patreon: Casey Visco.</p>
+</body>
+</html>

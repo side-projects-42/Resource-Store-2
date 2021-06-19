@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="rebuild">Rebuild</h1>
+    <p>
+      Rebuild is a simple utility that does just one thing: it watches one or
+      more files or directories for changes and runs a command when they change.
+      That’s it. It’s intended to be used with command line build systems, but
+      you can’t really use it for anything.
+    </p>
+    <h2 id="installation">Installation</h2>
+    <pre><code>npm install rebuild -g</code></pre>
+    <h2 id="usage">Usage</h2>
+    <p>
+      Specify any number of files or directories using <code>-w</code> or
+      <code>--watch</code>. Then just include whatever command you want to run.
+      For example, if you just want to run <code>ls</code> whenever files in the
+      <code>tmp</code> directory change, you would do this:
+    </p>
+    <pre><code>rebuild -w tmp ls</code></pre>
+    <p>
+      The directory is resolved based on the current working directory for both
+      the files and directories to watch and the command to run. Other examples:
+    </p>
+    <pre><code># Run &quot;ant test&quot; when the files in src change
+rebuild -w src ant test
+
+# Automatically check in files in src and docs when they change
+rebuild -w src -w docs git commit -am &quot;Just wanted to check these in&quot;</code></pre>
+  </body>
+</html>

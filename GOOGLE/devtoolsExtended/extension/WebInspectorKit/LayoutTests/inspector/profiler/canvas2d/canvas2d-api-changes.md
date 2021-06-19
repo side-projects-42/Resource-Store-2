@@ -1,0 +1,1 @@
+Test to catch Canvas 2D API changes. If this test should ever fail, we should re-examine the Canvas 2D state saving/restoring logic in the InjectedScriptModule to include any latest changes to the API.

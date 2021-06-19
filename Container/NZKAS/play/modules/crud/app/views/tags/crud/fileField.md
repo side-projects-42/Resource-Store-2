@@ -1,0 +1,1 @@
+\#{field 'object.' + \_name} &{\_name} \#{ifError field.name} <span class="error">${field.error.raw()}</span> \#{/ifError} \#{if \_value && \_value.exists() && \_id} <a href="@%7Battachment(_id,%20_name)%7D" class="currentAttachment">Download current file (${\_value.length().formatSize()})</a> <span class="removeAttachment"> (delete)</span> \#{/if} \#{/field}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2015-11-03-what-jvm-versions-are-running-jenkins</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Preceding some of last week’s
+      <a href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+2.0"
+        >Jenkins 2.0</a
+      >
+      discussions, there had been
+      <a
+        href="https://groups.google.com/d/msg/jenkinsci-dev/sw_WepGw0Pk/0gO2V9UXy-8J"
+        >some threads</a
+      >
+      on whether we should move Jenkins to require Java 8. The introduction of
+      <a href="http://www.oracle.com/events/us/en/java8/index.html">Java 8</a>
+      last year brought performance improvements and highly desirable API
+      changes, which make developing Java-based applications (arguably) much
+      easier than before. The release was followed earlier this year by the
+      <a href="https://www.java.com/en/download/faq/java_7.xml"
+        >end-of-life announcement</a
+      >
+      for Java 7; the writing is on the wall: upgrade to Java 8.
+    </p>
+    <p>
+      I wanted to answer the question “does it even make sense to force an
+      upgrade to Java 8?” There are plenty of technical discussions that we can
+      have in the community on whether or not this is the right approach, but my
+      goal was to try and measure the current Jenkins install base for Java 8
+      preparedness.
+    </p>
+    <!--break-->
+    <p>
+      While we do not currently (to my knowledge) collect Java runtime versions
+      in our
+      <a href="http://stats.jenkins-ci.org/jenkins-stats/"
+        >anonymous usage statistics</a
+      >, we do have access logs from our
+      <a href="http://mirrors.jenkins-ci.org">mirror redirector</a> which might
+      provide some insight.
+    </p>
+    <p>
+      With some access logs data, I went through the millions of requests made
+      to Jenkins infrastructure in 2015 and started filtering out the user agent
+      which made those requests.
+    </p>
+    <blockquote>
+      <p>
+        <strong>NOTE:</strong> This data is totally not scientific and is only
+        meant to provide a coarse insight into what versions of Java access
+        Jenkins web infrastructure.
+      </p>
+    </blockquote>
+    <p>
+      When Jenkins hits the mirror network, it’s not overriding the default user
+      agent from the Java runtime, so many of the user agents for the HTTP
+      request are something like <code>Java/1.7.0_75</code>. This indicates that
+      the request came from a Java Runtime version 1.7.0 (update 75).
+    </p>
+    <p>
+      Looking at the major JVM versions making (non-unique) requests to Jenkins
+      infrastructure we have:
+    </p>
+    <center>
+      <img
+        src="https://agentdero.cachefly.net/continuousblog/major-jvm-versions.png"
+      />
+    </center>
+    <ul>
+      <li><strong>1.8.0</strong>: 21,278,960</li>
+      <li><strong>1.7.0</strong>: 27,340,214</li>
+      <li><strong>1.6.0</strong>: 4,148,833</li>
+    </ul>
+    <p>
+      This breaks down across various updates as well, which is also
+      particularly interesting to me because many of these Java versions have
+      long since had security advisories posted against them.
+    </p>
+    <center>
+      <img
+        src="https://agentdero.cachefly.net/continuousblog/jvm-versions-with-updates.png"
+        width="600"
+      />
+    </center>
+    <p>
+      As I mentioned before, this is not a rigorous analysis of the access log
+      data and is also not filtered by unique IP addresses. What I found most
+      interesting though is that the Java 8 upgrade numbers are actually
+      <em>fairly strong</em>, which I didn’t expect. I expect that piece of the
+      pie will continue to grow. Hopefully so much so that we’re able to move
+      over to Java 8 before the end of 2016!
+    </p>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="phone-info">Phone Info</h1>
+<p>Phone Info is an example application for retrieving both static and dynamic properties of a Windows Phone device. The methods implemented in <code>DeviceProperties</code> class and utilised in this app can be used for adapting your application to wider range of phone models; If a phone does not support a ertain non-vital feature of your application, you can gracefully adapt by hiding that feature dynamically. The same applies to optimising your app for different screen resolutions and display sizes.</p>
+<p><img src="https://raw.github.com/Microsoft/phone-info/master/doc/screenshots_wp8_1/pi_fixed_small.png" alt="Fixed features view on Nokia Lumia 930 (Windows Phone 8.1 version)" />  <img src="https://raw.github.com/Microsoft/phone-info/master/doc/screenshots_wp8_1/pi_dynamic_small.png" alt="Dynamic features view on Nokia Lumia 930 (Windows Phone 8.1 version)" />  <img src="https://raw.github.com/Microsoft/phone-info/master/doc/screenshots_wp8_1/pi_camera_1_small.png" alt="Camera features view Nokia Lumia 930 (Windows Phone 8.1 version)" />  <img src="https://raw.github.com/Microsoft/phone-info/master/doc/screenshots_wp8_1/pi_sensors_2_small.png" alt="Sensor features view on Nokia Lumia 930 (Windows Phone 8.1 version)" /></p>
+<p><em>Screenshots from Windows Phone 8.1 version running on Nokia Lumia 930.</em></p>
+<p>The user interface of the app consists of four pivot views:</p>
+<ul>
+<li>The <strong>fixed</strong> view provides screen and display properties.</li>
+<li>The <strong>dynamic</strong> view displays app memory consumption, theme details and battery status.</li>
+<li>The <strong>camera</strong> view lists the available cameras and camera flashes of the phone including the respective capture resolutions for both photo and video.</li>
+<li>The <strong>sensors</strong> view lists the sensor availability of the phone including the new SensorCore APIs.</li>
+</ul>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/phone-info</p>
+<p>For more information on the subject, visit Nokia Lumia Developer’s Library:</p>
+<ul>
+<li>http://developer.nokia.com/Resources/Library/Lumia/#!optimising-for-large-screen-phones.html</li>
+<li>http://developer.nokia.com/Resources/Library/Lumia/#!how-to-adapt-to-lumia-phone-hardware-features.html</li>
+</ul>
+<p>The latest version is compatible with Windows Phone 8.1 devices. Tested on Nokia Lumia 630, Nokia Lumia 930 and Nokia Lumia 1020. Note that the class responsible for resolving the device properties, <a href="https://github.com/Microsoft/phone-info/blob/master/PhoneInfoWP8_1/PhoneInfo/DeviceProperties.cs">DeviceProperties</a>, is compatible for Windows 8.1 and will work e.g. on Windows 8.1 tablets. The user interface implementation, however, is Windows Phone 8.1 specific.</p>
+<h2 id="about-implementation">1. About implementation</h2>
+<p><strong>Important files and classes:</strong></p>
+<ul>
+<li><code>DeviceProperties</code>: The main helper class which resolves and holds the information of all the different device specific properties shown by the application. <strong>This is the class to extract from this project and place it into your own application.</strong></li>
+<li><code>PivotPage</code>: Implements the application UI and controls the application logic.</li>
+</ul>
+<p><strong>Required capabilities:</strong></p>
+<ul>
+<li>Proximity</li>
+<li>Removable Storage</li>
+<li>Webcam</li>
+<li><em>Internet (Client &amp; Server)</em> (Required only by the link on the about page)</li>
+</ul>
+<h2 id="license">2. License</h2>
+<p>See the license text file delivered with this project. The license file is also available online at https://github.com/Microsoft/phone-info/blob/master/Licence.txt</p>
+<h2 id="version-history">3. Version history</h2>
+<ul>
+<li>Version 2.0: Initial release for Windows (Phone) 8.1</li>
+</ul>
+</body>
+</html>

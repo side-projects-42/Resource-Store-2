@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="polyfill-for-css-position-sticky">Polyfill for CSS <code>position: sticky</code></h1>
+<p>The most accurate sticky polyfill out in the wild.</p>
+<p>Check out <a href="http://wd.dizaina.net/en/scripts/stickyfill/">the demo</a> and <a href="http://wilddeer.github.io/stickyfill/test/">use cases test page</a>.</p>
+<h2 id="what-it-does">What it does</h2>
+<ul>
+<li>supports top-positioned stickies,</li>
+<li>works in IE9+,</li>
+<li>disables itself in older IEs and in browsers with native <code>position: sticky</code> support,</li>
+<li><p>mimics original <code>position: sticky</code> behavior:</p>
+<ul>
+<li>uses parent node as a boundary box,</li>
+<li>behaves nicely with horizontal page scrolling,</li>
+<li>only works on elements with specified <code>top</code>,</li>
+<li>mimics native <code>top</code> and <code>margin-bottom</code> behavior,</li>
+<li><del>works with table cells</del> removed for consistency until Firefox <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=975644">makes a native implementation</a></li>
+</ul></li>
+</ul>
+<h2 id="what-it-doesnt">What it doesn’t</h2>
+<ul>
+<li>doesn’t support left, right, bottom or combined stickies,</li>
+<li>doesn’t work in overflowed blocks,</li>
+<li>doesn’t parse your CSS! Launch it manually.</li>
+</ul>
+<hr />
+<p align="center">
+<a href="#installation">Installation</a>   <a href="#usage">Usage</a>   <a href="#pro-tips">Pro tips</a>   <a href="#api">API</a>   <a href="#feature-requests">Feature requests</a>   <a href="#bug-reports">Bug reports</a>   <a href="#contributing">Contributing</a>   <a href="#using-stickyfill">Buy me a beer</a>
+</p>
+<hr />
+<h2 id="installation">Installation</h2>
+<h3 id="npm">NPM</h3>
+<pre><code>npm install stickyfilljs --save</code></pre>
+<h3 id="yarn">Yarn</h3>
+<pre><code>yarn add stickyfilljs</code></pre>
+<h3 id="raw-es6-module">Raw ES6 module</h3>
+<p><a href="https://raw.github.com/wilddeer/stickyfill/master/dist/stickyfill.es6.js">stickyfill.es6.js</a></p>
+<h3 id="old-fashioned">Old fashioned</h3>
+<p>Download minified production ES5 script:</p>
+<p><a href="https://raw.github.com/wilddeer/stickyfill/master/dist/stickyfill.min.js">stickyfill.min.js</a></p>
+<p>Include it on your page:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;path/to/stickyfill.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre></div>
+<h2 id="usage">Usage</h2>
+<p>First things first, make sure your stickies work in the <a href="http://caniuse.com/#feat=css-sticky">browsers that support them natively</a>, e.g.:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;sticky&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    ...</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">&lt;/div&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">.sticky</span> {</a>
+<a class="sourceLine" id="cb5-2" title="2">    <span class="kw">position</span>: -webkit-sticky<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="kw">position</span>: sticky<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="kw">top</span>: <span class="dv">0</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">}</a></code></pre></div>
+<p>Then apply the polyfill:</p>
+<p>JS:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">var</span> elements <span class="op">=</span> <span class="va">document</span>.<span class="at">querySelectorAll</span>(<span class="st">&#39;.sticky&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="va">Stickyfill</span>.<span class="at">add</span>(elements)<span class="op">;</span></a></code></pre></div>
+<p>or JS + jQuery:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">var</span> elements <span class="op">=</span> <span class="at">$</span>(<span class="st">&#39;.sticky&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="va">Stickyfill</span>.<span class="at">add</span>(elements)<span class="op">;</span></a></code></pre></div>
+<p>Also worth having a clearfix:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode css"><code class="sourceCode css"><a class="sourceLine" id="cb8-1" title="1"><span class="fu">.sticky</span><span class="in">:before</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="fu">.sticky</span><span class="in">:after</span> {</a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="kw">content</span>: <span class="st">&#39;&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="kw">display</span>: <span class="dv">table</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-5" title="5">}</a></code></pre></div>
+<h2 id="pro-tips">Pro tips</h2>
+<ul>
+<li><code>top</code> specifies sticky’s position relatively to the top edge of the viewport. It accepts negative values, too.</li>
+<li>You can push sticky’s bottom limit up or down by specifying positive or negative <code>margin-bottom</code>.</li>
+<li>Any non-default value (not <code>visible</code>) for <code>overflow</code>, <code>overflow-x</code>, or <code>overflow-y</code> on any of the ancestor elements anchors the sticky to the overflow context of that ancestor. Simply put, scrolling the ancestor will cause the sticky to stick, scrolling the window will not. This is expected with <code>overflow: auto</code> and <code>overflow: scroll</code>, but often causes confusion with <code>overflow: hidden</code>. Keep this in mind, folks!</li>
+</ul>
+<p>Check out <a href="http://wilddeer.github.io/stickyfill/test/">the test page</a> to understand stickies better.</p>
+<h2 id="api">API</h2>
+<h3 id="stickyfill"><code>Stickyfill</code></h3>
+<h4 id="stickyfill.addoneelement"><code>Stickyfill.addOne(element)</code></h4>
+<p><code>element</code> – <code>HTMLElement</code> or iterable element list (<a href="https://developer.mozilla.org/en/docs/Web/API/NodeList"><code>NodeList</code></a>, jQuery collection, etc.). First element of the list is used.</p>
+<p>Adds the element as a sticky. Returns new <a href="#stickyfillsticky">Sticky</a> instance associated with the element.</p>
+<p>If there’s a sticky associated with the element, returns existing <a href="#stickyfillsticky">Sticky</a> instance instead.</p>
+<h4 id="stickyfill.addelementlist"><code>Stickyfill.add(elementList)</code></h4>
+<p><code>elementList</code> – iterable element list (<a href="https://developer.mozilla.org/en/docs/Web/API/NodeList"><code>NodeList</code></a>, jQuery collection, etc.) or single <code>HTMLElement</code>.</p>
+<p>Adds the elements as stickies. Skips the elements that have stickies associated with them.</p>
+<p>Returns an array of <a href="#stickyfillsticky">Sticky</a> instances associated with the elements (both existing and new ones).</p>
+<h4 id="stickyfill.refreshall"><code>Stickyfill.refreshAll()</code></h4>
+<p>Refreshes all existing stickies, updates their parameters and positions.</p>
+<p>All stickies are automatically refreshed after window resizes and device orientations changes.</p>
+<p>There’s also a fast but not very accurate layout change detection that triggers this method. Call this method manually in case automatic detection fails.</p>
+<h4 id="stickyfill.removeoneelement"><code>Stickyfill.removeOne(element)</code></h4>
+<p><code>element</code> – <code>HTMLElement</code> or iterable element list (<a href="https://developer.mozilla.org/en/docs/Web/API/NodeList"><code>NodeList</code></a>, jQuery collection, etc.). First element of the list is used.</p>
+<p>Removes sticky associated with the element.</p>
+<h4 id="stickyfill.removeelementlist"><code>Stickyfill.remove(elementList)</code></h4>
+<p><code>elementList</code> – iterable element list (<a href="https://developer.mozilla.org/en/docs/Web/API/NodeList"><code>NodeList</code></a>, jQuery collection, etc.) or single <code>HTMLElement</code>.</p>
+<p>Removes stickies associated with the elements in the list.</p>
+<h4 id="stickyfill.removeall"><code>Stickyfill.removeAll()</code></h4>
+<p>Removes all existing stickies.</p>
+<h4 id="stickyfill.forcesticky"><code>Stickyfill.forceSticky()</code></h4>
+<p>Force-enable the polyfill, even if the browser supports <code>position: sticky</code> natively.</p>
+<h4 id="stickyfill.stickies"><code>Stickyfill.stickies</code></h4>
+<p>Array of existing <a href="#Stickyfill.Sticky">Sticky</a> instances.</p>
+<h3 id="stickyfill.sticky"><code>Stickyfill.Sticky</code></h3>
+<p>Sticky class. You can use it directly if you want:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">const</span> sticky <span class="op">=</span> <span class="kw">new</span> <span class="va">Stickyfill</span>.<span class="at">Sticky</span>(element)<span class="op">;</span></a></code></pre></div>
+<p>Throws an error if there’s a sticky already bound to the element.</p>
+<h4 id="sticky.refresh"><code>Sticky.refresh()</code></h4>
+<p>Refreshes the sticky, updates its parameters and position.</p>
+<h4 id="sticky.remove"><code>Sticky.remove()</code></h4>
+<p>Removes the sticky. Restores the element to its original state.</p>
+<h2 id="feature-requests">Feature requests</h2>
+<h3 id="tldr">TL;DR</h3>
+<p>These features will never be implemented in Stickyfill:</p>
+<ul>
+<li>Callbacks for sticky state changes</li>
+<li>Switching classes between different sticky states</li>
+<li>Other features that add non-standard functionality</li>
+</ul>
+<p>If your request isn’t about one of these, you are welcome to <a href="https://github.com/wilddeer/stickyfill/issues/new">create an issue</a>. Please check <a href="https://github.com/wilddeer/stickyfill/issues">existing issues</a> before creating new one.</p>
+<h3 id="some-reasoning">Some reasoning</h3>
+<p>Stickyfill is a <a href="https://en.wikipedia.org/wiki/Polyfill">polyfill</a>. This means that it implements a feature (sticky positioning in this case) that already exists in some browsers natively, and allows to use this feature in the browsers that don’t support it yet and older versions of the browsers that didn’t support it at the time. This is its only purpose.</p>
+<p>This also means that Stickyfill does nothing in the browsers that <em>do</em> support sticky positioning. Which, in turn, means that those browsers won’t support any additional non-standard features.</p>
+<h2 id="bug-reports">Bug reports</h2>
+<p>Check <a href="https://github.com/wilddeer/stickyfill/issues">existing issues</a> before creating new one. <strong>Please provide a live reproduction of a bug.</strong></p>
+<h2 id="contributing">Contributing</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Install Git 😱</li>
+<li>Install <a href="https://nodejs.org/en/">node</a></li>
+<li>Install <a href="http://gruntjs.com/getting-started#installing-the-cli">grunt-cli</a></li>
+<li>Clone the repo, <code>cd</code> into the repo folder, run <code>npm install</code> (or <code>yarn</code> if you are fancy).</li>
+</ul>
+<p>Ok, you are all set.</p>
+<h3 id="building-and-testing">Building and testing</h3>
+<p><code>cd</code> into the repo folder and run <code>grunt</code>. It will build the project from <code>/src/stickyfill.js</code> into <code>/dist</code> and run the watcher that will rebuild the project every time you change something in the source file.</p>
+<p>Make changes to the source file. Stick to ES6 syntax.</p>
+<p>Open <code>/test/index.html</code> in a browser that <a href="http://caniuse.com/#feat=css-sticky">doesn’t support</a> <code>position: sticky</code> to check that everything works as expected. Compare the results to the same page in a browser that supports <code>position: sticky</code>.</p>
+<p>Commit the changes. <strong>DO NOT</strong> commit the files in the <code>/dist</code> folder. <strong>DO NOT</strong> change the version in <code>package.json</code>.</p>
+<p>Make a pull request 👍</p>
+<h3 id="adding-removing-updating-npm-packages">Adding / removing / updating npm packages</h3>
+<p>Use <a href="https://yarnpkg.com/">Yarn</a>, dont’t forget to commit <code>yarn.lock</code>.</p>
+<h2 id="using-stickyfill">Using Stickyfill?</h2>
+<p>🍻 <a href="https://www.paypal.me/wilddeer/3usd">Buy me a beer</a></p>
+<h2 id="license">License</h2>
+<p><a href="LICENSE">MIT license</a>.</p>
+</body>
+</html>

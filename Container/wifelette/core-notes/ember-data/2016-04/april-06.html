@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-06</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-04-06">ember-data-weekly-call 2016-04-06</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>pangratz</li>
+<li>bmac</li>
+<li>wycats</li>
+<li>fivetanley</li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="queryrecord-inconsistencies-as-discussed-in-last-meeting-pr"><code>queryRecord</code> inconsistencies as discussed in last meeting PR</h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4300">PR #4300</a></li>
+<li>Issues: <a href="https://github.com/emberjs/data/issues/4227">#4227</a> <a href="https://github.com/emberjs/data/issues/4255">#4255</a></li>
+<li>address inconsistencies in <code>store.queryRecord</code> as discussed in last meeting</li>
+<li>assert/warn when array is returned as primary data</li>
+<li>deprecates array as result for <code>queryRecord</code> in <code>rest</code> serializer</li>
+</ul>
+<h5 id="discussion">Discussion</h5>
+<ul>
+<li>YK: sounds great to me</li>
+</ul>
+<h5 id="resolution">Resolution:</h5>
+<hr />
+<h3 id="backgroundreload-also-for-query"><code>backgroundReload</code> also for <code>query</code></h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4261">Issue #4261</a></li>
+<li>Summary: caching for <code>query</code></li>
+<li>there is already a <code>update()</code> on <code>DS.AdapterPopulatedRecordArray</code> which does background reload</li>
+</ul>
+<h5 id="discussion-1">Discussion</h5>
+<ul>
+<li>if <code>store.query()</code> should be reloaded, use <code>update()</code> on that adapterpopulatrecordarray</li>
+</ul>
+<h5 id="resolution-1">Resolution</h5>
+<ul>
+<li>pangratz: will comment on issue to get further feedback on specific use case</li>
+</ul>
+<hr />
+<h3 id="deprecate-ember.date.parse">deprecate <code>Ember.Date.parse</code></h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4089">Issue #4089</a></li>
+<li><a href="https://github.com/emberjs/data/pull/4275">PR #4275</a></li>
+<li>Related issues: <a href="https://github.com/emberjs/data/pull/4082">#4082</a></li>
+</ul>
+<h5 id="summary-3">Summary</h5>
+<ul>
+<li>basically no need for <code>Ember.Date</code> since only <code>parse</code> is used</li>
+<li><code>parse</code> should be available by <code>ember-data</code> supported platforms, so it is not needed anymore</li>
+<li>current PR replaces <code>Ember.Date.parse</code> with native <code>Date.parse</code> and adds a deprecation</li>
+</ul>
+<h5 id="discussion-2">Discussion</h5>
+<h5 id="resolution-2">Resolution</h5>
+<ul>
+<li>Fine as long as we leave around the requirement that you specify a time zone if no time zone is specified in the serialization (as opposed to picking up the local time zone).</li>
+<li>Can probably move any relevant logic into the transform.</li>
+</ul>
+<hr />
+<h3 id="unloadrecord-doesnt-remove-observers"><code>unloadRecord</code> doesn’t remove observers</h3>
+<h5 id="summary-4">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4126">Issue #4126</a></li>
+<li><a href="https://github.com/emberjs/data/pull/4277">PR #4277</a></li>
+<li>Related issues: <a href="https://github.com/emberjs/data/issues/3525">#3525</a> Automatic unloading of models in long-lived apps (2015-07-10)</li>
+<li><code>store.unloadRecord(record)</code> does not destroy the <code>DS.Model</code> instance and hence observers on the record are not torn down</li>
+<li>use case of the issue is models should be destroyed after a given TTL</li>
+</ul>
+<h5 id="discussion-3">Discussion</h5>
+<ul>
+<li>Is there a reason for this?</li>
+<li>Nobody could think of one</li>
+</ul>
+<h5 id="resolution-3">Resolution</h5>
+<ul>
+<li>We should have <code>unloadRecord</code> destroy the object (and keep an eye on it to make sure we’re not missing something)</li>
+</ul>
+<hr />
+<h3 id="model.rollbackattributename---allow-rollback-of-single-attribute"><code>model.rollbackAttribute(name)</code> - allow rollback of single attribute</h3>
+<h5 id="summary-5">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/3705">Issue #3705</a></li>
+<li><a href="https://github.com/emberjs/data/pull/4246">PR #4246</a></li>
+<li>add <code>rollbackAttribute(name)</code> to <code>DS.Model</code>, which restores to last canonical value</li>
+</ul>
+<h5 id="discussion-4">Discussion</h5>
+<ul>
+<li><code>s/canonical/canonical or in flight/</code></li>
+<li>we should explore undelete()</li>
+</ul>
+<h5 id="resolution-4">Resolution</h5>
+<ul>
+<li>Seems fine</li>
+<li>pangratz: will respond and take care of this going forward
+<ul>
+<li>rename to <code>resetAttribute</code> rollbackAttributes({ dontDelete: true }) (bikeshed the option)</li>
+<li><code>rollback</code> is currently called <code>rollbackAttributes</code> because we’re waiting for real rollback; in the meantime, <code>resetAttributes</code> and <code>rollbackAttributes</code> would be too confusing, so we’re going with the option to <code>rollbackAttributes</code> for now</li>
+<li><code>resetAttribute()</code> is fine</li>
+<li><code>undelete()</code> is fine?</li>
+</ul></li>
+</ul>
+<hr />
+<h3 id="dont-unnecessarily-materialize-records">Don’t unnecessarily materialize records</h3>
+<h5 id="summary-6">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4272">PR #4272</a></li>
+<li>add <code>store._push</code> which returns <code>DS.InternalModel</code>’s instead of materialized <code>DS.Model</code></li>
+<li>this is then used within the various store finders</li>
+</ul>
+<h5 id="discussion-5">Discussion</h5>
+<ul>
+<li><a href="https://github.com/emberjs/rfcs/blob/master/text/0057-ember-data-reference-unification.md">RFC #57</a></li>
+<li>This topic is pretty related to RecordReference; we should consider implementing it soon and see if there’s a way to let the public API more explicitly allow you to talk about lazy materialization</li>
+</ul>
+<h5 id="resolution-5">Resolution</h5>
+<ul>
+<li>further explore reference unification</li>
+</ul>
+<hr />
+<h3 id="prs-which-are-good-to-go">PR’s which are good to go</h3>
+<ul>
+<li><a href="https://github.com/emberjs/data/pull/4023">#4023</a> Enhance blueprints to extend from application adapter / serializer when available</li>
+<li><a href="https://github.com/emberjs/data/pull/4293">#4293</a> Transition an invalid created record to the deleted saved state when deleted</li>
+</ul>
+</body>
+</html>

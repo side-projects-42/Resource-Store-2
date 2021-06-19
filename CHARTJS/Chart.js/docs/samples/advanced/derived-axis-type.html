@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>derived-axis-type</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="derived-axis-type">Derived Axis Type</h1>
+<p>```js chart-editor // <block:setup:1> const DATA_COUNT = 12; const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 1000 }; const labels = Utils.months({ count: DATA_COUNT }); const data = { labels: labels, datasets: [ { label: “My First dataset”, data: Utils.numbers(NUMBER_CFG), borderColor: Utils.CHART_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), fill: false, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data, options: { responsive: true, scales: { x: { display: true, }, y: { display: true, type: “log2”, }, }, }, };</p>
+<p>// </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h2 id="log2-axis-implementation">Log2 axis implementation</h2>
+<p>&lt;&lt;&lt; @/docs/scripts/log2.js</p>
+</body>
+</html>

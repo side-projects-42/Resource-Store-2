@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="dataschema-change-history">DataSchema Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<h3 id="dataschema-json"><code>dataschema-json</code></h3>
+<ul>
+<li>Added support to accept the results array as input, leaving <code>schema.resultListLocator</code> as optional.</li>
+<li>Field locators that contain . or [???] now fail over to look for that locator as a single property name rather than a nested value. For example, a locator <code>"not.nested"</code> would look for <code>inputRecord.not.nested</code> for a value, but if it doesn’t find one, it will look for <code>inputRecord["not.nested"]</code>. If it finds a value there, it will not look for a nested value for subsequent records.</li>
+<li><code>getPath</code> is far more tolerant of locator strings. In particular, it considered utf-8 characters that didn’t match the <code>\w</code> regex group to be invalid. This is fixed.</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Bug 2528429: Added support for locator property to DataSchema.JSON resultFields.</li>
+<li>Known Android issues (bugs 2529621, 2529758, 2529775): XML parsing is buggy on the Android WebKit browser.</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>Set custom parser execution scope to be DataSchema instance.</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li>Added support for nested schemas.</li>
+<li>Added support for XPath resultListLocator, instead of requiring the use of ‘getElementsByTagName’.</li>
+<li>Improved support for DOM elements in DataSchema.XML when IE xmldoc.selectNodes(String) fails.</li>
+<li>Field list is now optional for DataSchema.JSON. If omitted, all response data is returned.</li>
+<li>Fixed a bug in field resolution where null might be discovered along the resolution path. Now exits gracefully rather than throwing an error.</li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li>Support for DOM elements in DataSchema.XML.</li>
+</ul>
+<h2 id="beta-1">3.0.0 beta 1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

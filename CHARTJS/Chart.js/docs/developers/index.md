@@ -1,31 +1,32 @@
-# Developers
+Developers
+==========
 
 Developer features allow extending and enhancing Chart.js in many different ways.
 
-## Latest resources
+Latest resources
+----------------
 
 Latest documentation and samples, including unreleased features, are available at:
 
-- <https://www.chartjs.org/docs/master/>
-- <https://www.chartjs.org/samples/master/>
+-   <a href="https://www.chartjs.org/docs/master/" class="uri">https://www.chartjs.org/docs/master/</a>
+-   <a href="https://www.chartjs.org/samples/master/" class="uri">https://www.chartjs.org/samples/master/</a>
 
-## Development releases
+Development releases
+--------------------
 
 Latest builds are available for testing at:
 
-- <https://www.chartjs.org/dist/master/chart.js>
-- <https://www.chartjs.org/dist/master/chart.min.js>
+-   <a href="https://www.chartjs.org/dist/master/chart.js" class="uri">https://www.chartjs.org/dist/master/chart.js</a>
+-   <a href="https://www.chartjs.org/dist/master/chart.min.js" class="uri">https://www.chartjs.org/dist/master/chart.min.js</a>
 
 **WARNING: Development builds MUST not be used for production purposes or as replacement for CDN.**
 
-## Browser support
+Browser support
+---------------
 
 All modern and up-to-date browsers are supported, including, but not limited to:
 
-Chrome
-Edge
-Firefox
-Safari
+Chrome Edge Firefox Safari
 
 As of version 3, we have dropped Internet Explorer 11 support.
 
@@ -35,7 +36,8 @@ Run `npx browserslist` at the root of the [codebase](https://github.com/chartjs/
 
 Thanks to [BrowserStack](https://browserstack.com) for allowing our team to test on thousands of browsers.
 
-## Previous versions
+Previous versions
+-----------------
 
 To migrate from version 2 to version 3, please see [the v3 migration guide](../getting-started/v3-migration).
 
@@ -45,5 +47,5 @@ Most earlier version options have current equivalents or are the same.
 
 Please note - documentation for previous versions are available online or in the GitHub repo.
 
-- [2.9.4 Documentation](https://www.chartjs.org/docs/2.9.4/)
-- [1.x Documentation](https://github.com/chartjs/Chart.js/tree/v1.1.1/docs)
+-   [2.9.4 Documentation](https://www.chartjs.org/docs/2.9.4/)
+-   [1.x Documentation](https://github.com/chartjs/Chart.js/tree/v1.1.1/docs)

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-20</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-04-20">ember-data-weekly-call 2016-04-20</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>pangratz</li>
+<li>wecc</li>
+<li>igorT</li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="open-from-last-meeting-possible-to-create-duplicate-records-in-the-store">Open from last meeting: Possible to create duplicate records in the store</h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li>As outlined in <a href="https://github.com/emberjs/data/issues/4262">#4262</a> is it possible that there are duplicate records in the store, by creating a record and <code>store.push()</code> a record with same id while the <code>createRecord</code> request is made</li>
+<li>Showcase via <a href="https://ember-twiddle.com/97ddeca43d6e405ffb5a4356303ade51?fileTreeShown=false&amp;numColumns=2&amp;openFiles=routes.application.js%2Ctemplates.application.hbs">this ember-twiddle</a></li>
+</ul>
+<h5 id="discussion">Discussion</h5>
+<ul>
+<li>we don’t know how to fix this at the moment for the case when a record will be created and is pushed in the meantime</li>
+</ul>
+<h5 id="action">Action</h5>
+<ul>
+<li>ping brains of tom and yehuda about this</li>
+</ul>
+<hr />
+<h3 id="the-reload-backgroundreload-situation">The <code>{ reload, backgroundReload }</code> situation</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li>Many stumbled over this because combination of both is surprising and not easy to see through: <a href="https://github.com/emberjs/data/issues/4162">#4162</a>, <a href="https://github.com/emberjs/data/issues/4148">#4148</a>, <a href="https://github.com/emberjs/data/issues/3657">#3657</a>, <a href="https://github.com/emberjs/data/issues/3483">#3483</a></li>
+<li>Currently the <code>backgroundReload</code> passed to <code>findRecord</code> and <code>findAll</code> is not considered, <a href="https://github.com/emberjs/data/issues/3772">#3772 opened for adding such a behavior</a></li>
+<li>has only been announced in <a href="http://emberjs.com/blog/2015/06/18/ember-data-1-13-released.html#toc_better-caching-defaults-for-code-findall-code-and-code-findrecord-code">blog post for <code>1.13</code></a> but docs haven’t been updated extensively</li>
+</ul>
+<h5 id="discussion-1">Discussion</h5>
+<p>pangratz: Should we add basic logging? Something like:</p>
+<ul>
+<li><code>findRecord will return a promise which resolves with cached record from store, background reload will update record once complete</code></li>
+<li><code>started background reload for "person", resolve promise with currently available data and update RecordArray with updated data from adapter once the data comes back</code></li>
+</ul>
+<p>pangratz: Explicitly passing <code>{ reload: false }</code> doesn’t overwrite <code>adapter.shouldReloadRecord</code> and <code>adapter.shouldReloadAll</code>, should this work? Same for background reload…</p>
+<p>pangratz: do we want flags indicating the reload / backgroundReload state (<code>isBackgroundReloading</code>, …)?</p>
+<h5 id="action-1">Action</h5>
+<ul>
+<li><code>{ reload: false }</code> and <code>{ backgroundReload: true|false }</code> should work as expected</li>
+<li>maybe add <code>isBackgroundReloading</code> flag …</li>
+</ul>
+<hr />
+<h3 id="improve-situation-for-unused-keys-in-payload">Improve situation for unused keys in payload</h3>
+<h5 id="summary-2">Summary</h5>
+<ul>
+<li>Folks run into issues where payload doesn’t look like what ember-data expects</li>
+<li>Some issues around this: <a href="https://github.com/emberjs/data/issues/4340">#4340</a>, <a href="https://github.com/emberjs/data/issues/4253">#4253</a>, <a href="https://github.com/emberjs/data/issues/3455">#3455</a></li>
+<li>Currently <code>DS_WARN_ON_UNUSED_KEYS</code> only warns on <code>store.push</code>, is not enabled by default and there is no documentation for it</li>
+</ul>
+<h5 id="discussion-2">Discussion</h5>
+<p>pangratz: do we want more logging using <code>console.group()</code>? Especially for the serializers?</p>
+<h5 id="action-2">Action</h5>
+<ul>
+<li>think about moving logic for <code>DS_WARN_ON_UNUSED_KEYS</code> to serializers</li>
+<li>maybe we can be smart about keys in the payload which are not the way the serializer expects them (check if they are camelCased, though they should be dasherized in JSON-API for example)</li>
+</ul>
+</body>
+</html>

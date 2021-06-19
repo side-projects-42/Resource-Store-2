@@ -1,0 +1,1 @@
+Test that web inspector can select element in an iframe even if the element was created via `createElement` of `document` other than iframe's `document`. [Bug 60031](https://bugs.webkit.org/show_bug.cgi?id=60031)

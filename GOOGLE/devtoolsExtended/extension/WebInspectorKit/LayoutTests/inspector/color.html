@@ -1,78 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script type="text/javascript">
-      var test = function () {
-        function dumpColor(colorText) {
-          var color = WebInspector.Color.parse(colorText);
-          InspectorTest.addResult(
-            "Dumping '" + colorText + "' in different formats:"
-          );
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.RGB)
-          );
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.RGBA)
-          );
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.HSL)
-          );
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.HSLA)
-          );
-
-          var hsv = color.hsva();
-          var hsvString = String.sprintf(
-            "hsv(%d, %d%, %d%)",
-            Math.round(hsv[0] * 360),
-            Math.round(hsv[1] * 100),
-            Math.round(hsv[2] * 100)
-          );
-          InspectorTest.addResult(" - " + hsvString);
-          var hsva = color.hsva();
-          var hsvaString = String.sprintf(
-            "hsva(%d, %d%, %d%, %f)",
-            Math.round(hsva[0] * 360),
-            Math.round(hsva[1] * 100),
-            Math.round(hsva[2] * 100),
-            hsva[3]
-          );
-          InspectorTest.addResult(" - " + hsvaString);
-
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.HEX)
-          );
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.ShortHEX)
-          );
-          InspectorTest.addResult(
-            " - " + color.toString(WebInspector.Color.Format.Nickname)
-          );
-          InspectorTest.addResult(" - default: " + color.toString());
-        }
-
-        dumpColor("red");
-        dumpColor("green");
-        dumpColor("blue");
-        dumpColor("cyan");
-        dumpColor("magenta");
-        dumpColor("yellow");
-        dumpColor("white");
-        dumpColor("black");
-
-        dumpColor("rgb(94, 126, 91)");
-        dumpColor("rgba(94, 126, 91, 0.5)");
-
-        dumpColor("hsl(212, 55%, 32%)");
-        dumpColor("hsla(212, 55%, 32%, 0.5)");
-
-        dumpColor("#00FFFF");
-        dumpColor("#0FF");
-        InspectorTest.completeTest();
-      };
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests WebInspector.Color</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>color</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests WebInspector.Color</p>
+</body>
 </html>

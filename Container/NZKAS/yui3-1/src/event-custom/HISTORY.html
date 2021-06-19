@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="custom-event-infrastructure-change-history">Custom Event Infrastructure Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>onceAfter (added in 3.4.0) now works for array and object signatures. [Ticket #2531121]</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>Custom events published from <code>Y</code> no longer bubble by default.</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li><p>Undocumented and poorly named <code>each()</code> method on EventHandle changed to <code>batch()</code>.</p></li>
+<li><p>After listeners for events fired in a <code>defaultFn</code> or listener are queued in the correct order.</p></li>
+<li><p>Added <code>Y.Do.originalRetVal</code> and <code>Y.Do.currentRetVal</code> statics accessible by <code>Y.Do.after()</code> subscribers.</p></li>
+<li><p>Exposed the previously private <code>EventTarget.parseType</code>.</p></li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li><p>Fixed <code>defaultTargetOnly</code> publish configuration.</p></li>
+<li><p><code>detach()</code> now decrements <code>subCount</code>/<code>afterCount</code>.</p></li>
+<li><p>Detaching via category no longer affects subscriptions on other objects.</p></li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>Wildcard prefix subscriptions supported: <code>target.on('*:click', …)</code> will be notified when <code>tree:click</code>, <code>tab:click</code>, etc are fired.</p></li>
+<li><p>Added <code>EventTarget::once</code>, which is equivalent to <code>on()</code>, except the listener automatically detaches itself once executed.</p></li>
+<li><p>Added event monitoring. When configured, an <code>EventTarget</code> will emit events for <code>publish()</code>, <code>attach()</code>, <code>fire()</code>, and <code>detach()</code> operations on the hosted events.</p></li>
+<li><p><code>EventTarget::on</code>’s <code>type</code> parameter is overloaded to accept arrays and objects for attaching multiple types at once.</p></li>
+<li><p><code>EventTarget::detach</code> returns the event target like the API docs already stated.</p></li>
+<li><p>Events can now be configured to execute the <code>defaultFn</code> only on the targeted object, not on the bubble targets.</p></li>
+<li><p>The event order has been reworked so that the after listeners for the entire event stack execute after all <code>defaultFn</code> across the entire bubble stack.</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li><p>Broken into core base and complex modules.</p></li>
+<li><p><code>broadcast</code> works for simple events.</p></li>
+<li><p>If configured to return an <code>EventHandle</code>, the return value will always be a single object, regardless of how many listeners were attached. Previously, multiple listeners provided an array of detach handles.</p></li>
+</ul>
+<h2 id="beta1">3.0.0beta1</h2>
+<ul>
+<li><p>[!] Exposed methods are <code>on()</code> for the before moment, <code>after()</code> for the after moment, and <code>detach()</code> for unsubscribe. <code>subscribe()</code>, <code>before()</code>, <code>unsubscribe()</code>, and corresponding methods are deprecated.</p></li>
+<li><p>Implemented the <code>broadcast</code> flag:</p>
+<ul>
+<li><code>broadcast = 1</code>: local, accessible via <code>Y.on('prefix:event')</code>.</li>
+<li><code>broadcast = 2</code>: global, accessible via <code>Y.on()</code> or globally via <code>Y.Global.on('prefix:event')</code>.</li>
+</ul>
+<p>Broadcast listeners cannot effect the <code>defaultFn</code> or host subscribers (so are in effect, after listeners), although this is still possible by added either <code>Y</code> or <code>Y.Global</code> as <code>EventTarget</code>s.</p></li>
+<li><p>Moved <code>event-custom</code> out of <code>event</code> package.</p></li>
+<li><p><code>EventTarget</code> accepts a <code>prefix</code> configuration. This is used in all exposed methods to handle shortcuts to event names, e.g., <code>'click'</code> and <code>'menu:click'</code> are the same if the prefix is <code>'menu'</code>.</p></li>
+<li><p>Event type accepts a event category which can be used to detach events:</p>
+<pre><code>Y.on(&#39;category|prefix:event&#39;, fn);
+Y.detach(&#39;category|prefix:event&#39;);
+Y.detach(&#39;category|*&#39;);</code></pre></li>
+<li><p>Added <code>chain</code> config to events that makes the return value the event target rather than a detach handle. Use with the detach category prefix.</p></li>
+<li><p>The <code>type</code> parameter can be an object containing multiple events to attach:</p>
+<pre><code>Y.on({ &#39;event1&#39;: fn1, &#39;event2&#39;: fn2 });</code></pre></li>
+<li><p><code>Y.fire</code> payload for event facades can be another facade or a custom event.</p></li>
+</ul>
+</body>
+</html>

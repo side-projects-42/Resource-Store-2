@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="dataschema-utility">DataSchema Utility</h1>
+<p>Use the DataSchema Utility to translate data in various input formats into a standard record-based structure like this:</p>
+<pre><code>{
+    results: [
+        { fieldA: valueA1, fieldB: valueB2, ... },
+        { fieldA: valueA2, fieldB: valueB2, ... },
+        ...
+    ],
+    meta: {
+        whatever  : &quot;you&quot;,
+        configured: &quot;to capture&quot;,
+        ...
+    }
+}</code></pre>
+<h1 id="available-processors">Available processors</h1>
+<ol type="1">
+<li><code>Y.DataSchema.Array</code> - (<code>dataschema-array</code>) Input is an Array</li>
+<li><code>Y.DataSchema.JSON</code> - (<code>dataschema-json</code>) Input is an Object or JSON string</li>
+<li><code>Y.DataSchema.XML</code> - (<code>dataschema-xml</code>) Input is an XML node</li>
+<li><code>Y.DataSchema.Text</code> - (<code>dataschema-text</code>) Input is a delimited text string</li>
+</ol>
+<p>The important method for each processor is the <code>apply(schema, data)</code> method, so for example:</p>
+<pre><code>var results = Y.DataSchema.JSON.apply({ schema config }, dataObject);</code></pre>
+<p>See the user guide for details about schema definitions for each processor.</p>
+</body>
+</html>

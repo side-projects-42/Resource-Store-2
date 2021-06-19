@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>embedding</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="embedded-tracing">Embedded Tracing</h1>
+<p>It is possible to embed the tracing library into a page and avoid the need for a browser extesion. This makes it easier to use the library with browsers that don’t have an extension or have it installed (iOS/IE/etc).</p>
+<h2 id="browserhtml-pages">Browser/HTML Pages</h2>
+<p>Obtain a copy of <code>wtf_trace_web_js_compiled.js</code>:</p>
+<pre><code># Build the release trace library js
+# Alternatively you can build :release
+anvil build :wtf_trace_web_js_compiled
+# Copy the build-out/wtf_trace_web_js_compiled.js to wherever you want</code></pre>
+<p>Add the appropriate <code>&lt;script&gt;</code> tags to the HTML page:</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;!-- This MUST be the first script on the page! --&gt;
+    &lt;script src=&quot;wtf_trace_web_js_compiled.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      wtf.trace.prepare(/* optional options */);
+      wtf.trace.start({
+        &#39;wtf.trace.mode&#39;: &#39;snapshotting&#39;,
+        &#39;wtf.trace.target&#39;: &#39;file://test&#39;
+      });
+    &lt;/script&gt;
+  &lt;/head&gt;
+  ...
+&lt;/html&gt;</code></pre>
+<p>In snapshotting mode you can then call <code>wtf.trace.snapshot()</code> at any time to create a snapshot and push it to the target.</p>
+<h3 id="hud">HUD</h3>
+<p>To add the HUD to a page and get the fancy UI, you must call the HUD preparation method. You may still call the <code>wtf.trace.snapshot()</code> method manually as well as using the UI.</p>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;script src=&quot;wtf_trace_web_js_compiled.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      var options = {
+        &#39;wtf.trace.mode&#39;: &#39;snapshotting&#39;,
+        &#39;wtf.trace.target&#39;: &#39;file://test&#39;
+      };
+      wtf.hud.prepare(options);
+      wtf.trace.start(options);
+    &lt;/script&gt;
+  &lt;/head&gt;
+  ...
+&lt;/html&gt;</code></pre>
+<h2 id="node.js-apps">node.js apps</h2>
+<p>NOTE: this is experimental and not yet ready for use!</p>
+<p>Obtain a copy of <code>wtf_trace_node_release.js</code>:</p>
+<pre><code># Build the release trace library js
+anvil build :wtf_trace_node_release
+# Copy the build-out/wtf_trace_node_release.js to wherever you want</code></pre>
+<p>Run your app with the runner script:</p>
+<pre><code>node ./bin/trace-runner.js myscript.js arg1 arg2 ...
+# See node.wtf-trace for the result</code></pre>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>styling</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="styling">Styling</h1>
+<p>There are a number of options to allow styling an axis. There are settings to control <a href="#grid-line-configuration">grid lines</a> and <a href="#tick-configuration">ticks</a>.</p>
+<h2 id="grid-line-configuration">Grid Line Configuration</h2>
+<p>Namespace: <code>options.scales[scaleId].grid</code>, it defines options for the grid lines that run perpendicular to the axis.</p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 12%" />
+<col style="width: 3%" />
+<col style="width: 3%" />
+<col style="width: 10%" />
+<col style="width: 60%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;">Scriptable</th>
+<th style="text-align: center;">Indexable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>borderColor</code></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>Chart.defaults.borderColor</code></td>
+<td>The color of the border line.</td>
+</tr>
+<tr class="even">
+<td><code>borderWidth</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>1</code></td>
+<td>The width of the border line.</td>
+</tr>
+<tr class="odd">
+<td><code>borderDash</code></td>
+<td><code>number[]</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>[]</code></td>
+<td>Length and spacing of dashes on grid lines. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash">MDN</a>.</td>
+</tr>
+<tr class="even">
+<td><code>borderDashOffset</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;"></td>
+<td><code>0.0</code></td>
+<td>Offset for line dashes. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset">MDN</a>.</td>
+</tr>
+<tr class="odd">
+<td><code>circular</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>false</code></td>
+<td>If true, gridlines are circular (on radar chart only).</td>
+</tr>
+<tr class="even">
+<td><code>color</code></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>Chart.defaults.borderColor</code></td>
+<td>The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second to the second grid line, and so on.</td>
+</tr>
+<tr class="odd">
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>true</code></td>
+<td>If false, do not display grid lines for this axis.</td>
+</tr>
+<tr class="even">
+<td><code>drawBorder</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>true</code></td>
+<td>If true, draw a border at the edge between the axis and the chart area.</td>
+</tr>
+<tr class="odd">
+<td><code>drawOnChartArea</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>true</code></td>
+<td>If true, draw lines on the chart area inside the axis lines. This is useful when there are multiple axes and you need to control which grid lines are drawn.</td>
+</tr>
+<tr class="even">
+<td><code>drawTicks</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>true</code></td>
+<td>If true, draw lines beside the ticks in the axis area beside the chart.</td>
+</tr>
+<tr class="odd">
+<td><code>lineWidth</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>1</code></td>
+<td>Stroke width of grid lines.</td>
+</tr>
+<tr class="even">
+<td><code>offset</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>false</code></td>
+<td>If true, grid lines will be shifted to be between labels. This is set to <code>true</code> for a bar chart by default.</td>
+</tr>
+<tr class="odd">
+<td><code>tickBorderDash</code></td>
+<td><code>number[]</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td></td>
+<td>Length and spacing of the tick mark line. If not set, defaults to the grid line <code>borderDash</code> value.</td>
+</tr>
+<tr class="even">
+<td><code>tickBorderDashOffset</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+<td>Offset for the line dash of the tick mark. If unset, defaults to the grid line <code>borderDashOffset</code> value</td>
+</tr>
+<tr class="odd">
+<td><code>tickColor</code></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+<td>Color of the tick line. If unset, defaults to the grid line color.</td>
+</tr>
+<tr class="even">
+<td><code>tickLength</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>8</code></td>
+<td>Length in pixels that the grid lines will draw into the axis area.</td>
+</tr>
+<tr class="odd">
+<td><code>tickWidth</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+<td>Width of the tick mark in pixels. If unset, defaults to the grid line width.</td>
+</tr>
+<tr class="even">
+<td><code>z</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td><code>0</code></td>
+<td>z-index of gridline layer. Values &lt;= 0 are drawn under datasets, &gt; 0 on top.</td>
+</tr>
+</tbody>
+</table>
+<p>The scriptable context is described in <a href="../general/options.md#tick">Options</a> section.</p>
+<h2 id="tick-configuration">Tick Configuration</h2>
+<p>!!!include(axes/_common_ticks.md)!!!</p>
+<p>The scriptable context is described in <a href="../general/options.md#tick">Options</a> section.</p>
+<h2 id="major-tick-configuration">Major Tick Configuration</h2>
+<p>Namespace: <code>options.scales[scaleId].ticks.major</code>, it defines options for the major tick marks that are generated by the axis.</p>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>enabled</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>If true, major ticks are generated. A major tick will affect autoskipping and <code>major</code> will be defined on ticks in the scriptable options context.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

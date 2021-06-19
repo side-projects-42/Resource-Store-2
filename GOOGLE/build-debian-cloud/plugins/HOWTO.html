@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HOWTO</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="writing-your-own-plugins">Writing your own plugins</h1>
+<p>If you want to change the behavior of the bootstrapper you can either modify the tasks directly or write plugins. Writing plugins has several advantages.</p>
+<ul>
+<li>You can easily include and exclude them with a command line option.</li>
+<li>The code is held separate from the bare bones bootstrapping setup.</li>
+<li>You don’t need to fork this repo.</li>
+<li>No need to merge updates into your own repo.</li>
+<li>Easily share your plugins with others.</li>
+</ul>
+<p>All plugins specified when bootstrapping, will be sourced <em>before</em> any tasks are run. The plugins can modify the task list and add their own tasks. Tasks are simply paths to scripts. They will be sourced as well. I recommend namespacing the function and variable names in a task to avoid naming clashes.</p>
+<h2 id="adding-tasks">Adding tasks</h2>
+<p>Adding tasks is quite easy. To have a custom task run before another, call <code>insert_task_before</code>. The first argument is one of the task variables <a href="#task-variables">listed below</a>. The second argument is the path to the task that is inserted. eg.:</p>
+<pre><code>insert_task_before $TASK_INITSCRIPTS &quot;/$plugindir/add-puppet-init.sh&quot;</code></pre>
+<p>To insert a task after any other task call <code>insert_task_after</code>. The arguments are the same.</p>
+<p>To remove a task, call <code>remove_task</code> with the basename of the script as an argument.</p>
+<pre><code>remove_task &quot;40-networking&quot;</code></pre>
+<h3 id="task-variables">Task variables</h3>
+<p>The internal workings of the bootstrapper might change from time to time, this includes the filenames of the different tasks. There are however some fundamentals in the bootstrapping process that are not likely to ever change. You can hook your plugin up to those fundamentals, they are aliased in the form of variables that point to a task filename.</p>
+<ul>
+<li><code>TASK_PACKAGES</code>: Adds packages to the <code>packages</code> array (and <code>exclude_packages</code>)</li>
+<li><code>TASK_CREATE_VOLUME</code>: Creates the EBS volume</li>
+<li><code>TASK_MOUNT_VOLUME</code>: Mounts the EBS volume</li>
+<li><code>TASK_BOOTSTRAP</code>: Runs the bootstrapping process</li>
+<li><code>TASK_MOUNT_SPECIALS</code>: Mounts things like /dev/pts and /proc</li>
+<li><code>TASK_APT_SOURCES</code>: Sets the aptitude sources</li>
+<li><code>TASK_APT_UPGRADE</code>: Upgrades packages and fixes broken dependencies</li>
+<li><code>TASK_INITSCRIPTS</code>: Installs the init.d scripts</li>
+<li><code>TASK_UNMOUNT_SPECIALS</code>: Unmounts things like /dev/pts and /proc</li>
+<li><code>TASK_UNMOUNT_VOLUME</code>: Unmounts the EBS volume</li>
+<li><code>TASK_SNAPSHOT</code>: Creates a snapshot of the EBS volume</li>
+<li><code>TASK_DELETE_VOLUME</code>: Deletes the EBS volume</li>
+<li><code>TASK_CREATE_AMI</code>: Registers the snapshot as an AMI</li>
+</ul>
+<h3 id="internal-variables">Internal variables</h3>
+<p>If you want to install additional packages, simply append them to the <code>packages</code> variable.<br />
+The <code>exclude_packages</code> excludes packages that would otherwise have been installed.</p>
+<p>If you need to install init.d scripts, simply add their path to the <code>init_scripts</code> variable and they will be automatically installed.</p>
+<p>You can append to an array in bash by doing this:</p>
+<pre><code>packages+=(&#39;vim&#39;)</code></pre>
+<p><strong>Other useful variables</strong>:</p>
+<ul>
+<li><code>host_packages</code>: Packages to be installed on the host, works just like <code>packages</code>.</li>
+<li><code>scriptdir</code>: Holds the path to the bootstrapping script folder.</li>
+<li><code>imagedir</code>: The path to where the EBS volume is mounted.</li>
+<li><code>plugindir</code>: When adding tasks, this is the directory where the script is stored. This avoids some quirky bash magic.</li>
+<li><code>taskdir</code>: When a task is run, this variable points to the directory in which the task is located.</li>
+<li>There are a lot of other variables, they are all declared on the first 50 lines in <code>ec2-debian-build-ami</code></li>
+</ul>
+<h2 id="simple-plugins">Simple plugins</h2>
+<p>If your plugin is really simple, you may not need to modify the task list. The <code>packages</code>, <code>exclude_packages</code> and <code>init_scripts</code> arrays are already declared when your plugin file is sourced. Removing nano and adding vim to the bootstrap process can be done with:</p>
+<pre><code>packages+=(&#39;vim&#39;)
+exclude_packages+=(&#39;nano&#39;)</code></pre>
+<h2 id="utility-functions">Utility functions</h2>
+<ul>
+<li><code>log</code>: Logs to the screen with blue text. Every parameter will be printed on a new line.</li>
+<li><code>die</code>: Kills the bootstrapping process with a message. Prints to stderr.</li>
+<li><code>spin</code>: Pipe into this function if you are running stuff that fills up the screen with verbose information. Every line of output will be printed on the same line in the console.</li>
+</ul>
+</body>
+</html>

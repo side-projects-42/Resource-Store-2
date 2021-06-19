@@ -1,63 +1,32 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Properties files mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="properties.js"></script>
-<style>
-  .CodeMirror {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">Properties files</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Properties files mode</h2>
-  <form>
-    <textarea id="code" name="code">
-# This is a properties file
-a.key = A value
-another.key = http://example.com
-! Exclamation mark as comment
-but.not=Within ! A value # indeed
-   # Spaces at the beginning of a line
-   spaces.before.key=value
-backslash=Used for multi\
-          line entries,\
-          that's convenient.
-# Unicode sequences
-unicode.key=This is \u0020 Unicode
-no.multiline=here
-# Colons
-colons : can be used too
-# Spaces
-spaces\ in\ keys=Not very common...
-</textarea
-    >
-  </form>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {});
-  </script>
-
-  <p>
-    <strong>MIME types defined:</strong> <code>text/x-properties</code>,
-    <code>text/x-ini</code>.
-  </p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Properties files mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">Properties files</a></li>
+</ul>
+<h2 id="properties-files-mode">Properties files mode</h2>
+<p># This is a properties file a.key = A value another.key = http://example.com ! Exclamation mark as comment but.not=Within ! A value # indeed # Spaces at the beginning of a line spaces.before.key=value backslash=Used for multi\ line entries,\ that’s convenient. # Unicode sequences unicode.key=This is \u0020 Unicode no.multiline=here # Colons colons : can be used too # Spaces spaces\ in\ keys=Not very common…</p>
+<p><strong>MIME types defined:</strong> <code>text/x-properties</code>, <code>text/x-ini</code>.</p>
+</body>
+</html>

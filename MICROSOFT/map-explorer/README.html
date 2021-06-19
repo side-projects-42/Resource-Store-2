@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="map-explorer">Map Explorer</h1>
+<p>Map Explorer application demonstrates how to use the new Windows Phone 8 Map control replacing the Bing Maps control used in Windows 7, as well as how to use new map-related features, such as address search, locationing, and routes. Map Explorer is a simple Silverlight application which enables the user to change properties of the map component to see the effect on shown map.</p>
+<p>The example has been developed with Silverlight for Windows Phone devices and tested to work on Lumia devices with Windows Phone 8.</p>
+<figure>
+<img src="doc/screenshots/MapExplorer_screenshot_1.png?raw=true" alt="Screenshot" /><figcaption>Screenshot</figcaption>
+</figure>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/map-explorer</p>
+<p>For more information on implementation and porting, visit Lumia Developer’s Library: http://developer.nokia.com/Resources/Library/Lumia/#!code-examples/map-explorer.html</p>
+<h2 id="whats-new">What’s new</h2>
+<p>Version 1.1.0.0: Support for downloading maps. Mapping APIs T&amp;C compliance.</p>
+<h2 id="usage">1. Usage</h2>
+<p>This is a simple build-and-run solution. Learn about Map properties and Map related features by trying out the application.</p>
+<h2 id="prerequisites">2. Prerequisites</h2>
+<ul>
+<li>C# basics</li>
+<li>Windows 8</li>
+<li>Microsoft Visual Studio Express for Windows Phone 2012</li>
+</ul>
+<h2 id="project-structure-and-implementation">3. Project structure and implementation</h2>
+<h2 id="folders">3.1 Folders</h2>
+<ul>
+<li>The root folder contains the project file, the license information and this file (release_notes.txt).</li>
+<li><code>MapExplorer</code>: Root folder for the implementation files.<br />
+</li>
+<li><code>Assets</code>: Graphic assets like icons and tiles.</li>
+<li><code>Properties</code>: Application property files.</li>
+<li><code>Resources</code>: Application resources.</li>
+</ul>
+<h2 id="important-files-and-classes">3.2 Important files and classes</h2>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>MainPage.xaml</code>
+</td>
+<td>
+The main page of the application with its most important component, the map.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>MainPage.xaml.cs</code>
+</td>
+<td>
+The code-behind file of the main page.
+</td>
+</tr>
+</tbody>
+</table>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+Class
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>MainPage</code>
+</td>
+<td>
+This class is responsible for all the map related functionality of the app.
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="used-apiswindows-phone-components">3.3 Used APIs/Windows Phone Components</h2>
+<ul>
+<li>Microsoft.Phone.Maps.Controls</li>
+<li>Microsoft.Phone.Maps.Services</li>
+<li>System.Device.Location</li>
+<li>Windows.Devices.Geolocation</li>
+</ul>
+<h2 id="compatibility">4. Compatibility</h2>
+<ul>
+<li>Windows Phone 8</li>
+</ul>
+<p>Tested to work on Nokia Lumia 820 and Nokia Lumia 920. Developed with Microsoft Visual Studio Express for Windows Phone 2012.</p>
+<h2 id="required-capabilities">4.1 Required Capabilities</h2>
+<ul>
+<li><code>ID_CAP_LOCATION</code></li>
+<li><code>ID_CAP_MAP</code></li>
+<li><code>ID_CAP_NETWORKING</code></li>
+<li><code>ID_CAP_SENSORS</code></li>
+</ul>
+<h2 id="known-issues">4.2 Known Issues</h2>
+<p>None.</p>
+<h2 id="building-installing-and-running-the-application">5. Building, installing, and running the application</h2>
+<h2 id="preparations">5.1 Preparations</h2>
+<p>Make sure you have the following installed: * Windows 8 * Windows Phone SDK 8.0</p>
+<h2 id="using-the-windows-phone-8-sdk">5.2 Using the WINDOWS PHONE 8 SDK</h2>
+<ol type="1">
+<li>Open the SLN file: File &gt; Open Project, select the file MapExplorer.sln</li>
+<li>Select the target ‘Emulator WVGA’.</li>
+<li>Press F5 to build the project and run it on the Windows Phone Emulator.</li>
+</ol>
+<h2 id="deploying-to-windows-phone-8">5.3 Deploying to Windows Phone 8</h2>
+<p>Please see official documentation for deploying and testing applications on Windows Phone devices: http://msdn.microsoft.com/en-us/library/gg588378%28v=vs.92%29.aspx</p>
+<h2 id="license">6. License</h2>
+<p>See the license text file delivered with this project. The license file is also available online at https://github.com/Microsoft/map-explorer/blob/master/Licence.txt</p>
+<h2 id="related-documentation">7. Related documentation</h2>
+<p>An article “Guide to the Maps” published on Nokia Lumia Developer’s Library (http://www.developer.nokia.com/Resources/Library/Lumia/#!guide-to-the-maps.html) describes the properties and usage of map control and map-related features in detail using MapExplorer as an example.</p>
+<h2 id="version-history">8. Version history</h2>
+<ul>
+<li>1.1.0.0 Support for downloading maps. Mapping APIs T&amp;C compliance.</li>
+<li>1.0.0.0 First release.</li>
+</ul>
+</body>
+</html>

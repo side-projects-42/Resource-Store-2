@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>january-28</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-01-28">ember-cli Meeting Notes - 2016-01-28</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Erik Trom</li>
+<li>Jake Bixby</li>
+<li>Kelly Selden</li>
+<li>Nathan Hammond</li>
+<li>Robert Jackson</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<h3 id="everybody">Everybody</h3>
+<ul>
+<li>Identify something you want to be a champion for.</li>
+<li>Find people who want to participate in this effort in ways other than writing code.</li>
+</ul>
+<h3 id="robert-or-stefan-or-kelly">Robert or Stefan or Kelly</h3>
+<ul>
+<li>[ ] Release a new version of ember-cli.</li>
+</ul>
+<h3 id="nathan">Nathan</h3>
+<ul>
+<li>[ ] Send an email connecting Rob, pangratz, and Katie on the topic of ember-try + ember-cli for ember-cli-qunit.</li>
+<li>[ ] Send an email connecting Ed &amp; Kelly on the topic of JSCS and ESLint running against ember-cli.</li>
+</ul>
+<h3 id="kelly">Kelly</h3>
+<ul>
+<li>[ ] Build consensus around using a CI tool or integrating the results of ESLint/JSCS into ember-cli’s test suite.</li>
+</ul>
+<h3 id="erik">Erik</h3>
+<ul>
+<li>[ ] Identify specific problems surround code reuse with fastboot, document, propose solutions.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="updates">Updates</h3>
+<ul>
+<li>Rob: Working on extracting ember-cli-test-loader from bower.</li>
+<li>Kelly: No update.</li>
+<li>Jake: PR landed for ember-cli-blueprints.</li>
+<li>Erik: PR opened on node-portfinder and not passing CI upstream.</li>
+<li>Nathan: Maintaining this group.</li>
+</ul>
+<h3 id="ember-try">ember-try</h3>
+<ul>
+<li>We want a story for ember-try to work with ember-cli.</li>
+<li>pangratz has a spike in ember-test-helpers.</li>
+</ul>
+<h3 id="jshinteslintjscs">JSHint/ESLint/JSCS</h3>
+<ul>
+<li>We’re planning to move from JSHint to ESLint. We’re also going to add JSCS.</li>
+<li>(Open Question - Kelly) For running JSCS/ESLint against ember-cli should we use a CI tool or integrate the results into ember-cli’s test suite?</li>
+<li>Ed has a branch for ESLint somewhere.</li>
+<li>We’re going to build the infra for this by adding an innocuous rule. Bikeshedding on what the rules should be will be deferred.</li>
+</ul>
+<h3 id="blueprint-extraction">Blueprint Extraction</h3>
+<ul>
+<li>PR landed in ember-cli.</li>
+<li>Some weirdness left in ember-cli-blueprint-test-helpers in install.</li>
+<li>Will be made easier if we cut a new version.</li>
+<li>Nathan is available to help review a final PR to move toward landing.</li>
+</ul>
+<h3 id="portfinder">Portfinder</h3>
+<ul>
+<li>PR open on node-portfinder, but failing their CI.</li>
+<li>The ember-cli-livereload has magical ports that it uses during testing, we should check that out.</li>
+</ul>
+<h3 id="pods">Pods</h3>
+<ul>
+<li>First pass was awkward.</li>
+<li>Stalled on ember-cli-(mv|rename) is stalled awaiting resolution.</li>
+<li>Once we know what to do Adolfo and Martin will be good resources for those utilities.</li>
+</ul>
+</body>
+</html>

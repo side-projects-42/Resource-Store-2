@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>This directory hold several benchmarking scripts used track performances of MediaWiki and/or PHP.</p>
+<h2 id="consistency">Consistency</h2>
+<p>On Linux, use of <code>taskset</code> and <code>nice</code> can help get more consistent results.</p>
+<p>For example:</p>
+<p>$ taskset 1 nice -n-10 php bench_wfIsWindows.php</p>
+<h2 id="fixtures">Fixtures</h2>
+<ul>
+<li>tidy/australia-untidy.html.gz: Representative input text for benchmarkTidy.php. It needs to be decompressed before use.</li>
+</ul>
+</body>
+</html>

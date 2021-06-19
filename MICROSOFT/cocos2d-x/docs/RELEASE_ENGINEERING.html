@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>RELEASE_ENGINEERING</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="cocos2d-x-release-engineering">Cocos2d-x Release Engineering</h1>
+<h2 id="tagging">Tagging</h2>
+<p>New releases must be tagged in github. The tag name must follow these rules:</p>
+<pre><code>cocos2d-x-Major.Minor[.Status]</code></pre>
+<p>or</p>
+<pre><code>cocos2d-x-Major.Minor.Revision[.Status]</code></pre>
+<p>Example of valid names:</p>
+<ul>
+<li>cocos2d-x-3.0rc0</li>
+<li>cocos2d-x-3.0</li>
+<li>cocos2d-x-2.1.1</li>
+<li>cocos2d-x-2.1.1rc0</li>
+</ul>
+<p>See “Naming Conventions” below</p>
+<h2 id="branching">Branching</h2>
+<p>Each Major version will have 2 branches, <code>master</code> and <code>develop</code>. For cocos2d-x v3, the branches names will be <code>v3-master</code> and <code>v3-develop</code>, for v4 the branches names will be <code>v4-master</code> and <code>v4-develop</code>, and so on.</p>
+<ul>
+<li><code>master</code> is the stable branch.</li>
+<li><code>develop</code> is the unstable branch. All new features, bug fixes, etc, are applied first to <code>develop</code>.</li>
+</ul>
+<p>Once a new version is released (either Major, Minor or Revision), then <code>develop</code> branch must be merged into <code>master</code> branch. To be more specific, <code>master</code> only contains <em>stable</em> releases. <em>Alpha</em>, <em>Beta</em>, and <em>RC</em> versions MUST NOT be merged into <code>master</code>.</p>
+<h2 id="announcing">Announcing</h2>
+<p>Only stable releases must be announced on:</p>
+<ul>
+<li><a href="http://www.cocos2d-x.org/news">Blog</a></li>
+</ul>
+<p>All kind of releases (alpha,beta,rc, final) must be announced on: * <a href="https://twitter.com/cocos2dx">Twitter</a> * <a href="http://discuss.cocos2d-x.org/">Forum</a></p>
+<h2 id="download-package">Download package</h2>
+<p>A download package must be available for each released version. The package shall include the source code of cocos2d-x, and the needed scripts to download and install the 3rd party binaries.</p>
+<h2 id="release-notes-and-changelog">Release Notes and Changelog</h2>
+<p><strong>BEFORE</strong> releasing a new version (either stable or unstable), the following documents must be updated:</p>
+<ul>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG">CHANGELOG</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md">Release Notes</a></li>
+</ul>
+<h2 id="documentation">Documentation</h2>
+<p><strong>BEFORE</strong> releasing a new Minor or Major stable release, the following tasks MUST be done:</p>
+<ul>
+<li>All documentation MUST be updated to the new version. This includes:
+<ul>
+<li>API Reference</li>
+<li>Programmers Guide</li>
+</ul></li>
+</ul>
+<h2 id="backward-compatibility">Backward compatibility</h2>
+<ul>
+<li>Minor versions MUST be backward compatible with previous minor versions. eg: v3.2 must be backward compatible with v3.1 and v3.0.</li>
+<li>Major versions SHOULD be backward compatible with previous major versions. Breaking backward compatibility in Major versions is acceptable only if it is extremely well justified</li>
+</ul>
+<h2 id="deprecated-apis">Deprecated APIs</h2>
+<ul>
+<li>Only Major versions (eg: 4.0, 5.0) can introduce deprecated APIs. Deprecated APIs cannot be introduced in Point releases (eg: 3.5, 4.2).</li>
+<li>Only Major versions can remove deprecated APIs. They cannot be removed in Point versions.</li>
+<li>A deprecated API must live at least for the whole cycle of a Major version. Eg: if an API was deprecated in 4.0, it can be removed in 5.0, but not before. It can be removed in 6.0 or future Major releases, but it cannot be removed in Point releases, like 5.1.</li>
+</ul>
+<h2 id="performance-tests">Performance tests</h2>
+<ul>
+<li>Performance tests MUST be run before releasing a Release Candidate</li>
+<li>If performance is worse than previous stable version, then the Release Candidate MUST NOT be released (See Naming Conventions below)</li>
+<li>Results of the performance tests must be documented in this <a href="https://docs.google.com/spreadsheet/ccc?key=0AvvkdgVbWvpZdHFudzdDT3NuYTRNTHlZZzRGZWYzMmc#gid=8">spreadsheet</a></li>
+</ul>
+<h2 id="samples-and-tests">Samples and tests</h2>
+<p><strong>BEFORE</strong> releasing a new Minor or Major stable release, the following tasks MUST be done:</p>
+<ul>
+<li>All the samples and tests must be updated to use the new version. This includes:
+<ul>
+<li>The samples in <a href="https://github.com/cocos2d/cocos2d-x-samples">cocos2d-x-samples</a> repository</li>
+<li>The demo games <a href="https://github.com/chukong/EarthWarrior3D">EarthWarrior3D</a> and <a href="https://github.com/chukong/FantasyWarrior3D">FantasyWarrior3D</a></li>
+<li>All the tests bundled in cocos2d-x</li>
+<li>All the templates bundled in cocos2d-x</li>
+</ul></li>
+</ul>
+<h2 id="naming-conventions">Naming conventions</h2>
+<h3 id="alpha">Alpha</h3>
+<p>The product is unstable. It could have memory leaks, or crashes, or the API is unstable. The product contains little QA. Although the product is not ready for production, the product should be testable. Alpha versions might have Core functionality that has just been refactored, meaning that Core functionality might be unstable, but should work Ok.</p>
+<p>As an example, for cocos2d-x, an <em>Alpha</em> version means:</p>
+<ul>
+<li>Basic functionality works Ok (not great, but OK), like Sprites, Scenes, actions, etc. _* But it might have memory leaks, or crashes, or the recently added features might be unfinished. The documentation might not be updated.</li>
+<li>As an example, the Renderer refactoring must be done in “alpha” versions (but not Beta versions).</li>
+</ul>
+<p>Alpha versions are NOT feature freeze. New features might be added in future alpha and beta versions.</p>
+<h3 id="beta">Beta</h3>
+<p>The product is more stable than <em>Alpha</em>. The product might crash, but not frequently. No major changes were made in core components. Smaller features could be refactored in <em>Beta</em> versions, but the core functionality is stable. The product has more QA. The only difference between <em>Alpha</em> and <em>Beta</em>, is that <em>Beta</em> is more stable than <em>Alpha</em>. And that in <em>Beta</em> versions no new major features will be added.</p>
+<p>As an example, for cocos2d-x it means:</p>
+<ul>
+<li>All the Core features (Sprites, Menu, Labels, Director, Transitions) are stable. Bug fixes could have been added into the Core functionality, but no major refactoring were done in the Core.</li>
+<li>But perhaps new features like the new Particle Engine could be unfinished, or the Cocos Studio reader might crash.</li>
+<li>Some cocos2d-x users might want to use a beta version for real games.</li>
+</ul>
+<p>Beta versions are NOT feature freeze. <strong>Small</strong> new features might be added in future <em>Beta</em> versions. New <strong>BIG</strong> features that might affect the Core functionality must only be added in <em>Alpha</em> versions, and not in <em>Beta</em> versions.</p>
+<h3 id="release-candidate">Release Candidate</h3>
+<p>Release candidate means that, unless major bugs are found, the product is ready for release. The difference between _Release Candidate__ and <em>Final</em> is that RC has less testing than the final version.</p>
+<p>Many cocos2d-x users might want to try and use the RC releases for production.</p>
+<p>RC versions ARE feature freeze. No new features, no matter how small they are, MUST be added in RC versions, because as the name implies, it is a <em>Release Candidate</em>.</p>
+<h3 id="final">Final</h3>
+<p>It is the new stable version.</p>
+<h2 id="number-conventions">Number conventions</h2>
+<p>major.minor [revision | status]</p>
+<h3 id="major">Major</h3>
+<p>The major number is increased when there are significant jumps in functionality such as changing the framework which could cause incompatibility with interfacing systems</p>
+<h3 id="minor">Minor</h3>
+<p>The minor number is incremented when only minor features or significant fixes have been added.</p>
+<h3 id="revision">Revision</h3>
+<p>The revision number is incremented when minor bugs are fixed.</p>
+<h3 id="status">Status</h3>
+<p>The status could be: alphaN, betaN or rcN.</p>
+<p>‘N’ is a number, and the first MUST always be 0.</p>
+<h3 id="examples">Examples</h3>
+<p>v2.0-alpha0: - New major version of cocos2d-x. - Unstable</p>
+<p>v2.1.3: - Stable version of cocos2d-x. It is the same as v2.1 plus some bug fixes.</p>
+<p>v2.2-beta0: - Similar to v2.1.3, but some new features were added, but are not stable yet.</p>
+<p>v2.2: - Similar to v2.1.3, but some small features were added. The new features are stable.</p>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="redux-combine-reducers">Redux Combine Reducers</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Write action creators and reducers to modify application state</li>
+<li>Build <strong>Redux’s combineReducers()</strong> function</li>
+<li>Use the <code>combineReducers()</code> function to delegate different pieces of state to each reducer</li>
+</ol>
+<h2 id="introduction">Introduction</h2>
+<p>So far we have been using a single reducer to return a new state when an action is dispatched. This works great for a small application where we only need our reducer to manage the state of one resource. However, as you will see, when working with multiple resources, placing all of this logic in one reducer function can quickly become unwieldy.</p>
+<p>Enter <code>combineReducers()</code> to save the day! In this lab, we’ll see how <strong>Redux</strong>’s <code>combineReducers()</code> function lets us delegate different pieces of state to separate reducer functions.</p>
+<p>We’ll do this in the context of a book application that we’ll use to keep track of programming books that we’ve read.</p>
+<p>We want our app to do two things:</p>
+<ol type="1">
+<li>Keep track of all the books we’ve read: title, author, description.</li>
+<li>Keep track of the authors who wrote these books.</li>
+</ol>
+<h4 id="determine-application-state-structure">Determine Application State Structure</h4>
+<p>Our app will need a state object that stores two types of information:</p>
+<ol type="1">
+<li>All our books, in an array</li>
+<li>Our authors, also in an array</li>
+</ol>
+<p>Each of these types of information–all our books, and the authors–should be represented on our store’s state object. We want to think of our store’s state structure as a database. We will represent this as a belongs to/has many relationship, in that a book belongs to an author and an author has many books. So this means each author would have its own id, and each book would have an authorId as a foreign key.</p>
+<p>With that, we can set the application state as:</p>
+<pre><code>{
+  authors: //array of authors
+  books: // array of books,
+}</code></pre>
+<p>So our state object will have two top-level keys, each pointing to an array. For now, let’s write a single reducer to manage both of these resources.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> <span class="at">bookApp</span>(</a>
+<a class="sourceLine" id="cb2-2" title="2">  state <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="dt">authors</span><span class="op">:</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="dt">books</span><span class="op">:</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  action</a>
+<a class="sourceLine" id="cb2-7" title="7">) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="kw">let</span> idx<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-10" title="10">    <span class="cf">case</span> <span class="st">&quot;ADD_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb2-11" title="11">      <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-12" title="12">        ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-13" title="13">        <span class="dt">authors</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">authors</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-14" title="14">        <span class="dt">books</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">books</span><span class="op">,</span> <span class="va">action</span>.<span class="at">book</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-15" title="15">      <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-16" title="16"></a>
+<a class="sourceLine" id="cb2-17" title="17">    <span class="cf">case</span> <span class="st">&quot;REMOVE_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb2-18" title="18">      idx <span class="op">=</span> <span class="va">state</span>.<span class="va">books</span>.<span class="at">findIndex</span>((book) <span class="kw">=&gt;</span> <span class="va">book</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-19" title="19">      <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-20" title="20">        ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-21" title="21">        <span class="dt">authors</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">authors</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-22" title="22">        <span class="dt">books</span><span class="op">:</span> [...<span class="va">state</span>.<span class="va">books</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span> ...<span class="va">state</span>.<span class="va">books</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-23" title="23">      <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-24" title="24"></a>
+<a class="sourceLine" id="cb2-25" title="25">    <span class="cf">case</span> <span class="st">&quot;ADD_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb2-26" title="26">      <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-27" title="27">        ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-28" title="28">        <span class="dt">books</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">books</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-29" title="29">        <span class="dt">authors</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">authors</span><span class="op">,</span> <span class="va">action</span>.<span class="at">author</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-30" title="30">      <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-31" title="31"></a>
+<a class="sourceLine" id="cb2-32" title="32">    <span class="cf">case</span> <span class="st">&quot;REMOVE_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb2-33" title="33">      idx <span class="op">=</span> <span class="va">state</span>.<span class="va">authors</span>.<span class="at">findIndex</span>((author) <span class="kw">=&gt;</span> <span class="va">author</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-34" title="34">      <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-35" title="35">        ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-36" title="36">        <span class="dt">books</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">books</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-37" title="37">        <span class="dt">authors</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb2-38" title="38">          ...<span class="va">state</span>.<span class="va">authors</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-39" title="39">          ...<span class="va">state</span>.<span class="va">authors</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-40" title="40">        ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-41" title="41">      <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-42" title="42"></a>
+<a class="sourceLine" id="cb2-43" title="43">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb2-44" title="44">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-45" title="45">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-46" title="46"><span class="op">}</span></a></code></pre></div>
+<p>This is the current set up in <code>src/reducers/manageAuthorsAndBooks.js</code>, and it works. You can see, however, by working with just two resources, the size of our reducer increased significantly. Moreover, by placing each resource in the same reducer, we are coupling these resources together, where we would prefer to maintain their separation. By creating separate reducers for each resource in an application, we can keep our code organized as our applications get more complicated.</p>
+<blockquote>
+<p><strong>NOTE:</strong> You may have noticed something in the reducer example: when we update one part of <code>state</code>, we’re still using the spread operator <em>on other parts</em>. For example, in the <code>"ADD_AUTHOR"</code> case, we add <code>action.author</code> to the <code>authors</code> array, but <strong>we also use the spread operator to create a new <code>book</code> array</strong>. This is because both <code>Object.assign()</code> and the spread operator only create shallow copies of objects. If we leave out <code>books: [...state.books]</code>, and just write the following:</p>
+</blockquote>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  ...<span class="at">state</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">authors</span><span class="op">:</span> [...<span class="va">state</span>.<span class="at">authors</span><span class="op">,</span> <span class="va">action</span>.<span class="at">author</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="op">};</span></a></code></pre></div>
+<p>A new reference to the old <code>state.books</code> array will be used, <em>not a new copy of the array</em>. This is subtle, and can easily be overlooked, but by referencing the old state, we are no longer maintaining an immutable state. <a href="https://redux.js.org/faq/immutable-data#what-are-the-benefits-of-immutability">The official redux documentation</a> goes into further detail on the benefits of immutability, <a href="https://redux.js.org/faq/immutable-data#accidental-object-mutation">discusses this exact issue</a>, and <a href="https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns">provides further examples</a> of how to properly use the spread operator to deeply copy nested data.</p>
+<h2 id="refactor-by-using-combinereducers">Refactor by using combineReducers</h2>
+<p>The <code>combineReducers()</code> function allows us to write two or more separate reducers, then pass each reducer to the <code>combineReducers()</code> function to produce the reducer we wrote above. Then we pass that combined reducer to the store in <code>src/index.js</code>. Let’s write some code, and then we’ll walk through it below.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="im">import</span> <span class="op">{</span> combineReducers <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">const</span> rootReducer <span class="op">=</span> <span class="at">combineReducers</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">authors</span><span class="op">:</span> authorsReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="dt">books</span><span class="op">:</span> booksReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="im">export</span> <span class="im">default</span> rootReducer<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="kw">function</span> <span class="at">booksReducer</span>(state <span class="op">=</span> []<span class="op">,</span> action) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-11" title="11">  <span class="kw">let</span> idx<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-12" title="12">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-13" title="13">    <span class="cf">case</span> <span class="st">&quot;ADD_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb4-14" title="14">      <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="va">action</span>.<span class="at">book</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-15" title="15"></a>
+<a class="sourceLine" id="cb4-16" title="16">    <span class="cf">case</span> <span class="st">&quot;REMOVE_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb4-17" title="17">      idx <span class="op">=</span> <span class="va">state</span>.<span class="at">findIndex</span>((book) <span class="kw">=&gt;</span> <span class="va">book</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-18" title="18">      <span class="cf">return</span> [...<span class="va">state</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span> ...<span class="va">state</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-19" title="19"></a>
+<a class="sourceLine" id="cb4-20" title="20">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb4-21" title="21">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-22" title="22">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-23" title="23"><span class="op">}</span></a>
+<a class="sourceLine" id="cb4-24" title="24"></a>
+<a class="sourceLine" id="cb4-25" title="25"><span class="kw">function</span> <span class="at">authorsReducer</span>(state <span class="op">=</span> []<span class="op">,</span> action) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-26" title="26">  <span class="kw">let</span> idx<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-27" title="27">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-28" title="28">    <span class="cf">case</span> <span class="st">&quot;ADD_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb4-29" title="29">      <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="va">action</span>.<span class="at">author</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-30" title="30"></a>
+<a class="sourceLine" id="cb4-31" title="31">    <span class="cf">case</span> <span class="st">&quot;REMOVE_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb4-32" title="32">      idx <span class="op">=</span> <span class="va">state</span>.<span class="at">findIndex</span>((author) <span class="kw">=&gt;</span> <span class="va">author</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-33" title="33">      <span class="cf">return</span> [...<span class="va">state</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span> ...<span class="va">state</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-34" title="34"></a>
+<a class="sourceLine" id="cb4-35" title="35">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb4-36" title="36">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-37" title="37">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-38" title="38"><span class="op">}</span></a></code></pre></div>
+<p>There’s a lot of code there, so let’s unpack it a bit. At the very top you see the following line:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="im">import</span> <span class="op">{</span> combineReducers <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw">const</span> rootReducer <span class="op">=</span> <span class="at">combineReducers</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="dt">authors</span><span class="op">:</span> authorsReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="dt">books</span><span class="op">:</span> booksReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="im">export</span> <span class="im">default</span> rootReducer<span class="op">;</span></a></code></pre></div>
+<p>Through <code>combineReducer</code>, we’re telling <strong>Redux</strong> to produce a reducer which will return a state that has both a key of books with a value equal to the return value of the <code>booksReducer()</code> <em>and</em> a key of <strong>authors</strong> with a value equal to the return value of the <code>authorsReducer()</code>. Now if you look at the <code>booksReducer()</code> and the <code>authorsReducer()</code> you will see that each returns a default state of an empty array.</p>
+<p>Since we’ve changed the default export of <code>manageAuthorsAndBooks.js</code>, in <code>index.js</code>, we don’t need to change anything with createStore unless we wanted to update names we’ve assigned:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="im">import</span> <span class="op">{</span> createStore <span class="op">}</span> <span class="im">from</span> <span class="st">&quot;redux&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="im">import</span> rootReducer <span class="im">from</span> <span class="st">&quot;./reducers/manageAuthorsAndBooks&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">const</span> store <span class="op">=</span> <span class="at">createStore</span>(</a>
+<a class="sourceLine" id="cb6-5" title="5">  rootReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb6-6" title="6">  <span class="va">window</span>.<span class="at">__REDUX_DEVTOOLS_EXTENSION__</span> <span class="op">&amp;&amp;</span> <span class="va">window</span>.<span class="at">__REDUX_DEVTOOLS_EXTENSION__</span>()</a>
+<a class="sourceLine" id="cb6-7" title="7">)<span class="op">;</span></a></code></pre></div>
+<p>By passing our rootReducer to the createStore method, the application maintains its initial state of <code>{ books: [], authors: [] }</code>, just as it did when we had one reducer. From the application’s perspective nothing has changed.</p>
+<h4 id="examining-our-new-reducers">Examining Our New Reducers</h4>
+<p>Now if we examine the <code>authorsReducer()</code>, notice that this reducer only concerns itself with its own slice of the state. This makes sense. Remember that ultimately the array that the <code>authorsReducer()</code> returns will be the value to the key of authors. Similarly the <code>authorsReducer()</code> only receives as its state argument the value of state.authors, in other words the authors array.</p>
+<p>So examining the <code>authorsReducer()</code>, we see that we no longer retrieve the list of authors with a call to <code>state.authors</code>, but can access the list of authors simply by calling <code>state</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">function</span> <span class="at">authorsReducer</span>(state <span class="op">=</span> []<span class="op">,</span> action) <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="kw">let</span> idx<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="cf">case</span> <span class="st">&quot;ADD_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb7-5" title="5">      <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="va">action</span>.<span class="at">author</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7">    <span class="cf">case</span> <span class="st">&quot;REMOVE_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb7-8" title="8">      idx <span class="op">=</span> <span class="va">state</span>.<span class="at">findIndex</span>((author) <span class="kw">=&gt;</span> <span class="va">author</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-9" title="9">      <span class="cf">return</span> [...<span class="va">state</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span> ...<span class="va">state</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)]<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-10" title="10"></a>
+<a class="sourceLine" id="cb7-11" title="11">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb7-12" title="12">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-13" title="13">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="op">}</span></a></code></pre></div>
+<h4 id="dispatching-actions">Dispatching Actions</h4>
+<p>The <code>combineReducer()</code> function returns to us one large reducer that looks like the following:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">function</span> <span class="at">reducer</span>(state <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">authors</span><span class="op">:</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="dt">books</span><span class="op">:</span> []</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="op">},</span> action) <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-5" title="5">  <span class="kw">let</span> idx</a>
+<a class="sourceLine" id="cb8-6" title="6">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-7" title="7"></a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="cf">case</span> <span class="st">&quot;ADD_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb8-9" title="9">      <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="va">action</span>.<span class="at">author</span>]</a>
+<a class="sourceLine" id="cb8-10" title="10"></a>
+<a class="sourceLine" id="cb8-11" title="11">    <span class="cf">case</span> <span class="st">&#39;REMOVE_AUTHOR&#39;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb8-12" title="12">      ...</a>
+<a class="sourceLine" id="cb8-13" title="13">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="op">}</span></a></code></pre></div>
+<p>Because of this, we can dispatch actions the same way we always did. <code>store.dispatch({ type: 'ADD_BOOK', { title: 'Snow Crash', author: 'Neal Stephenson' } });</code> will hit our switch statement in the reducer and add a new author. One thing to note, is that if you want to have more than one reducer respond to the same action, you can.</p>
+<p>For example, in our application, when a user inputs information about a book, the user <em>also</em> inputs the author’s name. It would be handy if, when a user submits a book with an author, that author is also added to our author array.</p>
+<p>The action dispatched doesn’t change: <code>store.dispatch({ type: 'ADD_BOOK', { title: 'Snow Crash', author: 'Neal Stephenson' } });</code>. Our <code>booksReducer</code> can stay the same for now:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">function</span> <span class="at">booksReducer</span>(state <span class="op">=</span> []<span class="op">,</span> action) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="kw">let</span> idx<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="cf">case</span> <span class="st">&quot;ADD_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb9-5" title="5">      <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="va">action</span>.<span class="at">book</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7">    <span class="cf">case</span> <span class="st">&quot;REMOVE_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb9-8" title="8">      idx <span class="op">=</span> <span class="va">state</span>.<span class="at">findIndex</span>((book) <span class="kw">=&gt;</span> <span class="va">book</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-9" title="9">      <span class="cf">return</span> [...<span class="va">state</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span> ...<span class="va">state</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)]<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-10" title="10"></a>
+<a class="sourceLine" id="cb9-11" title="11">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb9-12" title="12">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-13" title="13">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="op">}</span></a></code></pre></div>
+<p>However, in <code>authorsReducer</code>, we can <em>also</em> include a switch case for “ADD_BOOK”:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="im">import</span> uuid <span class="im">from</span> <span class="st">&quot;uuid&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw">function</span> <span class="at">authorsReducer</span>(state <span class="op">=</span> []<span class="op">,</span> action) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="kw">let</span> idx<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-5" title="5">  <span class="cf">switch</span> (<span class="va">action</span>.<span class="at">type</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="cf">case</span> <span class="st">&quot;ADD_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb10-7" title="7">      <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="va">action</span>.<span class="at">author</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-8" title="8"></a>
+<a class="sourceLine" id="cb10-9" title="9">    <span class="cf">case</span> <span class="st">&quot;REMOVE_AUTHOR&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb10-10" title="10">      idx <span class="op">=</span> <span class="va">state</span>.<span class="at">findIndex</span>((book) <span class="kw">=&gt;</span> <span class="va">book</span>.<span class="at">id</span> <span class="op">===</span> <span class="va">action</span>.<span class="at">id</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-11" title="11">      <span class="cf">return</span> [...<span class="va">state</span>.<span class="at">slice</span>(<span class="dv">0</span><span class="op">,</span> idx)<span class="op">,</span> ...<span class="va">state</span>.<span class="at">slice</span>(idx <span class="op">+</span> <span class="dv">1</span>)]<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-12" title="12"></a>
+<a class="sourceLine" id="cb10-13" title="13">    <span class="cf">case</span> <span class="st">&quot;ADD_BOOK&quot;</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb10-14" title="14">      <span class="kw">let</span> existingAuthor <span class="op">=</span> <span class="va">state</span>.<span class="at">filter</span>(</a>
+<a class="sourceLine" id="cb10-15" title="15">        (author) <span class="kw">=&gt;</span> <span class="va">author</span>.<span class="at">authorName</span> <span class="op">===</span> <span class="va">action</span>.<span class="va">book</span>.<span class="at">authorName</span></a>
+<a class="sourceLine" id="cb10-16" title="16">      )<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-17" title="17">      <span class="cf">if</span> (<span class="va">existingAuthor</span>.<span class="at">length</span> <span class="op">&gt;</span> <span class="dv">0</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-18" title="18">        <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-19" title="19">      <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-20" title="20">        <span class="cf">return</span> [...<span class="at">state</span><span class="op">,</span> <span class="op">{</span> <span class="dt">authorName</span><span class="op">:</span> <span class="va">action</span>.<span class="va">book</span>.<span class="at">authorName</span><span class="op">,</span> <span class="dt">id</span><span class="op">:</span> <span class="at">uuid</span>() <span class="op">}</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-21" title="21">      <span class="op">}</span></a>
+<a class="sourceLine" id="cb10-22" title="22"></a>
+<a class="sourceLine" id="cb10-23" title="23">    <span class="cf">default</span><span class="op">:</span></a>
+<a class="sourceLine" id="cb10-24" title="24">      <span class="cf">return</span> state<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-25" title="25">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb10-26" title="26"><span class="op">}</span></a></code></pre></div>
+<p>In the new "ADD<em>BOOK" case, we’re checking to see if an authorName matches with the name dispatches from the BookInput component. If the name already exists, state is returned unchanged. If the name is not present, it is added to the author array. Use the example above to modify the <code>manageAuthorsAndBooks</code> reducer and you can see the effect. We have two separate forms, one for adding just authors, and one that adds books _and</em> authors.</p>
+<p><strong>Note:</strong> We’re using a useful package, <code>uuid</code>, to handle unique ID generation. With this refactor, since we are creating an author ID from within the reducer instead of in <code>AuthorInput.js</code>, we need to import it here as well.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>For learning purposes, our two reducers are in the same file, but it is common to separate each reducer into its own file. You could then either import each reducer into a <em>new</em> file, something like <code>reducers/rootReducer.js</code>, where <code>combineReducer</code> is called. Or, alternatively, you could include <code>combineReducer</code> in your <code>src/index.js</code> file. For example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="im">import</span> authorsReducer <span class="im">from</span> <span class="st">&#39;./reducers/authorsReducer&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="im">import</span> booksReducer <span class="im">from</span> <span class="st">&#39;./reducers/booksReducer&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="kw">const</span> rootReducer <span class="op">=</span> <span class="at">combineReducers</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb11-5" title="5">  <span class="dt">books</span><span class="op">:</span> booksReducer<span class="op">,</span></a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="dt">authors</span><span class="op">:</span> authorsReducer</a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="op">}</span>)</a>
+<a class="sourceLine" id="cb11-8" title="8"></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="kw">const</span> store <span class="op">=</span> <span class="at">createStore</span>(rootReducer<span class="op">,</span> <span class="va">window</span>.<span class="at">__REDUX_DEVTOOLS_EXTENSION__</span> <span class="op">&amp;&amp;</span> <span class="va">window</span>.<span class="at">__REDUX_DEVTOOLS_EXTENSION__</span>())</a>
+<a class="sourceLine" id="cb11-10" title="10"></a>
+<a class="sourceLine" id="cb11-11" title="11">...</a></code></pre></div>
+<p>In React/Redux apps where we’re using and storing many resources in our store, keeping reducers separated helps us organize code and separate concerns. Actions can cause multiple reducers to modify their own state, but we can still keep all modifications to a <em>particular</em> resource within its own separate file.</p>
+<h4 id="resources">Resources</h4>
+<ul>
+<li><a href="https://egghead.io/lessons/javascript-redux-implementing-combinereducers-from-scratch">Implementing Combine Reducers from Scratch</a></li>
+</ul>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/combine-reducers-codealong'>Combine Reducers Codealong</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-20</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-04-20">FastBoot Meeting Notes 2016-04-20</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Please add yourself.</em></p>
+<p>Tom Dale, Dan McClain, Ron White, Patrick Fisher, Arjan Singh, Krati Ahuja</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li><p>[x] Last Week’s Action Items</p>
+<ul>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to deprecate Node 0.10 support by removing from Travis build matrix</li>
+<li>[x] <span class="citation" data-cites="danmcclain">@danmcclain</span> will push PR for deferring rendering via promise chain</li>
+<li>[x] <span class="citation" data-cites="danmcclain">@danmcclain</span> will update FastBootRequest PR to implement get for headers so users don’t have to call <code>toLowerCase</code> on headers</li>
+<li>[x] <span class="citation" data-cites="danmcclain">@danmcclain</span> will submit PR to update FastBoot service to deprecate old access to request details</li>
+<li>[ ] <span class="citation" data-cites="kratiahuja">@kratiahuja</span> will add error handling via <code>Ember.onerror</code> and other mechanisms to avoid crashing the process</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> will sync up with <span class="citation" data-cites="fivetanley">@fivetanley</span> to merge in build refactor</li>
+</ul></li>
+<li>[ ] FastBoot App Server: <a href="https://gist.github.com/tomdale/4b44d83172877c49747f2a5894dec05e">https://gist.github.com/tomdale/4b44d83172877c49747f2a5894dec05e</a></li>
+<li><p>[ ] FastBoot Server -&gt; FastBoot Middleware</p></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><p>Amazon EBS server used to require application reboot to update assets, <span class="citation" data-cites="tomdale">@tomdale</span> rewrote the server to abstract downloading/notifying/reloading assets for FastBoot - S3Downloader and Notifier built right now</p></li>
+<li><p><span class="citation" data-cites="tomdale">@tomdale</span> proposed converting the ember-fastboot-server -&gt; ember-fastboot-middleware</p>
+<ul>
+<li>Remove the server bits from ember-fastboot-server</li>
+</ul></li>
+<li><p><span class="citation" data-cites="kratiahuja">@kratiahuja</span> will submit a PR today with onerror fix</p></li>
+</ul>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> will review deferred rendering PR, <span class="citation" data-cites="danmcclain">@danmcclain</span> will write tests to verify with async component</li>
+<li>[ ] <span class="citation" data-cites="pwfisher">@pwfisher</span> will work on FastBoot watching</li>
+<li>[ ] <span class="citation" data-cites="arjansingh">@arjansingh</span> will work on adding the server response to the FastBoot service</li>
+</ul>
+</body>
+</html>

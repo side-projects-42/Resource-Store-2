@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="xmlsec-ruby">xmlsec-ruby</h1>
+    <p>
+      Currently working on getting a basic signature verification (for SAML
+      purposes) working, in the least hacky way possible.
+    </p>
+    <h2 id="testing">Testing</h2>
+    <p>
+      Tests are dependent on <code>rspec</code> and <code>rake-compiler</code>.
+      Run them with:
+    </p>
+    <pre><code>rake spec</code></pre>
+    <p>
+      The tests build the C extension, to clean the output from the build
+      process:
+    </p>
+    <pre><code>rake clean</code></pre>
+    <p>
+      Test certificates and signed documents are taken from the
+      <a href="http://code.google.com/p/xmlseclibs/source/browse/trunk/tests/"
+        >xmlseclibs</a
+      >
+      test suite.
+    </p>
+    <h2 id="version-history">Version History</h2>
+    <p>Version 0.0.6 Less hacky way of grabbing ID attributes.</p>
+    <p>
+      Version 0.0.5 Took out init/deinit of crypto libraries - this should
+      already done when we require openssl, and we don’t want to wantonly
+      destroy all that state.
+    </p>
+  </body>
+</html>

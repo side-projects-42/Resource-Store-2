@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>elements</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="elements">Elements</h1>
+<p>While chart types provide settings to configure the styling of each dataset, you sometimes want to style <strong>all datasets the same way</strong>. A common example would be to stroke all of the bars in a bar chart with the same colour but change the fill per dataset. Options can be configured for four different types of elements: <strong><a href="#arc-configuration">arc</a></strong>, <strong><a href="#line-configuration">lines</a></strong>, <strong><a href="#point-configuration">points</a></strong>, and <strong><a href="#bar-configuration">bars</a></strong>. When set, these options apply to all objects of that type unless specifically overridden by the configuration attached to a dataset.</p>
+<h2 id="global-configuration">Global Configuration</h2>
+<p>The element options can be specified per chart or globally. The global options for elements are defined in <code>Chart.defaults.elements</code>. For example, to set the border width of all bar charts globally you would do:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="va">Chart</span>.<span class="va">defaults</span>.<span class="va">elements</span>.<span class="va">bar</span>.<span class="at">borderWidth</span> <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></a></code></pre></div>
+<h2 id="point-configuration">Point Configuration</h2>
+<p>Point elements are used to represent the points in a line, radar or bubble chart.</p>
+<p>Namespace: <code>options.elements.point</code>, global point options: <code>Chart.defaults.elements.point</code>.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>radius</code></td>
+<td><code>number</code></td>
+<td><code>3</code></td>
+<td>Point radius.</td>
+</tr>
+<tr class="even">
+<td><a href="#point-styles"><code>pointStyle</code></a></td>
+<td><code>string</code>|<code>Image</code></td>
+<td><code>'circle'</code></td>
+<td>Point style.</td>
+</tr>
+<tr class="odd">
+<td><code>rotation</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Point rotation (in degrees).</td>
+</tr>
+<tr class="even">
+<td><code>backgroundColor</code></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td><code>Chart.defaults.backgroundColor</code></td>
+<td>Point fill color.</td>
+</tr>
+<tr class="odd">
+<td><code>borderWidth</code></td>
+<td><code>number</code></td>
+<td><code>1</code></td>
+<td>Point stroke width.</td>
+</tr>
+<tr class="even">
+<td><code>borderColor</code></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td><code>'Chart.defaults.borderColor</code></td>
+<td>Point stroke color.</td>
+</tr>
+<tr class="odd">
+<td><code>hitRadius</code></td>
+<td><code>number</code></td>
+<td><code>1</code></td>
+<td>Extra radius added to point radius for hit detection.</td>
+</tr>
+<tr class="even">
+<td><code>hoverRadius</code></td>
+<td><code>number</code></td>
+<td><code>4</code></td>
+<td>Point radius when hovered.</td>
+</tr>
+<tr class="odd">
+<td><code>hoverBorderWidth</code></td>
+<td><code>number</code></td>
+<td><code>1</code></td>
+<td>Stroke width when hovered.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="point-styles">Point Styles</h3>
+<p>The following values are supported:</p>
+<ul>
+<li><code>'circle'</code></li>
+<li><code>'cross'</code></li>
+<li><code>'crossRot'</code></li>
+<li><code>'dash'</code></li>
+<li><code>'line'</code></li>
+<li><code>'rect'</code></li>
+<li><code>'rectRounded'</code></li>
+<li><code>'rectRot'</code></li>
+<li><code>'star'</code></li>
+<li><code>'triangle'</code></li>
+</ul>
+<p>If the value is an image, that image is drawn on the canvas using <a href="https://developer.mozilla.org/en/docs/Web/API/CanvasRenderingContext2D/drawImage">drawImage</a>.</p>
+<h2 id="line-configuration">Line Configuration</h2>
+<p>Line elements are used to represent the line in a line chart.</p>
+<p>Namespace: <code>options.elements.line</code>, global line options: <code>Chart.defaults.elements.line</code>.</p>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 14%" />
+<col style="width: 15%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>tension</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Bézier curve tension (<code>0</code> for no Bézier curves).</td>
+</tr>
+<tr class="even">
+<td><code>backgroundColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td><code>Chart.defaults.backgroundColor</code></td>
+<td>Line fill color.</td>
+</tr>
+<tr class="odd">
+<td><code>borderWidth</code></td>
+<td><code>number</code></td>
+<td><code>3</code></td>
+<td>Line stroke width.</td>
+</tr>
+<tr class="even">
+<td><code>borderColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td><code>Chart.defaults.borderColor</code></td>
+<td>Line stroke color.</td>
+</tr>
+<tr class="odd">
+<td><code>borderCapStyle</code></td>
+<td><code>string</code></td>
+<td><code>'butt'</code></td>
+<td>Line cap style. See <a href="https://developer.mozilla.org/en/docs/Web/API/CanvasRenderingContext2D/lineCap">MDN</a>.</td>
+</tr>
+<tr class="even">
+<td><code>borderDash</code></td>
+<td><code>number[]</code></td>
+<td><code>[]</code></td>
+<td>Line dash. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash">MDN</a>.</td>
+</tr>
+<tr class="odd">
+<td><code>borderDashOffset</code></td>
+<td><code>number</code></td>
+<td><code>0.0</code></td>
+<td>Line dash offset. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset">MDN</a>.</td>
+</tr>
+<tr class="even">
+<td><code>borderJoinStyle</code></td>
+<td><code>string</code></td>
+<td><code>'miter'</code></td>
+<td>Line join style. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineJoin">MDN</a>.</td>
+</tr>
+<tr class="odd">
+<td><code>capBezierPoints</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td><code>true</code> to keep Bézier control inside the chart, <code>false</code> for no restriction.</td>
+</tr>
+<tr class="even">
+<td><code>cubicInterpolationMode</code></td>
+<td><code>string</code></td>
+<td><code>'default'</code></td>
+<td>Interpolation mode to apply. <a href="/charts/line.md/#cubicinterpolationmode">See more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>fill</code></td>
+<td><code>boolean</code>|<code>string</code></td>
+<td><code>false</code></td>
+<td>How to fill the area under the line. See <a href="/charts/area.md#filling-modes">area charts</a>.</td>
+</tr>
+<tr class="even">
+<td><code>stepped</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td><code>true</code> to show the line as a stepped line (<code>tension</code> will be ignored).</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bar-configuration">Bar Configuration</h2>
+<p>Bar elements are used to represent the bars in a bar chart.</p>
+<p>Namespace: <code>options.elements.bar</code>, global bar options: <code>Chart.defaults.elements.bar</code>.</p>
+<table>
+<colgroup>
+<col style="width: 16%" />
+<col style="width: 16%" />
+<col style="width: 17%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>backgroundColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td><code>Chart.defaults.backgroundColor</code></td>
+<td>Bar fill color.</td>
+</tr>
+<tr class="even">
+<td><code>borderWidth</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Bar stroke width.</td>
+</tr>
+<tr class="odd">
+<td><code>borderColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td><code>Chart.defaults.borderColor</code></td>
+<td>Bar stroke color.</td>
+</tr>
+<tr class="even">
+<td><code>borderSkipped</code></td>
+<td><code>string</code></td>
+<td><code>'start'</code></td>
+<td>Skipped (excluded) border: <code>'start'</code>, <code>'end'</code>, <code>'bottom'</code>, <code>'left'</code>, <code>'top'</code> or <code>'right'</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>borderRadius</code></td>
+<td><code>number</code>|<code>object</code></td>
+<td><code>0</code></td>
+<td>The bar border radius (in pixels).</td>
+</tr>
+<tr class="even">
+<td><a href="#point-styles"><code>pointStyle</code></a></td>
+<td><code>string</code>|<code>Image</code></td>
+<td><code>'circle'</code></td>
+<td>Style of the point for legend.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="arc-configuration">Arc Configuration</h2>
+<p>Arcs are used in the polar area, doughnut and pie charts.</p>
+<p>Namespace: <code>options.elements.arc</code>, global arc options: <code>Chart.defaults.elements.arc</code>.</p>
+<table>
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 27%" />
+<col style="width: 30%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>angle</code> - for polar only</td>
+<td><code>number</code></td>
+<td><code>circumference / (arc count)</code></td>
+<td>Arc angle to cover.</td>
+</tr>
+<tr class="even">
+<td><code>backgroundColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td><code>Chart.defaults.backgroundColor</code></td>
+<td>Arc fill color.</td>
+</tr>
+<tr class="odd">
+<td><code>borderAlign</code></td>
+<td><code>string</code></td>
+<td><code>'center'</code></td>
+<td>Arc stroke alignment.</td>
+</tr>
+<tr class="even">
+<td><code>borderColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td><code>'#fff'</code></td>
+<td>Arc stroke color.</td>
+</tr>
+<tr class="odd">
+<td><code>borderWidth</code></td>
+<td><code>number</code></td>
+<td><code>2</code></td>
+<td>Arc stroke width.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

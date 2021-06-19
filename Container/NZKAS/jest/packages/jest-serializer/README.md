@@ -4,9 +4,7 @@ Module for serializing and deserializing object into memory and disk. By default
 
 ## Install
 
-```sh
-$ yarn add jest-serializer
-```
+    $ yarn add jest-serializer
 
 ## API
 
@@ -16,32 +14,28 @@ Three kinds of API groups are exposed:
 
 This set of functions take or return a `Buffer`. All the process happens in memory. This is useful when willing to transfer over HTTP, TCP or via UNIX pipes.
 
-```javascript
-import {serialize, deserialize} from 'jest-serializer';
+    import {serialize, deserialize} from 'jest-serializer';
 
-const myObject = {
-  foo: 'bar',
-  baz: [0, true, '2', [], {}],
-};
+    const myObject = {
+      foo: 'bar',
+      baz: [0, true, '2', [], {}],
+    };
 
-const buffer = serialize(myObject);
-const myCopyObject = deserialize(buffer);
-```
+    const buffer = serialize(myObject);
+    const myCopyObject = deserialize(buffer);
 
 ### Synchronous persistent filesystem: `readFileSync` and `writeFileSync`
 
 This set of functions allow to send to disk a serialization result and retrieve it back, in a synchronous way. It mimics the `fs` API so it looks familiar.
 
-```javascript
-import {readFileSync, writeFileSync} from 'jest-serializer';
+    import {readFileSync, writeFileSync} from 'jest-serializer';
 
-const myObject = {
-  foo: 'bar',
-  baz: [0, true, '2', [], {}],
-};
+    const myObject = {
+      foo: 'bar',
+      baz: [0, true, '2', [], {}],
+    };
 
-const myFile = '/tmp/obj';
+    const myFile = '/tmp/obj';
 
-writeFileSync(myFile, myObject);
-const myCopyObject = readFileSync(myFile);
-```
+    writeFileSync(myFile, myObject);
+    const myCopyObject = readFileSync(myFile);

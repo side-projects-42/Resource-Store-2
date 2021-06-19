@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2016-09-01-jest-15</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      We spent the past year making Jest
+      <a
+        href="https://jestjs.io/blog/2016/03/11/javascript-unit-testing-performance.html"
+        >faster</a
+      >,
+      <a href="https://jestjs.io/blog/2016/04/12/jest-11.html"
+        >easier to configure</a
+      >,
+      <a href="https://jestjs.io/blog/2016/06/22/jest-13.html"
+        >added tons of features</a
+      >
+      and built
+      <a href="https://jestjs.io/blog/2016/07/27/jest-14.html"
+        >snapshot testing</a
+      >. However, there were two areas where we invested very little: the CLI
+      output and user experience. With Jest 15 we are changing the framework
+      radically to make it easier to use both for beginners and experienced
+      users. We are excited that our investment in Jest is now paying off: we
+      can move fast and improve the framework for Facebook and the open source
+      community at light-speed. Jest’s goal is to come with batteries included
+      and to require as little configuration as necessary. We recently got a
+      chance to explain our philosophy on a
+      <a
+        href="https://github.com/facebookincubator/create-react-app/pull/250#issuecomment-237098619"
+        >create-react-app issue</a
+      >.
+    </p>
+    <p>
+      The most important change to talk about is a set of
+      <a href="https://github.com/facebook/jest/pull/1511">new defaults</a>. If
+      you are an existing Jest user you will very likely need to update your
+      configuration for Jest 15. In most cases it will simplify your setup and
+      Jest will provide useful error messages during the upgrade. All of the new
+      defaults can be disabled to suit your needs, but we still consider the
+      disabled features critical for Jest in certain situations and will
+      continue to use and support them at Facebook long-term. Our
+      <a href="https://jestjs.io/docs/api.html">API documentation</a> was also
+      completely rewritten to reflect these changes.
+      <a href="https://github.com/facebook/react/pull/7625/files"
+        >This pull request for React</a
+      >
+      highlights some of the changes necessary for existing projects.
+    </p>
+    <!--truncate-->
+    <h2 id="new-cli-error-messages-and-summaries">
+      New CLI error messages and summaries
+    </h2>
+    <p>
+      As part of our effort to remove Jasmine incrementally within Jest,
+      replacing all Jasmine matchers was almost completed. A lot of time was
+      spent tweaking every error message for every matcher to give the best
+      signal to users when a test is failing – the time when Jest should provide
+      the most value to you. In addition to printing the expected and received
+      values, a diff is printed for the <code>toBe</code> and
+      <code>toEqual</code> matchers to help spot mistakes. More colors were
+      added and relevant files from stack traces are highlighted more
+      prominently.
+    </p>
+    <p>
+      Here is a comparison of the before and after on a light terminal:
+      <img src="/img/blog/15-failure1.png" alt="failure1" /> It also works well
+      with darker colors: <img src="/img/blog/15-failure2.png" alt="failure2" />
+    </p>
+    <h2 id="new-watch-command">New watch command</h2>
+    <p>
+      We completely rewrote <code>jest --watch</code> to be more interactive. It
+      can now switch between running all tests or only test files related to
+      changed files by pressing <code>a</code> or <code>o</code>. By pressing
+      <code>p</code> a prompt appears that allows to specify a test pattern to
+      focus on a specific set of files. Snapshot tests can be updated by
+      pressing <code>u</code>.
+    </p>
+    <figure>
+      <img src="/img/blog/15-watch.gif" alt="watch" />
+      <figcaption>watch</figcaption>
+    </figure>
+    <h2 id="jest-react-native-improvements">jest-react-native improvements</h2>
+    <p>
+      Mocks for <code>ListView</code>, <code>TextInput</code>,
+      <code>ActivityIndicator</code>, <code>ScrollView</code> and more were
+      added. The existing mocks were updated to use the real implementations and
+      existing snapshots likely have to be updated when upgrading to Jest 15. A
+      <code>mockComponent</code> function was added to
+      <code>jest-react-native</code> that can be used to mock native components:
+    </p>
+    <pre><code>jest.mock(&#39;MyNativeComponent&#39;, () =&gt; {
+  const jestReactNative = require(&#39;jest-react-native&#39;);
+  return jestReactNative.mockComponent(&#39;MyNativeComponent&#39;);
+});</code></pre>
+    <p>
+      There have also been a number of improvements around mocking images, the
+      fetch module and other native APIs.
+    </p>
+    <h2 id="buffered-console-messages">Buffered Console Messages</h2>
+    <p>
+      Jest parallelizes test runs across workers to maximize performance.
+      Previously Jest used to forward console messages from workers to the
+      parent and printed them immediately. When running multiple tests in
+      parallel, it was often hard to find out which test and which module was
+      calling a log function. In Jest 15, all console messages are buffered and
+      printed together with individual test results. In addition the file and
+      line number of the log call is printed so the code can easily be
+      inspected.
+    </p>
+    <p>
+      Compare the output of the previous version of Jest and Jest 15:
+      <img src="/img/blog/15-console.png" alt="console" />
+    </p>
+    <h2 id="disabled-automocking">Disabled Automocking</h2>
+    <p>
+      Automocking is now disabled by default in Jest. This is by far the most
+      confusing feature for new users and in many ways it doesn’t make sense for
+      small projects. We introduced automocking at Facebook and it worked great
+      for us when unit testing was adopted in a large existing code base with
+      few existing tests, but over time it felt like people spent more time
+      fighting with mocked/unmocked modules than it would have taken them to
+      write a test normally. We also noticed that library authors often require
+      a huge number of basic modules that always have to be manually unmocked.
+      Even for Jest itself we realized that the majority of tests had
+      automocking disabled manually. We still believe that explicit automocking
+      can be incredibly valuable. This change simply trades implicit mocks for
+      explicit mocks via calls to <code>jest.mock(moduleName)</code>.
+    </p>
+    <p>
+      If you would still like to use automocking by default, enable the
+      <code>automock</code> setting in your configuration or manually call
+      <code>jest.enableAutomock()</code> in your test or setup file.
+    </p>
+    <h2 id="test-file-patterns">Test File Patterns</h2>
+    <p>
+      Not everyone uses the same convention of using a
+      <code>__tests__</code> folder to store tests. Jest 15 also looks for files
+      ending in <code>.spec.js</code> or <code>.test.js</code>, two popular
+      community standards. Jest 15 also removes the
+      <code>testDirectoryName</code> and
+      <code>testFileExtensions</code> configuration options and asks users to
+      switch to the <code>testRegex</code> option when the old configuration
+      options are used.
+    </p>
+    <h2 id="module-registry-persistence">Module Registry Persistence</h2>
+    <p>
+      Jest used to implicitly reset all modules before each test and we
+      recommended requiring modules in <code>beforeEach</code> or inside of
+      tests. This is useful when modules have local state that shouldn’t be
+      shared between tests. However, two big shifts happened: ES modules with
+      the top-level <code>import</code> syntax and a renewed interest in writing
+      stateless functional modules.
+    </p>
+    <p>
+      This has lead to numerous incompatibilities. We also noticed that at
+      Facebook we weren’t even using this implicit reset. Instead we relied on
+      explicit calls to <code>jest.resetModules()</code> which puts engineers in
+      control on when to wipe away all state.
+    </p>
+    <p>Here is an example:</p>
+    <pre><code>const React1 = require(&#39;react&#39;);
+jest.resetModules();
+const React2 = require(&#39;react&#39;);
+
+React1 !== React2 // These two are separate copies of React.</code></pre>
+    <p>
+      The call to <code>resetModules</code> wipes away the require cache. A
+      second call to require the same module will result in a new instantiation
+      of the same module and all of its dependencies. This feature is especially
+      useful when dealing with modules that have side effects, like
+      <a
+        href="https://github.com/facebook/jest/blob/3bbf32a239fc4aad8cc6928a787f235bd86fecac/packages/jest-haste-map/src/__tests__/index-test.js#L64"
+        >jest-haste-map</a
+      >.
+    </p>
+    <p>
+      We believe it is better to put users in control so we disabled the
+      implicit reset. Modules can be reset using
+      <code>jest.resetModules()</code> in code and the
+      <code>resetModules</code> option can be enabled in the configuration to
+      bring back the previous behavior.
+    </p>
+    <h2 id="real-vs-fake-timers">Real vs Fake Timers</h2>
+    <p>
+      By default Jest used to mock all timer functions like
+      <code>setTimeout</code> or <code>process.nextTick</code> and provided an
+      API <code>jest.runAllTimers()</code> to advance timers programatically.
+      This is useful when a piece of code sets a long timeout that we don’t want
+      to wait for in a test.
+    </p>
+    <p>
+      However we found that most of the time the use cases are quite isolated.
+      <a href="https://jestjs.io/docs/tutorial-async.html">Async programming</a>
+      has also become much simpler in our test runner. Jest now uses the real
+      timers by default.
+    </p>
+    <p>
+      You can still override this by specifying <code>"timers": "fake"</code> in
+      the configuration or by calling <code>jest.useRealTimers()</code> and
+      <code>jest.useFakeTimers()</code> global switches.
+    </p>
+    <h2 id="setupenvscriptfile-vs-setupfiles">
+      setupEnvScriptFile vs setupFiles
+    </h2>
+    <p>
+      The <code>setupEnvScriptFile</code> configuration option has been
+      deprecated for a while. Jest 15 removes it completely and replaces it with
+      <code>setupFiles</code>. This option expects an array of file paths that
+      are loaded in order before a test file is executed.
+    </p>
+    <h2 id="rewritten-code-coverage-support">
+      Rewritten Code Coverage Support
+    </h2>
+    <p>
+      Code coverage in Jest can be used through <code>jest --coverage</code> and
+      requires no additional packages or configuration. Code coverage support
+      was completely rewritten and a new <code>collectCoverageFrom</code> option
+      was added to collect code coverage information from entire projects,
+      including <strong>untested files</strong>. Note that this option uses
+      globs as we are hoping to further simplify configuration options in the
+      future and provide a simpler alternative to regular expressions. See
+      Jest’s
+      <a
+        href="https://github.com/facebook/jest/blob/9088f6517813f6c089cf52e980d6579511dcde88/package.json#L47"
+        >package.json</a
+      >
+      for an example.
+    </p>
+    <h2 id="other-improvements">Other Improvements</h2>
+    <p>A huge number of other improvements were also made:</p>
+    <ul>
+      <li>Improved performance of small test runs.</li>
+      <li>
+        Jest now uses verbose mode when only a single test file is executed.
+      </li>
+      <li>
+        Added an <code>--env</code> option to override the configured test
+        environment.
+      </li>
+      <li><code>moduleNameMapper</code> now uses a resolution algorithm.</li>
+      <li>
+        Jest now works with paths that have special characters in them, like
+        parenthesis.
+      </li>
+      <li>Added <code>global.global</code> to the node environment.</li>
+      <li>
+        Fixed <code>babel-plugin-jest-hoist</code>’s invalid error when a random
+        user function was called <code>mock</code>.
+      </li>
+      <li>
+        Fix <code>testEnvironment</code> resolution to prefer
+        <code>jest-environment-{name}</code> instead of
+        <code>{name}</code> only. This prevents a module collision when using
+        <code>jsdom</code> as test environment.
+      </li>
+      <li>
+        Improvements to Jest’s own test infra by merging integration and unit
+        tests. Code coverage is now collected for Jest.
+      </li>
+    </ul>
+    <p>
+      We are happy when looking back at all the changes we have made together
+      with the help from the community and couldn’t be more excited to make Jest
+      even better over the course of the next few months. Please
+      <a href="https://github.com/facebook/jest/issues">file an issue</a> if
+      something isn’t working as expected and send us pull requests.
+    </p>
+    <p>
+      Next up:
+      <a href="https://github.com/facebook/jest/pull/1480"
+        >Concurrent Reporter</a
+      >.
+    </p>
+  </body>
+</html>

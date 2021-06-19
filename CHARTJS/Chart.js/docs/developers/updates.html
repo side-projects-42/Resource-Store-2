@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>updates</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="updating-charts">Updating Charts</h1>
+<p>It’s pretty common to want to update charts after they’ve been created. When the chart data or options are changed, Chart.js will animate to the new data values and options.</p>
+<h2 id="adding-or-removing-data">Adding or Removing Data</h2>
+<p>Adding and removing data is supported by changing the data array. To add data, just add data into the data array as seen in this example.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">function</span> <span class="at">addData</span>(chart<span class="op">,</span> label<span class="op">,</span> data) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="va">chart</span>.<span class="va">data</span>.<span class="va">labels</span>.<span class="at">push</span>(label)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="va">chart</span>.<span class="va">data</span>.<span class="va">datasets</span>.<span class="at">forEach</span>((dataset) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="va">dataset</span>.<span class="va">data</span>.<span class="at">push</span>(data)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="va">chart</span>.<span class="at">update</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="op">}</span></a>
+<a class="sourceLine" id="cb1-8" title="8"></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">function</span> <span class="at">removeData</span>(chart) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  <span class="va">chart</span>.<span class="va">data</span>.<span class="va">labels</span>.<span class="at">pop</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11">  <span class="va">chart</span>.<span class="va">data</span>.<span class="va">datasets</span>.<span class="at">forEach</span>((dataset) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="va">dataset</span>.<span class="va">data</span>.<span class="at">pop</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-13" title="13">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-14" title="14">  <span class="va">chart</span>.<span class="at">update</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="op">}</span></a></code></pre></div>
+<h2 id="updating-options">Updating Options</h2>
+<p>To update the options, mutating the options property in place or passing in a new options object are supported.</p>
+<ul>
+<li>If the options are mutated in place, other option properties would be preserved, including those calculated by Chart.js.</li>
+<li>If created as a new object, it would be like creating a new chart with the options - old options would be discarded.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">function</span> <span class="at">updateConfigByMutating</span>(chart) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="va">chart</span>.<span class="va">options</span>.<span class="va">plugins</span>.<span class="va">title</span>.<span class="at">text</span> <span class="op">=</span> <span class="st">&quot;new title&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="va">chart</span>.<span class="at">update</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">function</span> <span class="at">updateConfigAsNewObject</span>(chart) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="va">chart</span>.<span class="at">options</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-8" title="8">    <span class="dt">responsive</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-9" title="9">    <span class="dt">plugins</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-10" title="10">      <span class="dt">title</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-11" title="11">        <span class="dt">display</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-12" title="12">        <span class="dt">text</span><span class="op">:</span> <span class="st">&quot;Chart.js&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-13" title="13">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-15" title="15">    <span class="dt">scales</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-16" title="16">      <span class="dt">x</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-17" title="17">        <span class="dt">display</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-18" title="18">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-19" title="19">      <span class="dt">y</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-20" title="20">        <span class="dt">display</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-21" title="21">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-22" title="22">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-23" title="23">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-24" title="24">  <span class="va">chart</span>.<span class="at">update</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="op">}</span></a></code></pre></div>
+<p>Scales can be updated separately without changing other options. To update the scales, pass in an object containing all the customization including those unchanged ones.</p>
+<p>Variables referencing any one from <code>chart.scales</code> would be lost after updating scales with a new <code>id</code> or the changed <code>type</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">function</span> <span class="at">updateScales</span>(chart) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="kw">var</span> xScale <span class="op">=</span> <span class="va">chart</span>.<span class="va">scales</span>.<span class="at">x</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="kw">var</span> yScale <span class="op">=</span> <span class="va">chart</span>.<span class="va">scales</span>.<span class="at">y</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="va">chart</span>.<span class="va">options</span>.<span class="at">scales</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">newId</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-6" title="6">      <span class="dt">display</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-8" title="8">    <span class="dt">y</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-9" title="9">      <span class="dt">display</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-10" title="10">      <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;logarithmic&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-11" title="11">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-12" title="12">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb3-13" title="13">  <span class="va">chart</span>.<span class="at">update</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-14" title="14">  <span class="co">// need to update the reference</span></a>
+<a class="sourceLine" id="cb3-15" title="15">  xScale <span class="op">=</span> <span class="va">chart</span>.<span class="va">scales</span>.<span class="at">newId</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-16" title="16">  yScale <span class="op">=</span> <span class="va">chart</span>.<span class="va">scales</span>.<span class="at">y</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="op">}</span></a></code></pre></div>
+<p>You can also update a specific scale either by its id.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">function</span> <span class="at">updateScale</span>(chart) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="va">chart</span>.<span class="va">options</span>.<span class="va">scales</span>.<span class="at">y</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;logarithmic&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="va">chart</span>.<span class="at">update</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="op">}</span></a></code></pre></div>
+<p>Code sample for updating options can be found in <a href="https://www.chartjs.org/samples/latest/scales/toggle-scale-type.html">toggle-scale-type.html</a>.</p>
+<h2 id="preventing-animations">Preventing Animations</h2>
+<p>Sometimes when a chart updates, you may not want an animation. To achieve this you can call <code>update</code> with <code>'none'</code> as mode.</p>
+</body>
+</html>

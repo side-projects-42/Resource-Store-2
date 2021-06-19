@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>june-16</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-06-16">ember-cli Meeting Notes - 2016-06-16</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Katie Gengler</li>
+<li>Tobias Bieniek</li>
+<li>Robert Jackson</li>
+<li>Jake Bixby</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Stef - Write something more formal for release day stuff.
+<ul>
+<li>[ ] - OR - Brain dump to Nathan.</li>
+</ul></li>
+<li>[ ] Katie - Release 2.7.0-beta.3 on Monday 6/20.</li>
+<li>[ ] Robert - <a href="https://github.com/rwjblue/ember-module-migrator">Migrate ember-module-migrator</a> to <a href="https://github.com/ember-cli/">ember-cli</a>.</li>
+<li>[ ] Robert - Discuss migration of <a href="https://github.com/switchfly">Switchfly-sponsored projects</a> to <a href="https://github.com/ember-cli/">ember-cli</a>.</li>
+<li>[ ] Tobias - Test a different version of ember-cli-babel for child addons.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="release-day-coordination.">“Release Day” + coordination.</h3>
+<ul>
+<li>+1 at the face-to-face.</li>
+<li>11am Pacific Mondays has been the release “call.” More of a support group.</li>
+<li>Eventually some “meta” package will be valuable to alleviate coordination efforts.</li>
+</ul>
+<h3 id="face-to-face-updates">Face-to-face Updates</h3>
+<ul>
+<li>RFC ripening period. Change the language around RFC approval to make sure that after we believe it’s good we’ll socialize with the larger Ember community to ensure an end-to-end cohesive experience.</li>
+<li>Module and testing RFC implementation progress. Move toward to active implementation.</li>
+<li>Ember CLI needs a representative to Ember.js security team.</li>
+</ul>
+<h3 id="babel-56">Babel 5/6</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/ember-cli/issues/5015">#5015</a></li>
+<li>Should allow the child addons to be able to use a different babel.</li>
+<li>Every addon can have its own dependency to allow the children to do the right thing.</li>
+<li>We traverse with <code>require</code> right now, hopefully “just works.”</li>
+<li>Badly behaved addons could still go grab Babel options from the host app.</li>
+</ul>
+</body>
+</html>

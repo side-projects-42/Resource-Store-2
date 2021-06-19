@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="bubblelevel-silverlight-example">BubbleLevel Silverlight Example</h1>
+<p>BubbleLevel Silverlight is a simple WP7 Silverlight application that uses accelerometer sensor information to calculate the inclination of the device and presents this as a traditional Bubble level. The application provides a calibration feature to handle any possible errors in accelerometer readings.</p>
+<p>The application is rewrite of the QtBubbleLevel application written in Qt for Symbian and Maemo devices.</p>
+<h2 id="prerequisities">PREREQUISITIES</h2>
+<ul>
+<li>C# basics</li>
+<li>Development environment ‘Microsoft Visual Studio 2010 Express for Windows Phone’</li>
+</ul>
+<h2 id="known-issues">KNOWN ISSUES</h2>
+<p>None.</p>
+<h2 id="build-installation-instructions">BUILD &amp; INSTALLATION INSTRUCTIONS</h2>
+<p><strong>Preparations</strong></p>
+<p>Make sure you have the following installed: * Windows 7 * Microsoft Visual Studio 2010 Express for Windows Phone * The Windows Phone Software Development Kit (SDK) 7.1 http://go.microsoft.com/?linkid=9772716</p>
+<p><strong>Build on Microsoft Visual Studio</strong></p>
+<p>Please refer to: http://msdn.microsoft.com/en-us/library/ff928362.aspx</p>
+<p><strong>Deploy to Windows Phone 7</strong></p>
+<p>Please refer to: http://msdn.microsoft.com/en-us/library/gg588378.aspx</p>
+<h2 id="running-the-application">RUNNING THE APPLICATION</h2>
+<p>Launch Bubble Level on your device. The bubble in the glass tube will show the level of the device’s x-axis relative to gravity. When the device is tilted to either direction 20 degrees or more, the bubble will be at the corresponding end of the tube.</p>
+<p>The accelerometer sensor of the device can be calibrated by pressing the tool icon beside the QtBubbleLevel sign, placing the device on a level surface, and tapping the Calibrate button. The calibration data will be saved into the device’s memory and it will be applied on the next startup of the application.</p>
+<h2 id="accelerometer">ACCELEROMETER</h2>
+<p>The application heavily bases on accelerometer sensor. Please follow the link below for instruction about using accelerometer in applcations. Accelerometer can be also tested now on the Windows Phone Emulator.</p>
+<p>http://msdn.microsoft.com/en-us/library/ff431810.aspx</p>
+<h2 id="compatibility">COMPATIBILITY</h2>
+<ul>
+<li>Windows Phone 7</li>
+</ul>
+<p>Tested on: - Nokia Lumia 800</p>
+<p>Developed with: - Microsoft Visual Studio 2010 Express for Windows Phone</p>
+<h2 id="licence">LICENCE</h2>
+<p>You can find license details in Licence.txt file provided with this project or online at https://github.com/Microsoft/bubble-level-wp/blob/master/License.txt</p>
+<h2 id="change-history">CHANGE HISTORY</h2>
+<p>1.1 Code level improvements 1.0 First version</p>
+</body>
+</html>

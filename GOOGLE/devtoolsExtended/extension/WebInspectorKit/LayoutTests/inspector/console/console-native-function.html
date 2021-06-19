@@ -1,20 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      function test() {
-        InspectorTest.evaluateInConsole("Math.random", step1);
-
-        function step1(current, total) {
-          InspectorTest.expandConsoleMessages();
-          InspectorTest.dumpConsoleMessages();
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests that console dumps native function without exception.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-native-function</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that console dumps native function without exception.</p>
+</body>
 </html>

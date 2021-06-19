@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>radar-skip-points</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="radar-skip-points">Radar skip points</h1>
+<p>```js chart-editor // <block:actions:2> const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset, i) =&gt; { const data = Utils.numbers({ count: chart.data.labels.length, min: 0, max: 100, });</p>
+<pre><code>    if (i === 0) {
+      data[0] = null;
+    } else if (i === 1) {
+      data[Number.parseInt(data.length / 2, 10)] = null;
+    } else {
+      data[data.length - 1] = null;
+    }
+
+    dataset.data = data;
+  });
+  chart.update();
+},</code></pre>
+<p>}, ]; // </block:actions></p>
+<p>// <block:setup:1> const DATA_COUNT = 7; const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };</p>
+<p>const labels = Utils.months({ count: 7 }); const dataFirstSkip = Utils.numbers(NUMBER_CFG); const dataMiddleSkip = Utils.numbers(NUMBER_CFG); const dataLastSkip = Utils.numbers(NUMBER_CFG);</p>
+<p>dataFirstSkip[0] = null; dataMiddleSkip[Number.parseInt(dataMiddleSkip.length / 2, 10)] = null; dataLastSkip[dataLastSkip.length - 1] = null;</p>
+<p>const data = { labels: labels, datasets: [ { label: “Skip first dataset”, data: dataFirstSkip, borderColor: Utils.CHART_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), }, { label: “Skip mid dataset”, data: dataMiddleSkip, borderColor: Utils.CHART_COLORS.blue, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), }, { label: “Skip last dataset”, data: dataLastSkip, borderColor: Utils.CHART_COLORS.green, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.green, 0.5), }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “radar”, data: data, options: { responsive: true, plugins: { title: { display: true, text: “Chart.js Radar Skip Points Chart”, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

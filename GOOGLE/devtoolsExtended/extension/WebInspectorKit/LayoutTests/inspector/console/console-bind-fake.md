@@ -1,0 +1,1 @@
+Tests that overriding Function.prototype.bind does not break inspector.

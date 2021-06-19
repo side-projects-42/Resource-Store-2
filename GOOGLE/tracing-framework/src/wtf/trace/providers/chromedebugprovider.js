@@ -753,7 +753,8 @@ wtf.trace.providers.ChromeDebugProvider.prototype.processChromeTracingData_ =
       var traceZone = traceZones[e[1]];
       wtf.trace.pushZone(traceZone.zone);
       switch (e[0]) {
-        case 0: { // enter scope
+        case 0: {
+          // enter scope
           var scope = wtf.trace.enterScope(e[3], t);
           traceZone.openScopes.push(scope);
           for (var m = 4; m < e.length; m += 2) {
@@ -763,12 +764,14 @@ wtf.trace.providers.ChromeDebugProvider.prototype.processChromeTracingData_ =
           }
           break;
         }
-        case 1: { // leave scope
+        case 1: {
+          // leave scope
           var scope = traceZone.openScopes.pop();
           wtf.trace.leaveScope(scope, undefined, t);
           break;
         }
-        case 2: { // timestamp
+        case 2: {
+          // timestamp
           wtf.trace.timeStamp(e[3], t);
           break;
         }

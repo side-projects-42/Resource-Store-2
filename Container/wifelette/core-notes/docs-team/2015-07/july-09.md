@@ -4,156 +4,156 @@
 
 Guides: What Is Working
 
-- Versioning lets us focus only on "current best recommendation" and move away from needing the current guide to support every part of Ember from today back to 1.0
-- Quick edit button is useful
+-   Versioning lets us focus only on “current best recommendation” and move away from needing the current guide to support every part of Ember from today back to 1.0
+-   Quick edit button is useful
 
 Guides: What Is Not Workingity to know how to help
 
-- JSBins are painful to maintain :(
+-   JSBins are painful to maintain :(
 
 API Docs: What Is Working
 
-- Search
-- Quick edit button is useful
+-   Search
+-   Quick edit button is useful
 
 API Docs: What Is Not Working
 
-- Not versioned and the versioning project was halted so we could version the guides (which was identified as a higher priority) and until we resolved our many libs/many versions problem
-- Need to verify that YUI doc can doc `@for namespaced/package-name` and not just `@for ClassName`
-- People don't like the method list's organization
-- Lots of private APIs accidentally made public
-- Organized by Class and not module
+-   Not versioned and the versioning project was halted so we could version the guides (which was identified as a higher priority) and until we resolved our many libs/many versions problem
+-   Need to verify that YUI doc can doc `@for namespaced/package-name` and not just `@for ClassName`
+-   People don’t like the method list’s organization
+-   Lots of private APIs accidentally made public
+-   Organized by Class and not module
 
 Questions
 
-- How do we make sure new commits to any Ember.js family project also have guides updates?
-- What are the coarse H1 topics for the guides? Core/Persistence/Animation/CLI have been proposed as possible top-level guides that all contain their own sub-sections, but this might reflect the current organization?
-- Where do the more philosophical "why" parts go in the guides? Some people like know why, others just want to know "how" so they can get their job done and move on.
-- How do we document the sub-systems of the Ember.js family? There are many topics to cover and each topic is fairly deep this point.
+-   How do we make sure new commits to any Ember.js family project also have guides updates?
+-   What are the coarse H1 topics for the guides? Core/Persistence/Animation/CLI have been proposed as possible top-level guides that all contain their own sub-sections, but this might reflect the current organization?
+-   Where do the more philosophical “why” parts go in the guides? Some people like know why, others just want to know “how” so they can get their job done and move on.
+-   How do we document the sub-systems of the Ember.js family? There are many topics to cover and each topic is fairly deep this point.
 
 Outline of the 1.12 guides:
 
-- Getting Started
-  - Installing Ember
-  - Glossary
-- Concepts
-  - Core Concepts
-  - Naming Conventions
-- The Object Model
-  - Classes and Instances
-  - Reopening Classes and Instances
-  - Computed Properties
-  - Computed Properties and Aggregate Data with @each
-  - Observers
-  - Bindings
-  - Bindings, Observers, Computed Properties: What Do I Use When?
-- Application
-  - Introduction
-- Templates
-  - Handlebars Basics
-  - The Application Template
-  - Conditionals
-  - Displaying a List of Items
-  - Binding Element Attributes
-  - Binding Element Class Names
-  - Links
-  - Actions
-  - Input Helpers
-  - Development Helpers
-  - Rendering with Helpers
-  - Writing Helpers
-- Routing
-  - Introduction
-  - Defining Your Routes
-  - Generated Objects
-  - Specifying a Route's Model
-  - Setting Up a Controller
-  - Rendering a Template
-  - Redirection
-  - Specifying the URL Type
-  - Query Parameters
-  - Asynchronous Routing
-  - Loading / Error Substates
-  - Preventing and Retrying Transitions
-- Components
-  - Introduction
-  - Defining a Component
-  - Passing Properties to a Component
-  - Wrapping Content in a Component
-  - Customizing a Component's Element
-  - Handling User Interaction with Actions
-  - Sending Actions from Components to Your Application
-- Controllers
-  - Introduction
-  - Representing Multiple Models with ArrayController
-  - Managing Dependencies Between Controllers
-- Models
-  - Introduction
-  - Defining Models
-  - Creating and Deleting Records
-  - Pushing Records into the Store
-  - Persisting Records
-  - Finding Records
-  - Working with Records
-  - The Rest Adapter
-  - Connecting to an HTTP Server
-  - Handling Metadata
-  - Customizing Adapters
-  - Frequently Asked Questions
-- Views
-  - Introduction
-  - Defining a View
-  - Handling Events
-  - Inserting Views in Templates
-  - Adding Layouts to Views
-  - Customizing a View's Element
-  - Built-in Views
-  - Manually Managing View Hierarchy
-- Enumerables
-  - Introduction
-- Testing
-  - Introduction
-  - Acceptance Tests
-  - Test Helpers
-  - Testing User Interactions
-  - Unit Testing Basics
-  - Unit Test Helpers
-  - Testing Components
-  - Testing Controllers
-  - Testing Routes
-  - Testing Models
-- Configuring Ember.js
-  - Disabling Prototype Extensions
-  - Embedding Applications
-  - Feature Flags
-- Ember Inspector
-  - Installing the Inspector
-  - Object Inspector
-  - The View Tree
-  - Inspecting Routes
-  - Data Tab
-  - Tackling Deprecations
-  - Library Info
-  - Debugging Promises
-  - Inspecting the Container
-  - Rendering Performance
-  - Troubleshooting
-- Cookbook
-  - Introduction
-  - Contributing
-  - User Interface and Interaction
-  - Event Handling & Data Binding
-  - Helpers & Components
-  - Working with Objects
-- Understanding Ember.js
-  - The View Layer
-  - Managing Asynchrony
-  - Debugging
-  - The Run Loop
-  - Dependency Injections & Service Lookup
-- Contributing to Ember.js
-  - Adding New Features
-  - Repositories
+-   Getting Started
+    -   Installing Ember
+    -   Glossary
+-   Concepts
+    -   Core Concepts
+    -   Naming Conventions
+-   The Object Model
+    -   Classes and Instances
+    -   Reopening Classes and Instances
+    -   Computed Properties
+    -   Computed Properties and Aggregate Data with <span class="citation" data-cites="each">@each</span>
+    -   Observers
+    -   Bindings
+    -   Bindings, Observers, Computed Properties: What Do I Use When?
+-   Application
+    -   Introduction
+-   Templates
+    -   Handlebars Basics
+    -   The Application Template
+    -   Conditionals
+    -   Displaying a List of Items
+    -   Binding Element Attributes
+    -   Binding Element Class Names
+    -   Links
+    -   Actions
+    -   Input Helpers
+    -   Development Helpers
+    -   Rendering with Helpers
+    -   Writing Helpers
+-   Routing
+    -   Introduction
+    -   Defining Your Routes
+    -   Generated Objects
+    -   Specifying a Route’s Model
+    -   Setting Up a Controller
+    -   Rendering a Template
+    -   Redirection
+    -   Specifying the URL Type
+    -   Query Parameters
+    -   Asynchronous Routing
+    -   Loading / Error Substates
+    -   Preventing and Retrying Transitions
+-   Components
+    -   Introduction
+    -   Defining a Component
+    -   Passing Properties to a Component
+    -   Wrapping Content in a Component
+    -   Customizing a Component’s Element
+    -   Handling User Interaction with Actions
+    -   Sending Actions from Components to Your Application
+-   Controllers
+    -   Introduction
+    -   Representing Multiple Models with ArrayController
+    -   Managing Dependencies Between Controllers
+-   Models
+    -   Introduction
+    -   Defining Models
+    -   Creating and Deleting Records
+    -   Pushing Records into the Store
+    -   Persisting Records
+    -   Finding Records
+    -   Working with Records
+    -   The Rest Adapter
+    -   Connecting to an HTTP Server
+    -   Handling Metadata
+    -   Customizing Adapters
+    -   Frequently Asked Questions
+-   Views
+    -   Introduction
+    -   Defining a View
+    -   Handling Events
+    -   Inserting Views in Templates
+    -   Adding Layouts to Views
+    -   Customizing a View’s Element
+    -   Built-in Views
+    -   Manually Managing View Hierarchy
+-   Enumerables
+    -   Introduction
+-   Testing
+    -   Introduction
+    -   Acceptance Tests
+    -   Test Helpers
+    -   Testing User Interactions
+    -   Unit Testing Basics
+    -   Unit Test Helpers
+    -   Testing Components
+    -   Testing Controllers
+    -   Testing Routes
+    -   Testing Models
+-   Configuring Ember.js
+    -   Disabling Prototype Extensions
+    -   Embedding Applications
+    -   Feature Flags
+-   Ember Inspector
+    -   Installing the Inspector
+    -   Object Inspector
+    -   The View Tree
+    -   Inspecting Routes
+    -   Data Tab
+    -   Tackling Deprecations
+    -   Library Info
+    -   Debugging Promises
+    -   Inspecting the Container
+    -   Rendering Performance
+    -   Troubleshooting
+-   Cookbook
+    -   Introduction
+    -   Contributing
+    -   User Interface and Interaction
+    -   Event Handling & Data Binding
+    -   Helpers & Components
+    -   Working with Objects
+-   Understanding Ember.js
+    -   The View Layer
+    -   Managing Asynchrony
+    -   Debugging
+    -   The Run Loop
+    -   Dependency Injections & Service Lookup
+-   Contributing to Ember.js
+    -   Adding New Features
+    -   Repositories
 
 #### Minutes
 
@@ -197,6 +197,6 @@ TG: Ideally the guides team can take an old PR and update it. So a PR would be r
 
 LS: Docs team should also view it as their responsibility to help build contributors for docs up
 
-RIC: We've talked about moving cookbooks to EmberWatch
+RIC: We’ve talked about moving cookbooks to EmberWatch
 
 (much meandering conversation, too broad ranging to make minutes for this time)

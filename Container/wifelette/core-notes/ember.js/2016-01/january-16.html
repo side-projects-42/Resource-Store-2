@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>january-16</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="ember.js-core-team-2016-01-16">Ember.js Core Team 2016-01-16</h1>
+<h4 id="agenda">Agenda</h4>
+<p>Sat Morn</p>
+<ul>
+<li>API Docs/Guides. But, no, really this time (Trek) 20min
+<ul>
+<li>Code School Getting Started Guide (Yehuda)</li>
+<li>Glimmer2 changes so much</li>
+</ul></li>
+<li>Attribute Actions (Matt) <a href="https://github.com/emberjs/rfcs/pull/100">emberjs/rfcs#100</a>, <a href="https://emberjs.slack.com/files/mixonic/F0JJKQ9MG/attribute_actions.key">slides for discussion</a> (40min)</li>
+</ul>
+<p>Sat Afternoon</p>
+<ul>
+<li>Ember Engines (Dan)
+<ul>
+<li>Long term future of ember-engines addon.</li>
+<li>Lazy Loading</li>
+<li>Feature flag timeline</li>
+<li>Open questions for RFC <a href="https://github.com/dgeb/ember-engines/issues/33">dgeb/ember-engines#33</a></li>
+</ul></li>
+<li>Pods Discussion and Status (Yehuda and Robert)</li>
+<li>Stable Dispatcher that can be shared across multiple apps in a page</li>
+<li>RFC process tweaks (Yehuda)</li>
+<li>Alumnization Policy (Yehuda)
+<ul>
+<li>“Homecoming Dinner” (maybe combined with EmberConf Speaker/Core Dinner)</li>
+</ul></li>
+<li>Branding and Trademark stuff (Leah)</li>
+</ul>
+<h3 id="notes">Notes</h3>
+<h4 id="morning-session-day-1">Morning Session, Day 1</h4>
+<h2 id="docs">Docs</h2>
+<p>LS: There are some documentation people who are great and seem willing to help, but who didn’t feel comfortable taking the lead because they didn’t want to step on anyone’s toes and had difficulties getting info out of the core team when they had questions/doubts. We should make it even clear to them that they can take lead/responsibility. More Core Team members need to show up to the calls to keep the docs team feeling the inertia and answer questions along the way. It would be tactically helpful but also just make everyone realize how important they are and how much we value their contributions (because we do!).</p>
+<p>KS: It seems like no one on core wants to work on docs.</p>
+<p>Many: DENY</p>
+<p>KS: I’ve seen stuff go out without docs.</p>
+<p>YK: There’s a ton of work going on with docs, but there’s no one there to ATV (articulate the vision) to focus all that work. ATV includes articulating what you want to do, building consensus, and also doing/helping do the bootstrapping work. There’s a ton of work happening even without that (the docs is probably the most worked on part of Ember), but we really need that too and that’ll help keep everything moving and in the right direction.</p>
+<p>LS: So what do we do about it?</p>
+<p>TD: I would like to do it but I cannot do it until after FastBoot shipped.</p>
+<p>YK: The Rust core team is structured similar to our team except that each subteam is more empowered. RFCs get managed by the subteams up to the point that a decision is made to actually include it in the project. The idea is that the subteams feel like they are the ones making the decisions.</p>
+<p>SP: I can’t review every PR or issue, but if someone can provide a triage list I can provide good feedback. I need someone to prepare that for me.</p>
+<p>LS: Maybe that’s a standing TODO at the end of each docs meeting: build a list of issues/PRs that need review by core.</p>
+<p>YK: Rust uses Discourse a lot more for subteams to put their thoughts.</p>
+<p>EF: We have enough people to help if we had a reliable way to distribute the work. Maybe a bot like <code>homu</code> to distribute docs review?</p>
+<p>KS: There’s a lot of things that we made public that we didn’t intend to make public.</p>
+<p>&lt;side conversation on public/private APIs in Ember CLI&gt;</p>
+<p>&lt;side conversation on who has interrupted who; we need an interrupt queue :p &gt;</p>
+<p>YK: After the 1.13 period, we did not do a good job of documenting any deprecations. Leah wrote a big checklist and took responsibility for shepherding that issue through to completion, by nagging the right people and making sure PRs got review.</p>
+<p>YK: &lt;points out weird thing in API docs&gt; I think Leah could manage cleanup like this.</p>
+<p>KS: There’s some things I care about like hooks that are exposed that I’m carefully paying attention to.</p>
+<p>&lt;conversation on <code>content</code> property on PromiseProxy and whether it’s public or not&gt;</p>
+<p>YK: We should try to make a list of things in the docs that need to get reviewed.</p>
+<p>YK: I don’t have the time to do the grunt work to create the GitHub issue but we should find obvious problems.</p>
+<p>RJ: We need to suppress private classes from the sidebar. It’s an easy fix that will solve many issues.</p>
+<p>EB: I’d like to raise the issue of poor search.</p>
+<p>YK: We should consider adopting Algolia, the results from eslint search are very good.</p>
+<p>EB: I’d also like to improve interlinking between guides and API docs.</p>
+<p>YK: At minimum each guide should link to a few different API classes. I like how Cocoa’s API docs work; there are “Common Tasks” that group the APIs by task. <a href="https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/">EXAMPLE link</a></p>
+<p>RJ: David Baker (Acorn Computer) has been investigating integrating Algolia.</p>
+<p>TD: We should talk to Stanley to see what the status of his offline API viewer Ember app.</p>
+<p>YK: We are failing very hard at doing a Getting Started Guide. We always get it out but fail to maintain it and keep it updated.</p>
+<p>TG: I disagree. There have been a lot of efforts but all of them have been slowed down by bikeshedding.</p>
+<p>YK: Code School has offered to do a free course to serve as our Getting Started tutorial. They will own it as a part of the Ember project. By giving them official status, they become a part of the docs team and are responsible for keeping the course up-to-date as framework changes.</p>
+<p>LS: They already have a bunch of people working on it right now</p>
+<p>YK: I told them my major criterion is that they need to keep it updated and not do “one and done.” They have done this successfully for Angular and jQuery. I also want to make sure that it’s sufficiently in-depth that people can use it to actually get some things done and not just be a teaser for the full course.</p>
+<p>EF: Will the content be open source licensed?</p>
+<p>YK: I doubt it but unknown.</p>
+<p>&lt;discussion about format of Code School courses&gt;</p>
+<p>MM: How much say do we have over the curriculum?</p>
+<p>YK: As much as we want if we move fast.</p>
+<p>&lt;discussion about plants and/or circles&gt;</p>
+<p>TG: How do we deal with transition periods? Guides want to tell people “the right way” to do things, but they still may encounter older style patterns.</p>
+<p>YK: We need to also make sure Google does not link to old versions of the docs and always go to the current version.</p>
+<h3 id="action-items">Action Items</h3>
+<ul>
+<li>[x] Open issue on filtering private classes out of API docs list (Stef)</li>
+<li>[ ] Get in touch with Algolia RE: search (Leah) -&gt; <a href="https://github.com/emberjs/website/issues/2452">issue</a></li>
+<li>[ ] Talk to Acorns about “Task” oriented API docs (Yehuda / Leah / Tom)</li>
+<li>[ ] Create a checklist issue for adding links between API docs and guides</li>
+<li>[ ] Make sure that Googling for “Ember Component” does not point to</li>
+</ul>
+<h2 id="better-actions">Better Actions</h2>
+<p>MB: &lt;presentation on better actions&gt; https://github.com/emberjs/rfcs/pull/100</p>
+<p>&lt;discussion on normalization of events and if we need to consider it for the RFC&gt;</p>
+<p>SP: We should be aware of security implications of interaction of bound <code>get</code> helper and the <code>action</code> helper; it may allow the user to invoke arbitrary methods.</p>
+<p>&lt;heated discussion about whether onclick={{foo}} is “documented” or not&gt;</p>
+<p>MB: &lt;presentation on actions RFC continues&gt;</p>
+<h3 id="open-questions">Open Questions</h3>
+<ul>
+<li>WebComponents have no specification for event handling. In a perfect world we should be able to set a property like we do with DOM and the WC would call it correctly.</li>
+<li>Or we do the opposite or we tell people not to call the method and intercept property sets and <code>addEventListener</code></li>
+<li>We don’t actually know what an WC’s events are so we cannot do the property -&gt; <code>addEventListener</code> binding automatically, YK says we need to discuss it</li>
+</ul>
+<h3 id="points-of-consensus">Points of Consensus</h3>
+<ul>
+<li>We do not want to change any of the semantics around <code>onclick</code> without a dash (at least the mental model for end users)</li>
+<li>No gratuitous differences between <code>&lt;foo&gt;</code> <code>&lt;foo-bar&gt;</code> as a web component, and <code>&lt;foo-bar&gt;</code> as a Glimmer Component.</li>
+<li>GlimmerComponents and Custom Elements should be able to consumed by users without having to know which it is (at least in 90% of cases)</li>
+</ul>
+<h3 id="actions-items">Actions Items</h3>
+<ul>
+<li>[ ] Close the Attribute Actions RFC. The <code>onsomeevent=</code> style of usage should Just Work as well as possible across native elements, custom elements, and Ember components. This requires further exploration though.</li>
+<li>[ ] Introduce an element modifier RFC. <code>&lt;div {{(someHelper)}}&gt;</code>. This would allow the creation of something like <code>&lt;div {{add-event-listener 'click' (action 'baz')}}&gt;</code> in user-space, and provide an outlet for those who need to do custom things with elements in the immediate future.</li>
+</ul>
+<h4 id="afternoon-session-day-1">Afternoon Session, Day 1</h4>
+<h2 id="ember-engines">Ember Engines</h2>
+<p>DG: Introducing this based on talk for Boston Ember</p>
+<p>DG: Initial list of features was basically too long. Went back six months ago to refocus. (In the RFC)</p>
+<p>DG: The key benefit goals: Distributed dev, integrated routing, ad hoc embedding, clean boundaries, lazy loading. Similar to mountable engines in Rails, but not similar to “app mixin” engines in Rails.</p>
+<p>DG: &lt;intro to the addon https://github.com/dgeb/ember-engines&gt;</p>
+<p>MB: the map exports a bare function, which is an upgrade hazard, should just export something. <RB strong agree></p>
+<p>DG: &lt;moar intro&gt;</p>
+<p>YK: We should ensure that engines don’t work with beta, since they are doing some funky monkey-patching and using internal private <code>require</code></p>
+<p>DG: &lt;moar into, routable engine and route-less engine&gt;</p>
+<p>&lt;can route-less engines have internal routes? For ergonomics or state serialization?&gt;</p>
+<p>DG: &lt;moar intro, dependency mapping&gt;</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1">initialize<span class="op">:</span> <span class="kw">function</span>(applicationInstanceInstance) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="va">applicationInstanceInstance</span>.<span class="at">inject</span>(</a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="st">&#39;engine:ember-blog-engine&#39;</span><span class="op">,</span> <span class="st">&#39;service:store&#39;</span><span class="op">,</span> <span class="st">&#39;service:store&#39;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  )</a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="op">}</span></a></code></pre></div>
+<p>&lt;debate on the using the DI system vs. a declarative solution for DI. Some consensus about the mount point defining the services passed in to an engine&gt;</p>
+<p>SP: Using the current DI APIs or improving them instead of the proposed syntax would be preferred.</p>
+<p>RJ: For ensuring dependencies are correct, a hook may be preferable to the limited config options presented.</p>
+<p>DG: So what is next. How do we get this upstream.</p>
+<p>RJ: Some things should be moved to inside Ember (monkey-patches). Perhaps need feature flags. I think there should be an addon in the long-term. The actual code goes in Ember, but the blueprints, config etc should live in the addon.</p>
+<p>YK: FastBoot is a good example for “works with canary” while it does monkey-patching etc but then, when Ember has the right APIs, begins to work with beta, stable etc.</p>
+<p>RJ: We’re going to do a poor-mans version of lazy-loading with the features available in Ember-CLI today, but want to do it right with the linker etc later.</p>
+<p>RJ: Addons just work, but they are globals. We can do work to make them lazy load it is just work.</p>
+<p>SP: dependency injections passed to <code>mount</code> cannoy change, if they are bound then they throw</p>
+<p>IT: routable engines might also use the template “mount” helper, and just use the route map for the routes</p>
+<p>DG: I’ll move forward on moving the patchy bits into core, and look at the dependency injection APIs</p>
+<h3 id="points-of-consensus-1">Points of Consensus</h3>
+<ul>
+<li>Route-less component should have internal routers. This internal router can serialize its state back to a two-way-bound prop, etc. This makes route-less components much like an iframe with their own navigation, etc.</li>
+<li>Services/DI for engines should be defined at the mount point (be it route or template).</li>
+<li>Let’s be careful about adding APIs (such as route serializers in separate files) just to scenario solve. We might end up with some warts.</li>
+</ul>
+<h3 id="action-items-1">Action Items</h3>
+<ul>
+<li>[ ] Route map should not be a bare function export. A bare function export is an upgrade hazard, and there may be other API reasons to have a more robust API. Let’s wrap it in a function call (not something that registers, just something that tags the function)</li>
+<li>[ ] Ensure the addon only works with Canary (detect feature flag?) (robert)</li>
+<li>[ ] Remove mounting into outlets (<code>this.mount()</code> in <code>Route</code>)</li>
+<li>[ ] RFC for lazy loading engine serializers, or at least explore the space</li>
+<li>[ ] the main RFC can be closed!</li>
+</ul>
+<h2 id="pods">Pods</h2>
+<p>RJ: Current status of pods: there are several sub-parts that are not pods:</p>
+<ul>
+<li>Local lookup (not enabled, in Canary, would like to enable after 2.4)</li>
+<li>New Resolver that does the right thing</li>
+</ul>
+<p>RJ: We made it so you have to opt in to the behavior with the new resolver. If we change to pods as the default structure we will have to change the default resolver.</p>
+<p>YK: Is your mental model that pods is purely resolver work remaining?</p>
+<p>RJ: Yes, all the work in Ember is done. We need to enable the feature ASAP as soon as 2.4 ships. That way we can make sure it gets in for 2.5. In that time frame I’ll release the new resolver.</p>
+<p>YK: What do you call non-pods mode?</p>
+<p>RJ: <em>Classic</em>.</p>
+<p>YK: So you can have classic mode app you can rip out the full component paths and it will just work.</p>
+<p>&lt;<a href="https://github.com/emberjs/ember.js/pull/12673">The PR has a demo</a> in a twiddle&gt;</p>
+<p>RJ: We maintained the existing behavior, so if you happen to have a global component and pod component with the same name, the component doesn’t change and the global one wins. With the current implementation, the local one wins.</p>
+<p>YK: We may need a warning mode in case you hit that situation.</p>
+<p>SP: I’m concerned that if you add a component to a pod that has the same name as a global component, it may break local templates that were using that global.</p>
+<p>EF: Generally you should be very protective of global scope and try to keep things pod-local as much as possible. Remember local lookup is only two level (local, global), not looking up the tree.</p>
+<p>RJ: I will add API documentation for the resolver but it’s sufficiently low-level I don’t think it requires any changes to the guides.</p>
+<p>RJ: The pods resolver itself is pretty simple. I need the local lookup feature for it to work. The other concern that I have and that others have voiced, and that I want to verify we’re on the same page is, is the depth of filename of pods stuff. For example:</p>
+<pre><code>app/routes/posts/routes/edit/components/show-post/helpers/title.js
+app/routes/posts/edit/show-post/title/helper.js
+
+pod dir would be:
+app/route/posts/routes/edit/
+                            component.js
+                            template.hbs
+                            routes/
+                            helpers/
+                            components/
+                                       show-post/component.js
+                                       show-post/template.js
+</code></pre>
+<p>&lt;discussion on whether Windows developers may hit the MAXPATH issue&gt;</p>
+<p>RJ: I just wanted to present this because it was the elephant in my head.</p>
+<p>YK: Important to introduce the benefits in RFC: being able to understand a route/template at a very local level. No naming conflicts for local lookup. relocatable.</p>
+<p>TD: A good way to talk about it may be “componentization” of app structure.</p>
+<p>YK: Yeah that is even kind of the point.</p>
+<h3 id="points-of-consensus-2">Points of Consensus</h3>
+<ul>
+<li>Local lookup followed by global lookup</li>
+<li>Deeply nested paths (Windows users will have to avoid extremely deep hierarchies)</li>
+<li>Migration path, tools?</li>
+</ul>
+<h3 id="action-items-2">Action Items</h3>
+<ul>
+<li>[ ] Add API documentation for new resolver hook</li>
+<li>[ ] ^ Enable the local lookup feature. This is a “go” in 2.5-beta</li>
+<li>[ ] RFC for this must be written. Robert will do the tech bits, perhaps Tom can finish it.</li>
+</ul>
+<h2 id="stable-dispatcher">Stable Dispatcher</h2>
+<p>YK: It would be nice to have a shared event dispatcher between apps, so that multiple Ember apps can co-exist on the same page (e.g. embedding Intercom inside Skylight).</p>
+<p>TG: We should extract it and make it usable with other libraries that do event delegation. Would be great if we could create a dispatcher that would be shared among multiple Ember and React instances on the same page.</p>
+<p>RJ: There are backwards-compatibility things an RFC would need to address.</p>
+<h3 id="action-items-3">Action Items</h3>
+<ul>
+<li>[ ] <span class="citation" data-cites="wycats">@wycats</span> to write an RFC</li>
+</ul>
+<h2 id="rfc-process-tweaks">RFC Process Tweaks</h2>
+<p>YK: I would like someone to sign up to implement the process tweaks. They are as follows:</p>
+<ol type="1">
+<li>A new RFC section “What should we name this?”</li>
+<li>New section: “How does this change the programming model?”</li>
+<li>All RFCs must actually include drawbacks and alternatives (“N/A” will not be accepted)</li>
+<li>Sync up the Rust and Ember RFC templates from time to time</li>
+<li>Introduce Final Comment Period</li>
+</ol>
+<p>YK: The idea behind FCP is that RFCs are “owned” by some subteam, and when they feel like the RFC is ready to go, they initiate a FCP as a warning to people that the period to comment is coming to a close.</p>
+<p>MB: Would be cool to add tests to RFCs and auto-close RFC PRs with empty sections or other automatable tests. Also great for documentation.</p>
+<p>YK: Rust has subteams like “tools” and “language.” It would be great to have strong subteams. We only have Ember Data and docs. It would be nice if we could formalize the other groups we have like Ember CLI, tools, etc. Each team should keep Discourse updated with their progress.</p>
+<p>YK: You can think of Final Comment Period as a “async go/no go” for RFCs.</p>
+<p>YK: I think we could do with a little more process around teams and little more process around RFCs.</p>
+<h3 id="action-items-4">Action Items</h3>
+<ul>
+<li>[ ] Define subteams and membership in each</li>
+</ul>
+<h2 id="alumnization-process">Alumnization Process</h2>
+<p>YK: There’s a problem with most of the core teams I’ve been on, which is when and how you decide to leave. There’s no impetus to leave on your own, and it can feel bad to be asked my other people on the team to step down.</p>
+<p>YK: I want to introduce a “Path Off Core.” The problem is that it feels bad to make a decision to leave because it feels sudden (even though it’s usually following an extended period of inaction). I would like to introduce a “countdown” of sorts, which is that you decide to leave but have a period where you can change your mind if you end up becoming more active in that period.</p>
+<p>RJ: Is it important to define what active means?</p>
+<p>YK: I don’t think it’s important, or that we could really enumerate it all in advance; however I do think it needs to be defined enough so that we could reach consensus on whether someone is active or not.</p>
+<p>RJ: Stef mentioned at one point in time there was an actual number of commits required per month.</p>
+<p>RJ: YK had previously put together a list of what it means to be alumnized and it’s basically like being a core team member with all the rights and none of the responsibilities.</p>
+<p>RJ: What happens if you are alumnized and you become active again?</p>
+<p>YK: DHH always says “you’re welcome to rejoin at any time” but in practice no one has ever asked to rejoin. I think in reality in makes sense to wait a bit to make sure they remain active.</p>
+<p>TG: I’d guess that face to face and other travel would not be covered for alumni?</p>
+<p>YK: Yes, we would only cover what we’re able to cover for core team members.</p>
+<p>TG: EmberConf?</p>
+<p>LS: Depends on the size of the group. We’ll have to play it by ear.</p>
+</body>
+</html>

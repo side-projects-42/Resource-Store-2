@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Architecture</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <figure>
+      <img
+        src="https://github.com/newrelic/opensource-website/blob/develop/docs/images/opensource-website_architecture.png"
+        alt="Architecture"
+      />
+      <figcaption>Architecture</figcaption>
+    </figure>
+    <h2
+      id="design-choice-project-stats-automation-commits-will-appear-out-of-sync"
+    >
+      Design Choice: Project stats automation commits will appear out of sync
+    </h2>
+    <p>
+      Every few hours as based on
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/.github/workflows/project-stats.yml#L4"
+        >this configuration</a
+      >, a GitHub Action executes some automation to rebuild the
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/src/data/project-stats"
+        >stats content</a
+      >
+      of this site for each project in the
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/src/data/projects"
+        >src/data/projects</a
+      >
+      directory.
+    </p>
+    <p>
+      <a
+        href="https://github.com/newrelic/opensource-website/tree/develop/.github/actions/sync-data"
+        >That automation</a
+      >
+      does a few things:
+    </p>
+    <ol type="1">
+      <li>
+        Retrieve the latest stats from GitHub for each
+        <a href="https://github.com/newrelic">newrelic</a> and
+        <a href="https://github.com/newrelic-experimental"
+          >newrelic-experimental</a
+        >
+        project registered in the
+        <a
+          href="https://github.com/newrelic/opensource-website/tree/develop/src/data/projects"
+          >projects</a
+        >
+        directory using the GitHub v3 and v4 API’s
+      </li>
+      <li>
+        Write that data to the
+        <a href="https://github.com/newrelic/opensource-website/tree/develop/"
+          >staging/develop branch</a
+        >
+      </li>
+      <li>
+        Selectively write the
+        <a href="https://github.com/newrelic/opensource-website/tree/develop/"
+          >develop</a
+        >
+        commit to the
+        <a href="https://github.com/newrelic/opensource-website/tree/main"
+          >production/main branch</a
+        >
+      </li>
+      <li>
+        Kick off builds to both the
+        <a href="https://staging-opensource.newrelic.com">staging</a> and
+        <a href="https://opensource.newrelic.com">production</a> environments
+        <strong>without</strong> revisioning the sites
+      </li>
+    </ol>
+    <p>
+      This was chosen so that functional changes in the
+      <a href="https://github.com/newrelic/opensource-website/tree/develop/"
+        >develop</a
+      >
+      branch could be tested, reviewed, and merged intentionally while automated
+      content updates would be kept up-to-date in both branches.
+    </p>
+    <p>
+      The consequence of this choice is that the commit to the
+      <a href="https://github.com/newrelic/opensource-website/tree/develop/"
+        >develop</a
+      >
+      branch is not the same identifier as the commit to the
+      <a href="https://github.com/newrelic/opensource-website/tree/main"
+        >main</a
+      >
+      branch for precisely the same change. In the case of a PR, from
+      <a href="https://github.com/newrelic/opensource-website/tree/develop/"
+        >staging</a
+      >
+      to
+      <a href="https://github.com/newrelic/opensource-website/tree/main"
+        >production</a
+      >, the commit histories will appear (in those areas) out of sync, without
+      generating a merge conflict.
+    </p>
+    <p>
+      Two commits for the same change isn’t optimal, but it’s the choice the
+      original maintainers made. Feel free to criticize (and suggest a better
+      solution) in an
+      <a href="https://github.com/newrelic/opensource-website/issues">issue</a>.
+    </p>
+  </body>
+</html>

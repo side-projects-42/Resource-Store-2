@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>04-Objects</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="expanded-object-functionality">Expanded Object Functionality</h1>
+<p>ECMAScript 6 focuses heavily on improving the utility of objects, which makes sense because nearly every value in JavaScript is some type of object. Additionally, the number of objects used in an average JavaScript program continues to increase as the complexity of JavaScript applications increases, meaning that programs are creating more objects all the time. With more objects comes the necessity to use them more effectively.</p>
+<p>ECMAScript 6 improves objects in a number of ways, from simple syntax extensions to options for manipulating and interacting with them.</p>
+<h2 id="object-categories">Object Categories</h2>
+<p>JavaScript uses a mix of terminology to describe objects found in the standard as opposed to those added by execution environments such as the browser or Node.js, and the ECMAScript 6 specification has clear definitions for each category of object. It’s important to understand this terminology to have a good understanding of the language as a whole. The object categories are:</p>
+<ul>
+<li><em>Ordinary objects</em> Have all the default internal behaviors for objects in JavaScript.</li>
+<li><em>Exotic objects</em> Have internal behavior that differs from the default in some way.</li>
+<li><em>Standard objects</em> Are those defined by ECMAScript 6, such as <code>Array</code>, <code>Date</code>, and so on. Standard objects may be ordinary or exotic.</li>
+<li><em>Built-in objects</em> Are present in a JavaScript execution environment when a script begins to execute. All standard objects are built-in objects.</li>
+</ul>
+<p>I will use these terms throughout the book to explain the various objects defined by ECMAScript 6.</p>
+<h2 id="object-literal-syntax-extensions">Object Literal Syntax Extensions</h2>
+<p>The object literal is one of the most popular patterns in JavaScript. JSON is built upon its syntax, and it’s in nearly every JavaScript file on the Internet. The object literal is so popular because it’s a succinct syntax for creating objects that otherwise would take several lines of code. Luckily for developers, ECMAScript 6 makes object literals more powerful and even more succinct by extending the syntax in several ways.</p>
+<h3 id="property-initializer-shorthand">Property Initializer Shorthand</h3>
+<p>In ECMAScript 5 and earlier, object literals were simply collections of name-value pairs. That meant there could be some duplication when property values are initialized. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">function</span> <span class="at">createPerson</span>(name<span class="op">,</span> age) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">        <span class="dt">name</span><span class="op">:</span> name<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="dt">age</span><span class="op">:</span> age</a>
+<a class="sourceLine" id="cb1-5" title="5">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="op">}</span></a></code></pre></div>
+<p>The <code>createPerson()</code> function creates an object whose property names are the same as the function parameter names. The result appears to be duplication of <code>name</code> and <code>age</code> even though one is the name of an object property while the other provides the value for that property. The key <code>name</code> in the returned object is assigned the value contained in the variable <code>name</code>, and the key <code>age</code> in the returned object is assigned the value contained in the variable <code>age</code>.</p>
+<p>In ECMAScript 6, you can eliminate the duplication that exists around property names and local variables by using the <em>property initializer</em> shorthand. When an object property name is the same as the local variable name, you can simply include the name without a colon and value. For example, <code>createPerson()</code> can be rewritten for ECMAScript 6 as follows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">function</span> <span class="at">createPerson</span>(name<span class="op">,</span> age) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">        name<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">        age</a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="op">}</span></a></code></pre></div>
+<p>When a property in an object literal only has a name, the JavaScript engine looks into the surrounding scope for a variable of the same name. If it finds one, that variable’s value is assigned to the same name on the object literal. In this example, the object literal property <code>name</code> is assigned the value of the local variable <code>name</code>.</p>
+<p>This extension makes object literal initialization even more succinct and helps to eliminate naming errors. Assigning a property with the same name as a local variable is a very common pattern in JavaScript, making this extension a welcome addition.</p>
+<h3 id="concise-methods">Concise Methods</h3>
+<p>ECMAScript 6 also improves the syntax for assigning methods to object literals. In ECMAScript 5 and earlier, you must specify a name and then the full function definition to add a method to an object, as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">sayName</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-4" title="4">        <span class="va">console</span>.<span class="at">log</span>(<span class="kw">this</span>.<span class="at">name</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="op">};</span></a></code></pre></div>
+<p>In ECMAScript 6, the syntax is made more concise by eliminating the colon and the <code>function</code> keyword. That means you can rewrite the previous example like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="at">sayName</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-4" title="4">        <span class="va">console</span>.<span class="at">log</span>(<span class="kw">this</span>.<span class="at">name</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="op">};</span></a></code></pre></div>
+<p>This shorthand syntax, also called <em>concise method</em> syntax, creates a method on the <code>person</code> object just as the previous example did. The <code>sayName()</code> property is assigned an anonymous function and has all the same characteristics as the ECMAScript 5 <code>sayName()</code> function. The one difference is that concise methods may use <code>super</code> (discussed later in the “Easy Prototype Access with Super References” section), while the nonconcise methods may not.</p>
+<p>I&gt; The <code>name</code> property of a method created using concise method shorthand is the name used before the parentheses. In the last example, the <code>name</code> property for <code>person.sayName()</code> is <code>"sayName"</code>.</p>
+<h3 id="computed-property-names">Computed Property Names</h3>
+<p>ECMAScript 5 and earlier could compute property names on object instances when those properties were set with square brackets instead of dot notation. The square brackets allow you to specify property names using variables and string literals that may contain characters that would cause a syntax error if used in an identifier. Here’s an example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{},</span></a>
+<a class="sourceLine" id="cb5-2" title="2">    lastName <span class="op">=</span> <span class="st">&quot;last name&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" title="3"></a>
+<a class="sourceLine" id="cb5-4" title="4">person[<span class="st">&quot;first name&quot;</span>] <span class="op">=</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">person[lastName] <span class="op">=</span> <span class="st">&quot;Zakas&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="va">console</span>.<span class="at">log</span>(person[<span class="st">&quot;first name&quot;</span>])<span class="op">;</span>      <span class="co">// &quot;Nicholas&quot;</span></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="va">console</span>.<span class="at">log</span>(person[lastName])<span class="op">;</span>          <span class="co">// &quot;Zakas&quot;</span></a></code></pre></div>
+<p>Since <code>lastName</code> is assigned a value of <code>"last name"</code>, both property names in this example use a space, making it impossible to reference them using dot notation. However, bracket notation allows any string value to be used as a property name, so assigning <code>"first name"</code> to <code>"Nicholas"</code> and "<code>last name"</code> to <code>"Zakas"</code> works.</p>
+<p>Additionally, you can use string literals directly as property names in object literals, like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">    <span class="st">&quot;first name&quot;</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="op">};</span></a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="va">console</span>.<span class="at">log</span>(person[<span class="st">&quot;first name&quot;</span>])<span class="op">;</span>      <span class="co">// &quot;Nicholas&quot;</span></a></code></pre></div>
+<p>This pattern works for property names that are known ahead of time and can be represented with a string literal. If, however, the property name <code>"first name"</code> were contained in a variable (as in the previous example) or had to be calculated, then there would be no way to define that property using an object literal in ECMAScript 5.</p>
+<p>In ECMAScript 6, computed property names are part of the object literal syntax, and they use the same square bracket notation that has been used to reference computed property names in object instances. For example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">var</span> lastName <span class="op">=</span> <span class="st">&quot;last name&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="st">&quot;first name&quot;</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-5" title="5">    [lastName]<span class="op">:</span> <span class="st">&quot;Zakas&quot;</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="op">};</span></a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="va">console</span>.<span class="at">log</span>(person[<span class="st">&quot;first name&quot;</span>])<span class="op">;</span>      <span class="co">// &quot;Nicholas&quot;</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="va">console</span>.<span class="at">log</span>(person[lastName])<span class="op">;</span>          <span class="co">// &quot;Zakas&quot;</span></a></code></pre></div>
+<p>The square brackets inside the object literal indicate that the property name is computed, so its contents are evaluated as a string. That means you can also include expressions such as:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">var</span> suffix <span class="op">=</span> <span class="st">&quot; name&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    [<span class="st">&quot;first&quot;</span> <span class="op">+</span> suffix]<span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    [<span class="st">&quot;last&quot;</span> <span class="op">+</span> suffix]<span class="op">:</span> <span class="st">&quot;Zakas&quot;</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="op">};</span></a>
+<a class="sourceLine" id="cb8-7" title="7"></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="va">console</span>.<span class="at">log</span>(person[<span class="st">&quot;first name&quot;</span>])<span class="op">;</span>      <span class="co">// &quot;Nicholas&quot;</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="va">console</span>.<span class="at">log</span>(person[<span class="st">&quot;last name&quot;</span>])<span class="op">;</span>       <span class="co">// &quot;Zakas&quot;</span></a></code></pre></div>
+<p>These properties evaluate to <code>"first name"</code> and <code>"last name"</code>, and those strings can be used to reference the properties later. Anything you would put inside square brackets while using bracket notation on object instances will also work for computed property names inside object literals.</p>
+<h2 id="new-methods">New Methods</h2>
+<p>One of the design goals of ECMAScript beginning with ECMAScript 5 was to avoid creating new global functions or methods on <code>Object.prototype</code>, and instead try to find objects on which new methods should be available. As a result, the <code>Object</code> global has received an increasing number of methods when no other objects are more appropriate. ECMAScript 6 introduces a couple new methods on the <code>Object</code> global that are designed to make certain tasks easier.</p>
+<h3 id="the-object.is-method">The Object.is() Method</h3>
+<p>When you want to compare two values in JavaScript, you’re probably used to using either the equals operator (<code>==</code>) or the identically equals operator (<code>===</code>). Many developers prefer the latter, to avoid type coercion during comparison. But even the identically equals operator isn’t entirely accurate. For example, the values +0 and -0 are considered equal by <code>===</code> even though they are represented differently in the JavaScript engine. Also <code>NaN === NaN</code> returns <code>false</code>, which necessitates using <code>isNaN()</code> to detect <code>NaN</code> properly.</p>
+<p>ECMAScript 6 introduces the <code>Object.is()</code> method to make up for the remaining quirks of the identically equals operator. This method accepts two arguments and returns <code>true</code> if the values are equivalent. Two values are considered equivalent when they are of the same type and have the same value. Here are some examples:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="va">console</span>.<span class="at">log</span>(<span class="op">+</span><span class="dv">0</span> <span class="op">==</span> <span class="dv">-0</span>)<span class="op">;</span>              <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="va">console</span>.<span class="at">log</span>(<span class="op">+</span><span class="dv">0</span> <span class="op">===</span> <span class="dv">-0</span>)<span class="op">;</span>             <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">is</span>(<span class="op">+</span><span class="dv">0</span><span class="op">,</span> <span class="dv">-0</span>))<span class="op">;</span>     <span class="co">// false</span></a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="kw">NaN</span> <span class="op">==</span> <span class="kw">NaN</span>)<span class="op">;</span>            <span class="co">// false</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="kw">NaN</span> <span class="op">===</span> <span class="kw">NaN</span>)<span class="op">;</span>           <span class="co">// false</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">is</span>(<span class="kw">NaN</span><span class="op">,</span> <span class="kw">NaN</span>))<span class="op">;</span>   <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-8" title="8"></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="va">console</span>.<span class="at">log</span>(<span class="dv">5</span> <span class="op">==</span> <span class="dv">5</span>)<span class="op">;</span>                <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="va">console</span>.<span class="at">log</span>(<span class="dv">5</span> <span class="op">==</span> <span class="st">&quot;5&quot;</span>)<span class="op">;</span>              <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="va">console</span>.<span class="at">log</span>(<span class="dv">5</span> <span class="op">===</span> <span class="dv">5</span>)<span class="op">;</span>               <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="va">console</span>.<span class="at">log</span>(<span class="dv">5</span> <span class="op">===</span> <span class="st">&quot;5&quot;</span>)<span class="op">;</span>             <span class="co">// false</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">is</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">5</span>))<span class="op">;</span>       <span class="co">// true</span></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">is</span>(<span class="dv">5</span><span class="op">,</span> <span class="st">&quot;5&quot;</span>))<span class="op">;</span>     <span class="co">// false</span></a></code></pre></div>
+<p>In many cases, <code>Object.is()</code> works the same as the <code>===</code> operator. The only differences are that +0 and -0 are considered not equivalent and <code>NaN</code> is considered equivalent to <code>NaN</code>. But there’s no need to stop using equality operators altogether. Choose whether to use <code>Object.is()</code> instead of <code>==</code> or <code>===</code> based on how those special cases affect your code.</p>
+<h3 id="the-object.assign-method">The Object.assign() Method</h3>
+<p><em>Mixins</em> are among the most popular patterns for object composition in JavaScript. In a mixin, one object receives properties and methods from another object. Many JavaScript libraries have a mixin method similar to this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">function</span> <span class="at">mixin</span>(receiver<span class="op">,</span> supplier) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">    <span class="va">Object</span>.<span class="at">keys</span>(supplier).<span class="at">forEach</span>(<span class="kw">function</span>(key) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-3" title="3">        receiver[key] <span class="op">=</span> supplier[key]<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-4" title="4">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="cf">return</span> receiver<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="op">}</span></a></code></pre></div>
+<p>The <code>mixin()</code> function iterates over the own properties of <code>supplier</code> and copies them onto <code>receiver</code> (a shallow copy, where object references are shared when property values are objects). This allows the <code>receiver</code> to gain new properties without inheritance, as in this code:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">function</span> <span class="at">EventTarget</span>() <span class="op">{</span> <span class="co">/*...*/</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="va">EventTarget</span>.<span class="at">prototype</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">constructor</span><span class="op">:</span> EventTarget<span class="op">,</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">emit</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span> <span class="co">/*...*/</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">on</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span> <span class="co">/*...*/</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="op">};</span></a>
+<a class="sourceLine" id="cb11-7" title="7"></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="kw">var</span> myObject <span class="op">=</span> <span class="op">{};</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="at">mixin</span>(myObject<span class="op">,</span> <span class="va">EventTarget</span>.<span class="at">prototype</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-10" title="10"></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="va">myObject</span>.<span class="at">emit</span>(<span class="st">&quot;somethingChanged&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, <code>myObject</code> receives behavior from the <code>EventTarget.prototype</code> object. This gives <code>myObject</code> the ability to publish events and subscribe to them using the <code>emit()</code> and <code>on()</code> methods, respectively.</p>
+<p>This pattern became popular enough that ECMAScript 6 added the <code>Object.assign()</code> method, which behaves the same way, accepting a receiver and any number of suppliers, and then returning the receiver. The name change from <code>mixin()</code> to <code>assign()</code> reflects the actual operation that occurs. Since the <code>mixin()</code> function uses the assignment operator (<code>=</code>), it cannot copy accessor properties to the receiver as accessor properties. The name <code>Object.assign()</code> was chosen to reflect this distinction.</p>
+<p>I&gt; Similar methods in various libraries may have other names for the same basic functionality; popular alternates include the <code>extend()</code> and <code>mix()</code> methods. There was also, briefly, an <code>Object.mixin()</code> method in ECMAScript 6 in addition to the <code>Object.assign()</code> method. The primary difference was that <code>Object.mixin()</code> also copied over accessor properties, but the method was removed due to concerns over the use of <code>super</code> (discussed in the “Easy Prototype Access with Super References” section of this chapter).</p>
+<p>You can use <code>Object.assign()</code> anywhere the <code>mixin()</code> function would have been used. Here’s an example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">function</span> <span class="at">EventTarget</span>() <span class="op">{</span> <span class="co">/*...*/</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="va">EventTarget</span>.<span class="at">prototype</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="dt">constructor</span><span class="op">:</span> EventTarget<span class="op">,</span></a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="dt">emit</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span> <span class="co">/*...*/</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb12-5" title="5">    <span class="dt">on</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span> <span class="co">/*...*/</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="op">}</span></a>
+<a class="sourceLine" id="cb12-7" title="7"></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="kw">var</span> myObject <span class="op">=</span> <span class="op">{}</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="va">Object</span>.<span class="at">assign</span>(myObject<span class="op">,</span> <span class="va">EventTarget</span>.<span class="at">prototype</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-10" title="10"></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="va">myObject</span>.<span class="at">emit</span>(<span class="st">&quot;somethingChanged&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>The <code>Object.assign()</code> method accepts any number of suppliers, and the receiver receives the properties in the order in which the suppliers are specified. That means the second supplier might overwrite a value from the first supplier on the receiver, which is what happens in this snippet:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">var</span> receiver <span class="op">=</span> <span class="op">{};</span></a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="va">Object</span>.<span class="at">assign</span>(receiver<span class="op">,</span></a>
+<a class="sourceLine" id="cb13-4" title="4">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-5" title="5">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;js&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-6" title="6">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;file.js&quot;</span></a>
+<a class="sourceLine" id="cb13-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb13-8" title="8">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-9" title="9">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;css&quot;</span></a>
+<a class="sourceLine" id="cb13-10" title="10">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb13-11" title="11">)<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-12" title="12"></a>
+<a class="sourceLine" id="cb13-13" title="13"><span class="va">console</span>.<span class="at">log</span>(<span class="va">receiver</span>.<span class="at">type</span>)<span class="op">;</span>     <span class="co">// &quot;css&quot;</span></a>
+<a class="sourceLine" id="cb13-14" title="14"><span class="va">console</span>.<span class="at">log</span>(<span class="va">receiver</span>.<span class="at">name</span>)<span class="op">;</span>     <span class="co">// &quot;file.js&quot;</span></a></code></pre></div>
+<p>The value of <code>receiver.type</code> is <code>"css"</code> because the second supplier overwrote the value of the first.</p>
+<p>The <code>Object.assign()</code> method isn’t a big addition to ECMAScript 6, but it does formalize a common function found in many JavaScript libraries.</p>
+<p>A&gt; ### Working with Accessor Properties A&gt; A&gt; Keep in mind that <code>Object.assign()</code> doesn’t create accessor properties on the receiver when a supplier has accessor properties. Since <code>Object.assign()</code> uses the assignment operator, an accessor property on a supplier will become a data property on the receiver. For example: A&gt; A&gt; <code>js A&gt; var receiver = {}, A&gt;     supplier = { A&gt;         get name() { A&gt;             return "file.js" A&gt;         } A&gt;     }; A&gt; A&gt; Object.assign(receiver, supplier); A&gt; A&gt; var descriptor = Object.getOwnPropertyDescriptor(receiver, "name"); A&gt; A&gt; console.log(descriptor.value);      // "file.js" A&gt; console.log(descriptor.get);        // undefined A&gt;</code> A&gt; A&gt; In this code, the <code>supplier</code> has an accessor property called <code>name</code>. After using the <code>Object.assign()</code> method, <code>receiver.name</code> exists as a data property with a value of <code>"file.js"</code> because <code>supplier.name</code> returned <code>"file.js"</code> when <code>Object.assign()</code> was called.</p>
+<h2 id="duplicate-object-literal-properties">Duplicate Object Literal Properties</h2>
+<p>ECMAScript 5 strict mode introduced a check for duplicate object literal properties that would throw an error if a duplicate was found. For example, this code was problematic:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="st">&quot;use strict&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-4" title="4">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb14-5" title="5">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Greg&quot;</span>        <span class="co">// syntax error in ES5 strict mode</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="op">};</span></a></code></pre></div>
+<p>When running in ECMAScript 5 strict mode, the second <code>name</code> property causes a syntax error. But in ECMAScript 6, the duplicate property check was removed. Both strict and nonstrict mode code no longer check for duplicate properties. Instead, the last property of the given name becomes the property’s actual value, as shown here:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="st">&quot;use strict&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw">var</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-4" title="4">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb15-5" title="5">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Greg&quot;</span>        <span class="co">// no error in ES6 strict mode</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="op">};</span></a>
+<a class="sourceLine" id="cb15-7" title="7"></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">person</span>.<span class="at">name</span>)<span class="op">;</span>       <span class="co">// &quot;Greg&quot;</span></a></code></pre></div>
+<p>In this example, the value of <code>person.name</code> is <code>"Greg"</code> because that’s the last value assigned to the property.</p>
+<h2 id="own-property-enumeration-order">Own Property Enumeration Order</h2>
+<p>ECMAScript 5 didn’t define the enumeration order of object properties, as it left this up to the JavaScript engine vendors. However, ECMAScript 6 strictly defines the order in which own properties must be returned when they are enumerated. This affects how properties are returned using <code>Object.getOwnPropertyNames()</code> and <code>Reflect.ownKeys</code> (covered in Chapter 12). It also affects the order in which properties are processed by <code>Object.assign()</code>.</p>
+<p>The basic order for own property enumeration is:</p>
+<ol type="1">
+<li>All numeric keys in ascending order</li>
+<li>All string keys in the order in which they were added to the object</li>
+<li>All symbol keys (covered in Chapter 6) in the order in which they were added to the object</li>
+</ol>
+<p>Here’s an example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">var</span> obj <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-2" title="2">    <span class="dt">a</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb16-3" title="3">    <span class="dv">0</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb16-4" title="4">    <span class="dt">c</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb16-5" title="5">    <span class="dv">2</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb16-6" title="6">    <span class="dt">b</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb16-7" title="7">    <span class="dv">1</span><span class="op">:</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="op">};</span></a>
+<a class="sourceLine" id="cb16-9" title="9"></a>
+<a class="sourceLine" id="cb16-10" title="10"><span class="va">obj</span>.<span class="at">d</span> <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb16-11" title="11"></a>
+<a class="sourceLine" id="cb16-12" title="12"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">getOwnPropertyNames</span>(obj).<span class="at">join</span>(<span class="st">&quot;&quot;</span>))<span class="op">;</span>     <span class="co">// &quot;012acbd&quot;</span></a></code></pre></div>
+<p>The <code>Object.getOwnPropertyNames()</code> method returns the properties in <code>obj</code> in the order <code>0</code>, <code>1</code>, <code>2</code>, <code>a</code>, <code>c</code>, <code>b</code>, <code>d</code>. Note that the numeric keys are grouped together and sorted, even though they appear out of order in the object literal. The string keys come after the numeric keys and appear in the order that they were added to <code>obj</code>. The keys in the object literal itself come first, followed by any dynamic keys that were added later (in this case, <code>d</code>).</p>
+<p>W&gt; The <code>for-in</code> loop still has an unspecified enumeration order because not all JavaScript engines implement it the same way. The <code>Object.keys()</code> method and <code>JSON.stringify()</code> are both specified to use the same (unspecified) enumeration order as <code>for-in</code>.</p>
+<p>While enumeration order is a subtle change to how JavaScript works, it’s not uncommon to find programs that rely on a specific enumeration order to work correctly. ECMAScript 6, by defining the enumeration order, ensures that JavaScript code relying on enumeration will work correctly regardless of where it is executed.</p>
+<h2 id="more-powerful-prototypes">More Powerful Prototypes</h2>
+<p>Prototypes are the foundation of inheritance in JavaScript, and ECMAScript 6 continues to make prototypes more powerful. Early versions of JavaScript severely limited what could be done with prototypes. However, as the language matured and developers became more familiar with how prototypes work, it became clear that developers wanted more control over prototypes and easier ways to work with them. As a result, ECMAScript 6 introduced some improvements to prototypes.</p>
+<h3 id="changing-an-objects-prototype">Changing an Object’s Prototype</h3>
+<p>Normally, the prototype of an object is specified when the object is created, via either a constructor or the <code>Object.create()</code> method. The idea that an object’s prototype remains unchanged after instantiation was one of the biggest assumptions in JavaScript programming through ECMAScript 5. ECMAScript 5 did add the <code>Object.getPrototypeOf()</code> method for retrieving the prototype of any given object, but it still lacked a standard way to change an object’s prototype after instantiation.</p>
+<p>ECMAScript 6 changes that assumption by adding the <code>Object.setPrototypeOf()</code> method, which allows you to change the prototype of any given object. The <code>Object.setPrototypeOf()</code> method accepts two arguments: the object whose prototype should change and the object that should become the first argument’s prototype. For example:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">let</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-2" title="2">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-3" title="3">        <span class="cf">return</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb17-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="kw">let</span> dog <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-8" title="8">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-9" title="9">        <span class="cf">return</span> <span class="st">&quot;Woof&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb17-10" title="10">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="op">};</span></a>
+<a class="sourceLine" id="cb17-12" title="12"></a>
+<a class="sourceLine" id="cb17-13" title="13"><span class="co">// prototype is person</span></a>
+<a class="sourceLine" id="cb17-14" title="14"><span class="kw">let</span> friend <span class="op">=</span> <span class="va">Object</span>.<span class="at">create</span>(person)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-15" title="15"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                      <span class="co">// &quot;Hello&quot;</span></a>
+<a class="sourceLine" id="cb17-16" title="16"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">getPrototypeOf</span>(friend) <span class="op">===</span> person)<span class="op">;</span>  <span class="co">// true</span></a>
+<a class="sourceLine" id="cb17-17" title="17"></a>
+<a class="sourceLine" id="cb17-18" title="18"><span class="co">// set prototype to dog</span></a>
+<a class="sourceLine" id="cb17-19" title="19"><span class="va">Object</span>.<span class="at">setPrototypeOf</span>(friend<span class="op">,</span> dog)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-20" title="20"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                      <span class="co">// &quot;Woof&quot;</span></a>
+<a class="sourceLine" id="cb17-21" title="21"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">getPrototypeOf</span>(friend) <span class="op">===</span> dog)<span class="op">;</span>     <span class="co">// true</span></a></code></pre></div>
+<p>This code defines two base objects: <code>person</code> and <code>dog</code>. Both objects have a <code>getGreeting()</code> method that returns a string. The object <code>friend</code> first inherits from the <code>person</code> object, meaning that <code>getGreeting()</code> outputs <code>"Hello"</code>. When the prototype becomes the <code>dog</code> object, <code>friend.getGreeting()</code> outputs <code>"Woof"</code> because the original relationship to <code>person</code> is broken.</p>
+<p>The actual value of an object’s prototype is stored in an internal-only property called <code>[[Prototype]]</code>. The <code>Object.getPrototypeOf()</code> method returns the value stored in <code>[[Prototype]]</code> and <code>Object.setPrototypeOf()</code> changes the value stored in <code>[[Prototype]]</code>. However, these aren’t the only ways to work with the value of <code>[[Prototype]]</code>.</p>
+<h3 id="easy-prototype-access-with-super-references">Easy Prototype Access with Super References</h3>
+<p>As previously mentioned, prototypes are very important for JavaScript and a lot of work went into making them easier to use in ECMAScript 6. Another improvement is the introduction of <code>super</code> references, which make accessing functionality on an object’s prototype easier. For example, to override a method on an object instance such that it also calls the prototype method of the same name, you’d do the following:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">let</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-2" title="2">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-3" title="3">        <span class="cf">return</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb18-6" title="6"></a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="kw">let</span> dog <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-8" title="8">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-9" title="9">        <span class="cf">return</span> <span class="st">&quot;Woof&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-10" title="10">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="op">};</span></a>
+<a class="sourceLine" id="cb18-12" title="12"></a>
+<a class="sourceLine" id="cb18-13" title="13"></a>
+<a class="sourceLine" id="cb18-14" title="14"><span class="kw">let</span> friend <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-15" title="15">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-16" title="16">        <span class="cf">return</span> <span class="va">Object</span>.<span class="at">getPrototypeOf</span>(<span class="kw">this</span>).<span class="va">getGreeting</span>.<span class="at">call</span>(<span class="kw">this</span>) <span class="op">+</span> <span class="st">&quot;, hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-17" title="17">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-18" title="18"><span class="op">};</span></a>
+<a class="sourceLine" id="cb18-19" title="19"></a>
+<a class="sourceLine" id="cb18-20" title="20"><span class="co">// set prototype to person</span></a>
+<a class="sourceLine" id="cb18-21" title="21"><span class="va">Object</span>.<span class="at">setPrototypeOf</span>(friend<span class="op">,</span> person)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-22" title="22"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                      <span class="co">// &quot;Hello, hi!&quot;</span></a>
+<a class="sourceLine" id="cb18-23" title="23"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">getPrototypeOf</span>(friend) <span class="op">===</span> person)<span class="op">;</span>  <span class="co">// true</span></a>
+<a class="sourceLine" id="cb18-24" title="24"></a>
+<a class="sourceLine" id="cb18-25" title="25"><span class="co">// set prototype to dog</span></a>
+<a class="sourceLine" id="cb18-26" title="26"><span class="va">Object</span>.<span class="at">setPrototypeOf</span>(friend<span class="op">,</span> dog)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-27" title="27"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                      <span class="co">// &quot;Woof, hi!&quot;</span></a>
+<a class="sourceLine" id="cb18-28" title="28"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Object</span>.<span class="at">getPrototypeOf</span>(friend) <span class="op">===</span> dog)<span class="op">;</span>     <span class="co">// true</span></a></code></pre></div>
+<p>In this example, <code>getGreeting()</code> on <code>friend</code> calls the prototype method of the same name. The <code>Object.getPrototypeOf()</code> method ensures the correct prototype is called, and then an additional string is appended to the output. The additional <code>.call(this)</code> ensures that the <code>this</code> value inside the prototype method is set correctly.</p>
+<p>Remembering to use <code>Object.getPrototypeOf()</code> and <code>.call(this)</code> to call a method on the prototype is a bit involved, so ECMAScript 6 introduced <code>super</code>. At its simplest, <code>super</code> is a pointer to the current object’s prototype, effectively the <code>Object.getPrototypeOf(this)</code> value. Knowing that, you can simplify the <code>getGreeting()</code> method as follows:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">let</span> friend <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-2" title="2">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-3" title="3">        <span class="co">// in the previous example, this is the same as:</span></a>
+<a class="sourceLine" id="cb19-4" title="4">        <span class="co">// Object.getPrototypeOf(this).getGreeting.call(this)</span></a>
+<a class="sourceLine" id="cb19-5" title="5">        <span class="cf">return</span> <span class="kw">super</span>.<span class="at">getGreeting</span>() <span class="op">+</span> <span class="st">&quot;, hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb19-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="op">};</span></a></code></pre></div>
+<p>The call to <code>super.getGreeting()</code> is the same as <code>Object.getPrototypeOf(this).getGreeting.call(this)</code> in this context. Similarly, you can call any method on an object’s prototype by using a <code>super</code> reference, so long as it’s inside a concise method. Attempting to use <code>super</code> outside of concise methods results in a syntax error, as in this example:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">let</span> friend <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-2" title="2">    <span class="dt">getGreeting</span><span class="op">:</span> <span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-3" title="3">        <span class="co">// syntax error</span></a>
+<a class="sourceLine" id="cb20-4" title="4">        <span class="cf">return</span> <span class="kw">super</span>.<span class="at">getGreeting</span>() <span class="op">+</span> <span class="st">&quot;, hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb20-5" title="5">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="op">};</span></a></code></pre></div>
+<p>This example uses a named property with a function, and the call to <code>super.getGreeting()</code> results in a syntax error because <code>super</code> is invalid in this context.</p>
+<p>The <code>super</code> reference is really powerful when you have multiple levels of inheritance, because in that case, <code>Object.getPrototypeOf()</code> no longer works in all circumstances. For example:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">let</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-2" title="2">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-3" title="3">        <span class="cf">return</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb21-6" title="6"></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="co">// prototype is person</span></a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="kw">let</span> friend <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-9" title="9">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-10" title="10">        <span class="cf">return</span> <span class="va">Object</span>.<span class="at">getPrototypeOf</span>(<span class="kw">this</span>).<span class="va">getGreeting</span>.<span class="at">call</span>(<span class="kw">this</span>) <span class="op">+</span> <span class="st">&quot;, hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-11" title="11">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb21-12" title="12"><span class="op">};</span></a>
+<a class="sourceLine" id="cb21-13" title="13"><span class="va">Object</span>.<span class="at">setPrototypeOf</span>(friend<span class="op">,</span> person)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-14" title="14"></a>
+<a class="sourceLine" id="cb21-15" title="15"></a>
+<a class="sourceLine" id="cb21-16" title="16"><span class="co">// prototype is friend</span></a>
+<a class="sourceLine" id="cb21-17" title="17"><span class="kw">let</span> relative <span class="op">=</span> <span class="va">Object</span>.<span class="at">create</span>(friend)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-18" title="18"></a>
+<a class="sourceLine" id="cb21-19" title="19"><span class="va">console</span>.<span class="at">log</span>(<span class="va">person</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                  <span class="co">// &quot;Hello&quot;</span></a>
+<a class="sourceLine" id="cb21-20" title="20"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                  <span class="co">// &quot;Hello, hi!&quot;</span></a>
+<a class="sourceLine" id="cb21-21" title="21"><span class="va">console</span>.<span class="at">log</span>(<span class="va">relative</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                <span class="co">// error!</span></a></code></pre></div>
+<p>The call to <code>Object.getPrototypeOf()</code> results in an error when <code>relative.getGreeting()</code> is called. That’s because <code>this</code> is <code>relative</code>, and the prototype of <code>relative</code> is the <code>friend</code> object. When <code>friend.getGreeting().call()</code> is called with <code>relative</code> as <code>this</code>, the process starts over again and continues to call recursively until a stack overflow error occurs.</p>
+<p>That problem is difficult to solve in ECMAScript 5, but with ECMAScript 6 and <code>super</code>, it’s easy:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">let</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-2" title="2">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-3" title="3">        <span class="cf">return</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb22-6" title="6"></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="co">// prototype is person</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="kw">let</span> friend <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-9" title="9">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-10" title="10">        <span class="cf">return</span> <span class="kw">super</span>.<span class="at">getGreeting</span>() <span class="op">+</span> <span class="st">&quot;, hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-11" title="11">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="op">};</span></a>
+<a class="sourceLine" id="cb22-13" title="13"><span class="va">Object</span>.<span class="at">setPrototypeOf</span>(friend<span class="op">,</span> person)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-14" title="14"></a>
+<a class="sourceLine" id="cb22-15" title="15"></a>
+<a class="sourceLine" id="cb22-16" title="16"><span class="co">// prototype is friend</span></a>
+<a class="sourceLine" id="cb22-17" title="17"><span class="kw">let</span> relative <span class="op">=</span> <span class="va">Object</span>.<span class="at">create</span>(friend)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-18" title="18"></a>
+<a class="sourceLine" id="cb22-19" title="19"><span class="va">console</span>.<span class="at">log</span>(<span class="va">person</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                  <span class="co">// &quot;Hello&quot;</span></a>
+<a class="sourceLine" id="cb22-20" title="20"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                  <span class="co">// &quot;Hello, hi!&quot;</span></a>
+<a class="sourceLine" id="cb22-21" title="21"><span class="va">console</span>.<span class="at">log</span>(<span class="va">relative</span>.<span class="at">getGreeting</span>())<span class="op">;</span>                <span class="co">// &quot;Hello, hi!&quot;</span></a></code></pre></div>
+<p>Because <code>super</code> references are not dynamic, they always refer to the correct object. In this case, <code>super.getGreeting()</code> always refers to <code>person.getGreeting()</code>, regardless of how many other objects inherit the method.</p>
+<h2 id="a-formal-method-definition">A Formal Method Definition</h2>
+<p>Prior to ECMAScript 6, the concept of a “method” wasn’t formally defined. Methods were just object properties that contained functions instead of data. ECMAScript 6 formally defines a method as a function that has an internal <code>[[HomeObject]]</code> property containing the object to which the method belongs. Consider the following:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">let</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-2" title="2"></a>
+<a class="sourceLine" id="cb23-3" title="3">    <span class="co">// method</span></a>
+<a class="sourceLine" id="cb23-4" title="4">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-5" title="5">        <span class="cf">return</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb23-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="op">};</span></a>
+<a class="sourceLine" id="cb23-8" title="8"></a>
+<a class="sourceLine" id="cb23-9" title="9"><span class="co">// not a method</span></a>
+<a class="sourceLine" id="cb23-10" title="10"><span class="kw">function</span> <span class="at">shareGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-11" title="11">    <span class="cf">return</span> <span class="st">&quot;Hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb23-12" title="12"><span class="op">}</span></a></code></pre></div>
+<p>This example defines <code>person</code> with a single method called <code>getGreeting()</code>. The <code>[[HomeObject]]</code> for <code>getGreeting()</code> is <code>person</code> by virtue of assigning the function directly to an object. The <code>shareGreeting()</code> function, on the other hand, has no <code>[[HomeObject]]</code> specified because it wasn’t assigned to an object when it was created. In most cases, this difference isn’t important, but it becomes very important when using <code>super</code> references.</p>
+<p>Any reference to <code>super</code> uses the <code>[[HomeObject]]</code> to determine what to do. The first step is to call <code>Object.getPrototypeOf()</code> on the <code>[[HomeObject]]</code> to retrieve a reference to the prototype. Then, the prototype is searched for a function with the same name. Last, the <code>this</code> binding is set and the method is called. Here’s an example:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">let</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb24-2" title="2">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb24-3" title="3">        <span class="cf">return</span> <span class="st">&quot;Hello&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb24-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb24-6" title="6"></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="co">// prototype is person</span></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="kw">let</span> friend <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb24-9" title="9">    <span class="at">getGreeting</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb24-10" title="10">        <span class="cf">return</span> <span class="kw">super</span>.<span class="at">getGreeting</span>() <span class="op">+</span> <span class="st">&quot;, hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb24-11" title="11">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb24-12" title="12"><span class="op">};</span></a>
+<a class="sourceLine" id="cb24-13" title="13"><span class="va">Object</span>.<span class="at">setPrototypeOf</span>(friend<span class="op">,</span> person)<span class="op">;</span></a>
+<a class="sourceLine" id="cb24-14" title="14"></a>
+<a class="sourceLine" id="cb24-15" title="15"><span class="va">console</span>.<span class="at">log</span>(<span class="va">friend</span>.<span class="at">getGreeting</span>())<span class="op">;</span>  <span class="co">// &quot;Hello, hi!&quot;</span></a></code></pre></div>
+<p>Calling <code>friend.getGreeting()</code> returns a string, which combines the value from <code>person.getGreeting()</code> with <code>", hi!"</code>. The <code>[[HomeObject]]</code> of <code>friend.getGreeting()</code> is <code>friend</code>, and the prototype of <code>friend</code> is <code>person</code>, so <code>super.getGreeting()</code> is equivalent to <code>person.getGreeting.call(this)</code>.</p>
+<h2 id="summary">Summary</h2>
+<p>Objects are the center of programming in JavaScript, and ECMAScript 6 made some helpful changes to objects that both make them easier to deal with and more powerful.</p>
+<p>ECMAScript 6 makes several changes to object literals. Shorthand property definitions make assigning properties with the same names as in-scope variables easier. Computed property names allow you to specify non-literal values as property names, which you’ve already been able to do in other areas of the language. Shorthand methods let you type a lot fewer characters in order to define methods on object literals, by completely omitting the colon and <code>function</code> keyword. ECMAScript 6 loosens the strict mode check for duplicate object literal property names as well, meaning you can have two properties with the same name in a single object literal without throwing an error.</p>
+<p>The <code>Object.assign()</code> method makes it easier to change multiple properties on a single object at once. This can be very useful if you use the mixin pattern. The <code>Object.is()</code> method performs strict equality on any value, effectively becoming a safer version of <code>===</code> when dealing with special JavaScript values.</p>
+<p>Enumeration order for own properties is now clearly defined in ECMAScript 6. When enumerating properties, numeric keys always come first in ascending order followed by string keys in insertion order and symbol keys in insertion order.</p>
+<p>It’s now possible to modify an object’s prototype after it’s already created, thanks to ECMAScript 6’s <code>Object.setPrototypeOf()</code> method.</p>
+<p>Finally, you can use the <code>super</code> keyword to call methods on an object’s prototype. The <code>this</code> binding inside a method invoked using <code>super</code> is set up to automatically work with the current value of <code>this</code>.</p>
+</body>
+</html>

@@ -1,0 +1,1 @@
+Tests that debugger will stop on "debugger" statement in a function that was added to the inspected page via evaluation in Web Inspector console.[Bug 41058](https://bugs.webkit.org/show_bug.cgi?id=41058)

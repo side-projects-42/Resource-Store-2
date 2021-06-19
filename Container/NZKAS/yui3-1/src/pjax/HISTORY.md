@@ -4,4 +4,4 @@ Pjax Change History
 3.5.0
 -----
 
-* Initial release.
+-   Initial release.

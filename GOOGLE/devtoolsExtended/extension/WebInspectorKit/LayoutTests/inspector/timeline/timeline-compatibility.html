@@ -1,30 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-<script src="../../http/tests/inspector/inspector-test.js"></script>
-<script src="../../http/tests/inspector/timeline-test.js"></script>
-<script>
-
-function test()
-{
-    var records = [
-        {"startTime": 1000.000,"data":{ "x": 100, "y": 200, "width": 300, "height": 400 },"endTime":1099.999,"type":"Paint","children":[]},
-        {"startTime": 2000.000,"data":{ "x": 100, "y": 200, "width": 300, "height": 400 },"endTime":2099.999,"type":"Layout","children":[]}
-    ];
-
-    InspectorTest.loadTimelineRecords(records);
-
-    var rootRecord = WebInspector.panels.timeline._presentationModel.rootRecord();
-    InspectorTest.dumpTimelineRecord(rootRecord);
-    InspectorTest.completeTest();
-}
-
-</script>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timeline-compatibility</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
 </head>
-
-<body onload="runTest()">
-<p>
-Test timeline compatibility with logs recorded by newer and older verions of timeline</a>
-</p>
-
+<body>
+<p>Test timeline compatibility with logs recorded by newer and older verions of timeline</p>
 </body>
 </html>

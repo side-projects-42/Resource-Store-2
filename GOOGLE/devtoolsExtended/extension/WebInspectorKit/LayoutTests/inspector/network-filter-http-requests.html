@@ -1,35 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function test() {
-        WebInspector.showPanel("network");
-
-        function checkURL(url) {
-          var request = new WebInspector.NetworkRequest(url, url, "", "", "");
-          var result = WebInspector.NetworkLogView.HTTPRequestsFilter(request);
-          InspectorTest.addResult(
-            (result ? "" : "Non-") + "HTTP request URL: " + url
-          );
-        }
-
-        checkURL("http://webkit.org");
-        checkURL("https://webkit.org");
-        checkURL("ws://webkit.org");
-        checkURL("wss://webkit.org");
-
-        InspectorTest.addResult("");
-
-        checkURL("data:text/plain,foo");
-        checkURL("file:///etc/passwd");
-        checkURL("javascript:void()");
-        checkURL("invalid");
-
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests filtering of requests suitable for HAR.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>network-filter-http-requests</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests filtering of requests suitable for HAR.</p>
+</body>
 </html>

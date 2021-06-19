@@ -1,10 +1,7 @@
 YQL Module
 ==========
 
-(YQL) is an expressive SQL-like language that lets you query, 
-filter, and join data across Web services. With YQL, *apps run
-faster with fewer lines of code and a smaller network footprint.* 
-
+(YQL) is an expressive SQL-like language that lets you query, filter, and join data across Web services. With YQL, *apps run faster with fewer lines of code and a smaller network footprint.*
 
     YUI().use('yql', function(Y) {
 
@@ -16,4 +13,3 @@ faster with fewer lines of code and a smaller network footprint.*
         });
 
     });
-

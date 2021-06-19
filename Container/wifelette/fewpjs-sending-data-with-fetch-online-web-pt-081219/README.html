@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="sending-data-with-fetch">Sending Data with Fetch</h1>
+<h2 id="learning-goals">Learning Goals</h2>
+<ul>
+<li>Use <code>fetch()</code> to send data to a remote host</li>
+<li>Handle the response from a successful request</li>
+<li>Handle errors from an unsuccessful request</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>If you think about it, <code>fetch()</code> is a little browser in your browser. You tell <code>fetch()</code> to go to a URL by passing it an argument e.g. <code>fetch("https://flatironschool.com")</code> and it makes a network request. You chain calls to <code>fetch()</code> with <code>then()</code>. Each <code>then()</code> call takes a callback function as its argument, based on actions in the callback function, we can display the content, update it, or inject it into the DOM.</p>
+<p>This is a lot like browsing the web: you change the URL in the URL bar, or you follow a link and those actions tell the browser to go somewhere else and get the data. A technical way to describe that is: “The browser implements an HTTP <code>GET</code> to retrieve the content at a URL.” It’s also 100% technically correct to say “<code>fetch()</code> uses an HTTP <code>GET</code> to retrieve the content specified by a URL.”</p>
+<p>The browser also provides a helpful model for understanding what <em>sending</em> data from the browser looks like. We know this as an HTML <em>form</em>. Technically speaking, HTML forms “use an HTTP <code>POST</code> to send content gathered in <code>&lt;input&gt;</code> elements to a specified URL” It’s also 100% technically correct to say "<code>fetch()</code> uses an HTTP <code>POST</code> to send content gathered in a JavaScript <code>Object</code></p>
+<p>HTML forms are still widely used, but with <code>fetch()</code>, we have more detailed control of the request. Using <code>fetch()</code>, we can actually <em>override</em> the normal behavior of an HTML form, capturing any user input, packaging it up with the appropriate request information and sending it out.</p>
+<p>Our focus this lesson will be to learning how to send data using <code>fetch()</code>.</p>
+<h2 id="introduce-the-json-server">Introduce the JSON Server</h2>
+<p>To help us practice sending <code>fetch()</code> requests, this lab comes with a dependency called <a href="https://github.com/typicode/json-server"><code>json-server</code></a>. The JSON Server allows us to start a fake RESTful API within our lab folder, giving us the ability to send both GET and POST requests and to persist and receive data.</p>
+<p>Install it by executing <code>npm install -g json-server</code>. To start up JSON Server, run <code>json-server --watch db.json</code> in your terminal.</p>
+<p>Once the server is running, you’ll see a list of available resource paths:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">Resources</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="ex">http</span>://localhost:3000/dogs</a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="ex">http</span>://localhost:3000/cats</a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="ex">http</span>://localhost:3000/users</a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="ex">http</span>://localhost:3000/robots</a></code></pre></div>
+<p>These endpoints each provide different sets of data. Since it is mimicking a RESTful API, sending a request to ‘http://localhost:3000/dogs’ will return all records in the database for dogs, while ‘http://localhost:3000/dogs/1’ will return the dog with the id of 1.</p>
+<p>Some example data is already present, stored in <code>db.json</code>. If the JSON server is running, you can also visit any of the above resources in a browser to see the data.</p>
+<p>The tests in this lab do not need JSON Server to be running, but if you would like to run tests while also running the server, open a second tab in your terminal.</p>
+<h2 id="analyze-data-sent-in-an-html-form">Analyze Data Sent in an HTML Form</h2>
+<p>Let’s take a look at a <code>&lt;form&gt;</code> (<em>see <code>sample_form.html</code> in this repo</em>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">&lt;form</span><span class="ot"> action=</span><span class="st">&quot;http://localhost:3000/dogs&quot;</span><span class="ot"> method=</span><span class="st">&quot;POST&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">&lt;label&gt;</span> Dog Name: <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> name=</span><span class="st">&quot;dogName&quot;</span><span class="ot"> id=</span><span class="st">&quot;dogName&quot;</span> <span class="kw">/&gt;&lt;/label</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="kw">&gt;&lt;br</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="kw">&lt;label&gt;</span> Dog Breed: <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> name=</span><span class="st">&quot;dogBreed&quot;</span><span class="ot"> id=</span><span class="st">&quot;dogBreed&quot;</span> <span class="kw">/&gt;&lt;/label</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="kw">&gt;&lt;br</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="ot"> name=</span><span class="st">&quot;submit&quot;</span><span class="ot"> id=</span><span class="st">&quot;submit&quot;</span><span class="ot"> value=</span><span class="st">&quot;Submit&quot;</span> <span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="kw">&lt;/form&gt;</span></a></code></pre></div>
+<p>The key components as far as sending data to the server are:</p>
+<ul>
+<li>The destination URL as defined in the <code>action</code> attribute of the <code>&lt;form&gt;</code> tag</li>
+<li>The HTTP verb to use as defined in the <code>method</code> attribute of the <code>&lt;form&gt;</code> tag</li>
+<li>The key / value data about the inputs in the fields <code>dogName</code> and <code>dogBreed</code></li>
+</ul>
+<p>We should expect that our “mini-browser,” <code>fetch()</code> will need those same bits of information in order to send data to the server. Let’s place this data inside our <code>form()</code> skeleton.</p>
+<blockquote>
+<p><strong>Note</strong>: if you have the JSON server running and open <code>sample_form.html</code>, you will be able to submit the form and successfully POST data to the JSON server database, <code>db.json</code>. Try it out!</p>
+</blockquote>
+<h2 id="construct-a-post-request-using-fetch">Construct a POST Request Using <code>fetch()</code></h2>
+<p>Sending a POST request with <code>fetch()</code> is more complicated than what we’ve seen up to this point. It still takes a <code>String</code> representing the desintation URL as the first argument, as always. But as we will see below, <code>fetch()</code> can also take a JavaScript <code>Object</code> (<code>{}</code>) as the <em>second</em> argument. This <code>Object</code> can be given certain <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters">properties</a> with certain values in order to change <code>fetch()</code>’s default behavior.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="at">fetch</span>(destinationURL<span class="op">,</span> configurationObject)<span class="op">;</span></a></code></pre></div>
+<p>The <code>configurationObject</code> contains three core components that are needed for standard POST requests.</p>
+<h3 id="add-the-http-verb">Add the HTTP Verb</h3>
+<p>So far, comparing to an HTML form, we’ve only got the destination URL (‘http://localhost:3000/dogs’ in this case). The next thing we need is to include the HTTP verb. By default, the verb is GET, which is why we can send simple GET requests with <em>only</em> a destination URL. To tell <code>fetch()</code> that this is a POST request, we need to add a <code>method</code> key to our <code>configurationObject</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1">configurationObject <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="op">};</span></a></code></pre></div>
+<h3 id="add-headers">Add Headers</h3>
+<p>The second piece we need to include is some <em>metadata</em> about the actual data we want to send. This metadata is in the form of <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"><em>headers</em></a>. Headers are sent just ahead of the actual data payload of our POST request. They contain information about the data being sent.</p>
+<p>One very common header is <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Type"><code>"Content-Type"</code></a>. <code>"Content-Type"</code> is used to indicate what format the data being sent is in. With JavaScript’s <code>fetch()</code>, <a href="https://www.json.org/">JSON</a> is the most common format we will be using. We want to make sure that the destination of our POST request knows this. To do this, we’ll include the <code>"Content-Type"</code> header:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1">configurationObject <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="op">};</span></a></code></pre></div>
+<p>Each individual header is stored as a key/value pair inside an object. This object is assigned to the <code>headers</code> key as seen above.</p>
+<p>When sending data, the server at the destination URL will send back a response, often including data that the sender of the <code>fetch()</code> request might find useful. Just like <code>"Content-Type"</code> tells the destination server what type of data we’re sending, it is also good practice to tell the server what data format we <em>accept</em> in return.</p>
+<p>To do this, we add a second header, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept"><code>"Accept"</code></a>, and assign it to <code>"application/json"</code> as well:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1">configurationObject <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="dt">Accept</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb6-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="op">};</span></a></code></pre></div>
+<p>There are many other <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers">headers</a> available for particular uses. Some are used to send credentials or user authentication keys. Others are used to send cookies containing user info. <code>"Content-Type"</code> and <code>"Accept"</code> are two that we’ll see the most throughout the remainder of this course.</p>
+<p>Servers may reject requests without the specific headers the server is configured to expect.</p>
+<h3 id="add-data">Add Data</h3>
+<p>We now have the destination URL, our HTTP verb, and headers that include information about the data we’re sending. The last thing to add is the <em>data</em> itself.</p>
+<p>Data being sent in <code>fetch()</code> must be stored in the <code>body</code> of the <code>configurationObject</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1">configurationObject <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-5" title="5">    <span class="st">&quot;Accept&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span></a>
+<a class="sourceLine" id="cb7-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb7-7" title="7">  <span class="dt">body</span><span class="op">:</span> <span class="co">/* Your data goes here */</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="op">};</span></a></code></pre></div>
+<p>There is a catch here to be aware of - when data is exchanged between a client (your browser, for instance), and a server, the data is sent as <em>text</em>. Whatever data we’re assigning to the <code>body</code> of our request needs to be a string.</p>
+<h4 id="use-json.stringify-to-convert-objects-to-strings">Use <code>JSON.stringify()</code> to Convert Objects to Strings</h4>
+<p>When sending data using <code>fetch()</code>, we often send multiple pieces of information in one request. In our code, we often organize this information using objects. Consider the following object, for instance:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="op">}</span></a></code></pre></div>
+<p>This object contains two related pieces of information, a dog’s name and breed. Let’s say we want to send the data in this object to a server. We can’t simply assign it to <code>body</code>, as it isn’t a string. Instead, we convert it to JSON. The object above, converted to JSON would look like this:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb9-1" title="1"><span class="er">&quot;</span><span class="fu">{</span><span class="dt">&quot;dogName&quot;</span><span class="fu">:</span><span class="st">&quot;Byron&quot;</span><span class="fu">,</span><span class="dt">&quot;dogBreed&quot;</span><span class="fu">:</span><span class="st">&quot;Poodle&quot;</span><span class="fu">}</span><span class="er">&quot;</span></a></code></pre></div>
+<p>Here, using JSON has enabled us to preserve the key/value pairs of our object within the string. When sent to a server, the server will be able to take this string and convert it back into key/value pairs in whatever language the server is written in.</p>
+<p>Fortunately, JavaScript comes with a built in method for converting objects to strings, <code>JSON.stringify()</code>. By passing an object in, <code>JSON.stringify()</code> will return a string, formatted and ready to send in our request:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1">configurationObject <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-4" title="4">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-5" title="5">    <span class="dt">Accept</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-7" title="7">  <span class="dt">body</span><span class="op">:</span> <span class="va">JSON</span>.<span class="at">stringify</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb10-8" title="8">    <span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-9" title="9">    <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-10" title="10">  <span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="op">};</span></a></code></pre></div>
+<h2 id="send-the-post-request">Send the POST Request</h2>
+<p>We’ve got all the pieces we need. Putting it all together, we get:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="at">fetch</span>(<span class="st">&quot;http://localhost:3000/dogs&quot;</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">Accept</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb11-7" title="7">  <span class="dt">body</span><span class="op">:</span> <span class="va">JSON</span>.<span class="at">stringify</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb11-8" title="8">    <span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-9" title="9">    <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-10" title="10">  <span class="op">}</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>With the JSON server running, if you open up <code>sample_form.html</code> or <code>index.html</code>, you can use the above to successfully send a POST request and persist data to <code>db.json</code>.</p>
+<p>Obviously, we don’t have to define everything inside of one anonymous <code>Object</code>. We could also write (they’re exactly the same!):</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">let</span> formData <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-2" title="2">  <span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-3" title="3">  <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="op">};</span></a>
+<a class="sourceLine" id="cb12-5" title="5"></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="kw">let</span> configObj <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-7" title="7">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-8" title="8">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-9" title="9">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-10" title="10">    <span class="dt">Accept</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-11" title="11">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb12-12" title="12">  <span class="dt">body</span><span class="op">:</span> <span class="va">JSON</span>.<span class="at">stringify</span>(formData)<span class="op">,</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="op">};</span></a>
+<a class="sourceLine" id="cb12-14" title="14"></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="at">fetch</span>(<span class="st">&quot;http://localhost:3000/dogs&quot;</span><span class="op">,</span> configObj)<span class="op">;</span></a></code></pre></div>
+<p><strong>Note</strong>: As a security precaution, most modern websites block the ability to use <code>fetch()</code> in console while on their website, so if you are testing out code in browser, make sure to be on a page like <code>index.html</code> or <code>sample_form.html</code>.</p>
+<h2 id="handling-what-happens-after">Handling What Happens After</h2>
+<p>Just like when we use <code>fetch()</code> to send GET requests, we have to handle responses to <code>fetch()</code>. As mentioned before, servers will send a [Response][response] that might include useful information. To access this information, we use a series of calls to <code>then()</code> which are given function <em>callbacks</em>.</p>
+<p>Building on the previous implementation we might write the following:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">let</span> formData <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-2" title="2">  <span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-3" title="3">  <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="op">};</span></a>
+<a class="sourceLine" id="cb13-5" title="5"></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="kw">let</span> configObj <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-7" title="7">  <span class="dt">method</span><span class="op">:</span> <span class="st">&quot;POST&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-8" title="8">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-9" title="9">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-10" title="10">    <span class="dt">Accept</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-11" title="11">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb13-12" title="12">  <span class="dt">body</span><span class="op">:</span> <span class="va">JSON</span>.<span class="at">stringify</span>(formData)<span class="op">,</span></a>
+<a class="sourceLine" id="cb13-13" title="13"><span class="op">};</span></a>
+<a class="sourceLine" id="cb13-14" title="14"></a>
+<a class="sourceLine" id="cb13-15" title="15"><span class="at">fetch</span>(<span class="st">&quot;http://localhost:3000/dogs&quot;</span><span class="op">,</span> configObj)</a>
+<a class="sourceLine" id="cb13-16" title="16">  .<span class="at">then</span>(<span class="kw">function</span> (response) <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-17" title="17">    <span class="cf">return</span> <span class="va">response</span>.<span class="at">json</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-18" title="18">  <span class="op">}</span>)</a>
+<a class="sourceLine" id="cb13-19" title="19">  .<span class="at">then</span>(<span class="kw">function</span> (object) <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-20" title="20">    <span class="va">console</span>.<span class="at">log</span>(object)<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-21" title="21">  <span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Notice that the first <code>then()</code> is passed a callback function that takes in <code>response</code> as an argument. This is a [<code>Response</code>][response] object, representing what the destination server sent back to us. This object has a built in method, <code>json()</code>, that converts the <em>body</em> of the response from JSON to a plain old JavaScript object. The result of <code>json()</code> is returned and made available in the <em>second</em> <code>then()</code>. In this example, whatever <code>response.json()</code> returns will be logged in <code>console.log(object)</code>.</p>
+<p>Sending the example above to our JSON server, once the request is successfully resolved, we would see the following log:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="op">{</span><span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span> <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span><span class="op">,</span> <span class="dt">id</span><span class="op">:</span> <span class="dv">6</span><span class="op">}</span> <span class="co">// Your ID will vary depending</span></a></code></pre></div>
+<p>The JSON server is sending back the data we sent, along with a new piece of data, an <code>id</code>, created by the server.</p>
+<h3 id="when-things-go-wrong-using-catch">When Things Go Wrong: Using <code>catch()</code></h3>
+<p>When something goes wrong in a <code>fetch()</code> request, JavaScript will look down the chain of <code>.then()</code> calls for something very similar to a <code>then()</code> called a <code>catch()</code>.</p>
+<p>When something goes wrong in a <code>fetch()</code>, the next <code>catch()</code> is called so that error work can be performed. Say for instance, we forgot to add the HTTP verb to our POST request, and the <code>fetch()</code> defaults to GET. By including a <code>catch()</code> statement, JavaScript doesn’t fail silently:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">let</span> formData <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-2" title="2">  <span class="dt">dogName</span><span class="op">:</span> <span class="st">&quot;Byron&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb15-3" title="3">  <span class="dt">dogBreed</span><span class="op">:</span> <span class="st">&quot;Poodle&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="op">};</span></a>
+<a class="sourceLine" id="cb15-5" title="5"></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co">// method: &quot;POST&quot; is missing from the object below</span></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="kw">let</span> configObj <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-8" title="8">  <span class="dt">headers</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-9" title="9">    <span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb15-10" title="10">    <span class="dt">Accept</span><span class="op">:</span> <span class="st">&quot;application/json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb15-11" title="11">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb15-12" title="12">  <span class="dt">body</span><span class="op">:</span> <span class="va">JSON</span>.<span class="at">stringify</span>(formData)<span class="op">,</span></a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="op">};</span></a>
+<a class="sourceLine" id="cb15-14" title="14"></a>
+<a class="sourceLine" id="cb15-15" title="15"><span class="at">fetch</span>(<span class="st">&quot;http://localhost:3000/dogs&quot;</span><span class="op">,</span> configObj)</a>
+<a class="sourceLine" id="cb15-16" title="16">  .<span class="at">then</span>(<span class="kw">function</span> (response) <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-17" title="17">    <span class="cf">return</span> <span class="va">response</span>.<span class="at">json</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-18" title="18">  <span class="op">}</span>)</a>
+<a class="sourceLine" id="cb15-19" title="19">  .<span class="at">then</span>(<span class="kw">function</span> (object) <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-20" title="20">    <span class="va">console</span>.<span class="at">log</span>(object)<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-21" title="21">  <span class="op">}</span>)</a>
+<a class="sourceLine" id="cb15-22" title="22">  .<span class="at">catch</span>(<span class="kw">function</span> (error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-23" title="23">    <span class="at">alert</span>(<span class="st">&quot;Bad things! Ragnarők!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-24" title="24">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-25" title="25">  <span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Sent to our JSON server from a page like <code>index.html</code>, we would receive an alert window pop-up and a logged message:</p>
+<pre class="text"><code>Failed to execute &#39;fetch&#39; on &#39;Window&#39;: Request with GET/HEAD method cannot have body.</code></pre>
+<p>While <code>catch()</code> may not stop <em>all</em> silent errors, it is useful to have as a way to gracefully handle unexpected results. We can use it, for instance, to display a message in the DOM for a user, rather than leave them with nothing.</p>
+<h2 id="challenge">Challenge</h2>
+<p>It’s time to practice writing your own POST request using <code>fetch()</code>. In <code>index.js</code>, write a method, <code>submitData</code>, that takes two strings arguments, one representing a user’s name and the other representing a user’s email.</p>
+<p>The first two tests mirror the behavior of the JSON server. As you write your solution, keep the server running to test your code. Open <code>index.html</code> in a browser to gain access to your <code>submitData</code> function in console.</p>
+<p><strong>Note</strong>: The tests in this lab need access to the <code>fetch()</code> request inside <code>submitData</code>. In order to give them access, write you solution so that <code>submitData</code> <em>returns</em> the <code>fetch()</code>. This will not change the behavior of your <code>fetch()</code>.</p>
+<h3 id="test-1---send-data">Test 1 - Send Data</h3>
+<p>In <code>submitData</code>, write a valid POST request to <code>http://localhost:3000/users</code> using <code>fetch()</code>. This request should include:</p>
+<ul>
+<li>The destination URL</li>
+<li>Headers for ‘Content-Type’ and ‘Accept’ set to ‘application/json’</li>
+<li>A body with the name and email passed in as arguments to <code>submitData</code>. These should be assigned to <code>name</code> and <code>email</code> keys within an object. This object should then be stringified.</li>
+</ul>
+<h3 id="test-2---handle-the-response">Test 2 - Handle the Response</h3>
+<p>On a successful POST request, expect the server to respond with a [<code>Response</code>][response] object. Just like we saw earlier in the dog example, the <code>body</code> property of this response will contain the data from the POST request along with a newly assigned <em>id</em>.</p>
+<p>Use a <code>then()</code> call to access the <code>Response</code> object and use its built in <code>json()</code> method to parse the contents of the <code>body</code> property. Use a <em>second</em> <code>then()</code> to access this newly converted object. From this object, find the new id and append this value to the DOM.</p>
+<p>Using <code>index.html</code> and the JSON server, if your code is successful, calling <code>submitData</code> in the console should cause an id number to appear on the page.</p>
+<h3 id="test-3---handle-errors">Test 3 - Handle Errors</h3>
+<p>For this final test, after the two <code>then()</code> calls on your <code>fetch()</code> request, add a <code>catch()</code>.</p>
+<p>When writing the callback function for your <code>catch()</code>, expect to receive an object on error with a property, <code>message</code>, containing info about what went wrong. Append this message to the DOM when <code>catch()</code> is called.</p>
+<h3 id="test-4---return-the-fetch-chain">Test 4 - Return the Fetch Chain</h3>
+<p>An amazing feature of <code>fetch()</code> is that if you <em>return</em> it, <em>other</em> functions can tack-on <em>their own</em> <code>then()</code> and <code>catch()</code> calls. While we won’t explore this amazing idea in this lesson, let’s learn good habits and be sure to return the <code>fetch()</code> chain from our <code>submitData</code> function.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Congratulations! You can now use <code>fetch()</code>: the browser inside your browser’s JavaScript environment to both:</p>
+<ul>
+<li>READ data using HTTP GET (whose response you can put into the DOM)</li>
+<li>SEND data using HTTP POST (whose response you can put into the DOM)</li>
+</ul>
+<p>With this we’re ready to to stitch server updates (reads <strong>and</strong> updates) with DOM updating and event handling. We’re almost ready to build the “Simple Liker” from scratch!</p>
+</body>
+</html>

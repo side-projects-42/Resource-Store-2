@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="interpolation-super-power">Interpolation Super Power</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Interpolate arbitrary code into a string</li>
+<li>Interpolate elements of an array into a single string</li>
+</ol>
+<h2 id="overview">Overview</h2>
+<p>We’ve talked about string interpolation, but let’s review quickly. String interpolation allows us to evaluate Ruby code, and inject the return value into the middle of a string. Normally, we see something like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">name = <span class="st">&quot;Bob&quot;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">puts <span class="st">&quot;Hello, </span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="co"># =&gt; &quot;Hello, Bob&quot;</span></a></code></pre></div>
+<p>We’re not just limited to injecting simple variables, though. We can do slightly fancier things if we just think of the pound sign/curly braces (<code>#{}</code>) as delimiters that allow us to run arbitrary code in the middle of a string. For example, there is nothing preventing us from doing something like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">puts <span class="st">&quot;1 plus 1 is </span><span class="ot">#{</span><span class="dv">1</span> + <span class="dv">1</span><span class="ot">}</span><span class="st">!&quot;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co"># =&gt; &quot;1 plus 1 is 2!&quot;</span></a></code></pre></div>
+<p>Almost anything is fair game here. In fact, we’re not even limited to just one interpolation per string. It’s perfectly acceptable for me to do the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">three = <span class="dv">2</span> + <span class="dv">1</span></a>
+<a class="sourceLine" id="cb3-2" title="2">name  = <span class="st">&quot;Bob&quot;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4">puts <span class="st">&quot;1 plus 1 is </span><span class="ot">#{</span><span class="dv">1</span> + <span class="dv">1</span><span class="ot">}</span><span class="st"> and 1 plus 2 is </span><span class="ot">#{</span>three<span class="ot">}</span><span class="st"> and 2 times 2 is</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="ot">#{</span><span class="dv">2</span> * <span class="dv">2</span><span class="ot">}</span><span class="st">. Oh, hey </span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">!&quot;</span></a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># =&gt; &quot;1 plus 1 is 2 and 1 plus 2 is 3 and 2 times 2 is 4. Oh, hey Bob!&quot;</span></a></code></pre></div>
+<p>This means we can do some pretty awesome stuff! Let’s say we wanted to print out a business card for our friend, Bob. We want it to look like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># =&gt; &quot;Name: Bob, Age: 46, Occupation: Juggler&quot;</span></a></code></pre></div>
+<p>At first blush, it might make sense to do something like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1">name       = <span class="st">&quot;Bob&quot;</span></a>
+<a class="sourceLine" id="cb5-2" title="2">age        = <span class="dv">46</span></a>
+<a class="sourceLine" id="cb5-3" title="3">occupation = <span class="st">&quot;Juggler&quot;</span></a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5">puts <span class="st">&quot;Name: </span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>age<span class="ot">}</span><span class="st">, Occupation: </span><span class="ot">#{</span>occupation<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb5-6" title="6"></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="co"># =&gt; &quot;Name: Bob, Age: 46, Occupation: Juggler&quot;</span></a></code></pre></div>
+<p>But what if, now, we also want to print a business card for Stefani? With this pattern, we’d need to start creating a whole bunch of variables:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">bob_name           = <span class="st">&quot;Bob&quot;</span></a>
+<a class="sourceLine" id="cb6-2" title="2">bob_age            = <span class="dv">46</span></a>
+<a class="sourceLine" id="cb6-3" title="3">bob_occupation     = <span class="st">&quot;Juggler&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">stefani_name       = <span class="st">&quot;Stefani&quot;</span></a>
+<a class="sourceLine" id="cb6-5" title="5">stefani_age        = <span class="dv">49</span></a>
+<a class="sourceLine" id="cb6-6" title="6">stefani_occupation = <span class="st">&quot;Firefighter&quot;</span></a>
+<a class="sourceLine" id="cb6-7" title="7"></a>
+<a class="sourceLine" id="cb6-8" title="8">puts <span class="st">&quot;Name: </span><span class="ot">#{</span>bob_name<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>bob_age<span class="ot">}</span><span class="st">, Occupation: </span><span class="ot">#{</span>bob_occupation<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co"># =&gt; &quot;Name: Bob, Age: 46, Occupation: Juggler&quot;</span></a>
+<a class="sourceLine" id="cb6-11" title="11"></a>
+<a class="sourceLine" id="cb6-12" title="12">puts <span class="st">&quot;Name: </span><span class="ot">#{</span>stefani_name<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>stefani_age<span class="ot">}</span><span class="st">, Occupation:</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="ot">#{</span>stefani_occupation<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb6-14" title="14"></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="co"># =&gt; &quot;Name: Stefani, Age: 49, Occupation: Firefighter&quot;</span></a></code></pre></div>
+<p>Three variables per person is going to get really, <em>really</em> messy once we want to print 5, 10, or 100 business cards. We can clean this up quite a bit by considering that name, age, and occupation really just comprise a list of attributes about a person. We have a really great data structure for representing lists in Ruby…an array!</p>
+<p>With that in mind, let’s represent our data as an array:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">bob     = [<span class="st">&quot;Bob&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;Juggler&quot;</span>]</a>
+<a class="sourceLine" id="cb7-2" title="2">stefani = [<span class="st">&quot;Stefani&quot;</span>, <span class="dv">49</span>, <span class="st">&quot;Firefighter&quot;</span>]</a></code></pre></div>
+<p>If we wanted to print out Bob’s name, we’d do it like this:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">name = bob[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3">puts name</a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="co"># =&gt; &quot;Bob&quot;</span></a></code></pre></div>
+<p>There’s an extra step there, though! As we know, we can run whatever Ruby code we want inside the <code>#{}</code> in a string. So we can just access the first element in the array directly within the string:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">puts <span class="st">&quot;</span><span class="ot">#{</span>bob[<span class="dv">0</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co"># =&gt; &quot;Bob&quot;</span></a></code></pre></div>
+<p>This is going to clean up our business card printer quite a bit!</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">bob     = [<span class="st">&quot;Bob&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;Juggler&quot;</span>]</a>
+<a class="sourceLine" id="cb10-2" title="2">stefani = [<span class="st">&quot;Stefani&quot;</span>, <span class="dv">49</span>, <span class="st">&quot;Firefighter&quot;</span>]</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4">puts <span class="st">&quot;Name: </span><span class="ot">#{</span>bob[<span class="dv">0</span>]<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>bob[<span class="dv">1</span>]<span class="ot">}</span><span class="st">, Occupation: </span><span class="ot">#{</span>bob[<span class="dv">2</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="co"># =&gt; &quot;Name: Bob, Age: 46, Occupation: Juggler&quot;</span></a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8">puts <span class="st">&quot;Name: </span><span class="ot">#{</span>stefani[<span class="dv">0</span>]<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>stefani[<span class="dv">1</span>]<span class="ot">}</span><span class="st">, Occupation: </span><span class="ot">#{</span>stefani[<span class="dv">2</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb10-9" title="9"></a>
+<a class="sourceLine" id="cb10-10" title="10"><span class="co"># =&gt; &quot;Name: Stefani, Age: 49, Occupation: Firefighter&quot;</span></a></code></pre></div>
+<p>Nice! But even this is a bit much. The fact that we have to repeat so much code is a pretty good sign that we need a printer method.</p>
+<p>So let’s do that! Let’s make a method, <code>#print_business_card</code>, that accepts an array representing a person, and then prints out their business card. First, we’ll create the basic method signature:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">def</span> print_business_card(person)</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw">end</span></a></code></pre></div>
+<p>Now, let’s re-use the code we’ve already written to print out the passed-in person’s details:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">def</span> print_business_card(person)</a>
+<a class="sourceLine" id="cb12-2" title="2">  puts <span class="st">&quot;Name: </span><span class="ot">#{</span>person[<span class="dv">0</span>]<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>person[<span class="dv">1</span>]<span class="ot">}</span><span class="st">, Occupation: </span><span class="ot">#{</span>person[<span class="dv">2</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">end</span></a></code></pre></div>
+<p>Something is missing, though. Our people need a phone number. Let’s change our people arrays to look like this:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1">bob = [<span class="st">&quot;Bob&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;Juggler&quot;</span>, <span class="st">&quot;555-555-5555&quot;</span>]</a></code></pre></div>
+<p>And in our <code>#print_business_card</code> method, let’s print that out on a second line:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">def</span> print_business_card(person)</a>
+<a class="sourceLine" id="cb14-2" title="2">  puts <span class="st">&quot;Name: </span><span class="ot">#{</span>person[<span class="dv">0</span>]<span class="ot">}</span><span class="st">, Age: </span><span class="ot">#{</span>person[<span class="dv">1</span>]<span class="ot">}</span><span class="st">, Occupation: </span><span class="ot">#{</span>person[<span class="dv">2</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb14-3" title="3">  puts <span class="st">&quot;Contact: </span><span class="ot">#{</span>person[<span class="dv">3</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<p>Now, let’s use this! Let’s print out business cards for Bob and Stefani:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb15-1" title="1">bob     = [<span class="st">&quot;Bob&quot;</span>, <span class="dv">46</span>, <span class="st">&quot;Juggler&quot;</span>, <span class="st">&quot;555-555-5555&quot;</span>]</a>
+<a class="sourceLine" id="cb15-2" title="2">stefani = [<span class="st">&quot;Stefani&quot;</span>, <span class="dv">49</span>, <span class="st">&quot;Firefighter&quot;</span>, <span class="st">&quot;555-111-1111&quot;</span>]</a>
+<a class="sourceLine" id="cb15-3" title="3"></a>
+<a class="sourceLine" id="cb15-4" title="4">print_business_card(bob)</a>
+<a class="sourceLine" id="cb15-5" title="5"></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="co"># =&gt; &quot;Name: Bob, Age: 46, Occupation: Juggler&quot;</span></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="co"># =&gt; &quot;Contact: 555-555-5555&quot;</span></a>
+<a class="sourceLine" id="cb15-8" title="8"></a>
+<a class="sourceLine" id="cb15-9" title="9">print_business_card(stefani)</a>
+<a class="sourceLine" id="cb15-10" title="10"></a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="co"># =&gt; &quot;Name: Stefani, Age: 49, Occupation: Firefighter&quot;</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="co"># =&gt; &quot;Contact: 555-111-1111&quot;</span></a></code></pre></div>
+<p>String interpolation is basically a super power. And like any good super power, mastery comes with practice! (That’s how Superman got so good at flying, right?) Your turn!</p>
+<h2 id="instructions">Instructions</h2>
+<ol type="1">
+<li>Define a method, <code>#display_rainbow</code>, in <code>lib/display_rainbow.rb</code>.</li>
+<li><code>#display_rainbow</code> must accept an argument, an array of colors. The tests call <code>#display_rainbow</code> with the following invocation: <code>display_rainbow(['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'])</code>.</li>
+<li><code>#display_rainbow</code> should print out the colors of the rainbow in the following format: <code>"R: red, O: orange, Y: yellow, G: green, B: blue, I: indigo, V: violet"</code> by reading from the array passed in as an argument. (For this lab it is OK to hardcode the uppercase letters.)</li>
+<li>It should accept an array containing the colors as an argument.</li>
+<li>Run <code>learn</code> locally until you pass.</li>
+<li>Submit the lab.</li>
+</ol>
+<p><code>colors</code> will be passed in as: <code>['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet']</code></p>
+<p>You must read from the <code>colors</code> argument and you can hardcode the order, there is no need to use <code>#each</code> or any loop. For example, given <code>letters = ["b","a","c"]</code> to print them in alphabetical order without iteration you could:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb16-1" title="1">letters = [<span class="st">&quot;b&quot;</span>,<span class="st">&quot;a&quot;</span>,<span class="st">&quot;c&quot;</span>]</a>
+<a class="sourceLine" id="cb16-2" title="2">puts <span class="st">&quot;The first letter in the alphabet is: </span><span class="ot">#{</span>letters[<span class="dv">1</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb16-3" title="3">puts <span class="st">&quot;The second letter in the alphabet is: </span><span class="ot">#{</span>letters[<span class="dv">0</span>]<span class="ot">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb16-4" title="4">puts <span class="st">&quot;The third letter in the alphabet is: </span><span class="ot">#{</span>letters[<span class="dv">2</span>]<span class="ot">}</span><span class="st">&quot;</span></a></code></pre></div>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/interpolation-super-power' title='Interpolation Super Power'>Interpolation Super Power</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

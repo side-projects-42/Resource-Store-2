@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      These tests are for determining the numbers of physical packages, physical
+      cores, and logical processors from the data returned by /proc/cpuinfo on
+      Linux hosts. Each text file in this directory is the output of
+      /proc/cpuinfo on various machines.
+    </p>
+    <p>
+      The names of all test files should be of the form
+      <code>Apack_Bcore_Clogical.txt</code> where <code>A</code>,
+      <code>B</code>, and <code>C</code> are integers or the character
+      <code>X</code>. For example, a single quad-core processor without
+      hyperthreading would correspond to <code>1pack_4core_4logical.txt</code>,
+      while two 6-core processors with hyperthreading would correspond to
+      <code>2pack_12core_24logical.txt</code>, and would be pretty sweet.
+    </p>
+    <p>
+      Using <code>A</code>, <code>B</code>, and <code>C</code> from above, code
+      processing the text in these files should produce the following expected
+      values:
+    </p>
+    <table>
+      <thead>
+        <tr class="header">
+          <th>property</th>
+          <th>value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td># physical packages</td>
+          <td><code>A</code></td>
+        </tr>
+        <tr class="even">
+          <td># physical cores</td>
+          <td><code>B</code></td>
+        </tr>
+        <tr class="odd">
+          <td># logical processors</td>
+          <td><code>C</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      (Obviously, the processing code should do this with no knowledge of the
+      filenames.)
+    </p>
+    <p>
+      If any of <code>A</code>, <code>B</code>, or <code>C</code> are the
+      character <code>X</code> instead of an integer, then processing code
+      should not return a value (return <code>null</code>, return
+      <code>nil</code>, raise an exception… whatever makes most sense for your
+      agent).
+    </p>
+    <p>
+      There is a malformed.txt file which is a random file that does not adhere
+      to any /proc/cpuinfo format. The expected result is <code>null</code> for
+      packages, cores and processors.
+    </p>
+  </body>
+</html>

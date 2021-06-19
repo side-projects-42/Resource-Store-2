@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>point</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="point-annotations">Point Annotations</h1>
+<p>Point annotations are used to mark points on the chart area. This can be useful for highlighting values that are of interest.</p>
+<p>```js chart-editor /* <block:options:0> <em>/ const options = { plugins: { autocolors: false, annotation: { annotations: { point1: { type: “point”, xValue: 1, yValue: 60, backgroundColor: “rgba(255, 99, 132, 0.25)”, }, }, }, }, }; /</em> </block:options> */</p>
+<p>/* <block:config:1> <em>/ const config = { type: “line”, data: { labels: [“January”, “February”, “March”, “April”, “May”, “June”, “July”], datasets: [ { label: “My First Dataset”, data: [65, 59, 80, 81, 56, 55, 40], fill: false, borderColor: “rgb(75, 192, 192)”, tension: 0.1, }, ], }, options, }; /</em> </block:config> */</p>
+<p>module.exports = { config, }; ```</p>
+<h2 id="configuration">Configuration</h2>
+<p>The following options are available for ellipse annotations.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;"><a href="../options#scriptable-options">Scriptable</a></th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#general"><code>display</code></a></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>true</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>adjustScaleRange</code></a></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>true</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>drawTime</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>'afterDatasetsDraw'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>xScaleID</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>'x'</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>yScaleID</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>'y'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>xValue</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>undefined</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>yValue</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>undefined</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>radius</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>10</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>borderColor</code></a></td>
+<td><a href="../options#color"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td><code>options.color</code></td>
+</tr>
+<tr class="even">
+<td><a href="#styling"><code>borderWidth</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>1</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>borderDash</code></a></td>
+<td><code>number[]</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>[]</code></td>
+</tr>
+<tr class="even">
+<td><a href="#styling"><code>borderDashOffset</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>0</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>backgroundColor</code></a></td>
+<td><a href="../options#color"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td><code>options.color</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="general">General</h3>
+<p>If one of the axes does not match an axis in the chart, the ellipse will take the entire chart dimension. The 4 coordinates, xMin, xMax, yMin, yMax are optional. If not specified, the ellipse is expanded out to the edges in the respective direction.</p>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 79%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>display</code></td>
+<td>Whether or not this annotation is visible</td>
+</tr>
+<tr class="even">
+<td><code>adjustScaleRange</code></td>
+<td>Should the scale range be adjusted if this annotation is out of range</td>
+</tr>
+<tr class="odd">
+<td><code>drawTime</code></td>
+<td>See <a href="../options#draw-time">drawTime</a></td>
+</tr>
+<tr class="even">
+<td><code>xScaleID</code></td>
+<td>ID of the X scale to bind onto, default is ‘x’.</td>
+</tr>
+<tr class="odd">
+<td><code>yScaleID</code></td>
+<td>ID of the Y scale to bind onto, default is ‘y’.</td>
+</tr>
+<tr class="even">
+<td><code>xValue</code></td>
+<td>X coordinate of the point in units along the x axis.</td>
+</tr>
+<tr class="odd">
+<td><code>yValue</code></td>
+<td>Y coordinate of the point in units along the y axis.</td>
+</tr>
+<tr class="even">
+<td><code>radius</code></td>
+<td>Size of the point in pixels</td>
+</tr>
+</tbody>
+</table>
+<h3 id="styling">Styling</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>borderColor</code></td>
+<td>Stroke color</td>
+</tr>
+<tr class="even">
+<td><code>borderWidth</code></td>
+<td>Stroke width</td>
+</tr>
+<tr class="odd">
+<td><code>borderDash</code></td>
+<td>Length and spacing of dashes. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash">MDN</a>.</td>
+</tr>
+<tr class="even">
+<td><code>borderDashOffset</code></td>
+<td>Offset for line dashes. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset">MDN</a>.</td>
+</tr>
+<tr class="odd">
+<td><code>backgroundColor</code></td>
+<td>Fill color</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

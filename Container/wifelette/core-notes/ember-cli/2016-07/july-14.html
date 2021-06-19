@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-14</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-07-14">ember-cli Meeting Notes - 2016-07-14</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Tobias Bieniek</li>
+<li>Jake Bixby</li>
+<li>Chad Hietala</li>
+<li>David Hamilton</li>
+<li>Stefan Penner</li>
+<li>Kelly Selden</li>
+<li>Katie Gengler</li>
+<li>Robert Jackson</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Nathan - Document merging <code>[BUGFIX master/beta]</code> back on a timeline.</li>
+<li>[ ] Stef - Find GitHub contact.</li>
+<li>[ ] Tobias - Changelog script updates minimizes milestones.</li>
+<li>[ ] Stef - RFC/plan for AssetGraph.</li>
+<li>[ ] Rob - Spike AssetGraph</li>
+<li>[ ] Tobias - Document plans for babel/eslint.</li>
+</ul>
+<h2 id="discussion">Discussion</h2>
+<h3 id="busted-release">Busted release</h3>
+<ul>
+<li>broccoli-caching-writer changed its sort method.</li>
+<li>Previously “undefined” had a consistent order, but not explicitly set.</li>
+<li>Now has guarantees.</li>
+<li>The change required proper use of <code>headerFiles</code> in broccoli-concat (downstream of BCW) to play nicely.</li>
+</ul>
+<h3 id="merge-vs.-cherry-pick">Merge vs. Cherry-Pick</h3>
+<p>Right now we are following both the “target a particular branch” as well as the cherry-pick strategy.</p>
+<ul>
+<li>Aim to minimize amount of time where differences exist in branches.</li>
+<li>When landing something on the beta/release branches as <code>[BUGFIX beta/release]</code> the merger should make sure it is merged back into master.</li>
+<li>Can’t guaranteedly be automated because of merge conflicts.</li>
+<li>Should get in touch with GitHub…</li>
+</ul>
+<h3 id="github">GitHub</h3>
+<ul>
+<li>We would like the ability to retarget a user’s PR to a different branch.</li>
+<li>Want to force things to be assigned to milestones before merging.</li>
+<li>Can we query the API by milestone?</li>
+</ul>
+<h3 id="broccoli-asset-rev">broccoli-asset-rev</h3>
+<ul>
+<li><a href="https://github.com/rickharrison/broccoli-asset-rev/issues/29#issuecomment-231413530">Has pretty serious problems with walking a graph.</a></li>
+<li>Need to come up with attack plan for this.</li>
+<li>Either update asset-rev to use the right library or replace.</li>
+<li>Investigate <a href="https://github.com/assetgraph/assetgraph">AssetGraph</a>.</li>
+</ul>
+<h3 id="eslintbabel">ESLint/Babel</h3>
+<ul>
+<li>Hard (/impossible) to use <code>npm link</code> with their current setup.</li>
+<li>Resolves relative to usage place instead.</li>
+<li>Can we work with them to improve how we dynamically load plugin packages?</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-02</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-data-weekly-call-2016-08-02">ember-data-weekly-call-2016-08-02</h1>
+<h1 id="attendees">Attendees</h1>
+<ul>
+<li>pangratz</li>
+<li>heroiceric</li>
+<li>igorT</li>
+</ul>
+<h1 id="agenda">Agenda</h1>
+<h3 id="ds-pushpayload-return"><code>ds-pushpayload-return</code></h3>
+<h5 id="summary">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/3576">Issue #3576</a></li>
+<li><a href="https://github.com/emberjs/data/pull/4110">PR #4110</a></li>
+<li>Feature has been in the pipeline for a while now</li>
+<li>Concerns raised by core team
+<ul>
+<li>API lock in for <code>store.pushPayload</code> to always return <code>DS.Model</code>s</li>
+<li>performance concerns since we can’t refactor in the future to not return materialized models</li>
+</ul></li>
+</ul>
+<h5 id="discussion-resolution">Discussion / Resolution</h5>
+<ul>
+<li>pangratz: I’ve opened <a href="https://github.com/emberjs/rfcs/pull/161">RFC#161</a> to get discussion going on how we can solve for different use cases</li>
+<li>possible drawback: references leaking into user space (might get stored in variables and stuff, which is not the intended usage of references)</li>
+</ul>
+<hr />
+<h3 id="bug-when-store.findrecordmodel-id-returns-different-id-in-response">Bug when <code>store.findRecord("model", id)</code> returns different id in response</h3>
+<h5 id="summary-1">Summary</h5>
+<ul>
+<li><a href="https://github.com/emberjs/data/issues/4414">Issue #4414</a></li>
+<li>Problem is that initially requested model stays in <code>loading</code> state</li>
+<li>Basic problem is that ember-data doesn’t support slugs out of the box</li>
+</ul>
+<h5 id="discussion-resolution-1">Discussion / Resolution</h5>
+<ul>
+<li>pangratz: <code>assert</code> that returned id is the same as the requested one? Would be a breaking change
+<ul>
+<li><a href="https://github.com/emberjs/data/blob/v2.7.0/addon/-private/system/store.js#L763-L765"><code>findMany</code> warns</a> when a requested <code>id</code> is not in the response</li>
+<li>should we support this use case? what can go wrong?</li>
+<li><code>warn</code> when this is the case, and provide link to add-on which adds <code>slug</code> support?
+<ul>
+<li><a href="https://github.com/bmac/ember-data-query-path">bmac/ember-data-query-path</a></li>
+<li><a href="https://ember-twiddle.com/ccfd163ccc045dda50b71976240aa883?fileTreeShown=false&amp;numColumns=3&amp;openFiles=services.store.js%2Cadapters.application.js%2Croutes.application.js">ember twiddle which showcases <code>findRecord</code> having slug support</a></li>
+</ul></li>
+</ul></li>
+<li>start working on an add-on to support the slug use case</li>
+</ul>
+<hr />
+<h3 id="features.json-features.md"><a href="https://github.com/emberjs/data/blob/master/cofig/features.json"><code>features.json</code></a> &amp;&amp; <a href="https://github.com/emberjs/data/blob/master/FEATURES.md"><code>FEATURES.md</code></a></h3>
+<ul>
+<li><code>ds-reset-attribute</code>
+<ul>
+<li>pangratz: enable for <code>2.8.0-beta.2</code>?
+<ul>
+<li>ping rwjblue and bmac about if a feature can be enabled during beta cycle (and not just at beginning), and bring this up in next meeting</li>
+</ul></li>
+</ul></li>
+</ul>
+</body>
+</html>

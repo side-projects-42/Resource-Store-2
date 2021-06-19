@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="kiss-metrics-log-file-processor---km-send">
+      Kiss Metrics Log File Processor - km-send
+    </h1>
+    <p>
+      This utility mimics the km ruby gem which processes a log file generated
+      by the km gem in a ruby application. It takes each line and sends it to
+      the Kiss Metrics server.
+    </p>
+    <p>
+      Unlike the ruby version of km-send, this has a couple of optional
+      arguments. Use “-h” for details.
+    </p>
+    <p>To use the utility, build the build/km-send.jar file and run it thus:</p>
+    <p>java -jar km-send.jar -h</p>
+    <p>
+      If an output directory is specified on the command line it will also write
+      each successful event to an archive file which can be used to replay the
+      events.
+    </p>
+    <p>Author: Bill Kayser, New Relic, Inc. copyright (c) 2012</p>
+  </body>
+</html>

@@ -1,49 +1,18 @@
-<html>
-  <head>
-    <style>
-      body {
-        margin: 0;
-      }
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>highlight-node-scaled</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
 
-      iframe {
-        position: absolute;
-        left: 83px;
-        top: 53px;
-        width: 200px;
-        height: 200px;
-      }
-    </style>
-
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function onload() {
-        if (window.eventSender) window.eventSender.setPageScaleFactor(2, 0, 0);
-        runTest();
-      }
-
-      function test() {
-        WebInspector.showPanel("elements");
-        WebInspector.panels.elements.treeOutline.addEventListener(
-          WebInspector.ElementsTreeOutline.Events.SelectedNodeChanged,
-          selectedNodeChanged,
-          this
-        );
-
-        function selectedNodeChanged(event) {
-          var node = event.data;
-          if (node.getAttribute("id") == "div")
-            RuntimeAgent.evaluate(
-              "dumpInspectorHighlightRects()",
-              InspectorTest.completeTest
-            );
-        }
-        InspectorTest.evaluateInConsole("inspect(iframeDivElement)");
-      }
-    </script>
-  </head>
-
-  <body onload="onload()">
-    <iframe src="resources/highlight-node-scaled-iframe.html"></iframe>
-  </body>
+</body>
 </html>

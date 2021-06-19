@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>
+      2011-01-08-installing-plugins-has-always-been-easy-now-its-fast-too
+    </title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      As one of the “men behind the scenes” of the Hudson project, a lot of my
+      contributions tend to be in writing articles or handling infrastructure,
+      anything to ensure folks like
+      <a href="http://twitter.com/kohsukekawa">Kohsuke</a> can continue to make
+      Hudson great without being distracted by inane system administration
+      tasks. This past week, one of my long-running infrastructure projects has
+      finally “gone live,” making downloads of plugins and packages faster than
+      ever!
+    </p>
+    <p>
+      Some number of months ago I became frustrated with the download speeds
+      reported by our international users, while the majority of Hudson’s
+      infrastructure is all colocated inside of the United States, there is a
+      <strong>huge</strong> number of Hudson users and developers who are both
+      in Europe and Asia.
+    </p>
+    <p>
+      After discussing things with some of the folks that run
+      <a href="http://download.opensuse.org">download.opensuse.org</a>, a
+      <a href="http://mirrorbrain.org">MirrorBrain</a> powered redirector, I set
+      out to build something similar. A mirroring network which could be easily
+      managed and help direct users’ downloads to the geographically closest and
+      fastest mirror available.
+    </p>
+    <h4 id="where-are-we-mirrored">Where are we mirrored?</h4>
+    <p>
+      Currently we have mirrors in a few locations within the United States, and
+      one overseas:
+    </p>
+    <ul>
+      <li>
+        Southwest U.S. (Utah) -
+        <em>Thanks to <a href="http://www.xmission.com">XMission</a></em>
+      </li>
+      <li>
+        Midwest U.S. (Chicago) -
+        <em>Thanks to the <a href="http://www.osuosl.org">OSUOSL</a></em>
+      </li>
+      <li>
+        Northeast U.S. (New York City) -
+        <em>Thanks to the <a href="http://www.osuosl.org">OSUOSL</a></em>
+      </li>
+      <li>
+        Germany -
+        <em
+          >Thanks to
+          <a href="http://www.aragost.com/">aragost Trifork ag</a></em
+        >
+      </li>
+    </ul>
+    <h4 id="using-the-mirrors">Using the mirrors</h4>
+    <p>
+      If you’ve updated or installed plugins from within Hudson lately, guess
+      what! You’re already using mirrors! In fact, since we flipped the switch
+      on January 7th, over <strong>800</strong> plugins and
+      <strong>600</strong> <code>hudson.war</code> updates have been downloaded
+      from the mirroring network!
+    </p>
+    <!--break-->
+    <p>
+      If you’d like to download directly from the mirrors, you can browse on
+      over to
+      <a href="http://mirrors.hudson-labs.org">mirrors.hudson-labs.org</a>,
+      which will redirect your request for specific files to the appropriate
+      mirror based on your IP address. It’s just that easy!
+    </p>
+    <p>
+      We are currently working with more providers to add additional mirrors,
+      hopefully we’ll have an Asian mirror online within the next two weeks and
+      if we’re lucky, we’ll find some more European mirrors too.
+    </p>
+    <hr />
+    <p>
+      I would like to thank the <strong>immensely</strong> helpful and
+      supportive engineers over at the
+      <a href="http://www.osuosl.org">OSUOSL</a> for offering gratis tech
+      support, suggestions, and bandwidth to serve as our
+      <em>primary</em> mirror.
+    </p>
+    <hr />
+  </body>
+</html>

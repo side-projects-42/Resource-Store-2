@@ -1,61 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      var globalVar = { b: 1 };
-
-      function slave(x) {
-        var y = 20;
-        debugger;
-      }
-
-      function testFunction() {
-        var localObject = { a: 300 };
-        slave(4000);
-      }
-
-      var test = function () {
-        InspectorTest.startDebuggerTest(step1);
-
-        function step1() {
-          InspectorTest.runTestFunctionAndWaitUntilPaused(step2);
-        }
-
-        function step2(callFrames) {
-          InspectorTest.evaluateInConsole(
-            "x + y + globalVar.b",
-            step3.bind(null, callFrames)
-          );
-        }
-
-        function step3(callFrames, result) {
-          InspectorTest.addResult(
-            "Evaluated script on the top frame: " + result
-          );
-          var pane = WebInspector.panels.sources.sidebarPanes.callstack;
-          pane._placardSelected(pane.placards[1]);
-          InspectorTest.runAfterPendingDispatches(step4);
-        }
-
-        function step4() {
-          InspectorTest.evaluateInConsole("localObject.a + globalVar.b", step5);
-        }
-
-        function step5(result) {
-          InspectorTest.addResult(
-            "Evaluated script on the calling frame: " + result
-          );
-          InspectorTest.completeDebuggerTest();
-        }
-      };
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that evaluation in console works fine when script is paused. It also
-      checks that stack and global variables are accessible from the console.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-eval-while-paused</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that evaluation in console works fine when script is paused. It also checks that stack and global variables are accessible from the console.</p>
+</body>
 </html>

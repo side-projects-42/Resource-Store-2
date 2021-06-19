@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>_common_ticks</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="common-tick-options-to-all-cartesian-axes">Common tick options to all cartesian axes</h3>
+<p>Namespace: <code>options.scales[scaleId].ticks</code></p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>align</code></td>
+<td><code>string</code></td>
+<td><code>'center'</code></td>
+<td>The tick alignment along the axis. Can be <code>'start'</code>, <code>'center'</code>, or <code>'end'</code>.</td>
+</tr>
+<tr class="even">
+<td><code>crossAlign</code></td>
+<td><code>string</code></td>
+<td><code>'near'</code></td>
+<td>The tick alignment perpendicular to the axis. Can be <code>'near'</code>, <code>'center'</code>, or <code>'far'</code>. See <a href="/axes/cartesian/#tick-alignment">Tick Alignment</a></td>
+</tr>
+<tr class="odd">
+<td><code>sampleSize</code></td>
+<td><code>number</code></td>
+<td><code>ticks.length</code></td>
+<td>The number of ticks to examine when deciding how many labels will fit. Setting a smaller value will be faster, but may be less accurate when there is large variability in label length.</td>
+</tr>
+<tr class="even">
+<td><code>autoSkip</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>If true, automatically calculates how many labels can be shown and hides labels accordingly. Labels will be rotated up to <code>maxRotation</code> before skipping any. Turn <code>autoSkip</code> off to show all labels no matter what.</td>
+</tr>
+<tr class="odd">
+<td><code>autoSkipPadding</code></td>
+<td><code>number</code></td>
+<td><code>3</code></td>
+<td>Padding between the ticks on the horizontal axis when <code>autoSkip</code> is enabled.</td>
+</tr>
+<tr class="even">
+<td><code>includeBounds</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Should the defined <code>min</code> and <code>max</code> values be presented as ticks even if they are not “nice”.</td>
+</tr>
+<tr class="odd">
+<td><code>labelOffset</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Distance in pixels to offset the label from the centre point of the tick (in the x-direction for the x-axis, and the y-direction for the y-axis). <em>Note: this can cause labels at the edges to be cropped by the edge of the canvas</em></td>
+</tr>
+<tr class="even">
+<td><code>maxRotation</code></td>
+<td><code>number</code></td>
+<td><code>50</code></td>
+<td>Maximum rotation for tick labels when rotating to condense labels. Note: Rotation doesn’t occur until necessary. <em>Note: Only applicable to horizontal scales.</em></td>
+</tr>
+<tr class="odd">
+<td><code>minRotation</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Minimum rotation for tick labels. <em>Note: Only applicable to horizontal scales.</em></td>
+</tr>
+<tr class="even">
+<td><code>mirror</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Flips tick labels around axis, displaying the labels inside the chart instead of outside. <em>Note: Only applicable to vertical scales.</em></td>
+</tr>
+<tr class="odd">
+<td><code>padding</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Padding between the tick label and the axis. When set on a vertical axis, this applies in the horizontal (X) direction. When set on a horizontal axis, this applies in the vertical (Y) direction.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

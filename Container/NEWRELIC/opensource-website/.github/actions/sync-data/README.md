@@ -1,6 +1,4 @@
-<p align="center">
-  <a href="https://github.com/actions/javascript-action/actions"><img alt="javscript-action status" src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"></a>
-</p>
+[![javscript-action status](https://github.com/actions/javascript-action/workflows/units-test/badge.svg)](https://github.com/actions/javascript-action/actions)
 
 # Create a JavaScript Action
 
@@ -8,7 +6,7 @@ Use this template to bootstrap the creation of a JavaScript action.:rocket:
 
 This template includes tests, linting, a validation workflow, publishing, and versioning guidance.
 
-If you are new, there's also a simpler introduction. See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+If you are new, there’s also a simpler introduction. See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
 
 ## Create an action from this template
 
@@ -18,22 +16,18 @@ Click the `Use this Template` and provide the new repo details for your action
 
 Install the dependencies
 
-```bash
-$ npm install
-```
+    $ npm install
 
 Run the tests :heavy_check_mark:
 
-```bash
-$ npm test
+    $ npm test
 
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
+     PASS  ./index.test.js
+      ✓ throws invalid number (3ms)
+      ✓ wait 500 ms (504ms)
+      ✓ test runs (95ms)
 
-...
-```
+    ...
 
 ## Change action.yml
 
@@ -47,21 +41,19 @@ See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-
 
 Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
 
-```javascript
-const core = require('@actions/core');
-...
+    const core = require('@actions/core');
+    ...
 
-async function run() {
-  try {
-      ...
-  }
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
+    async function run() {
+      try {
+          ...
+      }
+      catch (error) {
+        core.setFailed(error.message);
+      }
+    }
 
-run()
-```
+    run()
 
 See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
 
@@ -73,30 +65,22 @@ Actions are run from GitHub repos. Packaging the action will create a packaged a
 
 Run package
 
-```bash
-npm run package
-```
+    npm run package
 
 Since the packaged index.js is run from the dist folder.
 
-```bash
-git add dist
-```
+    git add dist
 
 ## Create a release branch
 
-Users shouldn't consume the action from master since that would be latest code and actions can break compatibility between major versions.
+Users shouldn’t consume the action from master since that would be latest code and actions can break compatibility between major versions.
 
 Checkin to the v1 release branch
 
-```bash
-$ git checkout -b v1
-$ git commit -a -m "v1 release"
-```
+    $ git checkout -b v1
+    $ git commit -a -m "v1 release"
 
-```bash
-$ git push origin v1
-```
+    $ git push origin v1
 
 Your action is now published! :rocket:
 
@@ -106,10 +90,8 @@ See the [versioning documentation](https://github.com/actions/toolkit/blob/maste
 
 You can now consume the action by referencing the v1 branch
 
-```yaml
-uses: actions/javascript-action@v1
-with:
-  milliseconds: 1000
-```
+    uses: actions/javascript-action@v1
+    with:
+      milliseconds: 1000
 
 See the [actions tab](https://github.com/actions/javascript-action/actions) for runs of this action! :rocket:

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="drag-and-drop-change-history">Drag and Drop Change History</h1>
+<h3 id="section">3.4.1</h3>
+<ul>
+<li>No changes.</li>
+</ul>
+<h3 id="section-1">3.4.0</h3>
+<ul>
+<li>#2529889 Example for Delegate Drag and Drop has wrong parameters</li>
+<li>#2529905 Using DDNodeScroll with DDDelegate causes JS error in Safari</li>
+<li>#2530050 Incorrect documentation</li>
+<li>#2530451 DragDrop enhancement - ability to use dd with non-node objects.</li>
+<li>#2530576 change notest needed in history file</li>
+</ul>
+<h3 id="section-2">3.3.0</h3>
+<ul>
+<li>#2529382 DD Delegate breaks when a draggable is nested and uses a handle</li>
+<li>#2529407 Add tickAlignX and tickAlignY events to Y.Plugin.DDConstrained</li>
+<li>#2529409 [Pull Request] - #2529407 Add tickAlignX and tickAlignY events to Y.Plugin.DDConstrained</li>
+<li>#2529463 Screen goes red in some YUI 3 D&amp;D examples in IE=8 doc mode</li>
+<li>#2529469 Reset _lastTickYFired/_lastTickXFired on drag end</li>
+<li>#2529470 [Pull Request] - #2529469 Reset _lastTickYFired/_lastTickXFired on drag end</li>
+<li>#2529484 DD example not working when run from local directory or hosted on YUIbuild</li>
+<li>#2529577 Slider thumb frozen on mousedown+mousemove in IE9</li>
+</ul>
+<h3 id="section-3">3.2.0</h3>
+<p><strong>IMPORTANT</strong> dd-plugin and dd-plugin-drop are no longer bundled with the dd module. They are now official plugins and need to be “used” on their own.</p>
+<p>Moved to new Gesture support. DD now works off both mouse events and touch events natively with the “drag-gestures” plugin that is conditionally loaded when touch events are found on the page.</p>
+<ul>
+<li>#2528693 3.1.0PR1 DD Examples fail in Opera 10.5</li>
+<li>#2528765 DD uses window references</li>
+<li>#2528797 Drag and drop breaks input text select()</li>
+<li>#2528959 Mouseenter event bubbles up when using both modules dd-plugin and dd-constrain</li>
+<li>#2529070 Drop destroy is throwing errors when the node is removed with .remove(true) using dd delegate</li>
+<li>#2529094 DD hard codes CSS prefix</li>
+</ul>
+<h3 id="section-4">3.1.0</h3>
+<ul>
+<li>#2527964 DD constrain2node cached position causes misalignment when that node is moved</li>
+<li>#2528229 Configuration to override region caching in Constrain plugin</li>
+<li>#2528395 Add a DD.Drag delegate class</li>
+<li>#2528457 Add invalid selector check to Delegate</li>
+<li>#2528488 Delegate errors without Drop plugin</li>
+<li>#2528509 Drag and drop slow on linux ff3.5.6</li>
+<li>#2528539 drag:start should fire before drag:enter</li>
+<li>#2528540 DDConstrained using cacheRegion set to false throws js errors when drag starts</li>
+<li>#2528560 drag:over event is not firing when useShim is false</li>
+<li>#2528578 DDConstrained has no default constraining config</li>
+<li>#2528585 drag:dropmiss being fired on simple click</li>
+<li>#2528592 Add throttle support to DD mousemove</li>
+<li>#2528596 Support Node instances as handles in Drag</li>
+<li>#2528607 Drop events not firing when attached to a Drag target</li>
+<li>#2528608 Default Drag throttleTime should be -1</li>
+<li>#2528613 dragNode XY not sync with the mouse if it has its dimensions changed on drag:start</li>
+</ul>
+<h3 id="section-5">3.0.0</h3>
+<ul>
+<li>#2528096 Updated initialization routine so plugins load before DD attachs to the node.</li>
+<li>#2528119 Added SELECT selector to invalidHandles.</li>
+<li>#2528124 Fixed issue with creating more than one DD instance on a node.</li>
+<li>#2528149 Fixed _noShim use case</li>
+</ul>
+<h3 id="beta1">3.0.0 Beta1</h3>
+<p>Added a plugin to support Window and Node based scrolling</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDWinScroll);
+
+var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDNodeScroll, {
+    node: &#39;#some-parent-with-scroll&#39;
+});</code></pre>
+<p>Proxy and Constrained were moved to the plugin modal, there are some syntax changes:</p>
+<p>PR2 - Proxy:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;,
+    proxy: true,
+    moveOnEnd: false
+});</code></pre>
+<p>Current - Proxy:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDProxy, {
+    moveOnEnd: false
+});</code></pre>
+<p>PR2 - Constrained:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;,
+    constrain2node: &#39;#wrap&#39;
+});</code></pre>
+<p>Current - Constrained:</p>
+<pre><code>var dd = new Y.DD.Drag({
+    node: &#39;#drag&#39;
+}).plug(Y.plugin.DDConstrained, {
+    constrain2node: &#39;#wrap&#39;
+});</code></pre>
+<p>Converted Everything to use setXY now that FF2 is not supported. Performance tweaks to dragging over a target.</p>
+<h3 id="pr2">3.0.0 PR2</h3>
+<p>Added bubbles config option to help with extending later. Updated _checkRegion to perform Bottom, Top, Left, Right validation instead of Top, Bottom, Left, Right</p>
+<h3 id="pr1">3.0.0 PR1</h3>
+<p>Known Issues:</p>
+<ul>
+<li><p>Firefox 2.x: Proxy Drags with handles inside an element with overflow: hidden will not target properly.</p></li>
+<li><p>All: Scrolling Module not available as of this release.</p></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>migration</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="migration-guide">Migration Guide</h1>
+    <blockquote>
+      <p>
+        The best reference to upgrade or getting started are
+        <a href="https://auth.nuxtjs.org/">Docs</a> and
+        <a href="https://github.com/nuxt-community/auth-module/">Demo example</a
+        >.
+      </p>
+    </blockquote>
+    <h2 id="from-4.0.0-rc.3-to-4.0.0">From 4.0.0-rc.3 to 4.0.0</h2>
+    <h3 id="multi-strategy">Multi strategy</h3>
+    <ul>
+      <li>
+        You have to move <code>auth.endpoints</code> into
+        <code>auth.strategies.local.endpoints</code>:
+      </li>
+    </ul>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode diff"
+      ><code class="sourceCode diff"><a class="sourceLine" id="cb1-1" title="1">auth: {</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="va">+ strategies: {</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    local: {</a>
+<a class="sourceLine" id="cb1-4" title="4">      endpoints: {</a>
+<a class="sourceLine" id="cb1-5" title="5">        // ...</a>
+<a class="sourceLine" id="cb1-6" title="6">      }</a>
+<a class="sourceLine" id="cb1-7" title="7">    }</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="va">+ }</span></a>
+<a class="sourceLine" id="cb1-9" title="9">}</a></code></pre>
+    </div>
+    <ul>
+      <li>
+        For choosing login strategy a new method
+        <code>$auth.loginWith(provider[,options])</code> is available.
+      </li>
+    </ul>
+    <h3 id="state-access">State access</h3>
+    <ul>
+      <li>
+        <p>
+          The <code>$auth.user</code> and <code>$auth.loggedIn</code> reactive
+          properties are the recommended way to access user info.
+        </p>
+      </li>
+      <li>
+        <p>For low-level state you can use <code>$auth.$storage</code>.</p>
+      </li>
+      <li>
+        <p>
+          Token can be retrieved using <code>$auth.getToken(provider)</code>.
+        </p>
+      </li>
+    </ul>
+    <h3 id="plugins-depending-on-auth">Plugins depending on $auth</h3>
+    <p>
+      If you have any plugin that needs extending <code>$auth</code> you have to
+      pass it into <code>auth.plugins[]</code> option instead of top level
+      <code>plugins[]</code> inside <code>nuxt.config.js</code>.
+    </p>
+    <h3 id="option-changes">Option changes</h3>
+    <p>Please refer to the new docs.</p>
+    <h2 id="from-3.x-to-4.x">From 3.x to 4.x</h2>
+    <p>
+      4.x is a new rewrite of Auth module. This release introduces some new
+      features but also includes breaking changes with both usage and options,
+      this guide will allow you to easily upgrade from 3.x to 4.x
+    </p>
+    <h3 id="behavioural-changes">Behavioural changes</h3>
+    <ul>
+      <li>
+        The module now watches any changes from <code>loggedIn</code> and
+        automatically redirects users on login and logout.
+      </li>
+    </ul>
+    <p>
+      <strong>NOTE :</strong>
+      <em
+        >User will be redirected using <code>login</code> and
+        <code>home</code> from <code>redirect</code> options</em
+      >
+    </p>
+    <h3 id="migration-example">Migration example</h3>
+    <p>
+      Any store actions should be replaced with new global
+      <code>$auth</code> instance. The best reference is official Docs for new
+      usage.
+    </p>
+    <p>
+      If you were using promise acceptance to redirect users after login and
+      logout like this:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// Login example</span></a>
+<a class="sourceLine" id="cb2-2" title="2">store</a>
+<a class="sourceLine" id="cb2-3" title="3">  .<span class="at">dispatch</span>(<span class="st">&quot;auth/login&quot;</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="dt">fields</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">      <span class="dt">username</span><span class="op">:</span> <span class="st">&quot;your_username&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="dt">password</span><span class="op">:</span> <span class="st">&quot;your_password&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="op">}</span>)</a>
+<a class="sourceLine" id="cb2-9" title="9">  .<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="kw">this</span>.<span class="va">$router</span>.<span class="at">replace</span>(<span class="st">&quot;/&quot;</span>))<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-10" title="10"></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="co">// Logout example</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="va">store</span>.<span class="at">dispatch</span>(<span class="st">&quot;auth/logout&quot;</span>).<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="kw">this</span>.<span class="va">$router</span>.<span class="at">replace</span>(<span class="st">&quot;/login&quot;</span>))<span class="op">;</span></a></code></pre>
+    </div>
+    <p>Now you can do this:</p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// Login example</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">login</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">data</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="dt">username</span><span class="op">:</span> <span class="st">&quot;your_username&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">password</span><span class="op">:</span> <span class="st">&quot;your_password&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-8" title="8"></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">// Logout example</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">logout</span>()<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="middleware-changes">Middleware changes</h3>
+    <ul>
+      <li>
+        <code>auth</code> middleware now manages both authenticated and
+        unauthenticated user redirection
+      </li>
+      <li>
+        <code>no-auth</code> middleware have been <strong>removed</strong> and
+        merged into <code>auth</code> middleware
+      </li>
+    </ul>
+    <h3 id="migration-example-1">Migration example</h3>
+    <h4 id="authenticated-and-unauthenticated-redirection">
+      Authenticated and unauthenticated redirection
+    </h4>
+    <p>If you were using the following configuration in 3.x :</p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="co">// nuxt.config.js</span></a>
+<a class="sourceLine" id="cb4-2" title="2">router<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">middleware</span><span class="op">:</span> [<span class="st">&quot;auth&quot;</span><span class="op">,</span> <span class="st">&quot;no-auth&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>This is the corresponding configuration in 4.x :</p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// nuxt.config.js</span></a>
+<a class="sourceLine" id="cb5-2" title="2">router<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">middleware</span><span class="op">:</span> [<span class="st">&quot;auth&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <h4 id="unauthenticated-redirection-only">
+      Unauthenticated redirection only
+    </h4>
+    <p>If you were using the following configuration in 3.x :</p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// nuxt.config.js</span></a>
+<a class="sourceLine" id="cb6-2" title="2">router<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">middleware</span><span class="op">:</span> [<span class="st">&quot;auth&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>This is the corresponding configuration in 4.x :</p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// nuxt.config.js</span></a>
+<a class="sourceLine" id="cb7-2" title="2">auth<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">redirect</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="dt">login</span><span class="op">:</span> <span class="kw">false</span></a>
+<a class="sourceLine" id="cb7-5" title="5">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="op">},</span></a>
+<a class="sourceLine" id="cb7-7" title="7">router<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-8" title="8">  <span class="dt">middleware</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb7-9" title="9">    <span class="st">&#39;auth&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-10" title="10">  ]</a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="op">}</span></a></code></pre>
+    </div>
+    <h4 id="authenticated-redirection-only">Authenticated redirection only</h4>
+    <p>If you were using the following configuration in 3.x :</p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1">router<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">middleware</span><span class="op">:</span> [<span class="st">&quot;no-auth&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>This is the corresponding configuration in 4.x :</p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="co">// nuxt.config.js</span></a>
+<a class="sourceLine" id="cb9-2" title="2">auth<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="dt">redirect</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">home</span><span class="op">:</span> <span class="kw">false</span></a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="op">},</span></a>
+<a class="sourceLine" id="cb9-7" title="7">router<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-8" title="8">  <span class="dt">middleware</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb9-9" title="9">    <span class="st">&#39;auth&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-10" title="10">  ]</a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="op">}</span></a></code></pre>
+    </div>
+  </body>
+</html>

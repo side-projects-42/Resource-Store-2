@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>november-13</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember.js-core-team-2015-11-13">Ember.js Core Team 2015-11-13</h1>
+<h4 id="agenda">Agenda</h4>
+<ul>
+<li>LS: A few things</li>
+<li>GC: Glimmer2</li>
+<li>SP KS, V8 team</li>
+<li>MB: 2.3 branch</li>
+<li>SP: ember-cli</li>
+</ul>
+<h4 id="minutes">Minutes</h4>
+<p>Attendees: MB, MM, LS, EF, AM, GC, KS, YK, SP</p>
+<p>LS: We’re planning travel for the Jan F2F, weekend of the 16th</p>
+<p>LS: Also EmberConf items</p>
+<p>GC: Still pushing on Glimmer2, planned to work in Ember integration this week but ran into some hiccups. Start focusing on improvements.</p>
+<p>YK: Two minute version, we’re in the same place as the last two meetings, but implementation is better <code>if</code>, <code>#if</code> is working. First implementation was a loop over statements, now we have a VM that does that. We’re making the impl faster and better, but no integration.</p>
+<p>YK: One good nugget is that there are a lot of components heavily used with literals. fa-icon for instance. The infrastructure we built allows us to just replace the attrs.foo inside the component with the string and just inline the static result. Subsequent statements that go through the statement can skip the lookups and use the inlined result.</p>
+<p>YK: A component lookup can’t change, so can can inline/cache the lookups as well.</p>
+<p>GC: Not much to add on Yehuda, the tl;dr is we went from glimmer 1 where the only plausible optimization was on the server to glimmer where we actually have a runtime and can do runtime optimization. This week we’re more honest about writing a runtime VM and can do more runtime optimization.</p>
+<p>GC: The if helper is completed, if you look at it as generate block helper, it is only that cannot change scope etc. We can inline statements and avoid any dynamic bits.</p>
+<p>YK: we could start doing integration, but robert is definitely an accellerant. If he can get us to the starting gate it can get done faster.</p>
+<p>YK: certain problems like the inlining work require two brains. We’ve just been focusing there. We do need to start working on integration though.</p>
+<p>KS: Looked at Bustle, found that there was a second of rendering and half of it was compiling JITed code. In 1.12 our views were a big source of this, in Glimmer the algorithm is better but there are hooks can can cause the same JIT churn. Chrome may do more work and have more memory pressure.</p>
+<p>KS: We got some confirmation of suspected things. Some are not ideal, there were suggestions that we do things to keep methods from JITing. Prevent methods from inlining.</p>
+<p>SP: We worked with a few engineers to look at tracing, and looking at combining the profiler with tracing. The V8 team wants to unify these things in the future, there is a tool for IE that has done this for a while.</p>
+<p>KS: there were three modes for a method: monomophic, branching for shape, and dynamic. There was a number of roughly five for getting to dynamic.</p>
+<p>SP: They did feel that the amount of compilation they were doing was unreasonable for something like Ember, regardless. They were going to look into the extra compilation stuff. We’re hitting a cliff somewhere and they’re looking into it.</p>
+<p>KS: There was something about the initial module/require pattern as well.</p>
+<p>SP: The have a two pass parser that trolls our module system- they walk it once optimistically assuming most code is not too important, then when you require at the end it just does a full parse anyway.</p>
+<p>KS: The performance numbers for pre-parse were surprisingly high to them</p>
+<p>YK: We just wanted to ensure our case was treated reasonably and legitimately</p>
+<p>SP: Yeah the V8 team felt it was wrong that 50% of the time spent was out of our hands.</p>
+<p>SP: They said give me a benchmark, and they will make it fast. So I’ll try to assemble that.</p>
+<p>SP: KS and I will keep looking for low-hanging fruit, and as long as YK and GC keep working we will be in a really good place.</p>
+<p>KS: glimmer 1 just got pwned hard by shape changes and JIT</p>
+<p>MB: last thing is 2.3 branches this weekend and early next week</p>
+<p>YK: I’ve like to land GC’d instrumentation stuff, it is very small</p>
+<p>YK: The only things we added were per-user interaction KS: there is overhead from the helper labels that is noticeable</p>
+<p>SP: Their work isn’t in a hot loop, even if it is 10x worse it won’t be too bad</p>
+<p>TD: GC let’s sync up on fast boot</p>
+<p>SP: We released ember-cli, we owned ourselves on some things, and there is an npm3 bug they are working on that makes npm3 a bit non-deterministic.</p>
+<p>SP: Toward the end of next week we should get 2.x out. resovlers etc will all come off npm, all blueprints from their respective addons (like Ember).</p>
+<p>SP: We’re working on a guide to getting the best of rebuild times in ember-cli.</p>
+<p>SP: I’m going to look at chad’s work after ember-cli output, and look at the tree shaking etc. Hopefully 10x faster builds by emberconf and all this tree shaking stuff.</p>
+<p>KS: There is some overlap with the angular team’s work. They have their own mergeTrees etc</p>
+<p>SP: They have a diffing step, I think further work removes the need for diffing and they seem less sure. I think we can do all these performance improvements without changing the public APIs and overhauling, we can slowly improve, their team has a similar end destination but is maybe less interested in migrating to it incrementally.</p>
+<p>SP: One last thing on broccoli is merge trees work, it is done, but not merged yet. I need to rewrite it for Jo. Ember’s build goes from 800 -&gt; 300ms with it.</p>
+<p>KS: what about my sourcemap thing?</p>
+<p>SP: I haven’t looked yet, maybe this weekend.</p>
+<p>KS: meanders into: wanting to make the run loops not flush sync, users cannot internalize the right usage and shouldn’t have to</p>
+<p>GC: last week we had to revert our build for ember-cli, still not sure why</p>
+<p>SP: yeah just upgrade ember-cli and npm shinkwrap –dev with npm 3, and things should work</p>
+<p>SP: feature.json needs to be in the babel cache for ember builds. Rob was going to do this, I’ll maybe take a look.</p>
+</body>
+</html>

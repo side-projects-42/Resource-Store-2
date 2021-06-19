@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>regression-checklist</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="regression-checklist">Regression checklist</h1>
+<p>This is a checklist, to keep a record of subtle bugs in the AMI that can be hard to spot.<br />
+Before publishing any AMI, this list should be consulted first.</p>
+<p><em>Note that the bootstrapper does all the listed things for you. However, regressions are always a possibility.</em></p>
+<ul>
+<li>EBS root volume, should be set to “Delete on Termination”</li>
+<li>The system log on instance startup should contain no error other than “hostname: the specified hostname is invalid”</li>
+<li>The AWS credentials should not be obtainable from the root volume (see below for instructions)</li>
+<li>The ssh hostkeys of the bootstrapping machine are copied into the image by debootstrap<br />
+to remove them properly they have to be shredded with <code>shred --remove FILENAME</code></li>
+<li>There should be no <code>.*_history</code> files in any home directories</li>
+<li>The default locale should be generated</li>
+<li>A timezone should be set</li>
+<li>The aptitude sources list should at least contain a security update mirror and a main repository mirror</li>
+<li>There should be no broken dependencies or un-upgraded packages</li>
+<li>eth0 should be configured</li>
+<li>The aptitude package cache should be deleted</li>
+<li>The motd contains a reference to the host (debootstrap put it there), that should be removed</li>
+</ul>
+<p>To check a volume for any sensitive data run the following commands:</p>
+<pre><code>apt-get update
+apt-get install binutils
+strings /dev/xvda1 | grep -A10 -B10 &#39;AWS_|EC2_&#39;</code></pre>
+</body>
+</html>

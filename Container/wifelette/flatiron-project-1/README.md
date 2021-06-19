@@ -1,14 +1,14 @@
-# Candidates
+Candidates
+==========
 
-The Candidates gem helps prospective employers quickly scan the activity of a candidate on GitHub. Let your engineers stay in the Command Line where they're comfy, while still being able to help with HR tasks.
+The Candidates gem helps prospective employers quickly scan the activity of a candidate on GitHub. Let your engineers stay in the Command Line where they’re comfy, while still being able to help with HR tasks.
 
-## Installation
+Installation
+------------
 
-Add this line to your application's Gemfile:
+Add this line to your application’s Gemfile:
 
-```ruby
-gem 'candidates'
-```
+    gem 'candidates'
 
 And then execute:
 
@@ -18,24 +18,29 @@ Or install it yourself as:
 
     $ gem install candidates
 
-## Usage
+Usage
+-----
 
-To run the `candidates` gem, navigate to the directory. There's a helpful wizard, which is the best way to navigate the program. The command is simply `wizard` (so `./bin/candidates wizard` for the whole thing), and you're off to the races!
+To run the `candidates` gem, navigate to the directory. There’s a helpful wizard, which is the best way to navigate the program. The command is simply `wizard` (so `./bin/candidates wizard` for the whole thing), and you’re off to the races!
 
-## Development
+Development
+-----------
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## Contributing
+Contributing
+------------
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/wifelette/candidates. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
-## License
+License
+-------
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
-## Code of Conduct
+Code of Conduct
+---------------
 
 Everyone interacting in the Candidates project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/wifelette/candidates/blob/master/CODE_OF_CONDUCT.md)

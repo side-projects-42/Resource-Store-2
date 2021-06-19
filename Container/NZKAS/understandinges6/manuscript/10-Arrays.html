@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>10-Arrays</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="improved-array-capabilities">Improved Array Capabilities</h1>
+<p>The array is a foundational JavaScript object. But while other aspects of JavaScript have evolved over time, arrays remained the same until ECMAScript 5 introduced several methods to make them easier to use. ECMAScript 6 continues to improve arrays by adding a lot more functionality, like new creation methods, several useful convenience methods, and the ability to make typed arrays.</p>
+<h2 id="creating-arrays">Creating Arrays</h2>
+<p>Prior to ECMAScript 6, there were two primary ways to create arrays: the <code>Array</code> constructor and array literal syntax. Both approaches require listing array items individually and are otherwise fairly limited. Options for converting an array-like object (that is, an object with numeric indices and a <code>length</code> property) into an array were also limited and often required extra code. To make JavaScript arrays easier to create, ECMAScript 6 adds the <code>Array.of()</code> and <code>Array.from()</code> methods.</p>
+<h3 id="the-array.of-method">The Array.of() Method</h3>
+<p>One reason ECMAScript 6 adds new creation methods to JavaScript is to help developers avoid a quirk of creating arrays with the <code>Array</code> constructor. The <code>new Array()</code> constructor actually behaves differently based on the type and number of arguments passed to it. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">let</span> items <span class="op">=</span> <span class="kw">new</span> <span class="at">Array</span>(<span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// undefined</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// undefined</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">items <span class="op">=</span> <span class="kw">new</span> <span class="at">Array</span>(<span class="st">&quot;2&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// &quot;2&quot;</span></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10">items <span class="op">=</span> <span class="kw">new</span> <span class="at">Array</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb1-14" title="14"></a>
+<a class="sourceLine" id="cb1-15" title="15">items <span class="op">=</span> <span class="kw">new</span> <span class="at">Array</span>(<span class="dv">3</span><span class="op">,</span> <span class="st">&quot;2&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 3</span></a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// &quot;2&quot;</span></a></code></pre></div>
+<p>When the <code>Array</code> constructor is passed a single numeric value, the <code>length</code> property of the array is set to that value. If a single non-numeric value is passed, then that value becomes the one and only item in the array. If multiple values are passed (numeric or not), then those values become items in the array. This behavior is both confusing and risky, as you may not always be aware of the type of data being passed.</p>
+<p>ECMAScript 6 introduces <code>Array.of()</code> to solve this problem. The <code>Array.of()</code> method works similarly to the <code>Array</code> constructor but has no special case regarding a single numeric value. The <code>Array.of()</code> method always creates an array containing its arguments regardless of the number of arguments or the argument types. Here are some examples that use the <code>Array.of()</code> method:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">let</span> items <span class="op">=</span> <span class="va">Array</span>.<span class="at">of</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6">items <span class="op">=</span> <span class="va">Array</span>.<span class="at">of</span>(<span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10">items <span class="op">=</span> <span class="va">Array</span>.<span class="at">of</span>(<span class="st">&quot;2&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="va">console</span>.<span class="at">log</span>(<span class="va">items</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="va">console</span>.<span class="at">log</span>(items[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// &quot;2&quot;</span></a></code></pre></div>
+<p>To create an array with the <code>Array.of()</code> method, just pass it the values you want in your array. The first example here creates an array containing two numbers, the second array contains one number, and the last array contains one string. This is similar to using an array literal, and you can use an array literal instead of <code>Array.of()</code> for native arrays most of the time. But if you ever need to pass the <code>Array</code> constructor into a function, then you might want to pass <code>Array.of()</code> instead to ensure consistent behavior. For example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">function</span> <span class="at">createArray</span>(arrayCreator<span class="op">,</span> value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="cf">return</span> <span class="at">arrayCreator</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="op">}</span></a>
+<a class="sourceLine" id="cb3-4" title="4"></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">let</span> items <span class="op">=</span> <span class="at">createArray</span>(<span class="va">Array</span>.<span class="at">of</span><span class="op">,</span> value)<span class="op">;</span></a></code></pre></div>
+<p>In this code, the <code>createArray()</code> function accepts an array creator function and a value to insert into the array. You can pass <code>Array.of()</code> as the first argument to <code>createArray()</code> to create a new array. It would be dangerous to pass <code>Array</code> directly if you cannot guarantee that <code>value</code> won’t be a number.</p>
+<p>I&gt; The <code>Array.of()</code> method does not use the <code>Symbol.species</code> property (discussed in Chapter 9) to determine the type of return value. Instead, it uses the current constructor (<code>this</code> inside the <code>of()</code> method) to determine the correct data type to return.</p>
+<h3 id="the-array.from-method">The Array.from() Method</h3>
+<p>Converting non-array objects into actual arrays has always been cumbersome in JavaScript. For instance, if you have an <code>arguments</code> object (which is array-like) and want to use it like an array, then you’d need to convert it first. To convert an array-like object to an array in ECMAScript 5, you’d write a function like the one in this example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">function</span> <span class="at">makeArray</span>(arrayLike) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="kw">var</span> result <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> len <span class="op">=</span> <span class="va">arrayLike</span>.<span class="at">length</span><span class="op">;</span> i <span class="op">&lt;</span> len<span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-5" title="5">        <span class="va">result</span>.<span class="at">push</span>(arrayLike[i])<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="cf">return</span> result<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="op">}</span></a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="kw">function</span> <span class="at">doSomething</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-12" title="12">    <span class="kw">var</span> args <span class="op">=</span> <span class="at">makeArray</span>(<span class="kw">arguments</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-13" title="13"></a>
+<a class="sourceLine" id="cb4-14" title="14">    <span class="co">// use args</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="op">}</span></a></code></pre></div>
+<p>This approach manually creates a <code>result</code> array and copies each item from <code>arguments</code> into the new array. That works but takes a decent amount of code to perform a relatively simple operation. Eventually, developers discovered they could reduce the amount of code by calling the native <code>slice()</code> method for arrays on array-like objects, like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">function</span> <span class="at">makeArray</span>(arrayLike) <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">    <span class="cf">return</span> <span class="va">Array</span>.<span class="va">prototype</span>.<span class="va">slice</span>.<span class="at">call</span>(arrayLike)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="op">}</span></a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="kw">function</span> <span class="at">doSomething</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="kw">var</span> args <span class="op">=</span> <span class="at">makeArray</span>(<span class="kw">arguments</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="co">// use args</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="op">}</span></a></code></pre></div>
+<p>This code is functionally equivalent to the previous example, and it works because it sets the <code>this</code> value for <code>slice()</code> to the array-like object. Since <code>slice()</code> needs only numeric indices and a <code>length</code> property to function correctly, any array-like object will work.</p>
+<p>Even though this technique requires less typing, calling <code>Array.prototype.slice.call(arrayLike)</code> doesn’t obviously translate to, “Convert <code>arrayLike</code> to an array.” Fortunately, ECMAScript 6 added the <code>Array.from()</code> method as an obvious, yet clean, way to convert objects into arrays.</p>
+<p>Given either an iterable or an array-like object as the first argument, the <code>Array.from()</code> method returns an array. Here’s a simple example:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">function</span> <span class="at">doSomething</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">    <span class="kw">var</span> args <span class="op">=</span> <span class="va">Array</span>.<span class="at">from</span>(<span class="kw">arguments</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="co">// use args</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="op">}</span></a></code></pre></div>
+<p>The <code>Array.from()</code> call creates a new array based on the items in <code>arguments</code>. So <code>args</code> is an instance of <code>Array</code> that contains the same values in the same positions as <code>arguments</code>.</p>
+<p>I&gt; The <code>Array.from()</code> method also uses <code>this</code> to determine the type of array to return.</p>
+<h4 id="mapping-conversion">Mapping Conversion</h4>
+<p>If you want to take array conversion a step further, you can provide <code>Array.from()</code> with a mapping function as a second argument. That function operates on each value from the array-like object and converts it to some final form before storing the result at the appropriate index in the final array. For example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">function</span> <span class="at">translate</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">    <span class="cf">return</span> <span class="va">Array</span>.<span class="at">from</span>(<span class="kw">arguments</span><span class="op">,</span> (value) <span class="kw">=&gt;</span> value <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="op">}</span></a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="kw">let</span> numbers <span class="op">=</span> <span class="at">translate</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="va">console</span>.<span class="at">log</span>(numbers)<span class="op">;</span>               <span class="co">// 2,3,4</span></a></code></pre></div>
+<p>Here, <code>Array.from()</code> is passed <code>(value) =&gt; value + 1</code> as a mapping function, so it adds 1 to each item in the array before storing the item. If the mapping function is on an object, you can also optionally pass a third argument to <code>Array.from()</code> that represents the <code>this</code> value for the mapping function:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">let</span> helper <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">    <span class="dt">diff</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="at">add</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-5" title="5">        <span class="cf">return</span> value <span class="op">+</span> <span class="kw">this</span>.<span class="at">diff</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="op">};</span></a>
+<a class="sourceLine" id="cb8-8" title="8"></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="kw">function</span> <span class="at">translate</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-10" title="10">    <span class="cf">return</span> <span class="va">Array</span>.<span class="at">from</span>(<span class="kw">arguments</span><span class="op">,</span> <span class="va">helper</span>.<span class="at">add</span><span class="op">,</span> helper)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="op">}</span></a>
+<a class="sourceLine" id="cb8-12" title="12"></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="kw">let</span> numbers <span class="op">=</span> <span class="at">translate</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-14" title="14"></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="va">console</span>.<span class="at">log</span>(numbers)<span class="op">;</span>               <span class="co">// 2,3,4</span></a></code></pre></div>
+<p>This example passes <code>helper.add()</code> as the mapping function for the conversion. Since <code>helper.add()</code> uses the <code>this.diff</code> property, you need to provide the third argument to <code>Array.from()</code> specifying the value of <code>this</code>. Thanks to the third argument, <code>Array.from()</code> can easily convert data without calling <code>bind()</code> or specifying the <code>this</code> value in some other way.</p>
+<h4 id="use-on-iterables">Use on Iterables</h4>
+<p>The <code>Array.from()</code> method works on both array-like objects and iterables. That means the method can convert any object with a <code>Symbol.iterator</code> property into an array. For example:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">let</span> numbers <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">    <span class="op">*</span>[<span class="va">Symbol</span>.<span class="at">iterator</span>]() <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-3" title="3">        <span class="kw">yield</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb9-4" title="4">        <span class="kw">yield</span> <span class="dv">2</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb9-5" title="5">        <span class="kw">yield</span> <span class="dv">3</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb9-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="op">};</span></a>
+<a class="sourceLine" id="cb9-8" title="8"></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="kw">let</span> numbers2 <span class="op">=</span> <span class="va">Array</span>.<span class="at">from</span>(numbers<span class="op">,</span> (value) <span class="kw">=&gt;</span> value <span class="op">+</span> <span class="dv">1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-10" title="10"></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="va">console</span>.<span class="at">log</span>(numbers2)<span class="op">;</span>              <span class="co">// 2,3,4</span></a></code></pre></div>
+<p>Since the <code>numbers</code> object is an iterable, you can pass <code>numbers</code> directly to <code>Array.from()</code> to convert its values into an array. The mapping function adds one to each number so the resulting array contains 2, 3, and 4 instead of 1, 2, and 3.</p>
+<p>I&gt; If an object is both array-like and iterable, then the iterator is used by <code>Array.from()</code> to determine the values to convert.</p>
+<h2 id="new-methods-on-all-arrays">New Methods on All Arrays</h2>
+<p>Continuing the trend from ECMAScript 5, ECMAScript 6 adds several new methods to arrays. The <code>find()</code> and <code>findIndex()</code> methods are meant to aid developers using arrays with any values, while <code>fill()</code> and <code>copyWithin()</code> are inspired by use cases for <em>typed arrays</em>, a form of array introduced in ECMAScript 6 that uses only numbers.</p>
+<h3 id="the-find-and-findindex-methods">The find() and findIndex() Methods</h3>
+<p>Prior to ECMAScript 5, searching through arrays was cumbersome because there were no built-in methods for doing so. ECMAScript 5 added the <code>indexOf()</code> and <code>lastIndexOf()</code> methods, finally allowing developers to search for specific values inside an array. These two methods were a big improvement, yet they were still fairly limited because you could only search for one value at a time. For example, if you wanted to find the first even number in a series of numbers, you’d need to write your own code to do so. ECMAScript 6 solved that problem by introducing the <code>find()</code> and <code>findIndex()</code> methods.</p>
+<p>Both <code>find()</code> and <code>findIndex()</code> accept two arguments: a callback function and an optional value to use for <code>this</code> inside the callback function. The callback function is passed an array element, the index of that element in the array, and the array itself–the same arguments passed to methods like <code>map()</code> and <code>forEach()</code>. The callback should return <code>true</code> if the given value matches some criteria you define. Both <code>find()</code> and <code>findIndex()</code> also stop searching the array the first time the callback function returns <code>true</code>.</p>
+<p>The only difference between these methods is that <code>find()</code> returns the value whereas <code>findIndex()</code> returns the index at which the value was found. Here’s an example to demonstrate:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">let</span> numbers <span class="op">=</span> [<span class="dv">25</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">35</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">45</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">find</span>(n <span class="kw">=&gt;</span> n <span class="op">&gt;</span> <span class="dv">33</span>))<span class="op">;</span>         <span class="co">// 35</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">findIndex</span>(n <span class="kw">=&gt;</span> n <span class="op">&gt;</span> <span class="dv">33</span>))<span class="op">;</span>    <span class="co">// 2</span></a></code></pre></div>
+<p>This code calls <code>find()</code> and <code>findIndex()</code> to locate the first value in the <code>numbers</code> array that is greater than 33. The call to <code>find()</code> returns 35 and <code>findIndex()</code> returns 2, the location of 35 in the <code>numbers</code> array.</p>
+<p>Both <code>find()</code> and <code>findIndex()</code> are useful to find an array element that matches a condition rather than a value. If you only want to find a value, then <code>indexOf()</code> and <code>lastIndexOf()</code> are better choices.</p>
+<h3 id="the-fill-method">The fill() Method</h3>
+<p>The <code>fill()</code> method fills one or more array elements with a specific value. When passed a value, <code>fill()</code> overwrites all of the values in an array with that value. For example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">let</span> numbers <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="va">numbers</span>.<span class="at">fill</span>(<span class="dv">1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4"></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">toString</span>())<span class="op">;</span>    <span class="co">// 1,1,1,1</span></a></code></pre></div>
+<p>Here, the call to <code>numbers.fill(1)</code> changes all values in <code>numbers</code> to <code>1</code>. If you only want to change some of the elements, rather than all of them, you can optionally include a start index and an exclusive end index, like this:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">let</span> numbers <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="va">numbers</span>.<span class="at">fill</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">toString</span>())<span class="op">;</span>    <span class="co">// 1,2,1,1</span></a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="va">numbers</span>.<span class="at">fill</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-8" title="8"></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">toString</span>())<span class="op">;</span>    <span class="co">// 1,0,0,1</span></a></code></pre></div>
+<p>In the <code>numbers.fill(1,2)</code> call, the <code>2</code> indicates to start filling elements at index 2. The exclusive end index isn’t specified with a third argument, so <code>numbers.length</code> is used as the end index, meaning the last two elements in <code>numbers</code> are filled with <code>1</code>. The <code>numbers.fill(0, 1, 3)</code> operation fills array elements at indices 1 and 2 with <code>0</code>. Calling <code>fill()</code> with the second and third arguments allows you to fill multiple array elements at once without overwriting the entire array.</p>
+<p>I&gt; If either the start or end index are negative, then those values are added to the array’s length to determine the final location. For instance, a start location of <code>-1</code> gives <code>array.length - 1</code> as the index, where <code>array</code> is the array on which <code>fill()</code> is called.</p>
+<h3 id="the-copywithin-method">The copyWithin() Method</h3>
+<p>The <code>copyWithin()</code> method is similar to <code>fill()</code> in that it changes multiple array elements at the same time. However, instead of specifying a single value to assign to array elements, <code>copyWithin()</code> lets you copy array element values from the array itself. To accomplish that, you need to pass two arguments to the <code>copyWithin()</code> method: the index where the method should start filling values and the index where the values to be copied begin.</p>
+<p>For instance, to copy the values from the first two elements in an array to the last two items in the array, you can do the following:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">let</span> numbers <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="co">// paste values into array starting at index 2</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="co">// copy values from array starting at index 0</span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="va">numbers</span>.<span class="at">copyWithin</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">toString</span>())<span class="op">;</span>    <span class="co">// 1,2,1,2</span></a></code></pre></div>
+<p>This code pastes values into <code>numbers</code> beginning from index 2, so both indices 2 and 3 will be overwritten. Passing <code>0</code> as the second argument to <code>copyWithin()</code> indicates to start copying values from index 0 and continue until there are no more elements to copy into.</p>
+<p>By default, <code>copyWithin()</code> always copies values up to the end of the array, but you can provide an optional third argument to limit how many elements will be overwritten. That third argument is an exclusive end index at which copying of values stops. Here’s an example:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">let</span> numbers <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="co">// paste values into array starting at index 2</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="co">// copy values from array starting at index 0</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co">// stop copying values when you hit index 1</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="va">numbers</span>.<span class="at">copyWithin</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">0</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-7" title="7"></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">numbers</span>.<span class="at">toString</span>())<span class="op">;</span>    <span class="co">// 1,2,1,4</span></a></code></pre></div>
+<p>In this example, only the value in index 0 is copied because the optional end index is set to <code>1</code>. The last element in the array remains unchanged.</p>
+<p>I&gt; As with the <code>fill()</code> method, if you pass a negative number for any argument to the <code>copyWithin()</code> method, the array’s length is automatically added to that value to determine the index to use.</p>
+<p>The use cases for <code>fill()</code> and <code>copyWithin()</code> may not be obvious to you at this point. That’s because these methods originated on typed arrays and were added to regular arrays for consistency. As you’ll learn in the next section, however, if you use typed arrays for manipulating the bits of a number, these methods become a lot more useful.</p>
+<h2 id="typed-arrays">Typed Arrays</h2>
+<p>Typed arrays are special-purpose arrays designed to work with numeric types (not all types, as the name might imply). The origin of typed arrays can be traced to WebGL, a port of Open GL ES 2.0 designed for use in web pages with the <code>&lt;canvas&gt;</code> element. Typed arrays were created as part of the port to provide fast bitwise arithmetic in JavaScript.</p>
+<p>Arithmetic on native JavaScript numbers was too slow for WebGL because the numbers were stored in a 64-bit floating-point format and converted to 32-bit integers as needed. Typed arrays were introduced to circumvent this limitation and provide better performance for arithmetic operations. The concept is that any single number can be treated like an array of bits and thus can use the familiar methods available on JavaScript arrays.</p>
+<p>ECMAScript 6 adopted typed arrays as a formal part of the language to ensure better compatibility across JavaScript engines and interoperability with JavaScript arrays. While the ECMAScript 6 version of typed arrays is not exactly the same as the WebGL version, there are enough similarities to make the ECMAScript 6 version an evolution of the WebGL version rather than a different approach.</p>
+<h3 id="numeric-data-types">Numeric Data Types</h3>
+<p>JavaScript numbers are stored in IEEE 754 format, which uses 64 bits to store a floating-point representation of the number. This format represents both integers and floats in JavaScript, with conversion between the two formats happening frequently as numbers change. Typed arrays allow the storage and manipulation of eight different numeric types:</p>
+<ol type="1">
+<li>Signed 8-bit integer (int8)</li>
+<li>Unsigned 8-bit integer (uint8)</li>
+<li>Signed 16-bit integer (int16)</li>
+<li>Unsigned 16-bit integer (uint16)</li>
+<li>Signed 32-bit integer (int32)</li>
+<li>Unsigned 32-bit integer (uint32)</li>
+<li>32-bit float (float32)</li>
+<li>64-bit float (float64)</li>
+</ol>
+<p>If you represent a number that fits in an int8 as a normal JavaScript number, you’ll waste 56 bits. Those bits might better be used to store additional int8 values or any other number that requires less than 56 bits. Using bits more efficiently is one of the use cases typed arrays address.</p>
+<p>All of the operations and objects related to typed arrays are centered around these eight data types. In order to use them, though, you’ll need to create an array buffer to store the data.</p>
+<p>I&gt; In this book, I will refer to these types by the abbreviations I showed in parentheses. Those abbreviations don’t appear in actual JavaScript code; they’re just a shorthand for the much longer descriptions.</p>
+<h3 id="array-buffers">Array Buffers</h3>
+<p>The foundation for all typed arrays is an <em>array buffer</em>, which is a memory location that can contain a specified number of bytes. Creating an array buffer is akin to calling <code>malloc()</code> in C to allocate memory without specifying what the memory block contains. You can create an array buffer by using the <code>ArrayBuffer</code> constructor as follows:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">;</span>   <span class="co">// allocate 10 bytes</span></a></code></pre></div>
+<p>Just pass the number of bytes the array buffer should contain when you call the constructor. This <code>let</code> statement creates an array buffer 10 bytes long. Once an array buffer is created, you can retrieve the number of bytes in it by checking the <code>byteLength</code> property:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">;</span>   <span class="co">// allocate 10 bytes</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="va">console</span>.<span class="at">log</span>(<span class="va">buffer</span>.<span class="at">byteLength</span>)<span class="op">;</span>     <span class="co">// 10</span></a></code></pre></div>
+<p>You can also use the <code>slice()</code> method to create a new array buffer that contains part of an existing array buffer. The <code>slice()</code> method works like the <code>slice()</code> method on arrays: you pass it the start index and end index as arguments, and it returns a new <code>ArrayBuffer</code> instance comprised of those elements from the original. For example:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">;</span>   <span class="co">// allocate 10 bytes</span></a>
+<a class="sourceLine" id="cb17-2" title="2"></a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="kw">let</span> buffer2 <span class="op">=</span> <span class="va">buffer</span>.<span class="at">slice</span>(<span class="dv">4</span><span class="op">,</span> <span class="dv">6</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="va">buffer2</span>.<span class="at">byteLength</span>)<span class="op">;</span>    <span class="co">// 2</span></a></code></pre></div>
+<p>In this code, <code>buffer2</code> is created by extracting the bytes at indices 4 and 5. Just like when you call the array version of this method, the second argument to <code>slice()</code> is exclusive.</p>
+<p>Of course, creating a storage location isn’t very helpful without being able to write data into that location. To do so, you’ll need to create a view.</p>
+<p>I&gt; An array buffer always represents the exact number of bytes specified when it was created. You can change the data contained within an array buffer, but never the size of the array buffer itself.</p>
+<h3 id="manipulating-array-buffers-with-views">Manipulating Array Buffers with Views</h3>
+<p>Array buffers represent memory locations, and <em>views</em> are the interfaces you’ll use to manipulate that memory. A view operates on an array buffer or a subset of an array buffer’s bytes, reading and writing data in one of the numeric data types. The <code>DataView</code> type is a generic view on an array buffer that allows you to operate on all eight numeric data types.</p>
+<p>To use a <code>DataView</code>, first create an instance of <code>ArrayBuffer</code> and use it to create a new <code>DataView</code>. Here’s an example:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb18-2" title="2">    view <span class="op">=</span> <span class="kw">new</span> <span class="at">DataView</span>(buffer)<span class="op">;</span></a></code></pre></div>
+<p>The <code>view</code> object in this example has access to all 10 bytes in <code>buffer</code>. You can also create a view over just a portion of a buffer. Just provide a byte offset and, optionally, the number of bytes to include from that offset. When a number of bytes isn’t included, the<code>DataView</code> will go from the offset to the end of the buffer by default. For example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb19-2" title="2">    view <span class="op">=</span> <span class="kw">new</span> <span class="at">DataView</span>(buffer<span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span>      <span class="co">// cover bytes 5 and 6</span></a></code></pre></div>
+<p>Here, <code>view</code> operates only on the bytes at indices 5 and 6. This approach allows you to create several views over the same array buffer, which can be useful if you want to use a single memory location for an entire application rather than dynamically allocating space as needed.</p>
+<h4 id="retrieving-view-information">Retrieving View Information</h4>
+<p>You can retrieve information about a view by fetching the following read-only properties:</p>
+<ul>
+<li><code>buffer</code> - The array buffer that the view is tied to</li>
+<li><code>byteOffset</code> - The second argument to the <code>DataView</code> constructor, if provided (0 by default)</li>
+<li><code>byteLength</code> - The third argument to the <code>DataView</code> constructor, if provided (the buffer’s <code>byteLength</code> by default)</li>
+</ul>
+<p>Using these properties, you can inspect exactly where a view is operating, like this:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb20-2" title="2">    view1 <span class="op">=</span> <span class="kw">new</span> <span class="at">DataView</span>(buffer)<span class="op">,</span>           <span class="co">// cover all bytes</span></a>
+<a class="sourceLine" id="cb20-3" title="3">    view2 <span class="op">=</span> <span class="kw">new</span> <span class="at">DataView</span>(buffer<span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span>     <span class="co">// cover bytes 5 and 6</span></a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view1</span>.<span class="at">buffer</span> <span class="op">===</span> buffer)<span class="op">;</span>       <span class="co">// true</span></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view2</span>.<span class="at">buffer</span> <span class="op">===</span> buffer)<span class="op">;</span>       <span class="co">// true</span></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view1</span>.<span class="at">byteOffset</span>)<span class="op">;</span>              <span class="co">// 0</span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view2</span>.<span class="at">byteOffset</span>)<span class="op">;</span>              <span class="co">// 5</span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view1</span>.<span class="at">byteLength</span>)<span class="op">;</span>              <span class="co">// 10</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view2</span>.<span class="at">byteLength</span>)<span class="op">;</span>              <span class="co">// 2</span></a></code></pre></div>
+<p>This code creates <code>view1</code>, a view over the entire array buffer, and <code>view2</code>, which operates on a small section of the array buffer. These views have equivalent <code>buffer</code> properties because both work on the same array buffer. The <code>byteOffset</code> and <code>byteLength</code> are different for each view, however. They reflect the portion of the array buffer where each view operates.</p>
+<p>Of course, reading information about memory isn’t very useful on its own. You need to write data into and read data out of that memory to get any benefit.</p>
+<h4 id="reading-and-writing-data">Reading and Writing Data</h4>
+<p>For each of JavaScript’s eight numeric data types, the <code>DataView</code> prototype has a method to write data and a method to read data from an array buffer. The method names all begin with either “set” or “get” and are followed by the data type abbreviation. For instance, here’s a list of the read and write methods that can operate on int8 and uint8 values:</p>
+<ul>
+<li><code>getInt8(byteOffset)</code> - Read an int8 starting at <code>byteOffset</code></li>
+<li><code>setInt8(byteOffset, value)</code> - Write an int8 starting at <code>byteOffset</code></li>
+<li><code>getUint8(byteOffset)</code> - Read an uint8 starting at <code>byteOffset</code></li>
+<li><code>setUint8(byteOffset, value)</code> - Write an uint8 starting at <code>byteOffset</code></li>
+</ul>
+<p>The “get” methods accept a single argument: the byte offset to read from. The “set” methods accept two arguments: the byte offset to write at and the value to write.</p>
+<p>Though I’ve only shown the methods you can use with 8-bit values, the same methods exist for operating on 16- and 32-bit values. Just replace the <code>8</code> in each name with <code>16</code> or <code>32</code>. Alongside all those integer methods, <code>DataView</code> also has the following read and write methods for floating point numbers:</p>
+<ul>
+<li><code>getFloat32(byteOffset, littleEndian)</code> - Read a float32 starting at <code>byteOffset</code></li>
+<li><code>setFloat32(byteOffset, value, littleEndian)</code> - Write a float32 starting at <code>byteOffset</code></li>
+<li><code>getFloat64(byteOffset, littleEndian)</code> - Read a float64 starting at <code>byteOffset</code></li>
+<li><code>setFloat64(byteOffset, value, littleEndian)</code> - Write a float64 starting at <code>byteOffset</code></li>
+</ul>
+<p>The float-related methods are only different in that they accept an additional optional boolean indicating whether the value should be read or written as little-endian. (<em>Little-endian</em> means the least significant byte is at byte 0, instead of in the last byte.)</p>
+<p>To see a “set” and a “get” method in action, consider the following example:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">2</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb21-2" title="2">    view <span class="op">=</span> <span class="kw">new</span> <span class="at">DataView</span>(buffer)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-3" title="3"></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="va">view</span>.<span class="at">setInt8</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="va">view</span>.<span class="at">setInt8</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-6" title="6"></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view</span>.<span class="at">getInt8</span>(<span class="dv">0</span>))<span class="op">;</span>       <span class="co">// 5</span></a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view</span>.<span class="at">getInt8</span>(<span class="dv">1</span>))<span class="op">;</span>       <span class="co">// -1</span></a></code></pre></div>
+<p>This code uses a two-byte array buffer to store two int8 values. The first value is set at offset 0 and the second is at offset 1, reflecting that each value spans a full byte (8 bits). Those values are later retrieved from their positions with the <code>getInt8()</code> method. While this example uses int8 values, you can use any of the eight numeric types with their corresponding methods.</p>
+<p>Views are interesting because they allow you to read and write in any format at any point in time, regardless of how data was previously stored. For instance, writing two int8 values and reading the buffer with an int16 method works just fine, as in this example:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">2</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb22-2" title="2">    view <span class="op">=</span> <span class="kw">new</span> <span class="at">DataView</span>(buffer)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="va">view</span>.<span class="at">setInt8</span>(<span class="dv">0</span><span class="op">,</span> <span class="dv">5</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="va">view</span>.<span class="at">setInt8</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">-1</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-6" title="6"></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view</span>.<span class="at">getInt16</span>(<span class="dv">0</span>))<span class="op">;</span>      <span class="co">// 1535</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view</span>.<span class="at">getInt8</span>(<span class="dv">0</span>))<span class="op">;</span>       <span class="co">// 5</span></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view</span>.<span class="at">getInt8</span>(<span class="dv">1</span>))<span class="op">;</span>       <span class="co">// -1</span></a></code></pre></div>
+<p>The call to <code>view.getInt16(0)</code> reads all bytes in the view and interprets those bytes as the number 1535. To understand why this happens, take a look at Figure 10-1, which shows what each <code>setInt8()</code> line does to the array buffer.</p>
+<!--![Figure 10-1: The array buffer after two method calls](images/Ch 10 Graphic.jpg)-->
+<pre><code>new ArrayBuffer(2)      0000000000000000
+view.setInt8(0, 5);     0000010100000000
+view.setInt8(1, -1);    0000010111111111</code></pre>
+<p>The array buffer starts with 16 bits that are all zero. Writing <code>5</code> to the first byte with <code>setInt8()</code> introduces a couple of 1s (in 8-bit representation, 5 is 00000101). Writing -1 to the second byte sets all bits in that byte to 1, which is the two’s complement representation of -1. After the second <code>setInt8()</code> call, the array buffer contains 16 bits, and <code>getInt16()</code> reads those bits as a single 16-bit integer, which is 1535 in decimal.</p>
+<p>The <code>DataView</code> object is perfect for use cases that mix different data types in this way. However, if you’re only using one specific data type, then the type-specific views are a better choice.</p>
+<h4 id="typed-arrays-are-views">Typed Arrays Are Views</h4>
+<p>ECMAScript 6 typed arrays are actually type-specific views for array buffers. Instead of using a generic <code>DataView</code> object to operate on an array buffer, you can use objects that enforce specific data types. There are eight type-specific views corresponding to the eight numeric data types, plus an additional option for <code>uint8</code> values.</p>
+<p>Table 10-1 shows an abbreviated version of the complete list of type-specific views from section 22.2 of the ECMAScript 6 specification.</p>
+<!--{ title="Table 10-1: Some Type-Specific Views in ECMAScript 6" }-->
+<!-- @Nicholas: I noticed the table title was throwing off the markdown preview
+     output somehow, so I commented it out for now. /JG -->
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 15%" />
+<col style="width: 43%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Constructor Name</th>
+<th>Element Size (in bytes)</th>
+<th>Description</th>
+<th>Equivalent C Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Int8Array</code></td>
+<td>1</td>
+<td>8-bit two’s complement signed integer</td>
+<td><code>signed char</code></td>
+</tr>
+<tr class="even">
+<td><code>Uint8Array</code></td>
+<td>1</td>
+<td>8-bit unsigned integer</td>
+<td><code>unsigned char</code></td>
+</tr>
+<tr class="odd">
+<td><code>Uint8ClampedArray</code></td>
+<td>1</td>
+<td>8-bit unsigned integer (clamped conversion)</td>
+<td><code>unsigned char</code></td>
+</tr>
+<tr class="even">
+<td><code>Int16Array</code></td>
+<td>2</td>
+<td>16-bit two’s complement signed integer</td>
+<td><code>short</code></td>
+</tr>
+<tr class="odd">
+<td><code>Uint16Array</code></td>
+<td>2</td>
+<td>16-bit unsigned integer</td>
+<td><code>unsigned short</code></td>
+</tr>
+<tr class="even">
+<td><code>Int32Array</code></td>
+<td>4</td>
+<td>32-bit two’s complement signed integer</td>
+<td><code>int</code></td>
+</tr>
+<tr class="odd">
+<td><code>Uint32Array</code></td>
+<td>4</td>
+<td>32-bit unsigned integer</td>
+<td><code>int</code></td>
+</tr>
+<tr class="even">
+<td><code>Float32Array</code></td>
+<td>4</td>
+<td>32-bit IEEE floating point</td>
+<td><code>float</code></td>
+</tr>
+<tr class="odd">
+<td><code>Float64Array</code></td>
+<td>8</td>
+<td>64-bit IEEE floating point</td>
+<td><code>double</code></td>
+</tr>
+</tbody>
+</table>
+<p>The left column lists the typed array constructors, and the other columns describe the data each typed array can contain. A <code>Uint8ClampedArray</code> is the same as a <code>Uint8Array</code> unless values in the array buffer are less than 0 or greater than 255. A <code>Uint8ClampedArray</code> converts values lower than 0 to 0 (-1 becomes 0, for instance) and converts values higher than 255 to 255 (so 300 becomes 255).</p>
+<p>Typed array operations only work on a particular type of data. For example, all operations on <code>Int8Array</code> use <code>int8</code> values. The size of an element in a typed array also depends on the type of array. While an element in an <code>Int8Array</code> is a single byte long, <code>Float64Array</code> uses eight bytes per element. Fortunately, the elements are accessed using numeric indices just like regular arrays, allowing you to avoid the somewhat awkward calls to the “set” and “get” methods of <code>DataView</code>.</p>
+<p>A&gt; ### Element Size A&gt; A&gt; Each typed array is made up of a number of elements, and the element size is the number of bytes each element represents. This value is stored on a <code>BYTES_PER_ELEMENT</code> property on each constructor and each instance, so you can easily query the element size: A&gt; A&gt; <code>js A&gt; console.log(UInt8Array.BYTES_PER_ELEMENT);      // 1 A&gt; console.log(UInt16Array.BYTES_PER_ELEMENT);     // 2 A&gt; A&gt; let ints = new Int8Array(5); A&gt; console.log(ints.BYTES_PER_ELEMENT);            // 1 A&gt;</code></p>
+<h4 id="creating-type-specific-views">Creating Type-Specific Views</h4>
+<p>Typed array constructors accept multiple types of arguments, so there are a few ways to create typed arrays. First, you can create a new typed array by passing the same arguments <code>DataView</code> takes (an array buffer, an optional byte offset, and an optional byte length). For example:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">let</span> buffer <span class="op">=</span> <span class="kw">new</span> <span class="at">ArrayBuffer</span>(<span class="dv">10</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb24-2" title="2">    view1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Int8Array</span>(buffer)<span class="op">,</span></a>
+<a class="sourceLine" id="cb24-3" title="3">    view2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Int8Array</span>(buffer<span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb24-4" title="4"></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view1</span>.<span class="at">buffer</span> <span class="op">===</span> buffer)<span class="op">;</span>       <span class="co">// true</span></a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view2</span>.<span class="at">buffer</span> <span class="op">===</span> buffer)<span class="op">;</span>       <span class="co">// true</span></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view1</span>.<span class="at">byteOffset</span>)<span class="op">;</span>              <span class="co">// 0</span></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view2</span>.<span class="at">byteOffset</span>)<span class="op">;</span>              <span class="co">// 5</span></a>
+<a class="sourceLine" id="cb24-9" title="9"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view1</span>.<span class="at">byteLength</span>)<span class="op">;</span>              <span class="co">// 10</span></a>
+<a class="sourceLine" id="cb24-10" title="10"><span class="va">console</span>.<span class="at">log</span>(<span class="va">view2</span>.<span class="at">byteLength</span>)<span class="op">;</span>              <span class="co">// 2</span></a></code></pre></div>
+<p>In this code, the two views are both <code>Int8Array</code> instances that use <code>buffer</code>. Both <code>view1</code> and <code>view2</code> have the same <code>buffer</code>, <code>byteOffset</code>, and <code>byteLength</code> properties that exist on <code>DataView</code> instances. It’s easy to switch to using a typed array wherever you use a <code>DataView</code> so long as you only work with one numeric type.</p>
+<p>The second way to create a typed array is to pass a single number to the constructor. That number represents the number of elements (not bytes) to allocate to the array. The constructor will create a new buffer with the correct number of bytes to represent that number of array elements, and you can access the number of elements in the array by using the <code>length</code> property. For example:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>(<span class="dv">2</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb25-2" title="2">    floats <span class="op">=</span> <span class="kw">new</span> <span class="at">Float32Array</span>(<span class="dv">5</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-3" title="3"></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">byteLength</span>)<span class="op">;</span>       <span class="co">// 4</span></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">length</span>)<span class="op">;</span>           <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb25-6" title="6"></a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">floats</span>.<span class="at">byteLength</span>)<span class="op">;</span>     <span class="co">// 20</span></a>
+<a class="sourceLine" id="cb25-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">floats</span>.<span class="at">length</span>)<span class="op">;</span>         <span class="co">// 5</span></a></code></pre></div>
+<p>The <code>ints</code> array is created with space for two elements. Each 16-bit integer requires two bytes per value, so the array is allocated four bytes. The <code>floats</code> array is created to hold five elements, so the number of bytes required is 20 (four bytes per element). In both cases, a new buffer is created and can be accessed using the <code>buffer</code> property if necessary.</p>
+<p>W&gt; If no argument is passed to a typed array constructor, the constructor acts as if <code>0</code> was passed. This creates a typed array that cannot hold data because zero bytes are allocated to the buffer.</p>
+<p>The third way to create a typed array is to pass an object as the only argument to the constructor. The object can be any of the following:</p>
+<ul>
+<li><strong>A Typed Array</strong> - Each element is copied into a new element on the new typed array. For example, if you pass an int8 to the <code>Int16Array</code> constructor, the int8 values would be copied into an int16 array. The new typed array has a different array buffer than the one that was passed in.</li>
+<li><strong>An Iterable</strong> - The object’s iterator is called to retrieve the items to insert into the typed array. The constructor will throw an error if any elements are invalid for the view type.</li>
+<li><strong>An Array</strong> - The elements of the array are copied into a new typed array. The constructor will throw an error if any elements are invalid for the type.</li>
+<li><strong>An Array-Like Object</strong> - Behaves the same as an array.</li>
+</ul>
+<p>In each of these cases, a new typed array is created with the data from the source object. This can be especially useful when you want to initialize a typed array with some values, like this:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">let</span> ints1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">,</span></a>
+<a class="sourceLine" id="cb26-2" title="2">    ints2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Int32Array</span>(ints1)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-3" title="3"></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints1</span>.<span class="at">buffer</span> <span class="op">===</span> <span class="va">ints2</span>.<span class="at">buffer</span>)<span class="op">;</span>     <span class="co">// false</span></a>
+<a class="sourceLine" id="cb26-5" title="5"></a>
+<a class="sourceLine" id="cb26-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints1</span>.<span class="at">byteLength</span>)<span class="op">;</span>      <span class="co">// 4</span></a>
+<a class="sourceLine" id="cb26-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints1</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb26-8" title="8"><span class="va">console</span>.<span class="at">log</span>(ints1[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 25</span></a>
+<a class="sourceLine" id="cb26-9" title="9"><span class="va">console</span>.<span class="at">log</span>(ints1[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 50</span></a>
+<a class="sourceLine" id="cb26-10" title="10"></a>
+<a class="sourceLine" id="cb26-11" title="11"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints2</span>.<span class="at">byteLength</span>)<span class="op">;</span>      <span class="co">// 8</span></a>
+<a class="sourceLine" id="cb26-12" title="12"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints2</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb26-13" title="13"><span class="va">console</span>.<span class="at">log</span>(ints2[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 25</span></a>
+<a class="sourceLine" id="cb26-14" title="14"><span class="va">console</span>.<span class="at">log</span>(ints2[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 50</span></a></code></pre></div>
+<p>This example creates an <code>Int16Array</code> and initializes it with an array of two values. Then, an <code>Int32Array</code> is created and passed the <code>Int16Array</code>. The values 25 and 50 are copied from <code>ints1</code> into <code>ints2</code> as the two typed arrays have completely separate buffers. The same numbers are represented in both typed arrays, but <code>ints2</code> has eight bytes to represent the data while <code>ints1</code> has only four.</p>
+<h2 id="similarities-between-typed-and-regular-arrays">Similarities Between Typed and Regular Arrays</h2>
+<p>Typed arrays and regular arrays are similar in several ways, and as you’ve already seen in this chapter, typed arrays can be used like regular arrays in many situations. For instance, you can check how many elements are in a typed array using the <code>length</code> property, and you can access a typed array’s elements directly using numeric indices. For example:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb27-2" title="2"></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 25</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 50</span></a>
+<a class="sourceLine" id="cb27-6" title="6"></a>
+<a class="sourceLine" id="cb27-7" title="7">ints[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb27-8" title="8">ints[<span class="dv">1</span>] <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb27-9" title="9"></a>
+<a class="sourceLine" id="cb27-10" title="10"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 2</span></a></code></pre></div>
+<p>In this code, a new <code>Int16Array</code> with two items is created. The items are read from and written to using their numeric indices, and those values are automatically stored and converted into int16 values as part of the operation. The similarities don’t end there, though.</p>
+<p>I&gt; Unlike regular arrays, you cannot change the size of a typed array using the <code>length</code> property. The <code>length</code> property is not writable, so any attempt to change it is ignored in non-strict mode and throws an error in strict mode.</p>
+<h3 id="common-methods">Common Methods</h3>
+<p>Typed arrays also include a large number of methods that are functionally equivalent to regular array methods. You can use the following array methods on typed arrays:</p>
+<ul>
+<li><code>copyWithin()</code></li>
+<li><code>entries()</code></li>
+<li><code>fill()</code></li>
+<li><code>filter()</code></li>
+<li><code>find()</code></li>
+<li><code>findIndex()</code></li>
+<li><code>forEach()</code></li>
+<li><code>indexOf()</code></li>
+<li><code>join()</code></li>
+<li><code>keys()</code></li>
+<li><code>lastIndexOf()</code></li>
+<li><code>map()</code></li>
+<li><code>reduce()</code></li>
+<li><code>reduceRight()</code></li>
+<li><code>reverse()</code></li>
+<li><code>slice()</code></li>
+<li><code>some()</code></li>
+<li><code>sort()</code></li>
+<li><code>values()</code></li>
+</ul>
+<p>Keep in mind that while these methods act like their counterparts on <code>Array.prototype</code>, they are not exactly the same. The typed array methods have additional checks for numeric type safety and, when an array is returned, will return a typed array instead of a regular array (due to <code>Symbol.species</code>). Here’s a simple example to demonstrate the difference:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">,</span></a>
+<a class="sourceLine" id="cb28-2" title="2">    mapped <span class="op">=</span> <span class="va">ints</span>.<span class="at">map</span>(v <span class="kw">=&gt;</span> v <span class="op">*</span> <span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-3" title="3"></a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">mapped</span>.<span class="at">length</span>)<span class="op">;</span>        <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb28-5" title="5"><span class="va">console</span>.<span class="at">log</span>(mapped[<span class="dv">0</span>])<span class="op">;</span>            <span class="co">// 50</span></a>
+<a class="sourceLine" id="cb28-6" title="6"><span class="va">console</span>.<span class="at">log</span>(mapped[<span class="dv">1</span>])<span class="op">;</span>            <span class="co">// 100</span></a>
+<a class="sourceLine" id="cb28-7" title="7"></a>
+<a class="sourceLine" id="cb28-8" title="8"><span class="va">console</span>.<span class="at">log</span>(mapped <span class="kw">instanceof</span> Int16Array)<span class="op">;</span>  <span class="co">// true</span></a></code></pre></div>
+<p>This code uses the <code>map()</code> method to create a new array based on the values in <code>ints</code>. The mapping function doubles each value in the array and returns a new <code>Int16Array</code>.</p>
+<h3 id="the-same-iterators">The Same Iterators</h3>
+<p>Typed arrays have the same three iterators as regular arrays, too. Those are the <code>entries()</code> method, the <code>keys()</code> method, and the <code>values()</code> method. That means you can use the spread operator and <code>for-of</code> loops with typed arrays just like you would with regular arrays. For example:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">,</span></a>
+<a class="sourceLine" id="cb29-2" title="2">    intsArray <span class="op">=</span> [...<span class="at">ints</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb29-3" title="3"></a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="va">console</span>.<span class="at">log</span>(intsArray <span class="kw">instanceof</span> Array)<span class="op">;</span>    <span class="co">// true</span></a>
+<a class="sourceLine" id="cb29-5" title="5"><span class="va">console</span>.<span class="at">log</span>(intsArray[<span class="dv">0</span>])<span class="op">;</span>                  <span class="co">// 25</span></a>
+<a class="sourceLine" id="cb29-6" title="6"><span class="va">console</span>.<span class="at">log</span>(intsArray[<span class="dv">1</span>])<span class="op">;</span>                  <span class="co">// 50</span></a></code></pre></div>
+<p>This code creates a new array called <code>intsArray</code> containing the same data as the typed array <code>ints</code>. As with other iterables, the spread operator makes converting typed arrays into regular arrays easy.</p>
+<h3 id="of-and-from-methods">of() and from() Methods</h3>
+<p>Lastly, all typed arrays have static <code>of()</code> and <code>from()</code> methods that work like the <code>Array.of()</code> and <code>Array.from()</code> methods. The difference is that the methods on typed arrays return a typed array instead of a regular array. Here are some examples that use these methods to create typed arrays:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="va">Int16Array</span>.<span class="at">of</span>(<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb30-2" title="2">    floats <span class="op">=</span> <span class="va">Float32Array</span>.<span class="at">from</span>([<span class="fl">1.5</span><span class="op">,</span> <span class="fl">2.5</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb30-3" title="3"></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="va">console</span>.<span class="at">log</span>(ints <span class="kw">instanceof</span> Int16Array)<span class="op">;</span>        <span class="co">// true</span></a>
+<a class="sourceLine" id="cb30-5" title="5"><span class="va">console</span>.<span class="at">log</span>(floats <span class="kw">instanceof</span> Float32Array)<span class="op">;</span>    <span class="co">// true</span></a>
+<a class="sourceLine" id="cb30-6" title="6"></a>
+<a class="sourceLine" id="cb30-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">length</span>)<span class="op">;</span>       <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb30-8" title="8"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">0</span>])<span class="op">;</span>           <span class="co">// 25</span></a>
+<a class="sourceLine" id="cb30-9" title="9"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">1</span>])<span class="op">;</span>           <span class="co">// 50</span></a>
+<a class="sourceLine" id="cb30-10" title="10"></a>
+<a class="sourceLine" id="cb30-11" title="11"><span class="va">console</span>.<span class="at">log</span>(<span class="va">floats</span>.<span class="at">length</span>)<span class="op">;</span>     <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb30-12" title="12"><span class="va">console</span>.<span class="at">log</span>(floats[<span class="dv">0</span>])<span class="op">;</span>         <span class="co">// 1.5</span></a>
+<a class="sourceLine" id="cb30-13" title="13"><span class="va">console</span>.<span class="at">log</span>(floats[<span class="dv">1</span>])<span class="op">;</span>         <span class="co">// 2.5</span></a></code></pre></div>
+<p>The <code>of()</code> and <code>from()</code> methods in this example are used to create an <code>Int16Array</code> and a <code>Float32Array</code>, respectively. These methods ensure that typed arrays can be created just as easily as regular arrays.</p>
+<h2 id="differences-between-typed-and-regular-arrays">Differences Between Typed and Regular Arrays</h2>
+<p>The most important difference between typed arrays and regular arrays is that typed arrays are not regular arrays. Typed arrays don’t inherit from <code>Array</code> and <code>Array.isArray()</code> returns <code>false</code> when passed a typed array. For example:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-2" title="2"></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="va">console</span>.<span class="at">log</span>(ints <span class="kw">instanceof</span> Array)<span class="op">;</span>     <span class="co">// false</span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">Array</span>.<span class="at">isArray</span>(ints))<span class="op">;</span>       <span class="co">// false</span></a></code></pre></div>
+<p>Since the <code>ints</code> variable is a typed array, it isn’t an instance of <code>Array</code> and cannot otherwise be identified as an array. This distinction is important because while typed arrays and regular arrays are similar, there are many ways in which typed arrays behave differently.</p>
+<h3 id="behavioral-differences">Behavioral Differences</h3>
+<p>While regular arrays can grow and shrink as you interact with them, typed arrays always remain the same size. You cannot assign a value to a nonexistent numeric index in a typed array like you can with regular arrays, as typed arrays ignore the operation. Here’s an example:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb32-2" title="2"></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb32-4" title="4"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 25</span></a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 50</span></a>
+<a class="sourceLine" id="cb32-6" title="6"></a>
+<a class="sourceLine" id="cb32-7" title="7">ints[<span class="dv">2</span>] <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb32-8" title="8"></a>
+<a class="sourceLine" id="cb32-9" title="9"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">length</span>)<span class="op">;</span>          <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb32-10" title="10"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">2</span>])<span class="op">;</span>              <span class="co">// undefined</span></a></code></pre></div>
+<p>Despite assigning <code>5</code> to the numeric index <code>2</code> in this example, the <code>ints</code> array does not grow at all. The <code>length</code> remains the same and the value is thrown away.</p>
+<p>Typed arrays also have checks to ensure that only valid data types are used. Zero is used in place of any invalid values. For example:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="st">&quot;hi&quot;</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb33-2" title="2"></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">length</span>)<span class="op">;</span>       <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="va">console</span>.<span class="at">log</span>(ints[<span class="dv">0</span>])<span class="op">;</span>           <span class="co">// 0</span></a></code></pre></div>
+<p>This code attempts to use the string value <code>"hi"</code> in an <code>Int16Array</code>. Of course, strings are invalid data types in typed arrays, so the value is inserted as <code>0</code> instead. The <code>length</code> of the array is still one, and even though the <code>ints[0]</code> slot exists, it just contains <code>0</code>.</p>
+<p>All methods that modify values in a typed array enforce the same restriction. For example, if the function passed to <code>map()</code> returns an invalid value for the typed array, then <code>0</code> is used instead:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">,</span></a>
+<a class="sourceLine" id="cb34-2" title="2">    mapped <span class="op">=</span> <span class="va">ints</span>.<span class="at">map</span>(v <span class="kw">=&gt;</span> <span class="st">&quot;hi&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb34-3" title="3"></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">mapped</span>.<span class="at">length</span>)<span class="op">;</span>        <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb34-5" title="5"><span class="va">console</span>.<span class="at">log</span>(mapped[<span class="dv">0</span>])<span class="op">;</span>            <span class="co">// 0</span></a>
+<a class="sourceLine" id="cb34-6" title="6"><span class="va">console</span>.<span class="at">log</span>(mapped[<span class="dv">1</span>])<span class="op">;</span>            <span class="co">// 0</span></a>
+<a class="sourceLine" id="cb34-7" title="7"></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="va">console</span>.<span class="at">log</span>(mapped <span class="kw">instanceof</span> Int16Array)<span class="op">;</span>  <span class="co">// true</span></a>
+<a class="sourceLine" id="cb34-9" title="9"><span class="va">console</span>.<span class="at">log</span>(mapped <span class="kw">instanceof</span> Array)<span class="op">;</span>       <span class="co">// false</span></a></code></pre></div>
+<p>Since the string value <code>"hi"</code> isn’t a 16-bit integer, it’s replaced with <code>0</code> in the resulting array. Thanks to this error correction behavior, typed array methods don’t have to worry about throwing errors when invalid data is present, because there will never be invalid data in the array.</p>
+<h3 id="missing-methods">Missing Methods</h3>
+<p>While typed arrays do have many of the same methods as regular arrays, they also lack several array methods. The following methods are not available on typed arrays:</p>
+<ul>
+<li><code>concat()</code></li>
+<li><code>pop()</code></li>
+<li><code>push()</code></li>
+<li><code>shift()</code></li>
+<li><code>splice()</code></li>
+<li><code>unshift()</code></li>
+</ul>
+<p>Except for the <code>concat()</code> method, the methods in this list can change the size of an array. Typed arrays can’t change size, which is why these aren’t available for typed arrays. The <code>concat()</code> method isn’t available because the result of concatenating two typed arrays (especially if they deal with different data types) would be uncertain, and that would go against the reason for using typed arrays in the first place.</p>
+<h3 id="additional-methods">Additional Methods</h3>
+<p>Finally, typed arrays methods have two methods not present on regular arrays: the <code>set()</code> and <code>subarray()</code> methods. These two methods are opposites in that <code>set()</code> copies another array into an existing typed array, whereas <code>subarray()</code> extracts part of an existing typed array into a new typed array.</p>
+<p>The <code>set()</code> method accepts an array (either typed or regular) and an optional offset at which to insert the data; if you pass nothing, the offset defaults to zero. The data from the array argument is copied into the destination typed array while ensuring only valid data types are used. Here’s an example:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>(<span class="dv">4</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-2" title="2"></a>
+<a class="sourceLine" id="cb35-3" title="3"><span class="va">ints</span>.<span class="at">set</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="va">ints</span>.<span class="at">set</span>([<span class="dv">75</span><span class="op">,</span> <span class="dv">100</span>]<span class="op">,</span> <span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-5" title="5"></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">ints</span>.<span class="at">toString</span>())<span class="op">;</span>   <span class="co">// 25,50,75,100</span></a></code></pre></div>
+<p>This code creates an <code>Int16Array</code> with four elements. The first call to <code>set()</code> copies two values to the first and second elements in the array. The second call to <code>set()</code> uses an offset of <code>2</code> to indicate that the values should be placed in the array starting at the third element.</p>
+<p>The <code>subarray()</code> method accepts an optional start and end index (the end index is exclusive, as in the <code>slice()</code> method) and returns a new typed array. You can also omit both arguments to create a clone of the typed array. For example:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">let</span> ints <span class="op">=</span> <span class="kw">new</span> <span class="at">Int16Array</span>([<span class="dv">25</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">75</span><span class="op">,</span> <span class="dv">100</span>])<span class="op">,</span></a>
+<a class="sourceLine" id="cb36-2" title="2">    subints1 <span class="op">=</span> <span class="va">ints</span>.<span class="at">subarray</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb36-3" title="3">    subints2 <span class="op">=</span> <span class="va">ints</span>.<span class="at">subarray</span>(<span class="dv">2</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb36-4" title="4">    subints3 <span class="op">=</span> <span class="va">ints</span>.<span class="at">subarray</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-5" title="5"></a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">subints1</span>.<span class="at">toString</span>())<span class="op">;</span>   <span class="co">// 25,50,75,100</span></a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="va">console</span>.<span class="at">log</span>(<span class="va">subints2</span>.<span class="at">toString</span>())<span class="op">;</span>   <span class="co">// 75,100</span></a>
+<a class="sourceLine" id="cb36-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="va">subints3</span>.<span class="at">toString</span>())<span class="op">;</span>   <span class="co">// 50,75</span></a></code></pre></div>
+<p>Three typed arrays are created from the original <code>ints</code> array in this example. The <code>subints1</code> array is a clone of <code>ints</code> that contains the same information. Since the <code>subints2</code> array copies data starting from index 2, it only contains the last two elements of the <code>ints</code> array (75 and 100). The <code>subints3</code> array contains only the middle two elements of the <code>ints</code> array, as <code>subarray()</code> was called with both a start and an end index.</p>
+<h2 id="summary">Summary</h2>
+<p>ECMAScript 6 continues the work of ECMAScript 5 by making arrays more useful. There are two more ways to create arrays: the <code>Array.of()</code> and <code>Array.from()</code> methods. The <code>Array.from()</code> method can also convert iterables and array-like objects into arrays. Both methods are inherited by derived array classes and do not use the <code>Symbol.species</code> property to determine what type of value should be returned (other inherited methods do use <code>Symbol.species</code> when returning an array).</p>
+<p>There are also several new methods on arrays. The <code>fill()</code> and <code>copyWithin()</code> methods allow you to alter array elements in-place. The <code>find()</code> and <code>findIndex()</code> methods are useful for finding the first element in an array that matches some criteria. The former returns the first element that fits the criteria, and the latter returns the element’s index.</p>
+<p>Typed arrays are not technically arrays, as they do not inherit from <code>Array</code>, but they do look and behave a lot like arrays. Typed arrays contain one of eight different numeric data types and are built upon <code>ArrayBuffer</code> objects that represent the underlying bits of a number or series of numbers. Typed arrays are a more efficient way of doing bitwise arithmetic because the values are not converted back and forth between formats, as is the case with the JavaScript number type.</p>
+</body>
+</html>

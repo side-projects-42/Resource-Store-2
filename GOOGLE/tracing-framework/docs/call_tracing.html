@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>call_tracing</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="call-tracing">Call Tracing</h1>
+<p>Warning: this feature is experimental and requires a bit of work to get going.</p>
+<p>Want to see every single function call your app is making? How about how many bytes each function allocates as it runs? That’d be cool, right?!</p>
+<p>The normal WTF instrumentation requires adding <code>wtf.trace</code> calls inside your code to find the times and structure of your code as it executes. Since you’re trying to get timing you want to restrain your usage as to not cause time skew and other bad effects. It’s also impossible to try to instrument every call in your program, even with the nifty helper functions.</p>
+<p>So the call tracing feature is implemented entirely differently. It is <strong>not for timing</strong> - you will not be able to get function times from this! What you will be seeing in the user interface is counts, based on the mode you’re running in.</p>
+<p>The <code>wtf-instrument</code> command line tool runs over your JavaScript to produce an instrumented file that can be run in the browser. Unlike the normal instrumentation that normal WTF does, this process performs code transformation and results in a different kind of file: <code>.wtf-calls</code>.</p>
+<p>The basic usage is to instrument your code (via a command line tool or a proxy), capture the call trace data, and view it in WTF.</p>
+<h2 id="preparing-your-code">Preparing Your Code</h2>
+<h3 id="remove-tracingassertionslogs">Remove Tracing/Assertions/Logs</h3>
+<p>First off, <strong>make sure all WTF tracing code is disabled</strong>. This tool does not interact with <code>wtf.trace</code> calls well and if they are present you’ll end up seeing them in your output. Strip all calls using a compiler or an if guard.</p>
+<p>Next, drop all code you aren’t interested in. Future versions may allow you to selectively ignore functions (by adding a .ignore property to functions or something), but for now you should strip what you don’t want like asserts/etc.</p>
+<h3 id="ensure-functions-are-named">Ensure Functions are Named</h3>
+<p>This tool only supports named function declarations right now:</p>
+<pre><code>// This will be named properly:
+function someName() {}
+var named1 = function() {};
+My.named2 = function() {};
+My.prototype.named3 = function() {};</code></pre>
+<p>Future versions will try to handle other cases better. Or help out and <a href="https://github.com/google/tracing-framework/blob/master/bin/instrument.js#L131">hack in your own</a>!</p>
+<p>If you’re using Closure Compiler to generate your optimized code you can enable anonymous function naming via the <code>setAnonymousFunctionNaming</code> compiler option. It should be set to either <code>UNMAPPED</code> or <code>MAPPED</code>. This is <code>setDebugOptionsForCompilationLevel</code> in the CompilationLevel and exposed to the command line as <code>--debug</code>.</p>
+<h3 id="use-final-output-with-names-on">Use Final Output (with names on)</h3>
+<p>If you’re using Closure Compiler ensure you have inlining/etc enabled so that the structure of the code you’re executing is what you will be shipping. The <strong>only</strong> difference between the code you run this tool on and what you ship should be visual only (pretty printing, naming, etc).</p>
+<h2 id="install-the-tracing-framework-tools">Install the tracing-framework Tools</h2>
+<pre><code>npm install -g tracing-framework</code></pre>
+<h2 id="manual-instrumentation">Manual Instrumentation</h2>
+<p>If you have a JavaScript file you’d like to instrument the easiest way to get started is by using the <code>wtf-instrument</code> tool included in the npm package (aka <code>./bin/instrument.js</code> in the repo).</p>
+<p>This tool will take an input file and produce an instrumented version that can be used on a page.</p>
+<pre><code># Generate the instrumented js file.
+wtf-instrument myapp.js myapp.instrumented.js</code></pre>
+<p>Once you have this file, include it on your page instead of the uninstrmented version. That’s it! See below for how to actually use the instrumented page.</p>
+<p>Caveats:</p>
+<ul>
+<li>Only one JavaScript file on a page can be instrumented this way right now. If you need more use the proxy below.</li>
+</ul>
+<h2 id="automatic-instrumentation">Automatic Instrumentation</h2>
+<p>By running a tiny proxy server and using a Chrome extension it’s possible to automatically instrument all JavaScript sources on a page automatically.</p>
+<p>Flow:</p>
+<ul>
+<li>Launch the proxy server (<code>wtf-instrument --server</code>).</li>
+<li>Install and enable the Chrome extension (wtf-instrument-proxy).</li>
+<li>Reload the page you want to instrument.</li>
+<li>Capture the calls!</li>
+</ul>
+<h3 id="launching-the-proxy-server">Launching the Proxy Server</h3>
+<pre><code># Launch the proxy on the default ports.
+# Leave this running and watch the output to make sure it&#39;s working.
+wtf-instrument --server</code></pre>
+<p>If you’re running from source, use <code>./bin/instrument.js --server</code>.</p>
+<h3 id="install-the-extension">Install the Extension</h3>
+<p>Navigate to <code>chrome://extensions</code>, click Load Unpacked Extensions, and select the <code>extensions/wtf-instrument-proxy/</code> directory. You can leave the extension installed but should disable it when not in use so that you aren’t instrumenting every page you visit!</p>
+<h3 id="reload-your-page">Reload Your Page</h3>
+<p>Make sure to force a full reload of your page to refetch all contents. Once the page is fully loaded you can disable the extension.</p>
+<h2 id="capturing-call-traces">Capturing Call Traces</h2>
+<p>Once you’ve instrumented your JavaScript with one of the above methods, you can capture your data.</p>
+<p>TODO: future versions will have a fancy UI, maybe.</p>
+<p>Right now, you need to use the console to manually trigger clearing and saving of data. It’s best to open the dev tools console before reloading your page so that the resize doesn’t affect your trace. Once it’s open, reload and wait until you want to capture the data.</p>
+<pre><code>// Saves the current trace data to a .wtf-calls file.
+__saveTrace()
+// Clears the trace data.
+__resetTrace()</code></pre>
+<p>You can reset and save as many times as you want in a session.</p>
+<h2 id="tracking-memory-usage">Tracking Memory Usage</h2>
+<p>The call tracing tool can be used to see how much memory each function allocates by enabling a special Chrome flag and adding a flag to your <code>wtf-instrument</code> call.</p>
+<p>First, launch a Chrome with natives enabled.</p>
+<pre><code># WARNING: THIS IS TOTALLY UNSAFE! DO NOT BROWSE THE WEB LIKE THIS!
+chrome --remote-debugging-port=9222 --disable-web-security --js-flags=--allow-natives-syntax</code></pre>
+<p>When running <code>wtf-instrument</code> add the <code>--track-heap</code> argument:</p>
+<pre><code>wtf-instrument --track-heap some.js
+# or
+wtf-instrument --server --track-heap</code></pre>
+<p>When viewing the trace each function call will be represented with the total bytes of memory allocated inside of that call as its time (so something that took 0.032ms allocated 32bytes, etc).</p>
+<h2 id="bookmarklets">Bookmarklets</h2>
+<p>Drag these to your bookmarks bar to make working with instrumented pages easier.</p>
+<p>Err, github doesn’t allow javascript: links, so you’ll have to create these manually:</p>
+<ul>
+<li>Reset Trace: <code>javascript:__resetTrace()</code>
+<ul>
+<li>Resets recorded data to start recording fresh.</li>
+</ul></li>
+<li>Save Trace: <code>javascript:__saveTrace()</code>
+<ul>
+<li>Saves a <code>.wtf-calls</code> file with the currently recorded data.</li>
+</ul></li>
+</ul>
+<h2 id="limitations">Limitations</h2>
+<p>The recording buffer is currently hardcoded to some large size and after it is full all calls are ignored without warning.</p>
+<p>Functions without a proper name will end up named as ‘anon#’. Future versions may try a little harder to extract a valid name from functions that have one (for example, property setters).</p>
+</body>
+</html>

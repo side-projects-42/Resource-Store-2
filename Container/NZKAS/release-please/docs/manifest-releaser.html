@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>manifest-releaser</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="manifest-driven-release-please">Manifest Driven release-please</h1>
+<p>release-please can be setup to use source controlled files containing releaser specific configuration (the <code>release-please-config.json</code>) as well package version tracking (the <code>.release-please-manifest.json</code>).</p>
+<p>The motivation of the manifest-based releaser is support support for monorepos:</p>
+<ul>
+<li>a combined <a href="https://github.com/googleapis/release-please#whats-a-release-pr">Release PR</a> will be created for all configured packages.</li>
+<li>release configuration for potentially hundreds of libraries is combined in two configuration files.</li>
+</ul>
+<p>Note: currently only <code>node</code> and <code>python</code> release types are supported.</p>
+<h2 id="quick-start">Quick Start</h2>
+<p>Create a minimal <code>release-please-config.json</code>, e.g., for a single JS package:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="st">&quot;packages&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="st">&quot;path/to/pkg&quot;</span><span class="op">:</span> <span class="op">{}</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="op">}</span></a></code></pre></div>
+<p>Create an empty <code>.release-please-manifest.json</code></p>
+<p>Commit/push/merge these to your remote GitHub repo (using either the repo’s default branch or a test branch in which case you’ll use the <code>--default-branch</code> flag in the next step).</p>
+<p>Run release-please:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">release-please</span> [--token=your/apikey.txt] [--default-branch=testing] manifest-pr</a></code></pre></div>
+<p>The resulting PR will assume a default starting version for your package (currently 0.1.0 for “node”) and will collect all the commits (in the history of the default/configured branch) to parse out conventional commits for changelog generation.</p>
+<p>If that is not the desired behavior for your first release PR, read on!</p>
+<h3 id="bootstrapping">Bootstrapping</h3>
+<p>There are two items to consider when running release-please for the first time: 1. which commit to start at (i.e. how much to include in your next changelog entry) 2. what version release-please should propose in this first release PR</p>
+<h4 id="starting-commit">Starting commit</h4>
+<p>You can add a top level <code>"bootstrap-sha": &lt;full sha value&gt;</code> key/value entry to the config which will cause release-please to stop there for collecting changelog commits (so choose one commit earlier than the first commit you want to include). Note: once a release-please generated PR has been merged, this config value will be ignored for all subsequent runs and can be removed.</p>
+<h4 id="initial-version">Initial Version</h4>
+<p>The simplest way to tell release-please the current version for a package it has never released before is to manually add an entry into <code>.release-please-manifest.json</code>. This change should be made directly on the default/configured branch or on a separate, user created branch/PR which is then merged into the default/configured branch.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="st">&quot;path/to/pkg&quot;</span><span class="op">:</span> <span class="st">&quot;1.1.1&quot;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="op">}</span></a></code></pre></div>
+<p>release-please will now use “1.1.1” as the last-released/current version for “path/to/pkg” and suggest the next version according to coventional commits it has found since the last merged release PR (or “bootstrap-sha” if this is the first run).</p>
+<h2 id="configfile">Configfile</h2>
+<p>Some example configs below illustrate usage (comments for illustration purposes only, not supported in actual configs).</p>
+<p>A config file must exist at the tip of the default/configured branch and the minimal content required defines at least one package:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="st">&quot;packages&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="co">// defaults to the &quot;node&quot; type which also implements package-name lookup</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="co">// so no need to specify that here.</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="st">&quot;path/to/pkg&quot;</span><span class="op">:</span> <span class="op">{}</span></a>
+<a class="sourceLine" id="cb4-6" title="6">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="op">}</span></a></code></pre></div>
+<p>The following example shows all the possiblities. Note: for illustration purposes the top level values set here are <strong>NOT</strong> the defaults (those are documented in comments)</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="co">// if this is the first time running `manifest-pr` on a repo</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="co">// this key will limit how far back (exclusive) to pull commits</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="co">// for conventional commit parsing.</span></a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="co">// Notes:</span></a>
+<a class="sourceLine" id="cb5-6" title="6">  <span class="co">//   - full sha required.</span></a>
+<a class="sourceLine" id="cb5-7" title="7">  <span class="co">//   - only applicable at top-level config.</span></a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="st">&quot;bootstrap-sha&quot;</span><span class="op">:</span> <span class="st">&quot;6fc119838885b0cb831e78ddd23ac01cb819e585&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-9" title="9"></a>
+<a class="sourceLine" id="cb5-10" title="10">  <span class="co">// see Plugins section below</span></a>
+<a class="sourceLine" id="cb5-11" title="11">  <span class="co">// absence defaults to [] (i.e. no plugins)</span></a>
+<a class="sourceLine" id="cb5-12" title="12">  <span class="st">&quot;plugins&quot;</span><span class="op">:</span> [<span class="st">&quot;node-workspace&quot;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-13" title="13"></a>
+<a class="sourceLine" id="cb5-14" title="14">  <span class="co">// optional top-level defaults that can be overriden per package:</span></a>
+<a class="sourceLine" id="cb5-15" title="15"></a>
+<a class="sourceLine" id="cb5-16" title="16">  <span class="co">// set default package release-type to &quot;python&quot;</span></a>
+<a class="sourceLine" id="cb5-17" title="17">  <span class="co">// absence defaults to &quot;node&quot;</span></a>
+<a class="sourceLine" id="cb5-18" title="18">  <span class="st">&quot;release-type&quot;</span><span class="op">:</span> <span class="st">&quot;python&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-19" title="19"></a>
+<a class="sourceLine" id="cb5-20" title="20">  <span class="co">// manually set next version to be &quot;1.2.3&quot; ignoring conventional commits.</span></a>
+<a class="sourceLine" id="cb5-21" title="21">  <span class="co">// absence defaults to conventional commits derived next version.</span></a>
+<a class="sourceLine" id="cb5-22" title="22">  <span class="co">// Note: once the release PR is merged you should either remove this or</span></a>
+<a class="sourceLine" id="cb5-23" title="23">  <span class="co">// update it to a higher version. Otherwise subsequent `manifest-pr` runs</span></a>
+<a class="sourceLine" id="cb5-24" title="24">  <span class="co">// will continue to use this version even though it was already set in the</span></a>
+<a class="sourceLine" id="cb5-25" title="25">  <span class="co">// last release.</span></a>
+<a class="sourceLine" id="cb5-26" title="26">  <span class="st">&quot;release-as&quot;</span><span class="op">:</span> <span class="st">&quot;1.2.3&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-27" title="27"></a>
+<a class="sourceLine" id="cb5-28" title="28">  <span class="co">// BREAKING CHANGE only bumps semver minor if version &lt; 1.0.0</span></a>
+<a class="sourceLine" id="cb5-29" title="29">  <span class="co">// absence defaults to false</span></a>
+<a class="sourceLine" id="cb5-30" title="30">  <span class="st">&quot;bump-minor-pre-major&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-31" title="31"></a>
+<a class="sourceLine" id="cb5-32" title="32">  <span class="co">// feat commits bump semver patch instead of minor if version &lt; 1.0.0</span></a>
+<a class="sourceLine" id="cb5-33" title="33">  <span class="co">// absence defaults to false</span></a>
+<a class="sourceLine" id="cb5-34" title="34">  <span class="st">&quot;bump-patch-for-minor-pre-major&quot;</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-35" title="35"></a>
+<a class="sourceLine" id="cb5-36" title="36">  <span class="co">// set default conventional commit =&gt; changelog sections mapping/appearance.</span></a>
+<a class="sourceLine" id="cb5-37" title="37">  <span class="co">// absence defaults to https://git.io/JqCZL</span></a>
+<a class="sourceLine" id="cb5-38" title="38">  <span class="st">&quot;changelog-sections&quot;</span><span class="op">:</span> [...]</a>
+<a class="sourceLine" id="cb5-39" title="39"></a>
+<a class="sourceLine" id="cb5-40" title="40">  <span class="co">// when `manifest-release` creates GitHub Releases per package, create</span></a>
+<a class="sourceLine" id="cb5-41" title="41">  <span class="co">// those as &quot;Draft&quot; releases (which can later be manually published).</span></a>
+<a class="sourceLine" id="cb5-42" title="42">  <span class="co">// absence defaults to false and Releases are created as already Published.</span></a>
+<a class="sourceLine" id="cb5-43" title="43">  <span class="st">&quot;draft&quot;</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb5-44" title="44"></a>
+<a class="sourceLine" id="cb5-45" title="45"></a>
+<a class="sourceLine" id="cb5-46" title="46">  <span class="co">// per package configuration: at least one entry required.</span></a>
+<a class="sourceLine" id="cb5-47" title="47">  <span class="co">// the key is the relative path from the repo root to the folder that contains</span></a>
+<a class="sourceLine" id="cb5-48" title="48">  <span class="co">// all the files for that package.</span></a>
+<a class="sourceLine" id="cb5-49" title="49">  <span class="co">// the value is an object with the following optional keys:</span></a>
+<a class="sourceLine" id="cb5-50" title="50">  <span class="co">// - overrides for above top-level defaults AND</span></a>
+<a class="sourceLine" id="cb5-51" title="51">  <span class="co">// - &quot;package-name&quot;: Ignored by packages whose release-type implements source</span></a>
+<a class="sourceLine" id="cb5-52" title="52">  <span class="co">//                   code package name lookup (e.g. &quot;node&quot;). Required for all</span></a>
+<a class="sourceLine" id="cb5-53" title="53">  <span class="co">//                   other packages (e.g. &quot;python&quot;)</span></a>
+<a class="sourceLine" id="cb5-54" title="54">  <span class="co">// - &quot;changelog-path&quot;: Path + filename of the changelog relative to the</span></a>
+<a class="sourceLine" id="cb5-55" title="55">  <span class="co">//                     *package* directory. defaults to &quot;CHANGELOG.md&quot;. E.g.</span></a>
+<a class="sourceLine" id="cb5-56" title="56">  <span class="co">//                     for a package key of &quot;path/to/mypkg&quot;, the location in</span></a>
+<a class="sourceLine" id="cb5-57" title="57">  <span class="co">//                     the repo is path/to/pkg/CHANGELOG.md</span></a>
+<a class="sourceLine" id="cb5-58" title="58">  <span class="st">&quot;packages&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-59" title="59">    <span class="st">&quot;path/to/myJSPkgA&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-60" title="60">      <span class="co">// overrides release-type for node</span></a>
+<a class="sourceLine" id="cb5-61" title="61">      <span class="st">&quot;release-type&quot;</span><span class="op">:</span> <span class="st">&quot;node&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-62" title="62">      <span class="co">// create published GitHub Releases on `manifest-release` runs</span></a>
+<a class="sourceLine" id="cb5-63" title="63">      <span class="st">&quot;draft&quot;</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-64" title="64">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-65" title="65"></a>
+<a class="sourceLine" id="cb5-66" title="66">    <span class="st">&quot;path/to/myJSPkgB&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-67" title="67">      <span class="co">// overrides release-type for node</span></a>
+<a class="sourceLine" id="cb5-68" title="68">      <span class="st">&quot;release-type&quot;</span><span class="op">:</span> <span class="st">&quot;node&quot;</span></a>
+<a class="sourceLine" id="cb5-69" title="69">      <span class="co">// overrides default release-as.</span></a>
+<a class="sourceLine" id="cb5-70" title="70">      <span class="co">// see top level note about deleting/modifying after release PR merge</span></a>
+<a class="sourceLine" id="cb5-71" title="71">      <span class="st">&quot;release-as&quot;</span><span class="op">:</span> <span class="st">&quot;3.2.1&quot;</span></a>
+<a class="sourceLine" id="cb5-72" title="72">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-73" title="73"></a>
+<a class="sourceLine" id="cb5-74" title="74">    <span class="st">&quot;path/to/myPyPkgA&quot;</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-75" title="75">      <span class="co">// when a default release-as is set, this is how you revert to using</span></a>
+<a class="sourceLine" id="cb5-76" title="76">      <span class="co">// conventional commits version bumping for an individual package.</span></a>
+<a class="sourceLine" id="cb5-77" title="77">      <span class="co">// Note: if present and set to &quot;&quot;, the behavior will always be to use</span></a>
+<a class="sourceLine" id="cb5-78" title="78">      <span class="co">// conventional commits, regardless of presence or absence of default</span></a>
+<a class="sourceLine" id="cb5-79" title="79">      <span class="co">// release-as config.</span></a>
+<a class="sourceLine" id="cb5-80" title="80">      <span class="st">&quot;release-as&quot;</span><span class="op">:</span> <span class="st">&quot;&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-81" title="81">      <span class="st">&quot;package-name&quot;</span><span class="op">:</span> <span class="st">&quot;coolio-pkg&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-82" title="82">      <span class="co">// our change log is located at path/to/myPyPkgA/docs/CHANGES.rst</span></a>
+<a class="sourceLine" id="cb5-83" title="83">      <span class="st">&quot;changelog-path&quot;</span><span class="op">:</span> <span class="st">&quot;docs/CHANGES.rst&quot;</span></a>
+<a class="sourceLine" id="cb5-84" title="84">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-85" title="85">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-86" title="86"></a>
+<a class="sourceLine" id="cb5-87" title="87"><span class="op">}</span></a></code></pre></div>
+<h2 id="manifest">Manifest</h2>
+<p>At a minimum, a manifest file must exist at the tip of the <code>--default-branch</code>. It can be empty when release-please is run for the first time but it must exist. Manually editing the manifest is only appropriate in the bootstrap case outlined above. release-please will record a new version into the manifest file for each package it is configured to release.</p>
+<p>Once the first release PR has been merged, subsequent <code>manifest-pr</code> runs will retrieve the content of the manifest at the commit corresponding to that merged PR. It will use this to find the last-released version for each package. It will only read the manifest versions at the tip of the default/configured branch if it fails to find a package’s version in the last released manifest content. It will only consider version info it is missing for a configured package (thus handling the new package bootstrap case).</p>
+<h2 id="cli-usage">CLI usage</h2>
+<p>The commands available for this mode are <code>manifest-pr</code> and <code>manifest-release</code></p>
+<p>They both take the following optional flags:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1">❯ <span class="ex">release-please</span> manifest-pr --help</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="ex">release-please</span> manifest-pr</a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="ex">create</span> a release-PR using a manifest file</a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="ex">Options</span>:</a>
+<a class="sourceLine" id="cb6-7" title="7">  <span class="ex">--help</span>                        Show help                              [boolean]</a>
+<a class="sourceLine" id="cb6-8" title="8">  <span class="ex">--version</span>                     Show version number                    [boolean]</a>
+<a class="sourceLine" id="cb6-9" title="9">  <span class="ex">--debug</span>                       print verbose errors (use only for local</a>
+<a class="sourceLine" id="cb6-10" title="10">                                <span class="ex">debugging</span>)<span class="bu">.</span>           [<span class="ex">boolean</span>] [default: false]</a>
+<a class="sourceLine" id="cb6-11" title="11">  <span class="ex">--token</span>                       GitHub token with repo write permissions</a>
+<a class="sourceLine" id="cb6-12" title="12">  <span class="ex">--api-url</span>                     URL to use when making API requests</a>
+<a class="sourceLine" id="cb6-13" title="13">                                    [<span class="ex">string</span>] [default: <span class="st">&quot;https://api.github.com&quot;</span>]</a>
+<a class="sourceLine" id="cb6-14" title="14">  <span class="ex">--default-branch</span>              The branch to open release PRs against and tag</a>
+<a class="sourceLine" id="cb6-15" title="15">                                <span class="ex">releases</span> on                             [string]</a>
+<a class="sourceLine" id="cb6-16" title="16">  <span class="ex">--fork</span>                        should the PR be created from a fork</a>
+<a class="sourceLine" id="cb6-17" title="17">                                                      [<span class="ex">boolean</span>] [default: false]</a>
+<a class="sourceLine" id="cb6-18" title="18">  <span class="ex">--repo-url</span>                    GitHub URL to generate release for    [required]</a>
+<a class="sourceLine" id="cb6-19" title="19">  <span class="ex">--config-file</span>                 where can the config file be found in the</a>
+<a class="sourceLine" id="cb6-20" title="20">                                <span class="ex">project?</span> [default: <span class="st">&quot;release-please-config.json&quot;</span>]</a>
+<a class="sourceLine" id="cb6-21" title="21">  <span class="ex">--manifest-file</span>               where can the manifest file be found in the</a>
+<a class="sourceLine" id="cb6-22" title="22">                                <span class="ex">project?</span></a>
+<a class="sourceLine" id="cb6-23" title="23">                                      [<span class="ex">default</span>: <span class="st">&quot;.release-please-manifest.json&quot;</span>]</a></code></pre></div>
+<h3 id="manifest-pr"><code>manifest-pr</code></h3>
+<p>This command can be run anytime and it will create or update a release PR. It labels the PR as <code>"autorelease: pending"</code> (used by <code>manifest-release</code>).</p>
+<h3 id="manifest-release"><code>manifest-release</code></h3>
+<p>This command should run some time after a release PR has been merged and before the next release PR is merged. It will create GitHub Releases based on the last merged release PR it finds (which is why you don’t want to let two release PRs merge w/out running it). If successful it will remove the <code>"autorelease: pending"</code> label and adds the <code>"autorelease: tagged"</code> label. Creating all the releases is not transactional. If any fail to create the command can be re-run safely to finish creating releases.</p>
+<h3 id="releasing-root-path-of-library-.">Releasing Root Path of Library (“.”)</h3>
+<p>One use-case that arose for <a href="https://github.com/googleapis/google-api-nodejs-client">googleapis</a>, was the need to publish individual libraries along with a combined version of the library, i.e.,</p>
+<ul>
+<li>an individual library for <code>@googleapis/youtube</code>, <code>@googleapis/sheets</code>, etc.</li>
+<li>a root library that combined all these API surfaces.</li>
+</ul>
+<p>This functionality can be achieved by using the special <code>"."</code> path. <code>"."</code> indicates a release should be created when any changes are made to the codebase.</p>
+<h2 id="plugins">Plugins</h2>
+<p>Plugins can be added to perform extra release processing that cannot be achieved by an individual releaser because that releaser only has the context of a single package on which to operate. A plugin operates in the context of all the packages in the monorepo after release-please has run individual releasers on each package but before the final PR is created or updated.</p>
+<h3 id="plugin-usage">Plugin usage</h3>
+<p>To use a plugin in your manifest based release-please setup, simply add it to the array of the <code>"plugins"</code> key in your release-please-config.json. (Note: the plugin must already be implemented, see below)</p>
+<h3 id="plugin-implementation">Plugin implementation</h3>
+<p>A <code>ManifestPlugin</code> instance has these resources avilable: - <code>this.gh</code>: a <code>GitHub</code> instance for any API operations it might want to perform - <code>this.config</code>: a <code>Config</code> object representing all the packages configured for the monorepo</p>
+<p>It must implement a <code>run</code> method which receives two arguments: - the latest versions of all packages (ultimately be written to the manifest) - an array of the mapping of package-to-currently-proposed-changes and makes any modifications, additions, or deletions to either argument (in addition to any other out-of-band side effect) and returns both (potentially modified) arguments in a tuple.</p>
+<p>For example, a very basic plugin that simply logs the number of packages currently appearing in the release written as <code>src/plugins/num-packages.ts</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode typescript"><code class="sourceCode typescript"><a class="sourceLine" id="cb7-1" title="1"><span class="im">import</span> <span class="op">{</span>CheckpointType<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;../util/checkpoint&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="im">export</span> <span class="im">default</span> <span class="kw">class</span> LogNumberPkgsReleased <span class="kw">extends</span> ManifestPlugin <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">  <span class="kw">async</span> <span class="fu">run</span>(</a>
+<a class="sourceLine" id="cb7-6" title="6">    newManifestVersions<span class="op">:</span> VersionsMap<span class="op">,</span></a>
+<a class="sourceLine" id="cb7-7" title="7">    pkgsWithPRData<span class="op">:</span> ManifestPackageWithPRData<span class="op">[]</span></a>
+<a class="sourceLine" id="cb7-8" title="8">  )<span class="op">:</span> <span class="bu">Promise</span><span class="op">&lt;[</span>VersionsMap<span class="op">,</span> ManifestPackageWithPRData<span class="op">[]]&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-9" title="9">    <span class="va">this</span><span class="op">.</span><span class="fu">log</span>(</a>
+<a class="sourceLine" id="cb7-10" title="10">      <span class="vs">`Number of packages to release: </span><span class="sc">${</span><span class="va">pkgsWithPRData</span><span class="op">.</span><span class="at">length</span><span class="sc">}</span><span class="vs">`</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-11" title="11">      <span class="va">CheckpointType</span><span class="op">.</span><span class="at">Success</span></a>
+<a class="sourceLine" id="cb7-12" title="12">    )<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-13" title="13">    <span class="cf">return</span> <span class="op">[</span>newManifestVersions<span class="op">,</span> pkgsWithPRData<span class="op">];</span></a>
+<a class="sourceLine" id="cb7-14" title="14">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="op">}</span></a></code></pre></div>
+<p>The <code>num-packages</code> plugin is not very interesting. Also, if it is not last in the <code>"plugins"</code> configuration array, it might not be accurate (a subsequent plugin could add or remove entries to/from <code>pkgsWithPRData</code>)</p>
+<p>However, one place a plugin has particular value is in a monorepo where local packages depend on the latest version of each other (e.g. yarn/npm workspaces for Node, or cargo workspaces for Rust).</p>
+<h3 id="node-workspace">node-workspace</h3>
+<p>The <code>node-workspace</code> plugin builds a graph of local node packages configured in release-please-config.json and the dependency relationships between them. It looks at what packages were updated by release-please and updates their reference in other packages’ dependencies lists. Even when a particular package was not updated by release-please, if a dependency did have an update, it will be patch bump the package, create a changelog entry, and add it to the list of PR changes. Under the hood this plugin adapts specific dependency graph building and updating functionality from the popular <a href="https://github.com/lerna/lerna">lerna</a> tool.</p>
+</body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Troubleshooting</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Troubleshooting</h1>
+    </header>
+    <p>
+      Uh oh, something went wrong? Use this guide to resolve issues with Jest.
+    </p>
+    <h2 id="tests-are-failing-and-you-dont-know-why">
+      Tests are Failing and You Don’t Know Why
+    </h2>
+    <p>
+      Try using the debugging support built into Node. Note: This will only work
+      in Node.js 8+.
+    </p>
+    <p>
+      Place a <code>debugger;</code> statement in any of your tests, and then,
+      in your project’s directory, run:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">node</span> --inspect-brk node_modules/.bin/jest --runInBand [any other arguments here]</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">or</span> on Windows</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ex">node</span> --inspect-brk ./node_modules/jest/bin/jest.js --runInBand [any other arguments here]</a></code></pre>
+    </div>
+    <p>
+      This will run Jest in a Node process that an external debugger can connect
+      to. Note that the process will pause until the debugger has connected to
+      it.
+    </p>
+    <p>
+      To debug in Google Chrome (or any Chromium-based browser), simply open
+      your browser and go to <code>chrome://inspect</code> and click on “Open
+      Dedicated DevTools for Node”, which will give you a list of available node
+      instances you can connect to. Simply click on the address displayed in the
+      terminal (usually something like <code>localhost:9229</code>) after
+      running the above command, and you will be able to debug Jest using
+      Chrome’s DevTools.
+    </p>
+    <p>
+      The Chrome Developer Tools will be displayed, and a breakpoint will be set
+      at the first line of the Jest CLI script (this is done simply to give you
+      time to open the developer tools and to prevent Jest from executing before
+      you have time to do so). Click the button that looks like a “play” button
+      in the upper right hand side of the screen to continue execution. When
+      Jest executes the test that contains the <code>debugger</code> statement,
+      execution will pause and you can examine the current scope and call stack.
+    </p>
+    <blockquote>
+      <p>
+        Note: the <code>--runInBand</code> cli option makes sure Jest runs test
+        in the same process rather than spawning processes for individual tests.
+        Normally Jest parallelizes test runs across processes but it is hard to
+        debug many processes at the same time.
+      </p>
+    </blockquote>
+    <h2 id="debugging-in-vs-code">Debugging in VS Code</h2>
+    <p>
+      There are multiple ways to debug Jest tests with
+      <a href="https://code.visualstudio.com">Visual Studio Code’s</a> built in
+      <a href="https://code.visualstudio.com/docs/nodejs/nodejs-debugging"
+        >debugger</a
+      >.
+    </p>
+    <p>To attach the built-in debugger, run your tests as aforementioned:</p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">node</span> --inspect-brk node_modules/.bin/jest --runInBand [any other arguments here]</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">or</span> on Windows</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="ex">node</span> --inspect-brk ./node_modules/jest/bin/jest.js --runInBand [any other arguments here]</a></code></pre>
+    </div>
+    <p>
+      Then attach VS Code’s debugger using the following
+      <code>launch.json</code> config:
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;0.2.0&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">&quot;configurations&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;node&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">      <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;attach&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-7" title="7">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Attach&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="dt">&quot;port&quot;</span><span class="fu">:</span> <span class="dv">9229</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb3-10" title="10">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      To automatically launch and attach to a process running your tests, use
+      the following configuration:
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;0.2.0&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">&quot;configurations&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-5" title="5">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Debug Jest Tests&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-6" title="6">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;node&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-7" title="7">      <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-8" title="8">      <span class="dt">&quot;runtimeArgs&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb4-9" title="9">        <span class="st">&quot;--inspect-brk&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb4-10" title="10">        <span class="st">&quot;${workspaceRoot}/node_modules/.bin/jest&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb4-11" title="11">        <span class="st">&quot;--runInBand&quot;</span></a>
+<a class="sourceLine" id="cb4-12" title="12">      <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-13" title="13">      <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-14" title="14">      <span class="dt">&quot;internalConsoleOptions&quot;</span><span class="fu">:</span> <span class="st">&quot;neverOpen&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-15" title="15">      <span class="dt">&quot;port&quot;</span><span class="fu">:</span> <span class="dv">9229</span></a>
+<a class="sourceLine" id="cb4-16" title="16">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb4-17" title="17">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb4-18" title="18"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>or the following for Windows:</p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;0.2.0&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">&quot;configurations&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-5" title="5">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Debug Jest Tests&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-6" title="6">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;node&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-7" title="7">      <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-8" title="8">      <span class="dt">&quot;runtimeArgs&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb5-9" title="9">        <span class="st">&quot;--inspect-brk&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb5-10" title="10">        <span class="st">&quot;${workspaceRoot}/node_modules/jest/bin/jest.js&quot;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb5-11" title="11">        <span class="st">&quot;--runInBand&quot;</span></a>
+<a class="sourceLine" id="cb5-12" title="12">      <span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-13" title="13">      <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-14" title="14">      <span class="dt">&quot;internalConsoleOptions&quot;</span><span class="fu">:</span> <span class="st">&quot;neverOpen&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-15" title="15">      <span class="dt">&quot;port&quot;</span><span class="fu">:</span> <span class="dv">9229</span></a>
+<a class="sourceLine" id="cb5-16" title="16">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb5-17" title="17">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb5-18" title="18"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      If you are using Facebook’s
+      <a href="https://github.com/facebookincubator/create-react-app"
+        ><code>create-react-app</code></a
+      >, you can debug your Jest tests with the following configuration:
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb6-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">&quot;version&quot;</span><span class="fu">:</span> <span class="st">&quot;0.2.0&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">&quot;configurations&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-5" title="5">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Debug CRA Tests&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-6" title="6">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;node&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-7" title="7">      <span class="dt">&quot;request&quot;</span><span class="fu">:</span> <span class="st">&quot;launch&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-8" title="8">      <span class="dt">&quot;runtimeExecutable&quot;</span><span class="fu">:</span> <span class="st">&quot;${workspaceRoot}/node_modules/.bin/react-scripts&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-9" title="9">      <span class="dt">&quot;args&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;test&quot;</span><span class="ot">,</span> <span class="st">&quot;--runInBand&quot;</span><span class="ot">,</span> <span class="st">&quot;--no-cache&quot;</span><span class="ot">,</span> <span class="st">&quot;--env=jsdom&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-10" title="10">      <span class="dt">&quot;cwd&quot;</span><span class="fu">:</span> <span class="st">&quot;${workspaceRoot}&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-11" title="11">      <span class="dt">&quot;protocol&quot;</span><span class="fu">:</span> <span class="st">&quot;inspector&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-12" title="12">      <span class="dt">&quot;console&quot;</span><span class="fu">:</span> <span class="st">&quot;integratedTerminal&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-13" title="13">      <span class="dt">&quot;internalConsoleOptions&quot;</span><span class="fu">:</span> <span class="st">&quot;neverOpen&quot;</span></a>
+<a class="sourceLine" id="cb6-14" title="14">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb6-15" title="15">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      More information on Node debugging can be found
+      <a href="https://nodejs.org/api/debugger.html">here</a>.
+    </p>
+    <h2 id="debugging-in-webstorm">Debugging in WebStorm</h2>
+    <p>
+      The easiest way to debug Jest tests in
+      <a href="https://www.jetbrains.com/webstorm/">WebStorm</a> is using
+      <code>Jest run/debug configuration</code>. It will launch tests and
+      automatically attach debugger.
+    </p>
+    <p>
+      In the WebStorm menu <code>Run</code> select
+      <code>Edit Configurations...</code>. Then click <code>+</code> and select
+      <code>Jest</code>. Optionally specify the Jest configuration file,
+      additional options, and environment variables. Save the configuration, put
+      the breakpoints in the code, then click the green debug icon to start
+      debugging.
+    </p>
+    <p>
+      If you are using Facebook’s
+      <a href="https://github.com/facebookincubator/create-react-app"
+        ><code>create-react-app</code></a
+      >, in the Jest run/debug configuration specify the path to the
+      <code>react-scripts</code> package in the Jest package field and add
+      <code>--env=jsdom</code> to the Jest options field.
+    </p>
+    <h2 id="caching-issues">Caching Issues</h2>
+    <p>
+      The transform script was changed or Babel was updated and the changes
+      aren’t being recognized by Jest?
+    </p>
+    <p>
+      Retry with <a href="CLI.md#cache"><code>--no-cache</code></a
+      >. Jest caches transformed module files to speed up test execution. If you
+      are using your own custom transformer, consider adding a
+      <code>getCacheKey</code> function to it:
+      <a
+        href="https://github.com/facebook/relay/blob/58cf36c73769690f0bbf90562707eadb062b029d/scripts/jest/preprocessor.js#L56-L61"
+        >getCacheKey in Relay</a
+      >.
+    </p>
+    <h2 id="unresolved-promises">Unresolved Promises</h2>
+    <p>If a promise doesn’t resolve at all, this error might be thrown:</p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">-</span> Error: Timeout - Async callback was not invoked within timeout specified by jasmine.DEFAULT_TIMEOUT_INTERVAL.<span class="kw">`</span></a></code></pre>
+    </div>
+    <p>
+      Most commonly this is being caused by conflicting Promise implementations.
+      Consider replacing the global promise implementation with your own, for
+      example
+      <code>global.Promise = jest.requireActual('promise');</code> and/or
+      consolidate the used Promise libraries to a single one.
+    </p>
+    <p>
+      If your test is long running, you may want to consider to increase the
+      timeout by calling <code>jest.setTimeout</code>
+    </p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="va">jest</span>.<span class="at">setTimeout</span>(<span class="dv">10000</span>)<span class="op">;</span> <span class="co">// 10 second timeout</span></a></code></pre>
+    </div>
+    <h2 id="watchman-issues">Watchman Issues</h2>
+    <p>
+      Try running Jest with
+      <a href="CLI.md#watchman"><code>--no-watchman</code></a> or set the
+      <code>watchman</code> configuration option to <code>false</code>.
+    </p>
+    <p>
+      Also see
+      <a href="https://facebook.github.io/watchman/docs/troubleshooting.html"
+        >watchman troubleshooting</a
+      >.
+    </p>
+    <h2
+      id="tests-are-extremely-slow-on-docker-andor-continuous-integration-ci-server."
+    >
+      Tests are Extremely Slow on Docker and/or Continuous Integration (CI)
+      server.
+    </h2>
+    <p>
+      While Jest is most of the time extremely fast on modern multi-core
+      computers with fast SSDs, it may be slow on certain setups as our users
+      <a href="https://github.com/facebook/jest/issues/1395">have</a>
+      <a
+        href="https://github.com/facebook/jest/issues/1524#issuecomment-260246008"
+        >discovered</a
+      >.
+    </p>
+    <p>
+      Based on the
+      <a
+        href="https://github.com/facebook/jest/issues/1524#issuecomment-262366820"
+        >findings</a
+      >, one way to mitigate this issue and improve the speed by up to 50% is to
+      run tests sequentially.
+    </p>
+    <p>
+      In order to do this you can run tests in the same thread using
+      <a href="CLI.md#runinband"><code>--runInBand</code></a
+      >:
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Using Jest CLI</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="ex">jest</span> --runInBand</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co"># Using yarn test (e.g. with create-react-app)</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="ex">yarn</span> test --runInBand</a></code></pre>
+    </div>
+    <p>
+      Another alternative to expediting test execution time on Continuous
+      Integration Servers such as Travis-CI is to set the max worker pool to
+      ~<em>4</em>. Specifically on Travis-CI, this can reduce test execution
+      time in half. Note: The Travis CI <em>free</em> plan available for open
+      source projects only includes 2 CPU cores.
+    </p>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Using Jest CLI</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">jest</span> --maxWorkers=4</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co"># Using yarn test (e.g. with create-react-app)</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="ex">yarn</span> test --maxWorkers=4</a></code></pre>
+    </div>
+    <h2 id="compatibility-issues">Compatibility issues</h2>
+    <p>
+      Jest takes advantage of new features added to Node 6. We recommend that
+      you upgrade to the latest stable release of Node. The minimum supported
+      version is <code>v6.0.0</code>. Versions <code>0.x.x</code> and
+      <code>4.x.x</code> are not supported because the
+      <code>jsdom</code> version used in Jest doesn’t support Node 4. However,
+      if you need to run Jest on Node 4, you can use the
+      <code>testEnvironment</code> config to use a
+      <a
+        href="https://jestjs.io/docs/en/configuration.html#testenvironment-string"
+        >custom environment</a
+      >
+      that supports Node 4, such as
+      <a href="https://yarnpkg.com/en/package/jest-environment-node"
+        ><code>jest-environment-node</code></a
+      >.
+    </p>
+    <h2 id="coveragepathignorepatterns-seems-to-not-have-any-effect.">
+      <code>coveragePathIgnorePatterns</code> seems to not have any effect.
+    </h2>
+    <p>
+      Make sure you are not using the <code>babel-plugin-istanbul</code> plugin.
+      Jest wraps Istanbul, and therefore also tells Istanbul what files to
+      instrument with coverage collection. When using
+      <code>babel-plugin-istanbul</code>, every file that is processed by Babel
+      will have coverage collection code, hence it is not being ignored by
+      <code>coveragePathIgnorePatterns</code>.
+    </p>
+    <h2 id="defining-tests">Defining Tests</h2>
+    <p>
+      Tests must be defined synchronously for Jest to be able to collect your
+      tests.
+    </p>
+    <p>
+      As an example to show why this is the case, imagine we wrote a test like
+      so:
+    </p>
+    <div class="sourceCode" id="cb11">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="co">// Don&#39;t do this it will not work</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="at">setTimeout</span>(() <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="at">it</span>(<span class="st">&#39;passes&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="at">expect</span>(<span class="dv">1</span>).<span class="at">toBe</span>(<span class="dv">1</span>))<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="op">},</span> <span class="dv">0</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      When Jest runs your test to collect the <code>test</code>s it will not
+      find any because we have set the definition to happen asynchronously on
+      the next tick of the event loop.
+    </p>
+    <p>
+      <em>Note:</em> This means when you are using <code>test.each</code> you
+      cannot set the table asynchronously within a <code>beforeEach</code> /
+      <code>beforeAll</code>.
+    </p>
+    <h2 id="still-unresolved">Still unresolved?</h2>
+    <p>See <a href="/help.html">Help</a>.</p>
+  </body>
+</html>

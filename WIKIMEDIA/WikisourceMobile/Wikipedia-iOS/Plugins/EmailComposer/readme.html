@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>readme</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Added Cordova 1.5 support March 2012 - <span class="citation" data-cites="RandyMcMillan">@RandyMcMillan</span></p>
+<p>• You will need to add MessageUI.framework to your project if it is not already included.</p>
+<p>• Just add the EmailComposer.h EmailComposer.m files to your Plugins Folder.</p>
+<p>• Place the EmailComposer.js file in your app root, and include it from your html.</p>
+<p>• Add to Cordova.plist Plugins: key EmailComposer value EmailComposer</p>
+<p>• This is intended to also demonstrate how to pass arguments to native code using the options/map object.</p>
+<p>• Please review the js file to understand the interface you can call, and reply with any questions.</p>
+<pre><code>    Cordova.exec(null, null, &quot;EmailComposer&quot;, &quot;showEmailComposer&quot;, [args]);</code></pre>
+</body>
+</html>

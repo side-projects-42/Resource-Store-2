@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>pie</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="pie-chart">Pie Chart</h1>
+<p>```js chart-editor // <block:setup:2> const DATA_COUNT = 5; Utils.srand(110);</p>
+<p>const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = generateData(); }); chart.update(); }, }, { name: “Toggle Doughnut View”, handler(chart) { if (chart.options.cutout) { chart.options.cutout = 0; } else { chart.options.cutout = “50%”; } chart.update(); }, },]; // </block:setup></p>
+<p>// <block:data:1> function generateData() { return Utils.numbers({ count: DATA_COUNT, min: -100, max: 100, }); }</p>
+<p>const data = { datasets: [ { data: generateData(), }, ], }; // </block:data></p>
+<p>// <block:options:0> function colorize(opaque, hover, ctx) { var v = ctx.parsed; var c = v &lt; -50 ? “#D60000” : v &lt; 0 ? “#F46300” : v &lt; 50 ? “#0358B6” : “#44DE28”;</p>
+<p>var opacity = hover ? 1 - Math.abs(v / 150) - 0.2 : 1 - Math.abs(v / 150);</p>
+<p>return opaque ? c : Utils.transparentize(c, opacity); }</p>
+<p>function hoverColorize(ctx) { return colorize(false, true, ctx); }</p>
+<p>const config = { type: “pie”, data: data, options: { plugins: { legend: false, tooltip: false, }, elements: { arc: { backgroundColor: colorize.bind(null, false, false), hoverBackgroundColor: hoverColorize, }, }, }, }; // </block:options></p>
+<p>module.exports = { actions, config, }; ```</p>
+</body>
+</html>

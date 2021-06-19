@@ -1,413 +1,52 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4701</title>
-  </head>
-  <body>
-    <h1>N4701 Editors' Report -- Programming Languages -- C++</h1>
-
-    <p>
-      2017-10-16 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Dawn Perchik (co-editor) (Embarcadero Technologies Inc) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Special thanks to Jens Maurer, Jonathan Wakely, and Eelis van der Weegen
-      for performing many of the editorial fixes since N4687.
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4700">N4700</a> is the current working draft
-        for C++20. It replaces <a href="http://wg21.link/n4687">N4659</a>.
-      </li>
-      <li>N4701 is this Editors' Report.</li>
-    </ul>
-
-    <h2>Motions incorporated into working draft</h2>
-
-    <p>This revision contains only editorial changes relative to N4687.</p>
-
-    <h2>Notable editorial changes</h2>
-
-    <h3>Changes in the style of specification</h3>
-
-    <ul>
-      <li>
-        Entries in Terms and Definitions have been reworded to serve as a
-        replacement for the term they define.
-      </li>
-      <li>
-        Care has been taken to replace any use of "must" with "shall" when it
-        states a requirement rather than a logical necessity.
-      </li>
-      <li>
-        The standard now generally refers to itself as "this document", and only
-        in rare cases as "this International Standard".
-      </li>
-    </ul>
-
-    <p>
-      Drafting for future standard changes should take the above into account.
-    </p>
-
-    <h3>Lists of figures and tables</h3>
-
-    <p>
-      At the request of ISO, the lists of figures and tables have been removed
-      from the document.
-    </p>
-
-    <h3>Pagination</h3>
-
-    <p>
-      At the request of ISO, the paper size used for the working draft has been
-      switched to A4.
-    </p>
-
-    <p>
-      Courtesy of Jens Maurer, we now automatically attempt to avoid page breaks
-      in undesirable places: immediately after section headings, and between the
-      declaration and description of standard library elements. We also provide
-      page break hints at the end of declarations and on blank lines in code
-      blocks. Many thanks to Jens; this will substantially reduce the effort
-      required to finalize the C++20 IS. Please file an
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >file an editorial issues</a
-      >
-      if you find any bad page breaks in the working draft.
-    </p>
-
-    <h3>Filesystem Terms and Definitions</h3>
-
-    <p>
-      Per the ISO Directives, the filesystem wording is not entitled to its own
-      Terms and Definitions section. The corresponding terms have been converted
-      to use our normal style of an italicized definition, the definitions have
-      been incorporated into the relevant portion of the running text, and the
-      [fs.definitions] subclause has been removed.
-    </p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made to the working draft since N4687 is below.
-      This list excludes changes that do not affect the body text or only affect
-      whitespace or typeface. For a complete list including such changes (or for
-      the actual deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4687...n4700"
-        >draft sources on github</a
-      >.
-    </p>
-
-    <pre><code>commit e3a5f29e3dbd60089a6371e5f16d5d507c429ea3
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4701</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4701-editors-report-programming-languages-c">N4701 Editors’ Report – Programming Languages – C++</h1>
+<p>2017-10-16<br />
+Richard Smith (editor) (Google Inc)<br />
+Dawn Perchik (co-editor) (Embarcadero Technologies Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Jens Maurer, Jonathan Wakely, and Eelis van der Weegen for performing many of the editorial fixes since N4687.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4700">N4700</a> is the current working draft for C++20. It replaces <a href="http://wg21.link/n4687">N4659</a>.</li>
+<li>N4701 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<p>This revision contains only editorial changes relative to N4687.</p>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<h3 id="changes-in-the-style-of-specification">Changes in the style of specification</h3>
+<ul>
+<li>Entries in Terms and Definitions have been reworded to serve as a replacement for the term they define.</li>
+<li>Care has been taken to replace any use of “must” with “shall” when it states a requirement rather than a logical necessity.</li>
+<li>The standard now generally refers to itself as “this document”, and only in rare cases as “this International Standard”.</li>
+</ul>
+<p>Drafting for future standard changes should take the above into account.</p>
+<h3 id="lists-of-figures-and-tables">Lists of figures and tables</h3>
+<p>At the request of ISO, the lists of figures and tables have been removed from the document.</p>
+<h3 id="pagination">Pagination</h3>
+<p>At the request of ISO, the paper size used for the working draft has been switched to A4.</p>
+<p>Courtesy of Jens Maurer, we now automatically attempt to avoid page breaks in undesirable places: immediately after section headings, and between the declaration and description of standard library elements. We also provide page break hints at the end of declarations and on blank lines in code blocks. Many thanks to Jens; this will substantially reduce the effort required to finalize the C++20 IS. Please file an <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">file an editorial issues</a> if you find any bad page breaks in the working draft.</p>
+<h3 id="filesystem-terms-and-definitions">Filesystem Terms and Definitions</h3>
+<p>Per the ISO Directives, the filesystem wording is not entitled to its own Terms and Definitions section. The corresponding terms have been converted to use our normal style of an italicized definition, the definitions have been incorporated into the relevant portion of the running text, and the [fs.definitions] subclause has been removed.</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made to the working draft since N4687 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4687...n4700">draft sources on github</a>.</p>
+<pre><code>commit e3a5f29e3dbd60089a6371e5f16d5d507c429ea3
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Oct 16 16:19:56 2017 -0700
 
@@ -420,7 +59,7 @@ commit d1ba29b57990161cbbcdbb3faf60aa9b67cc3274
 Author: Akira Takahashi &lt;faithandbrave@gmail.com&gt;
 Date:   Tue Oct 17 01:29:14 2017 +0900
 
-    [util.smartptr.shared.cmp] Add "typename" for dependent name (#1770)
+    [util.smartptr.shared.cmp] Add &quot;typename&quot; for dependent name (#1770)
 
 commit dbb1ea97f1cb57cab275ba4eec9def4b3daab97e
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -432,7 +71,7 @@ commit b07fd6c53e0d5841b513192ebe08c047f3d05df4
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Apr 20 21:41:52 2017 +0200
 
-    Use 'well-formed' (with hyphen) consistently.
+    Use &#39;well-formed&#39; (with hyphen) consistently.
 
     Fixes #1618.
 
@@ -443,7 +82,7 @@ Date:   Mon Jul 10 18:23:47 2017 +0100
     [stringbuf.virtuals] Rephrase DR 453 resolution for seekoff
 
     This avoids the requirement to compare newoff to zero when the value of
-    newoff hasn't been determined.
+    newoff hasn&#39;t been determined.
 
 commit d6a3234838da05d460366c83d8ec524f42ea37a4
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -471,9 +110,9 @@ commit 0059794f5370697d647bf31cc434cf306ba08554
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Oct 10 12:23:17 2017 -0700
 
-    Front matter: remove "Contents" entry from itself. Remove list of tables
-    and list of figures. Reorder cross-reference bullets in "Terms and
-    definitions".
+    Front matter: remove &quot;Contents&quot; entry from itself. Remove list of tables
+    and list of figures. Reorder cross-reference bullets in &quot;Terms and
+    definitions&quot;.
 
     As requested by ISO Central Secretariat.
 
@@ -481,7 +120,7 @@ commit 8b767974c25346ea4d8990ebe315ab8dfa45a3b9
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Fri Oct 6 21:52:12 2017 +0200
 
-    [mem.res.private] Remove misleading 'typical' in note.
+    [mem.res.private] Remove misleading &#39;typical&#39; in note.
 
     Fixes #1698.
 
@@ -491,7 +130,7 @@ Date:   Tue Oct 3 13:41:04 2017 +0100
 
     [time] Fix namespace for definitions in std::chrono
 
-    The previous commit ad767d39f1a0667470ded0e5eb3155fcdd55f465 accidentally added the wrong namespace "std" instead of "std::chrono".
+    The previous commit ad767d39f1a0667470ded0e5eb3155fcdd55f465 accidentally added the wrong namespace &quot;std&quot; instead of &quot;std::chrono&quot;.
 
 commit 72647e7b03472315794872a10dfe2f2b74a2fa74
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -499,7 +138,7 @@ Date:   Tue Oct 3 10:22:55 2017 +0100
 
     [mem.res] Fix namespace for definitions in std::pmr
 
-    The previous commit ad767d39f1a0667470ded0e5eb3155fcdd55f465 accidentally added the wrong namespace "std" instead of "std::pmr".
+    The previous commit ad767d39f1a0667470ded0e5eb3155fcdd55f465 accidentally added the wrong namespace &quot;std&quot; instead of &quot;std::pmr&quot;.
 
 commit eb035cf60c50ef8ad7d74ffdd5c2140f4179769a
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -511,7 +150,7 @@ commit ad767d39f1a0667470ded0e5eb3155fcdd55f465
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Tue Oct 3 00:18:23 2017 +0100
 
-    [utilities] Add missing "namespace std" to some class definitions
+    [utilities] Add missing &quot;namespace std&quot; to some class definitions
 
 commit b888c3d0cbe078475562f2b4d5f45e1528e61c6e
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -535,7 +174,7 @@ commit 97f21603bd6a9a547b98394a85c1cc0f342f7273
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 25 15:45:43 2017 -0700
 
-    Fix '// Error' in examples to use '// error' instead.
+    Fix &#39;// Error&#39; in examples to use &#39;// error&#39; instead.
 
 commit fa958265bed2a99d6d9787705297dc34c749017a
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -559,7 +198,7 @@ commit 6a7b14ae0b0f74f3ee27f0ad1354920acc830558
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 25 09:32:47 2017 -0700
 
-    [string.assign] Add missing "Returns:".
+    [string.assign] Add missing &quot;Returns:&quot;.
 
 commit 9177b4b733b7fe8d121647d5638040c1d059370e
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -585,10 +224,10 @@ commit 1a9b8ebecd1c4e2da29329be5d7bda696c8cfbed
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Sep 12 11:53:46 2017 -0700
 
-    Convert "must"s in normative wording that do not indicate logical
+    Convert &quot;must&quot;s in normative wording that do not indicate logical
     necessity to a different form.
 
-    Normative requirements use "shall". Advice to users uses "should".
+    Normative requirements use &quot;shall&quot;. Advice to users uses &quot;should&quot;.
     Description of the behavior of the implementation that does not of
     itself constitute a requirement uses the imperative mood.
 
@@ -598,7 +237,7 @@ commit 6218c216178655ece30733a0ec8043af9a65bf2e
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Sep 14 14:45:56 2017 -0700
 
-    Replace "this International Standard" with "this document" when
+    Replace &quot;this International Standard&quot; with &quot;this document&quot; when
     referring to the document as a body of text.
 
     Cases where that phrasing is used to compare this standard to other
@@ -639,7 +278,7 @@ commit 6b0c8352738bce937d5aa633aacb4cd3c3285acc
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Thu Sep 7 21:58:28 2017 +0100
 
-    [intro.defs, definitions, fs.definitions] change notes in Terms and Definitions to say "Note X to entry"
+    [intro.defs, definitions, fs.definitions] change notes in Terms and Definitions to say &quot;Note X to entry&quot;
 
     Fixes ISO 3 (C++17 DIS)
 
@@ -658,11 +297,11 @@ commit 60453da3081d8fa5753f48d2c78e1e78b1a3b079
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 11 11:40:41 2017 -0700
 
-    [fs.definitions] Replace "Terms and definitions" formatting with inline definitions.
+    [fs.definitions] Replace &quot;Terms and definitions&quot; formatting with inline definitions.
 
-    These definitions do not satisfy ISO rules for a "Terms and definitions"
+    These definitions do not satisfy ISO rules for a &quot;Terms and definitions&quot;
     section, and in any case it does not make sense for FS to have its own
-    "Terms and definitions". Following our usual convention, we use inline
+    &quot;Terms and definitions&quot;. Following our usual convention, we use inline
     definitions for locally-scoped terms.
 
 commit 5619b65614eae10510f337a1eacd05fc4308fe5c
@@ -674,7 +313,7 @@ Date:   Thu Sep 7 14:40:23 2017 -0700
 
     In particular, such phrases should not begin with an article. However,
     for definitions of adjectives, a noun phrase is still used, because the
-    English language is not compatible with ISO's requirements.
+    English language is not compatible with ISO&#39;s requirements.
 
 commit a31fa795274e9fbb676b3ef2a8e60df12eb516b0
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -691,7 +330,7 @@ commit 1a4e554f910cdd1df3d2d8a62c2270dd1219eddc
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Thu Sep 7 20:02:06 2017 +0100
 
-    [any.cons] fix tag typename; "in_place&lt;T&gt;" should be "in_place_type&lt;T&gt;"
+    [any.cons] fix tag typename; &quot;in_place&lt;T&gt;&quot; should be &quot;in_place_type&lt;T&gt;&quot;
 
     Fixes NB JP 10 (C++17 DIS)
 
@@ -753,7 +392,6 @@ commit 355a20beb12ba9c26cb09d41159f7f68238dab7d
 Author: timsong-cpp &lt;rs2740@gmail.com&gt;
 Date:   Tue Aug 1 04:14:14 2017 -0400
 
-    [defns.well.formed] remove full stop
-</code></pre>
-  </body>
+    [defns.well.formed] remove full stop</code></pre>
+</body>
 </html>

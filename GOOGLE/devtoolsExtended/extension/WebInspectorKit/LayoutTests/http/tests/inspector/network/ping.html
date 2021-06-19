@@ -1,52 +1,19 @@
-<html>
-  <head>
-    <script src="../inspector-test.js"></script>
-    <script>
-      function onload() {
-        if (window.testRunner)
-          testRunner.overridePreference("WebKitHyperlinkAuditingEnabled", 1);
-        runTest();
-      }
-
-      function navigateLink() {
-        var evt = document.createEvent("MouseEvents");
-        evt.initMouseEvent("click");
-        var link = document.getElementById("pingLink");
-        link.dispatchEvent(evt);
-      }
-
-      function test() {
-        InspectorTest.addSniffer(
-          WebInspector.NetworkDispatcher.prototype,
-          "requestWillBeSent",
-          step2
-        );
-        InspectorTest.evaluateInPage("navigateLink()");
-
-        function step2() {
-          // inspector-test.js appears in network panel occasionally in Safari on
-          // Mac, so checking last request.
-          var requests = WebInspector.networkLog.requests;
-          var requestsCount = requests.length;
-          var request = requests[requestsCount - 1];
-
-          InspectorTest.addResult(request.url);
-          InspectorTest.addResult(
-            "resource.isPingRequest(): " + request.isPingRequest()
-          );
-          InspectorTest.addResult(
-            "resource.requestContentType: " + request.requestContentType()
-          );
-
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-  <body onload="onload()">
-    <a id="pingLink" href="#" ping="ping.html">ping</a>
-    <p>
-      Tests that hyperlink auditing (ping) requests appear in network panel.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>ping</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p><a href="#" id="pingLink">ping</a></p>
+<p>Tests that hyperlink auditing (ping) requests appear in network panel.</p>
+</body>
 </html>

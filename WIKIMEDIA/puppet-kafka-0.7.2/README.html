@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="kafka-puppet">kafka-puppet</h1>
+<p>A Puppet module for installing and managing Apache Kafka brokers.</p>
+<h2 id="requirements">Requirements:</h2>
+<ul>
+<li>Java</li>
+<li>An installable Apache Kafka package. You can use the one available at <a href="https://github.com/wmf-analytics/kafka-debian">kafka-debian</a>.</li>
+</ul>
+<h2 id="usage">Usage:</h2>
+<pre class="puppet"><code># install the kafka package
+include kafka
+
+# include common config
+class { &quot;kafka::config&quot;:
+    zookeeper_hosts =&gt; [&quot;zk1:2181&quot;, &quot;zk2:2181&quot;, &quot;zk3:2181&quot;],
+}
+
+# start a kafka broker
+class { &quot;kafka::server&quot;:
+    log_dir =&gt; &quot;/var/lib/kafka&quot;,
+}</code></pre>
+<p>If you do not set <code>broker_id</code> on kafka::server, the broker_id will be inferred from integers in the node’s hostname. E.g. kafka01 will render <code>server.properties</code> with <code>brokerid</code> == 1.</p>
+</body>
+</html>

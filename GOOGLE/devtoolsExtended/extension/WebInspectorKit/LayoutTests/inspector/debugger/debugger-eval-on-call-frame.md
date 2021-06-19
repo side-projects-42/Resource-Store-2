@@ -1,0 +1,1 @@
+Test that evaluation in the context of top frame will see values of its local variables, even if there are global variables with same names. On success the test will print a = 2(value of the local variable a). [Bug 47358.](https://bugs.webkit.org/show_bug.cgi?id=47358)

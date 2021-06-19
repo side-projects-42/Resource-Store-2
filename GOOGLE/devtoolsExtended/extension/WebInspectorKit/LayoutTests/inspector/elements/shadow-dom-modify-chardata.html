@@ -1,51 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function typeText() {
-        var input = document.getElementById("input1");
-        input.focus();
-        eventSender.keyDown("B");
-        eventSender.keyDown("a");
-        eventSender.keyDown("r");
-      }
-
-      function test() {
-        var containerNode;
-
-        WebInspector.ElementsTreeOutline.showShadowDOMForTest = true;
-
-        InspectorTest.runTestSuite([
-          function testDumpInitial(next) {
-            function callback(node) {
-              containerNode = InspectorTest.expandedNodeWithId("container");
-              InspectorTest.addResult("========= Original ========");
-              InspectorTest.dumpElementsTree(containerNode);
-              next();
-            }
-            InspectorTest.expandElementsTree(callback);
-          },
-
-          function testAppend(next) {
-            InspectorTest.evaluateInPage("typeText()", callback);
-
-            function callback() {
-              InspectorTest.addResult("======== Type text =========");
-              InspectorTest.dumpElementsTree(containerNode);
-              next();
-            }
-          },
-        ]);
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that elements panel updates shadow dom tree structure upon typing.
-    </p>
-
-    <div id="container"><input type="text" id="input1" /></div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>shadow-dom-modify-chardata</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that elements panel updates shadow dom tree structure upon typing.</p>
+</body>
 </html>

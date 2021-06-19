@@ -1,0 +1,1 @@
+Tests requestDirectoryContent command.

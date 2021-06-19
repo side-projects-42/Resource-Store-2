@@ -1,0 +1,1 @@
+Tests that overriding window.eval does not break inspector.

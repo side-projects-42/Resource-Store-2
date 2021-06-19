@@ -4,9 +4,7 @@ A module used internally by Jest to check which files have changed since you las
 
 ## Install
 
-```sh
-$ npm install --save jest-changed-files
-```
+    $ npm install --save jest-changed-files
 
 ## API
 
@@ -23,7 +21,7 @@ options: Object literal with keys
 - lastCommit: boolean
 - withAncestor: boolean
 
-### findRepos(roots: <Array<string>>): Promise<?object>
+### findRepos(roots: &lt;Array&gt;): Promise
 
 Get a set of git and hg repositories.
 
@@ -33,31 +31,27 @@ roots: Array of string paths gathered from [jest roots](https://jestjs.io/docs/c
 
 ## Usage
 
-```javascript
-import {getChangedFilesForRoots} from 'jest-changed-files';
+    import {getChangedFilesForRoots} from 'jest-changed-files';
 
-getChangedFilesForRoots(['/path/to/test'], {
-  lastCommit: true,
-  withAncestor: true,
-}).then((files) => {
-  /*
-  {
-    repos: [],
-    changedFiles: []
-  }
-  */
-});
-```
+    getChangedFilesForRoots(['/path/to/test'], {
+      lastCommit: true,
+      withAncestor: true,
+    }).then((files) => {
+      /*
+      {
+        repos: [],
+        changedFiles: []
+      }
+      */
+    });
 
-```javascript
-import {findRepos} from 'jest-changed-files';
+    import {findRepos} from 'jest-changed-files';
 
-findRepos(['/path/to/test']).then((repos) => {
-  /*
-  {
-    git: Set<Path>,
-    hg: Set<Path>
-  }
-  */
-});
-```
+    findRepos(['/path/to/test']).then((repos) => {
+      /*
+      {
+        git: Set<Path>,
+        hg: Set<Path>
+      }
+      */
+    });

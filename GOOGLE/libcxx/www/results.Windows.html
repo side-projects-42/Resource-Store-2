@@ -1,25 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>results.Windows</title>
-  </head>
-  <body>
-    <pre>
-All failures in the libc++ test suite will be documented here.
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>results.Windows</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<pre><code>All failures in the libc++ test suite will be documented here.
 
 Last run was with Clang (pre-3.1) and GCC 4.6.3 (with dw2 exception handling) and
  mingw-w64 v2.0.3 on i686-w64-mingw32.
 
-The following line was added to ./lib/buildit to make a static libc++ library because a DLL requires "declspec(dllexport)" or a .def file:
+The following line was added to ./lib/buildit to make a static libc++ library because a DLL requires &quot;declspec(dllexport)&quot; or a .def file:
 ar rcs libc++.a *.o
 I also deleted libc++.dll and libc++.dll.a to make sure libc++ was linked statically to prevent unrelated issues from contaminating the test results.
 The commands to build and test were (-nodefaultlibs does not work, lots of MinGW related stuff gets left out resulting in linker failures):
 TRIPLE=i686-w64-mingw32 ./buildit
-TRIPLE=i686-w64-mingw32 HEADER_INCLUDE="-I/home/Ruben/libcxx/include" LIBS="-L/home/ruben/libcxx/lib -lc++ -lpthread -lsupc++ -lmsvcr100 -Wl,--allow-multiple-definition" ./testit > test.log 2>&1
+TRIPLE=i686-w64-mingw32 HEADER_INCLUDE=&quot;-I/home/Ruben/libcxx/include&quot; LIBS=&quot;-L/home/ruben/libcxx/lib -lc++ -lpthread -lsupc++ -lmsvcr100 -Wl,--allow-multiple-definition&quot; ./testit &gt; test.log 2&gt;&amp;1
 
-Note: Some locale tests may "Need investigating", but I think most problems are
+Note: Some locale tests may &quot;Need investigating&quot;, but I think most problems are
       caused by wrong/unportable locale naming in the tests.
-Note: Some tests failed to link because "test.exe" was still running when ld.exe
+Note: Some tests failed to link because &quot;test.exe&quot; was still running when ld.exe
       tried to link the next test. I left these failures out of the list; they
       account for about 10-30 failures, and are counted in the total scores below.
       I reran some of these failures manually and they passed.
@@ -88,7 +96,7 @@ input.output/
    ifstream.members/
     open_pointer.pass.cpp: idem.
     open_string.pass.cpp: idem.
-	  rdbuf.pass.cpp: idem.
+      rdbuf.pass.cpp: idem.
    ofstream.assign/
     member_swap.pass.cpp: idem.
     move_assign.pass.cpp: idem.
@@ -100,10 +108,10 @@ input.output/
    ofstream.members/
     open_pointer.pass.cpp: idem.
     open_string.pass.cpp: idem.
-	  rdbuf.pass.cpp: idem.
+      rdbuf.pass.cpp: idem.
  iostream.format/
   ext.manip
-   get_money.pass.cpp: Windows locale names don't follow UNIX convention.
+   get_money.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    get_time.pass.cpp: idem.
    put_money.pass.cpp: idem.
    put_time.pass.cpp: idem.
@@ -124,26 +132,26 @@ input.output/
  iostreams.base/
   ios/
    basic.ios.members/
-    copyfmt.pass.cpp: Windows locale names don't follow UNIX convention.
+    copyfmt.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
     imbue.pass.cpp: idem.
     move.pass.cpp: idem.
-    swap.pass.cpp: Windows locale names don't follow UNIX convention.
+    swap.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
   ios.base/
    ios.base.callback/
-    register_callback.pass.cpp: Windows locale names don't follow UNIX convention.
+    register_callback.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    ios.base.locales/
-    imbue.pass.cpp: Windows locale names don't follow UNIX convention.
+    imbue.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
  stream.buffers/
   streambuf/
    streambuf.cons/
-    copy.pass.cpp: Windows locale names don't follow UNIX convention.
+    copy.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
     default.pass.cpp: idem.
    streambuf.members/
     streambuf.buffer/
-     locales.pass.cpp: Windows locale names don't follow UNIX convention.
+     locales.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    streambuf.protected/
     streambuf.assign/
-	   assign.pass.cpp: Windows locale names don't follow UNIX convention.
+       assign.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
      swap.pass.cpp: idem.
 language.support/
  support.exception/
@@ -175,11 +183,11 @@ localization/
  locale.categories/
   category.collate/
    locale.collate.byname/
-    compare.pass.cpp: Windows locale names don't follow UNIX convention.
+    compare.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
     hash.pass.cpp: idem.
     transform.pass.cpp: getenv should be replaced by putenv for portability.
-                        Windows locale names don't follow UNIX convention.
-    types.pass.cpp: Windows locale names don't follow UNIX convention.
+                        Windows locale names don&#39;t follow UNIX convention.
+    types.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
  locale.categories/
   category.ctype/
    locale.codecvt/
@@ -189,9 +197,9 @@ localization/
      wchar_t_out.pass.cpp: idem.
      wchar_t_unshift.pass.cpp: idem.
    locale.codecvt.byname/
-    ctor_wchar_t.pass.cpp: Windows locale names don't follow UNIX convention.
+    ctor_wchar_t.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    locale.ctype.byname/
-    is_1.pass.cpp: Windows locale names don't follow UNIX convention.
+    is_1.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
     is_many.pass.cpp: idem.
     narrow_1.pass.cpp: idem.
     narrow_many.pass.cpp: idem.
@@ -207,14 +215,14 @@ localization/
   category.monetary/
    locale.money.get/
     locale.money.get.members/
-     get_long_double_en_US.pass.cpp: Windows locale names don't follow UNIX convention.
+     get_long_double_en_US.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
      get_long_double_fr_FR.pass.cpp: idem.
      get_long_double_ru_RU.pass.cpp: idem.
      get_long_double_zh_CN.pass.cpp: idem.
      get_string_en_US.pass.cpp: idem.
    locale.money.put/
     locale.money.put.members/
-	 put_long_double_en_US.pass.cpp: Windows locale names don't follow UNIX convention.
+     put_long_double_en_US.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
      put_long_double_fr_FR.pass.cpp: idem.
      put_long_double_ru_RU.pass.cpp: idem.
      put_long_double_zh_CN.pass.cpp: idem.
@@ -244,7 +252,7 @@ localization/
   category.time/
    locale.time.get/
     locale.time.get.byname/
-     date_order.pass.cpp: Windows locale names don't follow UNIX convention.
+     date_order.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
      date_order_wide.pass.cpp: idem.
      get_date.pass.cpp: idem.
      get_date_wide.pass.cpp: idem.
@@ -263,7 +271,7 @@ localization/
      put1.pass.cpp: Needs investigating.
      put2.pass.cpp: idem.
     locale.time.put.byname/
-     put1.pass.cpp: Windows locale names don't follow UNIX convention.
+     put1.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    facet.numpunct/
     locale.numpunct/
      locale.numpunct.byname/
@@ -280,7 +288,7 @@ localization/
  locales/
   locale/
    locale.cons/
-    assign.pass.cpp: Windows locale names don't follow UNIX convention.
+    assign.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
     char_pointer.pass.cpp: idem.
     copy.pass.cpp: idem.
     default.pass.cpp: idem.
@@ -290,12 +298,12 @@ localization/
     locale_string_cat.pass.cpp: idem.
     string.pass.cpp: idem.
    locale.members/
-    name.pass.cpp: Windows locale names don't follow UNIX convention.
+    name.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    locale.operators/
-    eq.pass.cpp: Windows locale names don't follow UNIX convention.
+    eq.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    locale/locale.statics/
     classic.pass.cpp: Failed constructing from C locale. Needs investigation.
-    global.pass.cpp: Windows locale names don't follow UNIX convention.
+    global.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
    locale.convenience/
     conversions/
      conversions.buffer/
@@ -306,7 +314,7 @@ localization/
       underflow.pass.cpp: idem.
      conversions.string/
       converted.pass.cpp: out of range hex sequence due to 2-byte wchar_t.
-      from_bytes.pass.cpp: idem (This test passed while it probably shouldn't!).
+      from_bytes.pass.cpp: idem (This test passed while it probably shouldn&#39;t!).
       to_bytes.pass.cpp: idem.
 numerics/
  complex.number/
@@ -329,17 +337,17 @@ numerics/
     rand.dist.bern.negbin/
      io.pass.cpp: Needs investigation. (different output double format?)
    rand.dist.norm/
-	  rand.dist.norm.cauchy/
+      rand.dist.norm.cauchy/
      io.pass.cpp: Needs investigation. (different output double format?)
-	  rand.dist.norm.chisq/
+      rand.dist.norm.chisq/
      io.pass.cpp: Needs investigation. (different output double format?)
-	  rand.dist.norm.norm.f/
+      rand.dist.norm.norm.f/
      io.pass.cpp: Needs investigation. (different output double format?)
-	  rand.dist.norm.lognormal/
+      rand.dist.norm.lognormal/
      io.pass.cpp: Needs investigation. (different output double format?)
-	  rand.dist.norm.normal/
+      rand.dist.norm.normal/
      io.pass.cpp: Needs investigation. (different output double format?)
-	  rand.dist.norm.t/
+      rand.dist.norm.t/
      io.pass.cpp: Needs investigation. (different output double format?)
    rand.dist.pois/
     rand.dist.pois.exp/
@@ -376,14 +384,14 @@ re/
    extended.pass.cpp: idem.
  re.regex/
   re.regex.locale/
-   imbue.pass.cpp: Windows locale names don't follow UNIX convention.
+   imbue.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
  re.traits/
-  default.pass.cpp: Windows locale names don't follow UNIX convention.
+  default.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
   getloc.pass.cpp: idem.
   imbue.pass.cpp: idem.
   isctype.pass.cpp: Needs investigation.
   lookup_classname.pass.cpp: idem.
-  lookup_collatename.pass.cpp: Windows locale names don't follow UNIX convention.
+  lookup_collatename.pass.cpp: Windows locale names don&#39;t follow UNIX convention.
   transform.pass.cpp: idem.
   transform_primary.pass.cpp: idem
   translate_nocase.pass.cpp: Needs investigation.
@@ -394,7 +402,7 @@ strings/
                    (v)swprintf to the Windows equivalent.
   version_cuchar.pass.cpp: see previous note about uchar.h.
  string.conversions/
-  stod.pass.cpp: "no conversion". Needs investigation.
+  stod.pass.cpp: &quot;no conversion&quot;. Needs investigation.
   stof.pass.cpp: idem.
   to_string.pass.cpp: Needs investigation.
   to_wstring.pass.cpp: idem.
@@ -481,8 +489,6 @@ utilities/
     make_signed.pass.cpp: Probably due to sizeof(wchar_t) != 4.
     make_unsigned.pass.cpp: idem.
    meta.unary.prop.query/
-    alignment_of.pass.cpp: Probably a Clang problem on Windows.
-</pre
-    >
-  </body>
+    alignment_of.pass.cpp: Probably a Clang problem on Windows.</code></pre>
+</body>
 </html>

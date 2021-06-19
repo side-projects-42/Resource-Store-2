@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="has-many-through-forms-rails">Has Many Through Forms Rails</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Construct a bi-directional has many through.</li>
+<li>Identify the join model in a has many through.</li>
+<li>Construct a nested params hash with data about the primary object and a has many through association.</li>
+<li>Use the conventional key names for associated data (association_attributes).</li>
+<li>Name form inputs correctly to create a nested params hash with has many through association data.</li>
+<li>Define a conventional association writer for the primary model to properly instantiate associations based on the nested params association data.</li>
+<li>Define a custom association writer for the primary model to properly instantiate associations with custom logic (like unique by name) on the nested params association data.</li>
+<li>Use fields_for to generate the association fields.</li>
+</ol>
+<h2 id="overview">Overview</h2>
+<p>We’ve looked at the different ways we can interact with our associated models through nested forms as well as displaying data from more complex associations. In this lesson, we’ll look at some different ways we can create data from our complex associations to make for a great user experience.</p>
+<h2 id="join-model-forms">Join Model Forms</h2>
+<p>Sometimes, it may be appropriate for a user to create an instance of our join model directly. Think back to the hospital domain from our previous lab. It makes perfect sense that a user would go to <code>appointments/new</code> and fill out a form to create a new appointment.</p>
+<pre class="erb"><code>&lt;%= form_for @appointment do |f| %&gt;
+  &lt;%= f.datetime_select :appointment_datetime %&gt;
+  &lt;%= f.collection_select :doctor, Doctor.all, :id, :name %&gt;
+  &lt;%= f.collection_select :patient, Patient.all, :id, :name %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;</code></pre>
+<p>In this example, a user is filling out a form, entering the date and time they’d like to come, and choosing their doctor and their name from a dropdown. We’re assigning these properties directly to the appointment as it’s created.</p>
+<p>Other times, we need to be more abstract. Let’s return to our blog example, but this time we’ll say that a post can have many categories and categories can have many posts. For this, we’ll need a join table –– let’s call it <code>post_categories</code>. If our user wants to associate a post with a category, it doesn’t make sense for them to go to <code>/post_categories/new</code> and fill out a “new post category form.” That’s confusing! Let’s look at a more abstract way that we can do this thanks to the magic of Active Record.</p>
+<h2 id="setting-up-our-posts-and-categories">Setting up our Posts and Categories</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># app/models/post.rb</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">class</span> <span class="dt">Post</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  has_many <span class="st">:post_categories</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  has_many <span class="st">:categories</span>, <span class="st">through: :post_categories</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">end</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># app/models/category.rb</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">class</span> <span class="dt">Category</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  has_many <span class="st">:post_categories</span></a>
+<a class="sourceLine" id="cb3-5" title="5">  has_many <span class="st">:posts</span>, <span class="st">through: :post_categories</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="kw">end</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># app/models/post_category.rb</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">class</span> <span class="dt">PostCategory</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  belongs_to <span class="st">:post</span></a>
+<a class="sourceLine" id="cb4-5" title="5">  belongs_to <span class="st">:category</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="kw">end</span></a></code></pre></div>
+<p>Now, let’s make it so that our user can assign categories to a post when the post is created. We did this in a previous example without a join table. Our post was directly related to its category, and the <code>posts</code> table had the foreign key for its category. Because of this, instances of our <code>Post</code> class responded to a method called <code>category_ids=</code>. We called upon this method from our form helpers to build out a nested form.</p>
+<p>Luckily, <code>has_many, through</code> functions exactly the same as a <code>has_many</code> relationship. Instances of our <code>Post</code> class still respond to a method called <code>category_ids=</code>. We’ll use a helper method very similar to the <code>collection_select</code> we used previously.</p>
+<pre class="erb"><code># app/views/posts/_form.html.erb
+
+&lt;%= form_for post do |f| %&gt;
+  &lt;%= f.label &quot;Title&quot; %&gt;
+  &lt;%= f.text_field :title %&gt;
+  &lt;%= f.label &quot;Content&quot; %&gt;
+  &lt;%= f.text_area :content %&gt;
+  &lt;%= f.collection_check_boxes :category_ids, Category.all, :id, :name %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;</code></pre>
+<p>This will create a checkbox field for each <code>Category</code> in our database. The HTML generated looks something like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">&lt;input</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="ot">  type=</span><span class="st">&quot;checkbox&quot;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="ot">  value=</span><span class="st">&quot;1&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="ot">  name=</span><span class="st">&quot;post[category_ids][]&quot;</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="ot">  id=</span><span class="st">&quot;post_category_ids_1&quot;</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">/&gt;</span></a></code></pre></div>
+<p>In our controller, we’ve setup our <code>post_params</code> to expect a key of <code>:category_ids</code> with a value of an array.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># app/controllers/post_controller.rb</span></a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">class</span> <span class="dt">PostsController</span> &lt; <span class="dt">ApplicationController</span></a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">  ...</a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7">  <span class="kw">private</span></a>
+<a class="sourceLine" id="cb7-8" title="8"></a>
+<a class="sourceLine" id="cb7-9" title="9">  <span class="kw">def</span> post_params</a>
+<a class="sourceLine" id="cb7-10" title="10">    params.require(<span class="st">:post</span>).permit(<span class="st">:title</span>, <span class="st">:content</span>, category_ids<span class="st">:[]</span>)</a>
+<a class="sourceLine" id="cb7-11" title="11">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="kw">end</span></a></code></pre></div>
+<p>After submitting the form, we end up with <code>post_params</code> that look something like:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">{<span class="st">&quot;title&quot;</span>=&gt;<span class="st">&quot;New Post&quot;</span>, <span class="st">&quot;content&quot;</span>=&gt;<span class="st">&quot;Some great content!!&quot;</span>, <span class="st">&quot;category_ids&quot;</span>=&gt;[<span class="st">&quot;2&quot;</span>, <span class="st">&quot;3&quot;</span>, <span class="st">&quot;&quot;</span>]}</a></code></pre></div>
+<p>Let’s check out the SQL that fires from creating our new post.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">def</span> create</a>
+<a class="sourceLine" id="cb9-2" title="2">  post = <span class="dt">Post</span>.create(post_params)</a>
+<a class="sourceLine" id="cb9-3" title="3">  redirect_to post</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">INSERT</span> <span class="kw">INTO</span> <span class="ot">&quot;posts&quot;</span> (<span class="ot">&quot;title&quot;</span>, <span class="ot">&quot;content&quot;</span>, <span class="ot">&quot;created_at&quot;</span>, <span class="ot">&quot;updated_at&quot;</span>) <span class="kw">VALUES</span> (?, ?, ?, ?)  [[<span class="ot">&quot;title&quot;</span>, <span class="ot">&quot;New Post&quot;</span>], [<span class="ot">&quot;content&quot;</span>, <span class="ot">&quot;Some great content!!&quot;</span>], [<span class="ot">&quot;created_at&quot;</span>, <span class="ot">&quot;2016-01-15 21:25:59.963430&quot;</span>], [<span class="ot">&quot;updated_at&quot;</span>, <span class="ot">&quot;2016-01-15 21:25:59.963430&quot;</span>]]</a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="kw">INSERT</span> <span class="kw">INTO</span> <span class="ot">&quot;post_categories&quot;</span> (<span class="ot">&quot;category_id&quot;</span>, <span class="ot">&quot;post_id&quot;</span>, <span class="ot">&quot;created_at&quot;</span>, <span class="ot">&quot;updated_at&quot;</span>) <span class="kw">VALUES</span> (?, ?, ?, ?)  [[<span class="ot">&quot;category_id&quot;</span>, <span class="dv">2</span>], [<span class="ot">&quot;post_id&quot;</span>, <span class="dv">6</span>], [<span class="ot">&quot;created_at&quot;</span>, <span class="ot">&quot;2016-01-15 21:25:59.966654&quot;</span>], [<span class="ot">&quot;updated_at&quot;</span>, <span class="ot">&quot;2016-01-15 21:25:59.966654&quot;</span>]]</a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="kw">INSERT</span> <span class="kw">INTO</span> <span class="ot">&quot;post_categories&quot;</span> (<span class="ot">&quot;category_id&quot;</span>, <span class="ot">&quot;post_id&quot;</span>, <span class="ot">&quot;created_at&quot;</span>, <span class="ot">&quot;updated_at&quot;</span>) <span class="kw">VALUES</span> (?, ?, ?, ?)  [[<span class="ot">&quot;category_id&quot;</span>, <span class="dv">3</span>], [<span class="ot">&quot;post_id&quot;</span>, <span class="dv">6</span>], [<span class="ot">&quot;created_at&quot;</span>, <span class="ot">&quot;2016-01-15 21:25:59.968301&quot;</span>], [<span class="ot">&quot;updated_at&quot;</span>, <span class="ot">&quot;2016-01-15 21:25:59.968301&quot;</span>]]</a></code></pre></div>
+<p>First, we’re creating a new row in our <code>posts</code> table with <code>title</code> and <code>content</code>. Next, we create a row in our <code>post_categories</code> table for each ID number that was stored in our <code>category_ids</code> array. This functions just like it did with a <code>has_many</code> relationship, but, instead of creating a new record in our <code>categories</code> table, Active Record is creating two new rows in our <code>post_categories</code> table. This means that we can interact with our higher-level models directly without having to think too much at all about our join table - ActiveRecord will manage that relationship for us behind the scenes.</p>
+<h2 id="creating-new-categories">Creating New Categories</h2>
+<p>We can now associate categories with our posts, but what about creating new categories? If I’m posting about baby elephants and no one has created the category “Super Cute!” yet, I want to be able to create it at the same time as my post. Again, this will be very similar to the way we’ve done things before.</p>
+<p>First, we want a text field to enter the name of our new category. The value of the name should be nested under our <code>post_params</code>, so we don’t have to add too much code to our controller. We can use the <code>fields_for</code> helper to do this very easily.</p>
+<pre class="erb"><code># app/views/posts/_form.html.erb
+
+&lt;%= form_for post do |f| %&gt;
+  &lt;%= f.label &quot;Title&quot; %&gt;
+  &lt;%= f.text_field :title %&gt;
+  &lt;%= f.label &quot;Content&quot; %&gt;
+  &lt;%= f.text_area :content %&gt;
+  &lt;%= f.collection_check_boxes :category_ids, Category.all, :id, :name %&gt;
+  &lt;%= f.fields_for :categories, post.categories.build do |categories_fields| %&gt;
+    &lt;%= categories_fields.text_field :name %&gt;
+  &lt;% end %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;</code></pre>
+<p>The <code>fields_for</code> helper takes two arguments: the associated model that we’re creating and an object to wrap around. In this case, we’ve passed in the <code>:categories</code> association and built an empty category associated with the post.</p>
+<p>Let’s look at the html that this generated for us.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">&lt;input</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ot">  type=</span><span class="st">&quot;text&quot;</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="ot">  name=</span><span class="st">&quot;post[categories_attributes][0][name]&quot;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="ot">  id=</span><span class="st">&quot;post_categories_attributes_0_name&quot;</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw">/&gt;</span></a></code></pre></div>
+<p>Our params hash will now have a key of <code>:categories_attributes</code> nested under the key of <code>post</code>. Let’s add that to our strong params and tell it to expect a key of <code>name</code> inside for the category’s name.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># app/controllers/post_controller.rb</span></a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="kw">class</span> <span class="dt">PostsController</span> &lt; <span class="dt">ApplicationController</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">  ...</a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7">  <span class="kw">private</span></a>
+<a class="sourceLine" id="cb13-8" title="8"></a>
+<a class="sourceLine" id="cb13-9" title="9">  <span class="kw">def</span> post_params</a>
+<a class="sourceLine" id="cb13-10" title="10">    params.require(<span class="st">:post</span>).permit(<span class="st">:title</span>, <span class="st">:content</span>, category_ids<span class="st">:[]</span>, <span class="st">categories_attributes: </span>[<span class="st">:name</span>])</a>
+<a class="sourceLine" id="cb13-11" title="11">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb13-12" title="12"><span class="kw">end</span></a></code></pre></div>
+<p>Now, when we do mass assignment, our <code>Post</code> model will call a method called <code>categories_attributes=</code>. Let’s add that method to our model using the <code>accepts_nested_attributes_for</code> macro.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">class</span> <span class="dt">Post</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb14-2" title="2">  has_many <span class="st">:post_categories</span></a>
+<a class="sourceLine" id="cb14-3" title="3">  has_many <span class="st">:categories</span>, <span class="st">through: :post_categories</span></a>
+<a class="sourceLine" id="cb14-4" title="4">  accepts_nested_attributes_for <span class="st">:categories</span></a>
+<a class="sourceLine" id="cb14-5" title="5"></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">end</span></a></code></pre></div>
+<p>Voila! Just like when our models were directly related, we can now create categories that are automatically associated with our new post. Looking at the SQL that gets generated, we can see that it’s creating new instances of <code>PostCategory</code> without us ever having to interact with them.</p>
+<pre class="shell"><code>(0.1ms)  begin transaction
+  SQL (0.4ms)  INSERT INTO &quot;posts&quot; (&quot;title&quot;, &quot;content&quot;, &quot;created_at&quot;, &quot;updated_at&quot;) VALUES (?, ?, ?, ?)  [[&quot;title&quot;, &quot;A New Post!&quot;], [&quot;content&quot;, &quot;It was the best of times, it was the worst of times&quot;], [&quot;created_at&quot;, &quot;2016-01-15 22:08:37.271367&quot;], [&quot;updated_at&quot;, &quot;2016-01-15 22:08:37.271367&quot;]]
+  SQL (0.1ms)  INSERT INTO &quot;categories&quot; (&quot;name&quot;, &quot;created_at&quot;, &quot;updated_at&quot;) VALUES (?, ?, ?)  [[&quot;name&quot;, &quot;Really Neat!&quot;], [&quot;created_at&quot;, &quot;2016-01-15 22:08:37.277421&quot;], [&quot;updated_at&quot;, &quot;2016-01-15 22:08:37.277421&quot;]]
+  SQL (0.3ms)  INSERT INTO &quot;post_categories&quot; (&quot;post_id&quot;, &quot;category_id&quot;, &quot;created_at&quot;, &quot;updated_at&quot;) VALUES (?, ?, ?, ?)  [[&quot;post_id&quot;, 9], [&quot;category_id&quot;, 5], [&quot;created_at&quot;, &quot;2016-01-15 22:08:37.279564&quot;], [&quot;updated_at&quot;, &quot;2016-01-15 22:08:37.279564&quot;]]
+   (1.0ms)  commit transaction</code></pre>
+<p>Still, there’s a problem. We’re creating a new category each time, regardless of whether or not it exists. It will look pretty weird if three people type in “Super Cute!” and we get three different categories. In this case, we need to customize the way our category is created. Luckily, we can easily do this by creating our own <code>categories_attributes=</code> method.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">class</span> <span class="dt">Post</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb16-2" title="2">  has_many <span class="st">:post_categories</span></a>
+<a class="sourceLine" id="cb16-3" title="3">  has_many <span class="st">:categories</span>, <span class="st">through: :post_categories</span></a>
+<a class="sourceLine" id="cb16-4" title="4">  <span class="co"># accepts_nested_attributes_for :categories</span></a>
+<a class="sourceLine" id="cb16-5" title="5"></a>
+<a class="sourceLine" id="cb16-6" title="6">  <span class="kw">def</span> categories_attributes=(category_attributes)</a>
+<a class="sourceLine" id="cb16-7" title="7">    category_attributes.values.each <span class="kw">do</span> |category_attribute|</a>
+<a class="sourceLine" id="cb16-8" title="8">      category = <span class="dt">Category</span>.find_or_create_by(category_attribute)</a>
+<a class="sourceLine" id="cb16-9" title="9">      <span class="dv">self</span>.categories &lt;&lt; category</a>
+<a class="sourceLine" id="cb16-10" title="10">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb16-11" title="11">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb16-12" title="12"><span class="kw">end</span></a></code></pre></div>
+<p>Now, we’re only creating a new category if it doesn’t already exist with the current name. We’re also using a cool method called <code>categories&lt;&lt;</code>. What’s great about this is you can mentally think of it as two steps. First, we call <code>self.categories</code>, which returns an array of <code>Category</code> objects, and then we call the shovel (<code>&lt;&lt;</code>) method to add our newly found or created <code>Category</code> object to the array. We could imagine later calling <code>save</code> on the <code>Post</code> object and this then creating the <code>post_categories</code> join record for us. In reality, this is syntactic sugar for the <code>categories&lt;&lt;</code> method. That’s the actual method name, and behind the scenes it will create the join record for us. It’s one of the methods dynamically created for us whenever we use a <code>has_many</code> association. The end result is this method doing exactly what Active Record was doing for us before; we’re just customizing the behavior a little bit.</p>
+<h2 id="conclusionso-what">Conclusion/So What?</h2>
+<p>As you can see, it doesn’t really matter how complex our associations are –– Active Record is really good at managing that complexity for us. We can always drop down a level of abstraction if needed to customize the way our application behaves.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/has-many-through-forms-rails' title='Has Many Through Forms Rails'>Has Many Through Forms Rails</a> on Learn.co and start learning to code for free.
+</p>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/has-many-through-forms-rails'>Has Many Through in Forms</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

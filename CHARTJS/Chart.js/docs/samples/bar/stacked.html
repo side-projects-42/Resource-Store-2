@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>stacked</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="stacked-bar-chart">Stacked Bar Chart</h1>
+<p>```js chart-editor // <block:actions:2> const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = Utils.numbers({ count: chart.data.labels.length, min: -100, max: 100, }); }); chart.update(); }, },]; // </block:actions></p>
+<p>// <block:setup:1> const DATA_COUNT = 7; const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };</p>
+<p>const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “Dataset 1”, data: Utils.numbers(NUMBER_CFG), backgroundColor: Utils.CHART_COLORS.red, }, { label: “Dataset 2”, data: Utils.numbers(NUMBER_CFG), backgroundColor: Utils.CHART_COLORS.blue, }, { label: “Dataset 3”, data: Utils.numbers(NUMBER_CFG), backgroundColor: Utils.CHART_COLORS.green, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “bar”, data: data, options: { plugins: { title: { display: true, text: “Chart.js Bar Chart - Stacked”, }, }, responsive: true, scales: { x: { stacked: true, }, y: { stacked: true, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

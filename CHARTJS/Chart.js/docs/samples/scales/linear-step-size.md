@@ -1,42 +1,7 @@
-# Linear Scale - Step Size
+Linear Scale - Step Size
+========================
 
-```js chart-editor
-// <block:actions:2>
-const actions = [
-  {
-    name: "Randomize",
-    handler(chart) {
-      chart.data.datasets.forEach((dataset) => {
-        dataset.data = Utils.numbers({
-          count: chart.data.labels.length,
-          min: 0,
-          max: 100,
-        });
-      });
-      chart.update();
-    },
-  },
-  {
-    name: "Add Dataset",
-    handler(chart) {
-      const data = chart.data;
-      const dsColor = Utils.namedColor(chart.data.datasets.length);
-      const newDataset = {
-        label: "Dataset " + (data.datasets.length + 1),
-        backgroundColor: dsColor,
-        borderColor: dsColor,
-        data: Utils.numbers({ count: data.labels.length, min: 0, max: 100 }),
-      };
-      chart.data.datasets.push(newDataset);
-      chart.update();
-    },
-  },
-  {
-    name: "Add Data",
-    handler(chart) {
-      const data = chart.data;
-      if (data.datasets.length > 0) {
-        data.labels = Utils.months({ count: data.labels.length + 1 });
+\`\`\`js chart-editor // const actions = \[ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = Utils.numbers({ count: chart.data.labels.length, min: 0, max: 100, }); }); chart.update(); }, }, { name: “Add Dataset”, handler(chart) { const data = chart.data; const dsColor = Utils.namedColor(chart.data.datasets.length); const newDataset = { label: “Dataset” + (data.datasets.length + 1), backgroundColor: dsColor, borderColor: dsColor, data: Utils.numbers({ count: data.labels.length, min: 0, max: 100 }), }; chart.data.datasets.push(newDataset); chart.update(); }, }, { name: “Add Data”, handler(chart) { const data = chart.data; if (data.datasets.length &gt; 0) { data.labels = Utils.months({ count: data.labels.length + 1 });
 
         for (var index = 0; index < data.datasets.length; ++index) {
           data.datasets[index].data.push(Utils.rand(0, 100));
@@ -45,18 +10,8 @@ const actions = [
         chart.update();
       }
     },
-  },
-  {
-    name: "Remove Dataset",
-    handler(chart) {
-      chart.data.datasets.pop();
-      chart.update();
-    },
-  },
-  {
-    name: "Remove Data",
-    handler(chart) {
-      chart.data.labels.splice(-1, 1); // remove the label first
+
+}, { name: “Remove Dataset”, handler(chart) { chart.data.datasets.pop(); chart.update(); }, }, { name: “Remove Data”, handler(chart) { chart.data.labels.splice(-1, 1); // remove the label first
 
       chart.data.datasets.forEach((dataset) => {
         dataset.data.pop();
@@ -64,80 +19,13 @@ const actions = [
 
       chart.update();
     },
-  },
-];
-// </block:actions>
 
-// <block:setup:1>
-const DATA_COUNT = 7;
-const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+}, \]; //
 
-const labels = Utils.months({ count: 7 });
-const data = {
-  labels: labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.CHART_COLORS.red,
-    },
-    {
-      label: "Dataset 2",
-      data: Utils.numbers(NUMBER_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.CHART_COLORS.blue,
-    },
-  ],
-};
-// </block:setup>
+// const DATA\_COUNT = 7; const NUMBER\_CFG = { count: DATA\_COUNT, min: 0, max: 100 };
 
-// <block:config:0>
-const config = {
-  type: "line",
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      tooltip: {
-        mode: "index",
-        intersect: false,
-      },
-      title: {
-        display: true,
-        text: "Chart.js Line Chart",
-      },
-    },
-    hover: {
-      mode: "index",
-      intersec: false,
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Month",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Value",
-        },
-        min: 0,
-        max: 100,
-        ticks: {
-          // forces step size to be 50 units
-          stepSize: 50,
-        },
-      },
-    },
-  },
-};
-// </block:config>
+const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: \[ { label: “Dataset 1”, data: Utils.numbers(NUMBER\_CFG), borderColor: Utils.CHART\_COLORS.red, backgroundColor: Utils.CHART\_COLORS.red, }, { label: “Dataset 2”, data: Utils.numbers(NUMBER\_CFG), borderColor: Utils.CHART\_COLORS.blue, backgroundColor: Utils.CHART\_COLORS.blue, }, \], }; //
 
-module.exports = {
-  actions: actions,
-  config: config,
-};
-```
+// const config = { type: “line”, data: data, options: { responsive: true, plugins: { tooltip: { mode: “index”, intersect: false, }, title: { display: true, text: “Chart.js Line Chart”, }, }, hover: { mode: “index”, intersec: false, }, scales: { x: { title: { display: true, text: “Month”, }, }, y: { title: { display: true, text: “Value”, }, min: 0, max: 100, ticks: { // forces step size to be 50 units stepSize: 50, }, }, }, }, }; //
+
+module.exports = { actions: actions, config: config, }; \`\`\`

@@ -1,396 +1,65 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4138</title>
-  </head>
-  <body>
-    <h1>
-      N4138 Editor's Report -- Working Draft, Standard for Programming Language
-      C++
-    </h1>
-
-    <p>
-      2014-10-07<br />
-      Richard Smith<br />
-      Google Inc<br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Special thanks to Stefanus Du Toit, the previous project editor, for all
-      his efforts in maintaining the specification, modernizing our editing
-      process, and helping to make the transition to a new editor as smooth as
-      possible.
-    </p>
-
-    <p>
-      Special thanks to my sub-editors, Dawn Perchik, Jonathan Wakely, and
-      Walter Brown, for all the work they've put into fixing editorial issues
-      and reviewing fixes produced by others.
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New Papers</h2>
-
-    <ul>
-      <li>N4138 is this Editor's Report for the current working draft.</li>
-      <li>N4139 is the Editor's Report for the C++14 IS.</li>
-      <li>N4140 is the current working draft. It replaces N3936.</li>
-      <li>N4141 is the C++14 IS.</li>
-    </ul>
-
-    <h3>Notable Changes to Issues and Papers as Moved</h3>
-
-    <p>No motions have been voted into the working draft since N3936.</p>
-
-    <h3>Other Notable Editorial Changes:</h3>
-
-    <h4>C++14 CD NB comment US-1: Numbered bulleted lists</h4>
-
-    <p>
-      Each bullet in a bulleted list now has an accompanying parenthesized
-      bullet number in addition to the bullet.
-    </p>
-
-    <h4>Horizontal and vertical spacing</h4>
-
-    <p>
-      A small amount of vertical space has been added between numbered
-      paragraphs, and various issues where too little vertical space was present
-      have been fixed.
-    </p>
-
-    <p>
-      In cases where a paragraph continues after an example, note, or bulleted
-      list, the following sentence was sometimes indented. Such indentation has
-      been removed.
-    </p>
-
-    <h2>Minor Editorial Fixes</h2>
-
-    <p>A log of all editorial fixes made since N3936 is below:</p>
-
-    <pre><code>commit 3974aee60d94d0bae3949f808e58bdfcbbd9990d
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4138</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4138-editors-report-working-draft-standard-for-programming-language-c">N4138 Editor’s Report – Working Draft, Standard for Programming Language C++</h1>
+<p>2014-10-07<br />
+Richard Smith<br />
+Google Inc<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Stefanus Du Toit, the previous project editor, for all his efforts in maintaining the specification, modernizing our editing process, and helping to make the transition to a new editor as smooth as possible.</p>
+<p>Special thanks to my sub-editors, Dawn Perchik, Jonathan Wakely, and Walter Brown, for all the work they’ve put into fixing editorial issues and reviewing fixes produced by others.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New Papers</h2>
+<ul>
+<li>N4138 is this Editor’s Report for the current working draft.</li>
+<li>N4139 is the Editor’s Report for the C++14 IS.</li>
+<li>N4140 is the current working draft. It replaces N3936.</li>
+<li>N4141 is the C++14 IS.</li>
+</ul>
+<h3 id="notable-changes-to-issues-and-papers-as-moved">Notable Changes to Issues and Papers as Moved</h3>
+<p>No motions have been voted into the working draft since N3936.</p>
+<h3 id="other-notable-editorial-changes">Other Notable Editorial Changes:</h3>
+<h4 id="c14-cd-nb-comment-us-1-numbered-bulleted-lists">C++14 CD NB comment US-1: Numbered bulleted lists</h4>
+<p>Each bullet in a bulleted list now has an accompanying parenthesized bullet number in addition to the bullet.</p>
+<h4 id="horizontal-and-vertical-spacing">Horizontal and vertical spacing</h4>
+<p>A small amount of vertical space has been added between numbered paragraphs, and various issues where too little vertical space was present have been fixed.</p>
+<p>In cases where a paragraph continues after an example, note, or bulleted list, the following sentence was sometimes indented. Such indentation has been removed.</p>
+<h2 id="minor-editorial-fixes">Minor Editorial Fixes</h2>
+<p>A log of all editorial fixes made since N3936 is below:</p>
+<pre><code>commit 3974aee60d94d0bae3949f808e58bdfcbbd9990d
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Oct 7 13:47:39 2014 -0700
 
     [over.literal] Use a valid parameter-declaration-clause for a literal
-    operator in example that claims to be "OK".
+    operator in example that claims to be &quot;OK&quot;.
 
 commit e17586537d43bd6916b93d07d9941f393964f4a6
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Oct 3 11:20:01 2014 -0700
 
     [temp] Add L suffix to literal value example definition of constexpr
-    variable template 'pi', to address questions about whether it would
-    do the right thing for 'long double'.
+    variable template &#39;pi&#39;, to address questions about whether it would
+    do the right thing for &#39;long double&#39;.
 
 commit 120f503dc966d8b9161b1499b16c3ad039627368
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Sep 24 18:57:44 2014 -0700
 
     [dcl.enum] Use more natural and unambiguous phrasing around the
-    definition of whether an enumeration type's underlying type is fixed.
+    definition of whether an enumeration type&#39;s underlying type is fixed.
 
 commit 61e6eaba01707a5a59f478bd5d2f74721b8ba947
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -402,13 +71,13 @@ commit cca7c26af4ea4e20fd139bf417b1a2481ab8cd9d
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Sep 23 16:17:17 2014 -0700
 
-    [stmt.for] Remove misplaced hyphen in "declarative region".
+    [stmt.for] Remove misplaced hyphen in &quot;declarative region&quot;.
 
 commit ef6c5a099def532dd165bb72bdc6289e4901f960
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Sep 23 15:57:26 2014 -0700
 
-    [expr.const] Fix typo 'evalution'.
+    [expr.const] Fix typo &#39;evalution&#39;.
 
 commit 0aef09114a750cf2961b120d9128543dde608fde
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -451,14 +120,14 @@ commit f654b0b03cba1ac5c47ff289677e873406a58592
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Sep 16 16:53:24 2014 -0700
 
-    [lex.comment] Slightly clarify what "terminates with" means in the context of a
+    [lex.comment] Slightly clarify what &quot;terminates with&quot; means in the context of a
     line comment.
 
 commit 88bf52a8dd2941cd0c1b622bf2f8479b86c98a49
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 8 17:31:26 2014 -0700
 
-    [basic.def.odr] Use "is", rather than "shall", when describing the behavior of
+    [basic.def.odr] Use &quot;is&quot;, rather than &quot;shall&quot;, when describing the behavior of
     the implementation.
 
     Fixes #168.
@@ -509,7 +178,7 @@ commit bba5cbf7a73454b208de14b0a4d0bb98d0f4c3a0
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 8 14:49:48 2014 -0700
 
-    [iterator.traits] An implementation that provides __far pointers doesn't need
+    [iterator.traits] An implementation that provides __far pointers doesn&#39;t need
     the standard to tell it (non-normatively) how to implement them.
 
     Fixes #260.
@@ -535,7 +204,7 @@ Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 8 14:29:04 2014 -0700
 
     [re.alg.replace] Add whitespace and bullets to make this paragraph more
-    readable and disambiguate the binding of the "Then calls" clause in the third
+    readable and disambiguate the binding of the &quot;Then calls&quot; clause in the third
     sentence.
 
     Fixes #279.
@@ -544,7 +213,7 @@ commit 0736e04de826a69abd998b6adea8b217782c8b46
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 8 14:03:36 2014 -0700
 
-    [dcl.link] Use "obtained" rather than "gotten" in comment in example.
+    [dcl.link] Use &quot;obtained&quot; rather than &quot;gotten&quot; in comment in example.
 
     Fixes #274.
 
@@ -563,7 +232,7 @@ commit 25aa6a57a59c1f08d5ab45f7e738631825262b99
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 8 11:27:14 2014 -0700
 
-    [support.initlist] Don't claim that std::initializer_list is a type; it's a
+    [support.initlist] Don&#39;t claim that std::initializer_list is a type; it&#39;s a
     class template.
 
     Fixes #280.
@@ -581,7 +250,7 @@ Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Sep 8 11:03:54 2014 -0700
 
     [support.exception], [except.nested]: Attributes should be written after
-    'template&lt;...&gt;', not before.
+    &#39;template&lt;...&gt;&#39;, not before.
 
     Fixes #363.
 
@@ -599,7 +268,7 @@ commit 1a59739348a8ebe039a218944811a02b16fb8c30
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Aug 30 17:21:12 2014 -0700
 
-    [except.handle] Add a missing ", or" after penultimate bullet.
+    [except.handle] Add a missing &quot;, or&quot; after penultimate bullet.
 
     Fixes #344.
 
@@ -607,14 +276,14 @@ commit c24e2c5e4770efa8732758a7f0d435990037fda8
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Aug 30 17:14:06 2014 -0700
 
-    [over.oper] Clarify that the 'has a parameter of class or enum type' constraint
+    [over.oper] Clarify that the &#39;has a parameter of class or enum type&#39; constraint
     on overloaded operators only applies to the non-member case.
 
 commit 54c6bf66d97c1d0f8a7ded3c0a2228093d8d3b5d
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Aug 30 16:54:15 2014 -0700
 
-    [over.inc] Add 'non-static' to the description of a member operator++
+    [over.inc] Add &#39;non-static&#39; to the description of a member operator++
     or operator-- to avoid confusion when comparing this wording to that
     of similar paragraphs in other clauses. The normative rule already
     exists in [over.oper]p6.
@@ -636,7 +305,7 @@ commit 4a58c6824c12ee4461edd9f5c891d050feca9032
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Aug 30 16:07:44 2014 -0700
 
-    [stmt.ambig] Don't start a several-paragraph note in the middle of a paragraph;
+    [stmt.ambig] Don&#39;t start a several-paragraph note in the middle of a paragraph;
     that makes it hard to notice that the second paragraph is not normative. Fix
     the note to avoid suggesting that unambiguous cases need disambiguation.
 
@@ -644,7 +313,7 @@ commit a361e26605834b7d90fc4d72fe48c352daaf9100
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Aug 30 12:42:05 2014 -0700
 
-    [basic.start.main] Don't use terminal font for comma separating a list of
+    [basic.start.main] Don&#39;t use terminal font for comma separating a list of
     keywords.
 
 commit 1bf763d4c8d23272a4b6f73e25f5f2c953844f9a
@@ -658,9 +327,9 @@ commit 73ced7924ce2df7e5d96ce903014f16b57025c1d
 Author: FrankHB &lt;frankhb1989@gmail.com&gt;
 Date:   Thu Aug 28 04:47:26 2014 +0800
 
-    [expr.new] Avoid "heap allocation"
+    [expr.new] Avoid &quot;heap allocation&quot;
 
-    The term "heap allocation" is not normatively defined, and the term "heap" has other meaning in the standard. Here "heap allocation" is typical implementation details, likely close to "free store". To clarify the intent, it would be better never used at all, even in an example.
+    The term &quot;heap allocation&quot; is not normatively defined, and the term &quot;heap&quot; has other meaning in the standard. Here &quot;heap allocation&quot; is typical implementation details, likely close to &quot;free store&quot;. To clarify the intent, it would be better never used at all, even in an example.
 
 commit 802ce675d22a413f66e9f51e1ae05b10a8c9cfb9
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -692,7 +361,7 @@ commit b6d072b7bdec269fd25ffd40d85f8502b4488744
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Aug 25 18:01:45 2014 -0700
 
-    [complex.ops] Reorder 'bool constexpr' to 'constexpr bool' for
+    [complex.ops] Reorder &#39;bool constexpr&#39; to &#39;constexpr bool&#39; for
     consistency.
 
 commit 83cedc7b814ed59a2a6c840ea9ff35a88bb9eef3
@@ -707,7 +376,7 @@ commit 8d43245c43b6733f77b8c774dc0552caba29e561
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Aug 25 17:56:32 2014 -0700
 
-    JP 16: [thread.sharedtimedmutex.class] Add missing 'or' at end of
+    JP 16: [thread.sharedtimedmutex.class] Add missing &#39;or&#39; at end of
     bullet.
 
     Fixes #375.
@@ -717,7 +386,7 @@ Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Aug 25 17:47:43 2014 -0700
 
     JP 14: [thread.sharedtimedmutex.class] Reformat synopsis for consistency
-    with nearby subclauses. Add "// blocking" comment systematically to
+    with nearby subclauses. Add &quot;// blocking&quot; comment systematically to
     lock() on all timed mutex classes.
 
     Fixes #374.
@@ -737,14 +406,14 @@ Date:   Mon Aug 25 16:53:32 2014 -0700
     Fix to 2013-09 LWG Motion 7:
 
     [comparisons] Fix incorrect application of N3789 to the working paper:
-      - Add 'constexpr' to
+      - Add &#39;constexpr&#39; to
           std::equal_to&lt;&gt;::operator()
           std::not_equal_to&lt;&gt;::operator()
           std::greater&lt;&gt;::operator()
           std::less&lt;&gt;::operator()
           std::greater_equal&lt;&gt;::operator()
           std::less_equal&lt;&gt;::operator()
-      - Reorder 'bool constexpr' to 'constexpr bool' in
+      - Reorder &#39;bool constexpr&#39; to &#39;constexpr bool&#39; in
           std::logical_or&lt;T&gt;::operator()
           std::logical_and&lt;T&gt;::operator()
           std::logical_not&lt;T&gt;::operator()
@@ -761,7 +430,7 @@ commit 5961b150e16572225481e8db383b73c837780121
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Aug 21 15:40:18 2014 -0700
 
-    Replace all '\sim's with '\~'s, to give more consistent formatting for ~s.
+    Replace all &#39;\sim&#39;s with &#39;\~&#39;s, to give more consistent formatting for ~s.
 
 commit 92d831349991ab00462cbb163dec39e4fe26fb5b
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -773,7 +442,7 @@ commit c4ce2ae3c7d3b2ca5a18caf9592172d20af953db
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Aug 21 15:24:55 2014 -0700
 
-    [gram] Don't convert one space to two after a `.` or `!` in the grammar.
+    [gram] Don&#39;t convert one space to two after a `.` or `!` in the grammar.
     These do not mark the end of a sentence.
 
 commit 7dd60658927bf6ca2e0a3c550f074ad63fcb8659
@@ -792,8 +461,8 @@ commit 4d1b4c404758249ae7ef2957b1b83a50c490071e
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Aug 13 11:45:44 2014 -0700
 
-    [basic.types] Italicize the definitions of 'incompletely-defined object
-    type' and 'incomplete type', and add index entries.
+    [basic.types] Italicize the definitions of &#39;incompletely-defined object
+    type&#39; and &#39;incomplete type&#39;, and add index entries.
 
 commit 009b092e6c3cdfefb8566e21ce593d6e715abdd0
 Author: Mitsuru Kariya &lt;kariya_mitsuru@hotmail.com&gt;
@@ -805,7 +474,7 @@ commit 28b5d355e74d283c40287f302b603d6c53a038af
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Wed Aug 6 11:11:29 2014 +0100
 
-    [atomics.syn] Fix typo by replacing ')' with '_'
+    [atomics.syn] Fix typo by replacing &#39;)&#39; with &#39;_&#39;
 
     Fixes #359
 
@@ -859,7 +528,7 @@ commit 607583a47e9d6e623c0592b3ab2b6a4316684fa1
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Tue Aug 5 12:17:22 2014 +0100
 
-    [memory.syn] Change "template functions" to "function templates"
+    [memory.syn] Change &quot;template functions&quot; to &quot;function templates&quot;
 
     Fixes #302
 
@@ -867,7 +536,7 @@ commit 25a61066569db45a919ae210d442ee1ae5bf1d20
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Tue Aug 5 12:10:46 2014 +0100
 
-    [func.bind.bind] Fix "template parameter back" typo.
+    [func.bind.bind] Fix &quot;template parameter back&quot; typo.
 
     Fixes #316
 
@@ -883,7 +552,7 @@ commit 12eb4b6a113e2ba16ce6ae08af59f315597fb22f
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Tue Aug 5 11:33:37 2014 +0100
 
-    [util.smartptr.shared.const], [util.smartptr.weak.const] Remove "the"
+    [util.smartptr.shared.const], [util.smartptr.weak.const] Remove &quot;the&quot;
 
     Fixes #335
 
@@ -899,7 +568,7 @@ commit ab93130a122d38b33d424df7a0379c1190a64c8d
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Aug 4 18:33:43 2014 -0700
 
-    [class] Fix unclear phrase "only one" to clearer phrase "at most one"
+    [class] Fix unclear phrase &quot;only one&quot; to clearer phrase &quot;at most one&quot;
     used in [class.union], to make it more obvious that a union can have
     no active members.
 
@@ -907,14 +576,14 @@ commit e26be95253370c374d4d3471d14cf376b15b278f
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Fri Aug 1 21:38:11 2014 +0100
 
-    Fix typography of "C." (spacing)
+    Fix typography of &quot;C.&quot; (spacing)
 
 commit 898a67758969d24aa9d47f726418c2be3951e5e8
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Jul 10 16:53:25 2014 -0700
 
     [global.functions] Clarify note by adding a cross-reference to make it
-    clearer that we're quoting another part of the standard. Update the
+    clearer that we&#39;re quoting another part of the standard. Update the
     quotation to match, and clean it up slightly.
 
 commit 4c0d9385493140ab50c36612a951370077d5c135
@@ -965,7 +634,7 @@ commit e2bf02ae11d6eb27b49c514895fcf8bc86316361
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Jun 26 14:21:08 2014 -0700
 
-    Fix 'tokens not allowed' warnings when building PDF.
+    Fix &#39;tokens not allowed&#39; warnings when building PDF.
 
 commit 6c602b653a211953a2c3caedb66cccbf13793b17
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -1019,7 +688,7 @@ commit 85d64aa6af217d2191a705db3b13865b9dfd01c6
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Jun 26 07:38:39 2014 -0700
 
-    Tighten the words we use in "Throughout this [sub]clause" wording
+    Tighten the words we use in &quot;Throughout this [sub]clause&quot; wording
     to introduce a set of requirements for template arguments based
     on their names, and make these paragraphs consistent.
 
@@ -1027,10 +696,10 @@ commit 50dfba2293729baf00f8bf98eeaaebcd8e5a5d2b
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Jun 25 03:59:44 2014 -0700
 
-    Remove unused definitions of terms 'formal argument', 'actual argument', and
-    'actual parameter'. Unify uses of 'formal parameter' and 'parameter' to all use
-    the vastly more common term 'parameter' and remove the definition of 'formal
-    parameter'.
+    Remove unused definitions of terms &#39;formal argument&#39;, &#39;actual argument&#39;, and
+    &#39;actual parameter&#39;. Unify uses of &#39;formal parameter&#39; and &#39;parameter&#39; to all use
+    the vastly more common term &#39;parameter&#39; and remove the definition of &#39;formal
+    parameter&#39;.
 
 commit ab1e49a22e78386e263e787cd1e705f9c81e951f
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -1050,7 +719,7 @@ commit b7a07da99905151d946713214e2a26e589c4c2d2
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sun Jun 22 04:45:54 2014 -0700
 
-    [class.mem] Format definition of 'layout-compatible' as a definition,
+    [class.mem] Format definition of &#39;layout-compatible&#39; as a definition,
     add it to the index, and unify spelling of this index entry across the
     three places where it is defined.
 
@@ -1058,7 +727,7 @@ commit cfd280a0fae206a6cb80022a5d29a88d77bf723c
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Jun 20 23:38:23 2014 -0700
 
-    [expr.const] Add missing 'const' to examples invalidated by N3598.
+    [expr.const] Add missing &#39;const&#39; to examples invalidated by N3598.
 
     Fixes CWG1683.
 
@@ -1075,7 +744,7 @@ commit e1f93bccfa94f5344d89958630a90362e54ba6b9
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Jun 11 13:13:17 2014 -0700
 
-    [expr.alignof] Use "is", not "shall be", to express a requirement on the
+    [expr.alignof] Use &quot;is&quot;, not &quot;shall be&quot;, to express a requirement on the
     implementation rather than one on the program.
 
 commit 77bee81349d30d7c23a19ebf81aedbd63b2fcaab
@@ -1113,8 +782,8 @@ commit 910119129a7b91ccdc13a298e03921619d18911e
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue May 20 16:22:28 2014 -0700
 
-    [gram] Fix formatting of 'class' and 'enumeration' -- these don't refer
-    to keywords, so they shouldn't be in teletype font.
+    [gram] Fix formatting of &#39;class&#39; and &#39;enumeration&#39; -- these don&#39;t refer
+    to keywords, so they shouldn&#39;t be in teletype font.
 
 commit f5db6003384bf612f907939c50d7e7f43ca9dfa7
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -1128,16 +797,16 @@ Date:   Tue May 20 10:43:17 2014 -0500
 
     instantiation -&gt; specialization in [refwrap]
 
-    To match the wording of http://cplusplus.github.io/LWG/lwg-active.html#2106 (The wording of 2106 is taken from here, but we decided to use the term "specialization".
+    To match the wording of http://cplusplus.github.io/LWG/lwg-active.html#2106 (The wording of 2106 is taken from here, but we decided to use the term &quot;specialization&quot;.
 
 commit e3b1fbb1a043b3695e7e3ff1208782272cb2ad25
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Tue May 20 16:04:21 2014 +0100
 
-    [atomics.types.operations.req] Hyphenate "non member".
+    [atomics.types.operations.req] Hyphenate &quot;non member&quot;.
 
-    Change "their corresponding explicit" to "their corresponding explicit
-    functions".
+    Change &quot;their corresponding explicit&quot; to &quot;their corresponding explicit
+    functions&quot;.
 
 commit 713bdee8b10f2d555d047cd159c10372919641cb
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -1216,7 +885,6 @@ commit 64e276342dab40a1479b2baa5ac321819ea519ab
 Author: Akira Takahashi &lt;faithandbrave@gmail.com&gt;
 Date:   Tue Mar 4 15:47:53 2014 +0900
 
-    shared_ptr : fix missing semicolon
-</code></pre>
-  </body>
+    shared_ptr : fix missing semicolon</code></pre>
+</body>
 </html>

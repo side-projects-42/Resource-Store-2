@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>_common_ticks</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="common-tick-options-to-all-axes">Common tick options to all axes</h3>
+<p>Namespace: <code>options.scales[scaleId].ticks</code></p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 14%" />
+<col style="width: 3%" />
+<col style="width: 15%" />
+<col style="width: 59%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;">Scriptable</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>backdropColor</code></td>
+<td><a href="../../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td><code>'rgba(255, 255, 255, 0.75)'</code></td>
+<td>Color of label backdrops.</td>
+</tr>
+<tr class="even">
+<td><code>backdropPadding</code></td>
+<td><a href="../../general/padding.md"><code>Padding</code></a></td>
+<td style="text-align: center;"></td>
+<td><code>2</code></td>
+<td>Padding of label backdrop.</td>
+</tr>
+<tr class="odd">
+<td><code>callback</code></td>
+<td><code>function</code></td>
+<td style="text-align: center;"></td>
+<td></td>
+<td>Returns the string representation of the tick value as it should be displayed on the chart. See <a href="/axes/labelling.md#creating-custom-tick-formats">callback</a>.</td>
+</tr>
+<tr class="even">
+<td><code>display</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;"></td>
+<td><code>true</code></td>
+<td>If true, show tick labels.</td>
+</tr>
+<tr class="odd">
+<td><code>color</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td><code>Chart.defaults.color</code></td>
+<td>Color of ticks.</td>
+</tr>
+<tr class="even">
+<td><code>font</code></td>
+<td><code>Font</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>Chart.defaults.font</code></td>
+<td>See <a href="/general/fonts.md">Fonts</a></td>
+</tr>
+<tr class="odd">
+<td><code>major</code></td>
+<td><code>object</code></td>
+<td style="text-align: center;"></td>
+<td><code>{}</code></td>
+<td><a href="/axes/styling.md#major-tick-configuration">Major ticks configuration</a>.</td>
+</tr>
+<tr class="even">
+<td><code>padding</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;"></td>
+<td><code>3</code></td>
+<td>Sets the offset of the tick labels from the axis</td>
+</tr>
+<tr class="odd">
+<td><code>showLabelBackdrop</code></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>true</code> for radial scale, <code>false</code> otherwise</td>
+<td>If true, draw a background behind the tick labels.</td>
+</tr>
+<tr class="even">
+<td><code>textStrokeColor</code></td>
+<td><a href="/general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td>`<code>| The color of the stroke around the text.                                                                                                                     | |</code>textStrokeWidth<code>|</code>number<code>|    Yes     |</code>0<code>| Stroke width around the text.                                                                                                                                | |</code>z<code>|</code>number<code>|            |</code>0`</td>
+<td>z-index of tick layer. Useful when ticks are drawn on chart area. Values &lt;= 0 are drawn under datasets, &gt; 0 on top.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

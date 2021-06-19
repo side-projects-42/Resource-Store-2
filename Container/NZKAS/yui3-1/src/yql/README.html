@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="yql-module">YQL Module</h1>
+<p>(YQL) is an expressive SQL-like language that lets you query, filter, and join data across Web services. With YQL, <em>apps run faster with fewer lines of code and a smaller network footprint.</em></p>
+<pre><code>YUI().use(&#39;yql&#39;, function(Y) {
+
+    Y.YQL(&#39;select * from weather.forecast where location=90210&#39;, function(r) {
+        //r now contains the result of the YQL Query
+        //use the YQL Developer console to learn
+        //what data is coming back in this object
+        //and how that data is structured.
+    });
+
+});</code></pre>
+</body>
+</html>

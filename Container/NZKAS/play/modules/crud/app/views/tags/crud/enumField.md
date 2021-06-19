@@ -1,0 +1,1 @@
+\#{field 'object.' + \_name} &{\_name} %{ \_property.choices.each() { }% %{ selected = false; if(field.error?.message != 'validation.required') { selected = it == \_value; } label = it.toString() }% ${label} %{ } }% \#{ifError field.name} <span class="error">${field.error.raw()}</span> \#{/ifError} \#{/field}

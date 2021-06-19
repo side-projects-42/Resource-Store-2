@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2015-07-14-juseppe-a-custom-update-site-for-jenkins</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <em
+        >This is a guest post by Kirill Merkushev at Yandex. I met him at JUC
+        Europe where he showed me the project he was working on: Juseppe. It
+        looked really interesting, so I asked him to write this guest post.</em
+      >
+    </p>
+    <p>
+      When you write your first custom Jenkins plugin for internal use, it’s
+      easy enough to deploy it on one or maybe two Jenkins instances. You can
+      save it on your local drive and upload the HPI file via the Jenkins Plugin
+      Manager as needed. It’s easy to do this for a few releases. But as your
+      experience grows, the number of plugins and their releases grows as well.
+      The plugins directory on your local drive soon looks like a garbage dump,
+      and it’s difficult to find that most recent version of any plugin. And if
+      you have a lot of Jenkins instances coordinating updates of your plugins
+      may cause a lot of pain.
+    </p>
+    <p>
+      A similar situation is when you contribute a much-needed patch to an
+      existing plugin, but you don’t have the time to wait until your pull
+      request is be merged and a new release is cut. Or you may need to patch a
+      plugin in ways not suitable for distribution, and decide to effectively
+      fork the plugin for use on your Jenkins instances. How are you going to do
+      this?
+    </p>
+    <p>
+      A solution avoiding the problems from these situations is to set up your
+      own update site to serve your private plugin builds. Juseppe allows you to
+      do this quickly and easily.
+    </p>
+    <h2 id="what-is-juseppe">What is Juseppe?</h2>
+    <p>
+      <em>Juseppe</em> is an acronym for
+      <em>Jenkins Update Site Embedded for Plugin Publishing Easily</em>.
+      Juseppe can help you set up a Jenkins update site in just a few minutes.
+    </p>
+    <h3 id="features">Features</h3>
+    <ul>
+      <li>
+        Generates signed <code>update-center.json</code> and
+        <code>release-history.json</code>
+      </li>
+      <li>
+        Works with HPI files directly (stored in one folder), no need to set up
+        a Maven repository
+      </li>
+      <li>
+        Watches for changes in the plugin folder and regenerates JSON files when
+        changes are detected
+      </li>
+      <li>
+        Serves generated files and plugin files with built-in Jetty web server
+      </li>
+      <li>
+        Can be run in a “generate-only” mode when you want to use a different
+        web server for these files.
+      </li>
+    </ul>
+    <h3 id="how-can-i-get-juseppe">How can I get Juseppe?</h3>
+    <p>
+      It ships as a Docker container, or can be built from source. Visit
+      <a href="https://github.com/yandex-qatools/juseppe"
+        >the GitHub project page</a
+      >
+      to learn more. The complete user guide is available in
+      <a
+        href="https://github.com/yandex-qatools/juseppe/wiki/Complete-Guide-of-own-update-center-using-Juseppe"
+        >the GitHub project wiki</a
+      >.
+    </p>
+  </body>
+</html>

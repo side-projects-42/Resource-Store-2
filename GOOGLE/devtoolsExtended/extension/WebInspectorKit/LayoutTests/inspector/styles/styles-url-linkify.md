@@ -1,0 +1,1 @@
+Tests that URLs are linked to and completed correctly. Bugs [51663](http://bugs.webkit.org/show_bug.cgi?id=51663), [53171](http://bugs.webkit.org/show_bug.cgi?id=53171), [62643](http://bugs.webkit.org/show_bug.cgi?id=62643), [72373](http://bugs.webkit.org/show_bug.cgi?id=72373), [79905](http://bugs.webkit.org/show_bug.cgi?id=79905)

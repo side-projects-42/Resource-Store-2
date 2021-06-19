@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="phonegap-actionsheet-plugin">PhoneGap ActionSheet Plugin</h1>
+<p>by <code>Olivier Louvignes</code></p>
+<h2 id="description">DESCRIPTION</h2>
+<ul>
+<li><p>This plugin provides a simple way to use the <code>UIActionSheet</code> native component from IOS. It does comply with the latest (future-2.x) phonegap standards.</p></li>
+<li><p>Compared to the <code>iPhone/NativeControls</code> plugin, it is more documented &amp; simpler to understand (only handle actionSheets). It does also provide new options (style).</p></li>
+<li><p>There is a <code>Sencha Touch 2.0</code> plugin to easily leverage this plugin <a href="https://github.com/mgcrea/sencha-touch-plugins/blob/master/PhonegapActionSheet.js">here</a></p></li>
+</ul>
+<h2 id="setup">SETUP</h2>
+<p>Using this plugin requires <a href="http://github.com/phonegap/phonegap-iphone">iPhone PhoneGap</a>.</p>
+<ol type="1">
+<li>Make sure your PhoneGap Xcode project has been <a href="http://wiki.phonegap.com/Upgrade-your-PhoneGap-Xcode-Template-for-iOS-4">updated for the iOS 4 SDK</a></li>
+<li>Drag and drop the <code>ActionSheet</code> folder from Finder to your Plugins folder in XCode, using “Create groups for any added folders”</li>
+<li>Add the .js files to your <code>www</code> folder on disk, and add reference(s) to the .js files as <link> tags in your html file(s)</li>
+<li>Add new entry with key <code>ActionSheet</code> and value <code>ActionSheet</code> to <code>Plugins</code> in <code>PhoneGap.plist</code></li>
+</ol>
+<h2 id="javascript-interface">JAVASCRIPT INTERFACE</h2>
+<pre><code>// After device ready, create a local alias
+var actionSheet = window.plugins.actionSheet;
+
+// Basic with title
+actionSheet.create(&#39;Title&#39;, [&#39;Foo&#39;, &#39;Bar&#39;], function(buttonValue, buttonIndex) { console.warn(&#39;create&#39;, [this, arguments]); });
+
+// Complex
+actionSheet.create(null, [&#39;Add&#39;, &#39;Delete&#39;, &#39;Cancel&#39;], function(buttonValue, buttonIndex) { console.warn(&#39;create&#39;, [this, arguments]); }, {destructiveButtonIndex: 1, cancelButtonIndex: 2});</code></pre>
+<ul>
+<li>Check <a href="http://github.com/mgcrea/phonegap-plugins/tree/master/iPhone/ActionSheet/ActionSheet.js">source</a> for additional configuration.</li>
+</ul>
+<h2 id="bugs-and-contributions">BUGS AND CONTRIBUTIONS</h2>
+<p>Patches welcome! Send a pull request. Since this is not a part of PhoneGap Core (which requires a CLA), this should be easier.</p>
+<p>Post issues on <a href="http://github.com/phonegap/phonegap-plugins/issues">Github</a></p>
+<p>The latest code (my fork) will always be <a href="http://github.com/mgcrea/phonegap-plugins/tree/master/iPhone/ActionSheet/">here</a></p>
+<h2 id="license">LICENSE</h2>
+<p>Copyright 2011 Olivier Louvignes. All rights reserved.</p>
+<p>The MIT License</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+<h2 id="credits">CREDITS</h2>
+<p>Inspired by :</p>
+<ul>
+<li><p><a href="https://github.com/phonegap/phonegap-plugins/tree/master/iPhone/NativeControls">NativeControls Phonegap plugin</a></p></li>
+<li><p><a href="http://docs.sencha.com/touch/2-0/#!/api/Ext.ActionSheet">ActionSheet Sencha Touch 2.0 class</a></p></li>
+</ul>
+</body>
+</html>

@@ -1,32 +1,19 @@
-# HTML Legend
+HTML Legend
+===========
 
 This example shows how to create a custom HTML legend using a plugin and connect it to the chart in lieu of the default on-canvas legend.
 
-<div id="legend-container"></div>
+\`\`\`js chart-editor // const getOrCreateLegendList = (chart, id) =&gt; { const legendContainer = document.getElementById(id); let listContainer = legendContainer.querySelector(“ul”);
 
-```js chart-editor
-// <block:plugin:0>
-const getOrCreateLegendList = (chart, id) => {
-  const legendContainer = document.getElementById(id);
-  let listContainer = legendContainer.querySelector("ul");
-
-  if (!listContainer) {
-    listContainer = document.createElement("ul");
-    listContainer.style.display = "flex";
-    listContainer.style.flexDirection = "row";
-    listContainer.style.margin = 0;
-    listContainer.style.padding = 0;
+if (!listContainer) { listContainer = document.createElement(“ul”); listContainer.style.display = “flex”; listContainer.style.flexDirection = “row”; listContainer.style.margin = 0; listContainer.style.padding = 0;
 
     legendContainer.appendChild(listContainer);
-  }
 
-  return listContainer;
-};
+}
 
-const htmlLegendPlugin = {
-  id: "htmlLegend",
-  afterUpdate(chart, args, options) {
-    const ul = getOrCreateLegendList(chart, options.containerID);
+return listContainer; };
+
+const htmlLegendPlugin = { id: “htmlLegend”, afterUpdate(chart, args, options) { const ul = getOrCreateLegendList(chart, options.containerID);
 
     // Remove old legend items
     while (ul.firstChild) {
@@ -82,55 +69,11 @@ const htmlLegendPlugin = {
       li.appendChild(textContainer);
       ul.appendChild(li);
     });
-  },
-};
-// </block:plugin>
 
-// <block:data:1>
-const NUM_DATA = 7;
-const NUM_CFG = { count: NUM_DATA, min: 0, max: 100 };
-const data = {
-  labels: Utils.months({ count: NUM_DATA }),
-  datasets: [
-    {
-      label: "Dataset: 1",
-      data: Utils.numbers(NUM_CFG),
-      borderColor: Utils.CHART_COLORS.red,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5),
-      fill: false,
-    },
-    {
-      label: "Dataset: 1",
-      data: Utils.numbers(NUM_CFG),
-      borderColor: Utils.CHART_COLORS.blue,
-      backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5),
-      fill: false,
-    },
-  ],
-};
-// </block:data>
+}, }; //
 
-// <block:setup:2>
-const config = {
-  type: "line",
-  data: data,
-  options: {
-    plugins: {
-      htmlLegend: {
-        // ID of the container to put the legend in
-        containerID: "legend-container",
-      },
-      legend: {
-        display: false,
-      },
-    },
-  },
-  plugins: [htmlLegendPlugin],
-};
-// </block:setup>
+// const NUM\_DATA = 7; const NUM\_CFG = { count: NUM\_DATA, min: 0, max: 100 }; const data = { labels: Utils.months({ count: NUM\_DATA }), datasets: \[ { label: “Dataset: 1”, data: Utils.numbers(NUM\_CFG), borderColor: Utils.CHART\_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART\_COLORS.red, 0.5), fill: false, }, { label: “Dataset: 1”, data: Utils.numbers(NUM\_CFG), borderColor: Utils.CHART\_COLORS.blue, backgroundColor: Utils.transparentize(Utils.CHART\_COLORS.blue, 0.5), fill: false, }, \], }; //
 
-module.exports = {
-  actions: [],
-  config: config,
-};
-```
+// const config = { type: “line”, data: data, options: { plugins: { htmlLegend: { // ID of the container to put the legend in containerID: “legend-container”, }, legend: { display: false, }, }, }, plugins: \[htmlLegendPlugin\], }; //
+
+module.exports = { actions: \[\], config: config, }; \`\`\`

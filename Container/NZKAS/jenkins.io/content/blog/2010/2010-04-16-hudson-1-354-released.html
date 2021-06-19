@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-04-16-hudson-1-354-released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <img
+        src="http://agentdero.cachefly.net/continuousblog/scenic_hudson.png"
+        align="right"
+        hspace="3"
+      />Hear ye, hear ye! Behold, the first release of Hudson <em>ever</em> made
+      by a not-employed-by-Sun
+      <a id="aptureLink_7UNdgyqEaS" href="http://twitter.com/kohsukekawa"
+        >Kohsuke</a
+      >
+      (as we
+      <a href="http://blog.hudson-ci.org/content/kohsuke-leaves-sun"
+        >covered last week</a
+      >). This iteration of Hudson contains only bug fixes, check the listing
+      below for the specifics on which bugs have been fixed (1.355 is looking
+      like it will contain a number of fixes as well). The release of 1.354
+      comes slightly later than usual given some of the logistics that needed
+      to, or still need to be resolved.
+    </p>
+    <p>
+      One of the infrastructure issues that’s half-way resolved is the question
+      of Debian/Ubuntu packages. Kohuske has packages uploaded in an
+      experimental
+      <a href="http://hudson-labs.org/debian/"
+        >apt repository on hudson-labs.org</a
+      >
+      which you can try out. That said, it’s not entirely clear whether this is
+      going to be the preferred means of distributing native Debian/Ubuntu
+      packages in the future (your mileage may vary).
+    </p>
+    <!--break-->
+    <h4 id="bugs-fixed">Bugs fixed</h4>
+    <ul class="image">
+      <li class="bug">
+        POM parsing was still using the module root as the base for relative
+        paths for alternate settings files. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-6080"
+          >issue 6080</a
+        >)
+      </li>
+
+      <li class="bug">
+        Fix dynamic updates of build history table when
+        <a
+          id="aptureLink_MAx8CeZUo3"
+          href="http://en.wikipedia.org/wiki/Cross-site%20request%20forgery"
+          >CSRF</a
+        >
+        protection is turned on. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-6072"
+          >issue 6072</a
+        >)
+      </li>
+
+      <li class="bug">
+        Improved the error reporting mechanism in LDAP setting.
+      </li>
+
+      <li class="bug">
+        Raw console output contains garbage. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-6034"
+          >issue 6034</a
+        >)
+      </li>
+
+      <li class="bug">
+        Fixed a file handle leak in the slave connection. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-6137"
+          >issue 6137</a
+        >)
+      </li>
+
+      <li class="bug">
+        Quiet period wasn’t taking effect properly when doing parameterized
+        builds.
+      </li>
+    </ul>
+
+    <p>
+      <br clear="all" />
+      ### Contributors The release of 1.354 contains a total of 51 commits to
+      the “core” part of the tree, from 9 different contributors
+    </p>
+    <ul>
+      <li>abayer</li>
+      <li>drulli</li>
+      <li>kohsuke</li>
+      <li>manuel_carrasco</li>
+      <li>mindless</li>
+      <li>sogabe</li>
+      <li>swiest</li>
+      <li>vlatombe</li>
+      <li>wyukawa <br clear="all" /></li>
+    </ul>
+    <hr />
+    <p>
+      You can go grab the
+      <a href="http://hudson-ci.org/latest/hudson.war">latest .war file</a>
+      straight from <code>hudson-ci.org</code> or if you’re using a native
+      package, use your package manager to upgrade.
+    </p>
+    <hr />
+  </body>
+</html>

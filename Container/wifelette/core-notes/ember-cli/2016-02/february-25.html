@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-25</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-02-25">ember-cli Meeting Notes - 2016-02-25</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Tobias Bieniek</li>
+<li>Chris Thoburn</li>
+<li>Kelly Selden</li>
+<li>Jake Bixby</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>(Nathan) Open issue on rfcs repo for “core extensibility primitive” assigned to Chris.</li>
+<li>(Nathan) Provide feedback on <a href="https://github.com/ember-cli/rfcs/pull/4#issuecomment-189021955">#4</a> and <a href="https://github.com/ember-cli/rfcs/pull/35#issuecomment-189014121">#35</a>.</li>
+<li>(Nathan) Invite ember-cli-deploy people for next week’s conversation.</li>
+<li>(Jake) PR solution for <a href="https://github.com/ember-cli/ember-cli/issues/5481">Issue #5481</a></li>
+<li>(Chris) RFC draft for extensibility primitive.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="rfc-4---processes">RFC #4 - Processes</h3>
+<ul>
+<li>Our current story for process management is nonexistent</li>
+<li>Our process for additional server tools is leveraging side effects of the original implementation.
+<ul>
+<li>The API wasn’t necessarily designed, and was instead just present.</li>
+</ul></li>
+<li>We want to design a lifecycle for tying child processes to ember-cli and provide bidirectional communication between these processes.</li>
+<li>Concerns:
+<ul>
+<li>sigterm cleanup</li>
+<li>Play nicely with Windows</li>
+</ul></li>
+<li>This will allow us to clean up the overloaded middleware story:
+<ul>
+<li>Express server: http mock, http proxy, livereload, ember-cli-csp</li>
+<li>It would allow us to possibly pull the server out of ember-cli and into an addon.</li>
+</ul></li>
+</ul>
+<h3 id="rfc-35---platforms">RFC #35 - Platforms</h3>
+<ul>
+<li>Desire is to add a new flag and tweak the semantics of some of the core ember-cli commands.</li>
+<li>The approach is clear, but falls down a slippery slope. How do we decide which features make it into ember-cli</li>
+<li>Further, the more complex commands need rather serious surgery in order to do the right thing: serve &amp; test are watch commands and communicate to external processes.</li>
+<li>Ideally the feature spec’d within would be an addon, we should rewrite this to figure out the core features required in order to implement it as an addon.</li>
+</ul>
+<h3 id="core-extensibility-primitive">Core Extensibility Primitive</h3>
+<ul>
+<li>We should be thinking about how to extend the core ember-cli primitive of a command via an addon, possibly each one of those has its own lifecycle.</li>
+<li>Not only that, but these addons need to customize things like Testem, and more, so it makes sense to have a process manager that can be hooked into.</li>
+<li>Apparently there is a pipeline primitive in ember-cli-deploy which we might want to explore.</li>
+<li>The basic primitive should have the ability to be isolated to allow for multiple simultaneous invocations.</li>
+<li>Possible use case of “in-repo platform” as something possibly easier to do with a broccoli-funnel instead of overriding the resolver uniquely per platform.</li>
+<li>Command line options would need to be propogated into each addon as we won’t know what is and isn’t legal at top level anymore.</li>
+<li>(V2) Should support multiple simultaneous outputs from a single input, even watched states like servers and testing. A primitive version can be done by forking a broccoli tree.</li>
+</ul>
+</body>
+</html>

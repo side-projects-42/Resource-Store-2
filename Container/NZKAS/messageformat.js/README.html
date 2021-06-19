@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <p>
+      <a href="http://travis-ci.org/SlexAxton/messageformat.js"
+        ><img
+          src="https://secure.travis-ci.org/SlexAxton/messageformat.js.png"
+          alt="Build Status"
+      /></a>
+    </p>
+    <h1 id="messageformat.js">messageformat.js</h1>
+    <p>
+      The experience and subtlety of your program’s text can be important.
+      MessageFormat (PluralFormat + SelectFormat) is a mechanism for handling
+      both <em>pluralization</em> and <em>gender</em> in your applications. It
+      can also lead to much better translations, as it was built by
+      <a
+        href="http://icu-project.org/apiref/icu4j/com/ibm/icu/text/MessageFormat.html"
+        >ICU</a
+      >
+      to help solve those two problems for all known
+      <a href="http://cldr.unicode.org/">CLDR</a> languages - likely all the
+      ones you care about.
+    </p>
+    <p>
+      There is a good slide-deck on
+      <a
+        href="https://docs.google.com/presentation/d/1ZyN8-0VXmod5hbHveq-M1AeQ61Ga3BmVuahZjbmbBxo/pub?start=false&amp;loop=false&amp;delayms=3000#slide=id.g1bc43a82_2_14"
+        >Plural and Gender in Translated Messages</a
+      >
+      by Markus Scherer and Mark Davis. But, again, remember that many of these
+      problems apply even if you’re only outputting english.
+    </p>
+    <p>
+      <a
+        href="http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/language_plural_rules.html"
+        >See just how many different pluralization rules there are.</a
+      >
+    </p>
+    <p>
+      MessageFormat in Java-land technically incorporates all other type
+      formatting (and the older ChoiceFormat) directly into its messages,
+      however, in the name of filesize, messageformat.js only strives to
+      implement <strong>SelectFormat</strong> and <strong>PluralFormat</strong>.
+    </p>
+    <p>
+      There are plans to pull in locale-aware
+      <strong>NumberFormat</strong> parsing as a “plugin” to this library, but
+      as of right now, it’s best to pass things in preformatted (as suggested in
+      the ICU docs).
+    </p>
+    <p>
+      We have also ported the Google Closure implementation of
+      <a href="https://github.com/jedtoolkit/numberformat.js">NumberFormat</a>,
+      but there is no direct integration of these two libraries. (They work well
+      together!)
+    </p>
+    <h2 id="what-problems-does-it-solve">What problems does it solve?</h2>
+    <p>A progression of strings in programs:</p>
+    <blockquote>
+      <p>There are 1 results.</p>
+    </blockquote>
+    <blockquote>
+      <p>There are 1 result(s).</p>
+    </blockquote>
+    <blockquote>
+      <p>Number of results: 5.</p>
+    </blockquote>
+    <p>
+      These are generally unacceptable in this day and age. Not to mention the
+      problem expands when you consider languages with 6 different pluralization
+      rules. You may be using something like Gettext to solve this across
+      multiple languages, but even Gettext falls flat.
+    </p>
+    <h2 id="what-does-it-look-like">What does it look like?</h2>
+    <p>
+      ICU bills the format as easy to read and write. It may be
+      <em>more</em> easy to read and write, but I’d still suggest a tool for
+      non-programmers. It looks a lot like Java’s <code>ChoiceFormat</code> -
+      but is different in a few significant ways, most notably its addition of
+      the <code>plural</code> keyword, and more friendly
+      <code>select</code> syntax.
+    </p>
+    <pre><code>{GENDER, select,
+    male {He}
+  female {She}
+   other {They}
+} found {NUM_RESULTS, plural,
+            one {1 result}
+          other {# results}
+        } in {NUM_CATEGORIES, plural,
+                  one {1 category}
+                other {# categories}
+             }.</code></pre>
+    <p>Here’s a few data sets against this message:</p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="st">&quot;GENDER&quot;</span>         <span class="op">:</span> <span class="st">&quot;male&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="st">&quot;NUM_RESULTS&quot;</span>    <span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="st">&quot;NUM_CATEGORIES&quot;</span> <span class="op">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="op">&gt;</span> <span class="st">&quot;He found 1 result in 2 categories.&quot;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="op">{</span></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="st">&quot;GENDER&quot;</span>         <span class="op">:</span> <span class="st">&quot;female&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="st">&quot;NUM_RESULTS&quot;</span>    <span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="st">&quot;NUM_CATEGORIES&quot;</span> <span class="op">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-12" title="12"><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="op">&gt;</span> <span class="st">&quot;She found 1 result in 2 categories.&quot;</span></a>
+<a class="sourceLine" id="cb2-14" title="14"></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="op">{</span></a>
+<a class="sourceLine" id="cb2-16" title="16">  <span class="st">&quot;GENDER&quot;</span>         <span class="op">:</span> <span class="st">&quot;male&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-17" title="17">  <span class="st">&quot;NUM_RESULTS&quot;</span>    <span class="op">:</span> <span class="dv">2</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-18" title="18">  <span class="st">&quot;NUM_CATEGORIES&quot;</span> <span class="op">:</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb2-19" title="19"><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-20" title="20"><span class="op">&gt;</span> <span class="st">&quot;He found 2 results in 1 category.&quot;</span></a>
+<a class="sourceLine" id="cb2-21" title="21"></a>
+<a class="sourceLine" id="cb2-22" title="22"><span class="op">{</span></a>
+<a class="sourceLine" id="cb2-23" title="23">  <span class="st">&quot;NUM_RESULTS&quot;</span>    <span class="op">:</span> <span class="dv">2</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-24" title="24">  <span class="st">&quot;NUM_CATEGORIES&quot;</span> <span class="op">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="op">&gt;</span> <span class="st">&quot;They found 2 results in 2 categories.&quot;</span></a></code></pre>
+    </div>
+    <p>
+      There is very little that needs to be repeated (until gender modifies more
+      than one word), and there are equivalent/appropriate plural keys for every
+      single language in the CLDR database. The syntax highlighting is less than
+      ideal, but parsing a string like this gives you flexibility for your
+      messages even if you’re <em>only</em> dealing with english.
+    </p>
+    <h2 id="features">Features</h2>
+    <ul>
+      <li>Handles arbitrary nesting of pluralization and select rules.</li>
+      <li>Works on the server and the client.</li>
+      <li>
+        No i18n necessary - you can use it for just well-formed english
+        sentences. <code>UX++;</code>
+      </li>
+      <li>
+        Speed: Compiles messages to JavaScript code.
+        <ul>
+          <li>
+            This is great for speed. Message formatting is just string
+            concatenation.
+          </li>
+          <li>
+            Run a precompiler at build time and remove the need for most of the
+            library. <code>filesize--;</code>
+          </li>
+        </ul>
+      </li>
+      <li>Compatible with other languages that support MessageFormat</li>
+      <li>Very whitespace tolerant.</li>
+      <li>Supports unicode characters</li>
+      <li>
+        Most translation companies are beginning to be exposed to translations
+        like this, even if it’s not their core business.
+      </li>
+    </ul>
+    <h2 id="install">Install</h2>
+    <h3 id="node">Node</h3>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="op">&gt;</span> npm install messageformat</a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">var</span> MessageFormat <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;messageformat&#39;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="browser">Browser</h3>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode html"
+      ><code class="sourceCode html"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;/path/to/messageformat-v0.x.x.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre>
+    </div>
+    <h3 id="adding-provided-locales">Adding Provided Locales</h3>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode html"
+      ><code class="sourceCode html"><a class="sourceLine" id="cb5-1" title="1"><span class="co">&lt;!-- after the messageformat.js include, but before you need to use the locale --&gt;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;/path/to/messageformat/locales/xx_xx.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span></a></code></pre>
+    </div>
+    <p>
+      TODO:: In node, we can automatically pull in all known locales for you.
+    </p>
+    <h3 id="adding-custom-locales">Adding Custom locales</h3>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// Any time after MessageFormat is included</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="va">MessageFormat</span>.<span class="at">locale</span>[<span class="st">&quot;locale_name&quot;</span>] <span class="op">=</span> <span class="kw">function</span> () <span class="op">{</span> ... <span class="op">};</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">// Or during instantiation</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>( <span class="st">&#39;locale_name&#39;</span><span class="op">,</span> <span class="kw">function</span> () <span class="op">{</span> ... <span class="op">}</span> )<span class="op">;</span></a></code></pre>
+    </div>
+    <h2 id="tests">Tests</h2>
+    <p>These require node:</p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="op">&gt;</span> <span class="fu">make</span> test</a>
+<a class="sourceLine" id="cb7-2" title="2"></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="op">&gt;</span> <span class="fu">make</span> test-browser</a></code></pre>
+    </div>
+    <h2 id="build-time-compilation">Build Time Compilation</h2>
+    <p>
+      You <strong>really</strong> should take advantage of this. It is
+      <em>much</em> faster than parsing in real-time.
+    </p>
+    <p>
+      I will eventually release a Handlebars and Require.js (r.js) plugin to do
+      this automatically, but if you would like to output the raw javascript
+      function, the following does that:
+    </p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>(<span class="st">&quot;en&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">var</span> js_string_represenation <span class="op">=</span> <span class="va">mf</span>.<span class="at">precompile</span>(</a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="va">mf</span>.<span class="at">parse</span>(<span class="st">&quot;Your {NUM, plural, one{message} other{messages}} go here.&quot;</span>)</a>
+<a class="sourceLine" id="cb8-4" title="4">)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-5" title="5"></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co">// This returns an unnamed - unreferenced function that needs to be passed the</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="co">// MessageFormat object. See the source of `MessageFormat.compile` for more details.</span></a></code></pre>
+    </div>
+    <h3 id="the-cli-compiler">The CLI compiler</h3>
+    <p>
+      If you don’t want to compile your templates programmatically, you can use
+      the built in CLI compiler.
+    </p>
+    <p>
+      This tool is in early stage. It was tested on Linux and Windows, but if
+      you find a bug, please create an issue.
+    </p>
+    <h4 id="usage">Usage</h4>
+    <pre><code>&gt; [sudo] npm install -g messageformat
+
+&gt; messageformat
+Usage: messageformat -l [locale] [INPUT_DIR] [OUTPUT_DIR]
+
+    --locale, -l        locale to use [mandatory]
+    --inputdir, -i      directory containings messageformat files to compile       $PWD
+    --output, -o        output where messageformat will be compiled                $PWD
+    --watch, -w         watch `inputdir` for change                                false
+    --namespace, -ns    object in the browser containing the templates             window.i18n
+    --include, -I       Glob patterns for files to include in `inputdir`           **/*.json
+    --stdout, -s        Print the result in stdout instead of writing in a file    false
+    --verbose, -v       Print logs for debug                                       false</code></pre>
+    <p>
+      If your prefer looking at an example
+      <a
+        href="https://github.com/SlexAxton/messageformat.js/tree/master/example/en"
+        >go there</a
+      >.
+    </p>
+    <p>
+      <code>messageformat</code> will read every JSON files in
+      <code>inputdir</code> and compile them to <code>output</code>.
+    </p>
+    <p>
+      When using the CLI, the following commands will works exactly the same:
+    </p>
+    <pre><code>&gt; messageformat --locale en ./example/en
+&gt; messageformat --locale en ./example/en ./i18n.js
+&gt; messageformat --locale en --inputdir ./example/en --output ./i18n.js</code></pre>
+    <p>or even shorter</p>
+    <pre><code>&gt; cd example/en
+&gt; messageformat -l en</code></pre>
+    <p>You can also do it with a unix pipe</p>
+    <pre><code>&gt; messageformat -l en --stdout &gt; i18n.js</code></pre>
+    <p>
+      Take a look at the example
+      <a
+        href="https://github.com/SlexAxton/messageformat.js/tree/master/example/en"
+        >inputdir</a
+      >
+      and
+      <a
+        href="https://github.com/SlexAxton/messageformat.js/tree/master/example/en/i18n.js"
+        >output</a
+      >
+    </p>
+    <p>
+      A watch mode is available with the <code>--watch</code> or
+      <code>-w</code> option.
+    </p>
+    <h4 id="the-json-messageformat-files">The JSON messageformat files</h4>
+    <p>
+      The original JSON files are simple objects, with a key and a messageformat
+      string as value, like
+      <a href="messageformat.js/blob/master/example/en/sub/folder/plural.json"
+        >this one</a
+      >:
+    </p>
+    <pre><code>{
+  &quot;test&quot;: &quot;Your {NUM, plural, one{message} other{messages}} go here.&quot;
+}</code></pre>
+    <p>
+      The CLI walks into <code>inputdir</code> recursively so you can structure
+      your messageformat with
+      <a href="messageformat.js/tree/master/example/en">dirs and subdirs</a>.
+    </p>
+    <h4 id="in-the-browser">In the browser</h4>
+    <p>
+      Now that you have compiled your messageformat, you can use it in your
+      <a href="messageformat.js/blob/master/example/index.html">html</a> by
+      adding a <code>&lt;script src="index.js"&gt;&lt;/script&gt;</code>.
+    </p>
+    <p>
+      In the browser, the global <code>window.i18n</code> is an object
+      containing the messageformat compiled functions.
+    </p>
+    <pre><code>&gt; i18n
+Object
+  colors: Object
+    blue:   [ Function ]
+    green:  [ Function ]
+    red:    [ Function ]
+  &quot;sub/folder/plural&quot;: Object
+    test:   [ Function ]</code></pre>
+    <p>You could then use it:</p>
+    <pre><code>$(&#39;&lt;div&gt;&#39;).text( window.i18n[ &#39;sub/folder/plural&#39; ].test( { NUM: 1 } ) ).appendTo(&#39;#content&#39;);</code></pre>
+    <p>
+      The namespace <code>window.i18n</code> could be changed with the
+      <code>--namespace</code> or <code>-ns</code> option.
+    </p>
+    <p>
+      Subdirectories messageformat are available in the
+      <code>window.i18n</code> namespace, prefixed with their relative path :
+    </p>
+    <pre><code>&gt; window.i18n[&#39;sub/folder/plural&#39;]
+Object
+* test: [ Function ]</code></pre>
+    <p>
+      <code>sub/folder</code> is the path, <code>plural</code> is the name of
+      <a href="messageformat.js/blob/master/example/en/sub/folder/plural.json"
+        >the JSON file</a
+      >, <code>test</code> is the key used.
+    </p>
+    <p>
+      A working example is available
+      <a href="messageformat.js/tree/master/example">here</a>.
+    </p>
+    <h3 id="no-frills">No Frills</h3>
+    <p>
+      The most simple case of MessageFormat would involve no formatting. Just a
+      string passthrough. This sounds silly, but often it’s nice to always use
+      the same i18n system when doing translations, and not everything takes
+      variables.
+    </p>
+    <div class="sourceCode" id="cb17">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="co">// Insantiate a MessageFormat object on your locale</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>(<span class="st">&#39;en&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-3" title="3"></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="co">// Compile a message</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="kw">var</span> message <span class="op">=</span> <span class="va">mf</span>.<span class="at">compile</span>( <span class="st">&#39;This is a message.&#39;</span> )<span class="op">;</span> <span class="co">// returns a function</span></a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="co">// You can call the function to get data out</span></a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="op">&gt;</span> <span class="at">message</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-9" title="9"><span class="st">&quot;This is a message.&quot;</span></a>
+<a class="sourceLine" id="cb17-10" title="10"></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="co">// </span><span class="al">NOTE</span><span class="co">:: if a message _does_ require data to be passed in, an error is thrown if you do not.</span></a></code></pre>
+    </div>
+    <h3 id="simple-variable-replacement">Simple Variable Replacement</h3>
+    <p>
+      The second most simple way to use MessageFormat is for simple variable
+      replacement. MessageFormat looks odd at first, but it’s actually fairly
+      simple. One way to think about the <code>{</code> and <code>}</code> is
+      that every level of them bring you into and out-of
+      <code>literal</code> and <code>code</code> mode.
+    </p>
+    <p>
+      By default (like in the previous example), you are just writing a literal.
+      Then the first level of brackets brings you into one of several
+      data-driven situations. The most simple is variable replacement.
+    </p>
+    <p>
+      Simply putting a variable name in between <code>{</code> and
+      <code>}</code> will place that variable there in the output.
+    </p>
+    <div class="sourceCode" id="cb18">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="co">// Instantiate new MessageFormat object for your locale</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>(<span class="st">&#39;en&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-3" title="3"></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="co">// Compile a message</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="kw">var</span> message <span class="op">=</span> <span class="va">mf</span>.<span class="at">compile</span>(<span class="st">&#39;His name is {NAME}.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-6" title="6"></a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="co">// Then send that data into the function</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span> <span class="st">&quot;NAME&quot;</span> <span class="op">:</span> <span class="st">&quot;Jed&quot;</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="st">&quot;His name is Jed.&quot;</span></a>
+<a class="sourceLine" id="cb18-10" title="10"></a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="co">// </span><span class="al">NOTE</span><span class="co">:: it&#39;s best to try and stick to keys that would be natively</span></a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="co">//        tolerant in your JS runtimes (think valid JS variable names).</span></a></code></pre>
+    </div>
+    <h3 id="selectformat">SelectFormat</h3>
+    <p>
+      <code>SelectFormat</code> is a lot like a switch statement for your
+      messages. Most often it’s used to select gender in a string. Here’s an
+      example:
+    </p>
+    <div class="sourceCode" id="cb19">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="co">// Insantiate an instance with your language settings</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MesssageFormat</span>(<span class="st">&#39;en&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="co">// Compile a message - returns a function</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="kw">var</span> message <span class="op">=</span> <span class="va">mf</span>.<span class="at">compile</span>(<span class="st">&#39;{GENDER, select, male{He} female{She} other{They}} liked this.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-5" title="5"></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="co">// Run your message function with your data</span></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;GENDER&quot;</span> <span class="op">:</span> <span class="st">&quot;male&quot;</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-8" title="8"><span class="st">&quot;He liked this.&quot;</span></a>
+<a class="sourceLine" id="cb19-9" title="9"></a>
+<a class="sourceLine" id="cb19-10" title="10"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;GENDER&quot;</span> <span class="op">:</span> <span class="st">&quot;female&quot;</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-11" title="11"><span class="st">&quot;She liked this.&quot;</span></a>
+<a class="sourceLine" id="cb19-12" title="12"></a>
+<a class="sourceLine" id="cb19-13" title="13"><span class="co">// The &#39;other&#39; key is **required** and in the case of GENDER</span></a>
+<a class="sourceLine" id="cb19-14" title="14"><span class="co">// it should be phrased as if you are too far away to tell the gender of the subject.</span></a>
+<a class="sourceLine" id="cb19-15" title="15"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-16" title="16"><span class="st">&quot;They liked this.&quot;</span></a></code></pre>
+    </div>
+    <h3 id="pluralformat">PluralFormat</h3>
+    <p>
+      <code>PluralFormat</code> is a similar mechanism to
+      <code>SelectFormat</code> (especially syntax wise), but it’s specific to
+      numbers, and the key that is chosen is generated by a
+      <em>Plural Function</em>.
+    </p>
+    <div class="sourceCode" id="cb20">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="co">// Insantiate a new MessageFormat object</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>(<span class="st">&#39;en&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-3" title="3"></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="co">// You can use the provided locales in the `/locale` folder</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="co">// (include the file directly after including messageformat.js</span></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>( <span class="st">&#39;sl&#39;</span> )<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-7" title="7"></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="co">// OR - you can pass a custom plural function to the MessageFormat constructor function.</span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">Message</span>( <span class="st">&#39;requiredCustomName&#39;</span><span class="op">,</span> <span class="kw">function</span> (n) <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-10" title="10">  <span class="cf">if</span> ( n <span class="op">===</span> <span class="dv">42</span> ) <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-11" title="11">    <span class="cf">return</span> <span class="st">&#39;many&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb20-12" title="12">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb20-13" title="13">  <span class="cf">return</span> <span class="st">&#39;other&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb20-14" title="14"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-15" title="15"></a>
+<a class="sourceLine" id="cb20-16" title="16"><span class="co">// Then the numbers that are passed into a compiled message will run through this function to select</span></a>
+<a class="sourceLine" id="cb20-17" title="17"><span class="co">// the keys. This is for the &#39;en&#39; locale:</span></a>
+<a class="sourceLine" id="cb20-18" title="18"><span class="kw">var</span> message <span class="op">=</span> <span class="va">mf</span>.<span class="at">compile</span>(<span class="st">&#39;There {NUM_RESULTS, plural, one{is one result} other{are # results}}.&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-19" title="19"></a>
+<a class="sourceLine" id="cb20-20" title="20"><span class="co">// Then the data causes the function to output:</span></a>
+<a class="sourceLine" id="cb20-21" title="21"></a>
+<a class="sourceLine" id="cb20-22" title="22"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_RESULTS&quot;</span> <span class="op">:</span> <span class="dv">0</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-23" title="23"><span class="st">&quot;There are 0 results.&quot;</span></a>
+<a class="sourceLine" id="cb20-24" title="24"></a>
+<a class="sourceLine" id="cb20-25" title="25"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_RESULTS&quot;</span> <span class="op">:</span> <span class="dv">1</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-26" title="26"><span class="st">&quot;There is one result.&quot;</span></a>
+<a class="sourceLine" id="cb20-27" title="27"></a>
+<a class="sourceLine" id="cb20-28" title="28"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_RESULTS&quot;</span> <span class="op">:</span> <span class="dv">100</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-29" title="29"><span class="st">&quot;There are 100 results.&quot;</span></a></code></pre>
+    </div>
+    <h4 id="named-keys">Named Keys</h4>
+    <p>
+      ICU declares the 6 named keys that CLDR defines for their plural form
+      data. Those are:
+    </p>
+    <ul>
+      <li>zero</li>
+      <li>one</li>
+      <li>two</li>
+      <li>few</li>
+      <li>many</li>
+      <li>other (<strong>required</strong>)</li>
+    </ul>
+    <p>
+      All of them are fairly straight-forward, but do remember, that for some
+      languages, they are more loose “guidelines” than they are exact.
+    </p>
+    <p>
+      The only <strong>required</strong> key is <code>other</code>. Your
+      compilation will throw an error if you forget this. In english, and many
+      other languages, the logic is simple:
+    </p>
+    <p><code>If N equals 1, then ONE, otherwise OTHER</code></p>
+    <p>
+      Other languages (take a peak at <code>ar.js</code> or <code>sl.js</code>)
+      can get much more complicated.
+    </p>
+    <p>
+      <strong
+        >Remember. English only uses <code>one</code> and <code>other</code> -
+        so including <code>zero</code> will never get called, even when the
+        number is 0</strong
+      >
+    </p>
+    <p>
+      The most simple (to pluralize) languages have no pluralization rules an
+      rely solely on the <code>other</code> named key.
+    </p>
+    <pre><code>{NUM, plural,
+  zero  {There are zero - in a lang that needs it.}
+  one   {There is one - in a lang that has it.}
+  two   {There is two - in a lang that has it.}
+  few   {There are a few - in a lang that has it.}
+  many  {There are many - in a lang that has it.}
+  other {There is a different amount than all the other stuff above.}
+}</code></pre>
+    <h4 id="literal-numeric-keys">Literal Numeric Keys</h4>
+    <p>
+      There also exists the capability to put literal numbers as keys in a
+      select statement. These are delimited by prefixing them with the
+      <code>=</code> character. These will match single, specific numbers. If
+      there is a match, that branch will immediately run, and the corresponding
+      named key <strong>will not</strong> also run.
+    </p>
+    <p>
+      There are plenty of legitimate uses for this, especially when considering
+      base cases and more pleasant language. But if you’re a Douglas Adams fan,
+      might use it like so:
+    </p>
+    <pre><code>You have {NUM_TASKS, plural,
+            one {one task}
+            other {# tasks}
+            =42 {the answer to the life, the universe and everything tasks}
+         } remaining.</code></pre>
+    <p>
+      When <code>NUM_TASKS</code> is 42, this outputs smiles. Remember, these
+      have priority over the named keys.
+    </p>
+    <h3 id="pluralformat---offset-extension">
+      PluralFormat - offset extension
+    </h3>
+    <p>
+      ICU provided the ability to extend existing select and plural
+      functionality, and the only official extension (that I could find) is the
+      <code>offset</code> extension.
+    </p>
+    <p>
+      It goes after the <code>plural</code> declaration, and is used to generate
+      sentences that break up a number into multiple sections. For instance:
+    </p>
+    <blockquote>
+      <p>You and 4 others added this to their profiles.</p>
+    </blockquote>
+    <p>
+      In this case, the total number of people who added ‘this’ to their
+      profiles is actually 5. We can use the <code>offset</code> extension to
+      help us with this.
+    </p>
+    <div class="sourceCode" id="cb23">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">var</span> mf <span class="op">=</span> <span class="kw">new</span> <span class="at">MessageFormat</span>(<span class="st">&#39;en&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-2" title="2"></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="co">// For simplicity&#39;s sake, let&#39;s assume the base case here isn&#39;t silly.</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="co">// The test suite has a bigger offset example at the bottom</span></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="co">// Let&#39;s also assume neutral gender for the same reason</span></a>
+<a class="sourceLine" id="cb23-6" title="6"></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="co">// Set the offset to 1</span></a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="kw">var</span> message <span class="op">=</span> <span class="va">mf</span>.<span class="at">compile</span>(</a>
+<a class="sourceLine" id="cb23-9" title="9">  <span class="st">&#39;You {NUM_ADDS, plural, offset:1&#39;</span> <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-10" title="10">          <span class="st">&#39;=0{didnt add this to your profile}&#39;</span> <span class="op">+</span> <span class="co">// Number literals, with a `=` do **NOT** use</span></a>
+<a class="sourceLine" id="cb23-11" title="11">          <span class="st">&#39;zero{added this to your profile}&#39;</span> <span class="op">+</span>   <span class="co">//   the offset value</span></a>
+<a class="sourceLine" id="cb23-12" title="12">          <span class="st">&#39;one{and one other person added this to their profile}&#39;</span> <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-13" title="13">          <span class="st">&#39;other{and # others added this to their profiles}&#39;</span> <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-14" title="14">      <span class="st">&#39;}.&#39;</span></a>
+<a class="sourceLine" id="cb23-15" title="15">)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-16" title="16"></a>
+<a class="sourceLine" id="cb23-17" title="17"><span class="co">// Tip: I like to consider the `=` prefixed number literals as more of an &quot;inductive step&quot;</span></a>
+<a class="sourceLine" id="cb23-18" title="18"><span class="co">// e.g. in this case, since (0 - 1) is _negative_ 1, we want to handle that base case.</span></a>
+<a class="sourceLine" id="cb23-19" title="19"></a>
+<a class="sourceLine" id="cb23-20" title="20"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_ADDS&quot;</span> <span class="op">:</span> <span class="dv">0</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-21" title="21"><span class="st">&quot;You didnt add this to your profile.&quot;</span></a>
+<a class="sourceLine" id="cb23-22" title="22"></a>
+<a class="sourceLine" id="cb23-23" title="23"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_ADDS&quot;</span> <span class="op">:</span> <span class="dv">1</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-24" title="24"><span class="st">&quot;You added this to your profile.&quot;</span></a>
+<a class="sourceLine" id="cb23-25" title="25"></a>
+<a class="sourceLine" id="cb23-26" title="26"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_ADDS&quot;</span> <span class="op">:</span> <span class="dv">2</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-27" title="27"><span class="st">&quot;You and one other person added this to their profile.&quot;</span></a>
+<a class="sourceLine" id="cb23-28" title="28"></a>
+<a class="sourceLine" id="cb23-29" title="29"><span class="op">&gt;</span> <span class="at">message</span>(<span class="op">{</span><span class="st">&quot;NUM_ADDS&quot;</span> <span class="op">:</span> <span class="dv">3</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-30" title="30"><span class="st">&quot;You and 3 others added this to their profile.&quot;</span></a></code></pre>
+    </div>
+    <h3 id="nesting">Nesting</h3>
+    <p>
+      Very simply, you can nest both <code>SelectFormat</code> blocks into
+      <code>PluralFormat</code> blocks, and visa-versa, as deeply as you’d like.
+      Simply start the new block directly inside:
+    </p>
+    <pre><code>{SEL1, select,
+  other {{PLUR1, plural,
+          one {1}
+          other {{SEL2, select,
+                  other {deep in the heart.}
+                }}
+        }}
+}</code></pre>
+    <h3 id="escaping">Escaping</h3>
+    <p>
+      messageformat.js tries to a good job of being tolerant of as much as
+      possible, but some characters, like the ones used the actual MessageFormat
+      spec itself, must be escaped to be a part of your string.
+    </p>
+    <p>
+      For <code>{</code>, <code>}</code> and <code>#</code> (only inside of a
+      select value) literals, just escape them with a backslash. (If you are in
+      a JS string, you’ll need to escape the escape backslash so it’ll look like
+      two).
+    </p>
+    <div class="sourceCode" id="cb25">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb25-1" title="1"><span class="co">// Technically, it&#39;s just:</span></a>
+<a class="sourceLine" id="cb25-2" title="2"></a>
+<a class="sourceLine" id="cb25-3" title="3">\<span class="op">{</span>\<span class="op">}</span>\#</a>
+<a class="sourceLine" id="cb25-4" title="4"></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="co">// But in practice, since you&#39;re often dealing with string literals, it looks more like</span></a>
+<a class="sourceLine" id="cb25-6" title="6"></a>
+<a class="sourceLine" id="cb25-7" title="7"><span class="kw">var</span> msg <span class="op">=</span> <span class="va">mf</span>.<span class="at">compile</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">{ {S, select, other{# is a </span><span class="sc">\\</span><span class="st">#}} </span><span class="sc">\\</span><span class="st">}&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-8" title="8"></a>
+<a class="sourceLine" id="cb25-9" title="9"><span class="op">&gt;</span> <span class="at">msg</span>(<span class="op">{</span><span class="dt">S</span><span class="op">:</span><span class="dv">5</span><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-10" title="10"><span class="st">&quot;{ 5 is a # }&quot;</span></a></code></pre>
+    </div>
+    <h2 id="why-not-gettext">Why not Gettext?</h2>
+    <p>
+      Gettext can generally go only one level deep without hitting some serious
+      roadblocks. For example, two plural elements in a sentence, or the
+      combination of gender and plurals.
+    </p>
+    <h3 id="this-would-be-prohibitively-difficult-with-gettext">
+      This would be prohibitively difficult with Gettext
+    </h3>
+    <blockquote>
+      <p>He found 5 results in 2 categories.</p>
+    </blockquote>
+    <blockquote>
+      <p>She found 1 result in 1 category.</p>
+    </blockquote>
+    <blockquote>
+      <p>He found 2 results in 1 category.</p>
+    </blockquote>
+    <p>
+      It can likely be done with contexts/domains for gender and some extra
+      plural forms work to pick contexts for the plurals, but it’s less than
+      ideal. Not to mention every translation must be completed in its entirety
+      for every combination. That stinks too.
+    </p>
+    <p>
+      You can easily mix Gettext and MessageFormat by storing MessageFormat
+      strings in your .po files. However, I would stop using the built in plural
+      functions of Gettext.
+    </p>
+    <p>
+      I tend to only use Gettext on projects that are already using it in other
+      languages, so we can share translations, otherwise, I like to live on the
+      wild-side and use PluralFormat and SelectFormat.
+    </p>
+    <p>
+      Most Gettext tools will look up the Plural Forms for a given locale for
+      you. This is also the opinion of PluralFormat. The library should just
+      contain the known plural forms of every locale, and not force translators
+      to reinput this information each time.
+    </p>
+    <h2 id="version">Version</h2>
+    <p><code>0.1.8</code></p>
+    <h2 id="todo">TODO</h2>
+    <ul>
+      <li>Create a tool to help translators understand and use this format.</li>
+      <li>
+        Template integration - I specifically want to make a build time
+        handlebars.js plugin to build this logic into the template builds.
+      </li>
+    </ul>
+    <h2 id="license">License</h2>
+    <p>You may use this software under the WTFPL.</p>
+    <p>
+      You may contribute to this software under the Dojo CLA -
+      <a href="http://dojofoundation.org/about/cla" class="uri"
+        >http://dojofoundation.org/about/cla</a
+      >
+    </p>
+    <h2 id="author">Author</h2>
+    <ul>
+      <li>
+        Alex Sexton -
+        <span class="citation" data-cites="SlexAxton">[@SlexAxton]</span
+        >(http://twitter.com/SlexAxton) -
+        <a href="http://alexsexton.com/" class="uri">http://alexsexton.com/</a>
+      </li>
+    </ul>
+    <h2 id="major-contributors">Major Contributors</h2>
+    <ul>
+      <li>
+        Eemeli Aro -
+        <span class="citation" data-cites="eemeli">[@eemeli]</span
+        >(https://github.com/eemeli)
+      </li>
+    </ul>
+    <h2 id="credits">Credits</h2>
+    <p>Thanks to:</p>
+    <ul>
+      <li>
+        <a href="https://github.com/Bazaarvoice">Bazaarvoice</a> - my employer -
+        for letting me do cool stuff like this.
+      </li>
+      <li>
+        Google has an implementation that is similar in Google Closure, I tried
+        to vet my code against many of their tests.
+      </li>
+      <li>Norbert Lindenberg for showing me how good it can be.</li>
+    </ul>
+  </body>
+</html>

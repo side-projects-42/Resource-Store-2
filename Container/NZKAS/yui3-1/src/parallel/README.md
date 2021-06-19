@@ -15,4 +15,3 @@ A concurrent parallel processor to help in running several async functions.
     stack.done(function() {
         Y.log('All IO requests complete!');
     });
-

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Readme</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="simple-bdd-for-ios">Simple BDD for iOS</h1>
+<p><a href="https://travis-ci.org/kiwi-bdd/Kiwi"><img src="https://travis-ci.org/kiwi-bdd/Kiwi.svg?branch=master" alt="Build Status" /></a></p>
+<p>Kiwi is a Behavior Driven Development library for iOS development. The goal is to provide a BDD library that is exquisitely simple to setup and use.</p>
+<h2 id="why">Why?</h2>
+<p>The idea behind Kiwi is to have tests that are more readable than what is possible with the bundled test framework.</p>
+<p>Tests (or rather specs) are written in Objective-C and run within the comfort of Xcode to provide a test environment that is as unobtrusive and seamless as possible in terms of running tests and error reporting.</p>
+<p>Specs look like this:</p>
+<pre><code>describe(@&quot;Team&quot;, ^{
+    context(@&quot;when newly created&quot;, ^{
+        it(@&quot;has a name&quot;, ^{
+            id team = [Team team];
+            [[team.name should] equal:@&quot;Black Hawks&quot;];
+        });
+
+        it(@&quot;has 11 players&quot;, ^{
+            id team = [Team team];
+            [[[team should] have:11] players];
+        });
+    });
+});</code></pre>
+<h2 id="documentation">Documentation</h2>
+<p>The <a href="https://github.com/kiwi-bdd/Kiwi/wiki">Kiwi Wiki</a> is the official documentation source.</p>
+<h2 id="getting-it">Getting it</h2>
+<p>The best way to get Kiwi is by using <a href="https://github.com/cocoapods/cocoapods">CocoaPods</a>. For all the installation details, check out the <a href="https://github.com/kiwi-bdd/Kiwi/wiki">Wiki</a></p>
+<h2 id="support">Support</h2>
+<p>For all the questions / suggestions you have, that aren’t bug reports please use our <a href="https://groups.google.com/forum/#!forum/kiwi-bdd">Google Group</a></p>
+</body>
+</html>

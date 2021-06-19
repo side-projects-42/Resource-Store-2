@@ -1,28 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      var foo = "fooValue";
-
-      Function.prototype.bind = function () {
-        throw ":P";
-      };
-
-      function test() {
-        InspectorTest.evaluateInConsole("foo", step1);
-
-        function step1() {
-          InspectorTest.dumpConsoleMessages();
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that overriding Function.prototype.bind does not break inspector.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-bind-fake</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that overriding Function.prototype.bind does not break inspector.</p>
+</body>
 </html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DOCUMENTATION</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h2 id="documentation">Documentation</h2>
+<p>You can see below the API reference of this module.</p>
+<h3 id="githubcalendarcontainer-username-options"><code>GitHubCalendar(container, username, options)</code></h3>
+<p>Brings the contributions calendar from GitHub (provided username) into your page.</p>
+<h4 id="params">Params</h4>
+<ul>
+<li><strong>String|HTMLElement</strong> <code>container</code>: The calendar container (query selector or the element itself).</li>
+<li><strong>String</strong> <code>username</code>: The GitHub username.</li>
+<li><strong>Object</strong> <code>options</code>: An object containing the following fields:
+<ul>
+<li><code>summary_text</code> (String): The text that appears under the calendar (defaults to: <code>"Summary of pull requests, issues opened, and commits made by &lt;username&gt;"</code>).</li>
+<li><code>proxy</code> (Function): A function that receives as argument the username (string) and should return a promise resolving the HTML content of the contributions page. The default is using <span class="citation" data-cites="Bloggify">@Bloggify</span>’s APIs.</li>
+<li><code>global_stats</code> (Boolean): If <code>false</code>, the global stats (total, longest and current streaks) will not be calculated and displayed. By default this is enabled.</li>
+<li><code>responsive</code> (Boolean): If <code>true</code>, the graph is changed to scale with the container. Custom CSS should be applied to the element to scale it appropriately. By default this is disabled.</li>
+<li><code>tooltips</code> (Boolean): If <code>true</code>, tooltips will be shown when hovered over calendar days. By default this is disabled.</li>
+<li><code>cache</code> (Number) The cache time in seconds.</li>
+</ul></li>
+</ul>
+<h4 id="return">Return</h4>
+<ul>
+<li><strong>Promise</strong> A promise returned by the <code>fetch()</code> call.</li>
+</ul>
+</body>
+</html>

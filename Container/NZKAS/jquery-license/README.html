@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="jquery-foundation-license-verification">
+      jQuery Foundation License Verification
+    </h1>
+    <p>
+      This module audits jQuery Foundation repositories to ensure that all
+      commits have appropriate licensing either via the
+      <a href="http://contribute.jquery.org/CLA/">CLA</a> or the CAA. This can
+      be run either as a full audit against a given branch of a repository or to
+      verify all commits within a pull request. The latter can be done
+      automatically with a webhook.
+    </p>
+    <p>
+      To manually check a PR, set up a <code>config.json</code> with your
+      <code>githubToken</code> (next section), then run the audir-pr script (see
+      PR Auditing below).
+    </p>
+    <h2 id="config">Config</h2>
+    <p>
+      The Auditing scripts require some configuration. Create a
+      <code>config.json</code> in the root of this module with the following
+      properties:
+    </p>
+    <ul>
+      <li>
+        <code>owner</code> (default: <code>"jquery"</code>): Which GitHub
+        user/organization to audit. When running jquery-license as a webhook
+        server, this property can be specified as an array of strings instead of
+        a single string, to check pull requests against multiple owners/orgs.
+      </li>
+      <li>
+        <code>repoDir</code> (default: <code>"repos"</code>): Which directory to
+        clone repositories into.
+      </li>
+      <li>
+        <code>outputDir</code> (default: <code>"output"</code>): Which directory
+        to store PR results into.
+        <ul>
+          <li>
+            Results for all PR checks are stored, whether run through the web
+            hook or through the <code>jquery-audit-pr</code> binary.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <code>githubToken</code>: A
+        <a
+          href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/"
+          >GitHub access token</a
+        >
+        used for setting the commit status. Used for the manual PR audit and
+        webhook.
+      </li>
+    </ul>
+    <h3 id="webhook-config">Webhook config</h3>
+    <p>The following properties only apply when running the webhook:</p>
+    <ul>
+      <li><code>port</code> (default: 8000): Which port to listen on.</li>
+      <li>
+        <code>signatureRefresh</code> (default: 60,000): How often to fetch new
+        CLA signatures.
+      </li>
+    </ul>
+    <h2 id="adding-a-new-orgrepository">Adding a new org/repository</h2>
+    <ol type="1">
+      <li>
+        Add the organization name to the <code>owner</code> array in
+        <code>config.json</code>
+      </li>
+      <li>
+        Set up the Webhook in the Settings page of the GitHub org or repo:
+        <ul>
+          <li>
+            Payload URL is the URL to the Webhook server run by
+            <code>bin/server.js</code>
+          </li>
+          <li>
+            Content-type should be
+            <code>application/x-www-form-urlencoded</code>
+          </li>
+          <li>Secret is empty</li>
+          <li>Event types is “Pull request”</li>
+        </ul>
+      </li>
+      <li>
+        Grant jquerybot write access to all the repositories that you want to
+        apply CLA checks to
+      </li>
+    </ol>
+    <h2 id="debugging">Debugging</h2>
+    <p>
+      The <a href="https://www.npmjs.org/package/debug">debug</a> module is used
+      for debug messages. To enable all debugging, run any script with
+      <code>DEBUG=*</code>. You may want to exclude the GitHub requests since
+      they’re large and noisy; to do so use <code>DEBUG=*,-github:*</code>.
+    </p>
+    <p>The following debug names are used:</p>
+    <ul>
+      <li>
+        <code>config</code>: Prints out the config values that are being used.
+      </li>
+      <li>
+        <code>signatures</code>: Prints out messages from the signatures module.
+      </li>
+      <li>
+        <code>repo:{repo-name}</code>: Prints out messages from the repo module.
+      </li>
+      <li>
+        <code>github:{request-id}</code>: Prints out all requests through the
+        GitHub API. The request ID allows you to correlate requests and
+        responses.
+      </li>
+      <li>
+        <code>audit:{repo}-{pr}</code>: Prints out messages from the PR audit
+        module.
+      </li>
+      <li>
+        <code>server</code>: Prints out messages from the web hook server.
+      </li>
+    </ul>
+    <h2 id="branch-auditing">Branch Auditing</h2>
+    <p>
+      The main export of this module is a function which audits a single branch
+      from a single repository. The signature is as follows:
+    </p>
+    <p><code>function( options )</code></p>
+    <ul>
+      <li>
+        <code>options</code> (Object): Settings for the audit.
+        <ul>
+          <li>
+            <code>repo</code> (String): The name of the repository to audit.
+          </li>
+          <li>
+            <code>branch</code> (String; default: <code>"master"</code>): The
+            name of the branch to audit.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Returns <code>Promise</code>
+        <ul>
+          <li>
+            <code>data</code>: Object containing audit information.
+            <ul>
+              <li>
+                <code>commits</code> (Array): An array of all commits that were
+                audited. Each commit object contains <code>hash</code>,
+                <code>name</code>, and <code>email</code> properties.
+              </li>
+              <li>
+                <code>neglectedCommits</code> (Array): An array of all commits
+                that aren’t licensed.
+              </li>
+              <li>
+                <code>neglectedAuthors</code> (Array): An array of all authors
+                that haven’t signed a license agreement. Each author object
+                contains <code>email</code> and <code>commits</code> properties,
+                with the <code>commits</code> property containing an array of
+                SHAs.
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <p>
+      This module also exposes a binary named
+      <code>jquery-audit-branch</code> which just passes its arguments on to the
+      main export for auditing a branch. The usage is as follows:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">jquery-audit-branch</span> <span class="op">&lt;</span>repo<span class="op">&gt;</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="ex">./bin/audit-branch.js</span> <span class="op">&lt;</span>repo<span class="op">&gt;</span> <span class="op">&lt;</span>branch<span class="op">&gt;</span></a></code></pre>
+    </div>
+    <h2 id="pr-auditing">PR Auditing</h2>
+    <p>
+      The webhook server can be run via <code>npm start</code> and will listen
+      to pull request hooks for all repositories. The webhook will set the
+      commit status based on the results of the audit. On every PR
+      synchronization, all commits in the PR are checked.
+    </p>
+    <p>
+      This module also exposes a binary named <code>jquery-audit-pr</code> which
+      performs a manual audit of a PR. The usage is as follows:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">jquery-audit-pr</span> <span class="op">&lt;</span>repo<span class="op">&gt;</span> <span class="op">&lt;</span>pr<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="co"># or</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="ex">./bin/audit-pr.js</span> <span class="op">&lt;</span>repo<span class="op">&gt;</span> <span class="op">&lt;</span>pr<span class="op">&gt;</span></a></code></pre>
+    </div>
+    <p>
+      Make sure to create a <code>config.json</code> with the
+      <code>githubToken</code> property (see above).
+    </p>
+    <h3 id="exceptions">Exceptions</h3>
+    <p>
+      While we strive to have proper licensing for all commits, many projects
+      contain contributions that were made prior to the existence of the CLA.
+      When we can’t track down the contributors and get them to sign the CLA, we
+      can exclude those commits from the audits by listing them as exceptions.
+    </p>
+    <p>
+      <strong
+        >Exceptions should only be used for trivial changes or code that has
+        since been removed from the repository.</strong
+      >
+    </p>
+    <p>
+      To mark a commit as an exception, add an entry to the appropriate file in
+      the <code>exceptions</code> directory. The file name must match the
+      repository name and every SHA listed as an exception must be accompanied
+      by a comment explaining why the commit is viable for exclusion from
+      audits.
+    </p>
+    <h3 id="manual-committer-name-verification">
+      Manual committer name verification
+    </h3>
+    <p>
+      To manually verify the name of a committer, in the associated CLA
+      spreadsheet, simply enter a comment in the “Name Confirmation” field
+      describing why the name is valid.
+    </p>
+  </body>
+</html>

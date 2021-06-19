@@ -1,9 +1,6 @@
 # This gem has been DEPRECATED
 
-This code was meant to be a convenience wrapper on ActiveResource classes
-to provide a nice resource based API. It's based on an older version
-of our API's. Since then we've created a much richer REST API with complete
-documentation and examples.
+This code was meant to be a convenience wrapper on ActiveResource classes to provide a nice resource based API. It’s based on an older version of our API’s. Since then we’ve created a much richer REST API with complete documentation and examples.
 
 Here are some references for version 2 of our REST API:
 

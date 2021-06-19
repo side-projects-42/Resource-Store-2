@@ -1,88 +1,25 @@
-# Bubble Chart
+Bubble Chart
+============
 
-```js chart-editor
-// <block:setup:2>
-const DATA_COUNT = 16;
-const MIN_XY = -150;
-const MAX_XY = 100;
-Utils.srand(110);
+\`\`\`js chart-editor // const DATA\_COUNT = 16; const MIN\_XY = -150; const MAX\_XY = 100; Utils.srand(110);
 
-const actions = [
-  {
-    name: "Randomize",
-    handler(chart) {
-      chart.data.datasets.forEach((dataset) => {
-        dataset.data = generateData();
-      });
-      chart.update();
-    },
-  },
-];
-// </block:setup>
+const actions = \[ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = generateData(); }); chart.update(); }, },\]; //
 
-// <block:data:1>
-function generateData() {
-  var data = [];
-  var i;
+// function generateData() { var data = \[\]; var i;
 
-  for (i = 0; i < DATA_COUNT; ++i) {
-    data.push({
-      x: Utils.rand(MIN_XY, MAX_XY),
-      y: Utils.rand(MIN_XY, MAX_XY),
-      v: Utils.rand(0, 1000),
-    });
-  }
+for (i = 0; i &lt; DATA\_COUNT; ++i) { data.push({ x: Utils.rand(MIN\_XY, MAX\_XY), y: Utils.rand(MIN\_XY, MAX\_XY), v: Utils.rand(0, 1000), }); }
 
-  return data;
-}
+return data; }
 
-const data = {
-  datasets: [
-    {
-      data: generateData(),
-    },
-    {
-      data: generateData(),
-    },
-  ],
-};
-// </block:data>
+const data = { datasets: \[ { data: generateData(), }, { data: generateData(), }, \], }; //
 
-// <block:options:0>
-function channelValue(x, y, values) {
-  return x < 0 && y < 0
-    ? values[0]
-    : x < 0
-    ? values[1]
-    : y < 0
-    ? values[2]
-    : values[3];
-}
+// function channelValue(x, y, values) { return x &lt; 0 && y &lt; 0 ? values\[0\] : x &lt; 0 ? values\[1\] : y &lt; 0 ? values\[2\] : values\[3\]; }
 
-function colorize(opaque, context) {
-  var value = context.raw;
-  var x = value.x / 100;
-  var y = value.y / 100;
-  var r = channelValue(x, y, [250, 150, 50, 0]);
-  var g = channelValue(x, y, [0, 50, 150, 250]);
-  var b = channelValue(x, y, [0, 150, 150, 250]);
-  var a = opaque ? 1 : (0.5 * value.v) / 1000;
+function colorize(opaque, context) { var value = context.raw; var x = value.x / 100; var y = value.y / 100; var r = channelValue(x, y, \[250, 150, 50, 0\]); var g = channelValue(x, y, \[0, 50, 150, 250\]); var b = channelValue(x, y, \[0, 150, 150, 250\]); var a = opaque ? 1 : (0.5 \* value.v) / 1000;
 
-  return "rgba(" + r + "," + g + "," + b + "," + a + ")";
-}
+return “rgba(” + r + “,” + g + “,” + b + “,” + a + “)”; }
 
-const config = {
-  type: "bubble",
-  data: data,
-  options: {
-    aspectRatio: 1,
-    plugins: {
-      legend: false,
-      tooltip: false,
-    },
-    elements: {
-      point: {
-        backgroundColor: colorize.bind(null, false),
+const config = { type: “bubble”, data: data, options: { aspectRatio: 1, plugins: { legend: false, tooltip: false, }, elements: { point: { backgroundColor: colorize.bind(null, false),
 
         borderColor: colorize.bind(null, true),
 
@@ -107,12 +44,7 @@ const config = {
         },
       },
     },
-  },
-};
-// </block:options>
 
-module.exports = {
-  actions,
-  config,
-};
-```
+}, }; //
+
+module.exports = { actions, config, }; \`\`\`

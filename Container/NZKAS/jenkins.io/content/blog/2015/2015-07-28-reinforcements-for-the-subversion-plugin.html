@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2015-07-28-reinforcements-for-the-subversion-plugin</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p><em>This is a guest post by Manuel Recena Soto (aka recena).</em></p>
+    <p>
+      Users of the plug-in know that it has undergone
+      <a
+        href="https://wiki.jenkins-ci.org/display/JENKINS/Subversion+Plugin#SubversionPlugin-ChangeLog"
+        >very important changes</a
+      >
+      in the last two years.
+    </p>
+    <p>
+      Unfortunately, some of these changes resulted in regressions for some
+      users that weren’t properly addressed in subsequent releases. Many users
+      were therefore forced to keep using an older release of the plugin to keep
+      their instances running.
+    </p>
+    <p>
+      To fix this difficult situation I’ve decided to dedicate my spare time to
+      improving the plug-in and attempting to restore the stability that an
+      essential plug-in like this requires.
+    </p>
+    <p>
+      In order to do so, <a href="https://github.com/recena/">me</a>, my
+      colleague <a href="https://github.com/christ66">Steven Christou</a> and
+      other members of the community have drawn up a plan.
+    </p>
+    <p>In the coming weeks we will be focusing our efforts on:</p>
+    <ul>
+      <li>
+        Going through the Jira tickets
+        <ul>
+          <li>Checking whether they are duplicated</li>
+          <li>Checking whether they are still relevant</li>
+          <li>Asking for more information from the people who reported them</li>
+          <li>Establishing their priority</li>
+        </ul>
+      </li>
+      <li>Reviewing pull requests</li>
+      <li>Investigating bug reports and try to reproduce them</li>
+      <li>Fixing serious bugs</li>
+      <li>Refactoring the plugin to improve its maintainability.</li>
+    </ul>
+    <p>
+      We’re planning to publish a new 2.5.x bugfix release once a fortnight. We
+      are not considering the inclusion of new features or improvements. The
+      priority now must be to obtain a stable and reliable plug-in, one that
+      will allow us to take things up again in the future with greater security
+      and peace of mind.
+    </p>
+    <p><em>Interested in helping? Just send us a message!</em></p>
+  </body>
+</html>

@@ -1,167 +1,32 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: mIRC mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<link rel="stylesheet" href="../../theme/twilight.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="mirc.js"></script>
-<style>
-  .CodeMirror {
-    border: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">mIRC</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>mIRC mode</h2>
-  <form>
-    <textarea id="code" name="code">
-;AKA Nick Tracker by Ford_Lawnmower irc.GeekShed.net #Script-Help
-;*****************************************************************************;
-;**Start Setup
-;Change JoinDisplay, below, for On Join AKA Display. On = 1 - Off = 0
-alias -l JoinDisplay { return 1 }
-;Change MaxNicks, below, to the number of nicknames you want to store for each hostmask. I wouldn't go over 400 with this ;/
-alias -l MaxNicks { return 20 }
-;Change AKALogo, below, To the text you want displayed before each AKA result.
-alias -l AKALogo { return 06 05A06K07A 06 }
-;**End Setup
-;*****************************************************************************;
-On *:Join:#: {
-  if ($nick == $me) { .timer 1 1 ialupdateCheck $chan }
-  NickNamesAdd $nick $+($network,$wildsite)
-  if ($JoinDisplay) { .timerNickNames $+ $nick 1 2 NickNames.display $nick $chan $network $wildsite }
-}
-on *:Nick: { NickNamesAdd $newnick $+($network,$wildsite) $nick }
-alias -l NickNames.display {
-  if ($gettok($hget(NickNames,$+($3,$4)),0,126) > 1) {
-    echo -g $2 $AKALogo $+(09,$1) $AKALogo 07 $mid($replace($hget(NickNames,$+($3,$4)),$chr(126),$chr(44)),2,-1)
-  }
-}
-alias -l NickNamesAdd {
-  if ($hget(NickNames,$2)) {
-    if (!$regex($hget(NickNames,$2),/~\Q $+ $replacecs($1,\E,\E\\E\Q) $+ \E~/i)) {
-      if ($gettok($hget(NickNames,$2),0,126) <= $MaxNicks) {
-        hadd NickNames $2 $+($hget(NickNames,$2),$1,~)
-      }
-      else {
-        hadd NickNames $2 $+($mid($hget(NickNames,$2),$pos($hget(NickNames,$2),~,2)),$1,~)
-      }
-    }
-  }
-  else {
-    hadd -m NickNames $2 $+(~,$1,~,$iif($3,$+($3,~)))
-  }
-}
-alias -l Fix.All.MindUser {
-  var %Fix.Count = $hfind(NickNames,/[^~]+[0-9]{4}~/,0,r).data
-  while (%Fix.Count) {
-    if ($Fix.MindUser($hget(NickNames,$hfind(NickNames,/[^~]+[0-9]{4}~/,%Fix.Count,r).data))) {
-      echo -ag Record %Fix.Count - $v1 - Was Cleaned
-      hadd NickNames $hfind(NickNames,/[^~]+[0-9]{4}~/,%Fix.Count,r).data $v1
-    }
-    dec %Fix.Count
-  }
-}
-alias -l Fix.MindUser { return $regsubex($1,/[^~]+[0-9]{4}~/g,$null) }
-menu nicklist,query {
-  -
-  .AKA
-  ..Check $$1: {
-    if ($gettok($hget(NickNames,$+($network,$address($1,2))),0,126) > 1) {
-      NickNames.display $1 $active $network $address($1,2)
-    }
-    else { echo -ag $AKALogo $+(09,$1) 07has not been known by any other nicknames while I have been watching. }
-  }
-  ..Cleanup $$1:hadd NickNames $+($network,$address($1,2)) $fix.minduser($hget(NickNames,$+($network,$address($1,2))))
-  ..Clear $$1:hadd NickNames $+($network,$address($1,2)) $+(~,$1,~)
-  ..AKA Search Dialog:dialog $iif($dialog(AKA_Search),-v,-m) AKA_Search AKA_Search
-  -
-}
-menu status,channel {
-  -
-  .AKA
-  ..AKA Search Dialog:dialog $iif($dialog(AKA_Search),-v,-m) AKA_Search AKA_Search
-  ..Clean All Records:Fix.All.Minduser
-  -
-}
-dialog AKA_Search {
-  title "AKA Search Engine"
-  size -1 -1 206 221
-  option dbu
-  edit "", 1, 8 5 149 10, autohs
-  button "Search", 2, 163 4 32 12
-  radio "Search HostMask", 4, 61 22 55 10
-  radio "Search Nicknames", 5, 123 22 56 10
-  list 6, 8 38 190 169, sort extsel vsbar
-  button "Check Selected", 7, 67 206 40 12
-  button "Close", 8, 160 206 38 12, cancel
-  box "Search Type", 3, 11 17 183 18
-  button "Copy to Clipboard", 9, 111 206 46 12
-}
-On *:Dialog:Aka_Search:init:*: { did -c $dname 5 }
-On *:Dialog:Aka_Search:Sclick:2,7,9: {
-  if ($did == 2) && ($did($dname,1)) {
-    did -r $dname 6
-    var %search $+(*,$v1,*), %type $iif($did($dname,5).state,data,item), %matches = $hfind(NickNames,%search,0,w). [ $+ [ %type ] ]
-    while (%matches) {
-      did -a $dname 6 $hfind(NickNames,%search,%matches,w). [ $+ [ %type ] ]
-      dec %matches
-    }
-    did -c $dname 6 1
-  }
-  elseif ($did == 7) && ($did($dname,6).seltext) { echo -ga $AKALogo 07 $mid($replace($hget(NickNames,$v1),$chr(126),$chr(44)),2,-1) }
-  elseif ($did == 9) && ($did($dname,6).seltext) { clipboard $mid($v1,$pos($v1,*,1)) }
-}
-On *:Start:{
-  if (!$hget(NickNames)) { hmake NickNames 10 }
-  if ($isfile(NickNames.hsh)) { hload  NickNames NickNames.hsh }
-}
-On *:Exit: { if ($hget(NickNames)) { hsave NickNames NickNames.hsh } }
-On *:Disconnect: { if ($hget(NickNames)) { hsave NickNames NickNames.hsh } }
-On *:Unload: { hfree NickNames }
-alias -l ialupdateCheck {
-  inc -z $+(%,ialupdateCheck,$network) $calc($nick($1,0) / 4)
-  ;If your ial is already being updated on join .who $1 out.
-  ;If you are using /names to update ial you will still need this line.
-  .who $1
-}
-Raw 352:*: {
-  if ($($+(%,ialupdateCheck,$network),2)) haltdef
-  NickNamesAdd $6 $+($network,$address($6,2))
-}
-Raw 315:*: {
-  if ($($+(%,ialupdateCheck,$network),2)) haltdef
-}
-
-</textarea
-    >
-  </form>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      theme: "twilight",
-      lineNumbers: true,
-      matchBrackets: true,
-      indentUnit: 4,
-      mode: "text/mirc",
-    });
-  </script>
-
-  <p><strong>MIME types defined:</strong> <code>text/mirc</code>.</p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: mIRC mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">mIRC</a></li>
+</ul>
+<h2 id="mirc-mode">mIRC mode</h2>
+<p>;AKA Nick Tracker by Ford_Lawnmower irc.GeekShed.net #Script-Help ;*****************************************************************************; ;**Start Setup ;Change JoinDisplay, below, for On Join AKA Display. On = 1 - Off = 0 alias -l JoinDisplay { return 1 } ;Change MaxNicks, below, to the number of nicknames you want to store for each hostmask. I wouldn’t go over 400 with this ;/ alias -l MaxNicks { return 20 } ;Change AKALogo, below, To the text you want displayed before each AKA result. alias -l AKALogo { return 06 05A06K07A 06 } ;**End Setup ;*****************************************************************************; On *:Join:#: { if ($nick == $me) { .timer 1 1 ialupdateCheck $chan } NickNamesAdd $nick <span class="math inline"> + (</span>network,<span class="math inline"><em>w</em><em>i</em><em>l</em><em>d</em><em>s</em><em>i</em><em>t</em><em>e</em>)<em>i</em><em>f</em>(</span>JoinDisplay) { .timerNickNames $+ $nick 1 2 NickNames.display $nick $chan $network $wildsite } } on *:Nick: { NickNamesAdd $newnick <span class="math inline"> + (</span>network,$wildsite) <span class="math inline">$nick } alias -l NickNames.display { if ($</span>gettok(<span class="math inline"><em>h</em><em>g</em><em>e</em><em>t</em>(<em>N</em><em>i</em><em>c</em><em>k</em><em>N</em><em>a</em><em>m</em><em>e</em><em>s</em>,</span>+($3,$4)),0,126) &gt; 1) { echo -g $2 $AKALogo $+(09,$1) $AKALogo 07 <span class="math inline"><em>m</em><em>i</em><em>d</em>(</span>replace(<span class="math inline"><em>h</em><em>g</em><em>e</em><em>t</em>(<em>N</em><em>i</em><em>c</em><em>k</em><em>N</em><em>a</em><em>m</em><em>e</em><em>s</em>,</span>+($3,<span class="math inline">4)),</span>chr(126),<span class="math inline">$chr(44)),2,-1) } } alias -l NickNamesAdd { if ($</span>hget(NickNames,<span class="math inline">$2)) { if (!$</span>regex($hget(NickNames,$2),/~\Q $+ $replacecs($1,\E,\E\\E\Q) <span class="math inline">$+ \\E~/i)) { if ($</span>gettok($hget(NickNames,$2),0,126) &lt;= $MaxNicks) { hadd NickNames $2 <span class="math inline"> + (</span>hget(NickNames,$2),$1,~) } else { hadd NickNames $2 <span class="math inline"> + (</span>mid($hget(NickNames,<span class="math inline">2),</span>pos($hget(NickNames,$2),<sub>,2)),$1,</sub>) } } } else { hadd -m NickNames $2 $+(<sub>,<span class="math inline">1, ,</span>iif(<span class="math inline">3,</span>+($3,</sub>))) } } alias -l Fix.All.MindUser { var %Fix.Count = <span class="math inline">$hfind(NickNames,/\[^~\]+\[0-9\]{4}~/,0,r).data while (%Fix.Count) { if ($</span>Fix.MindUser(<span class="math inline"><em>h</em><em>g</em><em>e</em><em>t</em>(<em>N</em><em>i</em><em>c</em><em>k</em><em>N</em><em>a</em><em>m</em><em>e</em><em>s</em>,</span>hfind(NickNames,/[^<sub>]+[0-9]{4}</sub>/,%Fix.Count,r).data))) { echo -ag Record %Fix.Count - $v1 - Was Cleaned hadd NickNames $hfind(NickNames,/[^<sub>]+[0-9]{4}</sub>/,%Fix.Count,r).data $v1 } dec %Fix.Count } } alias -l Fix.MindUser { return $regsubex(<span class="math inline">$1,/\[^~\]+\[0-9\]{4}~/g,$</span>null) } menu nicklist,query { - .AKA ..Check <br /><span class="math display">$$1: { if ($gettok($hget(NickNames,$+($network,$address($1,2))),0,126) &amp;gt; 1) { NickNames.display $1 $active $network $address($1,2) } else { echo -ag $AKALogo $+(09,$1) 07has not been known by any other nicknames while I have been watching. } } ..Cleanup $$</span><br />1:hadd NickNames <span class="math inline"> + (</span>network,$address($1,2)) <span class="math inline"><em>f</em><em>i</em><em>x</em>.<em>m</em><em>i</em><em>n</em><em>d</em><em>u</em><em>s</em><em>e</em><em>r</em>(</span>hget(NickNames,<span class="math inline"> + (</span>network,$address($1,2)))) ..Clear $$1:hadd NickNames <span class="math inline"> + (</span>network,$address($1,2)) $+(<sub>,$1,</sub>) ..AKA Search Dialog:dialog <span class="math inline"><em>i</em><em>i</em><em>f</em>(</span>dialog(AKA_Search),-v,-m) AKA_Search AKA_Search - } menu status,channel { - .AKA ..AKA Search Dialog:dialog <span class="math inline"><em>i</em><em>i</em><em>f</em>(</span>dialog(AKA_Search),-v,-m) AKA_Search AKA_Search ..Clean All Records:Fix.All.Minduser - } dialog AKA_Search { title “AKA Search Engine” size -1 -1 206 221 option dbu edit "“, 1, 8 5 149 10, autohs button”Search“, 2, 163 4 32 12 radio”Search HostMask“, 4, 61 22 55 10 radio”Search Nicknames“, 5, 123 22 56 10 list 6, 8 38 190 169, sort extsel vsbar button”Check Selected“, 7, 67 206 40 12 button”Close“, 8, 160 206 38 12, cancel box”Search Type“, 3, 11 17 183 18 button”Copy to Clipboard", 9, 111 206 46 12 } On *:Dialog:Aka_Search:init:*: { did -c <span class="math inline">$dname 5 } On \*:Dialog:Aka\_Search:Sclick:2,7,9: { if ($</span>did == 2) &amp;&amp; (<span class="math inline"><em>d</em><em>i</em><em>d</em>(</span>dname,1)) { did -r $dname 6 var %search <span class="math inline">$+(\*,$</span>v1,*), %type <span class="math inline"><em>i</em><em>i</em><em>f</em>(</span>did($dname,5).state,data,item), %matches = $hfind(NickNames,%search,0,w). [ $+ [ %type ] ] while (%matches) { did -a $dname 6 $hfind(NickNames,%search,%matches,w). [ $+ [ %type ] ] dec %matches } did -c <span class="math inline">$dname 6 1 } elseif ($</span>did == 7) &amp;&amp; (<span class="math inline"><em>d</em><em>i</em><em>d</em>(</span>dname,6).seltext) { echo -ga $AKALogo 07 <span class="math inline"><em>m</em><em>i</em><em>d</em>(</span>replace(<span class="math inline"><em>h</em><em>g</em><em>e</em><em>t</em>(<em>N</em><em>i</em><em>c</em><em>k</em><em>N</em><em>a</em><em>m</em><em>e</em><em>s</em>,</span>v1),<span class="math inline"><em>c</em><em>h</em><em>r</em>(126),</span>chr(44)),2,-1) } elseif (<span class="math inline">$did == 9) &amp;&amp; ($</span>did($dname,6).seltext) { clipboard <span class="math inline"><em>m</em><em>i</em><em>d</em>(</span>v1,<span class="math inline"><em>p</em><em>o</em><em>s</em>(</span>v1,*,1)) } } On *:Start:{ if (!<span class="math inline"><em>h</em><em>g</em><em>e</em><em>t</em>(<em>N</em><em>i</em><em>c</em><em>k</em><em>N</em><em>a</em><em>m</em><em>e</em><em>s</em>))<em>h</em><em>m</em><em>a</em><em>k</em><em>e</em><em>N</em><em>i</em><em>c</em><em>k</em><em>N</em><em>a</em><em>m</em><em>e</em><em>s</em>10<em>i</em><em>f</em>(</span>isfile(NickNames.hsh)) { hload NickNames NickNames.hsh } } On *:Exit: { if (<span class="math inline">$hget(NickNames)) { hsave NickNames NickNames.hsh } } On \*:Disconnect: { if ($</span>hget(NickNames)) { hsave NickNames NickNames.hsh } } On *:Unload: { hfree NickNames } alias -l ialupdateCheck { inc -z <span class="math inline"> + (</span>network) <span class="math inline"><em>c</em><em>a</em><em>l</em><em>c</em>(</span>nick($1,0) / 4) ;If your ial is already being updated on join .who $1 out. ;If you are using /names to update ial you will still need this line. .who <span class="math inline">$1 } Raw 352:\*: { if ($</span>(<span class="math inline"> + (</span>network),2)) haltdef NickNamesAdd $6 <span class="math inline"> + (</span>network,$address(<span class="math inline">$6,2)) } Raw 315:\*: { if ($</span>(<span class="math inline"> + (</span>network),2)) haltdef }</p>
+<p><strong>MIME types defined:</strong> <code>text/mirc</code>.</p>
+</body>
+</html>

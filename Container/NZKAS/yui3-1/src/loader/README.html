@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="yui-loader">YUI Loader</h1>
+<p>Processes dependencies and dynamically loads script and css for YUI and external modules.</p>
+<h2 id="development">Development</h2>
+<p>The Loader build provides a Makefile for easy building. The Makefile contains the following targets:</p>
+<ul>
+<li><code>all</code> - Runs <code>build</code> then <code>test</code> (the default)</li>
+<li><code>build</code> - A passthrough to <code>ant all</code> (requires nodejs and python)</li>
+<li><code>meta</code> - Runs the <code>scripts/meta_join.py</code> to build the meta data (requires python)</li>
+<li><code>check</code> - Runs the <code>scripts/meta_check.js</code> to check meta-data for inconsistencies (requires nodejs)</li>
+<li><code>test</code> - Runs a series of NodeJS based CLI tests (requires nodejs with yuitest installed)</li>
+<li><code>gallery</code> - Fetches and updates the meta-data with the latest gallery build (requires nodejs)</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<pre><code>npm -g i yuitest</code></pre>
+<p>There is one set of automated CLI tests that can be run with <code>make test</code>. This will do a simple <code>Loader</code> call for a module and then check the Loader’s <code>sorted</code> array for that module. A very simple smoke test to determine if Loader is functioning properly.</p>
+<p>There is an advanced test under <code>tests/server</code>. This test will attempt to load every yui3 module from one of these places:</p>
+<ul>
+<li><code>STATIC</code> local static files</li>
+<li><code>COMBO</code> local combo handler</li>
+<li><code>LOADER</code> local combo handle after fetching loader</li>
+<li><code>STAR</code> use star <code>YUI().use('*')</code> with a dynamic script generated on the server</li>
+<li><code>RLS</code> A local RLS server (not supported until YLS is released)</li>
+</ul>
+<p>To run these tests, <code>cd tests/server</code></p>
+<pre><code>npm -g i yui3 express combohandler
+
+export STAR=1; ./server.js
+export LOCAL=1; export STAR=1; ./server.js
+export LOCAL=1; export STAR=1; export COMBO=1; ./server.js
+export LOCAL=1; export STAR=1; export COMBO=1; export LOADER=1; ./server.js #The normal test to run
+export LOCAL=1; export STAR=1; export COMBO=1; export RLS=1; ./server.js
+export LOCAL=1; export STAR=1; export COMBO=1; export LOADER=1; export RLS=1; ./server.js</code></pre>
+</body>
+</html>

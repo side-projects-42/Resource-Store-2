@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p><img src="http://www.cocos2d-x.org/attachments/801/cocos2dx_portrait.png" width="200" /></p>
+<h1 id="cocos2d-x">cocos2d-x</h1>
+<table style="width:96%;">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 13%" />
+<col style="width: 17%" />
+<col style="width: 10%" />
+<col style="width: 13%" />
+<col style="width: 20%" />
+<col style="width: 10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+</th>
+<th>
+iOS
+</th>
+<th>
+Mac
+</th>
+<th>
+Linux
+</th>
+<th>
+Win32
+</th>
+<th>
+Android
+</th>
+<th>
+Tizen
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+v3
+</td>
+<td>
+<a href="http://45.56.80.45:8080/job/daily-build-v3/node=ios"><img src="http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=ios" alt="Build Status" /></a>
+</td>
+<td>
+<a href="http://45.56.80.45:8080/job/daily-build-v3/node=mac"><img src="http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=mac" alt="Build Status" /></a>
+</td>
+<td>
+<a href="http://45.56.80.45:8080/job/daily-build-v3/node=linux"><img src="http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=linux" alt="Build Status" /></a>
+</td>
+<td>
+<a href="http://45.56.80.45:8080/job/daily-build-v3/node=win32_bak"><img src="http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=win32_bak" alt="Build Status" /></a>
+</td>
+<td>
+<a href="http://45.56.80.45:8080/job/daily-build-v3/node=android"><img src="http://45.56.80.45:8080/buildStatus/icon?job=daily-build-v3/node=android" alt="Build Status" /></a>
+</td>
+<td>
+<a href="http://45.56.80.45:8080/job/tizen-daily-build/node=tizen_mac/"><img src="http://45.56.80.45:8080/buildStatus/icon?job=tizen-daily-build/node=tizen_mac" alt="Build Status" /></a>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a href="http://www.cocos2d-x.org" title="cocos2d-x">cocos2d-x</a> is a multi-platform framework for building 2d games, interactive books, demos and other graphical applications. It is based on <a href="http://www.cocos2d-iphone.org" title="cocos2d for iPhone">cocos2d-iphone</a>, but instead of using Objective-C, it uses C++. It works on iOS, Android, Tizen, Windows Phone and Store Apps, OS X, Windows, Linux and Web platforms.</p>
+<p><strong>Cocos2d-x Framework Architecture</strong>:</p>
+<p><img src="docs/framework_architecture.jpg" /></p>
+<p>cocos2d-x is:</p>
+<ul>
+<li>Fast</li>
+<li>Free</li>
+<li>Easy to use</li>
+<li>Community supported</li>
+</ul>
+<h2 id="git-user-attention">Git user attention</h2>
+<ol type="1">
+<li><p>Clone the repo from GitHub.</p>
+<pre><code>  $ git clone https://github.com/cocos2d/cocos2d-x.git</code></pre></li>
+<li><p>After cloning the repo, please execute <code>download-deps.py</code> to download and install dependencies.</p>
+<pre><code>  $ cd cocos2d-x
+  cocos2d-x $ python download-deps.py</code></pre></li>
+<li><p>After running <code>download-deps.py</code>.</p>
+<pre><code>  cocos2d-x $ git submodule update --init</code></pre></li>
+</ol>
+<h2 id="download-stable-versions">Download stable versions</h2>
+<ul>
+<li><a href="http://www.cocos2d-x.org/download">Cocos2d-x stable versions</a></li>
+<li><a href="http://www.cocos2d-x.org/filecenter/jsbuilder">Cocos2d-JS Lite version</a></li>
+</ul>
+<h2 id="how-to-start-a-new-game">How to start a new game</h2>
+<ol type="1">
+<li>Download the code from <a href="http://www.cocos2d-x.org/download/version#Cocos2d-x">cocos2d download site</a></li>
+<li>Run <code>setup.py</code></li>
+<li>Run the <code>cocos</code> script</li>
+</ol>
+<p>Example:</p>
+<pre><code>$ cd cocos2d-x
+$ ./setup.py
+$ source FILE_TO_SAVE_SYSTEM_VARIABLE
+$ cocos new MyGame -p com.your_company.mygame -l cpp -d NEW_PROJECTS_DIR
+$ cd NEW_PROJECTS_DIR/MyGame</code></pre>
+<p>You can also create a JS project or Lua project with <code>-l js</code> or <code>-l lua</code>.</p>
+<h3 id="build-and-run-a-new-project-for-android">Build and run a new project for Android</h3>
+<pre><code>$ cocos run -p android -j 4</code></pre>
+<h3 id="build-and-run-a-new-project-for-ios">Build and run a new project for iOS</h3>
+<pre><code>$ cocos run -p ios</code></pre>
+<h3 id="build-and-run-a-new-project-for-osx">Build and run a new project for OSX</h3>
+<pre><code>$ cocos run -p mac</code></pre>
+<h3 id="build-and-run-a-new-project-for-tizen">Build and run a new project for Tizen</h3>
+<p>There are two ways to build and run Tizen project:</p>
+<ul>
+<li><p>use cocos console(can not work on 32-bit Windows currently)</p>
+<pre><code>cocos run -p tizen</code></pre></li>
+<li><p>use Tizen IDE, can refer to <a href="http://cocos2d-x.org/docs/installation/Tizen/index.html">this doc</a> for detail usage</p></li>
+</ul>
+<h3 id="build-and-run-a-new-project-for-linux">Build and run a new project for Linux</h3>
+<p>If you never run cocos2d-x on Linux, you need to install all dependencies by the script in <strong>cocos2d/build/install-deps-linux.sh</strong></p>
+<pre><code>$ cd cocos2d-x/build
+$ ./install-deps-linux.sh</code></pre>
+<p>Then</p>
+<pre><code>$ cd NEW_PROJECTS_DIR/MyGame
+$ cocos run -p linux</code></pre>
+<p>Run</p>
+<pre><code>$ bin/MyGame</code></pre>
+<h3 id="build-and-run-new-project-for-win32">Build and run new project for win32</h3>
+<pre><code>$ cocos run -p win32</code></pre>
+<h3 id="build-and-run-new-project-for-windows-8.110.0-and-windows-phone-8.110.0">Build and run new project for Windows 8.1/10.0 and Windows Phone 8.1/10.0</h3>
+<pre><code>$ cocos new MyGame -p com.your_company.mygame -l cpp -d projects</code></pre>
+<ul>
+<li><p>Visual Studio 2013 Update 4 or later is required for Windows 8.1 Universal Apps</p></li>
+<li><p>Visual Studio 2015 (Release version) and Windows 10.0 (Release version) are required for Windows 10.0 Universal Windows Platform (UWP) Apps. RC versions of Visual Studio and Windows 10 are no longer supported.</p></li>
+</ul>
+<p>Starting with Cocos2d-x v3.3, you can create Windows 8.1 Universal Apps (Windows Store and Windows Phone 8.1). Starting with Cocos2d-x v3.8 you can create Windows 10.0 UWP Apps (Windows Store and Windows Phone 10.0). Starting with Cocos2d-x v3.6 there will no longer be support for Windows Phone 8.0.</p>
+<p>See more info on how to install and create games on Windows RT (Windows and Windows Phone 8.1) at http://msopentech.github.io/cocos2d-x/</p>
+<h3 id="build-and-run-new-project-for-web">Build and run new project for web</h3>
+<p>Only JS project can be published to web platforms, so you will need to create a JS project first:</p>
+<pre><code>$ cocos new -l js WebGame</code></pre>
+<p>Then you can run your game in a web browser:</p>
+<pre><code>$ cocos run -p web</code></pre>
+<p>Or you can publish your game to <code>publish/html5/</code> folder:</p>
+<pre><code>$ cocos run -p web -m release [--advanced]</code></pre>
+<h2 id="documentations-and-samples">Documentations and samples</h2>
+<ul>
+<li><a href="http://cocos2d-x.org/docs/">All Docs in a single place!</a></li>
+<li><a href="http://cocos2d-x.org/docs/api-ref/index.html">Online API Reference</a> <em>Note that Cocos2d-x, Cocos2d-JS and Cocos Creator have different API set</em></li>
+<li><a href="http://cocos2d-x.org/docs/programmers-guide/2/index.html">Programmers Guide</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md">Latest Release Note</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG">Changelog</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x-samples">Cocos2d sample games</a> <em>More samples will be added in v3.8</em></li>
+</ul>
+<h2 id="main-features">Main features</h2>
+<ul>
+<li>Scene management (workflow)</li>
+<li>Transitions between scenes</li>
+<li>Sprites and Sprite Sheets</li>
+<li>Effects: Lens, Ripple, Waves, Liquid, etc.</li>
+<li>Actions (behaviours):
+<ul>
+<li>Transformation Actions: Move, Rotate, Scale, Fade, Tint, etc.</li>
+<li>Composable actions: Sequence, Spawn, Repeat, Reverse</li>
+<li>Ease Actions: Exp, Sin, Cubic, Elastic, etc.</li>
+<li>Misc actions: CallFunc, OrbitCamera, Follow, Tween</li>
+</ul></li>
+<li>Basic menus and buttons</li>
+<li>Integrated with physics engines: <a href="http://www.box2d.org" title="Box2D">Box2d</a> and <a href="http://www.chipmunk-physics.net" title="Chipmunk2D">Chipmunk</a></li>
+<li>Particle system</li>
+<li>Skeleton Animations: <a href="http://esotericsoftware.com/" title="http://esotericsoftware.com/">Spine</a> and Armature support</li>
+<li>Fonts:
+<ul>
+<li>Fast font rendering using Fixed and Variable width fonts</li>
+<li>Support for .ttf fonts</li>
+</ul></li>
+<li>Tile Map support: Orthogonal, Isometric and Hexagonal</li>
+<li>Parallax scrolling</li>
+<li>Motion Streak</li>
+<li>Render To Texture</li>
+<li>Touch/Accelerometer on mobile devices</li>
+<li>Touch/Mouse/Keyboard on desktop</li>
+<li>Sound Engine support (CocosDenshion library) based on OpenAL</li>
+<li>Integrated Slow motion/Fast forward</li>
+<li>Fast and compressed textures: PVR compressed and uncompressed textures, ETC1 compressed textures, and more</li>
+<li>Resolution Independent</li>
+<li>Language: C++, with Lua and JavaScript bindings</li>
+<li>Open Source Commercial Friendly(MIT): Compatible with open and closed source projects</li>
+<li>OpenGL ES 2.0 (mobile) / OpenGL 2.1 (desktop) based</li>
+</ul>
+<h2 id="build-requirements">Build Requirements</h2>
+<ul>
+<li>Mac OS X 10.7+, Xcode 7+</li>
+<li>or Ubuntu 12.10+, CMake 2.6+</li>
+<li>or Windows 7+, VS 2013+</li>
+<li>Python 2.7.5</li>
+<li>NDK r11+ is required to build Android games</li>
+<li>Android Studio 2.3+ to build Android games</li>
+<li>Tizen SDK 2.3+ is required to build Tizen games</li>
+<li>Windows Phone/Store 10.0 VS 2015</li>
+<li>JRE or JDK 1.6+ is required for web publishing</li>
+</ul>
+<h2 id="runtime-requirements">Runtime Requirements</h2>
+<ul>
+<li>iOS 7.0+ for iPhone / iPad games</li>
+<li>Android 2.3.3+ for Android games</li>
+<li>Tizen 2.3+ or 2.4+ for Tizen games</li>
+<li>Windows 10.0 for Windows Phone/Store 10.0 games</li>
+<li>OS X v10.9+ for Mac games</li>
+<li>Windows 7+ for Win games</li>
+<li>Modern browsers and IE 9+ for web games</li>
+</ul>
+<h2 id="running-tests">Running Tests</h2>
+<p>Select the test you want from Xcode Scheme chooser.</p>
+<ul>
+<li>Cocos Console</li>
+</ul>
+<!-- -->
+<pre><code>// Enter cpp test folder
+cd tests/cpp-tests
+// Or enter js test folder
+cd tests/js-tests
+// Or enter lua test folder
+cd tests/lua-tests
+
+// Compile or run test case
+cocos compile -p ios|mac|android|win32|win8_1|metro|web -m debug|release
+cocos run -p ios|mac|android|win32|win8_1|metro|web -m debug|release</code></pre>
+<ul>
+<li>For OS X / iOS</li>
+</ul>
+<!-- -->
+<pre><code>$ cd cocos2d-x/build
+$ open cocos2d_tests.xcodeproj</code></pre>
+<ul>
+<li>For Linux</li>
+</ul>
+<!-- -->
+<pre><code>$ cd cocos2d-x/build
+$ ./install-deps-linux.sh
+$ cmake ..
+$ make</code></pre>
+<p>Run Samples</p>
+<pre><code>$ bin/cpp-empty-test/cpp-empty-test
+or
+$ bin/lua-empty-test/lua-empty-test
+
+  You may meet building errors when building libGLFW.so. It is because libGL.so directs to an error target,
+  you should make it to direct to a correct one. `install-deps-linux.sh` only has to be run once.</code></pre>
+<ul>
+<li>For Windows</li>
+</ul>
+<p>Open the <code>cocos2d-x/build/cocos2d-win32.sln</code></p>
+<ul>
+<li>For Windows 8.1 Universal Apps (Phone and Store)</li>
+</ul>
+<p>Open the <code>cocos2d-x/build/cocos2d-win8.1-universal.sln</code></p>
+<ul>
+<li>For Windows 10.0 Universal Windows Platform (UWP) Apps (Phone and Store)</li>
+</ul>
+<p>Open the <code>cocos2d-x/build/cocos2d-win10.sln</code></p>
+<ul>
+<li>For Android</li>
+</ul>
+<!-- -->
+<pre><code>$ cd cocos2d-x/build
+$ python ./android-build.py cpp-empty-test -p 13
+$ adb install ../tests/cpp-empty-test/proj.android/bin/CppEmptyTest-debug.apk</code></pre>
+<p>Then click item on Android device to run tests. Available value of <code>-p</code> is the API level, cocos2d-x supports from level 13.</p>
+<ul>
+<li>For Tizen</li>
+</ul>
+<p>Please refer to this <a href="http://cocos2d-x.org/docs/installation/Tizen/index.html">guide</a>.</p>
+<h2 id="learning-resources">Learning Resources</h2>
+<ul>
+<li><a href="http://cocos2d-x.org/docs/programmers-guide/2/index.html">Programmers Guide</a></li>
+<li><a href="https://www.youtube.com/user/sonarsystemslimited/search?query=cocos2d-x">Sonar Systems Videos</a></li>
+<li><a href="https://developer.android.com/guide/components/fundamentals.html">Android Fundamentals</a></li>
+<li><a href="https://www.makeschool.com/tutorials/">Make School Tutorials</a></li>
+<li><a href="http://www.gamefromscratch.com/page/Cocos2d-x-CPP-Game-Programming-Tutorial-Series.aspx">Games From Scratch</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x-samples">Cocos2d sample games</a></li>
+</ul>
+<h2 id="spreading-the-word">Spreading the word!</h2>
+<p>You can help us spread the word about cocos2d-x! We would surely appreciate it!</p>
+<ul>
+<li>Talk about us on Facebook! Our <a href="https://www.facebook.com/cocos2dx/">Facebook Page</a></li>
+<li>Tweet, Tweet! Our <a href="https://twitter.com/cocos2dx">Twitter</a></li>
+<li>Read our <a href="http://blog.cocos2d-x.org/">Blog</a> and promote it on your social media.</li>
+<li>Become a <a href="http://discuss.cocos2d-x.org/t/we-need-regional-coordinators/24104">Regional Coordinator</a></li>
+</ul>
+<h2 id="see-what-we-are-planning">See what we are planning!</h2>
+<p>You can see exactly what we are planning to do with the Cocos family of products.</p>
+<ul>
+<li><a href="https://trello.com/b/Np6obnuE/cocos2d-x-roadmap">Cocos2d-x roadmap</a></li>
+</ul>
+<h2 id="where-to-get-help">Where to get help</h2>
+<ul>
+<li><a href="http://discuss.cocos2d-x.org">Forums</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x/issues">Bug Tracker</a></li>
+<li>IRC. We are in <a href="https://webchat.freenode.net/">Freenode</a> in the <em>#cocos2d</em> channel</li>
+<li><code>cpp-tests</code> project. This project is our basis for testing. Use this project to learn how we implement the functionality of the engine. This project is located in <strong>cocos2d-x_root/build.</strong></li>
+<li><a href="http://cocos2d-x.org/docs/api-ref/index.html">API Reference</a>.</li>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/docs/RELEASE_NOTES.md">Latest Release Note</a></li>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/CHANGELOG">Changelog</a></li>
+</ul>
+<h2 id="contributing-to-the-project">Contributing to the Project</h2>
+<p>Cocos2d-x is licensed under the <a href="https://opensource.org/licenses/MIT">MIT License</a>. We welcome participation!</p>
+<p>Did you find a bug? Do you have feature request? Do you want to merge a feature?</p>
+<ul>
+<li><a href="https://github.com/cocos2d/cocos2d-x/blob/v3/CONTRIBUTING.md">contributing to cocos2d-x</a></li>
+</ul>
+<h2 id="contact-us">Contact us</h2>
+<ul>
+<li>Forum: <a href="http://discuss.cocos2d-x.org" class="uri">http://discuss.cocos2d-x.org</a></li>
+<li>Twitter: <a href="http://www.twitter.com/cocos2dx" class="uri">http://www.twitter.com/cocos2dx</a></li>
+<li>Weibo: <a href="http://t.sina.com.cn/cocos2dx" class="uri">http://t.sina.com.cn/cocos2dx</a></li>
+<li>IRC: <a href="https://webchat.freenode.net/" class="uri">https://webchat.freenode.net/</a> (#cocos2d and #cocos2d-x channels)</li>
+</ul>
+</body>
+</html>

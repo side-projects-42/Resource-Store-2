@@ -1,368 +1,49 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4432</title>
-  </head>
-  <body>
-    <h1>
-      N4432 Editor's Report -- Working Draft, Standard for Programming Language
-      C++
-    </h1>
-
-    <p>
-      2015-04-10 <br />
-      Richard Smith <br />
-      Google Inc <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>Special thanks to Jonathan Wakely for providing many editorial fixes.</p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New Papers</h2>
-
-    <ul>
-      <li>N4431 is the current working draft. It replaces N4296.</li>
-      <li>N4432 is this Editor's Report for the current working draft.</li>
-    </ul>
-
-    <h3>Notable Changes to Issues and Papers as Moved</h3>
-
-    <p>No motions have been voted into the working draft since N4296.</p>
-
-    <h3>Other Notable Editorial Changes:</h3>
-
-    <p>
-      2013-04 CWG motion 4 moved that the proposed resolution of CWG1531 be
-      adopted. However, due to an oversight, the motion stated that the
-      resolution be taken from N3539 (which contains no wording for this issue)
-      instead of the intended N3674. As a result, no modification was made to
-      the standard for this issue. As the changes are editorial in nature, and
-      the intent of the committee is clear, this Working Draft incorporates the
-      changes for CWG1531 specified in N3674.
-    </p>
-
-    <p>
-      A bug has been fixed that resulted in cross-references to definitions (in
-      [intro.defs] and [definitions]) missing the final number from their
-      section.
-    </p>
-
-    <h2>Minor Editorial Fixes</h2>
-
-    <p>A log of all editorial fixes made since N4296 is below:</p>
-
-    <pre><code>commit 47bd8e96cf0528cab40c467cf65da25e7bd70bf5
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4432</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4432-editors-report-working-draft-standard-for-programming-language-c">N4432 Editor’s Report – Working Draft, Standard for Programming Language C++</h1>
+<p>2015-04-10<br />
+Richard Smith<br />
+Google Inc<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Jonathan Wakely for providing many editorial fixes.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New Papers</h2>
+<ul>
+<li>N4431 is the current working draft. It replaces N4296.</li>
+<li>N4432 is this Editor’s Report for the current working draft.</li>
+</ul>
+<h3 id="notable-changes-to-issues-and-papers-as-moved">Notable Changes to Issues and Papers as Moved</h3>
+<p>No motions have been voted into the working draft since N4296.</p>
+<h3 id="other-notable-editorial-changes">Other Notable Editorial Changes:</h3>
+<p>2013-04 CWG motion 4 moved that the proposed resolution of CWG1531 be adopted. However, due to an oversight, the motion stated that the resolution be taken from N3539 (which contains no wording for this issue) instead of the intended N3674. As a result, no modification was made to the standard for this issue. As the changes are editorial in nature, and the intent of the committee is clear, this Working Draft incorporates the changes for CWG1531 specified in N3674.</p>
+<p>A bug has been fixed that resulted in cross-references to definitions (in [intro.defs] and [definitions]) missing the final number from their section.</p>
+<h2 id="minor-editorial-fixes">Minor Editorial Fixes</h2>
+<p>A log of all editorial fixes made since N4296 is below:</p>
+<pre><code>commit 47bd8e96cf0528cab40c467cf65da25e7bd70bf5
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Apr 9 13:23:27 2015 -0700
 
-    Add back redundant 'of arithmetic type' requirement at request of lib-37799.
+    Add back redundant &#39;of arithmetic type&#39; requirement at request of lib-37799.
 
 commit 8866e4d6d43bc4b7456852e64a2838681a9c77d3
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Apr 8 19:13:26 2015 -0700
 
-    CWG1531 Definition of "access" (verb)
+    CWG1531 Definition of &quot;access&quot; (verb)
 
     This was supposed to be moved by 201304 CWG motion 4, but that motion
     referred to N3539, which did not have wording for this issue, so it
@@ -387,9 +68,9 @@ commit f961a9bed91a875108aa8c31a8dc6f14378b645d
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Apr 8 12:02:15 2015 -0700
 
-    [c.math] Fix use of undefined term "arithmetic argument" to the intended "argument of arithmetic type".
+    [c.math] Fix use of undefined term &quot;arithmetic argument&quot; to the intended &quot;argument of arithmetic type&quot;.
 
-    Remove the resulting "of arithmetic type" in two places where the type
+    Remove the resulting &quot;of arithmetic type&quot; in two places where the type
     is constrained to be a specific arithmetic type later in the same
     sentence.
 
@@ -397,7 +78,7 @@ commit c40cc1478a486ff5bc69bb4bb0184bca2aa901bc
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Apr 8 11:51:39 2015 -0700
 
-    [basic.fundamental] Fix misleading and miscapitalized "that is" in footnote.
+    [basic.fundamental] Fix misleading and miscapitalized &quot;that is&quot; in footnote.
 
 commit f4cb613217ea77ebbc2ee91bd3bb55e00043dd89
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -459,7 +140,7 @@ commit 5dc7260ff4192beedf708dc45c9ba915daedaba1
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Mon Mar 30 10:39:42 2015 +0100
 
-    [futures.async] Use American English spelling of "behavior"
+    [futures.async] Use American English spelling of &quot;behavior&quot;
 
     Fixes #463.
 
@@ -469,14 +150,14 @@ Date:   Sat Mar 7 03:38:14 2015 -0500
 
     Correct link in basic_ostream::flush() description
 
-    flush() "Behaves as an unformatted output function", but the link is to [ostream.formatted.reqmts]. Should link to [ostream.unformatted] like others in the same section.
+    flush() &quot;Behaves as an unformatted output function&quot;, but the link is to [ostream.formatted.reqmts]. Should link to [ostream.unformatted] like others in the same section.
 
 commit 5599ece8d063beab627a983aada25cfbdb1eeac7
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Fri Feb 27 15:51:20 2015 +0000
 
-    [unique.ptr], [func.require] Remove hyphens from "lvalue-reference"
-    and "rvalue-reference".
+    [unique.ptr], [func.require] Remove hyphens from &quot;lvalue-reference&quot;
+    and &quot;rvalue-reference&quot;.
 
     Fixes #446.
 
@@ -505,7 +186,7 @@ commit ff1809d09d24895bd19b4ef5a886893dc0fcb3f4
 Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
 Date:   Thu Jan 15 22:20:29 2015 +0800
 
-    [temp.deduct] Correct "void ()(const int, int[5])"
+    [temp.deduct] Correct &quot;void ()(const int, int[5])&quot;
 
 commit e1fffe915cd926bcc810e0a0f4c5bf91d51ff222
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -519,7 +200,7 @@ commit 6168263c640b1c93aedc1d174a46ef7b57b0f423
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Dec 18 10:33:56 2014 -0800
 
-    [dcl.spec.auto] Add implied word "trailing-return-type" to clarify the
+    [dcl.spec.auto] Add implied word &quot;trailing-return-type&quot; to clarify the
     meaning of this sentence.
 
 commit 9099ef8515e45d8751e9d400ca206f755e8cdbed
@@ -538,7 +219,7 @@ commit 8b86d944c43c2cdf7e1784f9002d5bb544eb17d4
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sat Dec 13 23:58:36 2014 +0000
 
-    [{i,o}stream.manip] Remove redundant "namespace std"
+    [{i,o}stream.manip] Remove redundant &quot;namespace std&quot;
 
 commit 668cad579f3fe748e717594ffdda7de7c2e0f41e
 Author: Foo Bar &lt;tkoeppe@google.com&gt;
@@ -550,7 +231,7 @@ commit ac5c5dc798052fc5a080cdd9893de31bf0447065
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Dec 9 17:22:21 2014 -0800
 
-    [dcl.fct] Format '...' in fixed-width font in the grammar and when it's
+    [dcl.fct] Format &#39;...&#39; in fixed-width font in the grammar and when it&#39;s
     later referred to in the text.
 
 commit bbd976ee7671481ef56521ded59a6bb3f12ba3bf
@@ -559,7 +240,7 @@ Date:   Sat Dec 6 18:56:19 2014 +0800
 
     [expr.sizeof] redundant wording
 
-    "an enumeration type whose underlying type is not fixed before all its enumerators have been declared" is an incomplete type.
+    &quot;an enumeration type whose underlying type is not fixed before all its enumerators have been declared&quot; is an incomplete type.
 
 commit 5e4fe90be52ddebf0314b4d98837408910a895b9
 Author: Mitsuru Kariya &lt;kariya_mitsuru@hotmail.com&gt;
@@ -611,7 +292,6 @@ Date:   Wed Nov 19 23:48:49 2014 +0000
 
     [func.wrap.func.inv] Add missing semi-colon.
 
-    Reported by Stephan T. Lavavej. Fixes #408.
-</code></pre>
-  </body>
+    Reported by Stephan T. Lavavej. Fixes #408.</code></pre>
+</body>
 </html>

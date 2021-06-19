@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-24</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-02-24">FastBoot Meeting Notes 2016-02-24</h1>
+<h2 id="attendees">Attendees</h2>
+<p>Ivan Kobza, Tom Dale, Ron White, Dan McClain, Miguel Camba, Terence Lee</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li>[x] Last week AI recap
+<ul>
+<li>[x] <span class="citation" data-cites="cibernox">@cibernox</span> to contact <span class="citation" data-cites="krisselden">@krisselden</span> on es6 support</li>
+<li>[x] <span class="citation" data-cites="ronco">@ronco</span> to continue working on fastboot filtering</li>
+<li>[x] <span class="citation" data-cites="cibernox">@cibernox</span> Decide if <code>ember-fastboot-test-helpers</code> should be framework agnostic (like <code>ember-test-helpers</code>) and have <code>ember-fastboot-qunit</code> and <code>ember-fastboot-mocha</code> with specific flavours. Right now focusing only on qunit.</li>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to expose <code>_request</code> on FastBoot</li>
+<li>[x] <span class="citation" data-cites="ef4">@ef4</span> to design API for “session” service that uses cookies to sync stateful info across browser and FastBoot server</li>
+<li>[x] <span class="citation" data-cites="ronco">@ronco</span> to add automated testing for <code>ember-cli-head</code></li>
+<li>[x] <span class="citation" data-cites="cibernox">@cibernox</span> will try to create generic harness for FastBoot extracted from ember-power-select</li>
+<li>[x] <span class="citation" data-cites="krati">@krati</span> to update sandbox adapter PR</li>
+</ul></li>
+<li>[x] Mode specific initializers</li>
+<li>[x] Heroku</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>RW: Can’t automatically filter <code>treeForApp</code> because it’s scoped per addon. I will continue working on an exported Broccoli filter.</p>
+<p>MC: I have a proof of concept working. See http://quick.as/qa5rc9zkk for an example screencast. <code>ember fastboot:test</code> starts a server, calls the build task to build tests, and calls a runner file that requires all of the individual tests.</p>
+<p>MC: I am just focusing on QUnit. Will keep other testing libraries in mind.</p>
+<p>TD: https://github.com/tildeio/ember-cli-fastboot/pull/121</p>
+<p>https://github.com/ember-fastboot/ember-fastboot-server/pull/19</p>
+<p>MC: WIP PR of the test harness: https://github.com/cibernox/ember-cli-fastboot/pull/1</p>
+<p>EF: We need some way to put placeholders for ads since we’ll never be able to render those in FastBoot (probably).</p>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] <span class="citation" data-cites="ronco">@ronco</span> to keep working on initializer filtering</li>
+<li>[ ] <span class="citation" data-cites="ef4">@ef4</span> to design session service API, <span class="citation" data-cites="tomdale">@tomdale</span> will help</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> will merge cookie PR and release new version</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> will add “set cookie” API</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to provide <span class="citation" data-cites="hone02">@hone02</span> with people that have sample FastBoot apps</li>
+<li>[ ] Jeff, <span class="citation" data-cites="hone02">@hone02</span>, <span class="citation" data-cites="ronco">@ronco</span> and others to help us fill out https://github.com/tildeio/ember-cli-fastboot/issues/100</li>
+<li>[ ] Design API for deferring FastBoot flush to the server (via pushing promises to the service, or something else)
+<ul>
+<li>[ ] Take into account that you should probably wait for the next render after the asynchrony</li>
+</ul></li>
+</ul>
+</body>
+</html>

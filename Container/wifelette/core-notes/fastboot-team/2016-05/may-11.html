@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>may-11</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-05-11">FastBoot Meeting Notes 2016-05-11</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Please add yourself.</em></p>
+<p>Tom Dale, Dan McClain, Ron White, Patrick Fisher, Arjan Singh, Krati Ahuja, Robert Jackson, Marco Otte-Witte, Hassan Abdel-Rahman</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li><p>[ ] Last Week’s Action Items</p>
+<ul>
+<li>[x] <span class="citation" data-cites="kratiahuja">@kratiahuja</span> to report on whether there is a significant performance regression 0.12 -&gt; Node 4</li>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to cut a new release with https://github.com/tildeio/htmlbars/pull/455</li>
+<li>[ ] <span class="citation" data-cites="rwjblue">@rwjblue</span> to write up constraints around steps to integrate <code>ember-cli-head</code> into <code>ember-cli</code></li>
+<li>[x] <span class="citation" data-cites="danmcclain">@danmcclain</span> to deprecate <code>doc.title</code> prior to betas</li>
+</ul></li>
+<li>[x] Serializing server-side data for the client</li>
+<li>[x] Add version info to FastBoot package</li>
+<li>[x] Config in meta</li>
+<li><p>[x] Consensus on Redirect implementation</p></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><p>Discussed at core-team: Going to write all FB stuff in a node 4 compat way, then convert to node 0.12 compat with babel at publish time</p>
+<ul>
+<li>Babel transpiled can be faster</li>
+</ul></li>
+<li>RJ: Working on ember-cli-head into ember-cli</li>
+<li>doc.title dep landed in 0.7.4</li>
+<li><p>Rename branch landed over weekend</p>
+<ul>
+<li>express middleware is on beta 3</li>
+<li><p>No beta branches yet - RJ: Do 3 branch method after 1.0 release</p></li>
+<li><p>ember-cli-fastboot - 1.0 beta not released yet (Travis needs to pass) - https://github.com/ember-fastboot/ember-cli-fastboot/pull/190 needs to land prior to 1.0 beta</p></li>
+</ul></li>
+<li><p>Serialization server side</p>
+<ul>
+<li><p>Need to take state on the server and have the same state on the browser render - example: Randomization on server and client</p></li>
+<li>If you want state to be preserved between each render, put the data into the html and parse on client side</li>
+<li><p>Core vs Addon - Seems important enough that many addons will want to take advantage of it</p></li>
+<li><p>CSP issues with script tags (custom type) - May want to confirm inline scripts CSP header. Alternative is to use <code> block too</p></li>
+<li>Meta tags have a limit on length</li>
+<li>By adding a cache, we need deal with coordinating keys with service</li>
+<li><p>Have separate `</p></li>
+</ul></li>
+</ul>
+</body>
+</html>

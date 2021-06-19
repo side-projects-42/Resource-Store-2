@@ -1,0 +1,15 @@
+--- :layout: post :title: Confluence migration this weekend :nodeid: 536 :created: 1428386888 :tags: - infrastructure - news :author: kohsuke ---
+
+[  
+![](http://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/GMC_U-Haul_truck_front_1.JPG/320px-GMC_U-Haul_truck_front_1.JPG)  
+](http://en.wikipedia.org/wiki/Structure_relocation)
+
+For the past few weeks, I've burnt a lot of midnight oil to [get Confluence containerized](https://github.com/jenkins-infra/confluence). The goal is to make Confluence upgrade more manageable and testable. In the proces, I've not only containerized Confluence, but also containerized [some other services](https://github.com/jenkins-infra/confluence-cache), including [mock LDAP server](https://github.com/jenkins-infra/mock-ldap), to be able to test the copy of the production Confluence dataset against newer versions of Confluence before upgrading production.
+
+The infra team is currently [targeting this weekend](http://lists.jenkins-ci.org/pipermail/jenkins-infra/2015-April/000292.html) to migrate our current Confluence instance to this new container, and use the opportunity to move the service to a bigger system. Currently JIRA and Confluence has to live within 2.5GB RAM from the same host, and it's really stretching both services. The new box has 4GB of RAM, and we are splitting JIRA and Confluence to two different servers. So there's a lot of head room.
+
+So please expect some Wiki outage over the next weekend.
+
+As always, our sincere thank you to [Oregon State University Open Source Lab](http://osuosl.org/) for generously hosting our servers. Please donate to them to show your support. Similarly, thank you [Atlassian](http://atlassian.com/) for generously providing the license for running Confluence.
+
+If this goes well, JIRA will follow suit.

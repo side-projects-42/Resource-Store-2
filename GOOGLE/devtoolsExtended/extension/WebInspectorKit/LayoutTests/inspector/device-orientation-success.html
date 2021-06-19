@@ -1,46 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      var mockAlpha = 1.1;
-      var mockBeta = 2.2;
-      var mockGamma = 3.3;
-      var absolute = true;
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>device-orientation-success</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
 
-      if (window.testRunner)
-        testRunner.setMockDeviceOrientation(
-          true,
-          mockAlpha,
-          true,
-          mockBeta,
-          true,
-          mockGamma,
-          true,
-          absolute
-        );
-      else debug("This test can not be run without the LayoutTestController");
-
-      function handler(evt) {
-        console.log(
-          "alpha: " + evt.alpha + " beta: " + evt.beta + " gamma: " + evt.gamma
-        );
-      }
-
-      function test() {
-        function callback() {
-          PageAgent.clearDeviceOrientationOverride();
-          InspectorTest.completeTest();
-        }
-
-        InspectorTest.evaluateInPage(
-          "window.addEventListener('deviceorientation', handler, false);",
-          callback
-        );
-        PageAgent.setDeviceOrientationOverride(20, 30, 40);
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p></p>
-  </body>
+</body>
 </html>

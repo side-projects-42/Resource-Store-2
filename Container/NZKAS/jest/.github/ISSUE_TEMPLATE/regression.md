@@ -1,11 +1,3 @@
----
-name: 💥 Regression Report
-labels: ':boom: Regression'
-about: Report unexpected behavior that worked in previous versions
----
-
-<!-- Love Jest? Please consider supporting our collective: 👉  https://opencollective.com/jest/donate -->
-
 ## 💥 Regression Report
 
 A clear and concise description of what the regression is.
@@ -33,7 +25,3 @@ Issues without a reproduction link are likely to stall.
 ## Run `npx envinfo --preset jest`
 
 Paste the results here:
-
-```bash
-
-```

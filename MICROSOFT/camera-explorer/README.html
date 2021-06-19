@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="camera-explorer">Camera Explorer</h1>
+<p>Camera Explorer application demonstrates the use of the new advanced Windows Phone 8 camera API, the Windows.Phone.Media.Capture.PhotoCaptureDevice and the related classes and enumerations on Lumia devices. The updated application adds tap-to-focus and Lens Picker integration.</p>
+<p>The example has been developed with Silverlight for Windows Phone devices and tested to work on Nokia Lumia devices with Windows Phone 8.</p>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/camera-explorer</p>
+<p>For more information on implementation and porting, visit Lumia Developer’s Library: http://developer.nokia.com/Resources/Library/Lumia/#!imaging/advanced-photo-capturing/camera-explorer.html</p>
+<p>This project is compatible with Windows Phone 8. Tested to work on Nokia Lumia 520, Nokia Lumia 820, Nokia Lumia 920 and Nokia Lumia 1020. Developed with Microsoft Visual Studio Express for Windows Phone 2012.</p>
+<h2 id="whats-new">What’s new</h2>
+<ul>
+<li>Version 1.3.1.0: Minor bug fixes.</li>
+<li>Version 1.3.0.0: Support for devices without front camera, flash setting fixed, half-pressing camera key now reactivates auto-focus after tap-to-focus, settings (for each sensor) are now persistent.</li>
+</ul>
+<h2 id="instructions">1. Instructions</h2>
+<p>This is a simple build-and-run solution. Learn about Windows Phone 8 camera features by trying out the application.</p>
+<p><strong>Building and deploying to phone</strong></p>
+<p>In Windows Phone 8 SDK:</p>
+<ol type="1">
+<li>Open the SLN file: File &gt; Open Project, select the file <code>CameraExplorer.sln</code>.</li>
+<li>Select the target ‘Device’.</li>
+<li>Press F5 to build the project and run it on the device.</li>
+</ol>
+<p>Please see official documentation for deploying and testing applications on Windows Phone devices: http://msdn.microsoft.com/en-us/library/gg588378%28v=vs.92%29.aspx</p>
+<h2 id="implementation">2. Implementation</h2>
+<p><strong>Folders:</strong></p>
+<ul>
+<li>The root folder contains the project file, the license information and this file (release_notes.txt).</li>
+<li><code>CameraExplorer</code>: Root folder for the implementation files.</li>
+<li><code>Assets</code>: Graphic assets like icons and tiles.</li>
+<li><code>Properties</code>: Application property files.</li>
+<li><code>Resources</code>: Application resources.</li>
+</ul>
+<p><strong>Important files and classes:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+MainPage.xaml(.cs)
+</td>
+<td>
+The main page with viewfinder and overlays.
+</td>
+</tr>
+<tr class="even">
+<td>
+SettingsPage.xaml(.cs)
+</td>
+<td>
+The page that is used to modify camera parameters.
+</td>
+</tr>
+<tr class="odd">
+<td>
+Parameter.cs
+</td>
+<td>
+Implementations for binding.
+</td>
+</tr>
+<tr class="even">
+<td>
+RangeParameter.cs
+</td>
+<td>
+PhotoCameraDevice API properties to XAML.
+</td>
+</tr>
+<tr class="odd">
+<td>
+ArrayParameter.cs
+</td>
+<td>
+controls in the SettingsPage UI.
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Required Capabilities:</strong></p>
+<ul>
+<li><code>ID_CAP_ISV_CAMERA</code></li>
+<li><code>ID_CAP_MEDIALIB_PHOTO</code></li>
+</ul>
+<h2 id="license">3. License</h2>
+<p>See the license text file delivered with this project. The license file is also available online at https://github.com/Microsoft/camera-explorer/blob/master/Licence.txt</p>
+<h2 id="related-documentation">4. Related documentation</h2>
+<p>An article “Advanced Photo Capturing” published on Lumia Developer’s Library (http://www.developer.nokia.com/Resources/Library/Lumia/#!advanced-photo-capturing.html) describes the usage of PhotoCaptureDevice properties in more detail.</p>
+<h2 id="version-history">5. Version history</h2>
+<ul>
+<li>Version 1.3.1: Minor bug fixes.</li>
+<li>Version 1.3: Support for devices without front camera, flash setting fixed, half-pressing camera key now reactivates auto-focus after tap-to-focus, settings (for each sensor) are now persistent.</li>
+<li>Version 1.2: Bug fix to tap-to-focus (Ticket #5).</li>
+<li>Version 1.1: Tap-to-focus and Lens Picker integration added.</li>
+<li>Version 1.0: The first release.</li>
+</ul>
+</body>
+</html>

@@ -6,9 +6,9 @@ The page is heavily inspired by the v1.0 [Play Framework](http://playframework.c
 
 ## Version 0.0.0
 
-Basically, it's an alpha. Not tests yet. I'd love your help in making them. :)
+Basically, it’s an alpha. Not tests yet. I’d love your help in making them. :)
 
-## What's it look like?
+## What’s it look like?
 
 ![Error page](errorpage.png)
 

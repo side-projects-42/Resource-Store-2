@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>performance</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="performance">Performance</h1>
+<p>Chart.js charts are rendered on <code>canvas</code> elements, which makes rendering quite fast. For large datasets or performance sensitive applications, you may wish to consider the tips below:</p>
+<ul>
+<li>Set <code>animation: { duration: 0 }</code> to disable <a href="../configuration/animations.md">animations</a>.</li>
+<li><a href="https://www.chartjs.org/docs/latest/axes/cartesian/#tick-configuration">Specify a rotation value</a> by setting <code>minRotation</code> and <code>maxRotation</code> to the same value</li>
+<li>For large datasets:
+<ul>
+<li>You may wish to sample your data before providing it to Chart.js. E.g. if you have a data point for each day, you may find it more performant to pass in a data point for each week instead</li>
+<li>Set the <a href="../axes/cartesian/README.md#tick-configuration"><code>ticks.sampleSize</code></a> option in order to render axes more quickly</li>
+</ul></li>
+</ul>
+</body>
+</html>

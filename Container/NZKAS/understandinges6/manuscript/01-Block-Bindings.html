@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>01-Block-Bindings</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="block-bindings">Block Bindings</h1>
+<p>Traditionally, the way variable declarations work has been one tricky part of programming in JavaScript. In most C-based languages, variables (or <em>bindings</em>) are created at the spot where the declaration occurs. In JavaScript, however, this is not the case. Where your variables are actually created depends on how you declare them, and ECMAScript 6 offers options to make controlling scope easier. This chapter demonstrates why classic <code>var</code> declarations can be confusing, introduces block-level bindings in ECMAScript 6, and then offers some best practices for using them.</p>
+<h2 id="var-declarations-and-hoisting">Var Declarations and Hoisting</h2>
+<p>Variable declarations using <code>var</code> are treated as if they are at the top of the function (or global scope, if declared outside of a function) regardless of where the actual declaration occurs; this is called <em>hoisting</em>. For a demonstration of what hoisting does, consider the following function definition:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">function</span> <span class="at">getValue</span>(condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="kw">var</span> value <span class="op">=</span> <span class="st">&quot;blue&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6">        <span class="co">// other code</span></a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8">        <span class="cf">return</span> value<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-9" title="9">    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11">        <span class="co">// value exists here with a value of undefined</span></a>
+<a class="sourceLine" id="cb1-12" title="12"></a>
+<a class="sourceLine" id="cb1-13" title="13">        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-14" title="14">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb1-15" title="15"></a>
+<a class="sourceLine" id="cb1-16" title="16">    <span class="co">// value exists here with a value of undefined</span></a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="op">}</span></a></code></pre></div>
+<p>If you are unfamiliar with JavaScript, then you might expect the variable <code>value</code> to only be created if <code>condition</code> evaluates to true. In fact, the variable <code>value</code> is created regardless. Behind the scenes, the JavaScript engine changes the <code>getValue</code> function to look like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">function</span> <span class="at">getValue</span>(condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="kw">var</span> value<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-6" title="6">        value <span class="op">=</span> <span class="st">&quot;blue&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8">        <span class="co">// other code</span></a>
+<a class="sourceLine" id="cb2-9" title="9"></a>
+<a class="sourceLine" id="cb2-10" title="10">        <span class="cf">return</span> value<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-11" title="11">    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13">        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="op">}</span></a></code></pre></div>
+<p>The declaration of <code>value</code> is hoisted to the top, while the initialization remains in the same spot. That means the variable <code>value</code> is actually still accessible from within the <code>else</code> clause. If accessed from there, the variable would just have a value of <code>undefined</code> because it hasn’t been initialized.</p>
+<p>It often takes new JavaScript developers some time to get used to declaration hoisting, and misunderstanding this unique behavior can end up causing bugs. For this reason, ECMAScript 6 introduces block level scoping options to make the controlling a variable’s lifecycle a little more powerful.</p>
+<h2 id="block-level-declarations">Block-Level Declarations</h2>
+<p>Block-level declarations are those that declare variables that are inaccessible outside of a given block scope. Block scopes, also called lexical scopes, are created:</p>
+<ol type="1">
+<li>Inside of a function</li>
+<li>Inside of a block (indicated by the <code>{</code> and <code>}</code> characters)</li>
+</ol>
+<p>Block scoping is how many C-based languages work, and the introduction of block-level declarations in ECMAScript 6 is intended to bring that same flexibility (and uniformity) to JavaScript.</p>
+<h3 id="let-declarations">Let Declarations</h3>
+<p>The <code>let</code> declaration syntax is the same as the syntax for <code>var</code>. You can basically replace <code>var</code> with <code>let</code> to declare a variable, but limit the variable’s scope to only the current code block (there are a few other subtle differences discussed a bit later, as well). Since <code>let</code> declarations are not hoisted to the top of the enclosing block, you may want to always place <code>let</code> declarations first in the block, so that they are available to the entire block. Here’s an example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">function</span> <span class="at">getValue</span>(condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-4" title="4">        <span class="kw">let</span> value <span class="op">=</span> <span class="st">&quot;blue&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6">        <span class="co">// other code</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8">        <span class="cf">return</span> value<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11">        <span class="co">// value doesn&#39;t exist here</span></a>
+<a class="sourceLine" id="cb3-12" title="12"></a>
+<a class="sourceLine" id="cb3-13" title="13">        <span class="cf">return</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-14" title="14">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-15" title="15"></a>
+<a class="sourceLine" id="cb3-16" title="16">    <span class="co">// value doesn&#39;t exist here</span></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="op">}</span></a></code></pre></div>
+<p>This version of the <code>getValue</code> function behaves much closer to how you’d expect it to in other C-based languages. Since the variable <code>value</code> is declared using <code>let</code> instead of <code>var</code>, the declaration isn’t hoisted to the top of the function definition, and the variable <code>value</code> is no longer accessible once execution flows out of the <code>if</code> block. If <code>condition</code> evaluates to false, then <code>value</code> is never declared or initialized.</p>
+<h3 id="no-redeclaration">No Redeclaration</h3>
+<p>If an identifier has already been defined in a scope, then using the identifier in a <code>let</code> declaration inside that scope causes an error to be thrown. For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">var</span> count <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">// Syntax error</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">let</span> count <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></a></code></pre></div>
+<p>In this example, <code>count</code> is declared twice: once with <code>var</code> and once with <code>let</code>. Because <code>let</code> will not redefine an identifier that already exists in the same scope, the <code>let</code> declaration will throw an error. On the other hand, no error is thrown if a <code>let</code> declaration creates a new variable with the same name as a variable in its containing scope, as demonstrated in the following code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">var</span> count <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="co">// Does not throw an error</span></a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="kw">let</span> count <span class="op">=</span> <span class="dv">40</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="co">// more code</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="op">}</span></a></code></pre></div>
+<p>This <code>let</code> declaration doesn’t throw an error because it creates a new variable called <code>count</code> within the <code>if</code> statement, instead of creating <code>count</code> in the surrounding block. Inside the <code>if</code> block, this new variable shadows the global <code>count</code>, preventing access to it until execution leaves the block.</p>
+<h3 id="constant-declarations">Constant Declarations</h3>
+<p>You can also define variables in ECMAScript 6 with the <code>const</code> declaration syntax. Variables declared using <code>const</code> are considered <em>constants</em>, meaning their values cannot be changed once set. For this reason, every <code>const</code> variable must be initialized on declaration, as shown in this example:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// Valid constant</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">const</span> maxItems <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">// Syntax error: missing initialization</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">const</span> name<span class="op">;</span></a></code></pre></div>
+<p>The <code>maxItems</code> variable is initialized, so its <code>const</code> declaration should work without a problem. The <code>name</code> variable, however, would cause a syntax error if you tried to run the program containing this code, because <code>name</code> is not initialized.</p>
+<h4 id="constants-vs-let-declarations">Constants vs Let Declarations</h4>
+<p>Constants, like <code>let</code> declarations, are block-level declarations. That means constants are no longer accessible once execution flows out of the block in which they were declared, and declarations are not hoisted, as demonstrated in this example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">    <span class="kw">const</span> maxItems <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="co">// more code</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="op">}</span></a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">// maxItems isn&#39;t accessible here</span></a></code></pre></div>
+<p>In this code, the constant <code>maxItems</code> is declared within an <code>if</code> statement. Once the statement finishes executing, <code>maxItems</code> is not accessible outside of that block.</p>
+<p>In another similarity to <code>let</code>, a <code>const</code> declaration throws an error when made with an identifier for an already-defined variable in the same scope. It doesn’t matter if that variable was declared using <code>var</code> (for global or function scope) or <code>let</code> (for block scope). For example, consider this code:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">var</span> message <span class="op">=</span> <span class="st">&quot;Hello!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">let</span> age <span class="op">=</span> <span class="dv">25</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co">// Each of these would throw an error.</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">const</span> message <span class="op">=</span> <span class="st">&quot;Goodbye!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="kw">const</span> age <span class="op">=</span> <span class="dv">30</span><span class="op">;</span></a></code></pre></div>
+<p>The two <code>const</code> declarations would be valid alone, but given the previous <code>var</code> and <code>let</code> declarations in this case, neither will work as intended.</p>
+<p>Despite those similarities, there is one big difference between <code>let</code> and <code>const</code> to remember. Attempting to assign a <code>const</code> to a previously defined constant will throw an error, in both strict and non-strict modes:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">const</span> maxItems <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">maxItems <span class="op">=</span> <span class="dv">6</span><span class="op">;</span>      <span class="co">// throws error</span></a></code></pre></div>
+<p>Much like constants in other languages, the <code>maxItems</code> variable can’t be assigned a new value later on. However, unlike constants in other languages, the value a constant holds may be modified if it is an object.</p>
+<h4 id="declaring-objects-with-const">Declaring Objects with Const</h4>
+<p>A <code>const</code> declaration prevents modification of the binding and not of the value itself. That means <code>const</code> declarations for objects do not prevent modification of those objects. For example:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">const</span> person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Nicholas&quot;</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="op">};</span></a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="co">// works</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="va">person</span>.<span class="at">name</span> <span class="op">=</span> <span class="st">&quot;Greg&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb10-7" title="7"></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="co">// throws an error</span></a>
+<a class="sourceLine" id="cb10-9" title="9">person <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-10" title="10">    <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Greg&quot;</span></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="op">};</span></a></code></pre></div>
+<p>Here, the binding <code>person</code> is created with an initial value of an object with one property. It’s possible to change <code>person.name</code> without causing an error because this changes what <code>person</code> contains and doesn’t change the value that <code>person</code> is bound to. When this code attempts to assign a value to <code>person</code> (thus attempting to change the binding), an error will be thrown. This subtlety in how <code>const</code> works with objects is easy to misunderstand. Just remember: <code>const</code> prevents modification of the binding, not modification of the bound value.</p>
+<h3 id="the-temporal-dead-zone">The Temporal Dead Zone</h3>
+<p>A variable declared with either <code>let</code> or <code>const</code> cannot be accessed until after the declaration. Attempting to do so results in a reference error, even when using normally safe operations such as the <code>typeof</code> operation in this example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-2" title="2">    <span class="va">console</span>.<span class="at">log</span>(<span class="kw">typeof</span> value)<span class="op">;</span>  <span class="co">// ReferenceError!</span></a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="kw">let</span> value <span class="op">=</span> <span class="st">&quot;blue&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="op">}</span></a></code></pre></div>
+<p>Here, the variable <code>value</code> is defined and initialized using <code>let</code>, but that statement is never executed because the previous line throws an error. The issue is that <code>value</code> exists in what the JavaScript community has dubbed the <em>temporal dead zone</em> (TDZ). The TDZ is never named explicitly in the ECMAScript specification, but the term is often used to describe why <code>let</code> and <code>const</code> declarations are not accessible before their declaration. This section covers some subtleties of declaration placement that the TDZ causes, and although the examples shown all use <code>let</code>, note that the same information applies to <code>const</code>.</p>
+<p>When a JavaScript engine looks through an upcoming block and finds a variable declaration, it either hoists the declaration to the top of the function or global scope (for <code>var</code>) or places the declaration in the TDZ (for <code>let</code> and <code>const</code>). Any attempt to access a variable in the TDZ results in a runtime error. That variable is only removed from the TDZ, and therefore safe to use, once execution flows to the variable declaration.</p>
+<p>This is true anytime you attempt to use a variable declared with <code>let</code> or <code>const</code> before it’s been defined. As the previous example demonstrated, this even applies to the normally safe <code>typeof</code> operator. You can, however, use <code>typeof</code> on a variable outside of the block where that variable is declared, though it may not give the results you’re after. Consider this code:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="va">console</span>.<span class="at">log</span>(<span class="kw">typeof</span> value)<span class="op">;</span>     <span class="co">// &quot;undefined&quot;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="cf">if</span> (condition) <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="kw">let</span> value <span class="op">=</span> <span class="st">&quot;blue&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="op">}</span></a></code></pre></div>
+<p>The variable <code>value</code> isn’t in the TDZ when the <code>typeof</code> operation executes because it occurs outside of the block in which <code>value</code> is declared. That means there is no <code>value</code> binding, and <code>typeof</code> simply returns <code>"undefined"</code>.</p>
+<p>The TDZ is just one unique aspect of block bindings. Another unique aspect has to do with their use inside of loops.</p>
+<h2 id="block-binding-in-loops">Block Binding in Loops</h2>
+<p>Perhaps one area where developers most want block level scoping of variables is within <code>for</code> loops, where the throwaway counter variable is meant to be used only inside the loop. For instance, it’s not uncommon to see code like this in JavaScript:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-2" title="2">    <span class="at">process</span>(items[i])<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="op">}</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="co">// i is still accessible here</span></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="va">console</span>.<span class="at">log</span>(i)<span class="op">;</span>                     <span class="co">// 10</span></a></code></pre></div>
+<p>In other languages, where block level scoping is the default, this example should work as intended, and only the <code>for</code> loop should have access to the <code>i</code> variable. In JavaScript, however, the variable <code>i</code> is still accessible after the loop is completed because the <code>var</code> declaration gets hoisted. Using <code>let</code> instead, as in the following code, should give the intended behavior:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-2" title="2">    <span class="at">process</span>(items[i])<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="op">}</span></a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co">// i is not accessible here - throws an error</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="va">console</span>.<span class="at">log</span>(i)<span class="op">;</span></a></code></pre></div>
+<p>In this example, the variable <code>i</code> only exists within the <code>for</code> loop. Once the loop is complete, the variable is no longer accessible elsewhere.</p>
+<h3 id="functions-in-loops">Functions in Loops</h3>
+<p>The characteristics of <code>var</code> have long made creating functions inside of loops problematic, because the loop variables are accessible from outside the scope of the loop. Consider the following code:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">var</span> funcs <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-4" title="4">    <span class="va">funcs</span>.<span class="at">push</span>(<span class="kw">function</span>() <span class="op">{</span> <span class="va">console</span>.<span class="at">log</span>(i)<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="op">}</span></a>
+<a class="sourceLine" id="cb15-6" title="6"></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="va">funcs</span>.<span class="at">forEach</span>(<span class="kw">function</span>(func) <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-8" title="8">    <span class="at">func</span>()<span class="op">;</span>     <span class="co">// outputs the number &quot;10&quot; ten times</span></a>
+<a class="sourceLine" id="cb15-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>You might ordinarily expect this code to print the numbers 0 to 9, but it outputs the number 10 ten times in a row. That’s because <code>i</code> is shared across each iteration of the loop, meaning the functions created inside the loop all hold a reference to the same variable. The variable <code>i</code> has a value of <code>10</code> once the loop completes, and so when <code>console.log(i)</code> is called, that value prints each time.</p>
+<p>To fix this problem, developers use immediately-invoked function expressions (IIFEs) inside of loops to force a new copy of the variable they want to iterate over to be created, as in this example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">var</span> funcs <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="cf">for</span> (<span class="kw">var</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-4" title="4">    <span class="va">funcs</span>.<span class="at">push</span>((<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-5" title="5">        <span class="cf">return</span> <span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-6" title="6">            <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb16-7" title="7">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb16-8" title="8">    <span class="op">}</span>(i)))<span class="op">;</span></a>
+<a class="sourceLine" id="cb16-9" title="9"><span class="op">}</span></a>
+<a class="sourceLine" id="cb16-10" title="10"></a>
+<a class="sourceLine" id="cb16-11" title="11"><span class="va">funcs</span>.<span class="at">forEach</span>(<span class="kw">function</span>(func) <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-12" title="12">    <span class="at">func</span>()<span class="op">;</span>     <span class="co">// outputs 0, then 1, then 2, up to 9</span></a>
+<a class="sourceLine" id="cb16-13" title="13"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>This version uses an IIFE inside of the loop. The <code>i</code> variable is passed to the IIFE, which creates its own copy and stores it as <code>value</code>. This is the value used by the function for that iteration, so calling each function returns the expected value as the loop counts up from 0 to 9. Fortunately, block-level binding with <code>let</code> and <code>const</code> in ECMAScript 6 can simplify this loop for you.</p>
+<h3 id="let-declarations-in-loops">Let Declarations in Loops</h3>
+<p>A <code>let</code> declaration simplifies loops by effectively mimicking what the IIFE does in the previous example. On each iteration, the loop creates a new variable and initializes it to the value of the variable with the same name from the previous iteration. That means you can omit the IIFE altogether and get the results you expect, like this:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">var</span> funcs <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-2" title="2"></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="cf">for</span> (<span class="kw">let</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-4" title="4">    <span class="va">funcs</span>.<span class="at">push</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-5" title="5">        <span class="va">console</span>.<span class="at">log</span>(i)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-6" title="6">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="op">}</span></a>
+<a class="sourceLine" id="cb17-8" title="8"></a>
+<a class="sourceLine" id="cb17-9" title="9"><span class="va">funcs</span>.<span class="at">forEach</span>(<span class="kw">function</span>(func) <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-10" title="10">    <span class="at">func</span>()<span class="op">;</span>     <span class="co">// outputs 0, then 1, then 2, up to 9</span></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="op">}</span>)</a></code></pre></div>
+<p>This loop works exactly like the loop that used <code>var</code> and an IIFE but is, arguably, cleaner. The <code>let</code> declaration creates a new variable <code>i</code> each time through the loop, so each function created inside the loop gets its own copy of <code>i</code>. Each copy of <code>i</code> has the value it was assigned at the beginning of the loop iteration in which it was created. The same is true for <code>for-in</code> and <code>for-of</code> loops, as shown here:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">var</span> funcs <span class="op">=</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb18-2" title="2">    object <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-3" title="3">        <span class="dt">a</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb18-4" title="4">        <span class="dt">b</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb18-5" title="5">        <span class="dt">c</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb18-6" title="6">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb18-7" title="7"></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="cf">for</span> (<span class="kw">let</span> key <span class="kw">in</span> object) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-9" title="9">    <span class="va">funcs</span>.<span class="at">push</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-10" title="10">        <span class="va">console</span>.<span class="at">log</span>(key)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-11" title="11">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="op">}</span></a>
+<a class="sourceLine" id="cb18-13" title="13"></a>
+<a class="sourceLine" id="cb18-14" title="14"><span class="va">funcs</span>.<span class="at">forEach</span>(<span class="kw">function</span>(func) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-15" title="15">    <span class="at">func</span>()<span class="op">;</span>     <span class="co">// outputs &quot;a&quot;, then &quot;b&quot;, then &quot;c&quot;</span></a>
+<a class="sourceLine" id="cb18-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, the <code>for-in</code> loop shows the same behavior as the <code>for</code> loop. Each time through the loop, a new <code>key</code> binding is created, and so each function has its own copy of the <code>key</code> variable. The result is that each function outputs a different value. If <code>var</code> were used to declare <code>key</code>, all functions would output <code>"c"</code>.</p>
+<p>I&gt; It’s important to understand that the behavior of <code>let</code> declarations in loops is a specially-defined behavior in the specification and is not necessarily related to the non-hoisting characteristics of <code>let</code>. In fact, early implementations of <code>let</code> did not have this behavior, as it was added later on in the process.</p>
+<h3 id="constant-declarations-in-loops">Constant Declarations in Loops</h3>
+<p>The ECMAScript 6 specification doesn’t explicitly disallow <code>const</code> declarations in loops; however, there are different behaviors based on the type of loop you’re using. For a normal <code>for</code> loop, you can use <code>const</code> in the initializer, but the loop will throw a warning if you attempt to change the value. For example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">var</span> funcs <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-2" title="2"></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="co">// throws an error after one iteration</span></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="cf">for</span> (<span class="kw">const</span> i <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> i <span class="op">&lt;</span> <span class="dv">10</span><span class="op">;</span> i<span class="op">++</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-5" title="5">    <span class="va">funcs</span>.<span class="at">push</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-6" title="6">        <span class="va">console</span>.<span class="at">log</span>(i)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-7" title="7">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-8" title="8"><span class="op">}</span></a></code></pre></div>
+<p>In this code, the <code>i</code> variable is declared as a constant. The first iteration of the loop, where <code>i</code> is 0, executes successfully. An error is thrown when <code>i++</code> executes because it’s attempting to modify a constant. As such, you can only use <code>const</code> to declare a variable in the loop initializer if you are not modifying that variable.</p>
+<p>When used in a <code>for-in</code> or <code>for-of</code> loop, on the other hand, a <code>const</code> variable behaves the same as a <code>let</code> variable. So the following should not cause an error:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">var</span> funcs <span class="op">=</span> []<span class="op">,</span></a>
+<a class="sourceLine" id="cb20-2" title="2">    object <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-3" title="3">        <span class="dt">a</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb20-4" title="4">        <span class="dt">b</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb20-5" title="5">        <span class="dt">c</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb20-6" title="6">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb20-7" title="7"></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="co">// doesn&#39;t cause an error</span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="cf">for</span> (<span class="kw">const</span> key <span class="kw">in</span> object) <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-10" title="10">    <span class="va">funcs</span>.<span class="at">push</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-11" title="11">        <span class="va">console</span>.<span class="at">log</span>(key)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-12" title="12">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-13" title="13"><span class="op">}</span></a>
+<a class="sourceLine" id="cb20-14" title="14"></a>
+<a class="sourceLine" id="cb20-15" title="15"><span class="va">funcs</span>.<span class="at">forEach</span>(<span class="kw">function</span>(func) <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-16" title="16">    <span class="at">func</span>()<span class="op">;</span>     <span class="co">// outputs &quot;a&quot;, then &quot;b&quot;, then &quot;c&quot;</span></a>
+<a class="sourceLine" id="cb20-17" title="17"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>This code functions almost exactly the same as the second example in the “Let Declarations in Loops” section. The only difference is that the value of <code>key</code> cannot be changed inside the loop. The <code>for-in</code> and <code>for-of</code> loops work with <code>const</code> because the loop initializer creates a new binding on each iteration through the loop rather than attempting to modify the value of an existing binding (as was the case with the previous example using <code>for</code> instead of <code>for-in</code>).</p>
+<h2 id="global-block-bindings">Global Block Bindings</h2>
+<p>Another way in which <code>let</code> and <code>const</code> are different from <code>var</code> is in their global scope behavior. When <code>var</code> is used in the global scope, it creates a new global variable, which is a property on the global object (<code>window</code> in browsers). That means you can accidentally overwrite an existing global using <code>var</code>, such as:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="co">// in a browser</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="kw">var</span> RegExp <span class="op">=</span> <span class="st">&quot;Hello!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="va">console</span>.<span class="at">log</span>(<span class="va">window</span>.<span class="at">RegExp</span>)<span class="op">;</span>     <span class="co">// &quot;Hello!&quot;</span></a>
+<a class="sourceLine" id="cb21-4" title="4"></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="kw">var</span> ncz <span class="op">=</span> <span class="st">&quot;Hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">window</span>.<span class="at">ncz</span>)<span class="op">;</span>        <span class="co">// &quot;Hi!&quot;</span></a></code></pre></div>
+<p>Even though the <code>RegExp</code> global is defined on <code>window</code>, it is not safe from being overwritten by a <code>var</code> declaration. This example declares a new global variable <code>RegExp</code> that overwrites the original. Similarly, <code>ncz</code> is defined as a global variable and immediately defined as a property on <code>window</code>. This is the way JavaScript has always worked.</p>
+<p>If you instead use <code>let</code> or <code>const</code> in the global scope, a new binding is created in the global scope but no property is added to the global object. That also means you cannot overwrite a global variable using <code>let</code> or <code>const</code>, you can only shadow it. Here’s an example:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="co">// in a browser</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="kw">let</span> RegExp <span class="op">=</span> <span class="st">&quot;Hello!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="va">console</span>.<span class="at">log</span>(RegExp)<span class="op">;</span>                    <span class="co">// &quot;Hello!&quot;</span></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="va">console</span>.<span class="at">log</span>(<span class="va">window</span>.<span class="at">RegExp</span> <span class="op">===</span> RegExp)<span class="op">;</span>  <span class="co">// false</span></a>
+<a class="sourceLine" id="cb22-5" title="5"></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="kw">const</span> ncz <span class="op">=</span> <span class="st">&quot;Hi!&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="va">console</span>.<span class="at">log</span>(ncz)<span class="op">;</span>                       <span class="co">// &quot;Hi!&quot;</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;ncz&quot;</span> <span class="kw">in</span> window)<span class="op">;</span>           <span class="co">// false</span></a></code></pre></div>
+<p>Here, a new <code>let</code> declaration for <code>RegExp</code> creates a binding that shadows the global <code>RegExp</code>. That means <code>window.RegExp</code> and <code>RegExp</code> are not the same, so there is no disruption to the global scope. Also, the <code>const</code> declaration for <code>ncz</code> creates a binding but does not create a property on the global object. This capability makes <code>let</code> and <code>const</code> a lot safer to use in the global scope when you don’t want to create properties on the global object.</p>
+<p>I&gt; You may still want to use <code>var</code> in the global scope if you have a code that should be available from the global object. This is most common in a browser when you want to access code across frames or windows.</p>
+<h2 id="emerging-best-practices-for-block-bindings">Emerging Best Practices for Block Bindings</h2>
+<p>While ECMAScript 6 was in development, there was widespread belief you should use <code>let</code> by default instead of <code>var</code> for variable declarations. For many JavaScript developers, <code>let</code> behaves exactly the way they thought <code>var</code> should have behaved, and so the direct replacement makes logical sense. In this case, you would use <code>const</code> for variables that needed modification protection.</p>
+<p>However, as more developers migrated to ECMAScript 6, an alternate approach gained popularity: use <code>const</code> by default and only use <code>let</code> when you know a variable’s value needs to change. The rationale is that most variables should not change their value after initialization because unexpected value changes are a source of bugs. This idea has a significant amount of traction and is worth exploring in your code as you adopt ECMAScript 6.</p>
+<h2 id="summary">Summary</h2>
+<p>The <code>let</code> and <code>const</code> block bindings introduce lexical scoping to JavaScript. These declarations are not hoisted and only exist within the block in which they are declared. This offers behavior that is more like other languages and less likely to cause unintentional errors, as variables can now be declared exactly where they are needed. As a side effect, you cannot access variables before they are declared, even with safe operators such as <code>typeof</code>. Attempting to access a block binding before its declaration results in an error due to the binding’s presence in the temporal dead zone (TDZ).</p>
+<p>In many cases, <code>let</code> and <code>const</code> behave in a manner similar to <code>var</code>; however, this is not true for loops. For both <code>let</code> and <code>const</code>, <code>for-in</code> and <code>for-of</code> loops create a new binding with each iteration through the loop. That means functions created inside the loop body can access the loop bindings values as they are during the current iteration, rather than as they were after the loop’s final iteration (the behavior with <code>var</code>). The same is true for <code>let</code> declarations in <code>for</code> loops, while attempting to use <code>const</code> declarations in a <code>for</code> loop may result in an error.</p>
+<p>The current best practice for block bindings is to use <code>const</code> by default and only use <code>let</code> when you know a variable’s value needs to change. This ensures a basic level of immutability in code that can help prevent certain types of errors.</p>
+</body>
+</html>

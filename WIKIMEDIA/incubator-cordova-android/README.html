@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="cordova-android">Cordova Android</h1>
+<p>Cordova Android is an Android application library that allows for Cordova based projects to be built for the Android Platform. Cordova based applications are, at the core, an application written with web technology: HTML, CSS and JavaScript.</p>
+<p>Apache Cordova is an effort undergoing incubation at The Apache Software Foundation (ASF), sponsored by the Apache Incubator project. Incubation is required of all newly accepted projects until a further review indicates that the infrastructure, communications, and decision making process have stabilized in a manner consistent with other successful ASF projects. While incubation status is not necessarily a reflection of the completeness or stability of the code, it does indicate that the project has yet to be fully endorsed by the ASF.</p>
+<h2 id="requires">Requires</h2>
+<ul>
+<li>Java JDK 1.5</li>
+<li>Apache ANT</li>
+<li>Android SDK <a href="http://developer.android.com">http://developer.android.com</a></li>
+<li>Apache Commons Codec <a href="http://commons.apache.org/codec/">http://commons.apache.org/codec/</a></li>
+</ul>
+<h2 id="test-requirements">Test Requirements</h2>
+<ul>
+<li>JUnit - <a href="https://github.com/KentBeck/junit">https://github.com/KentBeck/junit</a></li>
+</ul>
+<h2 id="building">Building</h2>
+<p>To create your cordova.jar, copy the commons codec:</p>
+<pre><code>mv commons-codec-1.6.jar framework/libs</code></pre>
+<p>then run in the framework directory:</p>
+<pre><code>android update project -p . -t android-15
+ant jar</code></pre>
+<h2 id="cordova-android-developer-tools">Cordova Android Developer Tools</h2>
+<p>The Cordova developer tooling is split between general tooling and project level tooling.</p>
+<p>To enable the command-line tools available in the ./bin directory, make sure you have all of the dependencies installed. You will need <a href="http://nodejs.org">NodeJS</a> (which should come with <code>npm</code>). To install the dependencies:</p>
+<pre><code>$ cd bin
+$ npm install</code></pre>
+<p>General Commands</p>
+<pre><code>./bin/create [path package activity] ... create the ./example app or a cordova android project
+./bin/bench ............................ generate a bench proj
+./bin/autotest ......................... test the cli tools
+./bin/test ............................. run mobile-spec</code></pre>
+<p>Project Commands</p>
+<p>These commands live in a generated Cordova Android project.</p>
+<pre><code>./cordovap/debug [path] ..................... install to first device
+./cordova/emulate .......................... start avd (emulator) named default
+./cordova/log .............................. starts logcat</code></pre>
+<h2 id="running-the-example-project">Running the Example Project</h2>
+<p>Start avd (emulator) named <code>default</code>:</p>
+<pre><code>./bin/emulate</code></pre>
+<p>Create the example project and build it to the first device:</p>
+<pre><code>./bin/create
+cd example
+./cordova/debug</code></pre>
+<p>Start adb logcat (console.log calls output here):</p>
+<pre><code>./cordova/log</code></pre>
+<h2 id="running-the-callbackcallback-test-tests">Running the <a href="http://github.com/callback/callback-test">callback/callback-test</a> tests:</h2>
+<pre><code>./bin/test</code></pre>
+<h2 id="creating-a-new-cordova-android-project">Creating a new Cordova Android Project</h2>
+<pre><code>./bin/create ~/Desktop/myapp com.phonegap.special MyApp</code></pre>
+<h2 id="importing-a-cordova-android-project-into-eclipse">Importing a Cordova Android Project into Eclipse</h2>
+<ol type="1">
+<li>File &gt; New &gt; Project…</li>
+<li>Android &gt; Android Project</li>
+<li>Create project from existing source (point to the generated app found in tmp/android)</li>
+<li>Right click on libs/cordova.jar and add to build path</li>
+<li>Right click on the project root: Run as &gt; Run Configurations</li>
+<li>Click on the Target tab and select Manual (this way you can choose the emulator or device to build to)</li>
+</ol>
+<h2 id="running-tests">Running Tests</h2>
+<p>Please see details under test/README.md.</p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="http://developer.android.com">http://developer.android.com</a></li>
+<li><a href="http://docs.phonegap.com">http://docs.phonegap.com</a></li>
+<li><a href="http://wiki.phonegap.com">http://wiki.phonegap.com</a></li>
+</ul>
+</body>
+</html>

@@ -6,18 +6,14 @@ This document specifies extensions to the core ESTree AST types to support ES pr
 
 ## Function
 
-```js
-extend interface Function {
-    async: false;
-}
-```
+    extend interface Function {
+        async: false;
+    }
 
 ## AwaitExpression
 
-```js
-interface AwaitExpression <: Expression {
-    type: "AwaitExpression";
-    argument: Expression | null;
-    all: boolean;
-}
-```
+    interface AwaitExpression <: Expression {
+        type: "AwaitExpression";
+        argument: Expression | null;
+        all: boolean;
+    }

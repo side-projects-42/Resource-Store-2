@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-04-01-announcing-the-hudson-2-0-roadmap</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <img
+        src="http://agentdero.cachefly.net/continuousblog/java-evil-edition.png"
+        align="right"
+      />There have been numerous discussions on the
+      <a href="http://wiki.hudson-ci.org/display/HUDSON/Mailing%20List"
+        >mailing lists</a
+      >
+      over the past couple months regarding memory issues, speed regressions and
+      a number of other issues regarding performance of Hudson, particularly
+      under high load. In an effort to address these concerns, the Hudson core
+      team has
+      <a href="http://agentdero.cachefly.net/continuousblog/just-kidding.jpg"
+        >announced</a
+      >
+      a roadmap for <strong>Hudson 2.0</strong>.
+    </p>
+    <p>
+      In a
+      <a href="http://agentdero.cachefly.net/continuousblog/just-kidding.jpg"
+        >message</a
+      >
+      to the <code>dev@</code> mailing list, Kohsuke said of Hudson 2.0:
+    </p>
+    <blockquote>
+      <p>
+        As it stands now Hudson 1.0 is a good proof of concept, it’s time to
+        take the lessons learned and build a truly solid enterprise-ready
+        continuous integration server
+      </p>
+    </blockquote>
+    <!--break-->
+    <p>
+      Some notable points from Kohsuke’s announcement with regards to the Hudson
+      2.0 roadmap, which is expected to ship late Q4 2011, are:
+    </p>
+    <ul>
+      <li>
+        Implementation of <code>core</code> in portable C for greater speed and
+        code readability
+      </li>
+      <li>
+        Selection of a better license, namely the
+        <a id="aptureLink_WU0wj407g6" href="http://en.wikipedia.org/wiki/WTFPL"
+          >WTFPL</a
+        >
+      </li>
+      <li>
+        Revamped storage architecture around the
+        <a href="http://www.oracle.com/database/standard_edition.html"
+          >Oracle 11g Database</a
+        >
+        to provide more optimal synergy over flat XML files.
+      </li>
+      <li>
+        Embedding the Mono, Python, V8 and Lua engines allowing plugins to be
+        written in C#, Python, JavaScript or Lua.
+      </li>
+      <li>
+        Adoption of the Hudson
+        <a
+          href="http://randomfunnypicture.com/wp2/wp-content/uploads/2009/12/haters-gonna-hate-eagle.jpg"
+          >Eagle</a
+        >
+        as a mascot instead of the butler
+      </li>
+      <li>
+        “Social” support will be merged into <code>core</code>, integrating
+        Hudson directly with Facebook so you can share test failures with your
+        friends.
+      </li>
+    </ul>
+    <p>
+      Hudson 2.0 is expected to follow in the intrepid footsteps of other major
+      revamps such as
+      <a href="http://en.wikipedia.org/wiki/Netscape_5">Netscape 5</a> and
+      <a id="aptureLink_LVKY9sDfJM" href="http://en.wikipedia.org/wiki/Perl%206"
+        >Perl 6</a
+      >
+      in its ambitiousness and innovation.
+    </p>
+    <hr />
+  </body>
+</html>

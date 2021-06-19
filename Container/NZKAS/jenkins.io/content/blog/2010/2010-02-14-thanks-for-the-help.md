@@ -1,13 +1,3 @@
----
-:layout: post
-:title: Thanks for the help!
-:nodeid: 203
-:created: 1266141600
-:tags:
-  - core
-:author: rtyler
----
-
 A great community of developers and users is one of the many things that make Hudson a great tool and a fun project to work with, after launching Continuous Blog as an extensions of that community earlier this week there are some thanks in order to those that helped spread the word about CB and in turn, Hudson. Thanks to:
 
 - Everybody on Twitter who retweeted the [Continuous Blog launch announcement](http://twitter.com/hudsonci/status/8796480478)
@@ -16,4 +6,4 @@ A great community of developers and users is one of the many things that make Hu
 
 ![Continuous Blog feature](/sites/default/files/javanetdouble.png)
 
-Of course, none of this would be possible without <a id="aptureLink_4cUre2louM" href="http://twitter.com/kohsukekawa">Kohsuke</a> and a large collection of contributors that have made Hudson what it is today.
+Of course, none of this would be possible without <a href="http://twitter.com/kohsukekawa" id="aptureLink_4cUre2louM">Kohsuke</a> and a large collection of contributors that have made Hudson what it is today.

@@ -1,11 +1,3 @@
----
-name: 🐛 Bug report
-labels: Bug Report, Needs Triage, Needs Repro
-about: Create a report to help us improve
----
-
-<!-- Love Jest? Please consider supporting our collective: 👉  https://opencollective.com/jest/donate -->
-
 ## 🐛 Bug Report
 
 A clear and concise description of what the bug is.
@@ -27,7 +19,3 @@ Issues without a reproduction link are likely to stall.
 ## Run `npx envinfo --preset jest`
 
 Paste the results here:
-
-```bash
-
-```

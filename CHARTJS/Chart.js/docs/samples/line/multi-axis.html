@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>multi-axis</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="multi-axis-line-chart">Multi Axis Line Chart</h1>
+<p>```js chart-editor // <block:actions:2> const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = Utils.numbers({ count: chart.data.labels.length, min: -100, max: 100, }); }); chart.update(); }, },]; // </block:actions></p>
+<p>// <block:setup:1> const DATA_COUNT = 7; const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 };</p>
+<p>const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “Dataset 1”, data: Utils.numbers(NUMBER_CFG), borderColor: Utils.CHART_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), yAxisID: “y”, }, { label: “Dataset 2”, data: Utils.numbers(NUMBER_CFG), borderColor: Utils.CHART_COLORS.blue, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), yAxisID: “y1”, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data: data, options: { responsive: true, interaction: { mode: “index”, intersect: false, }, stacked: false, plugins: { title: { display: true, text: “Chart.js Line Chart - Multi Axis”, }, }, scales: { y: { type: “linear”, display: true, position: “left”, }, y1: { type: “linear”, display: true, position: “right”,</p>
+<pre><code>    // grid line settings
+    grid: {
+      drawOnChartArea: false, // only want the grid lines for one axis to show up
+    },
+  },
+},</code></pre>
+<p>}, }; // </block:config></p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

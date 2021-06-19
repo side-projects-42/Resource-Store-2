@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>locale</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="locale">Locale</h1>
+<p>For applications where the numbers of ticks on scales must be formatted accordingly with a language sensitive number formatting, you can enable this kind of formatting by setting the <code>locale</code> option.</p>
+<p>The locale is a string that is a <a href="https://www.unicode.org/reports/tr35/tr35.html#BCP_47_Conformance">Unicode BCP 47 locale identifier</a>.</p>
+<p>A Unicode BCP 47 locale identifier consists of</p>
+<ol type="1">
+<li>a language code,</li>
+<li>(optionally) a script code,</li>
+<li>(optionally) a region (or country) code,</li>
+<li>(optionally) one or more variant codes, and</li>
+<li>(optionally) one or more extension sequences,</li>
+</ol>
+<p>with all present components separated by hyphens.</p>
+<p>By default the chart is using the default locale of the platform which is running on.</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<p>Namespace: <code>options</code></p>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 3%" />
+<col style="width: 5%" />
+<col style="width: 87%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>locale</code></td>
+<td><code>string</code></td>
+<td><code>undefined</code></td>
+<td>a string with a BCP 47 language tag, leveraging on <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat/NumberFormat">INTL NumberFormat</a>.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

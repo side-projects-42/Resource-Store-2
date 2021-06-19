@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-02-15-hudson-1-346-released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      After some scrambling earlier in the week to get
+      <a href="http://blog.hudson-ci.org/content/breaking-hudson-1345-released"
+        >1.345 out the door</a
+      >, correcting some regressions in 1.344, the Hudson team still rolled out
+      a 1.346 release last Friday, February 12th, 2010. Similar to the past
+      couple releases, 1.346 had a good number of bug fixes, including a a
+      performance fix when dealing with larger build submissions and a
+      substantial revision of the SCM polling code to fix a long-standing issue
+      with the quiet period blocking the build from running (<a
+        href="http://issues.hudson-ci.org/browse/HUDSON-2180"
+        >issue 2180</a
+      >), there were also some additionally memory improvements made to
+      <a
+        id="aptureLink_sglHnjrHm5"
+        href="http://en.wikipedia.org/wiki/Apache%20Jelly"
+        >Jelly</a
+      >, the library with which the majority of Hudson’s web interface is
+      rendered, that Kohsuke will detail in a later post.
+    </p>
+    <p>Here’s the breakdown:</p>
+    <h4 id="bugs-fixed">Bugs fixed</h4>
+    <ul class="image">
+      <li class="bug">
+        Maven modules should not be buildable when the parent project is
+        disabled. (<a href="http://issues.hudson-ci.org/browse/HUDSON-1375"
+          >issue 1375</a
+        >)
+      </li>
+
+      <li class="bug">
+        <pre><code>Fixed the broken quiet period implementation when polling interval is shorter than
+the quiet period.  (Changes in SCM impls are needed for this to take effect.)
+(&lt;a href=&quot;http://issues.hudson-ci.org/browse/HUDSON-2180&quot;&gt;issue 2180&lt;/a&gt;)</code></pre>
+      </li>
+
+      <li class="bug">
+        Escape username in URLs in case it contains special characters such as
+        “#”. (<a href="http://issues.hudson-ci.org/browse/HUDSON-2610"
+          >issue 2610</a
+        >)
+      </li>
+
+      <li class="bug">
+        Fix sidepanel link for People to be visible and show view-specific info
+        when appropriate. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-5443"
+          >issue 5443</a
+        >)
+      </li>
+
+      <li class="bug">
+        Improved HTML rendering, not using closing tags that do not exist in
+        HTML. (<a href="http://issues.hudson-ci.org/browse/HUDSON-5458"
+          >issue 5458</a
+        >)
+      </li>
+
+      <li class="bug">
+        <pre><code>Show better error message for missing view type selection when creating a view.
+(&lt;a href=&quot;http://issues.hudson-ci.org/browse/HUDSON-5469&quot;&gt;issue 5469&lt;/a&gt;)</code></pre>
+      </li>
+
+      <li class="bug">
+        Hudson wasn’t properly streaming a large external build submission,
+        which can result in OOME and unresponsiveness.
+      </li>
+    </ul>
+
+    <br clear="all" />
+    #### Enhancements
+    <ul>
+      <li class="rfe">
+        Use fixed-width font in text area for shell/batch build steps. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-5471"
+          >issue 5471</a
+        >)
+      </li>
+
+      <li class="rfe">
+        Use user selected icon size on People page. (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-5447"
+          >issue 5447</a
+        >)
+      </li>
+
+      <li class="rfe">Speed/footprint improvement in the HTML rendering.</li>
+    </ul>
+
+    <p>
+      <br clear="all" />
+      #### Contributors This release of Hudson contained 37 commits from 3
+      different contributors to “core”:
+    </p>
+    <ul>
+      <li>
+        <a id="aptureLink_YaPunVjeFQ" href="http://twitter.com/kohsukekawa"
+          >kohsuke</a
+        >
+      </li>
+      <li>
+        <a id="aptureLink_XwoYyUAc5v" href="http://blogs.sun.com/mindless"
+          >mindless</a
+        >
+      </li>
+      <li>
+        <a id="aptureLink_IPwBJtA60V" href="http://twitter.com/ssogabe"
+          >sogabe</a
+        >
+      </li>
+    </ul>
+    <p>
+      <br clear="all" />
+      As usual, you can go grab the
+      <a href="http://hudson-ci.org/latest/hudson.war">latest .war file</a>
+      straight from <code>hudson-ci.org</code> or if you’re using a native
+      package, use your package manager to upgrade.
+    </p>
+    <hr />
+    <p><strong>Updated:</strong> Added the “official” changelog notes</p>
+    <!--break-->
+  </body>
+</html>

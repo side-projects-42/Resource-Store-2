@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a
+        href="https://github.com/newrelic/open-source-office/blob/master/examples/categories/index.md#archived"
+        ><img
+          src="https://github.com/newrelic/open-source-office/raw/master/examples/categories/images/Archived.png"
+          alt="Archived header"
+      /></a>
+    </p>
+    <h1 id="puppet-nrsysmond">puppet-nrsysmond</h1>
+    <p>Puppet module to install the New Relic Server Monitor</p>
+    <h2 id="usage">Usage</h2>
+    <p>
+      Easiest way to use this module is to call the nrsysmond parameterized
+      class from your modules.
+    </p>
+    <pre class="puppet"><code>  class { &#39;nrsysmond&#39;:
+    license_key    =&gt; &#39;0123456789abcdef0123456789abcdef01234567&#39;,
+  }</code></pre>
+    <h2 id="reference">Reference</h2>
+    <p>
+      See the
+      <a
+        href="https://github.com/newrelic/puppet-nrsysmond/blob/master/manifests/init.pp"
+        >Nrsysmond class</a
+      >
+      for a reference for all the parameters.
+    </p>
+  </body>
+</html>

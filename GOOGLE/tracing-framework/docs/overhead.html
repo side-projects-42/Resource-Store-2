@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>overhead</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="tracing-overhead">Tracing Overhead</h1>
+<p>TODO(benvanik): more information</p>
+<h2 id="measured-overhead">Measured Overhead</h2>
+<p>Every machine/browser/operating system has a different amount of overhead when tracing. Use the ‘View Warnings’ dialog in the WTF app to see information about the measured overhead from the machine that traced the file.</p>
+<p>The simplest WTF event takes about 0.1µs (that’s 0.0001ms) on a decently fast Linux machine. A scope is made up of both an enter and a leave, each taking 0.1µs, so you can assume they take about 0.2-0.3µs together.</p>
+<p>Once you add arguments to events the time starts increasing. Arguments like <code>uint32</code> are cheap, others like <code>float32</code> and <code>ascii</code> are a bit more expensive, and some like <code>any</code> are very expensive. Use the strictest argument type you can and only trace what you need.</p>
+<p>Some events, like the generic <code>wtf.trace.enterScope</code>, <code>wtf.trace.appendScopeData</code>, and <code>wtf.trace.timeStamp</code> are horrendously expensive and should only be used when absolutely necessary. You should always be using typed events via <code>wtf.trace.events.create*</code> or the automatic instrumention functions like <code>wtf.trace.instrument</code>.</p>
+<h2 id="guidelines">Guidelines</h2>
+<ul>
+<li>Trace fewer than 10,000 scopes per frame. That’s about 2ms of overhead.</li>
+<li>Never use <code>enterScope</code>, <code>appendScopeData</code>, or <code>timeStamp</code>.</li>
+<li>Never use the <code>any</code> event argument type.</li>
+<li>Prefer the <code>ascii</code> event argument type to <code>utf8</code> which can be up to 2x slower.</li>
+<li>Avoid large strings as <code>ascii</code> or <code>utf8</code> event arguments.</li>
+<li>Avoid arrays as event arguments where non-arrays work (x,y,z vs. []).</li>
+</ul>
+<h2 id="benchmarks">Benchmarks</h2>
+<p>TODO(benvanik): post a public benchmark page.</p>
+<h2 id="warning-information">Warning Information</h2>
+<p><span id="warn_too_many_events_per_frame"></span></p>
+<h3 id="too-many-events-per-frame">Too Many Events Per Frame</h3>
+<p>TODO(benvanik): document this</p>
+</body>
+</html>

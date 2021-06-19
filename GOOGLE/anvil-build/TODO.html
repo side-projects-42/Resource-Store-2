@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>TODO</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>foo#<em>.ext for src_filter on input side removes extra intermediate rules (</em>.css only from set)</p>
+<h1 id="caching">Caching</h1>
+<p>copy_files/etc need to preserve times</p>
+<h1 id="stages">Stages</h1>
+<p>Commands emit a list of stages. Each stage is executed in order and only if the previous stage was skipped/succeeded.</p>
+<p>StageManager: log_sinks log stages execute()</p>
+<p>Stage: name log execute()</p>
+<p>Simple commands can setup a single StageManager with stages and execute. The daemon would setup a new StageManager each time it goes to perform its work.</p>
+<p>StageManagers setup LogSinks as needed (ConsoleLogSink, RemoteLogSink, FileLogSink) and wire up all the loggers.</p>
+<p>Stages are logical subcommands, such as ‘build’, ‘test’, ‘deploy’, ‘clean’, etc. A ‘rebuild’ command may consist of ‘clean’ and ‘build’, where a ‘test’ command would have ‘build’ and ‘test’.</p>
+<h1 id="logging">Logging</h1>
+<h2 id="logsource">LogSource</h2>
+<p>Builds a line list of output from a single rule. Pickleable to allow for passing across processes.</p>
+<ul>
+<li>Name</li>
+<li>Parent / children</li>
+<li>Sinks</li>
+<li>Default verbosity level (inherit/+/-)</li>
+<li>Methods for debug/info/warn/error</li>
+<li>Status: waiting|running|succeeded|failed|skipped</li>
+<li>Exception</li>
+<li>start_time / end_time</li>
+<li>work_unit / work_unit_count for progress tracking</li>
+</ul>
+<h2 id="logsink">LogSink</h2>
+<p>Receives change notifications for all logger objects. For every field updated on a LogSource, the LogSink will get notified that the change occurred.</p>
+<ul>
+<li>source_open(source)</li>
+<li>source_set_status(source, value)</li>
+<li>source_set_exeception(source, ex)</li>
+<li>source_append_line(source, line)</li>
+<li>source_set_time(source, start_time, end_time)</li>
+<li>source_set_work_unit(source, work_unit, work_unit_count)</li>
+<li>source_close(source)</li>
+</ul>
+<p>Example sinks:</p>
+<ul>
+<li>ConsoleLogSink: log to an interactive console</li>
+<li>FileLogSink: log simple output to a file/pipe</li>
+<li>RemoteLogSink: post to a log server</li>
+</ul>
+<h2 id="flow">Flow</h2>
+<p>One ScopedLogger for the entire command, one for each stage (build/test/etc), and one for each rule.</p>
+<h1 id="log-server">Log Server</h1>
+<p>Starts a streaming log server that can be viewed in the browser to watch build status/test reports, as well as providing an API for build sessions to post data with.</p>
+<p>anvil log_server –http_port=8000</p>
+<ul>
+<li>/ : index
+<ul>
+<li>Report history</li>
+<li>Live-updating ‘in-progress’ list</li>
+<li>Basic machine stats (CPU %, etc)</li>
+</ul></li>
+<li>GET /report/N/ : report view
+<ul>
+<li>Info: build config/command line/etc</li>
+<li>Timing information for whole report</li>
+<li>Graph w/ timing for each node
+<ul>
+<li>State (success, fail, running, skipped)</li>
+<li>Time elapsed</li>
+<li>Click to show output</li>
+</ul></li>
+<li>Console log (all output)</li>
+<li>Test results
+<ul>
+<li>Take output from Buster/etc?</li>
+</ul></li>
+</ul></li>
+<li>POST /report/ : create report</li>
+<li>POST /report/N/ : update report</li>
+</ul>
+<h2 id="post-blobs">POST blobs</h2>
+<p>Creation: ’’’ { ‘host’: { ‘name’: ‘some-machine’, ‘platform’: ‘windows’, ‘processors’: 9, … }, ‘working_dir’: ‘/some/path/’, ‘command_line’: ‘anvil build –foo …’, ‘command’: ‘build’, ‘stages’: [‘build’, ‘test’, ‘deploy’], ‘configuration’: ‘…’, ‘targets’: [‘:c’], ‘graph’: { ‘nodes’: [ { ‘name’: ‘:a’, ‘path’: ‘/some/path:a’, … }], ‘edges’: [[‘:a’, ‘:b’], [‘:b’, ‘:c’]] }, } ’’’</p>
+<p>Update: ’’’ scoped logger blob: // any fields can be omitted to not update that field // output is always appended if present ‘status’: ‘waiting|running|succeeded|failed|skipped’, ‘start_time’: 0, ‘end_time’: 0, ‘exception’: undefined, ‘output’: ‘new output’, ‘work_unit_count’: 100, ‘work_unit’: 28,</p>
+<p>{ {scoped logger blob},</p>
+<p>‘children’: { ‘build’: { {scoped logger blob}, ‘children’: { ‘/some/path:a’: { {scoped logger blob}, ‘src_paths’: [‘a’, ‘b’], ‘all_output_files’: [‘ax’, ‘bx’] } } }, ‘test’: { {scoped logger blob}, // something } } } ’’’</p>
+<h1 id="servingdaemon">Serving/Daemon</h1>
+<h1 id="anvilrc">anvilrc</h1>
+<p>Universal arg: ‘–anvil_config=…’ If not specified, search up cwd path until .anvilrc or .git/ found</p>
+<h2 id="format">Format</h2>
+<p>[core] jobs=2 [commands] search_paths= some/path/ [rules] search_paths= some/path/ [serving] http_port=8080 daemon_port=8081 <a href="#logging">logging</a> http_port=8000 …</p>
+</body>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="librarian-build-status">
+      Librarian
+      <a href="http://travis-ci.org/applicationsonline/librarian"
+        ><img
+          src="https://secure.travis-ci.org/applicationsonline/librarian.png"
+          alt="Build Status"
+      /></a>
+    </h1>
+    <p>
+      Librarian is a framework for writing bundlers, which are tools that
+      resolve, fetch, install, and isolate a project’s dependencies, in Ruby.
+    </p>
+    <p>
+      Librarian ships with Librarian-Chef, which is a bundler for your
+      Chef-based infrastructure repositories. In the future, Librarian-Chef will
+      be a separate project.
+    </p>
+    <p>
+      A bundler written with Librarian will expect you to provide a specfile
+      listing your project’s declared dependencies, including any version
+      constraints and including the upstream sources for finding them. Librarian
+      can resolve the spec, write a lockfile listing the full resolution, fetch
+      the resolved dependencies, install them, and isolate them in your project.
+    </p>
+    <p>
+      A bundler written with Librarian will be similar in kind to
+      <a href="http://gembundler.com">Bundler</a>, the bundler for Ruby gems
+      that many modern Rails applications use.
+    </p>
+    <h2 id="librarian-chef">Librarian-Chef</h2>
+    <p>
+      Librarian-Chef is a tool that helps you manage the cookbooks that your
+      chef-repo depends on. Here are some more details.
+    </p>
+    <p>
+      Librarian-Chef is a bundler for infrastructure repositories using Chef.
+      You can use Librarian-Chef to resolve your infrastructure’s cookbook
+      dependencies, fetch them, and install them into your infrastructure
+      repository.
+    </p>
+    <p>
+      Librarian-Chef can resolve and fetch third-party, publicly-released
+      cookbooks, and install them into your infrastructure repository. It can
+      also source cookbooks directly from their own source control repositories.
+    </p>
+    <p>
+      Librarian-Chef can also deal with cookbooks you may actively be working on
+      outside your infrastructure repository. For example, it can deal with
+      cookbooks directly from their own private source control repositories,
+      whether they are remote or local to your machine, and it can deal with
+      cookbooks released to and hosted on a private cookbooks server.
+    </p>
+    <p>
+      Librarian-Chef is not primarily intended for dealing with the cookbooks
+      you are actively working on <em>within</em> your infrastructure
+      repository. In such a case, you can still use Librarian-Chef, but it is
+      likely unnecessary.
+    </p>
+    <p>
+      Librarian-Chef <em>takes over</em> your <code>cookbooks/</code> directory
+      and manages it for you based on your <code>Cheffile</code>. Your
+      <code>Cheffile</code> becomes the authoritative source for the cookbooks
+      your infrastructure repository depends on. You should not modify the
+      contents of your <code>cookbooks/</code> directory when using
+      Librarian-Chef. If you have cookbooks which are, rather than being
+      separate projects, inherently part of your infrastructure repository, then
+      they should go in a separate directory, like your
+      <code>site-cookbooks/</code> directory, and you do not need to use
+      Librarian-Chef to manage them.
+    </p>
+    <h3 id="the-cheffile">The Cheffile</h3>
+    <p>
+      Every infrastruture repository that uses Librarian-Chef will have a file
+      named <code>Cheffile</code> in the root directory of that repository. The
+      full specification for which third-party, publicly-released cookbooks your
+      infrastructure repository depends will go here.
+    </p>
+    <p>Here’s an example <code>Cheffile</code>:</p>
+    <pre><code>site &quot;http://community.opscode.com/api/v1&quot;
+
+cookbook &quot;ntp&quot;
+cookbook &quot;timezone&quot;, &quot;0.0.1&quot;
+
+cookbook &quot;rvm&quot;,
+  :git =&gt; &quot;https://github.com/fnichol/chef-rvm&quot;,
+  :ref =&gt; &quot;v0.7.1&quot;
+
+cookbook &quot;cloudera&quot;,
+  :path =&gt; &quot;vendor/cookbooks/cloudera-cookbook&quot;</code></pre>
+    <p>Here’s how it works:</p>
+    <p>
+      We start off by declaring the <em>default source</em> for this
+      <code>Cheffile</code>.
+    </p>
+    <pre><code>site &quot;http://community.opscode.com/api/v1&quot;</code></pre>
+    <p>
+      This default source in this example is the Opscode Community Site API.
+      This is most likely what you will want for your default source. However,
+      you can certainly set up your own API-compatible HTTP endpoint if you want
+      more control.
+    </p>
+    <p>
+      Any time we declare a cookbook dependency without also declaring a source
+      for that cookbook dependency, Librarian-Chef assumes we want it to look
+      for that cookbook in the default source.
+    </p>
+    <p>
+      Any time we declare a cookbook dependency that has subsidiary cookbook
+      dependencies of its own, Librarian-Chef assumes we want it to look for the
+      subsidiary cookbook dependencies in the default source.
+    </p>
+    <pre><code>cookbook &quot;ntp&quot;</code></pre>
+    <p>
+      Our infrastructure repository depends on the <code>ntp</code> cookbook
+      from the default source. Any version of the <code>ntp</code> cookbook will
+      fulfill our requirements.
+    </p>
+    <pre><code>cookbook &quot;timezone&quot;, &quot;0.0.1&quot;</code></pre>
+    <p>
+      Our infrastructure repository depends on the
+      <code>timezone</code> cookbook from the default source. But only version
+      <code>0.0.1</code> of that cookbook will do.
+    </p>
+    <pre><code>cookbook &quot;rvm&quot;,
+  :git =&gt; &quot;https://github.com/fnichol/chef-rvm&quot;,
+  :ref =&gt; &quot;v0.7.1&quot;</code></pre>
+    <p>
+      Our infrastructure repository depends on the <code>rvm</code> cookbook,
+      but not the one from the default source. Instead, the cookbook is to be
+      fetched from the specified Git repository and from the specified Git tag
+      only.
+    </p>
+    <p>
+      When using a Git source, we do not have to use a <code>:ref =&gt;</code>.
+      If we do not, then Librarian-Chef will assume we meant the
+      <code>master</code> branch. (In the future, this will be changed to
+      whatever branch is the default branch according to the Git remote, which
+      may not be <code>master</code>.)
+    </p>
+    <p>
+      If we use a <code>:ref =&gt;</code>, we can use anything that Git will
+      recognize as a ref. This includes any branch name, tag name, SHA, or SHA
+      unique prefix. If we use a branch, we can later ask Librarian-Chef to
+      update the cookbook by fetching the most recent version of the cookbook
+      from that same branch.
+    </p>
+    <p>
+      The Git source also supports a <code>:path =&gt;</code> option. If we use
+      the path option, Librarian-Chef will navigate down into the Git repository
+      and only use the specified subdirectory. Many people have the habit of
+      having a single repository with many cookbooks in it. If we need a
+      cookbook from such a repository, we can use the
+      <code>:path =&gt;</code> option here to help Librarian-Chef drill down and
+      find the cookbook subdirectory.
+    </p>
+    <pre><code>cookbook &quot;cloudera&quot;,
+  :path =&gt; &quot;vendor/cookbooks/cloudera-cookbook&quot;</code></pre>
+    <p>
+      Our infrastructure repository depends on the
+      <code>cloudera</code> cookbook, which we have downloaded and copied into
+      our repository. In this example, <code>vendor/cookbooks/</code> is only
+      for use with Librarian-Chef. This directory should not appear in the
+      <code>.chef/knife.rb</code>. Librarian-Chef will, instead, copy this
+      cookbook from where we vendored it in our repository into the
+      <code>cookbooks/</code> directory for us.
+    </p>
+    <p>
+      The <code>:path =&gt;</code> source won’t be confused with the
+      <code>:git =&gt;</code> source’s <code>:path =&gt;</code> option.
+    </p>
+    <h3 id="how-to-use">How to Use</h3>
+    <p>Install Librarian-Chef:</p>
+    <pre><code>$ gem install librarian</code></pre>
+    <p>Prepare your infrastructure repository:</p>
+    <pre><code>$ cd ~/path/to/chef-repo
+$ git rm -r cookbooks
+$ echo /cookbooks &gt;&gt; .gitignore
+$ echo /tmp &gt;&gt; .gitignore</code></pre>
+    <p>
+      Librarian-Chef takes over your <code>cookbooks/</code> directory, and will
+      always reinstall the cookbooks listed the <code>Cheffile.lock</code> into
+      your <code>cookbooks/</code> directory. Hence you do not need your
+      <code>cookbooks/</code> directory to be tracked in Git. If you
+      nevertheless want your <code>cookbooks/</code> directory to be tracked in
+      Git, simple don’t <code>.gitignore</code> the directory.
+    </p>
+    <p>
+      If you are manually tracking/vendoring outside cookbooks within the
+      repository, put them in another directory such as
+      <code>vendor/cookbooks/</code> and use the <code>:path =&gt;</code> source
+      when declaring these cookbooks in your <code>Cheffile</code>. Most people
+      will typically not be manually tracking/vendoring outside cookbooks.
+    </p>
+    <p>
+      Librarian-Chef uses your <code>tmp/</code> directory for tempfiles and
+      caches. You do not need to track this directory in Git.
+    </p>
+    <p>Make a Cheffile:</p>
+    <pre><code>$ librarian-chef init</code></pre>
+    <p>
+      This creates an empty <code>Cheffile</code> with the Opscode Community
+      Site API as the default source.
+    </p>
+    <p>Add dependencies and their sources to the <code>Cheffile</code>:</p>
+    <pre><code>$ cat Cheffile
+    site &#39;http://community.opscode.com/api/v1&#39;
+    cookbook &#39;ntp&#39;
+    cookbook &#39;timezone&#39;, &#39;0.0.1&#39;
+    cookbook &#39;rvm&#39;,
+      :git =&gt; &#39;https://github.com/fnichol/chef-rvm&#39;,
+      :ref =&gt; &#39;v0.7.1&#39;
+    cookbook &#39;cloudera&#39;,
+      :path =&gt; &#39;vendor/cookbooks/cloudera-cookbook&#39;</code></pre>
+    <p>This is the same <code>Cheffile</code> we saw above.</p>
+    <pre><code>$ librarian-chef install [--clean] [--verbose]</code></pre>
+    <p>
+      This command looks at each <code>cookbook</code> declaration and fetches
+      the cookbook from the source specified, or from the default source if none
+      is provided.
+    </p>
+    <p>
+      Each cookbook is inspected, its dependencies are determined, and each
+      dependency is also fetched. For example, if you declare
+      <code>cookbook 'nagios'</code>, which depends on other cookbooks such as
+      <code>'php'</code>, then those other cookbooks including
+      <code>'php'</code> will be fetched. This goes all the way down the chain
+      of dependencies.
+    </p>
+    <p>
+      This command writes the complete resolution into
+      <code>Cheffile.lock</code>.
+    </p>
+    <p>
+      This command then copies all of the fetched cookbooks into your
+      <code>cookbooks/</code> directory, overwriting whatever was there before.
+      You can then use <code>knife cookbook upload -all</code> to upload the
+      cookbooks to your chef-server, if you are using the client-server model.
+    </p>
+    <p>
+      Check your <code>Cheffile</code> and <code>Cheffile.lock</code> into
+      version control:
+    </p>
+    <pre><code>$ git add Cheffile
+$ git add Cheffile.lock
+$ git commit -m &quot;I want these particular versions of these particular cookbooks from these particular.&quot;</code></pre>
+    <p>
+      Make sure you check your <code>Cheffile.lock</code> into version control.
+      This will ensure dependencies do not need to be resolved every run,
+      greatly reducing dependency resolution time.
+    </p>
+    <p>Get an overview of your <code>Cheffile.lock</code> with:</p>
+    <pre><code>$ librarian-chef show</code></pre>
+    <p>Inspect the details of specific resolved dependencies with:</p>
+    <pre><code>$ librarian-chef show NAME1 [NAME2, ...]</code></pre>
+    <p>
+      Update your <code>Cheffile</code> with new/changed/removed
+      constraints/sources/dependencies:
+    </p>
+    <pre><code>$ cat Cheffile
+    site &#39;http://community.opscode.com/api/v1&#39;
+    cookbook &#39;ntp&#39;
+    cookbook &#39;timezone&#39;, &#39;0.0.1&#39;
+    cookbook &#39;rvm&#39;,
+      :git =&gt; &#39;https://github.com/fnichol/chef-rvm&#39;,
+      :ref =&gt; &#39;v0.7.1&#39;
+    cookbook &#39;monit&#39; # new!
+$ git diff Cheffile
+$ librarian-chef install [--verbose]
+$ git diff Cheffile.lock
+$ git add Cheffile
+$ git add Cheffile.lock
+$ git commit -m &quot;I also want these additional cookbooks.&quot;</code></pre>
+    <p>Find out which dependencies are outdated and may be updated:</p>
+    <pre><code>$ librarian-chef outdated [--verbose]</code></pre>
+    <p>Update the version of a dependency:</p>
+    <pre><code>$ librarian-chef update ntp timezone monit [--verbose]
+$ git diff Cheffile.lock
+$ git add Cheffile.lock
+$ git commit -m &quot;I want updated versions of these cookbooks.&quot;</code></pre>
+    <p>Push your changes to the git repository:</p>
+    <pre><code>$ git push origin master</code></pre>
+    <p>Upload the cookbooks to your chef-server:</p>
+    <pre><code>$ knife cookbook upload --all</code></pre>
+    <h3 id="configuration">Configuration</h3>
+    <p>
+      Configuration comes from three sources with the following
+      highest-to-lowest precedence:
+    </p>
+    <ul>
+      <li>The local config (<code>./.librarian/chef/config</code>)</li>
+      <li>The environment</li>
+      <li>The global config (<code>~/.librarian/chef/config</code>)</li>
+    </ul>
+    <p>You can inspect the final configuration with:</p>
+    <pre><code>$ librarian-chef config</code></pre>
+    <p>You can find out where a particular key is set with:</p>
+    <pre><code>$ librarian-chef config KEY</code></pre>
+    <p>You can set a key at the global level with:</p>
+    <pre><code>$ librarian-chef config KEY VALUE --global</code></pre>
+    <p>And remove it with:</p>
+    <pre><code>$ librarian-chef config KEY --global --delete</code></pre>
+    <p>You can set a key at the local level with:</p>
+    <pre><code>$ librarian-chef config KEY VALUE --local</code></pre>
+    <p>And remove it with:</p>
+    <pre><code>$ librarian-chef config KEY --local --delete</code></pre>
+    <p>You cannot set or delete environment-level config keys with the CLI.</p>
+    <p>
+      Configuration set at either the global or local level will affect
+      subsequent invocations of <code>librarian-chef</code>. Configurations set
+      at the environment level are not saved and will not affect subsequent
+      invocations of <code>librarian-chef</code>.
+    </p>
+    <p>
+      You can pass a config at the environment level by taking the original
+      config key and transforming it: replace hyphens (<code>-</code>) with
+      underscores (<code>_</code>) and periods (<code>.</code>) with doubled
+      underscores (<code>__</code>), uppercase, and finally prefix with
+      <code>LIBRARIAN_CHEF_</code>. For example, to pass a config in the
+      environment for the key <code>part-one.part-two</code>, set the
+      environment variable <code>LIBRARIAN_CHEF_PART_ONE__PART_TWO</code>.
+    </p>
+    <p>Configuration affects how various commands operate.</p>
+    <ul>
+      <li>
+        <p>
+          The <code>path</code> config sets the cookbooks directory to install
+          to. If a relative path, it is relative to the directory containing the
+          <code>Cheffile</code>. The equivalent environment variable is
+          <code>LIBRARIAN_CHEF_PATH</code>.
+        </p>
+      </li>
+      <li>
+        <p>
+          The <code>install.strip-dot-git</code> config causes the
+          <code>.git/</code> directory to be stripped out when installing
+          cookbooks from a git source. This must be set to exactly “1” to cause
+          this behavior. The equivalent environment variable is
+          <code>LIBRARIAN_CHEF_INSTALL__STRIP_DOT_GIT</code>.
+        </p>
+      </li>
+    </ul>
+    <p>
+      Configuration can be set by passing specific options to other commands.
+    </p>
+    <ul>
+      <li>
+        <p>
+          The <code>path</code> config can be set at the local level by passing
+          the <code>--path</code> option to the <code>install</code> command. It
+          can be unset at the local level by passing the
+          <code>--no-path</code> option to the <code>install</code> command.
+          Note that if this is set at the environment or global level then, even
+          if <code>--no-path</code> is given as an option, the environment or
+          global config will be used.
+        </p>
+      </li>
+      <li>
+        <p>
+          The <code>install.strip-dot-git</code> config can be set at the local
+          level by passing the <code>--strip-dot-git</code> option to the
+          <code>install</code> command. It can be unset at the local level by
+          passing the <code>--no-strip-dot-git</code> option.
+        </p>
+      </li>
+    </ul>
+    <h3 id="knife-integration">Knife Integration</h3>
+    <p>You can integrate your <code>knife.rb</code> with Librarian-Chef.</p>
+    <p>Stick the following in your <code>knife.rb</code>:</p>
+    <pre><code>require &#39;librarian/chef/integration/knife&#39;
+cookbook_path Librarian::Chef.install_path,
+              &quot;/path/to/chef-repo/site-cookbooks&quot;</code></pre>
+    <p>
+      In the above, do <em>not</em> to include the path to your
+      <code>cookbooks/</code> directory. If you have additional cookbooks
+      directories in your chef-repo that you use for vendored cookbooks (where
+      you use the <code>:path =&gt;</code> source in your
+      <code>Cheffile</code>), make sure <em>not</em> to include the paths to
+      those additional cookbooks directories either.
+    </p>
+    <p>
+      You still need to include your <code>site-cookbooks/</code> directory in
+      the above list.
+    </p>
+    <p>
+      What this integration does is whenever you use any
+      <code>knife</code> command, it will:
+    </p>
+    <ul>
+      <li>
+        Enforce that your <code>Cheffile</code> and
+        <code>Cheffile.lock</code> are in sync
+      </li>
+      <li>Install the resolved cookbooks to a temporary directory</li>
+      <li>
+        Configure Knife to look in the temporary directory for the installed
+        cookbooks and not in the normal <code>cookbooks/</code> directory.
+      </li>
+    </ul>
+    <p>
+      When you use this integration, any changes you make to anything in the
+      <code>cookbooks/</code> directory will be ignored by Knife, because Knife
+      won’t look in that directory for your cookbooks.
+    </p>
+    <h2 id="how-to-contribute">How to Contribute</h2>
+    <h3 id="running-the-tests">Running the tests</h3>
+    <pre><code># Either
+$ rspec spec
+$ cucumber
+
+# Or
+$ rake</code></pre>
+    <p>
+      You will probably need some way to isolate gems. Librarian provides a
+      <code>Gemfile</code>, so if you want to use bundler, you can prepare the
+      directory with the usual <code>bundle install</code> and run each command
+      prefixed with the usual <code>bundle exec</code>, as:
+    </p>
+    <pre><code>$ bundle install
+$ bundle exec rspec spec
+$ bundle exec cucumber
+$ bundle exec rake</code></pre>
+    <h3 id="installing-locally">Installing locally</h3>
+    <pre><code>$ rake install</code></pre>
+    <p>
+      You should typically not need to install locally, if you are simply trying
+      to patch a bug and test the result on a test case. Instead of installing
+      locally, you are probably better served by:
+    </p>
+    <pre><code>$ cd $PATH_TO_INFRASTRUCTURE_REPO
+$ $PATH_TO_LIBRARIAN_CHECKOUT/bin/librarian-chef install [--verbose]</code></pre>
+    <h3 id="reporting-issues">Reporting Issues</h3>
+    <p>
+      Please include relevant <code>Cheffile</code> and
+      <code>Cheffile.lock</code> files. Please run the
+      <code>librarian-chef</code> commands in verbose mode by using the
+      <code>--verbose</code> flag, and include the verbose output in the bug
+      report as well.
+    </p>
+    <h2 id="license">License</h2>
+    <p>Written by Jay Feldblum.</p>
+    <p>Copyright (c) 2011-2012 ApplicationsOnline, LLC.</p>
+    <p>
+      Released under the terms of the MIT License. For further information,
+      please see the file <code>MIT-LICENSE</code>.
+    </p>
+  </body>
+</html>

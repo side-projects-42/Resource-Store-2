@@ -1,49 +1,23 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/timeline-test.js"></script>
-    <style>
-      .relayout-boundary {
-        overflow: hidden;
-        width: 100px;
-        height: 100px;
-      }
-    </style>
-    <script>
-      function invalidateAndForceLayout(element) {
-        element.style.marginTop = "10px";
-        var unused = element.offsetHeight;
-      }
-
-      function performActions() {
-        invalidateAndForceLayout(document.getElementById("invalidate1"));
-        invalidateAndForceLayout(document.getElementById("invalidate2"));
-      }
-
-      function test() {
-        InspectorTest.evaluateInPage("testRunner.display()", function () {
-          InspectorTest.performActionsAndPrint("performActions()", "Layout");
-        });
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests the Timeline API instrumentation of a Layout event</p>
-    <div class="relayout-boundary">
-      <div>text</div>
-      <div></div>
-      <div>
-        <div id="invalidate1"><div>text</div></div>
-      </div>
-    </div>
-    <div class="relayout-boundary">
-      <div></div>
-      <div>text</div>
-      <div id="invalidate2"><div>text</div></div>
-      <div></div>
-      <div></div>
-      <div>text</div>
-    </div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timeline-layout</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests the Timeline API instrumentation of a Layout event</p>
+<p>text</p>
+<p>text</p>
+<p>text</p>
+<p>text</p>
+<p>text</p>
+</body>
 </html>

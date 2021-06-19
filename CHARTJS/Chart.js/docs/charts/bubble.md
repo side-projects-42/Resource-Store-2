@@ -1,96 +1,39 @@
-# Bubble Chart
+Bubble Chart
+============
 
 A bubble chart is used to display three dimensions of data at the same time. The location of the bubble is determined by the first two dimensions and the corresponding horizontal and vertical axes. The third dimension is represented by the size of the individual bubbles.
 
-```js chart-editor
-// <block:setup:1>
-const data = {
-  datasets: [
-    {
-      label: "First Dataset",
-      data: [
-        {
-          x: 20,
-          y: 30,
-          r: 15,
-        },
-        {
-          x: 40,
-          y: 10,
-          r: 10,
-        },
-      ],
-      backgroundColor: "rgb(255, 99, 132)",
-    },
-  ],
-};
-// </block:setup>
+\`\`\`js chart-editor // const data = { datasets: \[ { label: “First Dataset”, data: \[ { x: 20, y: 30, r: 15, }, { x: 40, y: 10, r: 10, }, \], backgroundColor: “rgb(255, 99, 132)”, }, \], }; //
 
-// <block:config:0>
-const config = {
-  type: "bubble",
-  data: data,
-  options: {},
-};
-// </block:config>
+// const config = { type: “bubble”, data: data, options: {}, }; //
 
-module.exports = {
-  actions: [],
-  config: config,
-};
-```
+module.exports = { actions: \[\], config: config, }; \`\`\`
 
-## Dataset Properties
+Dataset Properties
+------------------
 
 Namespaces:
 
-- `data.datasets[index]` - options for this dataset only
-- `options.datasets.bubble` - options for all bubble datasets
-- `options.elements.point` - options for all [point elements](../configuration/elements.md#point-configuration)
-- `options` - options for the whole chart
+-   `data.datasets[index]` - options for this dataset only
+-   `options.datasets.bubble` - options for all bubble datasets
+-   `options.elements.point` - options for all [point elements](../configuration/elements.md#point-configuration)
+-   `options` - options for the whole chart
 
 The bubble chart allows a number of properties to be specified for each dataset. These are used to set display properties for a specific dataset. For example, the colour of the bubbles is generally set this way.
 
-| Name                                    | Type                            | [Scriptable](../general/options.md#scriptable-options) | [Indexable](../general/options.md#indexable-options) | Default                |
-| --------------------------------------- | ------------------------------- | :----------------------------------------------------: | :--------------------------------------------------: | ---------------------- |
-| [`backgroundColor`](#styling)           | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `'rgba(0, 0, 0, 0.1)'` |
-| [`borderColor`](#styling)               | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `'rgba(0, 0, 0, 0.1)'` |
-| [`borderWidth`](#styling)               | `number`                        |                          Yes                           |                         Yes                          | `3`                    |
-| [`clip`](#general)                      | `number`\|`object`              |                           -                            |                          -                           | `undefined`            |
-| [`data`](#data-structure)               | `object[]`                      |                           -                            |                          -                           | **required**           |
-| [`hoverBackgroundColor`](#interactions) | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `undefined`            |
-| [`hoverBorderColor`](#interactions)     | [`Color`](../general/colors.md) |                          Yes                           |                         Yes                          | `undefined`            |
-| [`hoverBorderWidth`](#interactions)     | `number`                        |                          Yes                           |                         Yes                          | `1`                    |
-| [`hoverRadius`](#interactions)          | `number`                        |                          Yes                           |                         Yes                          | `4`                    |
-| [`hitRadius`](#interactions)            | `number`                        |                          Yes                           |                         Yes                          | `1`                    |
-| [`label`](#general)                     | `string`                        |                           -                            |                          -                           | `undefined`            |
-| [`order`](#general)                     | `number`                        |                           -                            |                          -                           | `0`                    |
-| [`pointStyle`](#styling)                | `string`\|`Image`               |                          Yes                           |                         Yes                          | `'circle'`             |
-| [`rotation`](#styling)                  | `number`                        |                          Yes                           |                         Yes                          | `0`                    |
-| [`radius`](#styling)                    | `number`                        |                          Yes                           |                         Yes                          | `3`                    |
+<table><thead><tr class="header"><th>Name</th><th>Type</th><th style="text-align: center;"><a href="../general/options.md#scriptable-options">Scriptable</a></th><th style="text-align: center;"><a href="../general/options.md#indexable-options">Indexable</a></th><th>Default</th></tr></thead><tbody><tr class="odd"><td><a href="#styling"><code>backgroundColor</code></a></td><td><a href="../general/colors.md"><code>Color</code></a></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>'rgba(0, 0, 0, 0.1)'</code></td></tr><tr class="even"><td><a href="#styling"><code>borderColor</code></a></td><td><a href="../general/colors.md"><code>Color</code></a></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>'rgba(0, 0, 0, 0.1)'</code></td></tr><tr class="odd"><td><a href="#styling"><code>borderWidth</code></a></td><td><code>number</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>3</code></td></tr><tr class="even"><td><a href="#general"><code>clip</code></a></td><td><code>number</code>|<code>object</code></td><td style="text-align: center;">-</td><td style="text-align: center;">-</td><td><code>undefined</code></td></tr><tr class="odd"><td><a href="#data-structure"><code>data</code></a></td><td><code>object[]</code></td><td style="text-align: center;">-</td><td style="text-align: center;">-</td><td><strong>required</strong></td></tr><tr class="even"><td><a href="#interactions"><code>hoverBackgroundColor</code></a></td><td><a href="../general/colors.md"><code>Color</code></a></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>undefined</code></td></tr><tr class="odd"><td><a href="#interactions"><code>hoverBorderColor</code></a></td><td><a href="../general/colors.md"><code>Color</code></a></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>undefined</code></td></tr><tr class="even"><td><a href="#interactions"><code>hoverBorderWidth</code></a></td><td><code>number</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>1</code></td></tr><tr class="odd"><td><a href="#interactions"><code>hoverRadius</code></a></td><td><code>number</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>4</code></td></tr><tr class="even"><td><a href="#interactions"><code>hitRadius</code></a></td><td><code>number</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>1</code></td></tr><tr class="odd"><td><a href="#general"><code>label</code></a></td><td><code>string</code></td><td style="text-align: center;">-</td><td style="text-align: center;">-</td><td><code>undefined</code></td></tr><tr class="even"><td><a href="#general"><code>order</code></a></td><td><code>number</code></td><td style="text-align: center;">-</td><td style="text-align: center;">-</td><td><code>0</code></td></tr><tr class="odd"><td><a href="#styling"><code>pointStyle</code></a></td><td><code>string</code>|<code>Image</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>'circle'</code></td></tr><tr class="even"><td><a href="#styling"><code>rotation</code></a></td><td><code>number</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>0</code></td></tr><tr class="odd"><td><a href="#styling"><code>radius</code></a></td><td><code>number</code></td><td style="text-align: center;">Yes</td><td style="text-align: center;">Yes</td><td><code>3</code></td></tr></tbody></table>
 
 All these values, if `undefined`, fallback to the scopes described in [option resolution](../general/options)
 
 ### General
 
-| Name    | Description                                                                                                                                                                                                                                       |
-| ------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `clip`  | How to clip relative to chartArea. Positive value allows overflow, negative value clips that many pixels inside chartArea. `0` = clip at chartArea. Clipping can also be configured per side: `clip: {left: 5, top: false, right: -2, bottom: 0}` |
-| `label` | The label for the dataset which appears in the legend and tooltips.                                                                                                                                                                               |
-| `order` | The drawing order of dataset. Also affects order for tooltip and legend.                                                                                                                                                                          |
+<table style="width:99%;"><colgroup><col style="width: 2%" /><col style="width: 97%" /></colgroup><thead><tr class="header"><th>Name</th><th>Description</th></tr></thead><tbody><tr class="odd"><td><code>clip</code></td><td>How to clip relative to chartArea. Positive value allows overflow, negative value clips that many pixels inside chartArea. <code>0</code> = clip at chartArea. Clipping can also be configured per side: <code>clip: {left: 5, top: false, right: -2, bottom: 0}</code></td></tr><tr class="even"><td><code>label</code></td><td>The label for the dataset which appears in the legend and tooltips.</td></tr><tr class="odd"><td><code>order</code></td><td>The drawing order of dataset. Also affects order for tooltip and legend.</td></tr></tbody></table>
 
 ### Styling
 
 The style of each bubble can be controlled with the following properties:
 
-| Name              | Description                                                      |
-| ----------------- | ---------------------------------------------------------------- |
-| `backgroundColor` | bubble background color.                                         |
-| `borderColor`     | bubble border color.                                             |
-| `borderWidth`     | bubble border width (in pixels).                                 |
-| `pointStyle`      | bubble [shape style](../configuration/elements.md#point-styles). |
-| `rotation`        | bubble rotation (in degrees).                                    |
-| `radius`          | bubble radius (in pixels).                                       |
+<table><thead><tr class="header"><th>Name</th><th>Description</th></tr></thead><tbody><tr class="odd"><td><code>backgroundColor</code></td><td>bubble background color.</td></tr><tr class="even"><td><code>borderColor</code></td><td>bubble border color.</td></tr><tr class="odd"><td><code>borderWidth</code></td><td>bubble border width (in pixels).</td></tr><tr class="even"><td><code>pointStyle</code></td><td>bubble <a href="../configuration/elements.md#point-styles">shape style</a>.</td></tr><tr class="odd"><td><code>rotation</code></td><td>bubble rotation (in degrees).</td></tr><tr class="even"><td><code>radius</code></td><td>bubble radius (in pixels).</td></tr></tbody></table>
 
 All these values, if `undefined`, fallback to the associated [`elements.point.*`](../configuration/elements.md#point-configuration) options.
 
@@ -98,39 +41,34 @@ All these values, if `undefined`, fallback to the associated [`elements.point.*`
 
 The interaction with each bubble can be controlled with the following properties:
 
-| Name                   | Description                                                 |
-| ---------------------- | ----------------------------------------------------------- |
-| `hoverBackgroundColor` | bubble background color when hovered.                       |
-| `hoverBorderColor`     | bubble border color when hovered.                           |
-| `hoverBorderWidth`     | bubble border width when hovered (in pixels).               |
-| `hoverRadius`          | bubble **additional** radius when hovered (in pixels).      |
-| `hitRadius`            | bubble **additional** radius for hit detection (in pixels). |
+<table><thead><tr class="header"><th>Name</th><th>Description</th></tr></thead><tbody><tr class="odd"><td><code>hoverBackgroundColor</code></td><td>bubble background color when hovered.</td></tr><tr class="even"><td><code>hoverBorderColor</code></td><td>bubble border color when hovered.</td></tr><tr class="odd"><td><code>hoverBorderWidth</code></td><td>bubble border width when hovered (in pixels).</td></tr><tr class="even"><td><code>hoverRadius</code></td><td>bubble <strong>additional</strong> radius when hovered (in pixels).</td></tr><tr class="odd"><td><code>hitRadius</code></td><td>bubble <strong>additional</strong> radius for hit detection (in pixels).</td></tr></tbody></table>
 
 All these values, if `undefined`, fallback to the associated [`elements.point.*`](../configuration/elements.md#point-configuration) options.
 
-## Default Options
+Default Options
+---------------
 
 We can also change the default values for the Bubble chart type. Doing so will give all bubble charts created after this point the new defaults. The default configuration for the bubble chart can be accessed at `Chart.overrides.bubble`.
 
-## Data Structure
+Data Structure
+--------------
 
 Bubble chart datasets need to contain a `data` array of points, each point represented by an object containing the following properties:
 
-```javascript
-{
-    // X Value
-    x: number,
+    {
+        // X Value
+        x: number,
 
-    // Y Value
-    y: number,
+        // Y Value
+        y: number,
 
-    // Bubble radius in pixels (not scaled).
-    r: number
-}
-```
+        // Bubble radius in pixels (not scaled).
+        r: number
+    }
 
 **Important:** the radius property, `r` is **not** scaled by the chart, it is the raw radius in pixels of the bubble that is drawn on the canvas.
 
-## Internal data format
+Internal data format
+--------------------
 
 `{x, y, _custom}` where `_custom` is the radius.

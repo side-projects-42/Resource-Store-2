@@ -1,10 +1,4 @@
----
-id: version-22.x-jest-object
-title: The Jest Object
-original_id: jest-object
----
-
-The `jest` object is automatically in scope within every test file. The methods in the `jest` object help create mocks and let you control Jest's overall behavior.
+The `jest` object is automatically in scope within every test file. The methods in the `jest` object help create mocks and let you control Jest’s overall behavior.
 
 ## Methods
 
@@ -55,37 +49,31 @@ After this method is called, all `require()`s will return the real versions of e
 
 Jest configuration:
 
-```json
-"automock": true
-```
+    "automock": true
 
 Example:
 
-```js
-// utils.js
-export default {
-  authorize: () => {
-    return 'token';
-  },
-};
-```
+    // utils.js
+    export default {
+      authorize: () => {
+        return 'token';
+      },
+    };
 
-```js
-// __tests__/disableAutomocking.js
-import utils from '../utils';
+    // __tests__/disableAutomocking.js
+    import utils from '../utils';
 
-jest.disableAutomock();
+    jest.disableAutomock();
 
-test('original implementation', () => {
-  // now we have the original implementation,
-  // even if we set the automocking in a jest configuration
-  expect(utils.authorize()).toBe('token');
-});
-```
+    test('original implementation', () => {
+      // now we have the original implementation,
+      // even if we set the automocking in a jest configuration
+      expect(utils.authorize()).toBe('token');
+    });
 
-This is usually useful when you have a scenario where the number of dependencies you want to mock is far less than the number of dependencies that you don't. For example, if you're writing a test for a module that uses a large number of dependencies that can be reasonably classified as "implementation details" of the module, then you likely do not want to mock them.
+This is usually useful when you have a scenario where the number of dependencies you want to mock is far less than the number of dependencies that you don’t. For example, if you’re writing a test for a module that uses a large number of dependencies that can be reasonably classified as “implementation details” of the module, then you likely do not want to mock them.
 
-Examples of dependencies that might be considered "implementation details" are things ranging from language built-ins (e.g. Array.prototype methods) to highly common utility methods (e.g. underscore/lo-dash, array utilities etc) and entire libraries like React.js.
+Examples of dependencies that might be considered “implementation details” are things ranging from language built-ins (e.g. Array.prototype methods) to highly common utility methods (e.g. underscore/lo-dash, array utilities etc) and entire libraries like React.js.
 
 Returns the `jest` object for chaining.
 
@@ -101,28 +89,24 @@ Returns the `jest` object for chaining.
 
 Example:
 
-```js
-// utils.js
-export default {
-  authorize: () => {
-    return 'token';
-  },
-  isAuthorized: (secret) => secret === 'wizard',
-};
-```
+    // utils.js
+    export default {
+      authorize: () => {
+        return 'token';
+      },
+      isAuthorized: (secret) => secret === 'wizard',
+    };
 
-```js
-// __tests__/disableAutomocking.js
-jest.enableAutomock();
+    // __tests__/disableAutomocking.js
+    jest.enableAutomock();
 
-import utils from '../utils';
+    import utils from '../utils';
 
-test('original implementation', () => {
-  // now we have the mocked implementation,
-  expect(utils.authorize._isMockFunction).toBeTruthy();
-  expect(utils.isAuthorized._isMockFunction).toBeTruthy();
-});
-```
+    test('original implementation', () => {
+      // now we have the mocked implementation,
+      expect(utils.authorize._isMockFunction).toBeTruthy();
+      expect(utils.isAuthorized._isMockFunction).toBeTruthy();
+    });
 
 _Note: this method was previously called `autoMockOn`. When using `babel-jest`, calls to `enableAutomock` will automatically be hoisted to the top of the code block. Use `autoMockOn` if you want to explicitly avoid this behavior._
 
@@ -130,15 +114,13 @@ _Note: this method was previously called `autoMockOn`. When using `babel-jest`, 
 
 Returns a new, unused [mock function](MockFunctionAPI.md). Optionally takes a mock implementation.
 
-```js
-const mockFn = jest.fn();
-mockFn();
-expect(mockFn).toHaveBeenCalled();
+    const mockFn = jest.fn();
+    mockFn();
+    expect(mockFn).toHaveBeenCalled();
 
-// With a mock implementation:
-const returnsTrue = jest.fn(() => true);
-console.log(returnsTrue()); // true;
-```
+    // With a mock implementation:
+    const returnsTrue = jest.fn(() => true);
+    console.log(returnsTrue()); // true;
 
 ### `jest.isMockFunction(fn)`
 
@@ -148,30 +130,26 @@ Determines if the given function is a mocked function.
 
 Given the name of a module, use the automatic mocking system to generate a mocked version of the module for you.
 
-This is useful when you want to create a [manual mock](ManualMocks.md) that extends the automatic mock's behavior.
+This is useful when you want to create a [manual mock](ManualMocks.md) that extends the automatic mock’s behavior.
 
 Example:
 
-```js
-// utils.js
-export default {
-  authorize: () => {
-    return 'token';
-  },
-  isAuthorized: (secret) => secret === 'wizard',
-};
-```
+    // utils.js
+    export default {
+      authorize: () => {
+        return 'token';
+      },
+      isAuthorized: (secret) => secret === 'wizard',
+    };
 
-```js
-// __tests__/genMockFromModule.test.js
-const utils = jest.genMockFromModule('../utils').default;
-utils.isAuthorized = jest.fn((secret) => secret === 'not wizard');
+    // __tests__/genMockFromModule.test.js
+    const utils = jest.genMockFromModule('../utils').default;
+    utils.isAuthorized = jest.fn((secret) => secret === 'not wizard');
 
-test('implementation created by jest.genMockFromModule', () => {
-  expect(utils.authorize.mock).toBeTruthy();
-  expect(utils.isAuthorized('not wizard')).toEqual(true);
-});
-```
+    test('implementation created by jest.genMockFromModule', () => {
+      expect(utils.authorize.mock).toBeTruthy();
+      expect(utils.isAuthorized('not wizard')).toEqual(true);
+    });
 
 This is how `genMockFromModule` will mock the following data types:
 
@@ -197,117 +175,107 @@ Creates a new property with the same primitive value as the original property.
 
 Example:
 
-```
-// example.js
-module.exports = {
-  function: function square(a, b) {
-    return a * b;
-  },
-  asyncFunction: async function asyncSquare(a, b) {
-    const result = await a * b;
-    return result;
-  },
-  class: new class Bar {
-    constructor() {
-      this.array = [1, 2, 3];
-    }
-    foo() {}
-  },
-  object: {
-    baz: 'foo',
-    bar: {
-      fiz: 1,
-      buzz: [1, 2, 3],
-    },
-  },
-  array: [1, 2, 3],
-  number: 123,
-  string: 'baz',
-  boolean: true,
-  symbol: Symbol.for('a.b.c'),
-};
-```
+    // example.js
+    module.exports = {
+      function: function square(a, b) {
+        return a * b;
+      },
+      asyncFunction: async function asyncSquare(a, b) {
+        const result = await a * b;
+        return result;
+      },
+      class: new class Bar {
+        constructor() {
+          this.array = [1, 2, 3];
+        }
+        foo() {}
+      },
+      object: {
+        baz: 'foo',
+        bar: {
+          fiz: 1,
+          buzz: [1, 2, 3],
+        },
+      },
+      array: [1, 2, 3],
+      number: 123,
+      string: 'baz',
+      boolean: true,
+      symbol: Symbol.for('a.b.c'),
+    };
 
-```js
-// __tests__/example.test.js
-const example = jest.genMockFromModule('./example');
+    // __tests__/example.test.js
+    const example = jest.genMockFromModule('./example');
 
-test('should run example code', () => {
-  // creates a new mocked function with no formal arguments.
-  expect(example.function.name).toEqual('square');
-  expect(example.function.length).toEqual(0);
+    test('should run example code', () => {
+      // creates a new mocked function with no formal arguments.
+      expect(example.function.name).toEqual('square');
+      expect(example.function.length).toEqual(0);
 
-  // async functions get the same treatment as standard synchronous functions.
-  expect(example.asyncFunction.name).toEqual('asyncSquare');
-  expect(example.asyncFunction.length).toEqual(0);
+      // async functions get the same treatment as standard synchronous functions.
+      expect(example.asyncFunction.name).toEqual('asyncSquare');
+      expect(example.asyncFunction.length).toEqual(0);
 
-  // creates a new class with the same interface, member functions and properties are mocked.
-  expect(example.class.constructor.name).toEqual('Bar');
-  expect(example.class.foo.name).toEqual('foo');
-  expect(example.class.array.length).toEqual(0);
+      // creates a new class with the same interface, member functions and properties are mocked.
+      expect(example.class.constructor.name).toEqual('Bar');
+      expect(example.class.foo.name).toEqual('foo');
+      expect(example.class.array.length).toEqual(0);
 
-  // creates a deeply cloned version of the original object.
-  expect(example.object).toEqual({
-    baz: 'foo',
-    bar: {
-      fiz: 1,
-      buzz: [],
-    },
-  });
+      // creates a deeply cloned version of the original object.
+      expect(example.object).toEqual({
+        baz: 'foo',
+        bar: {
+          fiz: 1,
+          buzz: [],
+        },
+      });
 
-  // creates a new empty array, ignoring the original array.
-  expect(example.array.length).toEqual(0);
+      // creates a new empty array, ignoring the original array.
+      expect(example.array.length).toEqual(0);
 
-  // creates a new property with the same primitive value as the original property.
-  expect(example.number).toEqual(123);
-  expect(example.string).toEqual('baz');
-  expect(example.boolean).toEqual(true);
-  expect(example.symbol).toEqual(Symbol.for('a.b.c'));
-});
-```
+      // creates a new property with the same primitive value as the original property.
+      expect(example.number).toEqual(123);
+      expect(example.string).toEqual('baz');
+      expect(example.boolean).toEqual(true);
+      expect(example.symbol).toEqual(Symbol.for('a.b.c'));
+    });
 
 ### `jest.mock(moduleName, factory, options)`
 
 Mocks a module with an auto-mocked version when it is being required. `factory` and `options` are optional. For example:
 
-```js
-// banana.js
-module.exports = () => 'banana';
+    // banana.js
+    module.exports = () => 'banana';
 
-// __tests__/test.js
-jest.mock('../banana');
+    // __tests__/test.js
+    jest.mock('../banana');
 
-const banana = require('../banana'); // banana will be explicitly mocked.
+    const banana = require('../banana'); // banana will be explicitly mocked.
 
-banana(); // will return 'undefined' because the function is auto-mocked.
-```
+    banana(); // will return 'undefined' because the function is auto-mocked.
 
-The second argument can be used to specify an explicit module factory that is being run instead of using Jest's automocking feature:
+The second argument can be used to specify an explicit module factory that is being run instead of using Jest’s automocking feature:
 
-```js
-jest.mock('../moduleName', () => {
-  return jest.fn(() => 42);
-});
+    jest.mock('../moduleName', () => {
+      return jest.fn(() => 42);
+    });
 
-// This runs the function specified as second argument to `jest.mock`.
-const moduleName = require('../moduleName');
-moduleName(); // Will return '42';
-```
+    // This runs the function specified as second argument to `jest.mock`.
+    const moduleName = require('../moduleName');
+    moduleName(); // Will return '42';
 
-The third argument can be used to create virtual mocks – mocks of modules that don't exist anywhere in the system:
+The third argument can be used to create virtual mocks – mocks of modules that don’t exist anywhere in the system:
 
-```js
-jest.mock(
-  '../moduleName',
-  () => {
-    /*
-     * Custom implementation of a module that doesn't exist in JS,
-     * like a generated module or a native module in react-native.
-     */
-  },
-  {virtual: true},
-);
-```
+    jest.mock(
+      '../moduleName',
+      () => {
+        /*
+         * Custom implementation of a module that doesn't exist in JS,
+         * like a generated module or a native module in react-native.
+         */
+      },
+      {virtual: true},
+    );
 
 _Warning: Importing a module in a setup file (as specified by `setupTestFrameworkScriptFile`) will prevent mocking for the module in question, as well as all the modules that it imports._
 
@@ -317,9 +285,9 @@ Returns the `jest` object for chaining.
 
 ### `jest.unmock(moduleName)`
 
-Indicates that the module system should never return a mocked version of the specified module from `require()` (e.g. that it should always return the real module).
+Indicates that the module system should never return a mocked version of the specified module from `require()` (e.g. that it should always return the real module).
 
-The most common use of this API is for specifying the module a given test intends to be testing (and thus doesn't want automatically mocked).
+The most common use of this API is for specifying the module a given test intends to be testing (and thus doesn’t want automatically mocked).
 
 Returns the `jest` object for chaining.
 
@@ -329,27 +297,25 @@ When using `babel-jest`, calls to `mock` will automatically be hoisted to the to
 
 One example when this is useful is when you want to mock a module differently within the same file:
 
-```js
-beforeEach(() => {
-  jest.resetModules();
-});
+    beforeEach(() => {
+      jest.resetModules();
+    });
 
-test('moduleName 1', () => {
-  jest.doMock('../moduleName', () => {
-    return jest.fn(() => 1);
-  });
-  const moduleName = require('../moduleName');
-  expect(moduleName()).toEqual(1);
-});
+    test('moduleName 1', () => {
+      jest.doMock('../moduleName', () => {
+        return jest.fn(() => 1);
+      });
+      const moduleName = require('../moduleName');
+      expect(moduleName()).toEqual(1);
+    });
 
-test('moduleName 2', () => {
-  jest.doMock('../moduleName', () => {
-    return jest.fn(() => 2);
-  });
-  const moduleName = require('../moduleName');
-  expect(moduleName()).toEqual(2);
-});
-```
+    test('moduleName 2', () => {
+      jest.doMock('../moduleName', () => {
+        return jest.fn(() => 2);
+      });
+      const moduleName = require('../moduleName');
+      expect(moduleName()).toEqual(2);
+    });
 
 Returns the `jest` object for chaining.
 
@@ -381,30 +347,26 @@ Resets the module registry - the cache of all required modules. This is useful t
 
 Example:
 
-```js
-const sum1 = require('../sum');
-jest.resetModules();
-const sum2 = require('../sum');
-sum1 === sum2;
-// > false (Both sum modules are separate "instances" of the sum module.)
-```
+    const sum1 = require('../sum');
+    jest.resetModules();
+    const sum2 = require('../sum');
+    sum1 === sum2;
+    // > false (Both sum modules are separate "instances" of the sum module.)
 
 Example in a test:
 
-```js
-beforeEach(() => {
-  jest.resetModules();
-});
+    beforeEach(() => {
+      jest.resetModules();
+    });
 
-test('works', () => {
-  const sum = require('../sum');
-});
+    test('works', () => {
+      const sum = require('../sum');
+    });
 
-test('works too', () => {
-  const sum = require('../sum');
-  // sum is a different copy of the sum module from the previous test.
-});
-```
+    test('works too', () => {
+      const sum = require('../sum');
+      // sum is a different copy of the sum module from the previous test.
+    });
 
 Returns the `jest` object for chaining.
 
@@ -430,15 +392,15 @@ Exhausts all tasks queued by `setImmediate()`.
 
 Also under the alias: `.runTimersToTime()`
 
-Executes only the macro task queue (i.e. all tasks queued by `setTimeout()` or `setInterval()` and `setImmediate()`).
+Executes only the macro task queue (i.e. all tasks queued by `setTimeout()` or `setInterval()` and `setImmediate()`).
 
-When this API is called, all timers are advanced by `msToRun` milliseconds. All pending "macro-tasks" that have been queued via `setTimeout()` or `setInterval()`, and would be executed within this time frame will be executed. Additionally if those macro-tasks schedule new macro-tasks that would be executed within the same time frame, those will be executed until there are no more macro-tasks remaining in the queue, that should be run within `msToRun` milliseconds.
+When this API is called, all timers are advanced by `msToRun` milliseconds. All pending “macro-tasks” that have been queued via `setTimeout()` or `setInterval()`, and would be executed within this time frame will be executed. Additionally if those macro-tasks schedule new macro-tasks that would be executed within the same time frame, those will be executed until there are no more macro-tasks remaining in the queue, that should be run within `msToRun` milliseconds.
 
 ### `jest.runOnlyPendingTimers()`
 
 Executes only the macro-tasks that are currently pending (i.e., only the tasks that have been queued by `setTimeout()` or `setInterval()` up to this point). If any of the currently pending macro-tasks schedule new macro-tasks, those new tasks will not be executed by this call.
 
-This is useful for scenarios such as one where the module being tested schedules a `setTimeout()` whose callback schedules another `setTimeout()` recursively (meaning the scheduling never stops). In these scenarios, it's useful to be able to run forward in time by a single step at a time.
+This is useful for scenarios such as one where the module being tested schedules a `setTimeout()` whose callback schedules another `setTimeout()` recursively (meaning the scheduling never stops). In these scenarios, it’s useful to be able to run forward in time by a single step at a time.
 
 ### `jest.requireActual(moduleName)`
 
@@ -452,13 +414,13 @@ Returns a mock module instead of the actual module, bypassing all checks on whet
 
 Explicitly supplies the mock object that the module system should return for the specified module.
 
-On occasion there are times where the automatically generated mock the module system would normally provide you isn't adequate enough for your testing needs. Normally under those circumstances you should write a [manual mock](ManualMocks.md) that is more adequate for the module in question. However, on extremely rare occasions, even a manual mock isn't suitable for your purposes and you need to build the mock yourself inside your test.
+On occasion there are times where the automatically generated mock the module system would normally provide you isn’t adequate enough for your testing needs. Normally under those circumstances you should write a [manual mock](ManualMocks.md) that is more adequate for the module in question. However, on extremely rare occasions, even a manual mock isn’t suitable for your purposes and you need to build the mock yourself inside your test.
 
-In these rare scenarios you can use this API to manually fill the slot in the module system's mock-module registry.
+In these rare scenarios you can use this API to manually fill the slot in the module system’s mock-module registry.
 
 Returns the `jest` object for chaining.
 
-_Note It is recommended to use [`jest.mock()`](#jestmockmodulename-factory-options) instead. The `jest.mock` API's second argument is a module factory instead of the expected exported module object._
+_Note It is recommended to use [`jest.mock()`](#jestmockmodulename-factory-options) instead. The `jest.mock` API’s second argument is a module factory instead of the expected exported module object._
 
 ### `jest.setTimeout(timeout)`
 
@@ -470,9 +432,7 @@ _Note: The method must be called after the test framework is installed in the en
 
 Example:
 
-```js
-jest.setTimeout(1000); // 1 second
-```
+    jest.setTimeout(1000); // 1 second
 
 ### `jest.useFakeTimers()`
 
@@ -494,32 +454,28 @@ _Note: By default, `jest.spyOn` also calls the **spied** method. This is differe
 
 Example:
 
-```js
-const video = {
-  play() {
-    return true;
-  },
-};
+    const video = {
+      play() {
+        return true;
+      },
+    };
 
-module.exports = video;
-```
+    module.exports = video;
 
 Example test:
 
-```js
-const video = require('./video');
+    const video = require('./video');
 
-test('plays video', () => {
-  const spy = jest.spyOn(video, 'play');
-  const isPlaying = video.play();
+    test('plays video', () => {
+      const spy = jest.spyOn(video, 'play');
+      const isPlaying = video.play();
 
-  expect(spy).toHaveBeenCalled();
-  expect(isPlaying).toBe(true);
+      expect(spy).toHaveBeenCalled();
+      expect(isPlaying).toBe(true);
 
-  spy.mockReset();
-  spy.mockRestore();
-});
-```
+      spy.mockReset();
+      spy.mockRestore();
+    });
 
 ### `jest.spyOn(object, methodName, accessType?)`
 
@@ -527,54 +483,50 @@ Since Jest 22.1.0+, the `jest.spyOn` method takes an optional third argument of 
 
 Example:
 
-```js
-const video = {
-  // it's a getter!
-  get play() {
-    return true;
-  },
-};
+    const video = {
+      // it's a getter!
+      get play() {
+        return true;
+      },
+    };
 
-module.exports = video;
+    module.exports = video;
 
-const audio = {
-  _volume: false,
-  // it's a setter!
-  set volume(value) {
-    this._volume = value;
-  },
-  get volume() {
-    return this._volume;
-  },
-};
+    const audio = {
+      _volume: false,
+      // it's a setter!
+      set volume(value) {
+        this._volume = value;
+      },
+      get volume() {
+        return this._volume;
+      },
+    };
 
-module.exports = video;
-```
+    module.exports = video;
 
 Example test:
 
-```js
-const video = require('./video');
+    const video = require('./video');
 
-test('plays video', () => {
-  const spy = jest.spyOn(video, 'play', 'get'); // we pass 'get'
-  const isPlaying = video.play;
+    test('plays video', () => {
+      const spy = jest.spyOn(video, 'play', 'get'); // we pass 'get'
+      const isPlaying = video.play;
 
-  expect(spy).toHaveBeenCalled();
-  expect(isPlaying).toBe(true);
+      expect(spy).toHaveBeenCalled();
+      expect(isPlaying).toBe(true);
 
-  spy.mockReset();
-  spy.mockRestore();
-});
+      spy.mockReset();
+      spy.mockRestore();
+    });
 
-test('plays audio', () => {
-  const spy = jest.spyOn(video, 'play', 'set'); // we pass 'set'
-  video.volume = 100;
+    test('plays audio', () => {
+      const spy = jest.spyOn(video, 'play', 'set'); // we pass 'set'
+      video.volume = 100;
 
-  expect(spy).toHaveBeenCalled();
-  expect(video.volume).toBe(100);
+      expect(spy).toHaveBeenCalled();
+      expect(video.volume).toBe(100);
 
-  spy.mockReset();
-  spy.mockRestore();
-});
-```
+      spy.mockReset();
+      spy.mockRestore();
+    });

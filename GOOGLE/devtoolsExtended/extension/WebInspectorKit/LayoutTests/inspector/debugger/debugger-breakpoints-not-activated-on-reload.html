@@ -1,46 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      function testFunction() {
-        return 0;
-      }
-
-      var test = function () {
-        var testName = WebInspector.inspectedPageURL;
-        testName = testName.substring(testName.lastIndexOf("/") + 1);
-
-        InspectorTest.startDebuggerTest(step1);
-
-        function step1() {
-          InspectorTest.showScriptSource(testName, step2);
-        }
-
-        function step2(sourceFrame) {
-          InspectorTest.addResult("Main resource was shown.");
-          InspectorTest.setBreakpoint(sourceFrame, 8, "", true);
-          WebInspector.panels.sources._toggleBreakpointsButton.element.click();
-          InspectorTest.reloadPage(step3);
-        }
-
-        function step3() {
-          InspectorTest.addResult("Main resource was shown.");
-          if (!WebInspector.debuggerModel.breakpointsActive())
-            InspectorTest.addResult("Breakpoints are deactivated.");
-          else InspectorTest.addResult("Error: breakpoints are activated.");
-          InspectorTest.completeDebuggerTest();
-        }
-      };
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that breakpoints are not activated on page reload.<a
-        href="https://bugs.webkit.org/show_bug.cgi?id=41461"
-        >Bug 41461</a
-      >
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-breakpoints-not-activated-on-reload</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that breakpoints are not activated on page reload.<a href="https://bugs.webkit.org/show_bug.cgi?id=41461">Bug 41461</a></p>
+</body>
 </html>

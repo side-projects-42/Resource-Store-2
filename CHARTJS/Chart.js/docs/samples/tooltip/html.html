@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>html</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="external-html-tooltip">External HTML Tooltip</h1>
+<p>This sample shows how to use the external tooltip functionality to generate an HTML tooltip.</p>
+<p>```js chart-editor // <block:external:2> const getOrCreateTooltip = (chart) =&gt; { let tooltipEl = chart.canvas.parentNode.querySelector(“div”);</p>
+<p>if (!tooltipEl) { tooltipEl = document.createElement(“div”); tooltipEl.style.background = “rgba(0, 0, 0, 0.7)”; tooltipEl.style.borderRadius = “3px”; tooltipEl.style.color = “white”; tooltipEl.style.opacity = 1; tooltipEl.style.pointerEvents = “none”; tooltipEl.style.position = “absolute”; tooltipEl.style.transform = “translate(-50%, 0)”; tooltipEl.style.transition = “all .1s ease”;</p>
+<pre><code>const table = document.createElement(&quot;table&quot;);
+table.style.margin = &quot;0px&quot;;
+
+tooltipEl.appendChild(table);
+chart.canvas.parentNode.appendChild(tooltipEl);</code></pre>
+<p>}</p>
+<p>return tooltipEl; };</p>
+<p>const externalTooltipHandler = (context) =&gt; { // Tooltip Element const { chart, tooltip } = context; const tooltipEl = getOrCreateTooltip(chart);</p>
+<p>// Hide if no tooltip if (tooltip.opacity === 0) { tooltipEl.style.opacity = 0; return; }</p>
+<p>// Set Text if (tooltip.body) { const titleLines = tooltip.title || []; const bodyLines = tooltip.body.map((b) =&gt; b.lines);</p>
+<pre><code>const tableHead = document.createElement(&quot;thead&quot;);
+
+titleLines.forEach((title) =&gt; {
+  const tr = document.createElement(&quot;tr&quot;);
+  tr.style.borderWidth = 0;
+
+  const th = document.createElement(&quot;th&quot;);
+  th.style.borderWidth = 0;
+  const text = document.createTextNode(title);
+
+  th.appendChild(text);
+  tr.appendChild(th);
+  tableHead.appendChild(tr);
+});
+
+const tableBody = document.createElement(&quot;tbody&quot;);
+bodyLines.forEach((body, i) =&gt; {
+  const colors = tooltip.labelColors[i];
+
+  const span = document.createElement(&quot;span&quot;);
+  span.style.background = colors.backgroundColor;
+  span.style.borderColor = colors.borderColor;
+  span.style.borderWidth = &quot;2px&quot;;
+  span.style.marginRight = &quot;10px&quot;;
+  span.style.height = &quot;10px&quot;;
+  span.style.width = &quot;10px&quot;;
+  span.style.display = &quot;inline-block&quot;;
+
+  const tr = document.createElement(&quot;tr&quot;);
+  tr.style.backgroundColor = &quot;inherit&quot;;
+  tr.style.borderWidth = 0;
+
+  const td = document.createElement(&quot;td&quot;);
+  td.style.borderWidth = 0;
+
+  const text = document.createTextNode(body);
+
+  td.appendChild(span);
+  td.appendChild(text);
+  tr.appendChild(td);
+  tableBody.appendChild(tr);
+});
+
+const tableRoot = tooltipEl.querySelector(&quot;table&quot;);
+
+// Remove old children
+while (tableRoot.firstChild) {
+  tableRoot.firstChild.remove();
+}
+
+// Add new children
+tableRoot.appendChild(tableHead);
+tableRoot.appendChild(tableBody);</code></pre>
+<p>}</p>
+<p>const { offsetLeft: positionX, offsetTop: positionY } = chart.canvas;</p>
+<p>// Display, position, and set styles for font tooltipEl.style.opacity = 1; tooltipEl.style.left = positionX + tooltip.caretX + “px”; tooltipEl.style.top = positionY + tooltip.caretY + “px”; tooltipEl.style.font = tooltip.options.bodyFont.string; tooltipEl.style.padding = tooltip.options.padding + “px” + tooltip.options.padding + “px”; }; // </block:external></p>
+<p>// <block:setup:1> const DATA_COUNT = 7; const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100, decimals: 0 }; const data = { labels: Utils.months({ count: DATA_COUNT }), datasets: [ { label: “Dataset 1”, data: Utils.numbers(NUMBER_CFG), fill: false, borderColor: Utils.CHART_COLORS.red, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), }, { label: “Dataset 2”, data: Utils.numbers(NUMBER_CFG), fill: false, borderColor: Utils.CHART_COLORS.blue, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data: data, options: { interaction: { mode: “index”, intersect: false, }, plugins: { title: { display: true, text: “Chart.js Line Chart - External Tooltips”, }, tooltip: { enabled: false, position: “nearest”, external: externalTooltipHandler, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+</body>
+</html>

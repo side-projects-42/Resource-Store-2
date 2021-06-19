@@ -1,69 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script src="../debugger/resources/edit-me.js"></script>
-
-    <script>
-      function test() {
-        var panel = WebInspector.showPanel("sources");
-
-        function selectionToSearchInputTest() {
-          WebInspector.searchController.showSearchField();
-          InspectorTest.addResult(
-            WebInspector.searchController._searchInputElement.value
-          );
-          WebInspector.advancedSearchController.show();
-          InspectorTest.addResult(
-            WebInspector.advancedSearchController._searchView._search.value
-          );
-        }
-
-        InspectorTest.showScriptSource("edit-me.js", didShowScriptSource);
-
-        function getLineColumn(sourceFrame, string) {
-          for (var i = 0; i < sourceFrame._textEditor.linesCount; ++i) {
-            var line = sourceFrame._textEditor.line(i);
-            var column = line.indexOf(string);
-            if (column === -1) continue;
-            return { line: i, column: column };
-            break;
-          }
-        }
-
-        function setSelection(sourceFrame, from, to) {
-          range = new WebInspector.TextRange(
-            from.line,
-            from.column,
-            to.line,
-            to.column
-          );
-          return sourceFrame._textEditor.setSelection(range);
-        }
-
-        function didShowScriptSource(sourceFrame) {
-          var string = "return";
-          var lineColumn = getLineColumn(sourceFrame, string);
-
-          InspectorTest.runTestSuite([
-            function testWordSelectionToSearchQuery(next) {
-              setSelection(sourceFrame, lineColumn, {
-                line: lineColumn.line,
-                column: lineColumn.column + string.length,
-              });
-              setTimeout(secondStep);
-              function secondStep() {
-                selectionToSearchInputTest();
-                next();
-              }
-            },
-          ]);
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests synchronizing the search input field to the editor selection.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>text-editor-selection-to-search</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests synchronizing the search input field to the editor selection.</p>
+</body>
 </html>

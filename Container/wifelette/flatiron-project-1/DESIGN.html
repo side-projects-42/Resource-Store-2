@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DESIGN</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="first-command">First Command</h3>
+<pre class="shell"><code>$ candidates user wifelette
+
+*Here&#39;s everything you need to know about wifelette:*
+
+**Their Basics**:
+
+**Name**: Leah Silber
+**Company**: Tilde.io
+**Location**: Portland, OR
+**Bio**: She&#39;s so awesome!
+**Email**: leah@tilde.io
+**Hireable**: Yes/No (Yes in Green, No in Red)
+
+**Their Activity**:
+
+**Joined GitHub**: September 9, 2008 (X years and Y months ago)
+**Org Membership**: 4 organizations
+**Public Repos**: 163 repos
+**Followers**: 363 followers
+
+**Lists you can dig into later**:
+(ProTip: Command + click on any of these URLs in most Terminals to go directly to the link)
+
+**Gists**: https://gist.github.com/search?o=desc&amp;q=user%3Awifelette&amp;s=stars
+**Followers**: https://github.com/wifelette?tab=followers
+**Repos**: https://github.com/wifelette?tab=repositories
+**Starred Repos**: https://github.com/wifelette?tab=stars
+**Who They Follow*: https://github.com/wifelette?tab=following
+
+Next, type `candidate USERNAME help` to learn about how else this tool can help.</code></pre>
+<h3 id="ideas-for-other-commands">Ideas for Other Commands</h3>
+<pre><code>$ candidate wifelette languages
+
+Of wifelette&#39;s 163 public repos, they break down as follows:
+
+* 145 are Ruby (X percent)
+* 2 are HTML (X percent)
+* 4 are JavaScript (X percent)
+* 1 is a Shell (X percent)</code></pre>
+<p>^ Color the language names? What if I don’t know how many or which they’ll be? Is there a way to use a <code>PASTEL.rand</code> kinda thing?</p>
+<p>^ This may not be possible for rate limit reasons—so far the only way to find this data would be to get ALL the details on ALL their repos and then do a .length for the total number, annnd… so far no way for the type :p GitHub uses Linguist to do it themselves (https://help.github.com/en/articles/about-repository-languages) and so far there’s nowhere exposed that they actually <em>store</em> that info.</p>
+<p><strong>Update</strong>: This info lives <em>inside</em> each org’s API call, nested inside each repo the user has. So <code>user &gt; repo &gt; language</code>, where there are <em>lots</em> of repos potentially belonging to each user. So now I know it’s definitely possible and probably not all that complicated, though it would surely be <em>slow</em>. For future implementation note:</p>
+<ul>
+<li>https://api.github.com/users/wifelette/repos is the API URL for each user’s repo</li>
+<li>Like earlier, this could be popped into a CLI command with <code>#{username}</code> interpolated into the URL.</li>
+<li>Once there, another array of hashes.</li>
+<li>Each entry in the array, top level, is a hash of the ID and details of the repo, as a <em>key</em> in another hash. The <em>value</em> attached to the key is yet <em>more</em> data, about the repo <em>contents</em>. So it would need to be something like… snag the key-repo-<code>id</code>, and then pair it with the nested <code>language</code> key/value.</li>
+<li>Lastly, gotta sort out the basic math to tally it all up and spit out the percentages.</li>
+</ul>
+<p>This same pattern follows if we went to https://api.github.com/orgs/tildeio/repos to fetch this info on the org level instead of the user level.</p>
+<h3 id="things-to-think-about-later">Things to think about later</h3>
+<ul>
+<li><strong>Q</strong>: Is it possible to reorder and/or add categories to how Thor presents all the commands when you type <code>help</code>?</li>
+<li><strong>A</strong>: Looked it up. It’s an open feature request, not currently possible.</li>
+<li><strong>Q</strong>: Some things, like email, won’t work unless the person is authed. How to handle?</li>
+<li><strong>A</strong>: For now I added a specific message for when there’s no email. Same for some other fields.</li>
+<li><strong>Q</strong>: if you accidentally type in just the <code>candidates user</code> instead of <code>candidates user username</code> a friendly and clear error message would be great</li>
+<li><strong>A</strong>: Wishlist for later, since it involves default Thor behavior. Right now this isn’t something I can touch with my custom errors.</li>
+</ul>
+<h2 id="custom-error-handling">Custom Error Handling</h2>
+<p>I started writing a custom error class when I hit a sort-of error in my TTY prompts. However, after a bit I dug into it a bit more, and discovered that TTY themselves had just accepted a PR to fix the issue (not in the way I’d have liked, but fix it just the same). So I abandoned that part, and switched to using the unreleased version of the gem.</p>
+<p>Later I added custom errors to handle what happened if you typed in a user that didn’t actually exist.</p>
+</body>
+</html>

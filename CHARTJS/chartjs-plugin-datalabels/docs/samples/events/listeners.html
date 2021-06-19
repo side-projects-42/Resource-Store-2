@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>listeners</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="listeners">Listeners</h1>
+<p>Listen and log all <a href="../../guide/events.md">label events</a> (see the <code>Output</code> tab).</p>
+<p>```js chart-editor // <block:setup:2> var DATA_COUNT = 6; var labels = [];</p>
+<p>Utils.srand(8);</p>
+<p>for (var idx = 0; idx &lt; DATA_COUNT; ++idx) { labels.push("" + idx); }</p>
+<p>function log(type, context) { var i = context.datasetIndex; var j = context.dataIndex; var v = context.dataset.data[j];</p>
+<p>console.log(type + “:” + i + “-” + j + " (" + v + “)”); } // </block:setup></p>
+<p>var config = /* <block:config:0> */ { type: “line”, data: { labels: labels, datasets: [ { backgroundColor: Utils.color(0), borderColor: Utils.color(0), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), datalabels: { align: “start”, }, }, { backgroundColor: Utils.color(1), borderColor: Utils.color(1), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), }, { backgroundColor: Utils.color(2), borderColor: Utils.color(2), data: Utils.numbers({ count: DATA_COUNT, min: 0, max: 100, }), datalabels: { align: “end”, }, }, ], }, options: { plugins: { datalabels: { backgroundColor: function (context) { return context.dataset.backgroundColor; }, color: “white”, font: { weight: “bold”, }, offset: 8, padding: 6, formatter: Math.round, listeners: { enter: function (context) { log(“enter”, context); }, leave: function (context) { log(“leave”, context); }, click: function (context) { log(“click”, context); }, }, }, },</p>
+<pre><code>// Core options
+aspectRatio: 5 / 3,
+layout: {
+  padding: {
+    top: 40,
+    right: 16,
+    bottom: 16,
+    left: 0,
+  },
+},
+elements: {
+  line: {
+    fill: false,
+  },
+},
+scales: {
+  yAxes: [
+    {
+      stacked: true,
+    },
+  ],
+},</code></pre>
+<p>}, }; /* </block:config> */</p>
+<p>module.exports = { config: config, output: “Interact with labels to log events”, }; ```</p>
+</body>
+</html>

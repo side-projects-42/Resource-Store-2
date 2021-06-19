@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="bonus-collections-practice">Bonus — Collections Practice</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Become proficient at manipulating arrays</li>
+<li>Practice using higher level Ruby enumerators like <code>.collect</code> and <code>.sort</code></li>
+</ol>
+<h2 id="instructions">Instructions</h2>
+<p>The goal of this lab is to become proficient at manipulating arrays. Try experimenting with the built in Ruby methods as well as implementing your own logic to solve these. Write methods that solve each of the rspec tests.</p>
+<h2 id="question-1-sort_array_asc">Question 1: <code>#sort_array_asc</code></h2>
+<p>Build a method <code>sort_array_asc</code> that takes in an array of integers and returns a copy of the array with the integers in ascending order.</p>
+<h2 id="question-2-sort_array_desc">Question 2: <code>#sort_array_desc</code></h2>
+<p>Build a method <code>sort_array_desc</code> that takes in an array of integers and returns a copy of the array with the integers in descending order. Remember that <code>.sort</code> takes a block in which you can specify how you want your array sorted.</p>
+<h2 id="question-3-sort_array_char_count">Question 3: <code>#sort_array_char_count</code></h2>
+<p>Build a method <code>sort_array_char_count</code> that takes in an array of strings and returns a copy of the array with the strings ordered in ascending order by length. Remember that <code>.sort</code> takes a block in which you can specify how you want your array sorted.</p>
+<h2 id="question-4-swap_elements">Question 4: <code>#swap_elements</code></h2>
+<p>Build a method <code>swap_elements</code> that takes in an array and swaps the second and third elements. Remember that array indices start at <code>0</code>, so the second element has an index of <code>1</code> and the third element has an index of <code>2</code>.</p>
+<p><strong>Advanced:</strong> <em>Try building a method</em> <code>swap_elements_from_to</code> <em>that takes in three arguments,</em> <code>array, index, destination_index</code><em>, that will allow you to specify the index of the element you would like to move to a new index. So:</em></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">swap_elements_from_to([<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>],<span class="dv">0</span>,<span class="dv">2</span>) <span class="co">#=&gt; [&quot;c&quot;, &quot;b&quot;, &quot;a&quot;]</span></a>
+<a class="sourceLine" id="cb1-2" title="2">swap_elements_from_to([<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>],<span class="dv">2</span>,<span class="dv">1</span>) <span class="co">#=&gt; [&quot;a&quot;, &quot;c&quot;, &quot;b&quot;]</span></a></code></pre></div>
+<p><strong>Advanced #2:</strong> <em>Try writing test coverage for it!</em></p>
+<h2 id="question-5-reverse_array">Question 5: <code>#reverse_array</code></h2>
+<p>Build a method <code>reverse_array</code> that takes in an array of integers and returns a copy of the array with the elements in reverse order.</p>
+<h2 id="question-6-kesha_maker">Question 6: <code>#kesha_maker</code></h2>
+<p>Build a method called <code>kesha_maker</code> that takes in an array of strings and replaces the third character in each string with a <code>$</code> (“dollar sign”)—Ke$ha style. Use the <code>.each</code> method to iterate and build a new array to return at the end of your method, just like we did in the “My Each” lab.</p>
+<h2 id="question-7-find_a">Question 7: <code>#find_a</code></h2>
+<p>Build a method <code>find_a</code> that returns all the strings in the array passed to it that <code>start_with?</code> (<strong>hint</strong>) the letter <code>"a"</code>. You’ll want to use a high level iterator for this that finds, selects, or detects elements based on a condition.</p>
+<h2 id="question-8-sum_array">Question 8: <code>#sum_array</code></h2>
+<p>Build a method <code>sum_array</code> that adds together all of the integers in the array and returns their sum.</p>
+<p><strong>Advanced:</strong> <em>Try using the</em> <code>.inject</code> <em>method here.</em></p>
+<h2 id="question-9-add_s">Question 9: <code>#add_s</code></h2>
+<p>Build a method that adds an <code>"s"</code> to each word in the array except for the second element in the array (“feet” is already plural).</p>
+<p><strong>Advanced:</strong> <em>Iterators in Ruby are chainable, see if you can use</em> <code>.each_with_index</code> <em>in addition to</em> <code>.collect</code> <em>to solve this one in an elegant way. What happens if you write:</em></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">[<span class="dv">1</span>,<span class="dv">2</span>].each_with_index.collect{|element, index| }</a></code></pre></div>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/collections_practice'>Bonus — Collections Practice</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

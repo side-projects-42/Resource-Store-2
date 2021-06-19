@@ -1,94 +1,33 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: GFM mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="../../addon/mode/overlay.js"></script>
-<script src="../xml/xml.js"></script>
-<script src="../markdown/markdown.js"></script>
-<script src="gfm.js"></script>
-<script src="../javascript/javascript.js"></script>
-<script src="../css/css.js"></script>
-<script src="../htmlmixed/htmlmixed.js"></script>
-<script src="../clike/clike.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">GFM</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>GFM mode</h2>
-  <form>
-    <textarea id="code" name="code">
-GitHub Flavored Markdown
-========================
-
-Everything from markdown plus GFM features:
-
-## URL autolinking
-
-Underscores_are_allowed_between_words.
-
-## Fenced code blocks (and syntax highlighting)
-
-```javascript
-for (var i = 0; i &lt; items.length; i++) {
-    console.log(items[i], i); // log them
-}
-```
-
-## Task Lists
-
-- [ ] Incomplete task list item
-- [x] **Completed** task list item
-
-## A bit of GitHub spice
-
-* SHA: be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2
-* User@SHA ref: mojombo@be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2
-* User/Project@SHA: mojombo/god@be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2
-* \#Num: #1
-* User/#Num: mojombo#1
-* User/Project#Num: mojombo/god#1
-
-See http://github.github.com/github-flavored-markdown/.
-
-</textarea
-    >
-  </form>
-
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      mode: "gfm",
-      lineNumbers: true,
-      theme: "default",
-    });
-  </script>
-
-  <p>Optionally depends on other modes for properly highlighted code blocks.</p>
-
-  <p>
-    <strong>Parsing/Highlighting Tests:</strong>
-    <a href="../../test/index.html#gfm_*">normal</a>,
-    <a href="../../test/index.html#verbose,gfm_*">verbose</a>.
-  </p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: GFM mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">GFM</a></li>
+</ul>
+<h2 id="gfm-mode">GFM mode</h2>
+<p>GitHub Flavored Markdown ======================== Everything from markdown plus GFM features: ## URL autolinking Underscores_are_allowed_between_words. ## Fenced code blocks (and syntax highlighting) ```javascript for (var i = 0; i &lt; items.length; i++) { console.log(items[i], i); // log them } ``` ## Task Lists - [ ] Incomplete task list item - [x] **Completed** task list item ## A bit of GitHub spice * SHA: be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2 * User@SHA ref: mojombo@be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2 * User/Project@SHA: mojombo/god@be6a8cc1c1ecfe9489fb51e4869af15a13fc2cd2 * \#Num: #1 * User/#Num: mojombo#1 * User/Project#Num: mojombo/god#1 See http://github.github.com/github-flavored-markdown/.</p>
+<p>Optionally depends on other modes for properly highlighted code blocks.</p>
+<p><strong>Parsing/Highlighting Tests:</strong> <a href="../../test/index.html#gfm_*">normal</a>, <a href="../../test/index.html#verbose,gfm_*">verbose</a>.</p>
+</body>
+</html>

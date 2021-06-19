@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="apples-and-holidays">Apples and Holidays</h1>
+<h2 id="objectives">Objectives</h2>
+<p>Get comfortable interating over arrays and hashes. This lab is broken into two sections: apple picker and holiday supplies.</p>
+<h2 id="apple-picker">Apple Picker</h2>
+<h3 id="instructions">Instructions</h3>
+<p>In <code>lib/apple.rb</code> write two methods that will pick the apples out of the fruits array, one using <code>collect</code>, and the other using <code>select</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">fruits = [<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;orange&quot;</span>, <span class="st">&quot;apple&quot;</span>]</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">apple_picker_with_select(fruits) <span class="co">#=&gt; [&quot;apple&quot;, &quot;apple&quot;]</span></a></code></pre></div>
+<ol type="1">
+<li><p>First, code the solution to the <code>apple_picker_with_select</code> method. Use <code>.select</code> to iterate over a given array, select the items in the array that are equal to <code>"apple"</code> and return a new array containing all of the <code>"apples"</code> from the original array. Use <code>binding.pry</code> to understand the return value of using the <code>.select</code> method on an array.</p></li>
+<li><p>Now, code the solution to <code>apple_picker_with_collect</code>.</p></li>
+</ol>
+<ul>
+<li>Set a variable, <code>result_of_collecting</code> equal to the return value of calling the <code>.collect</code> method on a given array to achieve the same result as above. You’ll need to use similar <strong>but not identical</strong> code as in the <code>do</code> <code>end</code> block that follows <code>.collect</code> as you originally did for <code>.select</code>.</li>
+<li>Use <code>binding.pry</code> to examine the return value of doing so. You should see that the return value is an array of <code>"apple"</code> strings, interspected with <code>nil</code> values. Oh no! Now we have to remove the <code>nil</code> elements from our array!</li>
+<li>Use the <code>.compact</code> method on <code>result_of_collecting</code> to remove all the <code>nil</code> elements from your array.</li>
+</ul>
+<p><strong>Important:</strong> Think about the difference between <code>select</code> and <code>collect</code>. Which one makes more sense to use? What do you think the benefits are of using one over the other, in this case?</p>
+<p><strong>Reminder:</strong> You can <code>require 'pry'</code> on the top of your file and use binding.pry inside your methods. Then, when you run rspec, you’ll be dropped right into the middle of the method. This will help you explore what is going on and understand how to get the tests passing.</p>
+<h2 id="the-holiday-suppliers">The Holiday Suppliers</h2>
+<h3 id="instructions-1">Instructions</h3>
+<p>You have a bunch of decorations for various holidays organized by season.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">holiday_supplies = {</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="st">:winter</span> =&gt; {</a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="st">:christmas</span> =&gt; [<span class="st">&quot;Lights&quot;</span>, <span class="st">&quot;Wreath&quot;</span>],</a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="st">:new_years</span> =&gt; [<span class="st">&quot;Party Hats&quot;</span>]</a>
+<a class="sourceLine" id="cb2-5" title="5">  },</a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="st">:summer</span> =&gt; {</a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="st">:fourth_of_july</span> =&gt; [<span class="st">&quot;Fireworks&quot;</span>, <span class="st">&quot;BBQ&quot;</span>]</a>
+<a class="sourceLine" id="cb2-8" title="8">  },</a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="st">:fall</span> =&gt; {</a>
+<a class="sourceLine" id="cb2-10" title="10">    <span class="st">:thanksgiving</span> =&gt; [<span class="st">&quot;Turkey&quot;</span>]</a>
+<a class="sourceLine" id="cb2-11" title="11">  },</a>
+<a class="sourceLine" id="cb2-12" title="12">  <span class="st">:spring</span> =&gt; {</a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="st">:memorial_day</span> =&gt; [<span class="st">&quot;BBQ&quot;</span>]</a>
+<a class="sourceLine" id="cb2-14" title="14">  }</a>
+<a class="sourceLine" id="cb2-15" title="15">}</a></code></pre></div>
+<p>Write your methods in <code>lib/holiday.rb</code>; use the comments in each method as guides.</p>
+<ul>
+<li>Write a method that returns the second supply for the Fourth of July. For eg:</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">def</span> second_supply_for_fourth_of_july(holiday_supplies)</a>
+<a class="sourceLine" id="cb3-2" title="2">  holiday_supplies[<span class="st">:summer</span>][<span class="st">:fourth_of_july</span>][<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">end</span></a></code></pre></div>
+<ul>
+<li><p>Write a method that adds a supply to both Winter holidays.</p></li>
+<li><p>Write a method that adds a supply to Memorial Day.</p></li>
+<li><p>Write a method that adds a new holiday and its associated supplies to any season.</p></li>
+<li><p>Write a method to collect all Winter supplies from all the winter holidays. For eg:</p></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">winter_supplies</span>(holiday_supplies) <span class="co">#=&gt; [&quot;Lights&quot;, &quot;Wreath&quot;, etc]</span></a></code></pre></div>
+<ul>
+<li><p>Write a method that uses a loop to list out all the supplies you have for each holiday and the season. Use string manipulation to get your output to match what the test is expecting.</p></li>
+<li>Here are a few helpful tips:
+<ul>
+<li>Our hash keys are symbols. We need to convert them into strings. Use the <code>.to_s</code> method on a symbol to convert it into a string.</li>
+<li>Look closely at the output string that the test is expecting. You’ll notice that it expects holiday names, like “New Years”, to have both words capitalized. Ruby has a <code>.capitalize</code> method that you can call on a string. <strong>But, note:</strong>
+<ul>
+<li><code>.capitilize</code> returns the capitalized string but <em>doesn’t change</em> the original string. So, when you call on that same string in the future, it <em>isn’t capitalized!</em>. You can capitalize a string for now and evermore by using the <code>!</code>, bang operator.</li>
+<li>You’ll need to capitalize <em>both words</em> in a given holiday’s name. If you call <code>"new years".capitalize!</code>. It will return <code>"New years"</code>. In order to capitalize <em>both</em> words, you’ll need to <code>.split</code> the string into an array and iterate over that array to <code>.capitalize!</code> each word in it. Then, you’ll need to <code>.join</code> the array back into a string.</li>
+<li>If you’re unfamiliar with the methods mentioned above, look them up in the Ruby documentation.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Example of expected output:</p>
+<pre><code>Winter:
+  Christmas: Lights, Wreath
+  New Years: Party Hats</code></pre>
+<ul>
+<li>Write a method to collect all holidays with BBQ. The method should behave as seen below:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">holidays_with_bbqs</span>(holiday_supplies)</a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co">#=&gt; [:fourth_of_july, :memorial_day]</span></a></code></pre></div>
+<p><strong>Reminder:</strong> This is a challenging lab, so remember to use Pry, googling and the Learn community to help you get the tests passing.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="http://www.codequizzes.com/learn-ruby/">Codequizzes</a> - <a href="http://www.codequizzes.com/learn-ruby/iteration-nested-data-structures">Iteration Nested Data Structures</a></li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>animations</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="animations">Animations</h1>
+<p>Chart.js animates charts out of the box. A number of options are provided to configure how the animation looks and how long it takes.</p>
+<div class="tabs">
+<p>::: tab “Looping tension [property]”</p>
+<p>```js chart-editor // <block:setup:1> const data = { labels: [“January”, “February”, “March”, “April”, “May”, “June”, “July”], datasets: [ { label: “Looping tension”, data: [65, 59, 80, 81, 26, 55, 40], fill: false, borderColor: “rgb(75, 192, 192)”, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data: data, options: { animations: { tension: { duration: 1000, easing: “linear”, from: 1, to: 0, loop: true, }, }, scales: { y: { // defining min and max so hiding the dataset does not change scale range min: 0, max: 100, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+</div>
+<p>::: tab “Hide and show [mode]”</p>
+<p>```js chart-editor // <block:setup:1> const data = { labels: [“January”, “February”, “March”, “April”, “May”, “June”, “July”], datasets: [ { label: “Try hiding me”, data: [65, 59, 80, 81, 26, 55, 40], fill: false, borderColor: “rgb(75, 192, 192)”, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data: data, options: { transitions: { show: { animations: { x: { from: 0, }, y: { from: 0, }, }, }, hide: { animations: { x: { to: 0, }, y: { to: 0, }, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<p>:::</p>
+<p>::::</p>
+<h2 id="animation-configuration">Animation configuration</h2>
+<p>Animation configuration consists of 3 keys.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>animation</td>
+<td><code>object</code></td>
+<td><a href="#animation">animation</a></td>
+</tr>
+<tr class="even">
+<td>animations</td>
+<td><code>object</code></td>
+<td><a href="#animations">animations</a></td>
+</tr>
+<tr class="odd">
+<td>transitions</td>
+<td><code>object</code></td>
+<td><a href="#transitions">transitions</a></td>
+</tr>
+</tbody>
+</table>
+<p>These keys can be configured in following paths:</p>
+<ul>
+<li>`` - chart options</li>
+<li><code>datasets[type]</code> - dataset type options</li>
+<li><code>overrides[type]</code> - chart type options</li>
+</ul>
+<p>These paths are valid under <code>defaults</code> for global confuguration and <code>options</code> for instance configuration.</p>
+<h2 id="animation">animation</h2>
+<p>The default configuration is defined here: <a href="https://github.com/chartjs/Chart.js/blob/master/src/core/core.animations.js" target="_blank">core.animations.js</a></p>
+<p>Namespace: <code>options.animation</code></p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>duration</code></td>
+<td><code>number</code></td>
+<td><code>1000</code></td>
+<td>The number of milliseconds an animation takes.</td>
+</tr>
+<tr class="even">
+<td><code>easing</code></td>
+<td><code>string</code></td>
+<td><code>'easeOutQuart'</code></td>
+<td>Easing function to use. <a href="#easing">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>delay</code></td>
+<td><code>number</code></td>
+<td><code>undefined</code></td>
+<td>Delay before starting the animations.</td>
+</tr>
+<tr class="even">
+<td><code>loop</code></td>
+<td><code>boolean</code></td>
+<td><code>undefined</code></td>
+<td>If set to <code>true</code>, the animations loop endlessly.</td>
+</tr>
+</tbody>
+</table>
+<p>These defaults can be overridden in <code>options.animation</code> or <code>dataset.animation</code> and <code>tooltip.animation</code>. These keys are also <a href="../general/options.md#scriptable-options">Scriptable</a>.</p>
+<h2 id="animations-1">animations</h2>
+<p>Animations options configures which element properties are animated and how. In addition to the main <a href="#animation-configuration">animation configuration</a>, the following options are available:</p>
+<p>Namespace: <code>options.animations[animation]</code></p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 22%" />
+<col style="width: 6%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>properties</code></td>
+<td><code>string[]</code></td>
+<td><code>key</code></td>
+<td>The property names this configuration applies to. Defaults to the key name of this object.</td>
+</tr>
+<tr class="even">
+<td><code>type</code></td>
+<td><code>string</code></td>
+<td><code>typeof property</code></td>
+<td>Type of property, determines the interpolator used. Possible values: <code>'number'</code>, <code>'color'</code> and <code>'boolean'</code>. Only really needed for <code>'color'</code>, because <code>typeof</code> does not get that right.</td>
+</tr>
+<tr class="odd">
+<td><code>from</code></td>
+<td><code>number</code>|<code>Color</code>|<code>boolean</code></td>
+<td><code>undefined</code></td>
+<td>Start value for the animation. Current value is used when <code>undefined</code></td>
+</tr>
+<tr class="even">
+<td><code>to</code></td>
+<td><code>number</code>|<code>Color</code>|<code>boolean</code></td>
+<td><code>undefined</code></td>
+<td>End value for the animation. Updated value is used when <code>undefined</code></td>
+</tr>
+<tr class="odd">
+<td><code>fn</code></td>
+<td><code>&lt;T&gt;(from: T, to: T, factor: number) =&gt; T;</code></td>
+<td><code>undefined</code></td>
+<td>Optional custom interpolator, instead of using a predefined interpolator from <code>type</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="default-animations">Default animations</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Option</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>numbers</code></td>
+<td><code>properties</code></td>
+<td><code>['x', 'y', 'borderWidth', 'radius', 'tension']</code></td>
+</tr>
+<tr class="even">
+<td><code>numbers</code></td>
+<td><code>type</code></td>
+<td><code>'number'</code></td>
+</tr>
+<tr class="odd">
+<td><code>colors</code></td>
+<td><code>properties</code></td>
+<td><code>['color', 'borderColor', 'backgroundColor']</code></td>
+</tr>
+<tr class="even">
+<td><code>colors</code></td>
+<td><code>type</code></td>
+<td><code>'color'</code></td>
+</tr>
+</tbody>
+</table>
+<p>:::tip Note These default animations are overridden by most of the dataset controllers. :::</p>
+<h2 id="transitions">transitions</h2>
+<p>The core transitions are <code>'active'</code>, <code>'hide'</code>, <code>'reset'</code>, <code>'resize'</code>, <code>'show'</code>. A custom transition can be used by passing a custom <code>mode</code> to <a href="../developers/api.md#updatemode">update</a>. Transition extends the main <a href="#animation-configuration">animation configuration</a> and <a href="#animations-configuration">animations configuration</a>.</p>
+<h3 id="default-transitions">Default transitions</h3>
+<p>Namespace: <code>options.transitions[mode]</code></p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 7%" />
+<col style="width: 37%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mode</th>
+<th>Option</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>'active'</code></td>
+<td>animation.duration</td>
+<td>400</td>
+<td>Override default duration to 400ms for hover animations</td>
+</tr>
+<tr class="even">
+<td><code>'resize'</code></td>
+<td>animation.duration</td>
+<td>0</td>
+<td>Override default duration to 0ms (= no animation) for resize</td>
+</tr>
+<tr class="odd">
+<td><code>'show'</code></td>
+<td>animations.colors</td>
+<td><code>{ type: 'color', properties: ['borderColor', 'backgroundColor'], from: 'transparent' }</code></td>
+<td>Colors are faded in from transparent when dataset is shown using legend / <a href="../developers/api.md#showdatasetIndex">api</a>.</td>
+</tr>
+<tr class="even">
+<td><code>'show'</code></td>
+<td>animations.visible</td>
+<td><code>{ type: 'boolean', duration: 0 }</code></td>
+<td>Dataset visiblity is immediately changed to true so the color transition from transparent is visible.</td>
+</tr>
+<tr class="odd">
+<td><code>'hide'</code></td>
+<td>animations.colors</td>
+<td><code>{ type: 'color', properties: ['borderColor', 'backgroundColor'], to: 'transparent' }</code></td>
+<td>Colors are faded to transparent when dataset id hidden using legend / <a href="../developers/api.md#hidedatasetIndex">api</a>.</td>
+</tr>
+<tr class="even">
+<td><code>'hide'</code></td>
+<td>animations.visible</td>
+<td><code>{ type: 'boolean', easing: 'easeInExpo' }</code></td>
+<td>Visibility is changed to false at a very late phase of animation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="disabling-animation">Disabling animation</h2>
+<p>To disable an animation configuration, the animation node must be set to <code>false</code>, with the exception for animation modes which can be disabled by setting the <code>duration</code> to <code>0</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="va">chart</span>.<span class="va">options</span>.<span class="at">animation</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// disables all animations</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="va">chart</span>.<span class="va">options</span>.<span class="va">animations</span>.<span class="at">colors</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// disables animation defined by the collection of &#39;colors&#39; properties</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="va">chart</span>.<span class="va">options</span>.<span class="va">animations</span>.<span class="at">x</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// disables animation defined by the &#39;x&#39; property</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="va">chart</span>.<span class="va">options</span>.<span class="va">transitions</span>.<span class="va">active</span>.<span class="va">animation</span>.<span class="at">duration</span> <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">// disables the animation for &#39;active&#39; mode</span></a></code></pre></div>
+<h2 id="easing">Easing</h2>
+<p>Available options are:</p>
+<ul>
+<li><code>'linear'</code></li>
+<li><code>'easeInQuad'</code></li>
+<li><code>'easeOutQuad'</code></li>
+<li><code>'easeInOutQuad'</code></li>
+<li><code>'easeInCubic'</code></li>
+<li><code>'easeOutCubic'</code></li>
+<li><code>'easeInOutCubic'</code></li>
+<li><code>'easeInQuart'</code></li>
+<li><code>'easeOutQuart'</code></li>
+<li><code>'easeInOutQuart'</code></li>
+<li><code>'easeInQuint'</code></li>
+<li><code>'easeOutQuint'</code></li>
+<li><code>'easeInOutQuint'</code></li>
+<li><code>'easeInSine'</code></li>
+<li><code>'easeOutSine'</code></li>
+<li><code>'easeInOutSine'</code></li>
+<li><code>'easeInExpo'</code></li>
+<li><code>'easeOutExpo'</code></li>
+<li><code>'easeInOutExpo'</code></li>
+<li><code>'easeInCirc'</code></li>
+<li><code>'easeOutCirc'</code></li>
+<li><code>'easeInOutCirc'</code></li>
+<li><code>'easeInElastic'</code></li>
+<li><code>'easeOutElastic'</code></li>
+<li><code>'easeInOutElastic'</code></li>
+<li><code>'easeInBack'</code></li>
+<li><code>'easeOutBack'</code></li>
+<li><code>'easeInOutBack'</code></li>
+<li><code>'easeInBounce'</code></li>
+<li><code>'easeOutBounce'</code></li>
+<li><code>'easeInOutBounce'</code></li>
+</ul>
+<p>See <a href="http://robertpenner.com/easing/">Robert Penner’s easing equations</a>.</p>
+<h2 id="animation-callbacks">Animation Callbacks</h2>
+<p>The animation configuration provides callbacks which are useful for synchronizing an external draw to the chart animation. The callbacks can be set only at main <a href="#animation-configuration">animation configuration</a>.</p>
+<p>Namespace: <code>options.animation</code></p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>onProgress</code></td>
+<td><code>function</code></td>
+<td><code>null</code></td>
+<td>Callback called on each step of an animation.</td>
+</tr>
+<tr class="even">
+<td><code>onComplete</code></td>
+<td><code>function</code></td>
+<td><code>null</code></td>
+<td>Callback called when all animations are completed.</td>
+</tr>
+</tbody>
+</table>
+<p>The callback is passed the following object:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="co">// Chart object</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">chart</span><span class="op">:</span> Chart<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="co">// Number of animations still in progress</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">currentStep</span><span class="op">:</span> number<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="co">// `true` for the initial animation of the chart</span></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="dt">initial</span><span class="op">:</span> boolean<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-10" title="10"></a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="co">// Total number of animations at the start of current animation</span></a>
+<a class="sourceLine" id="cb2-12" title="12">  <span class="dt">numSteps</span><span class="op">:</span> number<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="op">}</span></a></code></pre></div>
+<p>The following example fills a progress bar during the chart animation.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">animation</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-6" title="6">      <span class="dt">onProgress</span><span class="op">:</span> <span class="kw">function</span> (animation) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-7" title="7">        <span class="va">progress</span>.<span class="at">value</span> <span class="op">=</span> <span class="va">animation</span>.<span class="at">currentStep</span> / <span class="va">animation</span>.<span class="at">numSteps</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-10" title="10">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Another example usage of these callbacks can be found on <a href="https://github.com/chartjs/Chart.js/blob/master/samples/advanced/progress-bar.html">Github</a>: this sample displays a progress bar showing how far along the animation is.</p>
+</body>
+</html>

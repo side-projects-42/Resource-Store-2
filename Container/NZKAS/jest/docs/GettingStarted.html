@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Getting Started</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Getting Started</h1>
+    </header>
+    <p>
+      Install Jest using
+      <a href="https://yarnpkg.com/en/package/jest"><code>yarn</code></a
+      >:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">yarn</span> add --dev jest</a></code></pre>
+    </div>
+    <p>
+      Or <a href="https://www.npmjs.com/"><code>npm</code></a
+      >:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">npm</span> install --save-dev jest</a></code></pre>
+    </div>
+    <p>
+      Note: Jest documentation uses <code>yarn</code> commands, but
+      <code>npm</code> will also work. You can compare <code>yarn</code> and
+      <code>npm</code> commands in the
+      <a
+        href="https://yarnpkg.com/en/docs/migrating-from-npm#toc-cli-commands-comparison"
+        >yarn docs, here</a
+      >.
+    </p>
+    <p>
+      Let’s get started by writing a test for a hypothetical function that adds
+      two numbers. First, create a <code>sum.js</code> file:
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">function</span> <span class="at">sum</span>(a<span class="op">,</span> b) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="cf">return</span> a <span class="op">+</span> b<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="op">}</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> sum<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Then, create a file named <code>sum.test.js</code>. This will contain our
+      actual test:
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">const</span> sum <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;./sum&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="at">test</span>(<span class="st">&#39;adds 1 + 2 to equal 3&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="at">expect</span>(<span class="at">sum</span>(<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span>)).<span class="at">toBe</span>(<span class="dv">3</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>Add the following section to your <code>package.json</code>:</p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">&quot;scripts&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="dt">&quot;test&quot;</span><span class="fu">:</span> <span class="st">&quot;jest&quot;</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      Finally, run <code>yarn test</code> or <code>npm run test</code> and Jest
+      will print this message:
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">PASS</span>  ./sum.test.js</a>
+<a class="sourceLine" id="cb6-2" title="2">✓ <span class="ex">adds</span> 1 + 2 to equal 3 (5ms)</a></code></pre>
+    </div>
+    <p>
+      <strong>You just successfully wrote your first test using Jest!</strong>
+    </p>
+    <p>
+      This test used <code>expect</code> and <code>toBe</code> to test that two
+      values were exactly identical. To learn about the other things that Jest
+      can test, see <a href="UsingMatchers.md">Using Matchers</a>.
+    </p>
+    <h2 id="running-from-command-line">Running from command line</h2>
+    <p>
+      You can run Jest directly from the CLI (if it’s globally available in your
+      <code>PATH</code>, e.g. by <code>yarn global add jest</code> or
+      <code>npm install jest --global</code>) with a variety of useful options.
+    </p>
+    <p>
+      Here’s how to run Jest on files matching <code>my-test</code>, using
+      <code>config.json</code> as a configuration file and display a native OS
+      notification after the run:
+    </p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">jest</span> my-test --notify --config=config.json</a></code></pre>
+    </div>
+    <p>
+      If you’d like to learn more about running <code>jest</code> through the
+      command line, take a look at the
+      <a href="CLI.md">Jest CLI Options</a> page.
+    </p>
+    <h2 id="additional-configuration">Additional Configuration</h2>
+    <h3 id="generate-a-basic-configuration-file">
+      Generate a basic configuration file
+    </h3>
+    <p>
+      Based on your project, Jest will ask you a few questions and will create a
+      basic configuration file with a short description for each option:
+    </p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">jest</span> --init</a></code></pre>
+    </div>
+    <h3 id="using-babel">Using Babel</h3>
+    <p>
+      To use <a href="http://babeljs.io/">Babel</a>, install required
+      dependencies via <code>yarn</code>:
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">yarn</span> add --dev babel-jest @babel/core @babel/preset-env</a></code></pre>
+    </div>
+    <p>
+      Configure Babel to target your current version of Node by creating a
+      <code>babel.config.js</code> file in the root of your project:
+    </p>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="co">// babel.config.js</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="dt">presets</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb10-4" title="4">    [</a>
+<a class="sourceLine" id="cb10-5" title="5">      <span class="st">&#39;@babel/preset-env&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-6" title="6">      <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-7" title="7">        <span class="dt">targets</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-8" title="8">          <span class="dt">node</span><span class="op">:</span> <span class="st">&#39;current&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-9" title="9">        <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-10" title="10">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-11" title="11">    ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb10-12" title="12">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="op">};</span></a></code></pre>
+    </div>
+    <p>
+      <strong
+        >The ideal configuration for Babel will depend on your project.</strong
+      >
+      See <a href="https://babeljs.io/docs/en/">Babel’s docs</a> for more
+      details.
+    </p>
+    <details>
+      <p>
+        <summary markdown="span">
+          <strong>Making your Babel config jest-aware</strong>
+        </summary>
+      </p>
+      <p>
+        Jest will set <code>process.env.NODE_ENV</code> to
+        <code>'test'</code> if it’s not set to something else. You can use that
+        in your configuration to conditionally setup only the compilation needed
+        for Jest, e.g.
+      </p>
+      <div class="sourceCode" id="cb11">
+        <pre
+          class="sourceCode javascript"
+        ><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="co">// babel.config.js</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> (api) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="kw">const</span> isTest <span class="op">=</span> <span class="va">api</span>.<span class="at">env</span>(<span class="st">&#39;test&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="co">// You can use isTest to determine what presets and plugins to use.</span></a>
+<a class="sourceLine" id="cb11-5" title="5"></a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-7" title="7">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb11-8" title="8">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="op">};</span></a></code></pre>
+      </div>
+      <blockquote>
+        <p>
+          Note: <code>babel-jest</code> is automatically installed when
+          installing Jest and will automatically transform files if a babel
+          configuration exists in your project. To avoid this behavior, you can
+          explicitly reset the <code>transform</code> configuration option:
+        </p>
+      </blockquote>
+      <div class="sourceCode" id="cb12">
+        <pre
+          class="sourceCode javascript"
+        ><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="co">// jest.config.js</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-3" title="3">  <span class="dt">transform</span><span class="op">:</span> <span class="op">{},</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="op">};</span></a></code></pre>
+      </div>
+    </details>
+    <details>
+      <p>
+        <summary markdown="span"><strong>Babel 6 support</strong></summary>
+      </p>
+      <p>
+        Jest 24 dropped support for Babel 6. We highly recommend you to upgrade
+        to Babel 7, which is actively maintained. However, if you cannot upgrade
+        to Babel 7, either keep using Jest 23 or upgrade to Jest 24 with
+        <code>babel-jest</code> locked at version 23, like in the example below:
+      </p>
+      <pre><code>&quot;dependencies&quot;: {
+  &quot;babel-core&quot;: &quot;^6.26.3&quot;,
+  &quot;babel-jest&quot;: &quot;^23.6.0&quot;,
+  &quot;babel-preset-env&quot;: &quot;^1.7.0&quot;,
+  &quot;jest&quot;: &quot;^24.0.0&quot;
+}</code></pre>
+      <p>
+        While we generally recommend using the same version of every Jest
+        package, this workaround will allow you to continue using the latest
+        version of Jest with Babel 6 for now.
+      </p>
+    </details>
+    <h3 id="using-webpack">Using webpack</h3>
+    <p>
+      Jest can be used in projects that use
+      <a href="https://webpack.github.io/">webpack</a> to manage assets, styles,
+      and compilation. webpack does offer some unique challenges over other
+      tools. Refer to the <a href="Webpack.md">webpack guide</a> to get started.
+    </p>
+    <h3 id="using-typescript">Using TypeScript</h3>
+    <p>
+      Jest supports TypeScript, via Babel. First make sure you followed the
+      instructions on <a href="#using-babel">using Babel</a> above. Next install
+      the <code>@babel/preset-typescript</code> via <code>yarn</code>:
+    </p>
+    <div class="sourceCode" id="cb14">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="ex">yarn</span> add --dev @babel/preset-typescript</a></code></pre>
+    </div>
+    <p>
+      Then add <code>@babel/preset-typescript</code> to the list of presets in
+      your <code>babel.config.js</code>.
+    </p>
+    <div class="sourceCode" id="cb15">
+      <pre
+        class="sourceCode diff"
+      ><code class="sourceCode diff"><a class="sourceLine" id="cb15-1" title="1">// babel.config.js</a>
+<a class="sourceLine" id="cb15-2" title="2">module.exports = {</a>
+<a class="sourceLine" id="cb15-3" title="3">  presets: [</a>
+<a class="sourceLine" id="cb15-4" title="4">    [&#39;@babel/preset-env&#39;, {targets: {node: &#39;current&#39;}}],</a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="va">+    &#39;@babel/preset-typescript&#39;,</span></a>
+<a class="sourceLine" id="cb15-6" title="6">  ],</a>
+<a class="sourceLine" id="cb15-7" title="7">};</a></code></pre>
+    </div>
+    <p>
+      However, there are some
+      <a
+        href="https://babeljs.io/docs/en/next/babel-plugin-transform-typescript.html#caveats"
+        >caveats</a
+      >
+      to using TypeScript with Babel. Because TypeScript support in Babel is
+      just transpilation, Jest will not type-check your tests as they are ran.
+      If you want that, you can use
+      <a href="https://github.com/kulshekhar/ts-jest">ts-jest</a>.
+    </p>
+  </body>
+</html>

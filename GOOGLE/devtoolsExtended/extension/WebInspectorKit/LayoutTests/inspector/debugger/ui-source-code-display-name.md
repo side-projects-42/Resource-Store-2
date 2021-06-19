@@ -1,0 +1,1 @@
+Tests UISourceCode display name.

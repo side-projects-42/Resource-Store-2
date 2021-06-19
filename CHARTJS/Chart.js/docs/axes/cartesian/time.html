@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>time</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="time-cartesian-axis">Time Cartesian Axis</h1>
+<p>The time scale is used to display times and dates. Data are spread according to the amount of time between data points. When building its ticks, it will automatically calculate the most comfortable unit base on the size of the scale.</p>
+<h2 id="date-adapters">Date Adapters</h2>
+<p>The time scale <strong>requires</strong> both a date library and a corresponding adapter to be present. Please choose from the <a href="https://github.com/chartjs/awesome#adapters">available adapters</a>.</p>
+<h2 id="data-sets">Data Sets</h2>
+<h3 id="input-data">Input Data</h3>
+<p>See <a href="../../general/data-structures.md">data structures</a>.</p>
+<h3 id="date-formats">Date Formats</h3>
+<p>When providing data for the time scale, Chart.js uses timestamps defined as milliseconds since the epoch (midnight January 1, 1970, UTC) internally. However, Chart.js also supports all of the formats that your chosen date adapter accepts. You should use timestamps if you’d like to set <code>parsing: false</code> for better performance.</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<h3 id="time-axis-specific-options">Time Axis specific options</h3>
+<p>Namespace: <code>options.scales[scaleId]</code></p>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>adapters.date</code></td>
+<td><code>object</code></td>
+<td><code>{}</code></td>
+<td>Options for adapter for external date library if that adapter needs or supports options</td>
+</tr>
+<tr class="even">
+<td><code>bounds</code></td>
+<td><code>string</code></td>
+<td><code>'data'</code></td>
+<td>Determines the scale bounds. <a href="./index.md#scale-bounds">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>ticks.source</code></td>
+<td><code>string</code></td>
+<td><code>'auto'</code></td>
+<td>How ticks are generated. <a href="#ticks-source">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>time.displayFormats</code></td>
+<td><code>object</code></td>
+<td></td>
+<td>Sets how different time units are displayed. <a href="#display-formats">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>time.isoWeekday</code></td>
+<td><code>boolean</code>|<code>number</code></td>
+<td><code>false</code></td>
+<td>If <code>boolean</code> and true and the unit is set to ‘week’, then the first day of the week will be Monday. Otherwise, it will be Sunday. If <code>number</code>, the index of the first day of the week (0 - Sunday, 6 - Saturday)</td>
+</tr>
+<tr class="even">
+<td><code>time.parser</code></td>
+<td><code>string</code>|<code>function</code></td>
+<td></td>
+<td>Custom parser for dates. <a href="#parser">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>time.round</code></td>
+<td><code>string</code></td>
+<td><code>false</code></td>
+<td>If defined, dates will be rounded to the start of this unit. See <a href="#time-units">Time Units</a> below for the allowed units.</td>
+</tr>
+<tr class="even">
+<td><code>time.tooltipFormat</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>The format string to use for the tooltip.</td>
+</tr>
+<tr class="odd">
+<td><code>time.unit</code></td>
+<td><code>string</code></td>
+<td><code>false</code></td>
+<td>If defined, will force the unit to be a certain type. See <a href="#time-units">Time Units</a> section below for details.</td>
+</tr>
+<tr class="even">
+<td><code>time.stepSize</code></td>
+<td><code>number</code></td>
+<td><code>1</code></td>
+<td>The number of units between grid lines.</td>
+</tr>
+<tr class="odd">
+<td><code>time.minUnit</code></td>
+<td><code>string</code></td>
+<td><code>'millisecond'</code></td>
+<td>The minimum display format to be used for a time unit.</td>
+</tr>
+</tbody>
+</table>
+<p>!!!include(axes/cartesian/_common.md)!!!</p>
+<p>!!!include(axes/_common.md)!!!</p>
+<h4 id="time-units">Time Units</h4>
+<p>The following time measurements are supported. The names can be passed as strings to the <code>time.unit</code> config option to force a certain unit.</p>
+<ul>
+<li><code>'millisecond'</code></li>
+<li><code>'second'</code></li>
+<li><code>'minute'</code></li>
+<li><code>'hour'</code></li>
+<li><code>'day'</code></li>
+<li><code>'week'</code></li>
+<li><code>'month'</code></li>
+<li><code>'quarter'</code></li>
+<li><code>'year'</code></li>
+</ul>
+<p>For example, to create a chart with a time scale that always displayed units per month, the following config could be used.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-5" title="5">    <span class="dt">scales</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-6" title="6">      <span class="dt">x</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;time&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-8" title="8">        <span class="dt">time</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-9" title="9">          <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;month&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-10" title="10">        <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-11" title="11">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-13" title="13">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h4 id="display-formats">Display Formats</h4>
+<p>You may specify a map of display formats with a key for each unit:</p>
+<ul>
+<li><code>millisecond</code></li>
+<li><code>second</code></li>
+<li><code>minute</code></li>
+<li><code>hour</code></li>
+<li><code>day</code></li>
+<li><code>week</code></li>
+<li><code>month</code></li>
+<li><code>quarter</code></li>
+<li><code>year</code></li>
+</ul>
+<p>The format string used as a value depends on the date adapter you chose to use.</p>
+<p>For example, to set the display format for the <code>quarter</code> unit to show the month and year, the following config might be passed to the chart constructor.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="dt">scales</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="dt">x</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-7" title="7">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;time&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-8" title="8">        <span class="dt">time</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-9" title="9">          <span class="dt">displayFormats</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-10" title="10">            <span class="dt">quarter</span><span class="op">:</span> <span class="st">&quot;MMM YYYY&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-11" title="11">          <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-12" title="12">        <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-13" title="13">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-14" title="14">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-15" title="15">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h4 id="ticks-source">Ticks Source</h4>
+<p>The <code>ticks.source</code> property controls the ticks generation.</p>
+<ul>
+<li><code>'auto'</code>: generates “optimal” ticks based on scale size and time options</li>
+<li><code>'data'</code>: generates ticks from data (including labels from data <code>{x|y}</code> objects)</li>
+<li><code>'labels'</code>: generates ticks from user given <code>labels</code> ONLY</li>
+</ul>
+<h4 id="parser">Parser</h4>
+<p>If this property is defined as a string, it is interpreted as a custom format to be used by the date adapter to parse the date.</p>
+<p>If this is a function, it must return a type that can be handled by your date adapter’s <code>parse</code> method.</p>
+<h2 id="internal-data-format">Internal data format</h2>
+<p>Internally time scale uses milliseconds since epoch</p>
+</body>
+</html>

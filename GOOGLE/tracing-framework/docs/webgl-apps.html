@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>webgl-apps</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="webgl-native-app-generation">WebGL Native App Generation</h1>
+<p>The tracing framework includes a script that can take recordings of WebGL calls in .wtf-trace files and spit out C code that can replay them outside of the browser. It’s experimental, and if it’s missing support for your favorite feature/compiler target/etc please submit pulls!</p>
+<h2 id="supported-features">Supported Features</h2>
+<ul>
+<li>Basic WebGL recordings</li>
+<li>WebGL Extensions:
+<ul>
+<li>Various ones that are constant values only (OES_texture_float/etc)</li>
+<li>ANGLE_instanced_arrays</li>
+</ul></li>
+</ul>
+<h2 id="supported-targets">Supported Targets</h2>
+<ul>
+<li>Linux with OpenGL 3+</li>
+<li>Windows with OpenGL 3+ or ANGLE (D3D9 or D3D11)</li>
+</ul>
+<p>MacOS is currently untested but could likely be made to work.</p>
+<h2 id="installing">Installing</h2>
+<h3 id="installing-on-windows">Installing on Windows</h3>
+<p><a href="https://drive.google.com/file/d/0Bxv84C6yIt2IQVkzRUVVNk1aTlk/edit">Download the packaged dependencies</a> (File-&gt;Download) and extract them. By default the script will look in <code>C:\Dev\tf-deps\</code>, but this can be changed with the <code>--vs_deps=</code> option.</p>
+<h3 id="installing-on-linux">Installing on Linux</h3>
+<pre><code># Install libgles2
+sudo apt-get install libgles2-mesa-dev
+# Get/make/install SDL
+hg clone http://hg.libsdl.org/SDL
+cd SDL/ &amp;&amp; ./configure &amp;&amp; make &amp;&amp; sudo make install &amp;&amp; cd ..
+# ?</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="recording-a-trace">Recording a Trace</h3>
+<ul>
+<li>Enable the Web Tracing Framework extension on your page via the page action popup menu.</li>
+<li>After the page reloads use the gear icon in the bottom right of the page to display the extension options.</li>
+<li>From the Providers group enable WebGL and its ‘Embed remote textures’ option.</li>
+<li>Perform the desired activity.</li>
+<li>Save the trace to a file.</li>
+</ul>
+<h3 id="generating-the-app">Generating the App</h3>
+<h4 id="windows">Windows</h4>
+<ul>
+<li>Open a ‘Developer Command Prompt for Visual Studio 2012’ prompt.</li>
+<li>Execute the script:</li>
+</ul>
+<!-- -->
+<pre><code># Optionally add --use_angle to enable ANGLE support.
+# Build with x64 with --vs_platform=x64.
+wtf-generate-webgl-app --output=test\some_test-x86\ some_test.wtf-trace</code></pre>
+<ul>
+<li>Build and run with the Visual Studio that opens.</li>
+</ul>
+<h4 id="linux">Linux</h4>
+<ul>
+<li>Execute the script:</li>
+</ul>
+<!-- -->
+<pre><code>wtf-generate-webgl-app --output=test/ some_test.wtf-trace</code></pre>
+<ul>
+<li>Run the output:</li>
+</ul>
+<!-- -->
+<pre><code>./test/some_test</code></pre>
+<h4 id="options">Options</h4>
+<p>If you want to inspect or modify the generated code use the <code>--src_output=</code> option to specify a destination path for the code.</p>
+</body>
+</html>

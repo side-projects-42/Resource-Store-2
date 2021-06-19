@@ -1,51 +1,57 @@
-# Previously
+Previously
+==========
 
-- [x] DB: Reach out to Core on deploying Algolia search on just 2.4
-- [x] TJ: Reach out to RM about taking on contextual components for the guides
-- [x] RT: Write an issue on guides nav linking for Getting Started
-- [x] YK: Review/Merge API Private Class Hiding PR(s)
-- [x] RM: write up a mini-rfp for core-notes minutes template(https://github.com/emberjs/guides/issues/1273)
-- [x] RL to create a combination header/footer restyle PR, consolidate CSS (to eliminate differences with guides, and remove emberconf references)
-- [ ] RT continues with consistent voice updates in quickstart (no merge 'til emberconf)
-- [x] RM to create a draft guides PR template (and possibly core-notes and RFCs )
-- [x] DB to work on Build page and feature dashboard website pages, reach out to `@miracleblue`
-- [ ] DB to send a guides PR linking to cli upgrade steps
-- [x] RM to create a repo in EmberTown for a living styleguide
-- [x] RM to create a Trello or Waffle site for the docs team
+-   \[x\] DB: Reach out to Core on deploying Algolia search on just 2.4
+-   \[x\] TJ: Reach out to RM about taking on contextual components for the guides
+-   \[x\] RT: Write an issue on guides nav linking for Getting Started
+-   \[x\] YK: Review/Merge API Private Class Hiding PR(s)
+-   \[x\] RM: write up a mini-rfp for core-notes minutes template(https://github.com/emberjs/guides/issues/1273)
+-   \[x\] RL to create a combination header/footer restyle PR, consolidate CSS (to eliminate differences with guides, and remove emberconf references)
+-   \[ \] RT continues with consistent voice updates in quickstart (no merge ’til emberconf)
+-   \[x\] RM to create a draft guides PR template (and possibly core-notes and RFCs )
+-   \[x\] DB to work on Build page and feature dashboard website pages, reach out to `@miracleblue`
+-   \[ \] DB to send a guides PR linking to cli upgrade steps
+-   \[x\] RM to create a repo in EmberTown for a living styleguide
+-   \[x\] RM to create a Trello or Waffle site for the docs team
 
-# Topics
+Topics
+======
 
-- Ask someone to take notes
-- Review action items from last week
-- Items for discussion
-  - API docs and hiding privates (TJ)
-    - Strategy forward: https://github.com/emberjs/website/issues/2452
-    - Seldon PR: https://github.com/emberjs/website/pull/2476 - Should we merge or wait for toggle
-    - Using a subdomain
-    - Hiding Feature Flagged Classes PR: https://github.com/emberjs/ember.js/pull/13105
-  - SEO update (DB)
+-   Ask someone to take notes
+-   Review action items from last week
+-   Items for discussion
+    -   API docs and hiding privates (TJ)
+        -   Strategy forward: https://github.com/emberjs/website/issues/2452
+        -   Seldon PR: https://github.com/emberjs/website/pull/2476 - Should we merge or wait for toggle
+        -   Using a subdomain
+        -   Hiding Feature Flagged Classes PR: https://github.com/emberjs/ember.js/pull/13105
+    -   SEO update (DB)
 
-# Action Items
+Action Items
+============
 
-- [ ] RM: Deploy Angolia Search to Staging
-- [ ] TJ: Create Contextual Components Draft
-- [ ] TJ: Reach out to `@rwjblue` about api deployment to internals subdomain
-- [ ] TJ: Add private toggle to api rendering
-- [ ] SV: Take a look at welcome page PR to see if he can take it forward
-- [ ] DB: Research schema.org as an SEO solution
-- [ ] YK: Reach out to google contacts for SEO guidance of ember docs
+-   \[ \] RM: Deploy Angolia Search to Staging
+-   \[ \] TJ: Create Contextual Components Draft
+-   \[ \] TJ: Reach out to `@rwjblue` about api deployment to internals subdomain
+-   \[ \] TJ: Add private toggle to api rendering
+-   \[ \] SV: Take a look at welcome page PR to see if he can take it forward
+-   \[ \] DB: Research schema.org as an SEO solution
+-   \[ \] YK: Reach out to google contacts for SEO guidance of ember docs
 
-# Minutes
+Minutes
+=======
 
-## Attendees
+Attendees
+---------
 
-- David (DB) @acorncom
-- Todd Jordan (TJ) @todd.jordan
-- Ricardo Mendes (RM) @locks
-- Leah Silber (LS) @wifelette
-- Steven Valladolid (SV) @mellatone
+-   David (DB) <span class="citation" data-cites="acorncom">@acorncom</span>
+-   Todd Jordan (TJ) <span class="citation" data-cites="todd.jordan">@todd.jordan</span>
+-   Ricardo Mendes (RM) <span class="citation" data-cites="locks">@locks</span>
+-   Leah Silber (LS) <span class="citation" data-cites="wifelette">@wifelette</span>
+-   Steven Valladolid (SV) <span class="citation" data-cites="mellatone">@mellatone</span>
 
-## Notes
+Notes
+-----
 
 ### Algolia Search
 
@@ -61,7 +67,7 @@ LS: Lets keep moving forward. If it ends up the best thing, LS will contact Matt
 
 TJ: discussed them with RM. To create a draft next week as part of block components to get feedback.
 
----
+------------------------------------------------------------------------
 
 ### API docs
 
@@ -69,7 +75,7 @@ TJ: things are sorted out, how do I get started on getting the subdomain
 
 LS: probably should talk to Robert
 
----
+------------------------------------------------------------------------
 
 ### locks
 
@@ -79,7 +85,7 @@ DB: How can we help?
 
 RM: Creating some issues on the repos
 
----
+------------------------------------------------------------------------
 
 ### Welcome Page PR
 
@@ -91,7 +97,7 @@ DB: Absolutely. Not tied to it.
 
 SV: Will take a look at it to see how far I can get.
 
----
+------------------------------------------------------------------------
 
 ### Search/SEO
 

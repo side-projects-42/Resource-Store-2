@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>spec</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <p>
+      This document specifies the core ESTree AST node types that support the
+      ES5 grammar.
+    </p>
+    <h1 id="node-objects">Node objects</h1>
+    <p>
+      ESTree AST nodes are represented as <code>Node</code> objects, which may
+      have any prototype inheritance but which implement the following
+      interface:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">interface</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">type</span><span class="op">:</span> string<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">loc</span><span class="op">:</span> SourceLocation <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      The <code>type</code> field is a string representing the AST variant type.
+      Each subtype of <code>Node</code> is documented below with the specific
+      string of its <code>type</code> field. You can use this field to determine
+      which interface a node implements.
+    </p>
+    <p>
+      The <code>loc</code> field represents the source location information of
+      the node. If the node contains no information about the source location,
+      the field is <code>null</code>; otherwise it is an object consisting of a
+      start position (the position of the first character of the parsed source
+      region) and an end position (the position of the first character after the
+      parsed source region):
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">interface</span> SourceLocation <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">source</span><span class="op">:</span> string <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">start</span><span class="op">:</span> Position<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">end</span><span class="op">:</span> Position<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      Each <code>Position</code> object consists of a <code>line</code> number
+      (1-indexed) and a <code>column</code> number (0-indexed):
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">interface</span> Position <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="dt">line</span><span class="op">:</span> uint32 <span class="op">&gt;=</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">column</span><span class="op">:</span> uint32 <span class="op">&gt;=</span> <span class="dv">0</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <h1 id="programs">Programs</h1>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">interface</span> Program <span class="op">&lt;:</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Program&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="dt">body</span><span class="op">:</span> [ Statement ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A complete program source tree.</p>
+    <h1 id="functions">Functions</h1>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">interface</span> Function <span class="op">&lt;:</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">    <span class="dt">id</span><span class="op">:</span> Identifier <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="dt">params</span><span class="op">:</span> [ Pattern ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="dt">body</span><span class="op">:</span> BlockStatement<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">generator</span><span class="op">:</span> <span class="kw">false</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="dt">expression</span><span class="op">:</span> <span class="kw">false</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A function declaration or expression.</p>
+    <h1 id="statements">Statements</h1>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">interface</span> Statement <span class="op">&lt;:</span> Node <span class="op">{</span> <span class="op">}</span></a></code></pre>
+    </div>
+    <p>Any statement.</p>
+    <h2 id="emptystatement">EmptyStatement</h2>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">interface</span> EmptyStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;EmptyStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An empty statement, i.e., a solitary semicolon.</p>
+    <h2 id="blockstatement">BlockStatement</h2>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">interface</span> BlockStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;BlockStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="dt">body</span><span class="op">:</span> [ Statement ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A block statement, i.e., a sequence of statements surrounded by braces.
+    </p>
+    <h2 id="expressionstatement">ExpressionStatement</h2>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">interface</span> ExpressionStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ExpressionStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="dt">expression</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      An expression statement, i.e., a statement consisting of a single
+      expression.
+    </p>
+    <h2 id="ifstatement">IfStatement</h2>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">interface</span> IfStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;IfStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="dt">test</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-4" title="4">    <span class="dt">consequent</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-5" title="5">    <span class="dt">alternate</span><span class="op">:</span> Statement <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An <code>if</code> statement.</p>
+    <h2 id="labeledstatement">LabeledStatement</h2>
+    <div class="sourceCode" id="cb11">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">interface</span> LabeledStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;LabeledStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="dt">label</span><span class="op">:</span> Identifier<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">body</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A labeled statement, i.e., a statement prefixed by a
+      <code>break</code>/<code>continue</code> label.
+    </p>
+    <h2 id="breakstatement">BreakStatement</h2>
+    <div class="sourceCode" id="cb12">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">interface</span> BreakStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;BreakStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="dt">label</span><span class="op">:</span> Identifier <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>break</code> statement.</p>
+    <h2 id="continuestatement">ContinueStatement</h2>
+    <div class="sourceCode" id="cb13">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">interface</span> ContinueStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ContinueStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="dt">label</span><span class="op">:</span> Identifier <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>continue</code> statement.</p>
+    <h2 id="withstatement">WithStatement</h2>
+    <div class="sourceCode" id="cb14">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">interface</span> WithStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;WithStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb14-3" title="3">    <span class="dt">object</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-4" title="4">    <span class="dt">body</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>with</code> statement.</p>
+    <h2 id="switchstatement">SwitchStatement</h2>
+    <div class="sourceCode" id="cb15">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">interface</span> SwitchStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb15-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;SwitchStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">discriminant</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-4" title="4">    <span class="dt">cases</span><span class="op">:</span> [ SwitchCase ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-5" title="5">    <span class="dt">lexical</span><span class="op">:</span> <span class="kw">false</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>switch</code> statement.</p>
+    <h2 id="returnstatement">ReturnStatement</h2>
+    <div class="sourceCode" id="cb16">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">interface</span> ReturnStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ReturnStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb16-3" title="3">    <span class="dt">argument</span><span class="op">:</span> Expression <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>return</code> statement.</p>
+    <h2 id="throwstatement">ThrowStatement</h2>
+    <div class="sourceCode" id="cb17">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">interface</span> ThrowStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ThrowStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb17-3" title="3">    <span class="dt">argument</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>throw</code> statement.</p>
+    <h2 id="trystatement">TryStatement</h2>
+    <div class="sourceCode" id="cb18">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">interface</span> TryStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;TryStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-3" title="3">    <span class="dt">block</span><span class="op">:</span> BlockStatement<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-4" title="4">    <span class="dt">handler</span><span class="op">:</span> CatchClause <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-5" title="5">    <span class="dt">finalizer</span><span class="op">:</span> BlockStatement <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A <code>try</code> statement. If <code>handler</code> is
+      <code>null</code> then <code>finalizer</code> must be a
+      <code>BlockStatement</code>.
+    </p>
+    <h2 id="whilestatement">WhileStatement</h2>
+    <div class="sourceCode" id="cb19">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">interface</span> WhileStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;WhileStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb19-3" title="3">    <span class="dt">test</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-4" title="4">    <span class="dt">body</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>while</code> statement.</p>
+    <h2 id="dowhilestatement">DoWhileStatement</h2>
+    <div class="sourceCode" id="cb20">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">interface</span> DoWhileStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;DoWhileStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb20-3" title="3">    <span class="dt">body</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-4" title="4">    <span class="dt">test</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>do</code>/<code>while</code> statement.</p>
+    <h2 id="forstatement">ForStatement</h2>
+    <div class="sourceCode" id="cb21">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">interface</span> ForStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ForStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-3" title="3">    <span class="dt">init</span><span class="op">:</span> VariableDeclaration <span class="op">|</span> Expression <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-4" title="4">    <span class="dt">test</span><span class="op">:</span> Expression <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-5" title="5">    <span class="dt">update</span><span class="op">:</span> Expression <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-6" title="6">    <span class="dt">body</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>for</code> statement.</p>
+    <h2 id="forinstatement">ForInStatement</h2>
+    <div class="sourceCode" id="cb22">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">interface</span> ForInStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ForInStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-3" title="3">    <span class="dt">left</span><span class="op">:</span> VariableDeclaration <span class="op">|</span>  Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-4" title="4">    <span class="dt">right</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-5" title="5">    <span class="dt">body</span><span class="op">:</span> Statement<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>for</code>/<code>in</code> statement.</p>
+    <h2 id="debuggerstatement">DebuggerStatement</h2>
+    <div class="sourceCode" id="cb23">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">interface</span> DebuggerStatement <span class="op">&lt;:</span> Statement <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;DebuggerStatement&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>debugger</code> statement.</p>
+    <h1 id="declarations">Declarations</h1>
+    <div class="sourceCode" id="cb24">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">interface</span> Declaration <span class="op">&lt;:</span> Statement <span class="op">{</span> <span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      Any declaration node. Note that declarations are considered statements;
+      this is because declarations can appear in any statement context.
+    </p>
+    <h2 id="functiondeclaration">FunctionDeclaration</h2>
+    <div class="sourceCode" id="cb25">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">interface</span> FunctionDeclaration <span class="op">&lt;:</span> Function<span class="op">,</span> Declaration <span class="op">{</span></a>
+<a class="sourceLine" id="cb25-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;FunctionDeclaration&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb25-3" title="3">    <span class="dt">id</span><span class="op">:</span> Identifier<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A function declaration. Note that unlike in the parent interface
+      <code>Function</code>, the <code>id</code> cannot be <code>null</code>.
+    </p>
+    <h2 id="variabledeclaration">VariableDeclaration</h2>
+    <div class="sourceCode" id="cb26">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">interface</span> VariableDeclaration <span class="op">&lt;:</span> Declaration <span class="op">{</span></a>
+<a class="sourceLine" id="cb26-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;VariableDeclaration&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb26-3" title="3">    <span class="dt">declarations</span><span class="op">:</span> [ VariableDeclarator ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-4" title="4">    <span class="dt">kind</span><span class="op">:</span> <span class="st">&quot;var&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb26-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A variable declaration.</p>
+    <h2 id="variabledeclarator">VariableDeclarator</h2>
+    <div class="sourceCode" id="cb27">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">interface</span> VariableDeclarator <span class="op">&lt;:</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb27-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;VariableDeclarator&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb27-3" title="3">    <span class="dt">id</span><span class="op">:</span> Pattern<span class="op">;</span></a>
+<a class="sourceLine" id="cb27-4" title="4">    <span class="dt">init</span><span class="op">:</span> Expression <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A variable declarator.</p>
+    <h1 id="expressions">Expressions</h1>
+    <div class="sourceCode" id="cb28">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">interface</span> Expression <span class="op">&lt;:</span> Node <span class="op">{</span> <span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      Any expression node. Since the left-hand side of an assignment may be any
+      expression in general, an expression can also be a pattern.
+    </p>
+    <h2 id="thisexpression">ThisExpression</h2>
+    <div class="sourceCode" id="cb29">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">interface</span> ThisExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb29-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ThisExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>this</code> expression.</p>
+    <h2 id="arrayexpression">ArrayExpression</h2>
+    <div class="sourceCode" id="cb30">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">interface</span> ArrayExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb30-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ArrayExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb30-3" title="3">    <span class="dt">elements</span><span class="op">:</span> [ Expression <span class="op">|</span> <span class="kw">null</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An array expression.</p>
+    <h2 id="objectexpression">ObjectExpression</h2>
+    <div class="sourceCode" id="cb31">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">interface</span> ObjectExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb31-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ObjectExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb31-3" title="3">    <span class="dt">properties</span><span class="op">:</span> [ Property ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An object expression.</p>
+    <h2 id="property">Property</h2>
+    <div class="sourceCode" id="cb32">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">interface</span> Property <span class="op">&lt;:</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb32-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Property&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb32-3" title="3">    <span class="dt">key</span><span class="op">:</span> Literal <span class="op">|</span> Identifier<span class="op">;</span></a>
+<a class="sourceLine" id="cb32-4" title="4">    <span class="dt">value</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb32-5" title="5">    <span class="dt">kind</span><span class="op">:</span> <span class="st">&quot;init&quot;</span> <span class="op">|</span> <span class="st">&quot;get&quot;</span> <span class="op">|</span> <span class="st">&quot;set&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A literal property in an object expression can have either a string or
+      number as its <code>value</code>. Ordinary property initializers have a
+      <code>kind</code> value <code>"init"</code>; getters and setters have the
+      kind values <code>"get"</code> and <code>"set"</code>, respectively.
+    </p>
+    <h2 id="functionexpression">FunctionExpression</h2>
+    <div class="sourceCode" id="cb33">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">interface</span> FunctionExpression <span class="op">&lt;:</span> Function<span class="op">,</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb33-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;FunctionExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>function</code> expression.</p>
+    <h2 id="sequenceexpression">SequenceExpression</h2>
+    <div class="sourceCode" id="cb34">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">interface</span> SequenceExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb34-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;SequenceExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb34-3" title="3">    <span class="dt">expressions</span><span class="op">:</span> [ Expression ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A sequence expression, i.e., a comma-separated sequence of expressions.
+    </p>
+    <h2 id="unaryexpression">UnaryExpression</h2>
+    <div class="sourceCode" id="cb35">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">interface</span> UnaryExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb35-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;UnaryExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb35-3" title="3">    <span class="dt">operator</span><span class="op">:</span> UnaryOperator<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-4" title="4">    <span class="dt">prefix</span><span class="op">:</span> boolean<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-5" title="5">    <span class="dt">argument</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A unary operator expression.</p>
+    <h2 id="binaryexpression">BinaryExpression</h2>
+    <div class="sourceCode" id="cb36">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">interface</span> BinaryExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb36-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;BinaryExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb36-3" title="3">    <span class="dt">operator</span><span class="op">:</span> BinaryOperator<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-4" title="4">    <span class="dt">left</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-5" title="5">    <span class="dt">right</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A binary operator expression.</p>
+    <h2 id="assignmentexpression">AssignmentExpression</h2>
+    <div class="sourceCode" id="cb37">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">interface</span> AssignmentExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb37-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;AssignmentExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb37-3" title="3">    <span class="dt">operator</span><span class="op">:</span> AssignmentOperator<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-4" title="4">    <span class="dt">left</span><span class="op">:</span> Pattern <span class="op">|</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-5" title="5">    <span class="dt">right</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An assignment operator expression.</p>
+    <h2 id="updateexpression">UpdateExpression</h2>
+    <div class="sourceCode" id="cb38">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">interface</span> UpdateExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb38-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;UpdateExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb38-3" title="3">    <span class="dt">operator</span><span class="op">:</span> UpdateOperator<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-4" title="4">    <span class="dt">argument</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-5" title="5">    <span class="dt">prefix</span><span class="op">:</span> boolean<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An update (increment or decrement) operator expression.</p>
+    <h2 id="logicalexpression">LogicalExpression</h2>
+    <div class="sourceCode" id="cb39">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">interface</span> LogicalExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb39-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;LogicalExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb39-3" title="3">    <span class="dt">operator</span><span class="op">:</span> LogicalOperator<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-4" title="4">    <span class="dt">left</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-5" title="5">    <span class="dt">right</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A logical operator expression.</p>
+    <h2 id="conditionalexpression">ConditionalExpression</h2>
+    <div class="sourceCode" id="cb40">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">interface</span> ConditionalExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb40-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;ConditionalExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb40-3" title="3">    <span class="dt">test</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-4" title="4">    <span class="dt">alternate</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-5" title="5">    <span class="dt">consequent</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A conditional expression, i.e., a ternary <code>?</code>/<code>:</code>
+      expression.
+    </p>
+    <h2 id="callexpression">CallExpression</h2>
+    <div class="sourceCode" id="cb41">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">interface</span> CallExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb41-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;CallExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb41-3" title="3">    <span class="dt">callee</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-4" title="4">    <span class="dt">arguments</span><span class="op">:</span> [ Expression ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A function or method call expression.</p>
+    <h2 id="newexpression">NewExpression</h2>
+    <div class="sourceCode" id="cb42">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">interface</span> NewExpression <span class="op">&lt;:</span> CallExpression <span class="op">{</span></a>
+<a class="sourceLine" id="cb42-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;NewExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>new</code> expression.</p>
+    <h2 id="memberexpression">MemberExpression</h2>
+    <div class="sourceCode" id="cb43">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">interface</span> MemberExpression <span class="op">&lt;:</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb43-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;MemberExpression&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb43-3" title="3">    <span class="dt">object</span><span class="op">:</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-4" title="4">    <span class="dt">property</span><span class="op">:</span> Identifier <span class="op">|</span> Expression<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-5" title="5">    <span class="dt">computed</span><span class="op">:</span> boolean<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A member expression. If <code>computed === true</code>, the node
+      corresponds to a computed <code>e1[e2]</code> expression and property is
+      an <code>Expression</code>. If <code>computed === false</code>, the node
+      corresponds to a static <code>e1.x</code> expression and
+      <code>property</code> is an <code>Identifier</code>.
+    </p>
+    <h1 id="patterns">Patterns</h1>
+    <p>
+      Destructuring binding and assignment are not part of ES6, but all binding
+      positions accept <code>Pattern</code> to allow for destructuring in ES6.
+      Nevertheless, for ES5, the only <code>Pattern</code> subtype is
+      <code>Identifier</code>.
+    </p>
+    <div class="sourceCode" id="cb44">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">interface</span> Pattern <span class="op">&lt;:</span> Node <span class="op">{</span> <span class="op">}</span></a></code></pre>
+    </div>
+    <h1 id="clauses">Clauses</h1>
+    <h2 id="switchcase">SwitchCase</h2>
+    <div class="sourceCode" id="cb45">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">interface</span> SwitchCase <span class="op">&lt;:</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;SwitchCase&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb45-3" title="3">    <span class="dt">test</span><span class="op">:</span> Expression <span class="op">|</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb45-4" title="4">    <span class="dt">consequent</span><span class="op">:</span> [ Statement ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb45-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      A <code>case</code> (if <code>test</code> is an <code>Expression</code>)
+      or <code>default</code> (if <code>test === null</code>) clause in the body
+      of a <code>switch</code> statement.
+    </p>
+    <h2 id="catchclause">CatchClause</h2>
+    <div class="sourceCode" id="cb46">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">interface</span> CatchClause <span class="op">&lt;:</span> Node <span class="op">{</span></a>
+<a class="sourceLine" id="cb46-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;CatchClause&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb46-3" title="3">    <span class="dt">param</span><span class="op">:</span> Pattern<span class="op">;</span></a>
+<a class="sourceLine" id="cb46-4" title="4">    <span class="dt">guard</span><span class="op">:</span> <span class="kw">null</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb46-5" title="5">    <span class="dt">body</span><span class="op">:</span> BlockStatement<span class="op">;</span></a>
+<a class="sourceLine" id="cb46-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A <code>catch</code> clause following a <code>try</code> block.</p>
+    <h1 id="miscellaneous">Miscellaneous</h1>
+    <h2 id="identifier">Identifier</h2>
+    <div class="sourceCode" id="cb47">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">interface</span> Identifier <span class="op">&lt;:</span> Node<span class="op">,</span> Expression<span class="op">,</span> Pattern <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb47-3" title="3">    <span class="dt">name</span><span class="op">:</span> string<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      An identifier. Note that an identifier may be an expression or a
+      destructuring pattern.
+    </p>
+    <h2 id="literal">Literal</h2>
+    <div class="sourceCode" id="cb48">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">interface</span> Literal <span class="op">&lt;:</span> Node<span class="op">,</span> Expression <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-2" title="2">    <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Literal&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb48-3" title="3">    <span class="dt">value</span><span class="op">:</span> string <span class="op">|</span> boolean <span class="op">|</span> <span class="kw">null</span> <span class="op">|</span> number <span class="op">|</span> RegExp<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-4" title="4"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A literal token. Note that a literal can be an expression.</p>
+    <h3 id="regexliteral">RegexLiteral</h3>
+    <div class="sourceCode" id="cb49">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">interface</span> RegexLiteral <span class="op">&lt;:</span> Literal <span class="op">{</span></a>
+<a class="sourceLine" id="cb49-2" title="2">  <span class="dt">regex</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb49-3" title="3">    <span class="dt">pattern</span><span class="op">:</span> string<span class="op">;</span></a>
+<a class="sourceLine" id="cb49-4" title="4">    <span class="dt">flags</span><span class="op">:</span> string<span class="op">;</span></a>
+<a class="sourceLine" id="cb49-5" title="5">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb49-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>
+      The <code>regex</code> property allows regexes to be represented in
+      environments that don’t support certain flags such as <code>y</code> or
+      <code>u</code>. In environments that don’t support these flags
+      <code>value</code> will be <code>null</code> as the regex can’t be
+      represented natively.
+    </p>
+    <h2 id="unaryoperator">UnaryOperator</h2>
+    <div class="sourceCode" id="cb50">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">enum</span> UnaryOperator <span class="op">{</span></a>
+<a class="sourceLine" id="cb50-2" title="2">    <span class="st">&quot;-&quot;</span> <span class="op">|</span> <span class="st">&quot;+&quot;</span> <span class="op">|</span> <span class="st">&quot;!&quot;</span> <span class="op">|</span> <span class="st">&quot;~&quot;</span> <span class="op">|</span> <span class="st">&quot;typeof&quot;</span> <span class="op">|</span> <span class="st">&quot;void&quot;</span> <span class="op">|</span> <span class="st">&quot;delete&quot;</span></a>
+<a class="sourceLine" id="cb50-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A unary operator token.</p>
+    <h2 id="binaryoperator">BinaryOperator</h2>
+    <div class="sourceCode" id="cb51">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">enum</span> BinaryOperator <span class="op">{</span></a>
+<a class="sourceLine" id="cb51-2" title="2">    <span class="st">&quot;==&quot;</span> <span class="op">|</span> <span class="st">&quot;!=&quot;</span> <span class="op">|</span> <span class="st">&quot;===&quot;</span> <span class="op">|</span> <span class="st">&quot;!==&quot;</span></a>
+<a class="sourceLine" id="cb51-3" title="3">         <span class="op">|</span> <span class="st">&quot;&lt;&quot;</span> <span class="op">|</span> <span class="st">&quot;&lt;=&quot;</span> <span class="op">|</span> <span class="st">&quot;&gt;&quot;</span> <span class="op">|</span> <span class="st">&quot;&gt;=&quot;</span></a>
+<a class="sourceLine" id="cb51-4" title="4">         <span class="op">|</span> <span class="st">&quot;&lt;&lt;&quot;</span> <span class="op">|</span> <span class="st">&quot;&gt;&gt;&quot;</span> <span class="op">|</span> <span class="st">&quot;&gt;&gt;&gt;&quot;</span></a>
+<a class="sourceLine" id="cb51-5" title="5">         <span class="op">|</span> <span class="st">&quot;+&quot;</span> <span class="op">|</span> <span class="st">&quot;-&quot;</span> <span class="op">|</span> <span class="st">&quot;*&quot;</span> <span class="op">|</span> <span class="st">&quot;/&quot;</span> <span class="op">|</span> <span class="st">&quot;%&quot;</span></a>
+<a class="sourceLine" id="cb51-6" title="6">         <span class="op">|</span> <span class="st">&quot;|&quot;</span> <span class="op">|</span> <span class="st">&quot;^&quot;</span> <span class="op">|</span> <span class="st">&quot;&amp;&quot;</span> <span class="op">|</span> <span class="st">&quot;in&quot;</span></a>
+<a class="sourceLine" id="cb51-7" title="7">         <span class="op">|</span> <span class="st">&quot;instanceof&quot;</span></a>
+<a class="sourceLine" id="cb51-8" title="8"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A binary operator token.</p>
+    <h2 id="logicaloperator">LogicalOperator</h2>
+    <div class="sourceCode" id="cb52">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">enum</span> LogicalOperator <span class="op">{</span></a>
+<a class="sourceLine" id="cb52-2" title="2">    <span class="st">&quot;||&quot;</span> <span class="op">|</span> <span class="st">&quot;&amp;&amp;&quot;</span></a>
+<a class="sourceLine" id="cb52-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>A logical operator token.</p>
+    <h2 id="assignmentoperator">AssignmentOperator</h2>
+    <div class="sourceCode" id="cb53">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb53-1" title="1"><span class="kw">enum</span> AssignmentOperator <span class="op">{</span></a>
+<a class="sourceLine" id="cb53-2" title="2">    <span class="st">&quot;=&quot;</span> <span class="op">|</span> <span class="st">&quot;+=&quot;</span> <span class="op">|</span> <span class="st">&quot;-=&quot;</span> <span class="op">|</span> <span class="st">&quot;*=&quot;</span> <span class="op">|</span> <span class="st">&quot;/=&quot;</span> <span class="op">|</span> <span class="st">&quot;%=&quot;</span></a>
+<a class="sourceLine" id="cb53-3" title="3">        <span class="op">|</span> <span class="st">&quot;&lt;&lt;=&quot;</span> <span class="op">|</span> <span class="st">&quot;&gt;&gt;=&quot;</span> <span class="op">|</span> <span class="st">&quot;&gt;&gt;&gt;=&quot;</span></a>
+<a class="sourceLine" id="cb53-4" title="4">        <span class="op">|</span> <span class="st">&quot;|=&quot;</span> <span class="op">|</span> <span class="st">&quot;^=&quot;</span> <span class="op">|</span> <span class="st">&quot;&amp;=&quot;</span></a>
+<a class="sourceLine" id="cb53-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An assignment operator token.</p>
+    <h2 id="updateoperator">UpdateOperator</h2>
+    <div class="sourceCode" id="cb54">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">enum</span> UpdateOperator <span class="op">{</span></a>
+<a class="sourceLine" id="cb54-2" title="2">    <span class="st">&quot;++&quot;</span> <span class="op">|</span> <span class="st">&quot;--&quot;</span></a>
+<a class="sourceLine" id="cb54-3" title="3"><span class="op">}</span></a></code></pre>
+    </div>
+    <p>An update (increment or decrement) operator token.</p>
+  </body>
+</html>

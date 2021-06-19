@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>auth</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="auth">auth</h1>
+    <p>
+      <a
+        href="https://github.com/nuxt-community/auth-module/blob/dev/lib/core/auth.js"
+        >Source Code</a
+      >
+    </p>
+    <p>
+      This module globally injects <code>$auth</code> instance, meaning that you
+      can access it anywhere using <code>this.$auth</code>. For plugins,
+      asyncData, fetch, nuxtServerInit and Middleware, you can access it from
+      <code>context.$auth</code>.
+    </p>
+    <h2 id="properties">properties</h2>
+    <p>
+      All properties are reactive. Meaning that you can safely use them in Vue
+      template <code>v-if</code> conditions.
+    </p>
+    <h3 id="user"><code>user</code></h3>
+    <p>
+      This object contains details about authenticated user such as name. You
+      can access it using either <code>$auth</code> or Vuex.
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// Access using $auth</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">user</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co">// Access using vuex</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="kw">this</span>.<span class="va">$store</span>.<span class="va">state</span>.<span class="va">auth</span>.<span class="at">user</span><span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="loggedin"><code>loggedIn</code></h3>
+    <p>
+      This boolean flag indicates that user is authenticated and available at
+      the moment or not.
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// Access using $auth</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">loggedIn</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="co">// Access using vuex</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="kw">this</span>.<span class="va">$store</span>.<span class="va">state</span>.<span class="va">auth</span>.<span class="at">loggedIn</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Under the hood, auth uses attached
+      <a href="./storage.md"><code>$storage</code></a> instance to provide this
+      states.
+    </p>
+    <h2 id="methods">methods</h2>
+    <h3 id="loginwithstrategyname-...args">
+      <code>loginWith(strategyName, ...args)</code>
+    </h3>
+    <ul>
+      <li>Returns: <code>Promise</code></li>
+    </ul>
+    <p>
+      Set current strategy to <code>strategyName</code> and try to do login.
+      Usage varies by current strategy.
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">this</span>.<span class="at">$auth</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  .<span class="at">loginWith</span>(<span class="st">&quot;local&quot;</span> <span class="co">/* .... */</span>)</a>
+<a class="sourceLine" id="cb3-3" title="3">  .<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="kw">this</span>.<span class="va">$toast</span>.<span class="at">success</span>(<span class="st">&quot;Logged In!&quot;</span>))<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="login...args"><code>login(...args)</code></h3>
+    <ul>
+      <li>Returns: <code>Promise</code></li>
+    </ul>
+    <p>Login using active strategy. Usage varies by current strategy.</p>
+    <blockquote>
+      <p>
+        <strong>TIP:</strong> Using <code>loginWith</code> is recommended
+        instead of this function!
+      </p>
+    </blockquote>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">login</span>(<span class="co">/* .... */</span>).<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="kw">this</span>.<span class="va">$toast</span>.<span class="at">success</span>(<span class="st">&quot;Logged In!&quot;</span>))<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="setusertokentoken"><code>setUserToken(token)</code></h3>
+    <ul>
+      <li>Returns: <code>Promise</code></li>
+    </ul>
+    <p>
+      Set the auth token and fetch the user using the new token and current
+      strategy.
+    </p>
+    <blockquote>
+      <p>
+        <strong>TIP:</strong> This function can properly set the user after
+        registration
+      </p>
+    </blockquote>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">setUserToken</span>(token).<span class="at">then</span>(() <span class="kw">=&gt;</span> <span class="kw">this</span>.<span class="va">$toast</span>.<span class="at">success</span>(<span class="st">&quot;User set!&quot;</span>))<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="logout...args"><code>logout(...args)</code></h3>
+    <ul>
+      <li>Returns: <code>Promise</code></li>
+    </ul>
+    <p>Logout active strategy. Usage varies by current scheme.</p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="cf">await</span> <span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">logout</span>(<span class="co">/* .... */</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="fetchuser"><code>fetchUser()</code></h3>
+    <ul>
+      <li>Returns: <code>Promise</code></li>
+    </ul>
+    <p>Force re-fetch user using active strategy.</p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="cf">await</span> <span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">fetchUser</span>()<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="hasscopescopename"><code>hasScope(scopeName)</code></h3>
+    <p>Check if user has a specific scope:</p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="co">// Returns is a computed boolean</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">hasScope</span>(<span class="st">&quot;admin&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="settokenstrategy-token"><code>setToken(strategy, token)</code></h3>
+    <p>
+      Universally set token. The <code>name</code> parameter is optional and
+      defaults to <code>options.token.name</code>.
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="co">// Update token</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">this</span>.<span class="va">$auth</span>.<span class="at">setToken</span>(<span class="st">&quot;local&quot;</span><span class="op">,</span> <span class="st">&quot;.....&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="onerrorhandler"><code>onError(handler)</code></h3>
+    <p>Listen for auth errors: (<code>plugins/auth.js</code>)</p>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> (<span class="op">{</span> $auth <span class="op">}</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="va">$auth</span>.<span class="at">onError</span>((error<span class="op">,</span> name<span class="op">,</span> endpoint) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="va">console</span>.<span class="at">error</span>(name<span class="op">,</span> error)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="op">}</span></a></code></pre>
+    </div>
+    <h3 id="onredirecthandler"><code>onRedirect(handler)</code></h3>
+    <p>Pre-process URLs before redirect: (<code>plugins/auth.js</code>)</p>
+    <div class="sourceCode" id="cb11">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="im">export</span> <span class="im">default</span> <span class="kw">function</span> (<span class="op">{</span> $auth <span class="op">}</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="va">$auth</span>.<span class="at">onRedirect</span>((to<span class="op">,</span> <span class="im">from</span>) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="va">console</span>.<span class="at">error</span>(to)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="co">// you can optionally change `to` by returning a new value</span></a>
+<a class="sourceLine" id="cb11-5" title="5">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+  </body>
+</html>

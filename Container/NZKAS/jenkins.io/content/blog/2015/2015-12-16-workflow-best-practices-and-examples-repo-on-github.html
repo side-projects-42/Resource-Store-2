@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>
+      2015-12-16-workflow-best-practices-and-examples-repo-on-github
+    </title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      A lot of people are using the
+      <a
+        href="https://github.com/jenkinsci/workflow-plugin/blob/master/README.md"
+        >Workflow plugin</a
+      >, but as with any scripting environment, users often have to start from
+      scratch and learn the same lessons and shortcuts that other users have
+      already learned. While there are blog posts from developers and users in
+      various places, and some samples in the Workflow plugin documentation,
+      more examples and tips and tricks are always, always useful. To help with
+      that, we’ve created the
+      <em
+        ><a href="https://github.com/jenkinsci/workflow-examples"
+          >workflow-examples</a
+        ></em
+      >
+      repository on GitHub, as a place to store community-developed Workflow
+      scripts that can help new users get started, show how to accomplish some
+      non-trivial goals, and find tips and trick for taking your Workflow
+      pipeline to the next level.
+    </p>
+    <p>The repository has four directories:</p>
+    <ul>
+      <li>
+        <code>docs/</code> - documentation, guides, and more. Including a
+        <a
+          href="https://github.com/jenkinsci/workflow-examples/blob/master/docs/BEST_PRACTICES.md"
+          >Best Practices document</a
+        >. We’d love to see more contributions to that doc, as well as any new
+        ones that would be helpful to Workflow users!
+      </li>
+      <li>
+        <code>workflow-examples/</code> - general Workflow examples, showing how
+        to use a given plugin with Workflow, quirks of the Workflow DSL syntax,
+        and more.
+      </li>
+      <li>
+        <code>global-library-examples/</code> - examples of how to write code
+        for
+        <a
+          href="https://github.com/jenkinsci/workflow-plugin/blob/master/cps-global-lib/README.md"
+          >the Workflow global library</a
+        >.
+      </li>
+      <li>
+        <code>jenkinsfile-examples/</code> - Sample
+        <a
+          href="https://github.com/jenkinsci/workflow-plugin/blob/master/TUTORIAL.md#creating-multibranch-projects"
+          >Jenkinsfiles</a
+        >
+        or other Workflow scripts from SCM .
+      </li>
+    </ul>
+    <p>
+      During <a href="/content/hacksgiving-left-overs">Hacksgiving</a> some
+      initial content was added, but not everything is covered yet, which is why
+      I’m posting this - more is needed. We’d love to see your tips, examples,
+      gotchas and more. If you’ve got Workflow scripts you’d like to contribute,
+      please read the
+      <a href="https://github.com/jenkinsci/workflow-examples#introduction"
+        >README</a
+      >
+      and send a
+      <a href="https://github.com/jenkinsci/workflow-examples/pulls"
+        >pull request</a
+      >. Thanks!
+    </p>
+  </body>
+</html>

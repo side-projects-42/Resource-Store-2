@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-07</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-04-07">ember-cli Meeting Notes - 2016-04-07</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Tobias Bieniek</li>
+<li>Chad Hietala</li>
+<li>Kelly Selden</li>
+<li>Katie Gengler</li>
+<li>Jake Bixby</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Nathan - Respond to 5707.</li>
+<li>[ ] Tobias - bring home update-notifier</li>
+<li>[ ] Katie - Plain statement regarding LTS</li>
+<li>[ ] Kelly - Bundling node comment</li>
+<li>[ ] Kelly - Run tests on current master</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="update-notifier-pr"><a href="https://github.com/ember-cli/ember-cli/pull/5661">update-notifier</a> PR</h3>
+<ul>
+<li>Went over the checklist to land, updated the issue inline.</li>
+<li>Need to confirm that it plays nicely with <code>--json</code> support.</li>
+</ul>
+<h3 id="issue-template"><a href="https://github.com/ember-cli/ember-cli/pull/5707">Issue Template</a></h3>
+<ul>
+<li>Wrap as much information as possible into <code>ember -v</code></li>
+<li>Here’s a bit more information just in time to make sure you’re best able to help us, but not a step-by-step guide.</li>
+<li>https://www.talater.com/open-source-templates/ might have some more inspiration</li>
+</ul>
+<h2 id="rfcs">RFCs</h2>
+<h4 id="node-support-policy">Node Support Policy</h4>
+<ul>
+<li>https://github.com/ember-cli/rfcs/pull/47</li>
+<li>Will add a bit more to the conversation and let it stew.</li>
+<li>Delay decisions until next week.</li>
+</ul>
+<h4 id="master-canary">master =&gt; canary</h4>
+<ul>
+<li>https://github.com/ember-cli/rfcs/pull/48</li>
+<li>Referendum complete: 50/50. With a split community reaction we’ll approach it as “use your best judgment” internally.</li>
+</ul>
+<h4 id="production-code-stripping">Production Code Stripping</h4>
+<ul>
+<li>https://github.com/ember-cli/rfcs/pull/50</li>
+<li>We want this. Let the RFC ripen a bit before making a decision.</li>
+</ul>
+<h3 id="ember-cli-jshint"><code>ember-cli-jshint</code></h3>
+<ul>
+<li><code>ember-cli-jshint</code> ownership on <a href="https://www.npmjs.com/package/ember-cli-jshint">npm</a> transfered to ember-cli</li>
+<li>TB extracted <a href="https://github.com/Turbo87/ember-cli-jshint">ember-cli-jshint</a> addon from <a href="https://github.com/ember-cli/ember-cli-qunit">ember-cli-qunit</a></li>
+<li>enables easier migration to ESLint</li>
+<li>release <code>ember-cli-jshint@1.0.0</code>?</li>
+<li>add <code>ember-cli-jshint@1.0.0</code> to app/addon blueprints?</li>
+<li>Removes JSHint from <code>ember-cli-qunit/mocha</code>?</li>
+<li>Universal in favor.</li>
+</ul>
+</body>
+</html>

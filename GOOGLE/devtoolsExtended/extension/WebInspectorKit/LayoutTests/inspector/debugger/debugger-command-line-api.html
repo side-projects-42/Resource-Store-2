@@ -1,57 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      function testFunction() {
-        debugger;
-      }
-
-      var test = function () {
-        InspectorTest.addSniffer(WebInspector, "inspect", inspect);
-        InspectorTest.addSniffer(
-          WebInspector,
-          "_updateFocusedNode",
-          updateFocusedNode
-        );
-
-        function updateFocusedNode() {
-          InspectorTest.addResult(
-            "Selected node id: '" +
-              WebInspector.panels.elements
-                .selectedDOMNode()
-                .getAttribute("id") +
-              "'."
-          );
-          InspectorTest.completeDebuggerTest();
-        }
-
-        function inspect(objectId, hints) {
-          InspectorTest.addResult(
-            "WebInspector.inspect called with: " + objectId.description
-          );
-          InspectorTest.addResult(
-            "WebInspector.inspect's hints are: " +
-              JSON.stringify(Object.keys(hints))
-          );
-        }
-
-        InspectorTest.startDebuggerTest(step1);
-
-        function step1() {
-          InspectorTest.runTestFunctionAndWaitUntilPaused(step2);
-        }
-
-        function step2(callFrames) {
-          InspectorTest.evaluateInConsoleAndDump("inspect($('#p1'))");
-        }
-      };
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p id="p1">
-      Tests that inspect() command line api works while on breakpoint.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-command-line-api</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that inspect() command line api works while on breakpoint.</p>
+</body>
 </html>

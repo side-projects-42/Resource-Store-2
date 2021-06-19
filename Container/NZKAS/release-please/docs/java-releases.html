@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>java-releases</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="java-release-strategies">Java Release Strategies</h1>
+<p>The Java release strategies that are currently implemented are tailored towards Google Cloud’s Java client libraries team.</p>
+<p>To manage versions, we maintain a <code>versions.txt</code> manifest which keeps track of artifact versions. To mark versions in code which need to be replaced, we use special markup to replace versions.</p>
+<h3 id="inline-annotation">Inline Annotation</h3>
+<p>You can add an inline annotation to the end of the line which you want a semver version to be replaced. Add <code>x-version-update:&lt;artifact-name&gt;:current</code> or <code>x-version-update:&lt;artifact-name&gt;:released</code> in a comment at the end of the line.</p>
+<p>The <code>current</code> version is the current version at HEAD while the <code>released</code> version is the latest released version in this branch.</p>
+<h3 id="block-annotation">Block Annotation</h3>
+<p>You can add block annotation to the end of the line which you want a semver version to be replaced. Surround the line(s) of code to be replaced with <code>{x-version-start:&lt;artifact-name&gt;:&lt;current|released&gt;}</code> and <code>{x-version-end}</code>.</p>
+<p>The <code>current</code> version is the current version at HEAD while the <code>released</code> version is the latest released version in this branch.</p>
+<h2 id="java-bom">Java Bom</h2>
+<p>Bill of Materials (BOM) artifacts are special <code>pom.xml</code> projects that only declare compatible dependency versions. In this strategy, we look at each <code>deps:</code> commit and infer the type for dependency bump. The semantic version bump of the dependency update should reflect the proposed version bump of the BOM artifact.</p>
+<p>For example, a major version bump in a dependency should bump the BOM artifact’s version with an associated major version bump.</p>
+<h2 id="java-lts">Java LTS</h2>
+<p>This is a special case versioning strategy where we adopt a custom versioning scheme and is meant to be used against an LTS branch. Consider an LTS branch cut from the mainline at version <code>1.2.3</code>. The next version proposed will be <code>1.2.3-sp.1</code>, followed by <code>1.2.3-lts.2</code>.</p>
+<p>For LTS releases, we use a special “lts-snapshot” bump which will make the version following <code>1.2.3-sp.1</code> be <code>1.2.3-sp.2-SNAPSHOT</code>.</p>
+</body>
+</html>

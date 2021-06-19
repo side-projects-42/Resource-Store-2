@@ -1,30 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        InspectorTest.expandElementsTree(step1);
-
-        function step1() {
-          InspectorTest.dumpElementsTree();
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests that elements panel shows DOM tree structure.</p>
-
-    <div id="level1">
-      <div id="level2">
-        "Quoted Text". Special&nbsp;characters:
-        &gt;&lt;&quot;&apos;&nbsp;&ensp;&emsp;&thinsp;&#8202;&#8203;&zwnj;&zwj;&lrm;&rlm;
-        &#8234;&#8235;&#8236;&#8237;&#8238;
-        <div id="level3"></div>
-      </div>
-    </div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>elements-panel-structure</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that elements panel shows DOM tree structure.</p>
+<p>“Quoted Text”. Special characters: &gt;&lt;"’     ​‌‍‎‏ ‪‫‬‭‮</p>
+</body>
 </html>

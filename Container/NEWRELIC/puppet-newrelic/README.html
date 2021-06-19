@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="puppet-newrelic---new-relic-server-monitor">
+      puppet-newrelic - New Relic Server Monitor
+    </h1>
+    <p>
+      This puppet module will install New Relic’s FREE Server monitor agent on
+      your servers.
+    </p>
+    <p>
+      Currently this module only supports rpm-based distributions like
+      rhel/centos. Patches for other distributions are welcome.
+    </p>
+    <h2 id="installation">Installation</h2>
+    <ol type="1">
+      <li>
+        Sign up for an account at http://newrelic.com/signup if you haven’t yet.
+      </li>
+      <li>Copy this directory to your puppet master module path</li>
+      <li>
+        Set your license key in the <code>$license_key</code> var in the
+        <code>package.pp</code> file.
+      </li>
+      <li>
+        Apply the <code>newrelic</code> class to any nodes you want the agent
+        installed on.
+      </li>
+      <li>
+        Login to your New Relic dashboard and you should see your servers show
+        up in a few minutes.
+      </li>
+    </ol>
+    <h2 id="todo">Todo</h2>
+    <ul>
+      <li>
+        Add support for .deb based systems. Pull requests very welcome on this
+        since I don’t currently run any debian-based systems.
+      </li>
+    </ul>
+    <h2 id="contributing">Contributing</h2>
+    <ul>
+      <li>fork on github (https://github.com/joemiller/puppet-newrelic)</li>
+      <li>send a pull request</li>
+    </ul>
+    <h2 id="author">Author</h2>
+    <p>Joe Miller (http://joemiller.me / https://github.com/joemiller)</p>
+    <h2 id="license">LICENSE</h2>
+    <pre><code>Author:: Joe Miller (http://joemiller.me)
+Copyright:: Copyright (c) 2011 Joe Miller
+License:: Apache License, Version 2.0
+
+Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</code></pre>
+  </body>
+</html>

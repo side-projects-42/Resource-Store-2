@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="history-utility">History Utility</h1>
+<p>Provides browser history management functionality using a simple add/get/replace paradigm. This can be used to ensure that the browser’s back and forward buttons work as the user expects and to provide bookmarkable URLs that return the user to the current application state, even in an Ajax application that doesn’t perform full-page refreshes.</p>
+<p>The following modules are available:</p>
+<ul>
+<li><code>history</code>: Rollup of <code>history-base</code>, <code>history-hash</code>, <code>history-hash-ie</code>, and <code>history-html5</code>.</li>
+<li><code>history-base</code>: Generic history management API (but no storage layer).</li>
+<li><code>history-hash</code>: History management using <code>window.location.hash</code>.</li>
+<li><code>history-hash-ie</code>: Adds IE6/7 back/forward support using an iframe hack.</li>
+<li><code>history-html5</code>: History management using the HTML5 history API.</li>
+</ul>
+<p>When using the <code>history</code> rollup module, or when the <code>history-hash</code> and <code>history-html5</code> modules are both loaded, <code>Y.History</code> will be an alias to the best adapter supported by the current browser, which may be either <code>Y.HistoryHash</code> or <code>Y.HistoryHTML5</code>. Preference is given to <code>Y.HistoryHTML5</code> if the browser supports the HTML5 history API.</p>
+</body>
+</html>

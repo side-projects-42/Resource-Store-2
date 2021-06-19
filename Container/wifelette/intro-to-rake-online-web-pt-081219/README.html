@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="intro-to-rake">Intro to Rake</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Introduce Rake and Rake tasks.</li>
+<li>Understand what Rake is used for in our Ruby programs.</li>
+<li>Learn how to build a basic Rake task.</li>
+</ol>
+<h2 id="what-is-rake">What is Rake?</h2>
+<p>Rake is a tool that is available to us in Ruby that allows us to automate certain jobs––anything from execute SQL to <code>puts</code>-ing out a friendly message to the terminal.</p>
+<p>Rake allows us to define something called “Rake tasks” that execute these jobs. Once we define a task, that task can be executed from the command line.</p>
+<h2 id="why-rake">Why Rake?</h2>
+<p>Every program has some jobs that must be executed now and then. For example, the task of creating a database table, the task of making or maintaining certain files. Before Rake was invented, we would have to write scripts that accomplish these tasks in BASH, or we would have to make potentially confusing and arbitrary decisions about what segment of our Ruby program would be responsible for executing these tasks.</p>
+<p>Writing scripts in BASH is tough, and BASH just isn’t as powerful as Ruby. On the other hand, for each developer to make his or her own decisions about where to define and execute certain common tasks related to databases or file maintenance is confusing.</p>
+<p>Rake provides us a standard, conventional way to define and execute such tasks using Ruby.</p>
+<h2 id="where-did-rake-come-from">Where did Rake Come From?</h2>
+<p>In fact, the C community was the first to implement the pattern of writing all their recurring system maintenance tasks in a separate file. They called this file the MakeFile because it was generally used to gather all of the source files and make it into one compiled executable file.</p>
+<p>Rake was later developed by <a href="https://en.wikipedia.org/wiki/Jim_Weirich">Jim Weirich</a> as the task management tool for Ruby.</p>
+<h2 id="how-to-define-and-use-rake-tasks">How to Define and Use Rake Tasks</h2>
+<p>Building a Rake task is easy, since Rake is already available to us as a part of Ruby. All we need to do is create a file in the top level of our directory called <code>Rakefile</code>. Here we define our task:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">task <span class="st">:hello</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="co"># the code we want to be executed by this task</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">end</span></a></code></pre></div>
+<p>We define tasks with <code>task</code> + <code>name of task as a symbol</code> + a block that contains the code we want to execute.</p>
+<p>If you open up the <code>Rakefile</code> in this directory, you’ll see our <code>:hello</code> task:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">task <span class="st">:hello</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  puts <span class="st">&quot;hello from Rake!&quot;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">end</span></a></code></pre></div>
+<p>Now, in your terminal in the directory of this project, type:</p>
+<p><code>rake hello</code></p>
+<p>You should see the following outputted to your terminal:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">hello</span> from Rake!</a></code></pre></div>
+<h3 id="describing-our-tasks-for-rake--t">Describing our Tasks for <code>rake -T</code></h3>
+<p>Rake comes with a handy command, <code>rake -T</code>, that we can run in the terminal to view a list of available Rake tasks and their descriptions. In order for <code>rake -T</code> to work though, we need to give our Rake tasks descriptions. Let’s give our <code>hello</code> task a description now:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">desc <span class="st">&#39;outputs hello to the terminal&#39;</span></a>
+<a class="sourceLine" id="cb4-2" title="2">task <span class="st">:hello</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  puts <span class="st">&quot;hello from Rake!&quot;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<p>Now, if we run <code>rake -T</code> in the terminal, we should see the following:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">rake</span> hello       <span class="co"># outputs hello to the terminal</span></a></code></pre></div>
+<p>So handy!</p>
+<h3 id="namespacing-rake-tasks">Namespacing Rake Tasks</h3>
+<p>It is possible to namespace your Rake tasks. What does “namespace” mean? A namespace is really just a way to group or contain something, in this case our Rake tasks. So, we might namespace a series of greeting Rake tasks, like <code>hello</code>, above, under the <code>greeting</code> heading.</p>
+<p>Let’s take a look at namespacing now. Let’s say we create another greeting-type Rake task, <code>hola</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">desc <span class="st">&#39;outputs hola to the terminal&#39;</span></a>
+<a class="sourceLine" id="cb6-2" title="2">task <span class="st">:hola</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  puts <span class="st">&quot;hola de Rake!&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<p>Now, let’s namespace both <code>hello</code> and <code>hola</code> under the <code>greeting</code> heading:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">namespace <span class="st">:greeting</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-2" title="2">desc <span class="st">&#39;outputs hello to the terminal&#39;</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  task <span class="st">:hello</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    puts <span class="st">&quot;hello from Rake!&quot;</span></a>
+<a class="sourceLine" id="cb7-5" title="5">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7">  desc <span class="st">&#39;outputs hola to the terminal&#39;</span></a>
+<a class="sourceLine" id="cb7-8" title="8">  task <span class="st">:hola</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb7-9" title="9">    puts <span class="st">&quot;hola de Rake!&quot;</span></a>
+<a class="sourceLine" id="cb7-10" title="10">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="kw">end</span></a></code></pre></div>
+<p>Now, to use either of our Rake tasks, we use the following syntax:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">rake</span> greeting:hello</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="ex">hello</span> from Rake!</a>
+<a class="sourceLine" id="cb8-3" title="3"></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="ex">rake</span> greeting:hola</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="ex">hola</span> de Rake!</a></code></pre></div>
+<h2 id="common-rake-tasks">Common Rake Tasks</h2>
+<p>As we move towards developing Sinatra and Rails web applications, you’ll begin to use some common Rake tasks that handle the certain database-related jobs.</p>
+<h3 id="rake-dbmigrate"><code>rake db:migrate</code></h3>
+<p>One common pattern you’ll soon become familiar with is the pattern of writing code that creates database tables and then “migrating” that code using a rake task.</p>
+<p>Our <code>Student</code> class currently has a <code>#create_table</code> method, so let’s use that method to build out our own <code>migrate</code> Rake task.</p>
+<p>We’ll namespace this task under the <code>db</code> heading. This namespace will contain a few common database-related tasks.</p>
+<p>We’ll call this task <code>migrate</code>, because it is a convention to say we are “migrating” our database by applying SQL statements that alter that database.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">namespace <span class="st">:db</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  desc <span class="st">&#39;migrate changes to your database&#39;</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  task <span class="st">:migrate</span> =&gt; <span class="st">:environment</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">Student</span>.create_table</a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="kw">end</span></a></code></pre></div>
+<p>But, if we run <code>rake db:migrate</code> now, we’re going to hit an error.</p>
+<h4 id="task-dependency">Task Dependency</h4>
+<p>You might be wondering what is happening with this snippet:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">task <span class="st">:migrate</span> =&gt; <span class="st">:environment</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb10-2" title="2">...</a></code></pre></div>
+<p>This creates a <em>task dependency</em>. Since our <code>Student.create_table</code> code would require access to the <code>config/environment.rb</code> file (which is where the student class and database are loaded), we need to give our task access to this file. In order to do that, we need to define yet another Rake task that we can tell to run before the <code>migrate</code> task is run.</p>
+<p>Let’s check out that <code>environment</code> task:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># in Rakefile</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3">task <span class="st">:environment</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb11-4" title="4">  require_relative <span class="st">&#39;./config/environment&#39;</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="kw">end</span></a></code></pre></div>
+<p>After adding our environment task, running <code>rake db:migrate</code> should create our students table.</p>
+<h3 id="rake-dbseed"><code>rake db:seed</code></h3>
+<p>Another task you will become familiar with is the <code>seed</code> task. This task is responsible for “seeding” our database with some dummy data.</p>
+<p>The conventional way to seed your database is to have a file in the <code>db</code> directory, <code>db/seeds.rb</code>, that contains some code to create instances of your class.</p>
+<p>If you open up <code>db/seeds.rb</code> you’ll see the following code to create a few students:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb12-1" title="1">require_relative <span class="st">&quot;../lib/student.rb&quot;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="dt">Student</span>.create(<span class="st">name: &quot;Melissa&quot;</span>, <span class="st">grade: &quot;10th&quot;</span>)</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="dt">Student</span>.create(<span class="st">name: &quot;April&quot;</span>, <span class="st">grade: &quot;10th&quot;</span>)</a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="dt">Student</span>.create(<span class="st">name: &quot;Luke&quot;</span>, <span class="st">grade: &quot;9th&quot;</span>)</a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="dt">Student</span>.create(<span class="st">name: &quot;Devon&quot;</span>, <span class="st">grade: &quot;11th&quot;</span>)</a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="dt">Student</span>.create(<span class="st">name: &quot;Sarah&quot;</span>, <span class="st">grade: &quot;10th&quot;</span>)</a></code></pre></div>
+<p>Then, we define a rake task that executes the code in this file. This task will also be namespaced under <code>db</code>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1">namespace <span class="st">:db</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb13-2" title="2"></a>
+<a class="sourceLine" id="cb13-3" title="3">  ...</a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">  desc <span class="st">&#39;seed the database with some dummy data&#39;</span></a>
+<a class="sourceLine" id="cb13-6" title="6">  task <span class="st">:seed</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb13-7" title="7">    require_relative <span class="st">&#39;./db/seeds.rb&#39;</span></a>
+<a class="sourceLine" id="cb13-8" title="8">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb13-9" title="9"><span class="kw">end</span></a></code></pre></div>
+<p>Now, if we run <code>rake db:seed</code> in our terminal (provided we have already run <code>rake db:migrate</code> to create the database table), we will insert five records into the database.</p>
+<p>If only there was some way to interact with our class and database without having to run our entire program…</p>
+<p>Well, we can build a Rake task that will load up a Pry console for us.</p>
+<h3 id="rake-console"><code>rake console</code></h3>
+<p>We’ll define a task that starts up the Pry console. We’ll make this task dependent on our <code>environment</code> task so that the <code>Student</code> class and the database connection load first.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb14-1" title="1">desc <span class="st">&#39;drop into the Pry console&#39;</span></a>
+<a class="sourceLine" id="cb14-2" title="2">task <span class="st">:console</span> =&gt; <span class="st">:environment</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb14-3" title="3">  <span class="dt">Pry</span>.start</a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<p>Now, provided we ran <code>rake db:migrate</code> and <code>rake db:seed</code>, we can drop into our console with the following:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="ex">rake</span> console</a></code></pre></div>
+<p>This should bring up the following in your terminal:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1">[<span class="ex">1</span>] pry(main)<span class="op">&gt;</span></a></code></pre></div>
+<p>Let’s check to see that we did in fact successfully migrate and seed our database:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1">[<span class="ex">1</span>] pry(main)<span class="op">&gt;</span> <span class="ex">Student.all</span></a>
+<a class="sourceLine" id="cb17-2" title="2">=<span class="op">&gt;</span> [[<span class="ex">1</span>, <span class="st">&quot;Melissa&quot;</span>, <span class="st">&quot;10th&quot;</span>],</a>
+<a class="sourceLine" id="cb17-3" title="3"> [<span class="ex">2</span>, <span class="st">&quot;April&quot;</span>, <span class="st">&quot;10th&quot;</span>],</a>
+<a class="sourceLine" id="cb17-4" title="4"> [<span class="ex">3</span>, <span class="st">&quot;Luke&quot;</span>, <span class="st">&quot;9th&quot;</span>],</a>
+<a class="sourceLine" id="cb17-5" title="5"> [<span class="ex">4</span>, <span class="st">&quot;Devon&quot;</span>, <span class="st">&quot;11th&quot;</span>],</a>
+<a class="sourceLine" id="cb17-6" title="6"> [<span class="ex">5</span>, <span class="st">&quot;Sarah&quot;</span>, <span class="st">&quot;10th&quot;</span>]]</a></code></pre></div>
+<p>We did it!</p>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/intro-to-rake'>Intro to Rake</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

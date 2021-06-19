@@ -1,0 +1,1 @@
+Test editor cursorPositionToCoordinates and coordinatesToCursorPosition API

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cordova Custom URL Scheme Handling</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<h1 id="cordova-custom-url-scheme-handling">Cordova Custom URL Scheme Handling</h1>
+<p>For an iOS app, you can add a URL Scheme handler in your app’s Info.plist so that your app launches when another iOS app (like Mobile Safari) launches a URL with your custom scheme.</p>
+<ol type="1">
+<li>Register your custom scheme in your app’s Info.plist: the instructions are <a href="http://developer.apple.com/library/ios/#documentation/iPhone/Conceptual/iPhoneOSProgrammingGuide/AdvancedAppTricks/AdvancedAppTricks.html#//apple_ref/doc/uid/TP40007072-CH7-SW21">here</a></li>
+<li><p>In your JavaScript, add a global function <strong>handleOpenURL</strong> which just takes one parameter, which will be a string containing the URL that was launched. Add your code to parse and handle the URL in that global function. This function will be called always if your app was launched from the custom scheme.</p>
+<pre><code>function handleOpenURL(url) {
+    // TODO: parse the url, and do something
+}</code></pre></li>
+<li><p>In your JavaScript, the global variable <strong>invokeString</strong> will be set with the URL that your app was launched with <strong>if it was first launched with a URL (from a terminated state)</strong>, not from resuming from the background (multi-tasking).</p></li>
+</ol>
+<p><strong>IMPORTANT NOTE:</strong></p>
+<p>You <strong>cannot</strong> launch any interactive features like alerts in the <strong>handleOpenURL</strong> code, if you do, your app will hang. Similarly, you should not call any Cordova APIs in there, unless you wrap it first in a setTimeout call, with a timeout value of zero:</p>
+<pre><code>    function handleOpenUrl(url) {
+         // TODO: parse the url, and do something
+         setTimeout(function() {
+             // TODO: call some Cordova API here
+         }, 0);
+    }</code></pre>
+</body>
+</html>

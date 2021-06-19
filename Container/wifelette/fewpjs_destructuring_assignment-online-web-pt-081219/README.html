@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="destructuring-assignment">Destructuring Assignment</h1>
+<h2 id="learning-goals">Learning Goals</h2>
+<ul>
+<li>Use destructuring to assign data to variables</li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p>As developers, sometimes we receive information in a collection like an <code>Object</code> and we want to “pick and choose” elements out of the collection. It’s a major pain to extract each property / value pair out of an <code>Object</code> and then assign it to a variable.</p>
+<p>Destructuring lets us type less and be more clear about what we want to pull out of an <code>Object</code>. Not only does destructuring help when working with data in your application, it’s essential for understanding how to get JavaScript to include third-party code (like you find on <a href="https://www.npmjs.com/">npm</a>).</p>
+<h2 id="use-destructuring-to-assign-data-to-variables">Use Destructuring to Assign Data to Variables</h2>
+<p>In JavaScript, when we want to assign data to single variables from a top level object such as this, we normally do it individually like so:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">const</span> doggie <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">first</span><span class="op">:</span> <span class="st">&quot;Buzz&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">breed</span><span class="op">:</span> <span class="st">&quot;Great Pyrenees&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">fur_color</span><span class="op">:</span> <span class="st">&quot;black and white&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">activity_level</span><span class="op">:</span> <span class="st">&quot;sloth-like&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="dt">favorite_food</span><span class="op">:</span> <span class="st">&quot;hot_dogs&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="op">};</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="kw">const</span> first <span class="op">=</span> <span class="va">doggie</span>.<span class="at">first</span><span class="op">;</span> <span class="co">// Buzz</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="kw">const</span> breed <span class="op">=</span> <span class="va">doggie</span>.<span class="at">breed</span><span class="op">;</span> <span class="co">// Great Pyrenees</span></a></code></pre></div>
+<p>This is repetitive code. The algorithm at play is:</p>
+<ol type="1">
+<li>Declare a variable with a name (e.g. <code>first</code> or <code>breed</code>)</li>
+<li>Use that variable’s name to point to an attribute in the <code>Object</code> whose name matches the name of the variable (e.g. <code>doggie.breed</code> or <code>doggie.first</code>)</li>
+<li>Assign the attribute’s value to the created variable</li>
+</ol>
+<p>JavaScript gives us the ability to perform this algorithm with <em>one</em> simple line of code.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">const</span> doggie <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">first</span><span class="op">:</span> <span class="st">&quot;Buzz&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">breed</span><span class="op">:</span> <span class="st">&quot;Great Pyrenees&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">fur_color</span><span class="op">:</span> <span class="st">&quot;black and white&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="dt">activity_level</span><span class="op">:</span> <span class="st">&quot;sloth-like&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="dt">favorite_food</span><span class="op">:</span> <span class="st">&quot;hot_dogs&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="op">};</span></a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">const</span> <span class="op">{</span> first<span class="op">,</span> breed <span class="op">}</span> <span class="op">=</span> doggie<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="va">console</span>.<span class="at">log</span>(first)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="va">console</span>.<span class="at">log</span>(breed)<span class="op">;</span></a></code></pre></div>
+<p>We can also use it to destructure a nested syntax:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">const</span> doggie <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">first</span><span class="op">:</span> <span class="st">&quot;Buzz&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">breed</span><span class="op">:</span> <span class="st">&quot;Great Pyrenees&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">fur_color</span><span class="op">:</span> <span class="st">&quot;black and white&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="dt">activity_level</span><span class="op">:</span> <span class="st">&quot;sloth-like&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="dt">favorite_foods</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-7" title="7">    <span class="dt">meats</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="dt">ham</span><span class="op">:</span> <span class="st">&quot;smoked&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-9" title="9">      <span class="dt">hot_dog</span><span class="op">:</span> <span class="st">&quot;oscar_meyer&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-10" title="10">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-11" title="11">    <span class="dt">cheeses</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-12" title="12">      <span class="dt">american</span><span class="op">:</span> <span class="st">&quot;kraft&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-13" title="13">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-14" title="14">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="op">};</span></a>
+<a class="sourceLine" id="cb3-16" title="16"></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="kw">const</span> <span class="op">{</span> ham<span class="op">,</span> hot_dog <span class="op">}</span> <span class="op">=</span> <span class="va">doggie</span>.<span class="va">favorite_foods</span>.<span class="at">meats</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="va">console</span>.<span class="at">log</span>(ham)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="va">console</span>.<span class="at">log</span>(hot_dog)<span class="op">;</span></a></code></pre></div>
+<h3 id="destructuring-assignment-with-arrays">Destructuring Assignment with Arrays</h3>
+<p>Destructuring does not just work on objects - we can also use the same syntax with <code>Array</code>s as well.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">const</span> dogs <span class="op">=</span> [<span class="st">&quot;Great Pyrenees&quot;</span><span class="op">,</span> <span class="st">&quot;Pug&quot;</span><span class="op">,</span> <span class="st">&quot;Bull Mastiff&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">const</span> [medium<span class="op">,</span> small<span class="op">,</span> giant] <span class="op">=</span> dogs<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="va">console</span>.<span class="at">log</span>(medium<span class="op">,</span> small<span class="op">,</span> giant)<span class="op">;</span> <span class="co">// Great Pyrenees, Pug, Bull Mastiff</span></a></code></pre></div>
+<p>The cool part is we can pick the parts of the <code>Array</code> that we want to assign!</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">const</span> dogs <span class="op">=</span> [<span class="st">&quot;Great Pyrenees&quot;</span><span class="op">,</span> <span class="st">&quot;Pug&quot;</span><span class="op">,</span> <span class="st">&quot;Bull Mastiff&quot;</span>]<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">const</span> [<span class="op">,</span> small<span class="op">,</span> giant] <span class="op">=</span> dogs<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="va">console</span>.<span class="at">log</span>(small<span class="op">,</span> giant)<span class="op">;</span> <span class="co">//  Pug, Bull Mastiff</span></a></code></pre></div>
+<h3 id="destructuring-assignment-with-strings">Destructuring Assignment with Strings</h3>
+<p>We can also destructure with strings, as a whole:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">const</span> dogsName <span class="op">=</span> <span class="st">&quot;Sir Woody BarksALot&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">const</span> [title<span class="op">,</span> firstName<span class="op">,</span> lastName] <span class="op">=</span> <span class="st">&quot;Sir Woody BarksALot&quot;</span>.<span class="at">split</span>(<span class="st">&quot; &quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="va">console</span>.<span class="at">log</span>(title<span class="op">,</span> firstName<span class="op">,</span> lastName)<span class="op">;</span> <span class="co">// Sir Woody BarksALot</span></a></code></pre></div>
+<p>And we can also destructure it in parts, just as we did with <code>Array</code>s above:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">const</span> dogsName <span class="op">=</span> <span class="st">&quot;Sir Woody BarksALot&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">const</span> [title<span class="op">,</span> <span class="op">,</span> lastName] <span class="op">=</span> <span class="st">&quot;Sir Woody BarksALot&quot;</span>.<span class="at">split</span>(<span class="st">&quot; &quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="va">console</span>.<span class="at">log</span>(title<span class="op">,</span> lastName)<span class="op">;</span> <span class="co">// Sir BarksALot</span></a></code></pre></div>
+<h2 id="instructions">Instructions</h2>
+<p>We are going to give you several <code>String</code>s, <code>Array</code>s, and <code>Object</code>s and you’re going to write several destructuring assignments for each. Write your code in the <code>index.js</code> file. Let the instructions in the README and the tests guide you through the process.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>“Destructuring assignment” is a fast, and efficient way to assign data to variables from objects, <code>Array</code>s, and strings. It allows us to pick and choose the pieces of data that we want to assign, and gives us lots of freedom to manipulate the data as it is coming in. With practice, you’ll be proficient at it in no time.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">Destructuring assignment</a></li>
+</ul>
+</body>
+</html>

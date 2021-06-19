@@ -1,23 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-  <title>WTF Test</title>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>settimeout</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
 </head>
-  <br/>
-  <br/>
-  <br/>
-  <a id="someLink" href="">Click!</a>
-
-  <script>
-    window.onload = function() {
-      var someLink = document.getElementById('someLink');
-      someLink.onclick = function(e) {
-        e.preventDefault();
-
-        window.setTimeout(function() {
-          console.log('hi');
-        }, 100);
-      };
-    };
-  </script>
+<body>
+<p><a href="" id="someLink">Click!</a></p>
 </body>
 </html>

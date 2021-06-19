@@ -1,47 +1,18 @@
-<html>
-  <head>
-    <script src="console-test.js"></script>
-    <script src="inspector-test.js"></script>
-
-    <script>
-      function performActions() {
-        loadXHR();
-        loadIframe();
-      }
-
-      function loadXHR() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", "non-existent-xhr", false);
-        xhr.send(null);
-      }
-
-      function loadIframe() {
-        var iframe = document.createElement("iframe");
-        iframe.src = "resources/console-resource-errors-iframe.html";
-        document.body.appendChild(iframe);
-      }
-
-      function test() {
-        InspectorTest.addConsoleSniffer(addMessage, true);
-
-        var messageCount = 0;
-        function addMessage(message) {
-          if (message.toString().indexOf("non-existent-iframe") !== -1) {
-            InspectorTest.expandConsoleMessages();
-            InspectorTest.dumpConsoleMessagesWithClasses(true);
-            InspectorTest.completeTest();
-          }
-        }
-
-        InspectorTest.evaluateInPage("performActions()");
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that errors to load a resource cause error messages to be logged to
-      console.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-resource-errors</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that errors to load a resource cause error messages to be logged to console.</p>
+</body>
 </html>

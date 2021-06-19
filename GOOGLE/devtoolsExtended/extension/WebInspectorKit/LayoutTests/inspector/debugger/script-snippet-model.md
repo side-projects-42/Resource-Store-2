@@ -1,0 +1,1 @@
+Tests script snippet model.

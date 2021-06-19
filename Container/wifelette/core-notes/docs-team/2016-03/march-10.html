@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>march-10</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="topics">Topics</h1>
+<h3 id="previous-action-items">Previous Action Items</h3>
+<ul>
+<li>[x] David: still want to contact Trek re: SEO questions, ask for original context</li>
+<li>[x] Todd: will check on private api info leaking through on API viewer (waiting on this until next week)</li>
+<li>[x] Ryan: update on screencast</li>
+<li>[ ] Ricardo: will write up a mini-rfp for core-notes minutes template</li>
+<li>[x] David: will send in a brief issues template (https://github.com/emberjs/guides/issues/1273)</li>
+<li>[ ] RL to create a combination header/footer restyle PR, consolidate CSS (to eliminate differences with guides, and remove emberconf references)</li>
+<li>[ ] RT continues with consistent voice updates in quickstart (no merge ’til emberconf)</li>
+<li>[x] TJ to work on filtering private/deprecated from YUIDoc output</li>
+<li>[ ] RM to create a draft guides PR template (and possibly core-notes and RFCs )</li>
+<li>[x] LS to broach PR template subject with core team</li>
+<li>[ ] DB to work on Build page and feature dashboard website pages, reach out to <code>@miracleblue</code></li>
+<li>[ ] DB to send a guides PR linking to cli upgrade steps</li>
+<li>[ ] RM to create a repo in EmberTown for a living styleguide</li>
+<li>[ ] RM to create a Trello or Waffle site for the docs team</li>
+</ul>
+<h3 id="agenda">Agenda</h3>
+<ul>
+<li>Ask someone to take notes.</li>
+<li>Review action items from last week.</li>
+<li>Items for Discussion - None</li>
+</ul>
+<h1 id="minutes">Minutes</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Name (Initials) <code>slackid</code></em></p>
+<ul>
+<li>Ricardo Mendes (RM) <code>@locks</code></li>
+<li>David (DB) <code>@acorncom</code></li>
+<li>Todd (TJ) <code>@todd.jordan</code></li>
+<li>Ryan Tablada (RT) <code>@rtablada</code></li>
+<li>Ryan Labouve (RL) <code>@ryanlabouve</code></li>
+<li>Matt Beale (MB) <code>@mixonic</code></li>
+<li>Leah (LS) <code>w@ifelette</code></li>
+<li>Yehuda Katz (YK) <code>@wycats</code></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<h3 id="new-action-items">New Action Items</h3>
+<ul>
+<li>[ ] DB: Reach out to Core on deploying angolia search on just 2.4</li>
+<li>[ ] TJ: Reach out to RM about taking on contextual components for the guides</li>
+<li>[ ] RT: Write an issue on guides nav linking for Getting Started</li>
+<li>[ ] YK: Review/Merge API Private Class Hiding PR(s)</li>
+</ul>
+<h3 id="guides-urls-and-seo">Guides URLs and SEO</h3>
+<p>YK: What’s the status of the URL —? How much is tech work and how much is grunt work?</p>
+<p>DB: We’re not super sure <em>what</em> we want to be doing yet. We have some theoretical ideas but we’re not sure about the exact plan.</p>
+<p>DB: Locks is working on an Ember app for the Guides. He’s hoping to have it in a few weeks. Assuming he <em>does</em> that, I want to wait on the SEO stuff.</p>
+<p>YK: We should pick a date and check in then so it doesn’t become a runaway project (where we suddenly notice in six months that we haven’t made any progress :p).</p>
+<p>DB: Agreed, we’ll revisit in two weeks for a more concrete status report.</p>
+<h3 id="getting-started-guide-screencast">Getting Started Guide / Screencast</h3>
+<p>RT: I’m planning on jumping in this weekend and working on the script and wording for the Getting Started Guide. I want to bring it more into line with the wording of the tutorial. Last week we decided we’d use that as the script for the YouTube video so we don’t break translation. On the next minor or LTS release we’ll pull in the tutorial (so after EmberConf) to translate the rewording.</p>
+<p>YK: Next LTS, so 2.8?</p>
+<p>RT: We need to check more with the translation team to be sure. Right now the tutorials are written in first-person collective, and a lot of the Getting Started is mixed and second-person. So I’m trying to get that more in line and towards something that feels good for the screencast.</p>
+<p>YK: I’m really glad someone is paying attention to that :) I assume you’re planning on extracting this to some kind of a writing guide? Even just bullet points would be good.</p>
+<p>RT: I’ll make a note to try and do something like that along with my work. Voice-wise, the only two new items since my last refactor are the <code>map</code> and the <code>helper</code> that I did. I think between me and DB we did a pretty good job at doing it right.</p>
+<p>YK: Are there situations where the collective voice will feel weird?</p>
+<p>RT: When talking about the current installed voice, or the ENV. That’s usually when I break collective voice.</p>
+<p>YK: Even instructions like “please install Node right now” saying “we will install node now” should work well.</p>
+<p>TJ: Are you sill working on the screencast RT?</p>
+<p>RT: Yep, that’s the script I referenced moving to collective voice.</p>
+<h4 id="style-guide">Style Guide</h4>
+<p>TJ: I don’t think the style guide stuff has happened yet, but unsure. Hopefully RL will get in touch. RL mentioned he would be working on it tonight.</p>
+<p>RL: (joined) Still in idea phase. Looking at the several links RM posted</p>
+<p>DB: I have a draft on the notes template. We should iterate on it with the Guides team and then ship it upstream to core.</p>
+<p>TJ: Ryan was also working on the header/footer stuff, and I think I saw a PR for that.</p>
+<p>DB: It’s been merged and redeployed! <em>cheers all around</em></p>
+<p>LS: Looks like the footer is messed up. It doesn’t match the Guide and has new bugs. The Copyright word is the wrong size or font, the center copy is incorectly centered. Unsure about the background color also, it seems to be different from the Guides footer color, but it might be on purpose.</p>
+<p>YK: I think the homepage version from before the changes is the canonical version. You can get it back by reverting the change. I think the guides version is worse.</p>
+<h3 id="hiding-privatedeprecated-classes-in-the-api">Hiding Private/Deprecated Classes in the API</h3>
+<p>TJ: Submitted a PR around updating the yuidoc json to filter out private/deprecated classes. Kris Seldon also has a PR for updating the rendering side. TJ’s PR to address other docs clients as well.</p>
+<p>YK: Send me PR(s) and I will review merge</p>
+<p>https://github.com/emberjs/ember.js/pull/13075</p>
+<p>https://github.com/emberjs/website/pull/2476</p>
+<p>YK: In terms of cost-benefit, this is the highest priority thing we can do as a project.</p>
+<h3 id="linking-to-cli-upgrade-instructions-from-guides">Linking to CLI Upgrade Instructions from Guides</h3>
+<p>RM: we should link to specific release for the guides and have it dynamically link.</p>
+<p>DB: Inclined to just link directly to the main releases github page and let the user choose.</p>
+<p>DB: Will send in a PR.</p>
+<h3 id="guide-navigation-link-issues">Guide Navigation Link Issues</h3>
+<p>RT: Under getting started there’s a quick start and installing ember section. Installing ember is at the index root, but is the second item in navigation. Best fix might be to use Quick start as the index and give installing a first class link.</p>
+<p>DB: also main guides page isn’t linked to on left… Can’t get back</p>
+<p>DB: Make and issue and deal with it later after translation drops (seo concerns)</p>
+<h3 id="search">Search</h3>
+<p>DB: Lets try algolia search on 2.4 guides. Will run it by Leah and possibly merge tonight.</p>
+<h3 id="documenting-contextual-components">Documenting Contextual Components</h3>
+<p>TJ: Would like to get Contextual Components in the Guide so I can share. Issue owned by RM. Will get in touch with him to see if I can take it since his plate is pretty full.</p>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-02-10-keeping-your-configuration-and-data-in-subversion</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      We all know that keeping important files in version control is critical,
+      as it ensures problematic changes can be reverted and can serve as a
+      backup mechanism as well. Code and resources are often kept in version
+      control, but it can be easy to forget your continuous integration (CI)
+      server itself! If a disk were to die or fall victim to a
+      <a href="http://twitter.com/progrium/status/7646048501">misplaced</a>
+      <code>rm -rf</code>, you could lose all the history and configuration
+      associated with the jobs your CI server manages.
+    </p>
+    <p>
+      It’s pretty simple to create a repository, but it isn’t obvious which
+      parts of your $HUDSON_HOME you’ll want to backup. You’ll also want to have
+      some automation so new projects get added to the repository, and deleted
+      ones get removed. Luckily we have a great tool to handle this: Hudson!
+    </p>
+    <p>
+      We have a Hudson job which runs nightly, performs the appropriate SVN
+      commands, and checks in. The high-level overview of this job is basically:
+    </p>
+    <ol type="1">
+      <li>
+        Add any new jobs, users, plugin configurations, et cetera:
+        <code
+          >svn add -q --parents *.xml jobs/*/config.xml users/*/config.xml
+          userContent/*</code
+        >
+      </li>
+      <li>
+        Remove anything from SVN that no longer exists (such as a deleted job):
+        <code>svn status | grep '!' | awk '{print $2;}' | xargs -r svn rm</code>
+      </li>
+      <li>
+        Check it in!
+        <code
+          >svn ci --non-interactive --username=mrhudson -m "automated commit of
+          Hudson configuration"</code
+        >
+        You’ll want to make sure to use the
+        <code>--non-interactive</code> option for any automated svn operations,
+        as this ensures Subversion won’t hang asking a question but instead fail
+        immediately. You may also need to provide your password with the
+        <code>--password</code> option.
+      </li>
+    </ol>
+    <p>
+      To make such a Hudson job, create a new job, tie it to the master (since
+      this is where the configuration files are), set it to build periodically
+      (we use “<span class="citation" data-cites="midnight">@midnight</span>”),
+      and add an “Execute shell” build step. Here’s the full script we use, to
+      put into the build step:
+    </p>
+    <p>
+      <code type="bash">
+        # Change into your HUDSON_HOME. cd /opt/hudson # Add any new conf files,
+        jobs, users, and content. svn add -q –parents
+        <em>.xml jobs/</em>/config.xml users/<em>/config.xml userContent/</em> #
+        Ignore things in the root we don’t care about. echo -e
+        “warnlogn<em>.logn</em>.tmpn<em>.oldn</em>.bakn<em>.jarn</em>.json” &gt;
+        myignores svn propset svn:ignore -F myignores . &amp;&amp; rm myignores
+        # Ignore things in jobs/* we don’t care about. echo -e
+        “buildsnlast<em>nnext</em>n<em>.txtn</em>.lognworkspace<em
+          >ncoberturanjavadocnhtmlreportsnncoverndoclinks" &gt; myignores svn
+          propset svn:ignore -F myignores jobs/</em
+        >
+        &amp;&amp; rm myignores # Remove anything from SVN that no longer exists
+        in Hudson. svn status | grep ‘!’ | awk ‘{print $2;}’ | xargs -r svn rm #
+        And finally, check in of course, showing status before and after for
+        logging. svn st &amp;&amp; svn ci –non-interactive –username=mrhudson
+        -m”automated commit of Hudson configuration" &amp;&amp; svn st
+      </code>
+    </p>
+    <p>
+      You’ll notice this does some extra things like set the svn:ignores
+      property to provide a relatively clean <code>svn st</code> which it shows
+      before and after the commit for logging purposes. One thing this job
+      <em>doesn’t</em> do is put the build results of your jobs in version
+      control. Because historical build logs and artifacts will never change and
+      are also potentially large, a periodic (daily or weekly)
+      <code>cp</code> or <code>rsync</code> of the
+      <strong>jobs</strong> directory will still give you restorability while
+      keeping your repository lean.
+    </p>
+    <p>
+      Now you can sleep well at night knowing that your CI server is safe and
+      sound. If you are doing a similar thing with Hudson or another CI system,
+      let us know about your solution!
+    </p>
+    <hr />
+    <p>
+      <strong>Editor’s Note:</strong>
+      <a id="aptureLink_S8IC1qB8oH" href="http://twitter.com/MikeRooney"
+        >Mike Rooney</a
+      >
+      is a Software Engineer at
+      <a id="aptureLink_tuyi7spa9e" href="http://twitter.com/Genius_com"
+        >Genius.com</a
+      >, provider of real-time marketing automation software connecting
+      marketing and sales. You can read more posts from Mike and other Geniuses
+      at <a href="http://eng.genius.com">eng.genius.com</a>
+    </p>
+  </body>
+</html>

@@ -1,57 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      function testFunction() {
-        foo();
-      }
-
-      function foo() {}
-
-      function test() {
-        InspectorTest.runDebuggerTestSuite([
-          function testSetNoneOfURLAndRegex(next) {
-            DebuggerAgent.setBreakpointByUrl.invoke({ lineNumber: 1 }, step2);
-
-            function step2(error) {
-              InspectorTest.addResult(error);
-              next();
-            }
-          },
-
-          function testSetBothURLAndRegex(next) {
-            var url = "debugger-set-breakpoint.js";
-            var urlRegex = "debugger-set-breakpoint.*";
-            DebuggerAgent.setBreakpointByUrl(1, url, urlRegex, step2);
-
-            function step2(error) {
-              InspectorTest.addResult(error);
-              next();
-            }
-          },
-
-          function testSetByRegex(next) {
-            DebuggerAgent.setBreakpointByUrl.invoke(
-              { urlRegex: "debugger-set-breakpoint.*", lineNumber: 8 },
-              step2
-            );
-
-            function step2(result) {
-              InspectorTest.runTestFunctionAndWaitUntilPaused(step3);
-            }
-
-            function step3(callFrames) {
-              InspectorTest.captureStackTrace(callFrames);
-              next();
-            }
-          },
-        ]);
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests Debugger.setBreakpointByUrl with isRegex set to true.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-set-breakpoint-regex</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests Debugger.setBreakpointByUrl with isRegex set to true.</p>
+</body>
 </html>

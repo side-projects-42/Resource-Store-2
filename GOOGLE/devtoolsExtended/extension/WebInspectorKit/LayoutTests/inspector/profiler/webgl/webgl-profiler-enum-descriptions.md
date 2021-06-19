@@ -1,0 +1,1 @@
+Tests WebGL enum formatting.

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-11</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="agenda">2016-02-11 Agenda</h1>
+<h1 id="topics">Topics</h1>
+<ul>
+<li>Review action items from last week</li>
+<li>DB
+<ul>
+<li>Docs structure (how do we want to organize this?)
+<ul>
+<li>high level, but needed for design folks</li>
+</ul></li>
+</ul></li>
+<li>RM
+<ul>
+<li>translations</li>
+<li>do we do anything? https://github.com/emberjs/guides/issues/1241</li>
+<li>https://github.com/emberjs/guides/issues/1244</li>
+<li>https://github.com/emberjs/guides/pull/1248</li>
+</ul></li>
+<li>TJ
+<ul>
+<li>tutorial - service update</li>
+<li>questions about super-rental repo
+<ul>
+<li>tests: should we add a test tutorial</li>
+<li>style: currently pretty bare. should we spruce the style up and make it a tutorial</li>
+</ul></li>
+</ul></li>
+<li>DB: Ember as CMS
+<ul>
+<li>pros/cons: https://gist.github.com/acorncom/9c5834530bf95a234920</li>
+<li>Fastboot serving probably required, involves hosting, how handle that?</li>
+<li>prob. best to keep this to a high-level discussion</li>
+</ul></li>
+<li>Community
+<ul>
+<li>Ember.js Newsletter</li>
+<li>Ember Hearth</li>
+<li>Ember Watch</li>
+<li>Ember Observer</li>
+</ul></li>
+<li>Tutorial Screencast?
+<ul>
+<li>Solidifying content for 2.4 guides (remaining open PRs)</li>
+</ul></li>
+</ul>
+<h1 id="minutes">Minutes</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>David Baker</li>
+<li>Leah Silber</li>
+<li>Ricardo Mendes</li>
+<li>Ryan Tablada</li>
+<li>Todd Jordan</li>
+<li>Tom Dale</li>
+<li>Yehuda Katz</li>
+</ul>
+<h3 id="guides-seo-issues">Guides SEO issues</h3>
+<p>DB: Noticed with RoR, current versions of docs aren’t versioned. Not versioning current would possibly solve the SEO issue.</p>
+<p>Want current version as top result, but still want to find old versions.</p>
+<p>DB: Plan to spend some more time researching and talk to trek.</p>
+<p>TD: Willing to signal boost on twitter for folks with SEO experience to come in and help</p>
+<h3 id="code-school">Code School</h3>
+<p>LS: Everyone who gave emails should now have access to the code school draft</p>
+<p>attendees had trouble accessing.</p>
+<h3 id="translations">Translations</h3>
+<p>RM: Everything is set up, James Kyle needed access to guides repo. Added a couple of project lead translators.</p>
+<p>LS: to gave access (thejameskyle, thejameskylebot), Brazil not showing</p>
+<p>RM: Not synced yet</p>
+<p>DB: middleman handles language, need to decide on ordering language/version…</p>
+<h3 id="cms">CMS</h3>
+<p>DB: Fastboot for guides?</p>
+<p>TD: That’d be great. Would be good to eat our own dogfood. Not as many rubyists in Ember as there used to be.</p>
+<h3 id="issues">Issues</h3>
+<p>RM: issue 1241 fixed on latest but not on older. iframe linking to a bad url</p>
+<p>DB: backporting is a pain</p>
+<p>TD: prev versions have external dependencies and tend to rot. Could manually go into github pages and edit the file. tundal45 may be willing to help out. Just requires time and patience</p>
+<p>RM: I’ll talk to him</p>
+<p>RM: issue 1244 5 issue/pr this week around using the wrong version of ember-data when following the guides. In tutorial we have an upgrading ember section that said your ember/ember-data should match the guides version.</p>
+<p>DB: put note saying your version must be 2.x to work.</p>
+<p>RM: best place for the warning is in the tutorial because of problems with mirage.</p>
+<p>[discussion of Ember-CLI, beta issues]</p>
+<p>RM: PR 1248</p>
+<p>DB: Merged</p>
+<h3 id="tutorial">Tutorial</h3>
+<p>TJ: I made a few tweaks based on Yehuda’s comments last week. I’ve been working on the services tutorial. I added a geolocation service, so in the Super Rentals example it will give you the location of the rentals relative to your current location.</p>
+<p>TJ: Secondly, I know Robert made some comments on the tests for the tutorial. I wonder if we should have a tutorial page for getting people started with testing.</p>
+<p>TD: I would think we should integrate testing into each step as you go. That ways testing isn’t one big step at the end, which people will troll us for.</p>
+<h3 id="community-resources">Community resources</h3>
+<p>RM: Wants a “This Week in Rust” equivalent for Ember highlighting addons and contributions to complement Ember Weekly</p>
+<p>TD: A dead mailing list is a signal that the project isn’t helping</p>
+<p>RT: We could complement the Ember Weekly guy who spend several hours every Sunday working on it. More automation would be of great help. First step might be better to deploy it to a website instead of a mailing list</p>
+<p>RM: will contact ember weekly and ember watch people</p>
+<p>RT: Offer my time doing an Ember in five minutes screencast for the tutorial or the quick start. Will look at the quick start.</p>
+<h1 id="action-items">Action Items</h1>
+<ul>
+<li>[ ] David: will research SEO issues further, canonical, will send Tom an issue</li>
+<li>[ ] Tom: will signal boost SEO issues on Twitter</li>
+<li>[ ] Leah: will let CodeSchool folks know couldn’t see tutorial</li>
+<li>[ ] Ricardo: will contact Ember Weekly / Ember Watch folks</li>
+<li>[ ] Ryan: will start working on screencast for quick start</li>
+</ul>
+</body>
+</html>

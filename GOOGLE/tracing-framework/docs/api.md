@@ -1,4 +1,5 @@
-# Tracing API
+Tracing API
+===========
 
 TODO(benvanik): more information.
 
@@ -43,8 +44,7 @@ Automatic instrumentation of an entire type:
           foo: 'foo(uint8 a)'
         });
 
-If you find yourself neededing to add arguments to a scope that was
-automatically created or is added conditionally, consider using an append event.
+If you find yourself neededing to add arguments to a scope that was automatically created or is added conditionally, consider using an append event.
 
     // Create the appending event:
     var appendMyData = wtf.trace.events.createInstance(
@@ -55,8 +55,7 @@ automatically created or is added conditionally, consider using an append event.
     appendMyData(123, 456);
     wtf.trace.leaveScope(scope);
 
-If (and only if!) you're doing some debugging and need a bunch of data in your
-scopes you can use the super slow `wtf.trace.appendScopeData` method:
+If (and only if!) you’re doing some debugging and need a bunch of data in your scopes you can use the super slow `wtf.trace.appendScopeData` method:
 
     var scope = ...enter scope...();
     // The value can be any JSONifiable value (numbers/arrays/objects).
@@ -66,15 +65,13 @@ scopes you can use the super slow `wtf.trace.appendScopeData` method:
     });
     wtf.trace.leaveScope(scope);
 
-If you need to do any expensive work that you don't want to show up as user
-time, use the built-in helper scope:
+If you need to do any expensive work that you don’t want to show up as user time, use the built-in helper scope:
 
     var traceScope = wtf.trace.enterTracingScope();
     // Expensive work...
     wtf.trace.leaveScope(traceScope);
 
-To prevent DOM event listeners from appearing in the trace, wrap them with
-`wtf.trace.ignoreListener` before attaching them:
+To prevent DOM event listeners from appearing in the trace, wrap them with `wtf.trace.ignoreListener` before attaching them:
 
     var el = document.createElement('a');
     el.onclick = wtf.trace.ignoreListener(function(e) {
@@ -86,12 +83,12 @@ To prevent DOM event listeners from appearing in the trace, wrap them with
 
 Supported types in event signatures:
 
-- int8/uint8
-- int16/uint16
-- int32/uint32
-- float32
-- ascii
-- utf8
-- any of the int/float types as type[] for an array
+-   int8/uint8
+-   int16/uint16
+-   int32/uint32
+-   float32
+-   ascii
+-   utf8
+-   any of the int/float types as type\[\] for an array
 
 TODO: add more types (float64/number, typed arrays, etc)

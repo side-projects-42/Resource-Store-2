@@ -1,42 +1,29 @@
-<html>
-  <head>
-    <title>DevToolsExtended</title>
-    <script src="../ChannelPlate/ChannelPlate.js"></script>
-    <script src="../crx2app/extension/lib/requirejs/require.js"></script>
-    <script src="atopwi.js"></script>
-    <link rel="StyleSheet" href="atopwi.css" type="text/css" />
-  </head>
-  <body>
-    <div class="hide" id="error"></div>
-    <div class="hide debuggeeSpec">
-      <h1>Chrome Devtools as Web App</h1>
-      front-end url presets:
-      <button class="crxFrontEnd">DevtoolsExtended Extension</button
-      ><button class="testingFrontEnd">localhost testing</button>
-      <form>
-        front-end url: <input class="frontendURL" type="url" size="128" />
-      </form>
-      <h2>Backend Using Chrome extension crx2App</h2>
-      <p>
-        The devtools front-end connects through postMessage() events to the
-        chrome.debugger API and from there to the backend
-      </p>
-      <form>
-        URL to debug: <input id="debuggeeSpecURLElt" type="url" size="128" />
-        <button id="doDebug">Debug</button>
-      </form>
-      <h2>OR: Backend Using Web Sockets</h2>
-      <p>The devtools front-end connects to localhost:9222</p>
-      <div class="WebSocketSelector">
-        <!-- filled in by JavaScript -->
-      </div>
-    </div>
-    <div class="splash">
-      <span class="splashWaitingMessage"
-        >Waiting for devtools backend connection:
-      </span>
-      <span class="devtoolsBackendURL"></span>
-    </div>
-    <div class="WebInspectorContainer"></div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>atopwi</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="chrome-devtools-as-web-app">Chrome Devtools as Web App</h1>
+<p>front-end url presets:</p>
+<p>DevtoolsExtended Extension</p>
+<p>localhost testing</p>
+<p>front-end url:</p>
+<h2 id="backend-using-chrome-extension-crx2app">Backend Using Chrome extension crx2App</h2>
+<p>The devtools front-end connects through postMessage() events to the chrome.debugger API and from there to the backend</p>
+<p>URL to debug:</p>
+<p>Debug</p>
+<h2 id="or-backend-using-web-sockets">OR: Backend Using Web Sockets</h2>
+<p>The devtools front-end connects to localhost:9222</p>
+<p><span class="splashWaitingMessage">Waiting for devtools backend connection: </span> <span class="devtoolsBackendURL"></span></p>
+</body>
 </html>

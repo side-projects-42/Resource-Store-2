@@ -1,0 +1,2 @@
+XQuery CodeMirror Mode
+======================

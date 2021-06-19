@@ -4,17 +4,15 @@ This Repo contains the testResultsProcessor needed to create the coverage map ne
 
 ## How to use it
 
-In `example/JestUnitTestEngine` you'll find an example of a Phabricator Jest UnitTestEngine reference implementation.
+In `example/JestUnitTestEngine` you’ll find an example of a Phabricator Jest UnitTestEngine reference implementation.
 
 You need to add the jest unit engine to your .arcconfig:
 
-```json
-...
+    ...
 
-"unit.engine" : "JestUnitTestEngine",
+    "unit.engine" : "JestUnitTestEngine",
 
-...
-```
+    ...
 
 In `JestUnitTestEngine` there are a couple of constants you probably need to modify:
 

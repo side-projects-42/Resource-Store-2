@@ -1,56 +1,32 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Gherkin mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="gherkin.js"></script>
-<style>
-  .CodeMirror {
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">Gherkin</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Gherkin mode</h2>
-  <form>
-    <textarea id="code" name="code">
-Feature: Using Google
-  Background: 
-    Something something
-    Something else
-  Scenario: Has a homepage
-    When I navigate to the google home page
-    Then the home page should contain the menu and the search form
-  Scenario: Searching for a term 
-    When I navigate to the google home page
-    When I search for Tofu
-    Then the search results page is displayed
-    Then the search results page contains 10 individual search results
-    Then the search results contain a link to the wikipedia tofu page
-</textarea
-    >
-  </form>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {});
-  </script>
-
-  <p><strong>MIME types defined:</strong> <code>text/x-feature</code>.</p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Gherkin mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">Gherkin</a></li>
+</ul>
+<h2 id="gherkin-mode">Gherkin mode</h2>
+<p>Feature: Using Google Background: Something something Something else Scenario: Has a homepage When I navigate to the google home page Then the home page should contain the menu and the search form Scenario: Searching for a term When I navigate to the google home page When I search for Tofu Then the search results page is displayed Then the search results page contains 10 individual search results Then the search results contain a link to the wikipedia tofu page</p>
+<p><strong>MIME types defined:</strong> <code>text/x-feature</code>.</p>
+</body>
+</html>

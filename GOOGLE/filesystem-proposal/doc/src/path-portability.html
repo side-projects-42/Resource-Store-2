@@ -1,173 +1,87 @@
-<html>
-  <head>
-    <meta http-equiv="Content-Language" content="en-us" />
-    <meta name="GENERATOR" content="Microsoft FrontPage 5.0" />
-    <meta name="ProgId" content="FrontPage.Editor.Document" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>New Page 1</title>
-  </head>
-
-  <body>
-    <h2><a name="Differences-Boost">Differences from Boost Filesystem</a></h2>
-
-    <p>
-      In the Boost library, class <code>path</code> solves portability needs via
-      facilities to handle narrow (i.e. <code>char</code>) character strings
-      with encodings other than the operating system's native encoding. That
-      caused unfortunate interface clutter, so the Library Working Group asked
-      that the clutter be removed from class <code>path</code>. Instead,
-      proposal
-      <a
-        href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3398.html"
-        >N3398, String Interoperation Library</a
-      >, provides general facilities that handle some use cases and some helper
-      functions have been added to the Filesystem Library.
-    </p>
-
-    <p>
-      Otherwise, the proposal is very similar to the Boost library. Indeed, the
-      proposed wording is generated from the same source as the Boost library's
-      reference documentation.
-    </p>
-
-    <h2><a name="Path-portability">Path portability</a></h2>
-
-    <p>
-      Moving code from a tidy environment where narrow character strings are
-      always UTF-8 encoded to an environment where the narrow character encoding
-      differs can be a daunting experience.&nbsp; Filenames can become
-      unrecognizable to a human or to a file system. The same problem also
-      applies to other encodings, although UTF-8 is so ubiquitous it deserves
-      special consideration.
-    </p>
-
-    <p>
-      One of the design objectives of the Filesystem Library is to ease this
-      problem. The solution centers around the constructors for class
-      <code>path</code>:
-    </p>
-    <table
-      border="1"
-      cellpadding="10"
-      cellspacing="0"
-      style="border-collapse: collapse"
-      bordercolor="#111111"
-    >
-      <tr>
-        <td>
-          <h3>
-            Recommendations for portable use of class
-            <code>path</code> constructors
-          </h3>
-          <ul>
-            <li dir="ltr">
-              For narrow (i.e. <code>char</code>) strings that are not composed
-              entirely of 7-bit ASCII characters, if the encoding is fixed (e.g.
-              UTF-8) rather than changing when the native encoding changes, do
-              one of two things:
-              <ul>
-                <li>
-                  Convert the narrow string data to <code>u16string</code> or
-                  <code> u32string</code>, so that encoding never changes.
-                </li>
-                <li>
-                  Tell the constructor (or a helper) what the actual narrow
-                  string encoding is, so that the default native encoding will
-                  be overridden. <br />
-                  &nbsp;
-                </li>
-              </ul>
-            </li>
-            <li dir="ltr">
-              Use <code>char</code> string literals
-              (<code>&quot;an&quot;</code>) only for strings composed entirely
-              of 7-bit ASCII characters. Use <code>char16_t</code> literals
-              (<code>u&quot;äñ&quot;</code>) for strings that include non-ASCII
-              characters within the 16-bit Unicode Basic Multilingual Plane
-              (BMP), or <code>char32_t</code> literals
-              (<code>U&quot;&#131312;&quot;</code>) for strings that include
-              Unicode characters above the BMP.
-            </li>
-          </ul>
-        </td>
-      </tr>
-    </table>
-
-    <h2><a name="Revision-history">Revision history</a></h2>
-
-    <p>
-      <span style="background-color: #ffff99">Nxxxx=12-xxxx</span>, Filesystem
-      Library Proposal (Revision 4). Changes include:
-    </p>
-
-    <ul>
-      <li>
-        The <a href="#Path-portability">Path portability</a> section was added.
-      </li>
-    </ul>
-
-    <hr />
-    <h2 dir="ltr">
-      Recommendations for portable use of narrow (i.e. <code>char</code>)
-      character strings
-    </h2>
-    <p dir="ltr">
-      Narrow (i.e. <code>char</code>) character strings that contain anything
-      other than 7-bit ASCII characters are inherently non-portable for creating
-      and observing paths, because the encoding of narrow strings is system
-      dependent.
-    </p>
-    <ul>
-      <li dir="ltr">
-        Do not use <code>char</code> string literals
-        (<code>&quot;an&quot;</code>) to create a <code>path</code> unless the
-        literal is composed entirely of 7-bit ASCII characters.<br />
-        <br />
-        Instead, use <code>char32_t</code> string literals
-        (<code>U&quot;äñ𠃰&quot;</code>), as these are always safe.<br />
-        <br />
-        It is also OK to use <code>char16_t</code> string literals
-        (<code>u&quot;äñ&quot;</code>) if all characters are within the 16-bit
-        Unicode Basic Multilingual Plane (BMP) and there is no issue with
-        combining characters, but non-experts can ignore this approach.<br />
-        &nbsp;
-      </li>
-      <li dir="ltr">
-        For narrow (i.e. <code>char</code>) strings that are not composed
-        entirely of 7-bit ASCII characters, if the encoding is fixed (e.g.
-        UTF-8) rather than changing when the native encoding changes, do one of
-        two things:
-        <ul>
-          <li>
-            Convert the narrow string data to <code>u16string</code> or
-            <code> u32string</code>, so that encoding never changes.
-          </li>
-          <li>
-            Tell the constructor (or a helper) what the actual narrow string
-            encoding is, so that the default native encoding will be
-            overridden.<br />
-            &nbsp;
-          </li>
-        </ul>
-      </li>
-      <li>
-        Do not use the string() or generic_string() observers. Instead use the
-        u16string(), u32string(), generic_u16string(), or generic_u32string()
-        observers. <br />
-        &nbsp;
-      </li>
-    </ul>
-    <p dir="ltr">&nbsp;</p>
-    <p>&nbsp;</p>
-    <hr />
-    <p>&nbsp;</p>
-    <p><i>Add an additional native format observer:</i></p>
-    <blockquote>
-      <p><code>string u8string() const;</code></p>
-    </blockquote>
-    <p><i>Add an additional generic format observer:</i></p>
-    <blockquote>
-      <p><code>string generic_u8string() const;</code></p>
-    </blockquote>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>path-portability</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h2 id="differences-from-boost-filesystem"><span id="Differences-Boost">Differences from Boost Filesystem</span></h2>
+<p>In the Boost library, class <code>path</code> solves portability needs via facilities to handle narrow (i.e. <code>char</code>) character strings with encodings other than the operating system’s native encoding. That caused unfortunate interface clutter, so the Library Working Group asked that the clutter be removed from class <code>path</code>. Instead, proposal <a href="http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2012/n3398.html">N3398, String Interoperation Library</a>, provides general facilities that handle some use cases and some helper functions have been added to the Filesystem Library.</p>
+<p>Otherwise, the proposal is very similar to the Boost library. Indeed, the proposed wording is generated from the same source as the Boost library’s reference documentation.</p>
+<h2 id="path-portability"><span id="Path-portability">Path portability</span></h2>
+<p>Moving code from a tidy environment where narrow character strings are always UTF-8 encoded to an environment where the narrow character encoding differs can be a daunting experience.  Filenames can become unrecognizable to a human or to a file system. The same problem also applies to other encodings, although UTF-8 is so ubiquitous it deserves special consideration.</p>
+<p>One of the design objectives of the Filesystem Library is to ease this problem. The solution centers around the constructors for class <code>path</code>:</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>
+<h3 id="recommendations-for-portable-use-of-class-path-constructors">
+Recommendations for portable use of class <code>path</code> constructors
+</h3>
+<ul>
+<li>
+For narrow (i.e. <code>char</code>) strings that are not composed entirely of 7-bit ASCII characters, if the encoding is fixed (e.g. UTF-8) rather than changing when the native encoding changes, do one of two things:
+<ul>
+<li>
+Convert the narrow string data to <code>u16string</code> or <code> u32string</code>, so that encoding never changes.
+</li>
+<li>
+Tell the constructor (or a helper) what the actual narrow string encoding is, so that the default native encoding will be overridden.<br />  
+</li>
+</ul>
+</li>
+<li>
+Use <code>char</code> string literals (<code>“an”</code>) only for strings composed entirely of 7-bit ASCII characters. Use <code>char16_t</code> literals (<code>u“äñ”</code>) for strings that include non-ASCII characters within the 16-bit Unicode Basic Multilingual Plane (BMP), or <code>char32_t</code> literals (<code>U“𠃰”</code>) for strings that include Unicode characters above the BMP.
+</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="revision-history"><span id="Revision-history">Revision history</span></h2>
+<p><span style="background-color: #ffff99">Nxxxx=12-xxxx</span>, Filesystem Library Proposal (Revision 4). Changes include:</p>
+<ul>
+<li>The <a href="#Path-portability">Path portability</a> section was added.</li>
+</ul>
+<hr />
+<h2 id="recommendations-for-portable-use-of-narrow-i.e.-char-character-strings">Recommendations for portable use of narrow (i.e. <code>char</code>) character strings</h2>
+<p>Narrow (i.e. <code>char</code>) character strings that contain anything other than 7-bit ASCII characters are inherently non-portable for creating and observing paths, because the encoding of narrow strings is system dependent.</p>
+<ul>
+<li><p>Do not use <code>char</code> string literals (<code>"an"</code>) to create a <code>path</code> unless the literal is composed entirely of 7-bit ASCII characters.</p>
+<p>Instead, use <code>char32_t</code> string literals (<code>U"äñ𠃰"</code>), as these are always safe.</p>
+It is also OK to use <code>char16_t</code> string literals (<code>u"äñ"</code>) if all characters are within the 16-bit Unicode Basic Multilingual Plane (BMP) and there is no issue with combining characters, but non-experts can ignore this approach.<br />
+ </li>
+<li>For narrow (i.e. <code>char</code>) strings that are not composed entirely of 7-bit ASCII characters, if the encoding is fixed (e.g. UTF-8) rather than changing when the native encoding changes, do one of two things:
+<ul>
+<li>Convert the narrow string data to <code>u16string</code> or <code>u32string</code>, so that encoding never changes.</li>
+<li>Tell the constructor (or a helper) what the actual narrow string encoding is, so that the default native encoding will be overridden.<br />
+ </li>
+</ul></li>
+<li><p>Do not use the string() or generic_string() observers. Instead use the u16string(), u32string(), generic_u16string(), or generic_u32string() observers.<br />
+ </p></li>
+</ul>
+<p> </p>
+<p> </p>
+<hr />
+<p> </p>
+<p><em>Add an additional native format observer:</em></p>
+<blockquote>
+<p><code>string u8string() const;</code></p>
+</blockquote>
+<p><em>Add an additional generic format observer:</em></p>
+<blockquote>
+<p><code>string generic_u8string() const;</code></p>
+</blockquote>
+</body>
 </html>

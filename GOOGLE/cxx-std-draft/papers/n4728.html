@@ -1,391 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4728</title>
-  </head>
-  <body>
-    <h1>N4728 Editors' Report -- Programming Languages -- C++</h1>
-
-    <p>
-      2018-02-12 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Dawn Perchik (co-editor) (Embarcadero Technologies Inc) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Special thanks to Jens Maurer for performing many of the editorial fixes
-      since N4713.
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4727">N4727</a> is the current working draft
-        for C++20. It replaces <a href="http://wg21.link/n4713">N4713</a>.
-      </li>
-      <li>N4728 is this Editors' Report.</li>
-    </ul>
-
-    <h2>Motions incorporated into working draft</h2>
-
-    <p>This revision contains only editorial changes relative to N4727.</p>
-
-    <h2>Notable editorial changes</h2>
-
-    <h3>Fixed misapplication of LWG issue 704</h3>
-
-    <p>
-      The application of
-      <a href="http://wg21.link/lwg704">LWG issue 704</a> introduced a reference
-      to the "Allocator-aware container requirements" table in normative
-      wording. Due to an editorial oversight after the insertion of earlier
-      tables caused the table numbering to change, this reference was instead
-      pointed at the "Container requirements" table, altering the normative
-      interpretation of the words.
-    </p>
-
-    <p>
-      The intended normative impact of LWG issue 704 has been restored by
-      repointing the reference to the correct table. However, we believe the
-      wording still does not have the intended effect, and
-      <a href="http://wg21.link/lwg3059">LWG issue 3059</a> has been opened to
-      rectify this wording.
-    </p>
-
-    <h3>Index of grammar productions</h3>
-
-    <p>
-      The index of grammar productions now indexes both the point at which each
-      grammar production is defined (in bold) and all references to the grammar
-      production in the main text.
-    </p>
-
-    <p>
-      Thanks to Jens Maurer for providing the necessary edits and cleanups for
-      this change.
-    </p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made to the working draft since N4727 is below.
-      This list excludes changes that do not affect the body text or only affect
-      whitespace or typeface. For a complete list including such changes (or for
-      the actual deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4713...n4727"
-        >draft sources on github</a
-      >.
-    </p>
-
-    <pre><code>commit 858b48f15b2a05e7332634efbe7effc1aace407a
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4728</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4728-editors-report-programming-languages-c">N4728 Editors’ Report – Programming Languages – C++</h1>
+<p>2018-02-12<br />
+Richard Smith (editor) (Google Inc)<br />
+Dawn Perchik (co-editor) (Embarcadero Technologies Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Jens Maurer for performing many of the editorial fixes since N4713.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4727">N4727</a> is the current working draft for C++20. It replaces <a href="http://wg21.link/n4713">N4713</a>.</li>
+<li>N4728 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<p>This revision contains only editorial changes relative to N4727.</p>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<h3 id="fixed-misapplication-of-lwg-issue-704">Fixed misapplication of LWG issue 704</h3>
+<p>The application of <a href="http://wg21.link/lwg704">LWG issue 704</a> introduced a reference to the “Allocator-aware container requirements” table in normative wording. Due to an editorial oversight after the insertion of earlier tables caused the table numbering to change, this reference was instead pointed at the “Container requirements” table, altering the normative interpretation of the words.</p>
+<p>The intended normative impact of LWG issue 704 has been restored by repointing the reference to the correct table. However, we believe the wording still does not have the intended effect, and <a href="http://wg21.link/lwg3059">LWG issue 3059</a> has been opened to rectify this wording.</p>
+<h3 id="index-of-grammar-productions">Index of grammar productions</h3>
+<p>The index of grammar productions now indexes both the point at which each grammar production is defined (in bold) and all references to the grammar production in the main text.</p>
+<p>Thanks to Jens Maurer for providing the necessary edits and cleanups for this change.</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made to the working draft since N4727 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4713...n4727">draft sources on github</a>.</p>
+<pre><code>commit 858b48f15b2a05e7332634efbe7effc1aace407a
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Nov 16 19:13:15 2017 +0100
 
-    [basic.def] 'class name declaration' is undefined.
+    [basic.def] &#39;class name declaration&#39; is undefined.
 
 commit 12f2ee068f9a7933c0b916ecdba6d90adc4c6708
 Author: JF Bastien &lt;github@jfbastien.com&gt;
@@ -393,13 +50,13 @@ Date:   Wed Feb 7 14:50:37 2018 -0800
 
     [atomics.types.operations] Clarify compare_exchange note
 
-    We now have explicit floating-point specializations for atomic. We had cmpxchg for them before, but people are now looking at increased usage and are confused about what the behavior is for `-0.` with `0.`, as well as NaNs. I propose clarifying the note to make this extra clear. This is a note and is therefore purely editorial, and would be a waste of SG1's time.
+    We now have explicit floating-point specializations for atomic. We had cmpxchg for them before, but people are now looking at increased usage and are confused about what the behavior is for `-0.` with `0.`, as well as NaNs. I propose clarifying the note to make this extra clear. This is a note and is therefore purely editorial, and would be a waste of SG1&#39;s time.
 
 commit f39be10b4419ea86711b7de4e9fe67ad340dc489
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Nov 29 21:25:35 2017 +0100
 
-    [filesystems] 'dot' and 'dot-dot' are not \grammarterms
+    [filesystems] &#39;dot&#39; and &#39;dot-dot&#39; are not \grammarterms
 
 commit 2ce8d327638e02de1009a687eb59825efed96438
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -417,7 +74,7 @@ commit c4b8bd47dd6d20ec653e388febaff44f510c5446
 Author: Geoff Romer &lt;gromer@google.com&gt;
 Date:   Fri Dec 8 11:02:50 2017 -0800
 
-    Constant expressions can have "library UB"
+    Constant expressions can have &quot;library UB&quot;
 
 commit e2db0305802e4974426741693e28a232d0bc22ef
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -429,19 +86,19 @@ commit 3431c062a2c76261f0fbb44b710a0775a568928b
 Author: Agustin K-ballo Berge &lt;k@fusionfenix.com&gt;
 Date:   Thu Dec 14 17:14:26 2017 -0300
 
-    [refwrap] Fix wrong use of "shall"
+    [refwrap] Fix wrong use of &quot;shall&quot;
 
 commit 2cbbe1c63ff17ff6e566c4dfa11211a6b3455e6d
 Author: Agustin K-ballo Berge &lt;k@fusionfenix.com&gt;
 Date:   Thu Dec 14 17:17:32 2017 -0300
 
-    [thread.thread.id] Fix wrong uses of "shall"
+    [thread.thread.id] Fix wrong uses of &quot;shall&quot;
 
 commit afa8c506f108c383826bf9962721d37d76ac4efb
 Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
 Date:   Tue Feb 13 03:02:28 2018 +0800
 
-    [basic.scope.class,basic.lookup.unqual] Use the term "default member initializer" (#1892)
+    [basic.scope.class,basic.lookup.unqual] Use the term &quot;default member initializer&quot; (#1892)
 
 commit 08c9d619ab28c79b51ef9ca4b6349436d4cf28c5
 Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
@@ -453,7 +110,7 @@ commit a1243f679098d3dd1e4e566873ae53c18a974e8c
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Wed Jan 3 10:26:16 2018 +0000
 
-    [dcl.enum] use indefinite article before "fixed underlying type"
+    [dcl.enum] use indefinite article before &quot;fixed underlying type&quot;
 
 commit cde94b80a4f229f564a51b20ed4e133ba15ee481
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -470,12 +127,12 @@ Date:   Tue Jan 30 10:50:05 2018 -0800
 
     Fix references to container requirements tables.
 
-    LWG issue 704 ("MoveAssignable requirement for container value type
-    overly strict") added a reference from [associative.reqmts] to what was
-    at the time table 93 ("Allocator-aware container requirements").
+    LWG issue 704 (&quot;MoveAssignable requirement for container value type
+    overly strict&quot;) added a reference from [associative.reqmts] to what was
+    at the time table 93 (&quot;Allocator-aware container requirements&quot;).
 
     That table is now table 86, but the cross reference is now
-    (incorrectly) to table 83 ("Container requirements").  It should still
+    (incorrectly) to table 83 (&quot;Container requirements&quot;).  It should still
     refer to the Allocator-ware container requirements table.  This patch
     changes it to do so, matching what the committee voted in (many years
     ago).
@@ -514,7 +171,7 @@ commit b4d7e7406dfa7c59591743dca9b79f30fa8f15bd
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Thu Jan 11 21:56:03 2018 +0000
 
-    [variant.visit] Rephrase specification of 'visit' to be more technically correct and precise
+    [variant.visit] Rephrase specification of &#39;visit&#39; to be more technically correct and precise
 
 commit 487e870347a4c76c9b6dd664c4e5671e709c81d8
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -526,7 +183,7 @@ commit 66a540e5b586bf85befc9ed14e6e98e708d0b305
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Fri Jan 5 14:53:02 2018 +0000
 
-    [algorithms] Uniformize spelling of "in the initializer list"
+    [algorithms] Uniformize spelling of &quot;in the initializer list&quot;
 
 commit 8e93464548bfabaa4dd501e4031f7afb7a70da3e
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -544,9 +201,9 @@ commit 70bd5d816825351d5b4abd376847814e9c1a9d4d
 Author: Alisdair Meredith &lt;alisdairm@me.com&gt;
 Date:   Fri Dec 22 06:24:47 2017 -0500
 
-    Use 'one of' formulation for binary-digit
+    Use &#39;one of&#39; formulation for binary-digit
 
-    The grammar for literals consistently prefers using the 'one of' a set
+    The grammar for literals consistently prefers using the &#39;one of&#39; a set
     formulation for character sets, rather than listing each character as
     an option.  This holds for other parts of this grammar, even when the
     set of options is just two items, such as hexadecimal-prefix,
@@ -578,7 +235,7 @@ commit bfcc4d844ac3758060c277e881b3aab7cf24743a
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Wed Dec 6 22:01:32 2017 +0000
 
-    [re.def] Clarify index entry for "sub-expression"
+    [re.def] Clarify index entry for &quot;sub-expression&quot;
 
 commit 3e715907193e3f5d47ff15470ef7a0496010e834
 Author: Alisdair Meredith &lt;public@alisdairm.net&gt;
@@ -601,19 +258,19 @@ commit 2da6e6a2c191ee03785f4eea34380b49274ffd52
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Nov 30 13:57:14 2017 +0100
 
-    [facet.num.put.virtuals] Fix definition and use of 'loc' (#1861)
+    [facet.num.put.virtuals] Fix definition and use of &#39;loc&#39; (#1861)
 
 commit 7945291d0b619765caf56ed746f173762c4824ee
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Nov 30 13:55:41 2017 +0100
 
-    [charconv.to.chars, charconv.from.chars] Replace 'minus sign' with '-' (#1862)
+    [charconv.to.chars, charconv.from.chars] Replace &#39;minus sign&#39; with &#39;-&#39; (#1862)
 
 commit 6c89881ad5ba8008a83d05232e316b9b5acbd08f
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Nov 30 13:55:15 2017 +0100
 
-    [fs.path.decompose] 'root-path' is not a grammar non-terminal (#1864)
+    [fs.path.decompose] &#39;root-path&#39; is not a grammar non-terminal (#1864)
 
     Use the function call root_path() instead.
 
@@ -621,7 +278,6 @@ commit ce1a9d0b60b3375d7e2f59cfdcd82ffb127f0eb9
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Nov 29 00:57:43 2017 +0100
 
-    [intro.scope] C++ is not a strict superset of C
-</code></pre>
-  </body>
+    [intro.scope] C++ is not a strict superset of C</code></pre>
+</body>
 </html>

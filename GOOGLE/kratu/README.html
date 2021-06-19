@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="kratu">Kratu</h1>
+<blockquote>
+<p>Kratu is an Open Source client-side analysis framework to create simple yet powerful renditions of data. It allows you to dynamically adjust your view of the data to highlight issues, opportunities and correlations in the data.</p>
+</blockquote>
+<blockquote>
+<p><a href="http://spokensanskrit.de/index.php?tinput=kratu&amp;script=&amp;direction=SE&amp;link=yes">Kratu is a Sanskrit word</a> and means enlightenment, understanding and intelligence.</p>
+</blockquote>
+<p>It can compare similar objects by calculating individual scores for all the features we care about. Each feature is highlighted according to their score, rendering a prioritized heatmap where the objects of most significance float to the top.</p>
+<p><strong>Have a look at our <a href="http://google.github.com/kratu/tutorial/">tutorial</a> and dive straight into the deep end, or read on for a more gentle introduction.</strong></p>
+<p>You can use Kratu to analyze data for support queue prioritization, account quality optimization, performance analysis, product comparison and much more. <img src="http://google.github.com/kratu/img/tut_finalreport.png" alt="Example Kratu Report" /></p>
+<h2 id="installation">Installation</h2>
+<p>Simply <a href="https://github.com/google/kratu/archive/master.zip">download Kratu</a> and extract, or check out the repository:</p>
+<pre><code>$ git clone https://github.com/google/kratu.git</code></pre>
+<p><em>Note: If you’re running Kratu locally, you might have to start your browser with a flag to allow local file loading.</em> <em>If you’re using Chrome, use –allow-file-access-from-files</em></p>
+<h2 id="quick-start">Quick start</h2>
+<p>If you want to see more of what Kratu can do, have a look at the <a href="https://github.com/google/kratu/tree/master/examples">examples included</a>.</p>
+<p>Otherwise, here’s a quick look at how to render a simple report</p>
+<pre><code>// Instantiate a new Kratu object
+var kratu = new Kratu();
+
+// Set the data we&#39;d like to render
+kratu.setEntities(data);
+
+// Tell Kratu where to render our report
+kratu.setRenderElement(document.getElementById(&quot;kratuReport&quot;));
+
+// And render it!
+kratu.renderReport();</code></pre>
+<h2 id="in-depth-tutorial">In-depth tutorial</h2>
+<p>To get a better understanding of what Kratu has to offer, go through <a href="http://google.github.com/kratu/tutorial/">this in-depth tutorial</a>, where we’ll build a <a href="https://github.com/google/kratu/tree/master/examples/spaceshipselector">product comparison analysis</a> that can help users figure out which spaceship to buy.</p>
+<h2 id="fine-print">Fine print</h2>
+<p>Pull requests are very much appreciated. Please sign the <a href="http://code.google.com/legal/individual-cla-v1.0.html">Google Code contributor license agreement</a> (There is a convenient online form) before submitting.</p>
+<p>Author<br />
+<a href="https://plus.google.com/+TarjeiVassbotn">Tarjei Vassbotn (Google Inc.)</a></p>
+<p>Copyright<br />
+Copyright © 2013 Google, Inc.</p>
+<p>License<br />
+Apache 2.0</p>
+<p>Limitations<br />
+Only tested on the latest versions of browsers. Expect it to fail on older versions.</p>
+</body>
+</html>

@@ -1,0 +1,2 @@
+Testing event firing sequence
+=============================

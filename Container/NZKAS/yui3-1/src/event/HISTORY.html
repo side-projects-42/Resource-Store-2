@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="event-infrastructure-change-history">Event Infrastructure Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li><p>Calling Y.on(‘syntheticEvent’, callback) without a context/selector argument now defaults to <code>window</code> (or the global object) [Ticket #2530081]</p></li>
+<li><p>event-resize, a.k.a. Y.on(‘windowresize’, …) migrated to synthetic event infrastructure. Now detachable, etc. Also properly throttles the resize event on newer Gecko engines. That browser sniff was old! [Ticket #2530805]</p></li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li><p><code>event-outside</code> added for “outside” events.</p></li>
+<li><p><code>Y.Event.define(name)</code> adds name to <code>DOM_EVENTS</code> whitelist. Accepts event name string or array of string names.</p></li>
+<li><p><code>event-hover</code> properly pulls in required module <code>event-mouseenter</code>.</p></li>
+<li><p>DOM event subscriptions are now removed and objects cleaned up after last subscription is detached; same for synthetic events.</p></li>
+<li><p><code>key</code> synthetic event migrated to official synth infrastructure; and now supports delegation.</p></li>
+<li><p><code>key</code> event spec param now supports letters and named keys. E.g.: <code>'enter+ctrl' == '13+ctrl'</code>, <code>'up:a' == 'up:65'</code> and <code>'A' == '65+shift'</code>.</p></li>
+<li><p>Added experimental config <code>YUI({ lazyEventFacade: true })</code> that triggers a mode for DOM EventFacades in IE8 to use getters to access event properties that involve any calculation, such as <code>e.target</code> and <code>e.currentTarget</code>; this should also improve performance.</p></li>
+<li><p><code>mouseenter</code> and <code>mouseleave</code> events now filter the native event rather than the generated <code>DOMEventFacades</code> for <code>mouseover</code>/<code>mouseout</code>. This results in fewer calls to <code>Y.one</code> (<code>e.target</code>, <code>currentTarget</code>, <code>relatedTarget</code>) as well, so should improve performance.</p></li>
+<li><p>Added <code>onceAfter()</code> method to do a self-detaching <code>after()</code> subscription. [Ticket #2529464]</p></li>
+<li><p><code>Y.on(type, callback, HTMLElement[], COMPAT)</code> subscriptions to attach to multiple elements in one call now correctly use native DOM elements instead of Nodes for all subscriptions. [Ticket #2529807]</p></li>
+<li><p>Plugged the leaked global <code>GLOBAL_ENV</code>. [Ticket #2530227]</p></li>
+<li><p>Fixed synth architecture to properly resubscribe to synths that use <code>processArgs</code> if the target is not available at the time of subscription. [Ticket #2530293]</p></li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li><p>Added support for <code>delegate({ click: fn, keyup: fn2 }, …)</code> and <code>delegate(['click', 'keyup'], fn, …)</code>.</p></li>
+<li><p>Delegation containers are now potential matches for the filter.</p></li>
+<li><p>Nested delegate matches will now have callback executed for all matching targets in bubbling order.</p></li>
+<li><p><code>e.stopPropagation()</code> in nested delegate matches now works as expected.</p></li>
+<li><p>The raw DOM event is no longer double wrapped (i.e. was: <code>e._event._event</code>).</p></li>
+<li><p><code>event-focus</code> now uses XHTML-friendly feature test to fork for IE.</p></li>
+<li><p>New <code>event-hover</code> module providing <code>node.on('hover', in, out)</code>.</p></li>
+<li><p><code>e.button</code>/<code>e.which</code> normalization.</p></li>
+<li><p><code>e.which</code> normalized for key operations as well.</p></li>
+<li><p>Split out IE-specific code into <code>event-base-ie</code> conditional module.</p></li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li><p>Added event and facade support for touch.</p></li>
+<li><p>Synthetic event infrastructure rebuilt. Changes include:</p>
+<ul>
+<li><p>Support for delegation.</p></li>
+<li><p>Passing <code>DOMEventFacade</code> to <code>notifier.fire(e)</code> now recommended.</p></li>
+<li><p>Fixed issue where firing the notifier from inside DOM event subs would result in duplicate synth sub execution if the same synth was subscribed multiple times on the same Node.</p></li>
+<li><p>Synths can now be detached with <code>node.purge(t|f, 'synthName')</code>.</p></li>
+<li><p><code>Event.define(type, config, *force*)</code> third arg added to override existing events. Only use this if you really know what you’re doing.</p></li>
+<li><p>Changed <code>allowDups</code> to <code>preventDups</code>, <code>true</code> by default to mimic existing behavior elsewhere in the event system.</p></li>
+</ul></li>
+<li><p><code>delegate()</code> now defers to synthetic event def more intelligently.</p></li>
+<li><p>Added support for passing filter function to delegate.</p></li>
+<li><p><code>delegate()</code> now executes callback for each filter match up the bubble path.</p></li>
+<li><p>Added detach category support to <code>delegate()</code>.</p></li>
+<li><p>Migrate <code>mouseenter</code>, <code>mouseleave</code>, <code>focus</code>, and <code>blur</code> to <code>Event.define</code>.</p></li>
+<li><p><code>focus</code> and <code>blur</code> now guarantee execution order of subs matches bubble order when multiple delegates are created from different levels.</p></li>
+<li><p><code>event-synthetic</code> added to ‘event’ rollup module.</p></li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>fired <code>fireOnce()</code> listeners are executed synchronously.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>Removed deprecated <code>delegate</code> custom event. As of 3.1.0 use the <code>delegate()</code> method on a <code>Node</code> instance or <code>Y</code> instance.</p></li>
+<li><p>Updated the <code>event-focus</code> submodule so that the specialized <code>focus</code> and <code>blur</code> events that enable the <code>focus</code> and <code>blur</code> events to bubble do not apply when adding <code>focus</code> and <code>blur</code> events to the <code>window</code> object.</p></li>
+<li><p>Synthetic event creation API added.</p></li>
+<li><p><code>delegate</code> enhancements.</p></li>
+<li><p><code>unload</code> event fix.</p></li>
+<li><p>Compatibility with Firefox’s untouchable anonymous <code>div</code>.</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li><p>Added <code>onreadystatechange</code> fork in <code>domready</code> to handle the event in IE when YUI is hosted in an <code>iframe</code>.</p></li>
+<li><p>Added <code>mousewheel</code> support.</p></li>
+<li><p>Added <code>Y.delegate()</code> function that is a bit easier to use than <code>Y.on('delegate', …)</code>.</p></li>
+<li><p>Default scope of <code>mouseenter</code> and <code>mouseleave</code> events is the <code>Node</code> instance to which the listener is attached.</p></li>
+<li><p>Default scope of delegated event listeners is the <code>Node</code> instance that matched the supplied CSS selector.</p></li>
+<li><p>All special DOM event handlers (<code>focus</code>, <code>blur</code>, <code>mousewheel</code>, <code>resize</code>, <code>delegate</code>, etc.) are broken down into submodules. Core DOM event functionality is provided in event-base.js, and all of the functionality is rolled into event.js.</p></li>
+<li><p>Additional Safari key remapping.</p></li>
+<li><p>Special DOM events can now be routed through <code>delegate()</code>.</p></li>
+<li><p><code>Y.on()</code> can target <code>Node</code> and <code>NodeList</code> references correctly.</p></li>
+<li><p>Fixed <code>onAvailable()</code> lazy DOM listener detach handles.</p></li>
+<li><p>When configured to return a detach handle, a single object is always returned. Previously requests that resolved to multiple listeners returned an array.</p></li>
+</ul>
+<h2 id="beta1">3.0.0beta1</h2>
+<ul>
+<li><p>DOM event, custom event, and simulate event moved to separate modules.</p></li>
+<li><p>Added an event for DOM event delegation. It only fires if the target or its descendants match a supplied selector.</p>
+<pre><code>Y.on(&#39;delegate&#39;, fn, el, &#39;click&#39;, &#39;selector&#39;, …)</code></pre>
+<p>The event facade sets the following properties:</p>
+<ul>
+<li><code>target</code>: the target of the event.</li>
+<li><code>currentTarget</code>: the element that the selector matched.</li>
+<li><code>container</code>: the bound element (the delegation container).</li>
+</ul></li>
+<li><p>Added <code>mouseenter</code>/<code>mouseleave</code> events:</p>
+<ul>
+<li><code>Y.on('mouseenter', fn, el, 'click', 'selector', …)</code></li>
+<li><code>Y.on('mouseleave', fn, el, 'click', 'selector', …)</code></li>
+</ul></li>
+<li><p>Added <code>Y.on('windowresize', fn)</code>, which attempts to normalize when the event fires across all browsers (once at the end of the resize rather than continuously during the resize).</p></li>
+<li><p>Fixed <code>unsubscribeAll()</code> return value.</p></li>
+<li><p>Added ability to skip facade creation where performance is a concern.</p></li>
+<li><p>Moved <code>DOMReady</code> core to <code>yui-base</code>.</p></li>
+<li><p>Focus/blur abstraction works in Opera when the bound element is the target.</p></li>
+<li><p><code>purgeElement</code> only reads element guids, it does not create new ones for elements without one.</p></li>
+<li><p><code>Event.attach()</code> returns a single handle if the result from collection processing is a single item.</p></li>
+</ul>
+<h2 id="pr2">3.0.0pr2</h2>
+<ul>
+<li><p>Fixed IE notification error when no arguments are supplied.</p></li>
+<li><p>Added <code>event-simulate</code>.</p></li>
+<li><p><code>getListeners()</code> works when the element has no listeners defined.</p></li>
+<li><p><code>Event.addListener()</code> removed. Exists only in compat layer.</p></li>
+<li><p><code>addListerer()</code> triggers 2.x event behavior.</p></li>
+<li><p>Removed extra undefined parameter passed to DOM event listeners.</p></li>
+<li><p>Compat layer contains <code>Event.on()</code>.</p></li>
+<li><p>Event adapter support added to <code>Y.on()</code>.</p></li>
+<li><p>Added <code>focus</code> and <code>blur</code> event adaptors (support for propagation of these events.)</p></li>
+<li><p>publish and subscribe support an object for the type, allowing for multiple events/subscriptions.</p></li>
+<li><p>subscriber failures throw an error by default rather than log.</p></li>
+<li><p>subscriber failures are not routed through <code>Y.fail</code> in order to improve the debug experience.</p></li>
+<li><p>New facades created every <code>fire()</code>.</p></li>
+<li><p><code>before()</code> method re-added to <code>EventTarget</code>, which delegates to <code>Do.before()</code> or <code>subscribe()</code>.</p></li>
+<li><p><code>EventTarget.after()</code> will delegate to <code>Do.after()</code> if type is a function.</p></li>
+<li><p>Added keylistener: <code>Y.on('key', fn, element, 'down:13,65+ctrl+shift')</code>.</p></li>
+<li><p><code>event:ready</code> event deprecated in favor of <code>domready</code>.</p></li>
+</ul>
+<h2 id="pr1">3.0.0pr1</h2>
+<ul>
+<li>Initial Release.</li>
+</ul>
+</body>
+</html>

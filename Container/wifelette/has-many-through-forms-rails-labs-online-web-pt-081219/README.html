@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="has-many-through-forms-rails-labs">Has Many Through Forms Rails Labs</h1>
+<h2 id="overview">Overview</h2>
+<p>We’ve looked at setting up the associations behind posts with comments, categories, and users. Now, let’s actually give our users the ability to create new comments, users, and categories! For this lab, your models are already stubbed out, but you may need to update them to make your forms work properly.</p>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Construct a bi-directional has many through.</li>
+<li>Identify the join model in a has many through.</li>
+<li>Construct a nested params hash with data about the primary object and a has many through association.</li>
+<li>Use the conventional key names for associated data (association_attributes).</li>
+<li>Name form inputs correctly to create a nested params hash with has many through association data.</li>
+<li>Define a conventional association writer for the primary model to properly instantiate associations based on the nested params association data.</li>
+<li>Define a custom association writer for the primary model to properly instantiate associations with custom logic (like unique by name) on the nested params association data.</li>
+<li>Use fields_for to generate the association fields.</li>
+</ol>
+<h2 id="instructions">Instructions</h2>
+<ol type="1">
+<li><p>Create a form at <code>posts#new</code> to create a new post. The form should include check boxes for us to select categories as well as a text field to create a new category. You should do this with a nested form so that our controller stays thin. Also, typing in a <code>Category</code> name that already exists should not create a new category. Instead, if we type in a category that already exists, we should select it from the database and associate the post we’ve created with the existing category.</p></li>
+<li>Create a <code>posts#show</code> page to display the following:
+<ul>
+<li>The title, categories, and content of the post.</li>
+<li>All of the comments associated with the post.</li>
+<li>A list of all the unique users who have commented on the post. A user’s name should only show up once in this section, even if they’ve commented multiple times.</li>
+<li>A form to add a new comment. The form should have a drop-down menu to select a user (we’ll change this in future lessons to automatically associate the comment with a logged-in user). We should also be able to create a new user here and automatically associate it with the post. To associate a new comment with a post, you’ll have to use a <em><a href="https://apidock.com/rails/ActionView/Helpers/FormHelper/hidden_field">hidden field</a></em>:</li>
+</ul></li>
+</ol>
+<pre class="erb"><code>&lt;%= f.hidden_field :post_id, value: @post.id %&gt;</code></pre>
+<ol start="3" type="1">
+<li><p>Create a <code>users#show</code> page that links to all of the posts a user has commented on.</p></li>
+<li><p>Create a <code>categories#show</code> page that links to all of the posts associated with a given category.</p></li>
+</ol>
+<h2 id="hints">Hints</h2>
+<ul>
+<li>When creating new comments, we should only create a new user if they filled in that input. <code>accepts_nested_attributes_for</code> has a <code>reject_if</code> option that you can configure to only create new records if all the fields aren’t blank.</li>
+<li>Also, the select box that we use for the users needs to have a blank option –– check out the <code>include_blank</code> option for <code>collection_select</code>.</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html">Accepts Nested Attributes For</a></li>
+<li><a href="http://apidock.com/rails/ActionView/Helpers/FormOptionsHelper/collection_select">Collection Select</a></li>
+<li><a href="https://www.youtube.com/watch?v=k7s2LjVF3YY">Lab Review</a></li>
+<li><a href="https://apidock.com/rails/ActionView/Helpers/FormHelper/hidden_field">API Doc: hidden_field</a></li>
+</ul>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/has-many-through-forms-rails-labs' title='Has Many Through Forms Rails Labs'>Has Many Through Forms Rails Labs</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

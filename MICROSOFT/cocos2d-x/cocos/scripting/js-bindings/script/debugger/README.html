@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="remote-debugging-by-using-firefox">Remote Debugging By Using FireFox</h1>
+<h2 id="requirement">Requirement</h2>
+<ul>
+<li>Firefox: From v24</li>
+</ul>
+<h2 id="how-to-use">How To Use</h2>
+<h3 id="prepare">Prepare</h3>
+<p>Please refer to https://developer.mozilla.org/en-US/docs/Tools/Remote_Debugging .</p>
+<h3 id="enable-debugger-support-for-your-jsb-project">Enable Debugger Support For Your JSB Project</h3>
+<pre><code>bool AppDelegate::applicationDidFinishLaunching()
+{
+    ...
+    
+    ScriptingCore* sc = ScriptingCore::getInstance();
+    sc-&gt;addRegisterCallback(register_all_cocos2dx);
+    sc-&gt;addRegisterCallback(register_all_cocos2dx_extension);
+    sc-&gt;addRegisterCallback(register_cocos2dx_js_extensions);
+    sc-&gt;addRegisterCallback(jsb_register_chipmunk);
+    sc-&gt;addRegisterCallback(register_all_cocos2dx_extension_manual);
+    sc-&gt;addRegisterCallback(register_CCBuilderReader);
+    sc-&gt;addRegisterCallback(jsb_register_system);
+    sc-&gt;addRegisterCallback(JSB_register_opengl);
+    
+    sc-&gt;start();
+    
+#if defined(COCOS2D_DEBUG) &amp;&amp; (COCOS2D_DEBUG &gt; 0)
+    sc-&gt;enableDebugger();   // Enable debugger here
+#endif
+
+   ...
+}</code></pre>
+<p>Run your game.</p>
+<h3 id="open-firefox-and-follow-the-step-as-follows">Open Firefox And Follow The Step As Follows</h3>
+<p><img src="https://lh5.googleusercontent.com/-HoxLGBdV2J0/UlZ7ZoFUjyI/AAAAAAAAADM/68GDaCQ1vP0/s0-I/Firefox-Remote-Debug01.jpg" alt="pic 1" /> <img src="https://lh6.googleusercontent.com/-7FDIHAYsKAY/UlZ7Yf8W-pI/AAAAAAAAAFQ/joG0AymnuBk/s0-I/Firefox-Remote-Debug02.jpg" alt="pic 2" /> <img src="https://lh4.googleusercontent.com/-idvnMRGcGy8/UlZ7Wj6DDuI/AAAAAAAAAC0/L9IVyHLNqeQ/s0-I/Firefox-Remote-Debug04.jpg" alt="pic 3" /> <img src="https://lh6.googleusercontent.com/-YuZj7JGAtFE/UlZ9DDGDczI/AAAAAAAAAEQ/D2qIedjP5FU/s0-I/Firefox-Remote-Debug04.png.png" alt="pic 4" /> <img src="https://lh3.googleusercontent.com/-cdIcNa3jT5c/UlZ9uapf3OI/AAAAAAAAAEg/MGq3vLHsauw/s0-I/Firefox-Remote-Debug05.png" alt="pic 5" /> <img src="https://lh5.googleusercontent.com/-T79-o5ylJKI/UlZ_JJQe3MI/AAAAAAAAAE8/F63fSVxlJKs/s0-I/Firefox-Remote-Debug06.png" alt="pic 6" /></p>
+</body>
+</html>

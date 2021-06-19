@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-08-10-big-security-fix-hudson-1-371-released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Hot on the heels of Hudson 1.370, which was released last Friday, the
+      Hudson team released 1.371 which addresses a
+      <strong>critical vulnerability</strong> in <strong>all</strong> Hudson
+      versions prior to 1.371. The vulnerability was disclosed by
+      <a href="http://infradna.com">InfraDNA</a> in the
+      <a href="http://infradna.com/content/security-advisory-2010-08-09"
+        >following security advisory</a
+      >, which details the issue:
+    </p>
+    <blockquote>
+      <p>
+        This critical vulnerability allows an attacker to use CLI commands that
+        they are otherwise unauthorized for. CLI commands can perform various
+        administrative operations.
+      </p>
+    </blockquote>
+    <p>
+      It is advised that <strong>all</strong> Hudson instances be upgraded
+      immediately to avoid data loss or other ill effects from this issue. If
+      you’re upgrading from a version earlier than 1.370, you can consult the
+      <a href="/changelog">changelog</a> for details on the other bug fixes and
+      enhancements covered by the upgrade of your version to 1.371.
+    </p>
+    <p>
+      If you run a Hudson instance, it is recommended that Hudson system admins
+      subscribe to either the
+      <a href="http://feeds.feedburner.com/hudson-security-advisories"
+        >security advisories RSS feed</a
+      >
+      or the
+      <a href="advisories-subscribe@hudson.dev.java.net"
+        >advisories@ mailing list</a
+      >
+    </p>
+    <h2 id="section"><!--break--></h2>
+    <p>
+      You can go grab the
+      <a href="http://ftp.osuosl.org/pub/hudson/war/1.371/hudson.war"
+        >latest .war file</a
+      >
+      straight from our <a href="http://www.osuosl.org">OSL mirror</a> or if
+      you’re using a native package, use your package manager to upgrade.
+    </p>
+  </body>
+</html>

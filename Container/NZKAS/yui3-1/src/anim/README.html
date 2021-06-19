@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="animation-utility">Animation Utility</h1>
+<p>Provides the ability to animate style property changes. Advanced easing equations are provided for more interesting animated effects.</p>
+<p>The following modules are available:</p>
+<ul>
+<li><code>anim</code>: Rollup of <code>anim-base</code>, <code>anim-color</code>, <code>anim-curve</code>, <code>anim-easing</code>, <code>anim-scroll</code>, and <code>anim-xy</code>.</li>
+<li><code>anim-base</code>: Adds animation functionality for number-based style properties.</li>
+<li><code>anim-color</code>: Adds the ability to animate colors.</li>
+<li><code>anim-curve</code>: Adds the ability to animate the position of an element using bezier control-points.</li>
+<li><code>anim-easing</code>: Contains easing equations for more advanced motion (e.g. “easeOut”, “backIn”, etc).</li>
+<li><code>anim-scroll</code>: Adds the ability to animate the scroll position of an element.</li>
+</ul>
+<p>You may want to consider using the Transition module for number-based style properties, as it leverages native CSS Transitions when possible. The Animation Utility will move to using CSS Animation in a future release.</p>
+</body>
+</html>

@@ -1,59 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        var testSuite = [];
-
-        function testSetUp(next) {
-          InspectorTest.expandElementsTree(next);
-        }
-        testSuite.push(testSetUp);
-
-        function testSetAttribute(callback) {
-          var node = InspectorTest.expandedNodeWithId("node-to-set-attribute");
-          node.setAttribute("foo", 'bar="edited attribute"', callback);
-        }
-        testSuite.push(InspectorTest.generateUndoTest(testSetAttribute));
-
-        function testRemoveAttribute(callback) {
-          var node = InspectorTest.expandedNodeWithId(
-            "node-to-remove-attribute"
-          );
-          node.removeAttribute("foo", callback);
-        }
-        testSuite.push(InspectorTest.generateUndoTest(testRemoveAttribute));
-
-        function testAddAttribute(callback) {
-          var node = InspectorTest.expandedNodeWithId("node-to-add-attribute");
-          node.setAttribute("", 'newattr="new-value"', callback);
-        }
-        testSuite.push(InspectorTest.generateUndoTest(testAddAttribute));
-
-        InspectorTest.runTestSuite(testSuite);
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that DOM modifications done in the Elements panel are undoable (Part
-      2).
-    </p>
-
-    <div style="display: none">
-      <div id="testSetAttribute">
-        <div foo="attribute value" id="node-to-set-attribute"></div>
-      </div>
-
-      <div id="testRemoveAttribute">
-        <div foo="attribute value" id="node-to-remove-attribute"></div>
-      </div>
-
-      <div id="testAddAttribute">
-        <div id="node-to-add-attribute"></div>
-      </div>
-    </div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>undo-dom-edits-2</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that DOM modifications done in the Elements panel are undoable (Part 2).</p>
+</body>
 </html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>over-scale-mode</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="over-scale-mode">Over Scale Mode</h1>
+<p>Pan and Zoom are allowed only when mouse is over the axis.</p>
+<p>```js chart-editor // <block:data:1> const NUMBER_CFG = { count: 20, min: -100, max: 100 }; const data = { datasets: [ { label: “My First dataset”, borderColor: Utils.randomColor(0.4), backgroundColor: Utils.randomColor(0.1), pointBorderColor: Utils.randomColor(0.7), pointBackgroundColor: Utils.randomColor(0.5), pointBorderWidth: 1, data: Utils.points(NUMBER_CFG), }, { label: “My Second dataset”, borderColor: Utils.randomColor(0.4), backgroundColor: Utils.randomColor(0.1), pointBorderColor: Utils.randomColor(0.7), pointBackgroundColor: Utils.randomColor(0.5), pointBorderWidth: 1, data: Utils.points(NUMBER_CFG), }, ], }; // </block:data></p>
+<p>// <block:scales:2> const scaleOpts = { reverse: true, ticks: { callback: (val, index, ticks) =&gt; index === 0 || index === ticks.length - 1 ? null : val, }, grid: { borderColor: Utils.randomColor(1), color: “rgba( 0, 0, 0, 0.1)”, }, title: { display: true, text: (ctx) =&gt; ctx.scale.axis + " axis“, }, }; const scales = { x: { position:”top“, }, y: { position:”right", }, }; Object.keys(scales).forEach((scale) =&gt; Object.assign(scales[scale], scaleOpts)); // </block:scales></p>
+<p>// <block:zoom:0> const zoomOptions = { zoom: { wheel: { enabled: true, }, pinch: { enabled: true, }, mode: “xy”, overScaleMode: “xy”, }, pan: { enabled: true, mode: “xy”, overScaleMode: “xy”, }, }; // </block></p>
+<p>const panStatus = () =&gt; (zoomOptions.pan.enabled ? “enabled” : “disabled”); const zoomStatus = () =&gt; zoomOptions.zoom.wheel.enabled ? “enabled” : “disabled”;</p>
+<p>// <block:config:1> const config = { type: “scatter”, data: data, options: { scales: scales, plugins: { zoom: zoomOptions, title: { display: true, position: “bottom”, text: (ctx) =&gt; “Zoom:” + zoomStatus() + “, Pan:” + panStatus(), }, }, }, }; // </block:config></p>
+<p>const actions = [ { name: “Toggle zoom”, handler(chart) { zoomOptions.zoom.wheel.enabled = !zoomOptions.zoom.wheel.enabled; zoomOptions.zoom.pinch.enabled = !zoomOptions.zoom.pinch.enabled; chart.update(); }, }, { name: “Toggle pan”, handler(chart) { zoomOptions.pan.enabled = !zoomOptions.pan.enabled; chart.update(); }, }, { name: “Reset zoom”, handler(chart) { chart.resetZoom(); }, },];</p>
+<p>module.exports = { actions, config, }; ```</p>
+</body>
+</html>

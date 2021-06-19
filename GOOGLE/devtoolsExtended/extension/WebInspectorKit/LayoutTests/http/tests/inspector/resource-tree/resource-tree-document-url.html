@@ -1,37 +1,18 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-<script src="../inspector-test.js"></script>
-<script src="../resources-test.js"></script>
-<script src="resource-tree-test.js"></script>
-
-<script>
-
-function test()
-{
-    InspectorTest.runAfterResourcesAreFinished(["dummy-iframe.html", "inspector-test.js", "resources-test.js", "resource-tree-test.js"], step1);
-
-    function step1()
-    {
-        function formatter(resource)
-        {
-            return resource.url + " => " + resource.documentURL;
-        }
-    
-        InspectorTest.dumpResources(formatter);    
-        InspectorTest.completeTest();
-    }
-}
-
-</script>
-
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>resource-tree-document-url</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
 </head>
-
 <body>
-<p>
-Tests that resources have proper documentURL set in the tree model.
-</p>
-
-<iframe src="resources/dummy-iframe.html" onload="runTest()">
-
+<p>Tests that resources have proper documentURL set in the tree model.</p>
 </body>
 </html>

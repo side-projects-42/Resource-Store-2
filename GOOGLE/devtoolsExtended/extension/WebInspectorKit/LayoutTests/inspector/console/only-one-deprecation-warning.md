@@ -1,0 +1,1 @@
+This test passes if only one deprecation warning is presented in the console.

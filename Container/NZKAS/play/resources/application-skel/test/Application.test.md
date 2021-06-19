@@ -1,0 +1,1 @@
+\*{ You can use plain selenium command using the selenium tag }\* \#{selenium} // Open the home page, and check that no error occured open('/') assertNotTitle('Application error') \#{/selenium}

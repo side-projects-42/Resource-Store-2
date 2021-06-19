@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>may-05</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-05-05">ember-cli Meeting Notes - 2016-05-05</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Jake Bixby</li>
+<li>Kelly Selden</li>
+<li>Tobias Bieniek</li>
+<li>Katie Gengler</li>
+<li>Stefan Penner</li>
+<li>Chad Hietala</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Stef - core-object fixes. Likely possible to fix all issues inside of core-object.</li>
+<li>[ ] Stef - Land ember-core in ember-cli via npm.</li>
+<li>[ ] Jake - Release new version of ember-cli-legacy-blueprints.</li>
+<li>[ ] Tobias - Document milestones for PRs/issues in CONTRIBUTING.md</li>
+<li>[ ] Nathan - Schedule call for external contributors. (e.g. ang-cli)</li>
+<li>[ ] Chad - (later) - Outline issues with services inside of engines.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="fast-tracking-features">Fast Tracking Features</h3>
+<ul>
+<li>Requires a champion who wants a feature badly and willing to steward it into existence..</li>
+<li>Requires core maintainers to review that it is worth the risk.</li>
+<li>Aim to be exceptionally rare.</li>
+<li>The idea behind the release train schedule is that you don’t worry about missing, next version is only six weeks away.</li>
+</ul>
+<h3 id="core-object-update">core-object Update</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/core-object/pull/32">Bug found, blocking 2.6 release.</a></li>
+<li>Enforces <code>super</code> even if no <code>super</code> called.</li>
+<li>There are two types of <code>super</code>, with and without arguments.</li>
+<li><code>super</code> with arguments and copy the properties onto the instance.</li>
+<li>Bug is an accidental confusion one invocation type with the other.</li>
+<li>Should always make sure we call it with one object and a pojo.</li>
+<li>Stef will update the PR with a complete description of the issues and resolution.</li>
+<li>Noticed issue fixed, but (likely) more similar types of problems.</li>
+</ul>
+<h3 id="npm-ember-core">npm ember-core</h3>
+<ul>
+<li>Publish ember as a node module: ember-core</li>
+<li>Start building support for this inside of ember-cli.</li>
+<li>Stays in the canaries.</li>
+<li>Probably need feature flag support.</li>
+</ul>
+<h3 id="test-suite-times">Test Suite Times</h3>
+<ul>
+<li>Feel empowered to delete and combine tests.</li>
+<li>Find tests that are slow, move to unit tests and fewer slow tests.</li>
+<li>Sacrifice some bug coverage to improve dev experience.</li>
+<li>e.g. Test up to the boundary of testem.</li>
+</ul>
+<h3 id="improve-visibility-into-featurepr-state-and-progress">Improve visibility into feature/PR state and progress</h3>
+<ul>
+<li>How do we know what features are at what stage?</li>
+<li>Make better use of milestones inside of GitHub.</li>
+<li>Infer channel status from version number.</li>
+<li>Need to spend time triaging existing issues.</li>
+</ul>
+<h3 id="decouple-ember-cli-from-ember">Decouple ember-cli from ember</h3>
+<ul>
+<li>e.g. Removing bower, removing blueprints</li>
+<li>Extract to core-cli/lib-cli.</li>
+<li>Some subgroup of people who are willing to work with external communities (e.g. Justin Searls, ang-cli team)</li>
+<li>Some of this will just be refactoring, but also some work is just to meet other peoples’ needs.</li>
+<li>Nathan to schedule a call for kickoff.</li>
+</ul>
+<h3 id="packagerlinker">Packager/Linker</h3>
+<ul>
+<li>Chad is revisiting.</li>
+<li>Concept of fileEntries helping maintain a graph.</li>
+<li>Keep the modules in some module class.</li>
+<li>Possibly rewrite things similar to rollup.</li>
+<li>Dead code elimination at the module level is possible.</li>
+<li>Later: inspect runtime dependency injection for module shaking.</li>
+<li>We should use our learnings here to dictate some limits on engines with regards to boundaries.</li>
+<li>Iterating toward Ember’s use case.</li>
+</ul>
+</body>
+</html>

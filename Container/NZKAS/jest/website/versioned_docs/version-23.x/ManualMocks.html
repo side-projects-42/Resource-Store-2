@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Manual Mocks</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Manual Mocks</h1>
+    </header>
+    <p>
+      Manual mocks are used to stub out functionality with mock data. For
+      example, instead of accessing a remote resource like a website or a
+      database, you might want to create a manual mock that allows you to use
+      fake data. This ensures your tests will be fast and not flaky.
+    </p>
+    <h2 id="mocking-user-modules">Mocking user modules</h2>
+    <p>
+      Manual mocks are defined by writing a module in a
+      <code>__mocks__/</code> subdirectory immediately adjacent to the module.
+      For example, to mock a module called <code>user</code> in the
+      <code>models</code> directory, create a file called
+      <code>user.js</code> and put it in the
+      <code>models/__mocks__</code> directory. Note that the
+      <code>__mocks__</code> folder is case-sensitive, so naming the directory
+      <code>__MOCKS__</code> will break on some systems.
+    </p>
+    <blockquote>
+      <p>
+        When we require that module in our tests, then explicitly calling
+        <code>jest.mock('./moduleName')</code> is <strong>required</strong>.
+      </p>
+    </blockquote>
+    <h2 id="mocking-node-modules">Mocking Node modules</h2>
+    <p>
+      If the module you are mocking is a Node module (e.g.:
+      <code>lodash</code>), the mock should be placed in the
+      <code>__mocks__</code> directory adjacent to
+      <code>node_modules</code> (unless you configured
+      <a href="Configuration.md#roots-array-string"><code>roots</code></a> to
+      point to a folder other than the project root) and will be
+      <strong>automatically</strong> mocked. There’s no need to explicitly call
+      <code>jest.mock('module_name')</code>.
+    </p>
+    <p>
+      Scoped modules can be mocked by creating a file in a directory structure
+      that matches the name of the scoped module. For example, to mock a scoped
+      module called <code>@scope/project-name</code>, create a file at
+      <code>__mocks__/@scope/project-name.js</code>, creating the
+      <code>@scope/</code> directory accordingly.
+    </p>
+    <blockquote>
+      <p>
+        Warning: If we want to mock Node’s core modules (e.g.:
+        <code>fs</code> or <code>path</code>), then explicitly calling
+        e.g. <code>jest.mock('path')</code> is <strong>required</strong>,
+        because core Node modules are not mocked by default.
+      </p>
+    </blockquote>
+    <h2 id="examples">Examples</h2>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">.</span></a>
+<a class="sourceLine" id="cb1-2" title="2">├── <span class="ex">config</span></a>
+<a class="sourceLine" id="cb1-3" title="3">├── <span class="ex">__mocks__</span></a>
+<a class="sourceLine" id="cb1-4" title="4">│   └── <span class="ex">fs.js</span></a>
+<a class="sourceLine" id="cb1-5" title="5">├── <span class="ex">models</span></a>
+<a class="sourceLine" id="cb1-6" title="6">│   ├── <span class="ex">__mocks__</span></a>
+<a class="sourceLine" id="cb1-7" title="7">│   │   └── <span class="ex">user.js</span></a>
+<a class="sourceLine" id="cb1-8" title="8">│   └── <span class="ex">user.js</span></a>
+<a class="sourceLine" id="cb1-9" title="9">├── <span class="ex">node_modules</span></a>
+<a class="sourceLine" id="cb1-10" title="10">└── <span class="ex">views</span></a></code></pre>
+    </div>
+    <p>
+      When a manual mock exists for a given module, Jest’s module system will
+      use that module when explicitly calling
+      <code>jest.mock('moduleName')</code>. However, when
+      <code>automock</code> is set to <code>true</code>, the manual mock
+      implementation will be used instead of the automatically created mock,
+      even if <code>jest.mock('moduleName')</code> is not called. To opt out of
+      this behavior you will need to explicitly call
+      <code>jest.unmock('moduleName')</code> in tests that should use the actual
+      module implementation.
+    </p>
+    <blockquote>
+      <p>
+        Note: In order to mock properly, Jest needs
+        <code>jest.mock('moduleName')</code> to be in the same scope as the
+        <code>require/import</code> statement.
+      </p>
+    </blockquote>
+    <p>
+      Here’s a contrived example where we have a module that provides a summary
+      of all the files in a given directory. In this case we use the core (built
+      in) <code>fs</code> module.
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="co">// FileSummarizer.js</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="st">&#39;use strict&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">const</span> fs <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">function</span> <span class="at">summarizeFilesInDirectorySync</span>(directory) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="cf">return</span> <span class="va">fs</span>.<span class="at">readdirSync</span>(directory).<span class="at">map</span>((fileName) <span class="kw">=&gt;</span> (<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-8" title="8">    directory<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-9" title="9">    fileName<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="op">}</span>))<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-11" title="11"><span class="op">}</span></a>
+<a class="sourceLine" id="cb2-12" title="12"></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="va">exports</span>.<span class="at">summarizeFilesInDirectorySync</span> <span class="op">=</span> summarizeFilesInDirectorySync<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Since we’d like our tests to avoid actually hitting the disk (that’s
+      pretty slow and fragile), we create a manual mock for the
+      <code>fs</code> module by extending an automatic mock. Our manual mock
+      will implement custom versions of the <code>fs</code> APIs that we can
+      build on for our tests:
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// __mocks__/fs.js</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="st">&#39;use strict&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">const</span> path <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;path&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="kw">const</span> fs <span class="op">=</span> <span class="va">jest</span>.<span class="at">genMockFromModule</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">// This is a custom function that our tests can use during setup to specify</span></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="co">// what the files on the &quot;mock&quot; filesystem should look like when any of the</span></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co">// `fs` APIs are used.</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="kw">let</span> mockFiles <span class="op">=</span> <span class="va">Object</span>.<span class="at">create</span>(<span class="kw">null</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="kw">function</span> <span class="at">__setMockFiles</span>(newMockFiles) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-13" title="13">  mockFiles <span class="op">=</span> <span class="va">Object</span>.<span class="at">create</span>(<span class="kw">null</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-14" title="14">  <span class="cf">for</span> (<span class="kw">const</span> file <span class="kw">in</span> newMockFiles) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-15" title="15">    <span class="kw">const</span> dir <span class="op">=</span> <span class="va">path</span>.<span class="at">dirname</span>(file)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-16" title="16"></a>
+<a class="sourceLine" id="cb3-17" title="17">    <span class="cf">if</span> (<span class="op">!</span>mockFiles[dir]) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-18" title="18">      mockFiles[dir] <span class="op">=</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-19" title="19">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-20" title="20">    mockFiles[dir].<span class="at">push</span>(<span class="va">path</span>.<span class="at">basename</span>(file))<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-21" title="21">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="op">}</span></a>
+<a class="sourceLine" id="cb3-23" title="23"></a>
+<a class="sourceLine" id="cb3-24" title="24"><span class="co">// A custom version of `readdirSync` that reads from the special mocked out</span></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="co">// file list set via __setMockFiles</span></a>
+<a class="sourceLine" id="cb3-26" title="26"><span class="kw">function</span> <span class="at">readdirSync</span>(directoryPath) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-27" title="27">  <span class="cf">return</span> mockFiles[directoryPath] <span class="op">||</span> []<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-28" title="28"><span class="op">}</span></a>
+<a class="sourceLine" id="cb3-29" title="29"></a>
+<a class="sourceLine" id="cb3-30" title="30"><span class="va">fs</span>.<span class="at">__setMockFiles</span> <span class="op">=</span> __setMockFiles<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-31" title="31"><span class="va">fs</span>.<span class="at">readdirSync</span> <span class="op">=</span> readdirSync<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-32" title="32"></a>
+<a class="sourceLine" id="cb3-33" title="33"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> fs<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Now we write our test. Note that we need to explicitly tell that we want
+      to mock the <code>fs</code> module because it’s a core Node module:
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="co">// __tests__/FileSummarizer-test.js</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="st">&#39;use strict&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-3" title="3"></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="va">jest</span>.<span class="at">mock</span>(<span class="st">&#39;fs&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5"></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="at">describe</span>(<span class="st">&#39;listFilesInDirectorySync&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-7" title="7">  <span class="kw">const</span> MOCK_FILE_INFO <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="st">&#39;/path/to/file1.js&#39;</span><span class="op">:</span> <span class="st">&#39;console.log(&quot;file1 contents&quot;);&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-9" title="9">    <span class="st">&#39;/path/to/file2.txt&#39;</span><span class="op">:</span> <span class="st">&#39;file2 contents&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-10" title="10">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12">  <span class="at">beforeEach</span>(() <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-13" title="13">    <span class="co">// Set up some mocked out file info before each test</span></a>
+<a class="sourceLine" id="cb4-14" title="14">    <span class="at">require</span>(<span class="st">&#39;fs&#39;</span>).<span class="at">__setMockFiles</span>(MOCK_FILE_INFO)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-15" title="15">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-16" title="16"></a>
+<a class="sourceLine" id="cb4-17" title="17">  <span class="at">test</span>(<span class="st">&#39;includes all files in the directory in the summary&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-18" title="18">    <span class="kw">const</span> FileSummarizer <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;../FileSummarizer&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-19" title="19">    <span class="kw">const</span> fileSummary <span class="op">=</span></a>
+<a class="sourceLine" id="cb4-20" title="20">      <span class="va">FileSummarizer</span>.<span class="at">summarizeFilesInDirectorySync</span>(<span class="st">&#39;/path/to&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-21" title="21"></a>
+<a class="sourceLine" id="cb4-22" title="22">    <span class="at">expect</span>(<span class="va">fileSummary</span>.<span class="at">length</span>).<span class="at">toBe</span>(<span class="dv">2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-23" title="23">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-24" title="24"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      The example mock shown here uses
+      <a href="JestObjectAPI.md#jestgenmockfrommodulemodulename"
+        ><code>jest.genMockFromModule</code></a
+      >
+      to generate an automatic mock, and overrides its default behavior. This is
+      the recommended approach, but is completely optional. If you do not want
+      to use the automatic mock at all, you can simply export your own functions
+      from the mock file. One downside to fully manual mocks is that they’re
+      manual – meaning you have to manually update them any time the module they
+      are mocking changes. Because of this, it’s best to use or extend the
+      automatic mock when it works for your needs.
+    </p>
+    <p>
+      To ensure that a manual mock and its real implementation stay in sync, it
+      might be useful to require the real module using
+      <code>jest.requireActual(moduleName)</code> in your manual mock and
+      amending it with mock functions before exporting it.
+    </p>
+    <p>
+      The code for this example is available at
+      <a
+        href="https://github.com/facebook/jest/tree/master/examples/manual-mocks"
+        >examples/manual-mocks</a
+      >.
+    </p>
+    <h2 id="using-with-es-module-imports">Using with ES module imports</h2>
+    <p>
+      If you’re using
+      <a
+        href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import"
+        >ES module imports</a
+      >
+      then you’ll normally be inclined to put your
+      <code>import</code> statements at the top of the test file. But often you
+      need to instruct Jest to use a mock before modules use it. For this
+      reason, Jest will automatically hoist <code>jest.mock</code> calls to the
+      top of the module (before any imports). To learn more about this and see
+      it in action, see
+      <a href="https://github.com/kentcdodds/how-jest-mocking-works"
+        >this repo</a
+      >.
+    </p>
+    <h2 id="mocking-methods-which-are-not-implemented-in-jsdom">
+      Mocking methods which are not implemented in JSDOM
+    </h2>
+    <p>
+      If some code uses a method which JSDOM (the DOM implementation used by
+      Jest) hasn’t implemented yet, testing it is not easily possible. This is
+      e.g. the case with <code>window.matchMedia()</code>. Jest returns
+      <code>TypeError: window.matchMedia is not a function</code> and doesn’t
+      properly execute the test.
+    </p>
+    <p>
+      In this case, mocking <code>matchMedia</code> in the test file should
+      solve the issue:
+    </p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="va">window</span>.<span class="at">matchMedia</span> <span class="op">=</span> <span class="va">jest</span>.<span class="at">fn</span>().<span class="at">mockImplementation</span>((query) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="cf">return</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="dt">matches</span><span class="op">:</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="dt">media</span><span class="op">:</span> query<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">onchange</span><span class="op">:</span> <span class="kw">null</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="dt">addListener</span><span class="op">:</span> <span class="va">jest</span>.<span class="at">fn</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-7" title="7">    <span class="dt">removeListener</span><span class="op">:</span> <span class="va">jest</span>.<span class="at">fn</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      This works if <code>window.matchMedia()</code> is used in a function (or
+      method) which is invoked in the test. If
+      <code>window.matchMedia()</code> is executed directly in the tested file,
+      Jest reports the same error. In this case, the solution is to move the
+      manual mock into a separate file and include this one in the test
+      <strong>before</strong> the tested file:
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="im">import</span> <span class="st">&#39;./matchMedia.mock&#39;</span><span class="op">;</span> <span class="co">// Must be imported before the tested file</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="im">import</span> <span class="op">{</span>myMethod<span class="op">}</span> <span class="im">from</span> <span class="st">&#39;./file-to-test&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb6-3" title="3"></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="at">describe</span>(<span class="st">&#39;myMethod()&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-5" title="5">  <span class="co">// Test the method here...</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+  </body>
+</html>

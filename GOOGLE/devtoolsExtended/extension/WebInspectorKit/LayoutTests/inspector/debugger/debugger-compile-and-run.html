@@ -1,100 +1,19 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      var test = function () {
-        InspectorTest.runDebuggerTestSuite([
-          function testSuccessfulCompileAndRun(next) {
-            var expression = "var a = 1; var b = 2; a + b; ";
-            InspectorTest.addResult("Compiling script");
-            DebuggerAgent.compileScript(
-              expression,
-              "test.js",
-              compileCallback.bind(this)
-            );
-
-            function compileCallback(error, scriptId, syntaxErrorMessage) {
-              InspectorTest.assertTrue(!error);
-              InspectorTest.assertTrue(!syntaxErrorMessage);
-              InspectorTest.assertTrue(!!scriptId);
-              var contextId = undefined;
-              InspectorTest.addResult("Running script");
-              DebuggerAgent.runScript(
-                scriptId,
-                contextId,
-                "console",
-                false,
-                runCallback.bind(this)
-              );
-            }
-
-            function runCallback(error, result, wasThrown) {
-              InspectorTest.assertTrue(!error);
-              InspectorTest.assertTrue(!wasThrown);
-              InspectorTest.addResult("Script result: " + result.value);
-              next();
-            }
-          },
-
-          function testRunError(next) {
-            var expression = "var a = 1; a + c; ";
-            InspectorTest.addResult("Compiling script");
-            DebuggerAgent.compileScript(
-              expression,
-              "test.js",
-              compileCallback.bind(this)
-            );
-
-            function compileCallback(error, scriptId, syntaxErrorMessage) {
-              InspectorTest.assertTrue(!error);
-              InspectorTest.assertTrue(!syntaxErrorMessage);
-              InspectorTest.assertTrue(!!scriptId);
-              var contextId = undefined;
-              InspectorTest.addResult("Running script");
-              DebuggerAgent.runScript(
-                scriptId,
-                contextId,
-                "console",
-                false,
-                runCallback.bind(this)
-              );
-            }
-
-            function runCallback(error, result, wasThrown) {
-              InspectorTest.assertTrue(!error);
-              InspectorTest.assertTrue(wasThrown);
-              InspectorTest.addResult(
-                "Script run error: " + result.description
-              );
-              next();
-            }
-          },
-
-          function testCompileError(next) {
-            var expression = "}";
-            InspectorTest.addResult("Compiling script");
-            DebuggerAgent.compileScript(
-              expression,
-              "test.js",
-              compileCallback.bind(this)
-            );
-
-            function compileCallback(error, scriptId, syntaxErrorMessage) {
-              InspectorTest.assertTrue(!error);
-              InspectorTest.assertTrue(!scriptId);
-              InspectorTest.addResult(
-                "Script compile error: " + syntaxErrorMessage
-              );
-              next();
-            }
-          },
-        ]);
-      };
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests separate compilation and run.</p>
-    <a href="https://bugs.webkit.org/show_bug.cgi?id=89646">Bug 89646.</a>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-compile-and-run</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests separate compilation and run.</p>
+<p><a href="https://bugs.webkit.org/show_bug.cgi?id=89646">Bug 89646.</a></p>
+</body>
 </html>

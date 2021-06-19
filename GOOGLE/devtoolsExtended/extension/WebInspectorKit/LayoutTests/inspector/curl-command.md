@@ -1,0 +1,1 @@
+Tests curl command generation

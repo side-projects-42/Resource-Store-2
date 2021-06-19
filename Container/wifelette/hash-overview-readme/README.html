@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="hashes">Hashes</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Get introduced to hashes and how they are useful.</li>
+<li>Create a hash.</li>
+<li>Retrieving data from a hash.</li>
+<li>Add data to a hash.</li>
+</ol>
+<iframe width="640" height="480" src="https://www.youtube.com/embed/0JSsFQGYaeA" frameborder="0" allowfullscreen>
+</iframe>
+<h2 id="introduction">Introduction</h2>
+<p>We’re going to introduce a new data structure, one that is more complicated than arrays. Hashes will occupy us for the next several lessons and there’s a lot to cover. This lesson, which includes code challenges, covers the following:</p>
+<ul>
+<li>What is a hash?</li>
+<li>What are hashes used for?</li>
+<li>Creating hashes</li>
+<li>Adding data to hashes</li>
+<li>Retrieving data from hashes</li>
+</ul>
+<p>In the upcoming lessons, we’ll go over how to iterate over and manipulate hashes and how to build more complex, or nested, hashes.</p>
+<blockquote>
+<p>Hashes are a lot like arrays: they have a bunch of slots that can point to various objects. However, in an array, the slots are lined up in a row, and each one is numbered (starting from zero). In a hash, the slots aren’t in a row (they are just sort of jumbled together) and you can use any object to refer to a slot, not just a number.</p>
+<p>— <a href="http://books.flatironschool.com/books/43?page=108">Chris Pine, <em>Learn to Program</em>, page 108</a></p>
+</blockquote>
+<p>Up until this point, we’ve stored our data in list-form using arrays. After we explain the basics of a hash, we’ll take a look at an example where an array would not be sufficient to meet our storage needs.</p>
+<h2 id="hash-structure">Hash Structure</h2>
+<p>Hashes are structured with keys and values. Each key/value pair makes up one unit in the hash. The entire collection of key/value pairs, which are comma separated, is enclosed in curly braces <code>{ }</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">hash = {<span class="st">&quot;key&quot;</span> =&gt; <span class="st">&quot;value&quot;</span>, <span class="st">&quot;another_key&quot;</span> =&gt; <span class="st">&quot;another value&quot;</span>}</a></code></pre></div>
+<p>You can think of a hash as a dictionary. The key is the reference point that is set equal to an associated value. A vocabulary dictionary actually makes a pretty good example of the hash structure:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">dictionary = {</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="st">&quot;apple&quot;</span> =&gt; <span class="st">&quot;a delicious fruit&quot;</span>,</a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="st">&quot;this readme&quot;</span> =&gt; <span class="st">&quot;wonderful and informative piece of reading&quot;</span>,</a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="st">&quot;Moby Dick&quot;</span> =&gt; <span class="st">&quot;a novel by my good friend, Herman Melville&quot;</span></a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7">}</a></code></pre></div>
+<p><strong>//Flat-fact:</strong> <em>In fact, “dictionary” is how the hash structure is known in some other programming languages such as Python and Objective-C.</em></p>
+<p>Keys in hashes can be strings, symbols, or integers. They are set equal to their associated values by using the <code>=&gt;</code> symbol, known for this use as the “hash-rocket” (<em>because it looks like a little rocket shooting off towards the right</em>).</p>
+<h3 id="example-named-data">Example: Named Data</h3>
+<p>You can think of the data stored in a hash as being <em>associative</em>. In other words, keys point to data that is <em>related</em> to that key. Let’s take a look at the following example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">the_rock = {<span class="st">&quot;name&quot;</span> =&gt; <span class="st">&quot;Dwayne, The Rock, Johnson&quot;</span>, <span class="st">&quot;weight&quot;</span> =&gt; <span class="st">&quot;a lot&quot;</span>}</a></code></pre></div>
+<p>If we tried to represent this same information as an array, it would look something like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">the_rock = [<span class="st">&quot;name&quot;</span>, <span class="st">&quot;Dwayne, The Rock, Johnson&quot;</span>, <span class="st">&quot;weight&quot;</span>, <span class="st">&quot;a lot&quot;</span>]</a></code></pre></div>
+<p>Then, in order to access The Rock’s name, we would have to use the following line of code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1">the_rock[<span class="dv">1</span>]</a></code></pre></div>
+<p>That requires us to remember, every time we want to access The Rock’s name, that it is stored at the first index of <code>the_rock</code> array. That is too hard to keep track of.</p>
+<p>Unlike arrays which store data in numbered indexes, hashes store data in unique keys—like fields for a contact in your address book. <strong>Each key in a hash must be unique</strong>. The value associated with that key is then accessed by accessing the hash using the key, rather than an index number. Let’s take a look:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">the_rock = {<span class="st">&quot;name&quot;</span> =&gt; <span class="st">&quot;Dwayne, The Rock, Johnson&quot;</span>, <span class="st">&quot;weight&quot;</span> =&gt; <span class="st">&quot;a lot&quot;</span>}</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3">the_rock[<span class="st">&quot;name&quot;</span>]</a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="co">#  =&gt; &quot;Dwayne, The Rock, Johnson&quot;</span></a></code></pre></div>
+<h3 id="what-is-a-hash-key">What is a Hash Key?</h3>
+<p>A key in a hash can be a string, a symbol, or an integer as long as you only use each key once. If, for example, we broke this cardinal rule with the following hash:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">the_rock = {<span class="st">&quot;name&quot;</span> =&gt; <span class="st">&quot;Dwayne Johnson&quot;</span>, <span class="st">&quot;name&quot;</span> =&gt; <span class="st">&quot;The Rock&quot;</span>, <span class="st">&quot;weight&quot;</span> =&gt; <span class="st">&quot;a lot&quot;</span>}</a></code></pre></div>
+<p>And then tried to access The Rock’s name:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">the_rock[<span class="st">&quot;name&quot;</span>]</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co"># =&gt; &quot;The Rock&quot;</span></a></code></pre></div>
+<p>Since each key must be unique, reusing a key will overwrite the previously stored value. Therefore, <strong>we must use unique keys to catalogue distinct values</strong>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">the_rock = {<span class="st">&quot;name&quot;</span> =&gt; <span class="st">&quot;Dwayne Johnson&quot;</span>, <span class="st">&quot;stage_name&quot;</span> =&gt; <span class="st">&quot;The Rock&quot;</span>, <span class="st">&quot;weight&quot;</span> =&gt; <span class="st">&quot;a lot&quot;</span>}</a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3">the_rock[<span class="st">&quot;name&quot;</span>]</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co"># =&gt; &quot;Dwayne Johnson&quot;</span></a></code></pre></div>
+<h3 id="example-customs-inspector">Example: Customs Inspector</h3>
+<figure>
+<img src="http://flatiron-labs.s3.amazonaws.com/160px-Herman_Melville.jpg" alt="Herman Melville" /><figcaption>Herman Melville</figcaption>
+</figure>
+<p>The year is 1866 and we work beside <a href="https://en.wikipedia.org/wiki/Herman_Melville">Herman Melville</a> (author of Moby Dick) as a customs inspector in New York. (I know, when did our lives become so old-timey and exciting?) We’re in charge of inspecting an incoming shipment and we need to track the items we’re inspecting by listing each type of item (such as: whale bone corsets, porcelain vases, and oil paintings) along with the number of each kind of item in the shipment.</p>
+<p>Let’s say our shipment contains five (5) whale bone corsets, two (2) porcelain vases, and three (3) oil paintings. If we tried to store them in an array in list form, it would look like this:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">old_fashioned_things = [</a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="st">&quot;whale bone corset&quot;</span>,</a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="st">&quot;whale bone corset&quot;</span>,</a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="st">&quot;whale bone corset&quot;</span>,</a>
+<a class="sourceLine" id="cb10-5" title="5">  <span class="st">&quot;whale bone corset&quot;</span>,</a>
+<a class="sourceLine" id="cb10-6" title="6">  <span class="st">&quot;whale bone corset&quot;</span>,</a>
+<a class="sourceLine" id="cb10-7" title="7">  <span class="st">&quot;porcelain vase&quot;</span>,</a>
+<a class="sourceLine" id="cb10-8" title="8">  <span class="st">&quot;porcelain vase&quot;</span>,</a>
+<a class="sourceLine" id="cb10-9" title="9">  <span class="st">&quot;oil painting&quot;</span>,</a>
+<a class="sourceLine" id="cb10-10" title="10">  <span class="st">&quot;oil painting&quot;</span>,</a>
+<a class="sourceLine" id="cb10-11" title="11">  <span class="st">&quot;oil painting&quot;</span></a>
+<a class="sourceLine" id="cb10-12" title="12">]</a></code></pre></div>
+<p>As it stands, there is no way for us to include the count of each item in a way that associates the item to its count, so we have to store a separate occurrence of that item in order to track the shipment. Certainly for a small list this is manageable, but what happens when the shipment of Herman’s first printing of <em>Moby Dick</em> arrives? We’d have to store 10,000 occurrences of the book instead of recording the count as value. That’s no good!</p>
+<p>So, how else can we help Herman keep track of how many of each item are included in the shipment? Here’s where a hash can come in handy. With a hash, we can store a list of associated key/value pairs. In other words, we can store the pairs of item/count:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb11-1" title="1">old_fashioned_things = {</a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="st">&quot;whale bone corset&quot;</span> =&gt; <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="st">&quot;porcelain vase&quot;</span> =&gt; <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb11-4" title="4">  <span class="st">&quot;oil painting&quot;</span> =&gt; <span class="dv">3</span></a>
+<a class="sourceLine" id="cb11-5" title="5">}</a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7">first_printing = {</a>
+<a class="sourceLine" id="cb11-8" title="8">  <span class="st">&quot;Moby Dick&quot;</span> =&gt; <span class="dv">10000</span></a>
+<a class="sourceLine" id="cb11-9" title="9">}</a></code></pre></div>
+<p>We’ll be done recording these shipments in no time!</p>
+<h2 id="creating-hashes">Creating Hashes</h2>
+<p>We can make a new hash via the class constructor or the literal constructor, just like arrays.</p>
+<h3 id="the-class-constructor">The Class Constructor</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb12-1" title="1">my_hash = <span class="dt">Hash</span>.new</a>
+<a class="sourceLine" id="cb12-2" title="2">  =&gt; {}</a></code></pre></div>
+<h3 id="the-literal-constructor">The Literal Constructor</h3>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1">my_hash = {}</a>
+<a class="sourceLine" id="cb13-2" title="2">  =&gt; {}</a></code></pre></div>
+<p>Initializing a hash that already contains data is a lot like initializing an array with data. We use the literal constructor:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb14-1" title="1">pets = {<span class="st">&quot;cat&quot;</span> =&gt; <span class="st">&quot;Maru&quot;</span>, <span class="st">&quot;dog&quot;</span> =&gt; <span class="st">&quot;Pluto&quot;</span>}</a>
+<a class="sourceLine" id="cb14-2" title="2">  =&gt; {<span class="st">&quot;cat&quot;</span> =&gt; <span class="st">&quot;Maru&quot;</span>, <span class="st">&quot;dog&quot;</span> =&gt; <span class="st">&quot;Pluto&quot;</span>}</a></code></pre></div>
+<p>In the upcoming lab, you’ll get a chance to practice making your own hashes.</p>
+<h2 id="retrieving-data-from-hashes">Retrieving Data from Hashes</h2>
+<p>Retrieving data from a hash is similar to retrieving data from an array, but instead of giving an array the index number in brackets <code>[i]</code> we give a hash the name of the key <code>[key]</code>. If an array is a list in which we access index items by their number, a hash is a dictionary in which we access values by their key.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb15-1" title="1">pets = {<span class="st">&quot;cat&quot;</span> =&gt; <span class="st">&quot;Maru&quot;</span>, <span class="st">&quot;dog&quot;</span> =&gt; <span class="st">&quot;Pluto&quot;</span>}</a>
+<a class="sourceLine" id="cb15-2" title="2"></a>
+<a class="sourceLine" id="cb15-3" title="3">pets[<span class="st">&quot;cat&quot;</span>]</a>
+<a class="sourceLine" id="cb15-4" title="4">  =&gt; <span class="st">&quot;Maru&quot;</span></a></code></pre></div>
+<p>Using <code>[]</code> is referred to as the “bracket method”.</p>
+<h2 id="adding-objects-to-hashes">Adding Objects to Hashes</h2>
+<p>Adding items to hashes is easy. Instead of <code>&lt;&lt;</code> (the shovel method) that we use to add items to arrays, hashes use an <code>[:key]=</code> method to add data. The full syntax for this takes the form of:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb16-1" title="1">hash[<span class="st">:key</span>]= value</a></code></pre></div>
+<p>While we were busy plugging away at our shipping manifest, Herman discovered an attempt to smuggle ten (10) jars of molasses past the inspection. Since molasses isn’t illegal Herman decided not to confiscate it, but we do need to add it to the manifest so the merchant gets taxed on it. Accomplishing this with our hash would look like this:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb17-1" title="1">shipping_manifest = {</a>
+<a class="sourceLine" id="cb17-2" title="2">  <span class="st">&quot;whale bone corset&quot;</span> =&gt; <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb17-3" title="3">  <span class="st">&quot;porcelain vase&quot;</span> =&gt; <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb17-4" title="4">  <span class="st">&quot;oil painting&quot;</span> =&gt; <span class="dv">3</span></a>
+<a class="sourceLine" id="cb17-5" title="5">}</a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7">shipping_manifest[<span class="st">&quot;jar of molasses&quot;</span>] = <span class="dv">10</span></a>
+<a class="sourceLine" id="cb17-8" title="8"></a>
+<a class="sourceLine" id="cb17-9" title="9">puts shipping_manifest</a>
+<a class="sourceLine" id="cb17-10" title="10"><span class="co">#  └── shipping_manifest = {</span></a>
+<a class="sourceLine" id="cb17-11" title="11">  <span class="st">&quot;whale bone corset&quot;</span> =&gt; <span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb17-12" title="12">  <span class="st">&quot;porcelain vase&quot;</span> =&gt; <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb17-13" title="13">  <span class="st">&quot;oil painting&quot;</span> =&gt; <span class="dv">3</span>,</a>
+<a class="sourceLine" id="cb17-14" title="14">  <span class="st">&quot;jar of molasses&quot;</span> =&gt; <span class="dv">10</span></a>
+<a class="sourceLine" id="cb17-15" title="15">}</a></code></pre></div>
+<p>Well done!</p>
+</body>
+</html>

@@ -1,51 +1,32 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: NTriples mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="ntriples.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border: 1px solid #eee;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">NTriples</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>NTriples mode</h2>
-  <form>
-    <textarea id="ntriples" name="ntriples">
-    
-<http://Sub1>     <http://pred1>     <http://obj> .
-<http://Sub2>     <http://pred2#an2> "literal 1" .
-<http://Sub3#an3> <http://pred3>     _:bnode3 .
-_:bnode4          <http://pred4>     "literal 2"@lang .
-_:bnode5          <http://pred5>     "literal 3"^^<http://type> .
-</textarea
-    >
-  </form>
-
-  <script>
-    var editor = CodeMirror.fromTextArea(
-      document.getElementById("ntriples"),
-      {}
-    );
-  </script>
-  <p><strong>MIME types defined:</strong> <code>text/n-triples</code>.</p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: NTriples mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">NTriples</a></li>
+</ul>
+<h2 id="ntriples-mode">NTriples mode</h2>
+<p>. “literal 1” . _:bnode3 . _:bnode4 “literal 2”<span class="citation" data-cites="lang">@lang</span> . _:bnode5 “literal 3”^^ .</p>
+<p><strong>MIME types defined:</strong> <code>text/n-triples</code>.</p>
+</body>
+</html>

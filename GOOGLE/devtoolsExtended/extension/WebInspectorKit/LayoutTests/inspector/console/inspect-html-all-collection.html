@@ -1,42 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function test() {
-        RuntimeAgent.evaluate(
-          "document.all",
-          "console",
-          false,
-          didGetHTMLAllCollection.bind(this)
-        );
-        function didGetHTMLAllCollection(error, result, wasThrown) {
-          if (error || wasThrown) {
-            InspectorTest.addResult("FAILED: " + error);
-            InspectorTest.completeTest();
-            return;
-          }
-          var htmlAllCollection = WebInspector.RemoteObject.fromPayload(result);
-          htmlAllCollection.callFunctionJSON(
-            "function(collection) { return this.length + collection.length; }",
-            [{ objectId: htmlAllCollection.objectId }],
-            didGetLength.bind(this)
-          );
-        }
-
-        function didGetLength(len) {
-          if (!len || typeof len !== "number")
-            InspectorTest.addResult(
-              "FAILED: unexpected document.all.length: " + len
-            );
-          else
-            InspectorTest.addResult("PASSED: retrieved length of document.all");
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests that HTMLAllCollection properties can be inspected.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>inspect-html-all-collection</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that HTMLAllCollection properties can be inspected.</p>
+</body>
 </html>

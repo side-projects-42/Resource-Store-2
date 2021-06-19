@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>A unified JavaScript layer for <a href="http://incubator.apache.org/projects/callback.html">Apache Cordova</a> projects.</p>
+<h1 id="project-structure">Project Structure</h1>
+<pre><code>cordova-js
+  |
+  |-build/
+  | Will contain any build modules (currently nothing here as it is all
+  | hacked into the JakeFile)
+  |
+  |-lib
+  |  |-cordova.js
+  |  | Common Cordova stuff such as callback handling and
+  |  | window/document add/removeEventListener hijacking
+  |  |
+  |  |-common/
+  |  | Contains the common-across-platforms base modules
+  |  |
+  |  |-common/builder.js
+  |  | Injects in our classes onto window and navigator (or wherever else
+  |  | is needed)
+  |  |
+  |  |-common/channel.js
+  |  | A pub/sub implementation to handle custom framework events
+  |  |
+  |  |-common/common.js
+  |  | Common locations to add Cordova objects to browser globals.
+  |  |
+  |  |-common/exec.js
+  |  | Stub for platform&#39;s specific version of exec.js
+  |  |
+  |  |-common/platform.js
+  |  | Stub for platform&#39;s specific version of platform.js
+  |  |
+  |  |-common/utils.js
+  |  | General purpose JS utility stuff: closures, uuids, object
+  |  | cloning, extending prototypes
+  |  |
+  |  |-common/plugin
+  |  | Contains the common-across-platforms plugin modules
+  |  |
+  |  |-scripts/
+  |  | Contains non-module JavaScript source that gets added to the
+  |  | resulting cordova.&lt;platform&gt;.js files closures, uuids, object
+  |  |
+  |  |-scripts/bootstrap.js
+  |  | Code to bootstrap the Cordova platform, inject APIs and fire events
+  |  |
+  |  |-scripts/require.js
+  |  | Our own module definition and require implementation.
+  |  |
+  |  |-&lt;platform&gt;/
+  |  | Contains the platform-specific base modules.
+  |  |
+  |  |-&lt;platform&gt;/plugin/&lt;platform&gt;
+  |  | Contains the platform-specific plugin modules.</code></pre>
+<p>The way the resulting <code>cordova.&lt;platform&gt;.js</code> files will be built is by combining the scripts in the <code>lib/scripts</code> directory with modules from the <code>lib/common</code> and <code>lib/&lt;platform&gt;</code> directories. For cases where there is the same named module in <code>lib/common</code> and <code>lib/&lt;platform&gt;/plugin/&lt;platform&gt;</code>, the <code>lib/&lt;platform&gt;</code> version wins. For instance, every <code>lib/&lt;platform&gt;</code> includes an <code>exec.js</code>, and there is also a version in <code>lib/common</code>, so the <code>lib/&lt;platform&gt;</code> version will always be used. In fact, the <code>lib/common</code> one will throw errors, so if you build a new platform and forget <code>exec.js</code>, the resulting <code>cordova.&lt;platform&gt;.js</code> file will also throw errors.</p>
+<h1 id="building">Building</h1>
+<p>Make sure you have <a href="http://nodejs.org">node.js</a> installed. It should come pre-installed with <a href="http://npmjs.org">npm</a> - but if you install node and can’t run <code>npm</code> then head over to the website and install it yourself. Make sure you have all of the node dependencies installed by running the following command from the repository root:</p>
+<pre><code>npm install</code></pre>
+<p>All of the build tasks can be run via the <code>jake</code> node module. Install it globally first by running:</p>
+<pre><code>sudo npm install -g jake</code></pre>
+<p>Every build also runs the scripts through <a href="http://jshint.com">JSHint</a>. It is best installed globally, but it is <em>not</em> necessary for building cordova-js (you just won’t get syntax and style hints when you build):</p>
+<pre><code>sudo npm install -g jshint</code></pre>
+<p>Then from the repository root run:</p>
+<pre><code>jake</code></pre>
+<p>This will run the <code>build</code>, <code>hint</code> and <code>test</code> tasks by default. All of the available tasks are:</p>
+<ul>
+<li><code>build</code>: creates platform versions of cordova-js and builds them into the <code>pkg/</code> directory</li>
+<li><code>test</code>: runs all of the unit tests inside node</li>
+<li><code>btest</code>: creates a server so you can run the tests inside a browser</li>
+<li><code>clean</code>: cleans out the <code>pkg/</code> directory</li>
+<li><code>hint</code>: runs all of the script files through JSHint</li>
+<li><code>fixwhitespace</code>: converts all tabs to four spaces, removes carriage returns and cuts out trailing whitespace within the script files</li>
+</ul>
+<h2 id="known-issues">Known Issues</h2>
+<ul>
+<li>On Mac OS 10.7.3, there were issues with the contextify module not being able to build properly when using node v0.6.10 and running <code>npm install</code>. Using node v0.6.6 works, though.</li>
+<li>On Windows, when you run <code>npm install</code>, you may get errors regarding contextify. This is necessary for running the tests. Make sure you are running node v0.6.15 at the least (and npm v1.1.16 which should come bundled with node 0.6.15). Also, install <a href="http://python.org/download/releases/2.7.3">Python 2.7.x</a> and <a href="http://www.microsoft.com/visualstudio/en-us/products/2010-editions/visual-cpp-express">Visual C++ 2010 Express</a>. When that is done, run <code>npm install</code> again and it should build contextify natively on Windows.</li>
+</ul>
+<h1 id="how-it-works">How It Works</h1>
+<p>The <code>build/packager.js</code> tool is a node.js script that concatenates all of the core Cordova plugins in this repository into a <code>cordova.&lt;platform&gt;.js</code> file under the <code>pkg/</code> folder. It also wraps the plugins with a RequireJS-compatible module syntax that works in both browser and node environments. We end up with a cordova.js file that wraps each Cordova plugin into its own module.</p>
+<p>Cordova defines a <code>channel</code> module under <code>lib/common/channel.js</code>, which is a publish/subscribe implementation that the project uses for event management.</p>
+<p>The Cordova native-to-webview bridge is initialized in <code>lib/scripts/bootstrap.js</code>. This file attaches the <code>boot</code> function to the <code>channel.onNativeReady</code> event - fired by native with a call to:</p>
+<pre><code>cordova.require(&#39;cordova/channel).onNativeReady.fire()</code></pre>
+<p>The <code>boot</code> method does all the work. First, it grabs the common platform definition (under <code>lib/common/common.js</code>) and injects all of the objects defined there onto <code>window</code> and other global namespaces. Next, it grabs all of the platform-specific object definitions (as defined under <code>lib/&lt;platform&gt;/platform.js</code>) and overrides those onto <code>window</code>. Finally, it calls the platform-specific <code>initialize</code> function (located in the platform definition). At this point, Cordova is fully initialized and ready to roll. Last thing we do is wait for the <code>DOMContentLoaded</code> event to fire to make sure the page has loaded properly. Once that is done, Cordova fires the <code>deviceready</code> event where you can safely attach functions that consume the Cordova APIs.</p>
+<h1 id="testing">Testing</h1>
+<p>Tests run in node or the browser. To run the tests in node:</p>
+<pre><code>jake test</code></pre>
+<p>To run them in the browser:</p>
+<pre><code>jake btest</code></pre>
+<p>Final testing should always be done with the <a href="https://github.com/apache/incubator-cordova-mobile-spec">Mobile Spec test application</a>.</p>
+<h1 id="integration">Integration</h1>
+<h2 id="cordova">Cordova</h2>
+<p>Build the .js file and drop it in as a replacement for cordova.js.</p>
+<h3 id="supported-platforms">Supported Platforms</h3>
+<ul>
+<li>Android</li>
+<li>iOS</li>
+<li>BlackBerry</li>
+<li>Windows Phone 7 ( 7.5 )</li>
+<li>Bada (WAC implementation)</li>
+<li>Windows 8 ( experimental work in progress )</li>
+</ul>
+<h2 id="ripple">Ripple</h2>
+<p>Load this in Ripple to play with it. You will have to use the cordova prototype branch to better simulate the phone environment and use this javascript rather than Ripple’s emulated code.</p>
+<pre><code>git clone git@github.com:blackberry-webworks/Ripple-UI.git
+git checkout winnie.the.pooh
+./configure
+jake</code></pre>
+<p>and then load the unpacked extension in chrome in the pkg/chromium folder. Use the cordova.proto platform in ripple.</p>
+<h1 id="adding-a-new-platform">Adding a New Platform</h1>
+<ol type="1">
+<li>Add your platform as a directory under the <code>lib</code> folder.</li>
+<li>Write a module that encapsulates your platform’s <code>exec</code> method and call it exec.js. The <code>exec</code> method is a JavaScript function that enables communication from the platform’s JavaScript environment into the platform’s native environment. Each platform uses a different mechanism to enable this bridge. We recommend you check out the other platform <code>exec</code> definitions for inspiration. Drop this into the <code>lib/&lt;platform&gt;</code> folder you created in step 1. The <code>exec</code> method has the following method signature: <code>function(success, fail, service, action, args)</code>, with the following parameters:</li>
+</ol>
+<ul>
+<li><code>success</code>: a success function callback</li>
+<li><code>fail</code>: a failure function callback</li>
+<li><code>service</code>: a string identifier that the platform can resolve to a native class</li>
+<li><code>action</code>: a string identifier that the platform can resolve to a specific method inside the class pointed to by <code>service</code></li>
+<li><code>args</code>: an array of parameters to pass to the native method invoked by the <code>exec</code> call It is required that new platform additions be as consistent as possible with the existing <code>service</code> and <code>action</code> labels.</li>
+</ul>
+<ol start="2" type="1">
+<li><p>Define your platform definition object and name it platform.js. Drop this into the <code>lib/&lt;platform&gt;</code> folder. This file should contain a JSON object with the following properties:</p>
+<ul>
+<li><code>id</code>: a string representing the platform. This should be the same name the .js file has</li>
+<li><code>objects</code>: the property names defined as children of this property are injected into <code>window</code>, and also <em>overrides any existing properties</em>. Each property can have the following child properties:
+<ul>
+<li><code>path</code>: a string representing the module ID that will define this object. For example, the file <code>lib/plugin/accelerometer.js</code> can be accessed as <code>"cordova/plugin/accelerometer"</code>. More details on how the module IDs are defined are above under the “How It Works” section.</li>
+<li><code>children</code>: in a recursive fashion, can have <code>path</code> and <code>children</code> properties of its own that are defined as children of the parent property object</li>
+</ul></li>
+<li><code>merges</code>: similar to the above <code>objects</code> property, this one will not clobber existing objects, instead it will recursively merge this object into the specific target</li>
+<li><code>initialize</code>: a function that fires immediately after the <code>objects</code> (see above) are defined in the global scope</li>
+</ul>
+<p>The following is a simple example of a platform definition:</p>
+<pre>
+ {
+   id:"atari",
+   initialize:function(){
+     console.log('firing up cordova in my atari, yo.');
+   },
+   objects:{
+     cordova:{
+       path:"cordova",
+       children:{
+         joystick:{
+           path:"cordova/plugin/atari/joystick"
+         }
+       }
+     }
+   }
+ }
+ </pre></li>
+<li>You should probably add a <code>packager.bundle('&lt;platform&gt;')</code> call to the <code>Jakefile</code> under the <code>build</code> task.</li>
+<li>Make sure your native implementation executes the following JavaScript once all of the native side is initialized and ready: <code>require('cordova/channel').onNativeReady.fire()</code>.</li>
+<li>The deviceready event is important. To make sure that the stock common JavaScript fires this event off, the device and network connection plugins must successfully be instantiated and return information about the connectivity and device information. The success callbacks for these plugins should include calls to <code>require('cordova/channel').onCordovaInfoReady.fire()</code> (for device information) and <code>require('cordova/channel').OnCordovaConnectionReady.fire()</code> (for network information).</li>
+<li><p>Last but certainly not least: add yourself to the contributors list! It’s in the <code>package.json</code> file in the root of this repository. You deserve it!</p></li>
+</ol>
+</body>
+</html>

@@ -1,16 +1,20 @@
-# Selenium tests
+Selenium tests
+==============
 
 For more information see https://www.mediawiki.org/wiki/Selenium
 
-## Setup
+Setup
+-----
 
 See https://www.mediawiki.org/wiki/MediaWiki-Docker/Extension/AbuseFilter
 
-## Run all specs
+Run all specs
+-------------
 
     npm run selenium-test
 
-## Run specific tests
+Run specific tests
+------------------
 
 Filter by file name:
 

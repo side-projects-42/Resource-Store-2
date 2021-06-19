@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2015-07-24-integrating-kubernetes-and-jenkins</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a href="http://kubernetes.io/">Kubernetes</a> is an open-source project
+      by Google that provides a platform for managing Docker containers as a
+      cluster. In their own words:
+    </p>
+    <blockquote>
+      <p>
+        Kubernetes is an open source orchestration system for Docker containers.
+        It handles scheduling onto nodes in a compute cluster and actively
+        manages workloads to ensure that their state matches the users declared
+        intentions. Using the concepts of “labels” and “pods”, it groups the
+        containers which make up an application into logical units for easy
+        management and discovery.
+      </p>
+    </blockquote>
+    <p>
+      Kubernetes-related services by Google are the
+      <a href="https://cloud.google.com/container-engine/"
+        >Google Container Engine</a
+      >, a Kubernetes-powered platform for hosting and managing Docker
+      containers, and the
+      <a href="https://cloud.google.com/tools/container-registry/#overview"
+        >Google Container Registry</a
+      >, a private Docker image registry.
+    </p>
+    <p>
+      Several new Jenkins plugins allow you to make use of Kubernetes and these
+      services:
+    </p>
+    <ul>
+      <li>
+        The
+        <a
+          href="https://wiki.jenkins-ci.org/display/JENKINS/Google+Container+Registry+Auth+Plugin"
+          >Google Cloud Registry Auth Plugin</a
+        >
+        allows users to authenticate with the Google Cloud Registry so they can
+        push/pull images. This allows you to use the Google Cloud Registry with
+        existing Docker-related plugins, like
+        <a
+          href="https://wiki.jenkins-ci.org/display/JENKINS/Docker+build+step+plugin"
+          >Docker build step plugin</a
+        >
+        or
+        <a
+          href="https://wiki.jenkins-ci.org/display/JENKINS/CloudBees+Docker+Custom+Build+Environment+Plugin"
+          >CloudBees Docker Custom Build Environment Plugin</a
+        >.
+      </li>
+      <li>
+        The
+        <a href="https://wiki.jenkins-ci.org/display/JENKINS/Kubernetes+Plugin"
+          >Kubernetes Plugin</a
+        >
+        implements a cloud provider for Jenkins, and can create slaves based on
+        Docker images on-demand on your Kubernetes cluster or the Google Cloud
+        Platform.
+      </li>
+    </ul>
+    <p>
+      <a
+        href="https://www.youtube.com/watch?v=PFCSSiT-UUQ&amp;index=21&amp;list=PL69nYSiGNLP0Ljwa9J98xUd6UlM604Y-l"
+        >Watch Kohsuke demoing Jenkins/Kubernetes integration at OSCON earlier
+        this week.</a
+      >
+    </p>
+    <p>
+      For a more in-depth look at how you can use Kubernetes with Jenkins, check
+      out these posts on the CloudBees blog by Tracy Kennedy:
+    </p>
+    <ul>
+      <li>
+        <a
+          href="http://blog.cloudbees.com/2015/07/orchestrating-deployments-with-jenkins.html"
+          >Orchestrating deployments with Jenkins Workflow and Kubernetes</a
+        >
+      </li>
+      <li>
+        <a
+          href="http://blog.cloudbees.com/2015/07/on-demand-jenkins-slaves-with.html"
+          >On-demand Jenkins slaves with Kubernetes and the Google Container
+          Engine</a
+        >
+      </li>
+      <li>
+        <a
+          href="http://blog.cloudbees.com/2015/07/clustering-jenkins-with-kubernetes-in.html"
+          >Clustering Jenkins with Kubernetes in the Google Container Engine</a
+        >
+      </li>
+    </ul>
+  </body>
+</html>

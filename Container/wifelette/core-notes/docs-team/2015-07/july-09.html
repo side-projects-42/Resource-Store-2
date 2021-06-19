@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-09</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="july-9-2015">July 9 2015</h3>
+<h5 id="topics">Topics</h5>
+<p>Guides: What Is Working</p>
+<ul>
+<li>Versioning lets us focus only on “current best recommendation” and move away from needing the current guide to support every part of Ember from today back to 1.0</li>
+<li>Quick edit button is useful</li>
+</ul>
+<p>Guides: What Is Not Workingity to know how to help</p>
+<ul>
+<li>JSBins are painful to maintain :(</li>
+</ul>
+<p>API Docs: What Is Working</p>
+<ul>
+<li>Search</li>
+<li>Quick edit button is useful</li>
+</ul>
+<p>API Docs: What Is Not Working</p>
+<ul>
+<li>Not versioned and the versioning project was halted so we could version the guides (which was identified as a higher priority) and until we resolved our many libs/many versions problem</li>
+<li>Need to verify that YUI doc can doc <code>@for namespaced/package-name</code> and not just <code>@for ClassName</code></li>
+<li>People don’t like the method list’s organization</li>
+<li>Lots of private APIs accidentally made public</li>
+<li>Organized by Class and not module</li>
+</ul>
+<p>Questions</p>
+<ul>
+<li>How do we make sure new commits to any Ember.js family project also have guides updates?</li>
+<li>What are the coarse H1 topics for the guides? Core/Persistence/Animation/CLI have been proposed as possible top-level guides that all contain their own sub-sections, but this might reflect the current organization?</li>
+<li>Where do the more philosophical “why” parts go in the guides? Some people like know why, others just want to know “how” so they can get their job done and move on.</li>
+<li>How do we document the sub-systems of the Ember.js family? There are many topics to cover and each topic is fairly deep this point.</li>
+</ul>
+<p>Outline of the 1.12 guides:</p>
+<ul>
+<li>Getting Started
+<ul>
+<li>Installing Ember</li>
+<li>Glossary</li>
+</ul></li>
+<li>Concepts
+<ul>
+<li>Core Concepts</li>
+<li>Naming Conventions</li>
+</ul></li>
+<li>The Object Model
+<ul>
+<li>Classes and Instances</li>
+<li>Reopening Classes and Instances</li>
+<li>Computed Properties</li>
+<li>Computed Properties and Aggregate Data with <span class="citation" data-cites="each">@each</span></li>
+<li>Observers</li>
+<li>Bindings</li>
+<li>Bindings, Observers, Computed Properties: What Do I Use When?</li>
+</ul></li>
+<li>Application
+<ul>
+<li>Introduction</li>
+</ul></li>
+<li>Templates
+<ul>
+<li>Handlebars Basics</li>
+<li>The Application Template</li>
+<li>Conditionals</li>
+<li>Displaying a List of Items</li>
+<li>Binding Element Attributes</li>
+<li>Binding Element Class Names</li>
+<li>Links</li>
+<li>Actions</li>
+<li>Input Helpers</li>
+<li>Development Helpers</li>
+<li>Rendering with Helpers</li>
+<li>Writing Helpers</li>
+</ul></li>
+<li>Routing
+<ul>
+<li>Introduction</li>
+<li>Defining Your Routes</li>
+<li>Generated Objects</li>
+<li>Specifying a Route’s Model</li>
+<li>Setting Up a Controller</li>
+<li>Rendering a Template</li>
+<li>Redirection</li>
+<li>Specifying the URL Type</li>
+<li>Query Parameters</li>
+<li>Asynchronous Routing</li>
+<li>Loading / Error Substates</li>
+<li>Preventing and Retrying Transitions</li>
+</ul></li>
+<li>Components
+<ul>
+<li>Introduction</li>
+<li>Defining a Component</li>
+<li>Passing Properties to a Component</li>
+<li>Wrapping Content in a Component</li>
+<li>Customizing a Component’s Element</li>
+<li>Handling User Interaction with Actions</li>
+<li>Sending Actions from Components to Your Application</li>
+</ul></li>
+<li>Controllers
+<ul>
+<li>Introduction</li>
+<li>Representing Multiple Models with ArrayController</li>
+<li>Managing Dependencies Between Controllers</li>
+</ul></li>
+<li>Models
+<ul>
+<li>Introduction</li>
+<li>Defining Models</li>
+<li>Creating and Deleting Records</li>
+<li>Pushing Records into the Store</li>
+<li>Persisting Records</li>
+<li>Finding Records</li>
+<li>Working with Records</li>
+<li>The Rest Adapter</li>
+<li>Connecting to an HTTP Server</li>
+<li>Handling Metadata</li>
+<li>Customizing Adapters</li>
+<li>Frequently Asked Questions</li>
+</ul></li>
+<li>Views
+<ul>
+<li>Introduction</li>
+<li>Defining a View</li>
+<li>Handling Events</li>
+<li>Inserting Views in Templates</li>
+<li>Adding Layouts to Views</li>
+<li>Customizing a View’s Element</li>
+<li>Built-in Views</li>
+<li>Manually Managing View Hierarchy</li>
+</ul></li>
+<li>Enumerables
+<ul>
+<li>Introduction</li>
+</ul></li>
+<li>Testing
+<ul>
+<li>Introduction</li>
+<li>Acceptance Tests</li>
+<li>Test Helpers</li>
+<li>Testing User Interactions</li>
+<li>Unit Testing Basics</li>
+<li>Unit Test Helpers</li>
+<li>Testing Components</li>
+<li>Testing Controllers</li>
+<li>Testing Routes</li>
+<li>Testing Models</li>
+</ul></li>
+<li>Configuring Ember.js
+<ul>
+<li>Disabling Prototype Extensions</li>
+<li>Embedding Applications</li>
+<li>Feature Flags</li>
+</ul></li>
+<li>Ember Inspector
+<ul>
+<li>Installing the Inspector</li>
+<li>Object Inspector</li>
+<li>The View Tree</li>
+<li>Inspecting Routes</li>
+<li>Data Tab</li>
+<li>Tackling Deprecations</li>
+<li>Library Info</li>
+<li>Debugging Promises</li>
+<li>Inspecting the Container</li>
+<li>Rendering Performance</li>
+<li>Troubleshooting</li>
+</ul></li>
+<li>Cookbook
+<ul>
+<li>Introduction</li>
+<li>Contributing</li>
+<li>User Interface and Interaction</li>
+<li>Event Handling &amp; Data Binding</li>
+<li>Helpers &amp; Components</li>
+<li>Working with Objects</li>
+</ul></li>
+<li>Understanding Ember.js
+<ul>
+<li>The View Layer</li>
+<li>Managing Asynchrony</li>
+<li>Debugging</li>
+<li>The Run Loop</li>
+<li>Dependency Injections &amp; Service Lookup</li>
+</ul></li>
+<li>Contributing to Ember.js
+<ul>
+<li>Adding New Features</li>
+<li>Repositories</li>
+</ul></li>
+</ul>
+<h4 id="minutes">Minutes</h4>
+<p>Attendees: Robert, Trek, Matt, Martin, Tom, Stefan, Yehuda, Locks, Michael, Leah</p>
+<p>TD: docs have reached a crises level, they are of upmost importance to sort out</p>
+<p>TG: guide structure needs consensus</p>
+<p>TD: its hard to get consensus in a call</p>
+<p>TG: we need to start somewhere</p>
+<p>TD: I believe our guides to follow the narrative of building a modern web api</p>
+<p>TG: we need to figure out what that means</p>
+<p>TG: how do we weave in projects (like ember-cli, liquid-fire, ember-data) in</p>
+<p>TG: we should be cautious of exploding the concepts is large (think advanced ember-addon stuff)</p>
+<p>TG: nailing the TOC will help move this forward</p>
+<p>TD: lets be sure NOT to organize the guides, in terms of the pieces.</p>
+<p>M: conflict, 2 goals of the guides 1. get new users up and running 2. deep dives.</p>
+<p>TD: more context, this discussion is geared not towards the getting started, rather the already comfortable user requiring additional knowledge</p>
+<p>TD: Would be nice to have the requirement of docs be explicit, and automated</p>
+<p>SP+TG: This will likely just be done by hand for now</p>
+<p>TG: often people want a new feature to become a new guide. Instead they should understand the implication of that feature on the guides, and make cross-cutting changes.</p>
+<p>TD: it is not fair to expect feature authors or bugfix authors to also master all the guides. It would be preferable to have a team dedicated to this</p>
+<p>RJ: requiring a guide PR to have landed before a feature lands behind a flag is messy</p>
+<p>TG: Ideally the guides team can take an old PR and update it. So a PR would be required for the guides, but merging it would not be required.</p>
+<p>LS: Docs team should also view it as their responsibility to help build contributors for docs up</p>
+<p>RIC: We’ve talked about moving cookbooks to EmberWatch</p>
+<p>(much meandering conversation, too broad ranging to make minutes for this time)</p>
+</body>
+</html>

@@ -1,0 +1,21 @@
+CodeMirror: Pig Latin mode
+
+[<img src="../../doc/logo.png" id="logo" />](http://codemirror.net)
+
+-   [Home](../../index.html)
+-   [Manual](../../doc/manual.html)
+-   [Code](https://github.com/marijnh/codemirror)
+
+<!-- -->
+
+-   [Language modes](../index.html)
+-   <a href="#" class="active">Pig Latin</a>
+
+Pig Latin mode
+--------------
+
+– Apache Pig (Pig Latin Language) Demo /\* This is a multiline comment. \*/ a = LOAD “\\path\\to\\input” USING PigStorage(‘\\t’) AS (x:long, y:chararray, z:bytearray); b = GROUP a BY (x,y,3+4); c = FOREACH b GENERATE flatten(group) as (x,y), SUM(group.$2) as z; STORE c INTO “\\path\\to\\output”; –
+
+Simple mode that handles Pig Latin language.
+
+**MIME type defined:** `text/x-pig` (PIG code)

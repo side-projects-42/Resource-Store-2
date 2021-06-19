@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>march-03</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-03-03">ember-cli Meeting Notes - 2016-03-03</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Chris Thoburn</li>
+<li>Kelly Selden</li>
+<li>Luke Melia</li>
+<li>Aaron Chambers</li>
+<li>Jake Bixby</li>
+<li>Chad Hietala</li>
+<li>Stefan Penner</li>
+<li>Leah Silber</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>(All) Identify set of custom commands that have been created.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="core-extensibility-primitive">Core Extensibility Primitive</h3>
+<ul>
+<li>https://github.com/ember-cli/rfcs/pull/35#issuecomment-189014121</li>
+<li>https://github.com/ember-cli/rfcs/pull/4#issuecomment-189021955</li>
+</ul>
+<h3 id="ember-cli-deploy-pipeline-primitive">ember-cli-deploy <a href="https://github.com/ember-cli/ember-cli-deploy/blob/master/lib/models/pipeline.js">Pipeline Primitive</a></h3>
+<ul>
+<li>Worked well, API hasn’t appeared to be lacking thus far.</li>
+<li>Pipeline is a simplistic concept, Unix-like, easy to implement inside of plugins.</li>
+<li>Goal was to replace grunt tasks and one-off scripts.</li>
+<li>One of the weird things about the Pipeline primitive is that it doesn’t know anything about broccoli.
+<ul>
+<li>Most other extensibility points involve passing broccoli trees around</li>
+<li>There need to be thoughts about interop between pipeline hooks as compared to passing around broccoli trees.</li>
+<li>A couple of things inside of ember-cli are more concerns of deployment (asset-rev and sri) are part of the Broccoli world but but have implications for deploy pipeline.</li>
+</ul></li>
+<li>Effectively shells out to <code>ember build</code> as a plugin.</li>
+<li>All other plugins run over top of that produced artifact.</li>
+</ul>
+<h3 id="ember-cli-current-limitations">ember-cli current limitations</h3>
+<ul>
+<li>ember-cli has grown organically and its current state is the outcome of that organic growth.</li>
+<li>As a result of ember-cli’s build process being relatively scripted it’s difficult to “peer into the box” right now.</li>
+<li>There is no extensibility point for reaching in and snagging a broccoli tree.</li>
+<li>We should identify and make explicit all of the current pain points to see what we can do.</li>
+</ul>
+<h3 id="concerns">Concerns</h3>
+<ul>
+<li>There is a bit of confusion about how current extensibility hooks work.</li>
+<li>We may be able to identify pre-existing extensibility points for these goals without invasive changes.</li>
+<li>We may be able to tweak things and achieve most of our goals.</li>
+<li>It’s entirely possible that if we try and identify an ivory tower solution that we simply add another piece of complexity to the process.</li>
+<li>Broccoli transforms happen repeatedly and quickly. We should make sure that we don’t lose the performance we’re accustomed to.</li>
+<li>Adding more extensibility into the system could make it difficult to build the things we want in the future.
+<ul>
+<li>More public API surface area means that people can tweak more means that ecosystem consistency is more difficult to accomplish.</li>
+<li>One of the great powers we have is the ability to make a rising tide lift all boats. Doing this wrong or too soon could be catastrophic to that goal.</li>
+<li>Nothing should change before we have achieved 100% modules.</li>
+</ul></li>
+</ul>
+<h3 id="on-pipelines">On Pipelines</h3>
+<ul>
+<li>Knowing how to watch and filter trees needs to be in that pipeline.</li>
+<li>Would require tremendous refactoring.</li>
+<li>Would make it possible to split some tasks out of ember-cli-deploy.</li>
+<li>All of the <code>treeFor</code> hooks would have to be called within a particular stage of the pipeline.</li>
+<li>There needs to be a “primitive” that gets passed from stage to stage in the pipeline. Figuring out what that is is difficult since it should support Broccoli, but other things as well.</li>
+<li>Any pipeline addon can rearrange the pipeline. (DAG?)</li>
+</ul>
+<h3 id="on-research">On Research</h3>
+<ul>
+<li>Can we easily list out the steps, in order, of what happens inside of the Ember build?
+<ul>
+<li>If so, then we could possibly push that into a pipeline.</li>
+<li>If we can’t really figure out a linear order is that because it’s not possible to do so?</li>
+</ul></li>
+</ul>
+<h3 id="on-approach">On Approach</h3>
+<ul>
+<li>Current builds are “one size fits all.” We know that not to be the case.</li>
+<li>It’d be nice to have ember-cli able to identify what to do from the application “shape” instead of making it imperative.
+<ul>
+<li>Engines and tree-shaking in a future state make that more important.</li>
+</ul></li>
+<li>Come up with something we can do first in 1-2 months.</li>
+<li>Long term goal is to describe a declarative API that makes it easy.</li>
+<li>Currently have significant technical debt we need to pay down from organic growth.</li>
+<li>Maybe we build an alternative EmberApp object? This would allow an opt-in switch.</li>
+</ul>
+</body>
+</html>

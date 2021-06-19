@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Cool App</title>
-  </head>
-  <body>
-    <div id="hello">
-      Your app here!
-      <a id="someLink" href="">Click!</a>
-      <script>
-        var remoteScript = document.createElement("script");
-        remoteScript.src = "test-scripts-remote.js";
-        remoteScript.onload = function () {
-          console.log("remote script loaded!");
-        };
-        document.body.appendChild(remoteScript);
-      </script>
-      <iframe src="test-iframe-child.html"></iframe>
-    </div>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>test-iframe</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Your app here! <a href="" id="someLink">Click!</a></p>
+</body>
 </html>

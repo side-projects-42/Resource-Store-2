@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>05-Destructuring</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="destructuring-for-easier-data-access">Destructuring for Easier Data Access</h1>
+<p>Object and array literals are two of the most frequently used notations in JavaScript, and thanks to the popular JSON data format, they’ve become a particularly important part of the language. It’s quite common to define objects and arrays, and then systematically pull out relevant pieces of information from those structures. ECMAScript 6 simplifies this task by adding <em>destructuring</em>, which is the process of breaking a data structure down into smaller parts. This chapter shows you how to harness destructuring for both objects and arrays.</p>
+<h2 id="why-is-destructuring-useful">Why is Destructuring Useful?</h2>
+<p>In ECMAScript 5 and earlier, the need to fetch information from objects and arrays could lead to a lot of code that looks the same, just to get certain data into local variables. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">let</span> options <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">        <span class="dt">repeat</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-3" title="3">        <span class="dt">save</span><span class="op">:</span> <span class="kw">false</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb1-5" title="5"></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co">// extract data from the object</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="kw">let</span> repeat <span class="op">=</span> <span class="va">options</span>.<span class="at">repeat</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-8" title="8">    save <span class="op">=</span> <span class="va">options</span>.<span class="at">save</span><span class="op">;</span></a></code></pre></div>
+<p>This code extracts the values of <code>repeat</code> and <code>save</code> from the <code>options</code> object and stores that data in local variables with the same names. While this code looks simple, imagine if you had a large number of variables to assign; you would have to assign them all one by one. And if there was a nested data structure to traverse to find the information instead, you might have to dig through the entire structure just to find one piece of data.</p>
+<p>That’s why ECMAScript 6 adds destructuring for both objects and arrays. When you break a data structure into smaller parts, getting the information you need out of it becomes much easier. Many languages implement destructuring with a minimal amount of syntax to make the process simpler to use. The ECMAScript 6 implementation actually makes use of syntax you’re already familiar with: the syntax for object and array literals.</p>
+<h2 id="object-destructuring">Object Destructuring</h2>
+<p>Object destructuring syntax uses an object literal on the left side of an assignment operation. For example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">let</span> <span class="op">{</span> type<span class="op">,</span> name <span class="op">}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="va">console</span>.<span class="at">log</span>(type)<span class="op">;</span>      <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="va">console</span>.<span class="at">log</span>(name)<span class="op">;</span>      <span class="co">// &quot;foo&quot;</span></a></code></pre></div>
+<p>In this code, the value of <code>node.type</code> is stored in a variable called <code>type</code> and the value of <code>node.name</code> is stored in a variable called <code>name</code>. This syntax is the same as the object literal property initializer shorthand introduced in Chapter 4. The identifiers <code>type</code> and <code>name</code> are both declarations of local variables and the properties to read the value from on the <code>node</code> object.</p>
+<p>A&gt; #### Don’t Forget the Initializer A&gt; A&gt;When using destructuring to declare variables using <code>var</code>, <code>let</code>, or <code>const</code>, you must supply an initializer (the value after the equals sign). The following lines of code will all throw syntax errors due to a missing initializer: A&gt; A&gt;<code>js A&gt;// syntax error! A&gt;var { type, name }; A&gt; A&gt;// syntax error! A&gt;let { type, name }; A&gt; A&gt;// syntax error! A&gt;const { type, name }; A&gt;</code> A&gt; A&gt;While <code>const</code> always requires an initializer, even when using nondestructured variables, <code>var</code> and <code>let</code> only require initializers when using destructuring.</p>
+<h4 id="destructuring-assignment">Destructuring Assignment</h4>
+<p>The object destructuring examples so far have used variable declarations. However, it’s also possible to use destructuring in assignments. For instance, you may decide to change the values of variables after they are defined, as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    type <span class="op">=</span> <span class="st">&quot;Literal&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">    name <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co">// assign different values using destructuring</span></a>
+<a class="sourceLine" id="cb3-9" title="9">(<span class="op">{</span> type<span class="op">,</span> name <span class="op">}</span> <span class="op">=</span> node)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="va">console</span>.<span class="at">log</span>(type)<span class="op">;</span>      <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb3-12" title="12"><span class="va">console</span>.<span class="at">log</span>(name)<span class="op">;</span>      <span class="co">// &quot;foo&quot;</span></a></code></pre></div>
+<p>In this example, <code>type</code> and <code>name</code> are initialized with values when declared, and then two variables with the same names are initialized with different values. The next line uses destructuring assignment to change those values by reading from the <code>node</code> object. Note that you must put parentheses around a destructuring assignment statement. That’s because an opening curly brace is expected to a be a block statement, and a block statement cannot appear on the left side of an assignment. The parentheses signal that the next curly brace is not a block statement and should be interpreted as an expression, allowing the assignment to complete.</p>
+<p>A destructuring assignment expression evaluates to the right side of the expression (after the <code>=</code>). That means you can use a destructuring assignment expression anywhere a value is expected. For instance, passing a value to a function:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    type <span class="op">=</span> <span class="st">&quot;Literal&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-6" title="6">    name <span class="op">=</span> <span class="dv">5</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">function</span> <span class="at">outputInfo</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-9" title="9">    <span class="va">console</span>.<span class="at">log</span>(value <span class="op">===</span> node)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="op">}</span></a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="at">outputInfo</span>(<span class="op">{</span> type<span class="op">,</span> name <span class="op">}</span> <span class="op">=</span> node)<span class="op">;</span>        <span class="co">// true</span></a>
+<a class="sourceLine" id="cb4-13" title="13"></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="va">console</span>.<span class="at">log</span>(type)<span class="op">;</span>      <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="va">console</span>.<span class="at">log</span>(name)<span class="op">;</span>      <span class="co">// &quot;foo&quot;</span></a></code></pre></div>
+<p>The <code>outputInfo()</code> function is called with a destructuring assignment expression. The expression evaluates to <code>node</code> because that is the value of the right side of the expression. The assignment to <code>type</code> and <code>name</code> both behave as normal and <code>node</code> is passed into <code>outputInfo()</code>.</p>
+<p>W&gt; An error is thrown when the right side of the destructuring assignment expression (the expression after <code>=</code>) evaluates to <code>null</code> or <code>undefined</code>. This happens because any attempt to read a property of <code>null</code> or <code>undefined</code> results in a runtime error.</p>
+<h4 id="default-values">Default Values</h4>
+<p>When you use a destructuring assignment statement, if you specify a local variable with a property name that doesn’t exist on the object, then that local variable is assigned a value of <code>undefined</code>. For example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="kw">let</span> <span class="op">{</span> type<span class="op">,</span> name<span class="op">,</span> value <span class="op">}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="va">console</span>.<span class="at">log</span>(type)<span class="op">;</span>      <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="va">console</span>.<span class="at">log</span>(name)<span class="op">;</span>      <span class="co">// &quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// undefined</span></a></code></pre></div>
+<p>This code defines an additional local variable called <code>value</code> and attempts to assign it a value. However, there is no corresponding <code>value</code> property on the <code>node</code> object, so the variable is assigned the value of <code>undefined</code> as expected.</p>
+<p>You can optionally define a default value to use when a specified property doesn’t exist. To do so, insert an equals sign (<code>=</code>) after the property name and specify the default value, like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb6-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb6-5" title="5"></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="kw">let</span> <span class="op">{</span> type<span class="op">,</span> name<span class="op">,</span> value <span class="op">=</span> <span class="kw">true</span> <span class="op">}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-7" title="7"></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="va">console</span>.<span class="at">log</span>(type)<span class="op">;</span>      <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="va">console</span>.<span class="at">log</span>(name)<span class="op">;</span>      <span class="co">// &quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// true</span></a></code></pre></div>
+<p>In this example, the variable <code>value</code> is given <code>true</code> as a default value. The default value is only used if the property is missing on <code>node</code> or has a value of <code>undefined</code>. Since there is no <code>node.value</code> property, the variable <code>value</code> uses the default value. This works similarly to the default parameter values for functions, as discussed in Chapter 3.</p>
+<h4 id="assigning-to-different-local-variable-names">Assigning to Different Local Variable Names</h4>
+<p>Up to this point, each example destructuring assignment has used the object property name as the local variable name; for example, the value of <code>node.type</code> was stored in a <code>type</code> variable. That works well when you want to use the same name, but what if you don’t? ECMAScript 6 has an extended syntax that allows you to assign to a local variable with a different name, and that syntax looks like the object literal nonshorthand property initializer syntax. Here’s an example:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb7-5" title="5"></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="kw">let</span> <span class="op">{</span> <span class="dt">type</span><span class="op">:</span> localType<span class="op">,</span> <span class="dt">name</span><span class="op">:</span> localName <span class="op">}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="va">console</span>.<span class="at">log</span>(localType)<span class="op">;</span>     <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="va">console</span>.<span class="at">log</span>(localName)<span class="op">;</span>     <span class="co">// &quot;foo&quot;</span></a></code></pre></div>
+<p>This code uses destructuring assignment to declare the <code>localType</code> and <code>localName</code> variables, which contain the values from the <code>node.type</code> and <code>node.name</code> properties, respectively. The syntax <code>type: localType</code> says to read the property named <code>type</code> and store its value in the <code>localType</code> variable. This syntax is effectively the opposite of traditional object literal syntax, where the name is on the left of the colon and the value is on the right. In this case, the name is on the right of the colon and the location of the value to read is on the left.</p>
+<p>You can add default values when using a different variable name, as well. The equals sign and default value are still placed after the local variable name. For example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb8-4" title="4"></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">let</span> <span class="op">{</span> <span class="dt">type</span><span class="op">:</span> localType<span class="op">,</span> <span class="dt">name</span><span class="op">:</span> localName <span class="op">=</span> <span class="st">&quot;bar&quot;</span> <span class="op">}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="va">console</span>.<span class="at">log</span>(localType)<span class="op">;</span>     <span class="co">// &quot;Identifier&quot;</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="va">console</span>.<span class="at">log</span>(localName)<span class="op">;</span>     <span class="co">// &quot;bar&quot;</span></a></code></pre></div>
+<p>Here, the <code>localName</code> variable has a default value of <code>"bar"</code>. The variable is assigned its default value because there’s no <code>node.name</code> property.</p>
+<p>So far, you’ve seen how to deal with destructuring of an object whose properties are primitive values. Object destructuring can also be used to retrieve values in nested object structures.</p>
+<h4 id="nested-object-destructuring">Nested Object Destructuring</h4>
+<p>By using a syntax similar to object literals, you can navigate into a nested object structure to retrieve just the information you want. Here’s an example:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-4" title="4">        <span class="dt">loc</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-5" title="5">            <span class="dt">start</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-6" title="6">                <span class="dt">line</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-7" title="7">                <span class="dt">column</span><span class="op">:</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb9-8" title="8">            <span class="op">},</span></a>
+<a class="sourceLine" id="cb9-9" title="9">            <span class="dt">end</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-10" title="10">                <span class="dt">line</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-11" title="11">                <span class="dt">column</span><span class="op">:</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb9-12" title="12">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-13" title="13">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-14" title="14">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb9-15" title="15"></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="kw">let</span> <span class="op">{</span> <span class="dt">loc</span><span class="op">:</span> <span class="op">{</span> start <span class="op">}}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-17" title="17"></a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="va">console</span>.<span class="at">log</span>(<span class="va">start</span>.<span class="at">line</span>)<span class="op">;</span>        <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="va">console</span>.<span class="at">log</span>(<span class="va">start</span>.<span class="at">column</span>)<span class="op">;</span>      <span class="co">// 1</span></a></code></pre></div>
+<p>The destructuring pattern in this example uses curly braces to indicate that the pattern should descend into the property named <code>loc</code> on <code>node</code> and look for the <code>start</code> property. Remember from the last section that whenever there’s a colon in a destructuring pattern, it means the identifier before the colon is giving a location to inspect, and the right side assigns a value. When there’s a curly brace after the colon, that indicates that the destination is nested another level into the object.</p>
+<p>You can go one step further and use a different name for the local variable as well:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-4" title="4">        <span class="dt">loc</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-5" title="5">            <span class="dt">start</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-6" title="6">                <span class="dt">line</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-7" title="7">                <span class="dt">column</span><span class="op">:</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb10-8" title="8">            <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-9" title="9">            <span class="dt">end</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-10" title="10">                <span class="dt">line</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-11" title="11">                <span class="dt">column</span><span class="op">:</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb10-12" title="12">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb10-13" title="13">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb10-14" title="14">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb10-15" title="15"></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co">// extract node.loc.start</span></a>
+<a class="sourceLine" id="cb10-17" title="17"><span class="kw">let</span> <span class="op">{</span> <span class="dt">loc</span><span class="op">:</span> <span class="op">{</span> <span class="dt">start</span><span class="op">:</span> localStart <span class="op">}}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-18" title="18"></a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="va">console</span>.<span class="at">log</span>(<span class="va">localStart</span>.<span class="at">line</span>)<span class="op">;</span>   <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb10-20" title="20"><span class="va">console</span>.<span class="at">log</span>(<span class="va">localStart</span>.<span class="at">column</span>)<span class="op">;</span> <span class="co">// 1</span></a></code></pre></div>
+<p>In this version of the code, <code>node.loc.start</code> is stored in a new local variable called <code>localStart</code>. Destructuring patterns can be nested to an arbitrary level of depth, with all capabilities available at each level.</p>
+<p>Object destructuring is very powerful and has a lot of options, but array destructuring offers some unique capabilities that allow you to extract information from arrays.</p>
+<p>A&gt; #### Syntax Gotcha A&gt; A&gt;Be careful when using nested destructuring because you can inadvertently create a statement that has no effect. Empty curly braces are legal in object destructuring, however, they don’t do anything. For example: A&gt; A&gt;<code>js A&gt;// no variables declared! A&gt;let { loc: {} } = node; A&gt;</code> A&gt; A&gt;There are no bindings declared in this statement. Due to the curly braces on the right, <code>loc</code> is used as a location to inspect rather than a binding to create. In such a case, it’s likely that the intent was to use <code>=</code> to define a default value rather than <code>:</code> to define a location. It’s possible that this syntax will be made illegal in the future, but for now, this is a gotcha to look out for.</p>
+<h2 id="array-destructuring">Array Destructuring</h2>
+<p>Array destructuring syntax is very similar to object destructuring; it just uses array literal syntax instead of object literal syntax. The destructuring operates on positions within an array, rather than the named properties that are available in objects. For example:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw">let</span> [ firstColor<span class="op">,</span> secondColor ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4"></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="va">console</span>.<span class="at">log</span>(firstColor)<span class="op">;</span>        <span class="co">// &quot;red&quot;</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="va">console</span>.<span class="at">log</span>(secondColor)<span class="op">;</span>       <span class="co">// &quot;green&quot;</span></a></code></pre></div>
+<p>Here, array destructuring pulls out the values <code>"red"</code> and <code>"green"</code> from the <code>colors</code> array and stores them in the <code>firstColor</code> and <code>secondColor</code> variables. Those values are chosen because of their position in the array; the actual variable names could be anything. Any items not explicitly mentioned in the destructuring pattern are ignored. Keep in mind that the array itself isn’t changed in any way.</p>
+<p>You can also omit items in the destructuring pattern and only provide variable names for the items you’re interested in. If, for example, you just want the third value of an array, you don’t need to supply variable names for the first and second items. Here’s how that works:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="kw">let</span> [ <span class="op">,</span> <span class="op">,</span> thirdColor ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="va">console</span>.<span class="at">log</span>(thirdColor)<span class="op">;</span>        <span class="co">// &quot;blue&quot;</span></a></code></pre></div>
+<p>This code uses a destructuring assignment to retrieve the third item in <code>colors</code>. The commas preceding <code>thirdColor</code> in the pattern are placeholders for the array items that come before it. By using this approach, you can easily pick out values from any number of slots in the middle of an array without needing to provide variable names for them.</p>
+<p>W&gt; Similar to object destructuring, you must always provide an initializer when using array destructuring with <code>var</code>, <code>let</code>, or <code>const</code>.</p>
+<h4 id="destructuring-assignment-1">Destructuring Assignment</h4>
+<p>You can use array destructuring in the context of an assignment, but unlike object destructuring, there is no need to wrap the expression in parentheses. For example:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb13-2" title="2">    firstColor <span class="op">=</span> <span class="st">&quot;black&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-3" title="3">    secondColor <span class="op">=</span> <span class="st">&quot;purple&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">[ firstColor<span class="op">,</span> secondColor ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7"><span class="va">console</span>.<span class="at">log</span>(firstColor)<span class="op">;</span>        <span class="co">// &quot;red&quot;</span></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="va">console</span>.<span class="at">log</span>(secondColor)<span class="op">;</span>       <span class="co">// &quot;green&quot;</span></a></code></pre></div>
+<p>The destructured assignment in this code works in a similar manner to the last array destructuring example. The only difference is that <code>firstColor</code> and <code>secondColor</code> have already been defined. Most of the time, that’s probably all you’ll need to know about array destructuring assignment, but there’s a little bit more to it that you will probably find useful.</p>
+<p>Array destructuring assignment has a very unique use case that makes it easier to swap the values of two variables. Value swapping is a common operation in sorting algorithms, and the ECMAScript 5 way of swapping variables involves a third, temporary variable, as in this example:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="co">// Swapping variables in ECMAScript 5</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">let</span> a <span class="op">=</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb14-3" title="3">    b <span class="op">=</span> <span class="dv">2</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb14-4" title="4">    tmp<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-5" title="5"></a>
+<a class="sourceLine" id="cb14-6" title="6">tmp <span class="op">=</span> a<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-7" title="7">a <span class="op">=</span> b<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-8" title="8">b <span class="op">=</span> tmp<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-9" title="9"></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="va">console</span>.<span class="at">log</span>(a)<span class="op">;</span>     <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb14-11" title="11"><span class="va">console</span>.<span class="at">log</span>(b)<span class="op">;</span>     <span class="co">// 1</span></a></code></pre></div>
+<p>The intermediate variable <code>tmp</code> is necessary in order to swap the values of <code>a</code> and <code>b</code>. Using array destructuring assignment, however, there’s no need for that extra variable. Here’s how you can swap variables in ECMAScript 6:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb15-1" title="1"><span class="co">// Swapping variables in ECMAScript 6</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw">let</span> a <span class="op">=</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb15-3" title="3">    b <span class="op">=</span> <span class="dv">2</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb15-4" title="4"></a>
+<a class="sourceLine" id="cb15-5" title="5">[ a<span class="op">,</span> b ] <span class="op">=</span> [ b<span class="op">,</span> a ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb15-6" title="6"></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="va">console</span>.<span class="at">log</span>(a)<span class="op">;</span>     <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="va">console</span>.<span class="at">log</span>(b)<span class="op">;</span>     <span class="co">// 1</span></a></code></pre></div>
+<p>The array destructuring assignment in this example looks like a mirror image. The left side of the assignment (before the equals sign) is a destructuring pattern just like those in the other array destructuring examples. The right side is an array literal that is temporarily created for the swap. The destructuring happens on the temporary array, which has the values of <code>b</code> and <code>a</code> copied into its first and second positions. The effect is that the variables have swapped values.</p>
+<p>W&gt; Like object destructuring assignment, an error is thrown when the right side of an array destructured assignment expression evaluates to <code>null</code> or <code>undefined</code>.</p>
+<h4 id="default-values-1">Default Values</h4>
+<p>Array destructuring assignment allows you to specify a default value for any position in the array, too. The default value is used when the property at the given position either doesn’t exist or has the value <code>undefined</code>. For example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="kw">let</span> [ firstColor<span class="op">,</span> secondColor <span class="op">=</span> <span class="st">&quot;green&quot;</span> ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb16-4" title="4"></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="va">console</span>.<span class="at">log</span>(firstColor)<span class="op">;</span>        <span class="co">// &quot;red&quot;</span></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="va">console</span>.<span class="at">log</span>(secondColor)<span class="op">;</span>       <span class="co">// &quot;green&quot;</span></a></code></pre></div>
+<p>In this code, the <code>colors</code> array has only one item, so there is nothing for <code>secondColor</code> to match. Since there is a default value, <code>secondColor</code> is set to <code>"green"</code> instead of <code>undefined</code>.</p>
+<h4 id="nested-destructuring">Nested Destructuring</h4>
+<p>You can destructure nested arrays in a manner similar to destructuring nested objects. By inserting another array pattern into the overall pattern, the destructuring will descend into a nested array, like this:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> [ <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;lightgreen&quot;</span> ]<span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-2" title="2"></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="co">// later</span></a>
+<a class="sourceLine" id="cb17-4" title="4"></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="kw">let</span> [ firstColor<span class="op">,</span> [ secondColor ] ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-6" title="6"></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="va">console</span>.<span class="at">log</span>(firstColor)<span class="op">;</span>        <span class="co">// &quot;red&quot;</span></a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="va">console</span>.<span class="at">log</span>(secondColor)<span class="op">;</span>       <span class="co">// &quot;green&quot;</span></a></code></pre></div>
+<p>Here, the <code>secondColor</code> variable refers to the <code>"green"</code> value inside the <code>colors</code> array. That item is contained within a second array, so the extra square brackets around <code>secondColor</code> in the destructuring pattern are necessary. As with objects, you can nest arrays arbitrarily deep.</p>
+<h4 id="rest-items">Rest Items</h4>
+<p>Chapter 3 introduced rest parameters for functions, and array destructuring has a similar concept called <em>rest items</em>. Rest items use the <code>...</code> syntax to assign the remaining items in an array to a particular variable. Here’s an example:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-2" title="2"></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="kw">let</span> [ firstColor<span class="op">,</span> ...<span class="at">restColors</span> ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-4" title="4"></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="va">console</span>.<span class="at">log</span>(firstColor)<span class="op">;</span>        <span class="co">// &quot;red&quot;</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="va">restColors</span>.<span class="at">length</span>)<span class="op">;</span> <span class="co">// 2</span></a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="va">console</span>.<span class="at">log</span>(restColors[<span class="dv">0</span>])<span class="op">;</span>     <span class="co">// &quot;green&quot;</span></a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="va">console</span>.<span class="at">log</span>(restColors[<span class="dv">1</span>])<span class="op">;</span>     <span class="co">// &quot;blue&quot;</span></a></code></pre></div>
+<p>The first item in <code>colors</code> is assigned to <code>firstColor</code>, and the rest are assigned into a new <code>restColors</code> array. The <code>restColors</code> array, therefore, has two items: <code>"green"</code> and <code>"blue"</code>. Rest items are useful for extracting certain items from an array and keeping the rest available, but there’s another helpful use.</p>
+<p>A glaring omission from JavaScript arrays is the ability to easily create a clone. In ECMAScript 5, developers frequently used the <code>concat()</code> method as an easy way to clone an array. For example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="co">// cloning an array in ECMAScript 5</span></a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="kw">var</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="kw">var</span> clonedColors <span class="op">=</span> <span class="va">colors</span>.<span class="at">concat</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-4" title="4"></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="va">console</span>.<span class="at">log</span>(clonedColors)<span class="op">;</span>      <span class="co">//&quot;[red,green,blue]&quot;</span></a></code></pre></div>
+<p>While the <code>concat()</code> method is intended to concatenate two arrays together, calling it without an argument returns a clone of the array. In ECMAScript 6, you can use rest items to achieve the same thing through syntax intended to function that way. It works like this:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="co">// cloning an array in ECMAScript 6</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">let</span> colors <span class="op">=</span> [ <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="st">&quot;blue&quot;</span> ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="kw">let</span> [ ...<span class="at">clonedColors</span> ] <span class="op">=</span> colors<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-4" title="4"></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="va">console</span>.<span class="at">log</span>(clonedColors)<span class="op">;</span>      <span class="co">//&quot;[red,green,blue]&quot;</span></a></code></pre></div>
+<p>In this example, rest items are used to copy values from the <code>colors</code> array into the <code>clonedColors</code> array. While it’s a matter of perception as to whether this technique makes the developer’s intent clearer than using the <code>concat()</code> method, this is a useful ability to be aware of.</p>
+<p>W&gt; Rest items must be the last entry in the destructured array and cannot be followed by a comma. Including a comma after rest items is a syntax error.</p>
+<h2 id="mixed-destructuring">Mixed Destructuring</h2>
+<p>Object and array destructuring can be used together to create more complex expressions. In doing so, you are able to extract just the pieces of information you want from any mixture of objects and arrays. For example:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">let</span> node <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-2" title="2">        <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;Identifier&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb21-3" title="3">        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;foo&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb21-4" title="4">        <span class="dt">loc</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-5" title="5">            <span class="dt">start</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-6" title="6">                <span class="dt">line</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb21-7" title="7">                <span class="dt">column</span><span class="op">:</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb21-8" title="8">            <span class="op">},</span></a>
+<a class="sourceLine" id="cb21-9" title="9">            <span class="dt">end</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-10" title="10">                <span class="dt">line</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb21-11" title="11">                <span class="dt">column</span><span class="op">:</span> <span class="dv">4</span></a>
+<a class="sourceLine" id="cb21-12" title="12">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb21-13" title="13">        <span class="op">},</span></a>
+<a class="sourceLine" id="cb21-14" title="14">        <span class="dt">range</span><span class="op">:</span> [<span class="dv">0</span><span class="op">,</span> <span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb21-15" title="15">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb21-16" title="16"></a>
+<a class="sourceLine" id="cb21-17" title="17"><span class="kw">let</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-18" title="18">    <span class="dt">loc</span><span class="op">:</span> <span class="op">{</span> start <span class="op">},</span></a>
+<a class="sourceLine" id="cb21-19" title="19">    <span class="dt">range</span><span class="op">:</span> [ startIndex ]</a>
+<a class="sourceLine" id="cb21-20" title="20"><span class="op">}</span> <span class="op">=</span> node<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-21" title="21"></a>
+<a class="sourceLine" id="cb21-22" title="22"><span class="va">console</span>.<span class="at">log</span>(<span class="va">start</span>.<span class="at">line</span>)<span class="op">;</span>        <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb21-23" title="23"><span class="va">console</span>.<span class="at">log</span>(<span class="va">start</span>.<span class="at">column</span>)<span class="op">;</span>      <span class="co">// 1</span></a>
+<a class="sourceLine" id="cb21-24" title="24"><span class="va">console</span>.<span class="at">log</span>(startIndex)<span class="op">;</span>        <span class="co">// 0</span></a></code></pre></div>
+<p>This code extracts <code>node.loc.start</code> and <code>node.range[0]</code> into <code>start</code> and <code>startIndex</code>, respectively. Keep in mind that <code>loc:</code> and <code>range:</code> in the destructured pattern are just locations that correspond to properties in the <code>node</code> object. There is no part of <code>node</code> that cannot be extracted using destructuring when you use a mix of object and array destructuring. This approach is particularly useful for pulling values out of JSON configuration structures without navigating the entire structure.</p>
+<h2 id="destructured-parameters">Destructured Parameters</h2>
+<p>Destructuring has one more particularly helpful use case, and that is when passing function arguments. When a JavaScript function takes a large number of optional parameters, one common pattern is to create an <code>options</code> object whose properties specify the additional parameters, like this:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="co">// properties on options represent additional parameters</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="kw">function</span> <span class="at">setCookie</span>(name<span class="op">,</span> value<span class="op">,</span> options) <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-3" title="3"></a>
+<a class="sourceLine" id="cb22-4" title="4">    options <span class="op">=</span> options <span class="op">||</span> <span class="op">{};</span></a>
+<a class="sourceLine" id="cb22-5" title="5"></a>
+<a class="sourceLine" id="cb22-6" title="6">    <span class="kw">let</span> secure <span class="op">=</span> <span class="va">options</span>.<span class="at">secure</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb22-7" title="7">        path <span class="op">=</span> <span class="va">options</span>.<span class="at">path</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb22-8" title="8">        domain <span class="op">=</span> <span class="va">options</span>.<span class="at">domain</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb22-9" title="9">        expires <span class="op">=</span> <span class="va">options</span>.<span class="at">expires</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-10" title="10"></a>
+<a class="sourceLine" id="cb22-11" title="11">    <span class="co">// code to set the cookie</span></a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="op">}</span></a>
+<a class="sourceLine" id="cb22-13" title="13"></a>
+<a class="sourceLine" id="cb22-14" title="14"><span class="co">// third argument maps to options</span></a>
+<a class="sourceLine" id="cb22-15" title="15"><span class="at">setCookie</span>(<span class="st">&quot;type&quot;</span><span class="op">,</span> <span class="st">&quot;js&quot;</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-16" title="16">    <span class="dt">secure</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb22-17" title="17">    <span class="dt">expires</span><span class="op">:</span> <span class="dv">60000</span></a>
+<a class="sourceLine" id="cb22-18" title="18"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Many JavaScript libraries contain <code>setCookie()</code> functions that look similar to this one. In this function, the <code>name</code> and <code>value</code> arguments are required, but <code>secure</code>, <code>path</code>, <code>domain</code>, and <code>expires</code> are not. And since there is no priority order for the other data, it’s efficient to just have an <code>options</code> object with named properties, rather than list extra named parameters. This approach works, but now you can’t tell what input the function expects just by looking at the function definition; you need to read the function body.</p>
+<p>Destructured parameters offer an alternative that makes it clearer what arguments a function expects. A destructured parameter uses an object or array destructuring pattern in place of a named parameter. To see this in action, look at this rewritten version of the <code>setCookie()</code> function from the last example:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">function</span> <span class="at">setCookie</span>(name<span class="op">,</span> value<span class="op">,</span> <span class="op">{</span> secure<span class="op">,</span> path<span class="op">,</span> domain<span class="op">,</span> expires <span class="op">}</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-2" title="2"></a>
+<a class="sourceLine" id="cb23-3" title="3">    <span class="co">// code to set the cookie</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="op">}</span></a>
+<a class="sourceLine" id="cb23-5" title="5"></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="at">setCookie</span>(<span class="st">&quot;type&quot;</span><span class="op">,</span> <span class="st">&quot;js&quot;</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-7" title="7">    <span class="dt">secure</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb23-8" title="8">    <span class="dt">expires</span><span class="op">:</span> <span class="dv">60000</span></a>
+<a class="sourceLine" id="cb23-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>This function behaves similarly to the previous example, but now, the third argument uses destructuring to pull out the necessary data. The parameters outside the destructured parameter are clearly expected, and at the same time, it’s clear to someone using <code>setCookie()</code> what options are available in terms of extra arguments. And of course, if the third argument is required, the values it should contain are crystal clear. The destructured parameters also act like regular parameters in that they are set to <code>undefined</code> if they are not passed.</p>
+<p>A&gt;Destructured parameters have all of the capabilities of destructuring that you’ve learned so far in this chapter. You can use default values, mix object and array patterns, and use variable names that differ from the properties you’re reading from.</p>
+<h3 id="destructured-parameters-are-required">Destructured Parameters are Required</h3>
+<p>One quirk of using destructured parameters is that, by default, an error is thrown when they are not provided in a function call. For instance, this call to the <code>setCookie()</code> function in the last example throws an error:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb24-1" title="1"><span class="co">// Error!</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="at">setCookie</span>(<span class="st">&quot;type&quot;</span><span class="op">,</span> <span class="st">&quot;js&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>The third argument is missing, and so it evaluates to <code>undefined</code> as expected. This causes an error because destructured parameters are really just a shorthand for destructured declaration. When the <code>setCookie()</code> function is called, the JavaScript engine actually does this:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">function</span> <span class="at">setCookie</span>(name<span class="op">,</span> value<span class="op">,</span> options) <span class="op">{</span></a>
+<a class="sourceLine" id="cb25-2" title="2"></a>
+<a class="sourceLine" id="cb25-3" title="3">    <span class="kw">let</span> <span class="op">{</span> secure<span class="op">,</span> path<span class="op">,</span> domain<span class="op">,</span> expires <span class="op">}</span> <span class="op">=</span> options<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-4" title="4"></a>
+<a class="sourceLine" id="cb25-5" title="5">    <span class="co">// code to set the cookie</span></a>
+<a class="sourceLine" id="cb25-6" title="6"><span class="op">}</span></a></code></pre></div>
+<p>Since destructuring throws an error when the right side expression evaluates to <code>null</code> or <code>undefined</code>, the same is true when the third argument isn’t passed to the <code>setCookie()</code> function.</p>
+<p>If you want the destructured parameter to be required, then this behavior isn’t all that troubling. But if you want the destructured parameter to be optional, you can work around this behavior by providing a default value for the destructured parameter, like this:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">function</span> <span class="at">setCookie</span>(name<span class="op">,</span> value<span class="op">,</span> <span class="op">{</span> secure<span class="op">,</span> path<span class="op">,</span> domain<span class="op">,</span> expires <span class="op">}</span> <span class="op">=</span> <span class="op">{}</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb26-2" title="2"></a>
+<a class="sourceLine" id="cb26-3" title="3">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="op">}</span></a></code></pre></div>
+<p>This example provides a new object as the default value for the third parameter. Providing a default value for the destructured parameter means that the <code>secure</code>, <code>path</code>, <code>domain</code>, and <code>expires</code> will all be <code>undefined</code> if the third argument to <code>setCookie()</code> isn’t provided, and no error will be thrown.</p>
+<h3 id="default-values-for-destructured-parameters">Default Values for Destructured Parameters</h3>
+<p>You can specify destructured default values for destructured parameters just as you would in destructured assignment. Just add the equals sign after the parameter and specify the default value. For example:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">function</span> <span class="at">setCookie</span>(name<span class="op">,</span> value<span class="op">,</span></a>
+<a class="sourceLine" id="cb27-2" title="2">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb27-3" title="3">        secure <span class="op">=</span> <span class="kw">false</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb27-4" title="4">        path <span class="op">=</span> <span class="st">&quot;/&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb27-5" title="5">        domain <span class="op">=</span> <span class="st">&quot;example.com&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb27-6" title="6">        expires <span class="op">=</span> <span class="kw">new</span> <span class="at">Date</span>(<span class="va">Date</span>.<span class="at">now</span>() <span class="op">+</span> <span class="dv">360000000</span>)</a>
+<a class="sourceLine" id="cb27-7" title="7">    <span class="op">}</span> <span class="op">=</span> <span class="op">{}</span></a>
+<a class="sourceLine" id="cb27-8" title="8">) <span class="op">{</span></a>
+<a class="sourceLine" id="cb27-9" title="9"></a>
+<a class="sourceLine" id="cb27-10" title="10">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="op">}</span></a></code></pre></div>
+<p>Each property in the destructured parameter has a default value in this code, so you can avoid checking to see if a given property has been included in order to use the correct value. Also, the entire destructured parameter has a default value of an empty object, making the parameter optional. This does make the function declaration look a bit more complicated than usual, but that’s a small price to pay for ensuring each argument has a usable value.</p>
+<h2 id="summary">Summary</h2>
+<p>Destructuring makes working with objects and arrays in JavaScript easier. Using the familiar object literal and array literal syntax, you can pick data structures apart to get at just the information you’re interested in. Object patterns allow you to extract data from objects while array patterns let you extract data from arrays.</p>
+<p>Both object and array destructuring can specify default values for any property or item that is <code>undefined</code> and both throw errors when the right side of an assignment evaluates to <code>null</code> or <code>undefined</code>. You can also navigate deeply nested data structures with object and array destructuring, descending to any arbitrary depth.</p>
+<p>Destructuring declarations use <code>var</code>, <code>let</code>, or <code>const</code> to create variables and must always have an initializer. Destructuring assignments are used in place of other assignments and allow you to destructure into object properties and already-existing variables.</p>
+<p>Destructured parameters use the destructuring syntax to make “options” objects more transparent when used as function parameters. The actual data you’re interested in can be listed out along with other named parameters. Destructured parameters can be array patterns, object patterns, or a mixture, and you can use all of the features of destructuring.</p>
+</body>
+</html>

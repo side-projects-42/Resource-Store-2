@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="active-record-association-methods">Active Record Association Methods</h1>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>Understand the common methods we have access to from our Active Record associations</li>
+<li>Use the methods that Active Record gives you based on your associations</li>
+</ul>
+<p>Previously, we learned what Active Record associations are and how to use them. In this lab, we are going to start with the association relationships already coded for <code>Songs</code>, <code>Genres</code>, and <code>Artists</code>. These associations look like this:</p>
+<ul>
+<li>Artists have many songs and a song belongs to an artist.</li>
+<li>Artists have many genres through songs.</li>
+<li>Songs belong to a genre.</li>
+<li>A genre has many songs.</li>
+<li>A genre has many artists through songs.</li>
+</ul>
+<p>You may recall that by writing a few migrations and making use of the appropriate Active Record macros, we will be able to:</p>
+<ul>
+<li>ask an Artist about its songs and genres</li>
+<li>ask a Song about its genre and its artist</li>
+<li>ask a Genre about its songs and artists.</li>
+</ul>
+<p>We will build these associations through the use of Active Record migrations and macros.</p>
+<h3 id="building-our-migrations">Building our Migrations</h3>
+<p>You can take a look at the migration, if you need a reminder of the tables’ structures. Run <code>rake db:migrate</code> in your terminal to execute our table creations.</p>
+<h3 id="building-our-associations-using-ar-macros">Building our Associations using AR Macros</h3>
+<p>We used the following AR macros (or methods): <a href="http://guides.rubyonrails.org/association_basics.html#the-has-many-association"><code>has_many</code></a>, <a href="http://guides.rubyonrails.org/association_basics.html#the-has-many-through-association"><code>has_many through</code></a>, <a href="http://guides.rubyonrails.org/association_basics.html#the-belongs-to-association"><code>belongs_to</code></a>. They helped us associate <code>songs</code>, <code>genres</code>, and <code>artists</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">class</span> <span class="dt">Song</span> &lt; <span class="dt">Active</span> <span class="dt">Record</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  belongs_to <span class="st">:artist</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  belongs_to <span class="st">:genre</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">class</span> <span class="dt">Artist</span> &lt; <span class="dt">Active</span> <span class="dt">Record</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  has_many <span class="st">:songs</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  has_many <span class="st">:genres</span>, <span class="st">through: :songs</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">class</span> <span class="dt">Genre</span> &lt; <span class="dt">Active</span> <span class="dt">Record</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  has_many <span class="st">:songs</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  has_many <span class="st">:artists</span>, <span class="st">through: :songs</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">end</span></a></code></pre></div>
+<p>And that’s it! With this relatively small amount of code, we now have access to a whole host of methods provided by Active Record.</p>
+<h2 id="association-methods">Association Methods</h2>
+<p>Go ahead and run the test suite and you’ll see that we are passing the first 14 tests. Our associations are all working, just because of our migrations and use of macros.</p>
+<p>We can now call methods on the objects we associated with one another. Let’s play around with our code using the console task we wrote for you in the Rakefile.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">rake</span> console</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1">hello = <span class="dt">Song</span>.create(<span class="st">name: &quot;Hello&quot;</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2">=&gt; <span class="co">#&lt;Song:0x007fc75a8de3d8 id: 1, name: &quot;Hello&quot;, artist_id: nil, genre_id: nil&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1">adele = <span class="dt">Artist</span>.create(<span class="st">name: &quot;Adele&quot;</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2">=&gt; <span class="co">#&lt;Artist:0x007fc75b8d9490 id: 1, name: &quot;Adele&quot;&gt;</span></a></code></pre></div>
+<p>So, we know that an individual song has an <code>artist_id</code> attribute. We <em>could</em> associate <code>hello</code> to <code>adele</code> by setting <code>hello.artist_id=</code> equal to the <code>id</code> of the <code>adele</code> object. BUT! Active Record makes it so easy for us. The macros we implemented in our classes allow us to associate a song object directly to an artist object:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1">hello.artist = adele</a>
+<a class="sourceLine" id="cb7-2" title="2">=&gt; <span class="co">#&lt;Artist:0x007fc75b8d9490 id: 1, name: &quot;Adele&quot;&gt;</span></a></code></pre></div>
+<p>Now, we can ask <code>hello</code> who its artist is:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">hello.artist</a>
+<a class="sourceLine" id="cb8-2" title="2">=&gt; <span class="co">#&lt;Artist:0x007fc75b8d9490 id: 1, name: &quot;Adele&quot;&gt;</span></a></code></pre></div>
+<p>We can even chain methods to ask <code>hello</code> for the <em>name</em> of its artist:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">hello.artist.name</a>
+<a class="sourceLine" id="cb9-2" title="2">=&gt; <span class="st">&quot;Adele&quot;</span></a></code></pre></div>
+<p>We can tell the artist about their song:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">rolling_in_the_deep = <span class="dt">Song</span>.create(<span class="st">name: &quot;Rolling in the Deep&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2">=&gt; <span class="co">#&lt;Song:0x007fc75bb4d1e0 id: 2, name: &quot;Rolling in the Deep&quot;, artist_id: nil, genre_id: nil&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb11-1" title="1">adele.songs &lt;&lt; rolling_in_the_deep</a>
+<a class="sourceLine" id="cb11-2" title="2">=&gt; <span class="co">#[ &lt;Song:0x007fc75bb4d1e0 id: 2, name: &quot;Rolling in the Deep&quot;, artist_id: 1, genre_id: nil&gt; ]</span></a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4">rolling_in_the_deep.artist</a>
+<a class="sourceLine" id="cb11-5" title="5">=&gt; <span class="co">#&lt;Artist:0x007fc75b8d9490 id: 1, name: &quot;Adele&quot;&gt;</span></a></code></pre></div>
+<h2 id="starting-the-lab">Starting the Lab</h2>
+<p>Be sure to run <code>rake db:migrate</code></p>
+<p>We are going to write some methods of our own. We want to take advantage of our new methods, thanks to the Active Record macros. Therefore, every method we write will use some code that was generated by a macro. For example:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">class</span> <span class="dt">Artist</span></a>
+<a class="sourceLine" id="cb12-2" title="2">  <span class="kw">def</span> get_first_song</a>
+<a class="sourceLine" id="cb12-3" title="3"></a>
+<a class="sourceLine" id="cb12-4" title="4">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw">end</span></a></code></pre></div>
+<p>How would you write the <code>#get_first_song</code> method so that it returns the first <code>song</code> object saved to the artist it’s called on? By using the macros! Just like above when we called <code>adele.songs</code>, we now want to call <code>songs</code> on the instance that the method will be called on in the future. How do we do that? Yes, <code>self</code>!</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">class</span> <span class="dt">Artist</span></a>
+<a class="sourceLine" id="cb13-2" title="2">  <span class="kw">def</span> get_first_song</a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="dv">self</span>.songs</a>
+<a class="sourceLine" id="cb13-4" title="4">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="kw">end</span></a></code></pre></div>
+<p>This will return an array of the artist’s songs. Since our method is specifically looking for the first song, we just have to chain on a <code>first</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">class</span> <span class="dt">Artist</span></a>
+<a class="sourceLine" id="cb14-2" title="2">  <span class="kw">def</span> get_first_song</a>
+<a class="sourceLine" id="cb14-3" title="3">    <span class="dv">self</span>.songs.first</a>
+<a class="sourceLine" id="cb14-4" title="4">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw">end</span></a></code></pre></div>
+<p>We’ll do a handful of methods like this one for the <code>Song</code>, <code>Artist</code>, and <code>Genre</code> classes. This lab is test-driven, so follow the specs and read the test error messages for additional information.</p>
+<p>The below methods are defined in the <code>artist.rb</code>, <code>genre.rb</code> and <code>song.rb</code> within <code>app/models</code>, but are all currently empty. Write implementations for each using ActiveRecord methods.</p>
+<h3 id="artist-methods">Artist Methods</h3>
+<h4 id="get_genre_of_first_song"><code>#get_genre_of_first_song</code></h4>
+<p>Returns the genre of the artist’s first saved song (maybe the <code>#get_first_song</code> method can be used here?)</p>
+<h4 id="song_count"><code>#song_count</code></h4>
+<p>Return the total number of songs associated with the artist</p>
+<h4 id="genre_count"><code>#genre_count</code></h4>
+<p>Return the total number of genres associated with the artist</p>
+<h3 id="genre-methods">Genre Methods</h3>
+<h4 id="song_count-1"><code>#song_count</code></h4>
+<p>Return the total number of songs associated with the genre</p>
+<h4 id="artist_count"><code>#artist_count</code></h4>
+<p>Return the number of artists associated with the genre</p>
+<h4 id="all_artist_names"><code>#all_artist_names</code></h4>
+<p>Return an array of strings containing every musician’s name</p>
+<h3 id="song-methods">Song Methods</h3>
+<h4 id="get_genre_name"><code>#get_genre_name</code></h4>
+<p>Return the name of the genre this song belongs to</p>
+<h4 id="drake_made_this"><code>#drake_made_this</code></h4>
+<p>For the final method in this lab, rather than return a specific value or set of values like the previous labs, your task is to create an association between a song and an artist. In this case, we’ll use one artist for simplicity - Drake.</p>
+<p>When this method is called, it should assign the song’s artist to Drake. Drake doesn’t exist in the database as an artist yet, so you’ll have to create a record. However, if this method is run multiple times, you won’t want to create a new record <em>each time</em>. Rather, you only want to create a record if Drake is not found in the database already. Once found or created, assign this song to the drake Artist instance.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/Active-Record-Association-Methods' title='Active Record Association Methods'>Active Record Association Methods</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

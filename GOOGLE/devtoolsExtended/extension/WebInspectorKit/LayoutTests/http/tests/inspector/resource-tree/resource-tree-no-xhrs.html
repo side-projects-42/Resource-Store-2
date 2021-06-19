@@ -1,31 +1,19 @@
-<html>
-  <head>
-    <script src="../inspector-test.js"></script>
-    <script src="../network-test.js"></script>
-    <script>
-      function test() {
-        InspectorTest.makeSimpleXHR(
-          "GET",
-          "resources/resource.php",
-          false,
-          step2
-        );
-
-        function step2() {
-          var resource = WebInspector.resourceTreeModel.resourceForURL(
-            "http://127.0.0.1:8000/inspector/resource-tree/resources/resource.php"
-          );
-          InspectorTest.assertTrue(
-            !resource,
-            "XHR resource should not be added to resourceTreeModel."
-          );
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests that XHRs are not added to resourceTreeModel.</p>
-    <a href="https://bugs.webkit.org/show_bug.cgi?id=60321">Bug 60321</a>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>resource-tree-no-xhrs</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that XHRs are not added to resourceTreeModel.</p>
+<p><a href="https://bugs.webkit.org/show_bug.cgi?id=60321">Bug 60321</a></p>
+</body>
 </html>

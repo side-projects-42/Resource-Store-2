@@ -1,82 +1,34 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: TOML Mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="toml.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">TOML Mode</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>TOML Mode</h2>
-  <form>
-    <textarea id="code" name="code">
-# This is a TOML document. Boom.
-
-title = "TOML Example"
-
-[owner]
-name = "Tom Preston-Werner"
-organization = "GitHub"
-bio = "GitHub Cofounder &amp; CEO\nLikes tater tots and beer."
-dob = 1979-05-27T07:32:00Z # First class dates? Why not?
-
-[database]
-server = "192.168.1.1"
-ports = [ 8001, 8001, 8002 ]
-connection_max = 5000
-enabled = true
-
-[servers]
-
-  # You can indent as you please. Tabs or spaces. TOML don't care.
-  [servers.alpha]
-  ip = "10.0.0.1"
-  dc = "eqdc10"
-  
-  [servers.beta]
-  ip = "10.0.0.2"
-  dc = "eqdc10"
-  
-[clients]
-data = [ ["gamma", "delta"], [1, 2] ]
-
-# Line breaks are OK when inside arrays
-hosts = [
-  "alpha",
-  "omega"
-]
-</textarea
-    >
-  </form>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      mode: { name: "toml" },
-      lineNumbers: true,
-    });
-  </script>
-  <h3>The TOML Mode</h3>
-  <p>Created by Forbes Lindesay.</p>
-  <p><strong>MIME type defined:</strong> <code>text/x-toml</code>.</p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: TOML Mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">TOML Mode</a></li>
+</ul>
+<h2 id="toml-mode">TOML Mode</h2>
+<p># This is a TOML document. Boom. title = “TOML Example” [owner] name = “Tom Preston-Werner” organization = “GitHub” bio = “GitHub Cofounder &amp; CEO\nLikes tater tots and beer.” dob = 1979-05-27T07:32:00Z # First class dates? Why not? [database] server = “192.168.1.1” ports = [ 8001, 8001, 8002 ] connection_max = 5000 enabled = true [servers] # You can indent as you please. Tabs or spaces. TOML don’t care. [servers.alpha] ip = “10.0.0.1” dc = “eqdc10” [servers.beta] ip = “10.0.0.2” dc = “eqdc10” [clients] data = [ [“gamma”, “delta”], [1, 2] ] # Line breaks are OK when inside arrays hosts = [ “alpha”, “omega” ]</p>
+<h3 id="the-toml-mode">The TOML Mode</h3>
+<p>Created by Forbes Lindesay.</p>
+<p><strong>MIME type defined:</strong> <code>text/x-toml</code>.</p>
+</body>
+</html>

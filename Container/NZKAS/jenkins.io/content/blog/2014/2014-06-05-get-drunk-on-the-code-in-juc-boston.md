@@ -1,0 +1,9 @@
+--- :layout: post :title: Get drunk on the code in JUC-Boston :nodeid: 475 :created: 1402018505 :tags: - general - meetup - jenkinsci - juc :author: christ66 ---
+
+![](http://jenkins-ci.org/sites/default/files/images/christou.jpg)
+
+Let me start by introducing myself, my name is Steven Christou. Many of you might know me on IRC as schristou, my github id as [christ66](https://github.com/christ66), or my twitter handle [@schristou88](https://twitter.com/schristou88). In Jenkins, I am currently working on some significant improvements to the subversion-plugin, along with various random bug fixes. I am also the current maintainer of [Cobertura](http://cobertura.github.io/cobertura), an open source code coverage tool for java. Prior to working on Jenkins, I was working on Hudson at the Eclipse Foundation.
+
+While working on Jenkins, I usually get requests (usually in IRC) about where to start when writing a plugin. Some examples are "Where do I start?" or "Do you have any examples?". Well at [JUC Boston](http://www.cloudbees.com/jenkins/juc-2014/boston), I will be hosting a small lecture called Get Drunk on the Code! I will be giving the lecture in the rooms "Back Bay" (1 & 2) where people will be able to sit down, drink a beer, and learn how to write a Jenkins plugin! I will be teaching people everything from how to get started, to some advanced techniques like writing a new [CLI Command](https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+CLI), and writing your own builder. I forgot to mention that I will be handing out beer while this is happening!
+
+This session will be happening after the exhibit break from 3:30pm to 6:00pm. It will be two hours where I will be walking around, and helping users if they encounter any issues while the session is happening. So grab your laptop, a beer and get drunk on the code! Don't get too drunk, but if you do at least you can improve the [beer plugin](https://wiki.jenkins-ci.org/display/JENKINS/Beer+Plugin)!"

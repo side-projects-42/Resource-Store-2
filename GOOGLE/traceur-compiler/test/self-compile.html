@@ -1,30 +1,18 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Tracuer self-compile in Web page for debugging.</title>
-    <script src="../bin/traceur.js"></script>
-    <script>
-      // Use settings the same as the tests.
-      // Except: issue 534 we cannot self-compile with freeVariableChecker.
-      var metadata = {
-        debug: true,
-        validate: true,
-      };
-
-      var url = window.location.href;
-
-      System.import("../src/traceur", { metadata: metadata }).then(
-        function (mod) {
-          console.log("DONE");
-        },
-        function (error) {
-          console.error(error);
-        }
-      );
-    </script>
-  </head>
-  <body>
-    For Self-hosted compilation: <code>make self</code>. Open DevTools. Reload.
-    Repeat.
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>self-compile</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>For Self-hosted compilation: <code>make self</code>. Open DevTools. Reload. Repeat.</p>
+</body>
 </html>

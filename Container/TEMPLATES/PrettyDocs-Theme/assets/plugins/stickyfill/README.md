@@ -1,56 +1,47 @@
-# Polyfill for CSS `position: sticky`
+Polyfill for CSS `position: sticky`
+===================================
 
 The most accurate sticky polyfill out in the wild.
 
 Check out [the demo](http://wd.dizaina.net/en/scripts/stickyfill/) and [use cases test page](http://wilddeer.github.io/stickyfill/test/).
 
-## What it does
+What it does
+------------
 
-- supports top-positioned stickies,
-- works in IE9+,
-- disables itself in older IEs and in browsers with native `position: sticky` support,
-- mimics original `position: sticky` behavior:
+-   supports top-positioned stickies,
+-   works in IE9+,
+-   disables itself in older IEs and in browsers with native `position: sticky` support,
+-   mimics original `position: sticky` behavior:
 
-    - uses parent node as a boundary box,
-    - behaves nicely with horizontal page scrolling,
-    - only works on elements with specified `top`,
-    - mimics native `top` and `margin-bottom` behavior,
-    - ~~works with table cells~~ removed for consistency until Firefox [makes a native implementation](https://bugzilla.mozilla.org/show_bug.cgi?id=975644)
+    -   uses parent node as a boundary box,
+    -   behaves nicely with horizontal page scrolling,
+    -   only works on elements with specified `top`,
+    -   mimics native `top` and `margin-bottom` behavior,
+    -   <s>works with table cells</s> removed for consistency until Firefox [makes a native implementation](https://bugzilla.mozilla.org/show_bug.cgi?id=975644)
 
-## What it doesn't
+What it doesn’t
+---------------
 
-- doesn't support left, right, bottom or combined stickies,
-- doesn't work in overflowed blocks,
-- doesn't parse your CSS! Launch it manually.
+-   doesn’t support left, right, bottom or combined stickies,
+-   doesn’t work in overflowed blocks,
+-   doesn’t parse your CSS! Launch it manually.
 
-----
+------------------------------------------------------------------------
 
-<p align="center">
-    <a href="#installation">Installation</a>&nbsp;&nbsp;
-    <a href="#usage">Usage</a>&nbsp;&nbsp;
-    <a href="#pro-tips">Pro tips</a>&nbsp;&nbsp;
-    <a href="#api">API</a>&nbsp;&nbsp;
-    <a href="#feature-requests">Feature requests</a>&nbsp;&nbsp;
-    <a href="#bug-reports">Bug reports</a>&nbsp;&nbsp;
-    <a href="#contributing">Contributing</a>&nbsp;&nbsp;
-    <a href="#using-stickyfill">Buy me a beer</a>
-</p>
+[Installation](#installation)   [Usage](#usage)   [Pro tips](#pro-tips)   [API](#api)   [Feature requests](#feature-requests)   [Bug reports](#bug-reports)   [Contributing](#contributing)   [Buy me a beer](#using-stickyfill)
 
-----
+------------------------------------------------------------------------
 
-## Installation
+Installation
+------------
 
 ### NPM
 
-```
-npm install stickyfilljs --save
-```
+    npm install stickyfilljs --save
 
 ### Yarn
 
-```
-yarn add stickyfilljs
-```
+    yarn add stickyfilljs
 
 ### Raw ES6 module
 
@@ -64,63 +55,54 @@ Download minified production ES5 script:
 
 Include it on your page:
 
-```html
-<script src="path/to/stickyfill.min.js"></script>
-```
+    <script src="path/to/stickyfill.min.js"></script>
 
-## Usage
+Usage
+-----
 
 First things first, make sure your stickies work in the [browsers that support them natively](http://caniuse.com/#feat=css-sticky), e.g.:
 
-```html
-<div class="sticky">
-    ...
-</div>
-```
+    <div class="sticky">
+        ...
+    </div>
 
-```css
-.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-}
-```
+    .sticky {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+    }
 
 Then apply the polyfill:
 
 JS:
 
-```js
-var elements = document.querySelectorAll('.sticky');
-Stickyfill.add(elements);
-```
+    var elements = document.querySelectorAll('.sticky');
+    Stickyfill.add(elements);
 
 or JS + jQuery:
 
-```js
-var elements = $('.sticky');
-Stickyfill.add(elements);
-```
+    var elements = $('.sticky');
+    Stickyfill.add(elements);
 
 Also worth having a clearfix:
 
-```css
-.sticky:before,
-.sticky:after {
-    content: '';
-    display: table;
-}
-```
+    .sticky:before,
+    .sticky:after {
+        content: '';
+        display: table;
+    }
 
-## Pro tips
+Pro tips
+--------
 
-- `top` specifies sticky’s position relatively to the top edge of the viewport. It accepts negative values, too.
-- You can push sticky’s bottom limit up or down by specifying positive or negative `margin-bottom`.
-- Any non-default value (not `visible`) for `overflow`, `overflow-x`, or `overflow-y` on any of the ancestor elements anchors the sticky to the overflow context of that ancestor. Simply put, scrolling the ancestor will cause the sticky to stick, scrolling the window will not. This is expected with `overflow: auto` and `overflow: scroll`, but often causes confusion with `overflow: hidden`. Keep this in mind, folks!
+-   `top` specifies sticky’s position relatively to the top edge of the viewport. It accepts negative values, too.
+-   You can push sticky’s bottom limit up or down by specifying positive or negative `margin-bottom`.
+-   Any non-default value (not `visible`) for `overflow`, `overflow-x`, or `overflow-y` on any of the ancestor elements anchors the sticky to the overflow context of that ancestor. Simply put, scrolling the ancestor will cause the sticky to stick, scrolling the window will not. This is expected with `overflow: auto` and `overflow: scroll`, but often causes confusion with `overflow: hidden`. Keep this in mind, folks!
 
 Check out [the test page](http://wilddeer.github.io/stickyfill/test/) to understand stickies better.
 
-## API
+API
+---
 
 ### `Stickyfill`
 
@@ -176,9 +158,7 @@ Array of existing [Sticky](#Stickyfill.Sticky) instances.
 
 Sticky class. You can use it directly if you want:
 
-```js
-const sticky = new Stickyfill.Sticky(element);
-```
+    const sticky = new Stickyfill.Sticky(element);
 
 Throws an error if there’s a sticky already bound to the element.
 
@@ -190,15 +170,16 @@ Refreshes the sticky, updates its parameters and position.
 
 Removes the sticky. Restores the element to its original state.
 
-## Feature requests
+Feature requests
+----------------
 
 ### TL;DR
 
 These features will never be implemented in Stickyfill:
 
-- Callbacks for sticky state changes
-- Switching classes between different sticky states
-- Other features that add non-standard functionality
+-   Callbacks for sticky state changes
+-   Switching classes between different sticky states
+-   Other features that add non-standard functionality
 
 If your request isn’t about one of these, you are welcome to [create an issue](https://github.com/wilddeer/stickyfill/issues/new). Please check [existing issues](https://github.com/wilddeer/stickyfill/issues) before creating new one.
 
@@ -206,20 +187,22 @@ If your request isn’t about one of these, you are welcome to [create an issue]
 
 Stickyfill is a [polyfill](https://en.wikipedia.org/wiki/Polyfill). This means that it implements a feature (sticky positioning in this case) that already exists in some browsers natively, and allows to use this feature in the browsers that don’t support it yet and older versions of the browsers that didn’t support it at the time. This is its only purpose.
 
-This also means that Stickyfill does nothing in the browsers that _do_ support sticky positioning. Which, in turn, means that those browsers won’t support any additional non-standard features.
+This also means that Stickyfill does nothing in the browsers that *do* support sticky positioning. Which, in turn, means that those browsers won’t support any additional non-standard features.
 
-## Bug reports
+Bug reports
+-----------
 
 Check [existing issues](https://github.com/wilddeer/stickyfill/issues) before creating new one. **Please provide a live reproduction of a bug.**
 
-## Contributing
+Contributing
+------------
 
 ### Prerequisites
 
-- Install Git 😱
-- Install [node](https://nodejs.org/en/)
-- Install [grunt-cli](http://gruntjs.com/getting-started#installing-the-cli)
-- Clone the repo, `cd` into the repo folder, run `npm install` (or `yarn` if you are fancy).
+-   Install Git 😱
+-   Install [node](https://nodejs.org/en/)
+-   Install [grunt-cli](http://gruntjs.com/getting-started#installing-the-cli)
+-   Clone the repo, `cd` into the repo folder, run `npm install` (or `yarn` if you are fancy).
 
 Ok, you are all set.
 
@@ -239,10 +222,12 @@ Make a pull request 👍
 
 Use [Yarn](https://yarnpkg.com/), dont’t forget to commit `yarn.lock`.
 
-## Using Stickyfill?
+Using Stickyfill?
+-----------------
 
 🍻 [Buy me a beer](https://www.paypal.me/wilddeer/3usd)
 
-## License
+License
+-------
 
 [MIT license](LICENSE).

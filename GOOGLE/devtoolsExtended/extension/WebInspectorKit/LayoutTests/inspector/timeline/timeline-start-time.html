@@ -1,41 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/timeline-test.js"></script>
-    <script>
-      function performActions() {
-        console.timeStamp("time is an illusion");
-      }
-
-      function test() {
-        var beforeStart = Date.now();
-        InspectorTest.startTimeline();
-        InspectorTest.waitForRecordType("TimeStamp", onTimeStamp);
-        InspectorTest.evaluateInPage("performActions()");
-
-        function onTimeStamp(record) {
-          var now = Date.now();
-          var eventTime = record.startTime;
-          InspectorTest.assertGreaterOrEqual(
-            eventTime,
-            beforeStart,
-            "event time should be after timeline start time"
-          );
-          InspectorTest.assertGreaterOrEqual(
-            now,
-            Math.floor(eventTime),
-            "event time should be before now"
-          );
-          InspectorTest.addResult("done");
-          InspectorTest.stopTimeline(
-            InspectorTest.completeTest.bind(InspectorTest)
-          );
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests sanity of timeline timestamps.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timeline-start-time</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests sanity of timeline timestamps.</p>
+</body>
 </html>

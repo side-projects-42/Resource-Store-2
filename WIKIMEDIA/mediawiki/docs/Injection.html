@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Injection</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="dependency-injection">Dependency Injection</h1>
+<p>This is an overview of how MediaWiki makes use of dependency injection. The design described here grew from the discussion of RFC <a href="https://phabricator.wikimedia.org/T384">T384</a>.</p>
+<p>The term “dependency injection” (DI) refers to a pattern on object oriented programming that tries to improve modularity by reducing strong coupling between classes. In practical terms, this means that anything an object needs to operate should be injected from the outside, the object itself should only know narrow interfaces, no concrete implementation of the logic it relies on.</p>
+<p>The requirement to inject everything typically results in an architecture that based on two main types of objects: simple value objects with no business logic (and often immutable), and essentially stateless service objects that use other service objects to operate on the value objects.</p>
+<p>As of the beginning of 2016 (MW version 1.27), MediaWiki is only starting to use the DI approach. Much of the code still relies on global state or direct instantiation, resulting in a highly cyclical dependency graph.</p>
+<h2 id="overview">Overview</h2>
+<p>The heart of the DI in MediaWiki is the central service locator, MediaWikiServices, which acts as the top level factory for services in MediaWiki. <code>MediaWikiServices::getInstance()</code> returns the default service locator instance, which can be used to gain access to default instances of various services. MediaWikiServices however also allows new services to be defined and default services to be redefined. Services are defined or redefined by providing a callback function, the “instantiator” function, that will return a new instance of the service.</p>
+<p>When <code>MediaWikiServices::getInstance()</code> is first called, it will create an instance of MediaWikiServices and populate it with the services defined in the files listed by <code>$wgServiceWiringFiles</code>, thereby “bootstrapping” the DI framework. Per default, <code>$wgServiceWiringFiles</code> lists includes/ServiceWiring.php, which defines all default service implementations, and specifies how they depend on each other (“wiring”).</p>
+<p>When a new service is added to MediaWiki core, an instantiator function that will create the appropriate default instance for that service must be added to ServiceWiring.php. This makes the service available through the generic getService() method on the service locator returned by <code>MediaWikiServices::getInstance()</code>.</p>
+<p>Extensions can add their own wiring files to <code>$wgServiceWiringFiles</code>, in order to define their own service. Extensions may also use the ‘MediaWikiServices’ hook to define or redefined services by calling methods on the default MediaWikiServices instance.</p>
+<p>It should be noted that the term “service locator” is often used to refer to a top level factory that is accessed directly, throughout the code, to avoid explicit dependency injection. In contrast, the term “DI container” is often used to describe a top level factory that is only accessed when services are created. We use the term “service locator” for the top level factory because it is more descriptive than “DI container”, even though application logic is strongly discouraged from accessing MediaWikiServices directly. <code>MediaWikiServices::getInstance()</code> should ideally be accessed only in “static entry points” such as hook handler functions. See “Migration” below.</p>
+<h2 id="service-reset">Service Reset</h2>
+<p>Services get their configuration injected, and changes to global configuration variables will not have any effect on services that were already instantiated. This would typically be the case for low level services like the ConfigFactory or the ObjectCacheManager, which are used during extension registration. To address this issue, Setup.php resets the global service locator instance by calling <code>MediaWikiServices::resetGlobalInstance()</code> once configuration and extension registration is complete.</p>
+<p>Note that “unmanaged” legacy services services that manage their own singleton must not keep references to services managed by MediaWikiServices, to allow a clean reset. After the global MediaWikiServices instance got reset, any such references would be stale, and using a stale service will result in an error.</p>
+<p>Services should either have all dependencies injected and be themselves managed by MediaWikiServices, or they should use the Service Locator pattern, accessing service instances via the global MediaWikiServices instance state when needed. This ensures that no stale service references remain after a reset.</p>
+<h2 id="configuration">Configuration</h2>
+<p>When the default MediaWikiServices instance is created, a Config object is provided to the constructor. This Config object represents the “bootstrap” configuration which will become available as the ‘BootstrapConfig’ service. As of MW 1.27, the bootstrap config is a GlobalVarConfig object providing access to the $wgXxx configuration variables.</p>
+<p>The bootstrap config is then used to construct a ‘ConfigFactory’ service, which in turn is used to construct the ‘MainConfig’ service. Application logic should use the ‘MainConfig’ service (or a more specific configuration object). ‘BootstrapConfig’ should only be used for bootstrapping basic services that are needed to load the ‘MainConfig’.</p>
+<p>Note: Several well known services in MediaWiki core act as factories themselves, e.g. ApiModuleManager, ObjectCache, SpecialPageFactory, etc. The registries these factories are based on are currently managed as part of the configuration. This may however change in the future.</p>
+<h2 id="migration">Migration</h2>
+<p>This section provides some recipes for improving code modularity by reducing strong coupling. The dependency injection mechanism described above is an essential tool in this effort.</p>
+<h3 id="migrate-access-to-global-service-instances-and-config-variables">Migrate access to global service instances and config variables</h3>
+<p>Assume <code>Foo</code> is a class that uses the <code>$wgScriptPath</code> global and calls <code>wfGetDB()</code> to get a database connection, in non-static methods.</p>
+<ul>
+<li>Add <code>$scriptPath</code> as a constructor parameter and use <code>$this-&gt;scriptPath</code> instead of <code>$wgScriptPath</code>.</li>
+<li>Add LoadBalancer <code>$dbLoadBalancer</code> as a constructor parameter. Use <code>$this-&gt;dbLoadBalancer-&gt;getConnection()</code> instead of <code>wfGetDB()</code>.</li>
+<li>Any code that calls <code>Foo</code>’s constructor would now need to provide the <code>$scriptPath</code> and <code>$dbLoadBalancer</code>. To avoid this, avoid direct instantiation of services all together - see below.</li>
+</ul>
+<h3 id="migrate-services-with-multiple-configuration-variables">Migrate services with multiple configuration variables</h3>
+<p>When a service needs multiple configuration globals injected, a ServiceOptions object is commonly used with the service class defining a public constant (usually <code>CONSTRUCTOR_OPTIONS</code>) with an array of settings that the class needs access to.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;?php</span></a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">class</span> DemoService {</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">    <span class="kw">public</span> <span class="kw">const</span> <span class="kw">CONSTRUCTOR_OPTIONS</span> = <span class="ot">[</span></a>
+<a class="sourceLine" id="cb1-6" title="6">        <span class="st">&#39;Foo&#39;</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb1-7" title="7">        <span class="st">&#39;Bar&#39;</span></a>
+<a class="sourceLine" id="cb1-8" title="8">    <span class="ot">];</span></a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10">    <span class="kw">private</span> <span class="kw">$options</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"></a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="kw">public</span> <span class="kw">function</span> <span class="fu">__construct</span><span class="ot">(</span> ServiceOptions <span class="kw">$options</span> <span class="ot">)</span> {</a>
+<a class="sourceLine" id="cb1-13" title="13">        <span class="co">// ServiceOptions::assertRequiredOptions ensures that all of the</span></a>
+<a class="sourceLine" id="cb1-14" title="14">        <span class="co">// settings listed in CONSTRUCTOR_OPTIONS are available</span></a>
+<a class="sourceLine" id="cb1-15" title="15">        <span class="kw">$options</span>-&gt;assertRequiredOptions<span class="ot">(</span> self::<span class="kw">CONSTRUCTOR_OPTIONS</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb1-16" title="16">        <span class="kw">$this</span>-&gt;options = <span class="kw">$options</span><span class="ot">;</span></a>
+<a class="sourceLine" id="cb1-17" title="17">        <span class="co">// $wgFoo is now available with $this-&gt;options-&gt;get( &#39;Foo&#39; )</span></a>
+<a class="sourceLine" id="cb1-18" title="18">        <span class="co">// $wgBar is now available with $this-&gt;options-&gt;get( &#39;Bar&#39; )</span></a>
+<a class="sourceLine" id="cb1-19" title="19">    }</a>
+<a class="sourceLine" id="cb1-20" title="20"></a>
+<a class="sourceLine" id="cb1-21" title="21">}</a></code></pre></div>
+<p>ServiceOptions objects are constructed within ServiceWiring.php and can also be created in tests.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb2-1" title="1"><span class="st">&#39;DemoService&#39;</span> =&gt; <span class="kw">function</span> <span class="ot">(</span> MediaWikiServices <span class="kw">$services</span> <span class="ot">)</span> : DemoService {</a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="kw">return</span> <span class="kw">new</span> DemoService<span class="ot">(</span></a>
+<a class="sourceLine" id="cb2-3" title="3">        <span class="kw">new</span> ServiceOptions<span class="ot">(</span></a>
+<a class="sourceLine" id="cb2-4" title="4">            DemoService::<span class="kw">CONSTRUCTOR_OPTIONS</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb2-5" title="5">            <span class="kw">$services</span>-&gt;getMainConfig<span class="ot">()</span></a>
+<a class="sourceLine" id="cb2-6" title="6">        <span class="ot">)</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="ot">);</span></a>
+<a class="sourceLine" id="cb2-8" title="8">}<span class="ot">,</span></a></code></pre></div>
+<h3 id="migrate-class-level-singleton-getters">Migrate class-level singleton getters</h3>
+<p>Assume class <code>Foo</code> has mostly non-static methods, and provides a static <code>getInstance()</code> method that returns a singleton (or default instance).</p>
+<ul>
+<li>Add an instantiator function for <code>Foo</code> into ServiceWiring.php. The instantiator would do exactly what <code>Foo::getInstance()</code> did. However, it should replace any access to global state with calls to <code>$services-&gt;getXxx()</code> to get a service, or <code>$services-&gt;getMainConfig()-&gt;get()</code> to get a configuration setting.</li>
+<li>Add a <code>getFoo()</code> method to MediaWikiServices. Don’t forget to add the appropriate test cases in MediaWikiServicesTest.</li>
+<li>Turn <code>Foo::getInstance()</code> into a deprecated alias for <code>MediaWikiServices::getInstance()-&gt;getFoo()</code>. Change all calls to <code>Foo::getInstance()</code> to use injection (see above).</li>
+</ul>
+<h3 id="migrate-direct-service-instantiation">Migrate direct service instantiation</h3>
+<p>Assume class <code>Bar</code> calls <code>new Foo()</code>.</p>
+<ul>
+<li>Add an instantiator function for <code>Foo</code> into ServiceWiring.php and add a <code>getFoo()</code> method to MediaWikiServices. Don’t forget to add the appropriate test cases in MediaWikiServicesTest.</li>
+<li>In the instantiator, replace any access to global state with calls to <code>$services-&gt;getXxx()</code> to get a service, or <code>$services-&gt;getMainConfig()-&gt;get()</code> to get a configuration setting.</li>
+<li>The code in <code>Bar</code> that calls <code>Foo</code>’s constructor should be changed to have a <code>Foo</code> instance injected; Eventually, the only code that instantiates <code>Foo</code> is the instantiator in ServiceWiring.php.</li>
+<li>As an intermediate step, <code>Bar</code>’s constructor could initialize the <code>$foo</code> member variable by calling <code>MediaWikiServices::getInstance()-&gt;getFoo()</code>. This is acceptable as a stepping stone, but should be replaced by proper injection via a constructor argument. Do not however inject the MediaWikiServices object!</li>
+</ul>
+<h3 id="migrate-parameterized-helper-instantiation">Migrate parameterized helper instantiation</h3>
+<p>Assume class <code>Bar</code> creates some helper object by calling <code>new Foo( $x )</code>, and <code>Foo</code> uses a global singleton of the <code>Xyzzy</code> service.</p>
+<ul>
+<li>Define a <code>FooFactory</code> class (or a <code>FooFactory</code> interface along with a <code>MyFooFactory</code> implementation). <code>FooFactory</code> defines the method <code>newFoo( $x )</code> or <code>getFoo( $x )</code>, depending on the desired semantics (<code>newFoo</code> would guarantee a fresh instance). When Foo gets refactored to have <code>Xyzzy</code> injected, <code>FooFactory</code> will need a <code>Xyzzy</code> instance, so <code>newFoo()</code> can pass it to <code>new Foo()</code>.</li>
+<li>Add an instantiator function for FooFactory into ServiceWiring.php and add a getFooFactory() method to MediaWikiServices. Don’t forget to add the appropriate test cases in MediaWikiServicesTest.</li>
+<li>The code in Bar that calls Foo’s constructor should be changed to have a FooFactory instance injected; Eventually, the only code that instantiates Foo are implementations of FooFactory, and the only code that instantiates FooFactory is the instantiator in ServiceWiring.php.</li>
+<li>As an intermediate step, Bar’s constructor could initialize the $fooFactory member variable by calling <code>MediaWikiServices::getInstance()-&gt;getFooFactory()</code>. This is acceptable as a stepping stone, but should be replaced by proper injection via a constructor argument. Do not however inject the MediaWikiServices object!</li>
+</ul>
+<h3 id="migrate-a-handler-registry">Migrate a handler registry</h3>
+<p>Assume class <code>Bar</code> calls <code>FooRegistry::getFoo( $x )</code> to get a specialized <code>Foo</code> instance for handling <code>$x</code>.</p>
+<ul>
+<li>Turn <code>getFoo</code> into a non-static method.</li>
+<li>Add an instantiator function for <code>FooRegistry</code> into ServiceWiring.php and add a <code>getFooRegistry()</code> method to MediaWikiServices. Don’t forget to add the appropriate test cases in MediaWikiServicesTest.</li>
+<li>Change all code that calls <code>FooRegistry::getFoo()</code> statically to call this method on a <code>FooRegistry</code> instance. That is, <code>Bar</code> would have a <code>$fooRegistry</code> member, initialized from a constructor parameter.</li>
+<li>As an intermediate step, Bar’s constructor could initialize the <code>$fooRegistry</code> member variable by calling <code>MediaWikiServices::getInstance()-&gt;getFooRegistry()</code>. This is acceptable as a stepping stone, but should be replaced by proper injection via a constructor argument. Do not however inject the MediaWikiServices object!</li>
+</ul>
+<h3 id="migrate-deferred-service-instantiation">Migrate deferred service instantiation</h3>
+<p>Assume class <code>Bar</code> calls <code>new Foo()</code>, but only when needed, to avoid the cost of instantiating Foo().</p>
+<ul>
+<li>Define a <code>FooFactory</code> interface and a <code>MyFooFactory</code> implementation of that interface. <code>FooFactory</code> defines the method <code>getFoo()</code> with no parameters.</li>
+<li>Precede as for the “parameterized helper instantiation” case described above.</li>
+</ul>
+<h3 id="migrate-a-class-with-only-static-methods">Migrate a class with only static methods</h3>
+<p>Assume <code>Foo</code> is a class with only static methods, such as <code>frob()</code>, which interacts with global state or system resources.</p>
+<ul>
+<li>Introduce a <code>FooService</code> interface and a <code>DefaultFoo</code> implementation of that interface. <code>FooService</code> contains the public methods defined by Foo.</li>
+<li>Add an instantiator function for <code>FooService</code> into ServiceWiring.php and add a <code>getFooService()</code> method to MediaWikiServices. Don’t forget to add the appropriate test cases in MediaWikiServicesTest.</li>
+<li>Add a private static <code>getFooService()</code> method to <code>Foo</code>. That method just calls <code>MediaWikiServices::getInstance()-&gt;getFooService()</code>.</li>
+<li>Make all methods in <code>Foo</code> delegate to the <code>FooService</code> returned by <code>getFooService()</code>. That is, <code>Foo::frob()</code> would do <code>self::getFooService()-&gt;frob()</code>.</li>
+<li>Deprecate <code>Foo</code>. Inject a <code>FooService</code> into all code that calls methods on <code>Foo</code>, and change any calls to static methods in foo to the methods provided by the <code>FooService</code> interface.</li>
+</ul>
+<h3 id="migrate-static-hook-handler-functions-to-allow-unit-testing">Migrate static hook handler functions (to allow unit testing)</h3>
+<p>Assume <code>MyExtHooks::onFoo</code> is a static hook handler function that is called with the parameter <code>$x</code>; Further assume <code>MyExt::onFoo</code> needs service <code>Bar</code>, which is already known to MediaWikiServices (if not, see above).</p>
+<ul>
+<li>Create a non-static <code>doFoo( $x )</code> method in <code>MyExtHooks</code> that has the same signature as <code>onFoo( $x )</code>. Move the code from <code>onFoo()</code> into <code>doFoo()</code>, replacing any access to global or static variables with access to instance member variables.</li>
+<li>Add a constructor to <code>MyExtHooks</code> that takes a Bar service as a parameter.</li>
+<li>Add a static method called <code>newFromGlobalState()</code> with no parameters. It should just return <code>new MyExtHooks( MediaWikiServices::getInstance()-&gt;getBar() )</code>.</li>
+<li>The original static handler method <code>onFoo( $x )</code> is then implemented as <code>self::newFromGlobalState()-&gt;doFoo( $x )</code>.</li>
+</ul>
+<h3 id="migrate-a-smart-record">Migrate a “smart record”</h3>
+<p>Assume <code>Thingy</code> is a “smart record” that “knows” how to load and store itself. For this purpose, <code>Thingy</code> uses wfGetDB().</p>
+<ul>
+<li>Create a “dumb” value class <code>ThingyRecord</code> that contains all the information that <code>Thingy</code> represents (e.g. the information from a database row). The value object should not know about any service.</li>
+<li>Create a DAO-style service for loading and storing <code>ThingyRecord</code>s, called <code>ThingyStore</code>. It may be useful to split the interfaces for reading and writing, with a single class implementing both interfaces, so we in the end have the <code>ThingyLookup</code> and <code>ThingyStore</code> interfaces, and a SqlThingyStore implementation.</li>
+<li>Add instantiator functions for <code>ThingyLookup</code> and <code>ThingyStore</code> in ServiceWiring.php. Since we want to use the same instance for both service interfaces, the instantiator for <code>ThingyLookup</code> would return <code>$services-&gt;getThingyStore()</code>.</li>
+<li>Add <code>getThingyLookup()</code> and <code>getThingyStore()</code> methods to MediaWikiServices. Don’t forget to add the appropriate test cases in MediaWikiServicesTest.</li>
+<li>In the old <code>Thingy</code> class, replace all member variables that represent the record’s data with a single <code>ThingyRecord</code> object.</li>
+<li>In the old Thingy class, replace all calls to static methods or functions, such as wfGetDB(), with calls to the appropriate services, such as <code>LoadBalancer::getConnection()</code>.</li>
+<li>In Thingy’s constructor, pull in any services needed, such as the LoadBalancer, by using <code>MediaWikiServices::getInstance()</code>. These services cannot be injected without changing the constructor signature, which is often impractical for “smart records” that get instantiated directly in many places in the code base.</li>
+<li>Deprecate the old <code>Thingy</code> class. Replace all usages of it with one of the three new classes: loading needs a <code>ThingyLookup</code>, storing needs a <code>ThingyStore</code>, and reading data needs a <code>ThingyRecord</code>.</li>
+</ul>
+<h3 id="migrate-lazy-loading">Migrate lazy loading</h3>
+<p>Assume <code>Thingy</code> is a “smart record” as described above, but requires lazy loading of some or all the data it represents.</p>
+<ul>
+<li>Instead of a plain object, define <code>ThingyRecord</code> to be an interface. Provide a “simple” and “lazy” implementations, called <code>SimpleThingyRecord</code> and <code>LazyThingyRecord</code>. <code>LazyThingyRecord</code> knows about some lower level storage interface, like a LoadBalancer, and uses it to load information on demand.</li>
+<li>Any direct instantiation of a <code>ThingyRecord</code> would use the <code>SimpleThingyRecord</code> implementation.</li>
+<li><code>SqlThingyStore</code> however creates instances of <code>LazyThingyRecord</code>, and injects whatever storage layer service <code>LazyThingyRecord</code> needs to perform lazy loading.</li>
+</ul>
+</body>
+</html>

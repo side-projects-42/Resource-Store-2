@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="active-record-crud">Active Record CRUD</h1>
+<h2 id="objective">Objective</h2>
+<p>The goal of this lab is to get comfortable performing CRUD (Create, Read, Update, Delete) actions using Active Record.</p>
+<p>There are different ways to solve this lab so feel free to experiment!</p>
+<h2 id="instructions">Instructions</h2>
+<p>Before starting this lab run <code>bundle</code>, to get the proper gem dependencies. If your operating system is OSX El Capitan, and you have an issue installing <code>EventMachine</code>, first check to make sure Open SSL is installed by entering <code>brew install openssl</code> in terminal. Once it’s installed, enter <code>brew link openssl --force</code>.</p>
+<p>Also enter <code>rake -T</code>, which will list all of the rake tasks you have available in this lab. These tasks come with the <code>sinatra-activerecord</code> gem.</p>
+<p>Start the lab by running <code>learn</code> or keep reading for more instructions.</p>
+<h3 id="create-table">Create Table</h3>
+<p>Try using the rake task <code>rake db:create_migration NAME=create_movies</code> to create your migration file. Once you have a migration file add columns like so:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Column Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>title</code></td>
+<td>(string)</td>
+</tr>
+<tr class="even">
+<td><code>release_date</code></td>
+<td>(integer)</td>
+</tr>
+<tr class="odd">
+<td><code>director</code></td>
+<td>(string)</td>
+</tr>
+<tr class="even">
+<td><code>lead</code></td>
+<td>(string)</td>
+</tr>
+<tr class="odd">
+<td><code>in_theaters</code></td>
+<td>(boolean)</td>
+</tr>
+</tbody>
+</table>
+<p>After your migration is ready run <code>rake db:migrate</code> to migrate your table and <code>rake db:migrate SINATRA_ENV=test</code> to migrate a test database so you will be able to run <code>learn</code></p>
+<h3 id="tests">Tests</h3>
+<p>Run <code>rspec</code> or <code>learn</code> to see the tests. To make them pass open <code>movie_controller.rb</code> and complete each method. It will help to open <code>spec/models/movie_spec.rb</code> to see exactly what each spec is testing for.</p>
+<p>In each method the <code>__</code> corresponds to a line of code you will need to write to make the spec pass.</p>
+<p>Each test will take us through performing a basic CRUD action using the database we just created. These tests will take you through:</p>
+<h4 id="create">Create</h4>
+<ul>
+<li>A movie can be instantiated, given a title, and saved</li>
+<li>A movie can be instantiated with a hash containing all of its attributes</li>
+<li>A movie can be created in a block</li>
+</ul>
+<h4 id="read">Read</h4>
+<ul>
+<li>You can return the first item in the table</li>
+<li>You can return the last item in the table</li>
+<li>You can return the number of records in the table</li>
+<li>You can return a movie from the table based on its attributes</li>
+<li>You can use a <code>where</code> clause to select the appropriate movies and sort them by release date</li>
+</ul>
+<h4 id="update">Update</h4>
+<ul>
+<li>Can be found, updated, and saved</li>
+<li>Can be updated using the <code>update</code> method</li>
+<li>Can update all records at once</li>
+</ul>
+<h4 id="destroy">Destroy</h4>
+<ul>
+<li>Can destroy a single item</li>
+<li>Can destroy all items at once</li>
+</ul>
+<h2 id="resources">Resources</h2>
+<p><a href="http://guides.rubyonrails.org/active_record_querying.html">Active Record Query Interface</a>.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/activerecord-crud' title='Active Record CRUD'>Active Record CRUD</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>january-22</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember.js-core-team-2016-01-22">Ember.js Core Team 2016-01-22</h1>
+<h2 id="attendees">Attendees</h2>
+<p>Matt, Dan, Ed, Godfrey, Kris, Martin, Tom, Yehuda, Erik, Stef, Leah</p>
+<h2 id="topics">Topics</h2>
+<ul>
+<li><code>@each</code> Bug - https://github.com/emberjs/ember.js/pull/12832 (stef)</li>
+<li>DG – Pods Discussion (dan)
+<ul>
+<li>new modular pods proposal - https://gist.github.com/dgeb/5185fd0179327a2426da</li>
+<li>analysis of NPS (and a pods+ proposal I no longer support) - https://gist.github.com/dgeb/9ed417afa7164dec4aa3</li>
+</ul></li>
+<li>Testing (robert)</li>
+<li>Glimmer2 stuff (yehuda)</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<h3 id="each"><code>@each</code></h3>
+<p>SP: there are a chain of poor tests around the <span class="citation" data-cites="each">@each</span> issue. I think it is good to enumerate as many cases as possible and write better tests. Something around 2.2 (I believe) changed though we haven’t hunted it down.</p>
+<p>KS: Is there a chance it could be the more frequent invalidation was required/intentional?</p>
+<p>SP: I don’t think so. Tricky to get to the root since there have been multiple issues for a while, and the conversation is becoming muddled on the issue</p>
+<p>(technical discussion)</p>
+<h3 id="pods">Pods</h3>
+<p>DG: I didn’t grok new pods until the end of the F2F, so I’ve been reviewing and thinking about it. I created a new proposal and it spun into a few variants. I went through what I think everyone went through at the last F2F</p>
+<p>DG: I’ve created a new proposal with thoughts and explorations</p>
+<p>YK: I think it is too early to evaluate proposals as a group right now. We only settled on a solution a day or two ago, and so we might have a good option or not. A smaller group iterating seems like they might find better ideas.</p>
+<p>YK: fwiw my recollection of the main constraint is that we do not want slashes in component names.</p>
+<p>YK: We need a method to group that does not mean specifying the group explicitly at invocation</p>
+<p>YK: We want some compat with the current global system. There should be a way to share components in your app, but it should not diverge extremely from the current invocations</p>
+<p>YK: lastly addons need a solution for this. there was a import proposal which we back-burnered, and the second was packaging</p>
+<p>YK: (one more constraint matt couldn’t type out)</p>
+<p>YK: lastly relocation should be DnD, basically</p>
+<p>YK: we need to check the mental load of adding a new thing (do I need to look at a flow chart to know how to name a thing?)</p>
+<p>SP: generators should save keystrokes, not cognitive overhead</p>
+<p>EF: We could make it so generators run in a nested directory create the thing in the right place.</p>
+<p>DG: I think the way to deal with namespacing is to have people invoke the generator with slashes to namespace.</p>
+<p>EF: Another constraint is to make sure we don’t have to reserve future names that may conflict with existing directories. That’s why the + was introduced.</p>
+<p>DG: Pods+ was designed to be future-proof</p>
+<p>YK: I like the proposal, I just want to discuss the cognitive load aspect a bit offline</p>
+<p>EF/YK: soft constraints, short is bad, long is bad, special characters are off-putting</p>
+<p>(discussion)</p>
+<p>SP: don’t want to add to this, but I’d really like to have my unit tests next to my code</p>
+<p>YK: package by feature cs package by layer are the terms in Java, you can google and get some ideas about what others have done with this stuff</p>
+<p>YK: One of the goals of the whole feature is that you can perceive nested parts as a “sub-app.” We would like you to be able to nest things in the areas where they are used. You should be able to look at a single route and view it as an encapsulated unit. If you flatten everything to a top-level, it’s hard to find the things that are specific to a particular route.</p>
+<p>(discussion of pods + routable components)</p>
+<p>YK: Using + for file or dir names requires some editor due diligence</p>
+<p>KS: modular approach also solve titlebar</p>
+<p>YK: disagree, I think it makes it worse. It has both approaches, so you have inconsistent content in the titlebar</p>
+<h3 id="summary-of-pods-design-constraints">Summary of Pods Design Constraints</h3>
+<ol type="1">
+<li>Reasonable branching factor. Users should see a reasonable number of items at any given level in their hierarchy. Flattening out too much results in an unreasonably large number of items.</li>
+<li>No slashes in component names. The existing system allows this, and it’s not something we want to support with Glimmer components.</li>
+<li>Addons need to participate in the naming scheme, most likely with namespace prefix and double-colon separator.</li>
+<li>Subtrees should be relocatable. If you move a directory to a new place in the tree, it’s internal structure should all still work.</li>
+<li>There should be no cognitive overhead when adding a new thing. The right way should be obvious and not impose unnecessary decisions.</li>
+<li>We need clean separation between the namespace of the user’s own components, helpers, routes, etc and the framework’s own type names (“component”, “helper”, etc) so that we can disambiguate them and add future ones.</li>
+<li>Ideally we will have a place to put tests alongside their components.</li>
+<li>Local relative lookup for components and helpers needs to work.</li>
+<li>Avoid the “titlebar problem”, in which many files are all named “component.js” and you can’t tell them apart in your editor.</li>
+</ol>
+<h3 id="testing">Testing</h3>
+<p>RJ: mmun and a coworker are working on improving test helpers. Going to do it incrementally, but not expose them until the whole is done.</p>
+<p>YK: Should for sure have an RFC</p>
+<p>RJ: Right, and I wanted to rewrite the testing guides. It will help us see what need to be in the RFC</p>
+<p>EF: yeah it is in an addon, but the experience is described in the guides and so should be RFC’d</p>
+<p>RJ: Right, this is with the goal of “readme driven development”</p>
+<h3 id="glimmer">Glimmer</h3>
+<p>YK: Glimmer FF</p>
+<p>RJ: I got sidelined, it is a small amount</p>
+<p>MB: can I get on the chat?</p>
+<p>YK: we have a room, we can add people to it</p>
+<p>MB: we should add people like serabe etc as well</p>
+<p>MB: I’d like to see a meeting like we have for htmlbars.</p>
+<p>(dive into testing setup for glimmer packages)</p>
+<p>YK: would be helpful to have the DSL as we have <a href="https://github.com/tildeio/glimmer/blob/07069c69057731730d25bfe340f843db8b3c23cc/packages/node_modules/glimmer-runtime/tests/ember-component-test.ts#L374-L394">here in glimmer for envs</a> (also <a href="https://github.com/tildeio/glimmer/blob/07069c69057731730d25bfe340f843db8b3c23cc/packages/node_modules/glimmer-runtime/tests/ember-component-test.ts#L491-L504">here</a> and <a href="https://github.com/tildeio/glimmer/blob/07069c69057731730d25bfe340f843db8b3c23cc/packages/node_modules/glimmer-runtime/tests/ember-component-test.ts#L1176">here</a>)</p>
+<p>YK: to the extent that we have better tests is it b/c of tools like this</p>
+<p>YK: we did the work on merging in glimmer 2 yesterday. after the F2F it felt like the biggest thing</p>
+</body>
+</html>

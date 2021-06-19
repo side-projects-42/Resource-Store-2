@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>11-Promises</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="promises-and-asynchronous-programming">Promises and Asynchronous Programming</h1>
+<p>One of the most powerful aspects of JavaScript is how easily it handles asynchronous programming. As a language created for the Web, JavaScript needed to be able to respond to asynchronous user interactions such as clicks and key presses from the beginning. Node.js further popularized asynchronous programming in JavaScript by using callbacks as an alternative to events. As more and more programs started using asynchronous programming, events and callbacks were no longer powerful enough to support everything developers wanted to do. <em>Promises</em> are the solution to this problem.</p>
+<p>Promises are another option for asynchronous programming, and they work like futures and deferreds do in other languages. A promise specifies some code to be executed later (as with events and callbacks) and also explicitly indicates whether the code succeeded or failed at its job. You can chain promises together based on success or failure in ways that make your code easier to understand and debug.</p>
+<p>To have a good understanding of how promises work, however, it’s important to understand some of the basic concepts upon which they are built.</p>
+<h2 id="asynchronous-programming-background">Asynchronous Programming Background</h2>
+<p>JavaScript engines are built on the concept of a single-threaded event loop. <em>Single-threaded</em> means that only one piece of code is ever executed at a time. Contrast this with languages like Java or C++, where threads can allow multiple different pieces of code to execute at the same time. Maintaining and protecting state when multiple pieces of code can access and change that state is a difficult problem and a frequent source of bugs in thread-based software.</p>
+<p>JavaScript engines can only execute one piece of code at a time, so they need to keep track of code that is meant to run. That code is kept in a <em>job queue</em>. Whenever a piece of code is ready to be executed, it is added to the job queue. When the JavaScript engine is finished executing code, the event loop executes the next job in the queue. The <em>event loop</em> is a process inside the JavaScript engine that monitors code execution and manages the job queue. Keep in mind that as a queue, job execution runs from the first job in the queue to the last.</p>
+<h3 id="the-event-model">The Event Model</h3>
+<p>When a user clicks a button or presses a key on the keyboard, an <em>event</em> like <code>onclick</code> is triggered. That event might respond to the interaction by adding a new job to the back of the job queue. This is JavaScript’s most basic form of asynchronous programming. The event handler code doesn’t execute until the event fires, and when it does execute, it has the appropriate context. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">let</span> button <span class="op">=</span> <span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;my-btn&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="va">button</span>.<span class="at">onclick</span> <span class="op">=</span> <span class="kw">function</span>(event) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Clicked&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="op">};</span></a></code></pre></div>
+<p>In this code, <code>console.log("Clicked")</code> will not be executed until <code>button</code> is clicked. When <code>button</code> is clicked, the function assigned to <code>onclick</code> is added to the back of the job queue and will be executed when all other jobs ahead of it are complete.</p>
+<p>Events work well for simple interactions, but chaining multiple separate asynchronous calls together is more complicated because you must keep track of the event target (<code>button</code> in the previous example) for each event. Additionally, you need to ensure all appropriate event handlers are added before the first time an event occurs. For instance, if <code>button</code> were clicked before <code>onclick</code> is assigned, nothing would happen. So while events are useful for responding to user interactions and similar infrequent functionality, they aren’t very flexible for more complex needs.</p>
+<h3 id="the-callback-pattern">The Callback Pattern</h3>
+<p>When Node.js was created, it advanced the asynchronous programming model by popularizing the callback pattern of programming. The callback pattern is similar to the event model because the asynchronous code doesn’t execute until a later point in time. It’s different because the function to call is passed in as an argument, as shown here:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="at">readFile</span>(<span class="st">&quot;example.txt&quot;</span><span class="op">,</span> <span class="kw">function</span>(err<span class="op">,</span> contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">        <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb2-5" title="5"></a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Hi!&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>This example uses the traditional Node.js <em>error-first</em> callback style. The <code>readFile()</code> function is intended to read from a file on disk (specified as the first argument) and then execute the callback (the second argument) when complete. If there’s an error, the <code>err</code> argument of the callback is an error object; otherwise, the <code>contents</code> argument contains the file contents as a string.</p>
+<p>Using the callback pattern, <code>readFile()</code> begins executing immediately and pauses when it starts reading from the disk. That means <code>console.log("Hi!")</code> is output immediately after <code>readFile()</code> is called, before <code>console.log(contents)</code> prints anything. When <code>readFile()</code> finishes, it adds a new job to the end of the job queue with the callback function and its arguments. That job is then executed upon completion of all other jobs ahead of it.</p>
+<p>The callback pattern is more flexible than events because chaining multiple calls together is easier with callbacks. For example:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="at">readFile</span>(<span class="st">&quot;example.txt&quot;</span><span class="op">,</span> <span class="kw">function</span>(err<span class="op">,</span> contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">    <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">        <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-5" title="5"></a>
+<a class="sourceLine" id="cb3-6" title="6">    <span class="at">writeFile</span>(<span class="st">&quot;example.txt&quot;</span><span class="op">,</span> <span class="kw">function</span>(err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-7" title="7">        <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-8" title="8">            <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-9" title="9">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-10" title="10"></a>
+<a class="sourceLine" id="cb3-11" title="11">        <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;File was written!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-12" title="12">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, a successful call to <code>readFile()</code> results in another asynchronous call, this time to the <code>writeFile()</code> function. Note that the same basic pattern of checking <code>err</code> is present in both functions. When <code>readFile()</code> is complete, it adds a job to the job queue that results in <code>writeFile()</code> being called (assuming no errors). Then, <code>writeFile()</code> adds a job to the job queue when it finishes.</p>
+<p>This pattern works fairly well, but you can quickly find yourself in <em>callback hell</em>. Callback hell occurs when you nest too many callbacks, like this:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="at">method1</span>(<span class="kw">function</span>(err<span class="op">,</span> result) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-4" title="4">        <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="at">method2</span>(<span class="kw">function</span>(err<span class="op">,</span> result) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-8" title="8"></a>
+<a class="sourceLine" id="cb4-9" title="9">        <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-10" title="10">            <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-11" title="11">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-12" title="12"></a>
+<a class="sourceLine" id="cb4-13" title="13">        <span class="at">method3</span>(<span class="kw">function</span>(err<span class="op">,</span> result) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-14" title="14"></a>
+<a class="sourceLine" id="cb4-15" title="15">            <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-16" title="16">                <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-17" title="17">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-18" title="18"></a>
+<a class="sourceLine" id="cb4-19" title="19">            <span class="at">method4</span>(<span class="kw">function</span>(err<span class="op">,</span> result) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-20" title="20"></a>
+<a class="sourceLine" id="cb4-21" title="21">                <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-22" title="22">                    <span class="cf">throw</span> err<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-23" title="23">                <span class="op">}</span></a>
+<a class="sourceLine" id="cb4-24" title="24"></a>
+<a class="sourceLine" id="cb4-25" title="25">                <span class="at">method5</span>(result)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-26" title="26">            <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-27" title="27"></a>
+<a class="sourceLine" id="cb4-28" title="28">        <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-29" title="29"></a>
+<a class="sourceLine" id="cb4-30" title="30">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-31" title="31"></a>
+<a class="sourceLine" id="cb4-32" title="32"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Nesting multiple method calls as this example does creates a tangled web of code that is hard to understand and debug. Callbacks also present problems when you want to implement more complex functionality. What if you want two asynchronous operations to run in parallel and notify you when they’re both complete? What if you’d like to start two asynchronous operations at a time but only take the result of the first one to complete?</p>
+<p>In these cases, you’d need to track multiple callbacks and cleanup operations, and promises greatly improve such situations.</p>
+<h2 id="promise-basics">Promise Basics</h2>
+<p>A promise is a placeholder for the result of an asynchronous operation. Instead of subscribing to an event or passing a callback to a function, the function can return a promise, like this:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// readFile promises to complete at some point in the future</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">let</span> promise <span class="op">=</span> <span class="at">readFile</span>(<span class="st">&quot;example.txt&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, <code>readFile()</code> doesn’t actually start reading the file immediately; that will happen later. Instead, the function returns a promise object representing the asynchronous read operation so you can work with it in the future. Exactly when you’ll be able to work with that result depends entirely on how the promise’s lifecycle plays out.</p>
+<h3 id="the-promise-lifecycle">The Promise Lifecycle</h3>
+<p>Each promise goes through a short lifecycle starting in the <em>pending</em> state, which indicates that the asynchronous operation hasn’t completed yet. A pending promise is considered <em>unsettled</em>. The promise in the last example is in the pending state as soon as the <code>readFile()</code> function returns it. Once the asynchronous operation completes, the promise is considered <em>settled</em> and enters one of two possible states:</p>
+<ol type="1">
+<li><em>Fulfilled</em>: The promise’s asynchronous operation has completed successfully.</li>
+<li><em>Rejected</em>: The promise’s asynchronous operation didn’t complete successfully due to either an error or some other cause.</li>
+</ol>
+<p>An internal <code>[[PromiseState]]</code> property is set to <code>"pending"</code>, <code>"fulfilled"</code>, or <code>"rejected"</code> to reflect the promise’s state. This property isn’t exposed on promise objects, so you can’t determine which state the promise is in programmatically. But you can take a specific action when a promise changes state by using the <code>then()</code> method.</p>
+<p>The <code>then()</code> method is present on all promises and takes two arguments. The first argument is a function to call when the promise is fulfilled. Any additional data related to the asynchronous operation is passed to this fulfillment function. The second argument is a function to call when the promise is rejected. Similar to the fulfillment function, the rejection function is passed any additional data related to the rejection.</p>
+<p>I&gt; Any object that implements the <code>then()</code> method in this way is called a <em>thenable</em>. All promises are thenables, but not all thenables are promises.</p>
+<p>Both arguments to <code>then()</code> are optional, so you can listen for any combination of fulfillment and rejection. For example, consider this set of <code>then()</code> calls:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="at">readFile</span>(<span class="st">&quot;example.txt&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="co">// fulfillment</span></a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="va">console</span>.<span class="at">log</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="op">},</span> <span class="kw">function</span>(err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="co">// rejection</span></a>
+<a class="sourceLine" id="cb6-8" title="8">    <span class="va">console</span>.<span class="at">error</span>(<span class="va">err</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-10" title="10"></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-12" title="12">    <span class="co">// fulfillment</span></a>
+<a class="sourceLine" id="cb6-13" title="13">    <span class="va">console</span>.<span class="at">log</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-15" title="15"></a>
+<a class="sourceLine" id="cb6-16" title="16"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">null</span><span class="op">,</span> <span class="kw">function</span>(err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-17" title="17">    <span class="co">// rejection</span></a>
+<a class="sourceLine" id="cb6-18" title="18">    <span class="va">console</span>.<span class="at">error</span>(<span class="va">err</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>All three <code>then()</code> calls operate on the same promise. The first call listens for both fulfillment and rejection. The second only listens for fulfillment; errors won’t be reported. The third just listens for rejection and doesn’t report success.</p>
+<p>Promises also have a <code>catch()</code> method that behaves the same as <code>then()</code> when only a rejection handler is passed. For example, the following <code>catch()</code> and <code>then()</code> calls are functionally equivalent:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="va">promise</span>.<span class="at">catch</span>(<span class="kw">function</span>(err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">    <span class="co">// rejection</span></a>
+<a class="sourceLine" id="cb7-3" title="3">    <span class="va">console</span>.<span class="at">error</span>(<span class="va">err</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-5" title="5"></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="co">// is the same as:</span></a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">null</span><span class="op">,</span> <span class="kw">function</span>(err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-9" title="9">    <span class="co">// rejection</span></a>
+<a class="sourceLine" id="cb7-10" title="10">    <span class="va">console</span>.<span class="at">error</span>(<span class="va">err</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>The intent behind <code>then()</code> and <code>catch()</code> is for you to use them in combination to properly handle the result of asynchronous operations. This system is better than events and callbacks because it makes whether the operation succeeded or failed completely clear. (Events tend not to fire when there’s an error, and in callbacks you must always remember to check the error argument.) Just know that if you don’t attach a rejection handler to a promise, all failures will happen silently. Always attach a rejection handler, even if the handler just logs the failure.</p>
+<p>A fulfillment or rejection handler will still be executed even if it is added to the job queue after the promise is already settled. This allows you to add new fulfillment and rejection handlers at any time and guarantee that they will be called. For example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="at">readFile</span>(<span class="st">&quot;example.txt&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-2" title="2"></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="co">// original fulfillment handler</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="va">console</span>.<span class="at">log</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-6" title="6"></a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="co">// now add another</span></a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-9" title="9">        <span class="va">console</span>.<span class="at">log</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-10" title="10">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, the fulfillment handler adds another fulfillment handler to the same promise. The promise is already fulfilled at this point, so the new fulfillment handler is added to the job queue and called when ready. Rejection handlers work the same way.</p>
+<p>I&gt; Each call to <code>then()</code> or <code>catch()</code> creates a new job to be executed when the promise is resolved. But these jobs end up in a separate job queue that is reserved strictly for promises. The precise details of this second job queue aren’t important for understanding how to use promises so long as you understand how job queues work in general.</p>
+<h3 id="creating-unsettled-promises">Creating Unsettled Promises</h3>
+<p>New promises are created using the <code>Promise</code> constructor. This constructor accepts a single argument: a function called the <em>executor</em>, which contains the code to initialize the promise. The executor is passed two functions named <code>resolve()</code> and <code>reject()</code> as arguments. The <code>resolve()</code> function is called when the executor has finished successfully to signal that the promise is ready to be resolved, while the <code>reject()</code> function indicates that the executor has failed.</p>
+<p>Here’s an example that uses a promise in Node.js to implement the <code>readFile()</code> function from earlier in this chapter:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="co">// Node.js example</span></a>
+<a class="sourceLine" id="cb9-2" title="2"></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw">let</span> fs <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;fs&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="kw">function</span> <span class="at">readFile</span>(filename) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-6" title="6">    <span class="cf">return</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-7" title="7"></a>
+<a class="sourceLine" id="cb9-8" title="8">        <span class="co">// trigger the asynchronous operation</span></a>
+<a class="sourceLine" id="cb9-9" title="9">        <span class="va">fs</span>.<span class="at">readFile</span>(filename<span class="op">,</span> <span class="op">{</span> <span class="dt">encoding</span><span class="op">:</span> <span class="st">&quot;utf8&quot;</span> <span class="op">},</span> <span class="kw">function</span>(err<span class="op">,</span> contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-10" title="10"></a>
+<a class="sourceLine" id="cb9-11" title="11">            <span class="co">// check for errors</span></a>
+<a class="sourceLine" id="cb9-12" title="12">            <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-13" title="13">                <span class="at">reject</span>(err)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-14" title="14">                <span class="cf">return</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb9-15" title="15">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb9-16" title="16"></a>
+<a class="sourceLine" id="cb9-17" title="17">            <span class="co">// the read succeeded</span></a>
+<a class="sourceLine" id="cb9-18" title="18">            <span class="at">resolve</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-19" title="19"></a>
+<a class="sourceLine" id="cb9-20" title="20">        <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-21" title="21">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-22" title="22"><span class="op">}</span></a>
+<a class="sourceLine" id="cb9-23" title="23"></a>
+<a class="sourceLine" id="cb9-24" title="24"><span class="kw">let</span> promise <span class="op">=</span> <span class="at">readFile</span>(<span class="st">&quot;example.txt&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-25" title="25"></a>
+<a class="sourceLine" id="cb9-26" title="26"><span class="co">// listen for both fulfillment and rejection</span></a>
+<a class="sourceLine" id="cb9-27" title="27"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-28" title="28">    <span class="co">// fulfillment</span></a>
+<a class="sourceLine" id="cb9-29" title="29">    <span class="va">console</span>.<span class="at">log</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-30" title="30"><span class="op">},</span> <span class="kw">function</span>(err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-31" title="31">    <span class="co">// rejection</span></a>
+<a class="sourceLine" id="cb9-32" title="32">    <span class="va">console</span>.<span class="at">error</span>(<span class="va">err</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-33" title="33"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, the native Node.js <code>fs.readFile()</code> asynchronous call is wrapped in a promise. The executor either passes the error object to the <code>reject()</code> function or passes the file contents to the <code>resolve()</code> function.</p>
+<p>Keep in mind that the executor runs immediately when <code>readFile()</code> is called. When either <code>resolve()</code> or <code>reject()</code> is called inside the executor, a job is added to the job queue to resolve the promise. This is called <em>job scheduling</em>, and if you’ve ever used the <code>setTimeout()</code> or <code>setInterval()</code> functions, then you’re already familiar with it. In job scheduling, you add a new job to the job queue to say, “Don’t execute this right now, but execute it later.” For instance, the <code>setTimeout()</code> function lets you specify a delay before a job is added to the queue:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="co">// add this function to the job queue after 500ms have passed</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="at">setTimeout</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Timeout&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="op">},</span> <span class="dv">500</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Hi!&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>This code schedules a job to be added to the job queue after 500ms. The two <code>console.log()</code> calls produce the following output:</p>
+<pre><code>Hi!
+Timeout</code></pre>
+<p>Thanks to the 500ms delay, the output that the function passed to <code>setTimeout()</code> was shown after the output from the <code>console.log("Hi!")</code> call.</p>
+<p>Promises work similarly. The promise executor executes immediately, before anything that appears after it in the source code. For instance:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-2" title="2">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Promise&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="at">resolve</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-5" title="5"></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Hi!&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>The output for this code is:</p>
+<pre><code>Promise
+Hi!</code></pre>
+<p>Calling <code>resolve()</code> triggers an asynchronous operation. Functions passed to <code>then()</code> and <code>catch()</code> are executed asynchronously, as these are also added to the job queue. Here’s an example:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-2" title="2">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Promise&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-3" title="3">    <span class="at">resolve</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-5" title="5"></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb14-7" title="7">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Resolved.&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-9" title="9"></a>
+<a class="sourceLine" id="cb14-10" title="10"><span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Hi!&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>The output for this example is:</p>
+<pre><code>Promise
+Hi!
+Resolved</code></pre>
+<p>Note that even though the call to <code>then()</code> appears before the <code>console.log("Hi!")</code> line, it doesn’t actually execute until later (unlike the executor). That’s because fulfillment and rejection handlers are always added to the end of the job queue after the executor has completed.</p>
+<h3 id="creating-settled-promises">Creating Settled Promises</h3>
+<p>The <code>Promise</code> constructor is the best way to create unsettled promises due to the dynamic nature of what the promise executor does. But if you want a promise to represent just a single known value, then it doesn’t make sense to schedule a job that simply passes a value to the <code>resolve()</code> function. Instead, there are two methods that create settled promises given a specific value.</p>
+<h4 id="using-promise.resolve">Using Promise.resolve()</h4>
+<p>The <code>Promise.resolve()</code> method accepts a single argument and returns a promise in the fulfilled state. That means no job scheduling occurs, and you need to add one or more fulfillment handlers to the promise to retrieve the value. For example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="va">Promise</span>.<span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb16-4" title="4">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>This code creates a fulfilled promise so the fulfillment handler receives 42 as <code>value</code>. If a rejection handler were added to this promise, the rejection handler would never be called because the promise will never be in the rejected state.</p>
+<h4 id="using-promise.reject">Using Promise.reject()</h4>
+<p>You can also create rejected promises by using the <code>Promise.reject()</code> method. This works like <code>Promise.resolve()</code> except the created promise is in the rejected state, as follows:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="va">Promise</span>.<span class="at">reject</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb17-2" title="2"></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="va">promise</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb17-4" title="4">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Any additional rejection handlers added to this promise would be called, but not fulfillment handlers.</p>
+<p>I&gt; If you pass a promise to either the <code>Promise.resolve()</code> or <code>Promise.reject()</code> methods, the promise is returned without modification.</p>
+<h4 id="non-promise-thenables">Non-Promise Thenables</h4>
+<p>Both <code>Promise.resolve()</code> and <code>Promise.reject()</code> also accept non-promise thenables as arguments. When passed a non-promise thenable, these methods create a new promise that is called after the <code>then()</code> function.</p>
+<p>A non-promise thenable is created when an object has a <code>then()</code> method that accepts a <code>resolve</code> and a <code>reject</code> argument, like this:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">let</span> thenable <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-2" title="2">    <span class="dt">then</span><span class="op">:</span> <span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb18-3" title="3">        <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb18-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="op">};</span></a></code></pre></div>
+<p>The <code>thenable</code> object in this example has no characteristics associated with a promise other than the <code>then()</code> method. You can call <code>Promise.resolve()</code> to convert <code>thenable</code> into a fulfilled promise:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">let</span> thenable <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-2" title="2">    <span class="dt">then</span><span class="op">:</span> <span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-3" title="3">        <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb19-6" title="6"></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="kw">let</span> p1 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">resolve</span>(thenable)<span class="op">;</span></a>
+<a class="sourceLine" id="cb19-8" title="8"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb19-9" title="9">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb19-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, <code>Promise.resolve()</code> calls <code>thenable.then()</code> so that a promise state can be determined. The promise state for <code>thenable</code> is fulfilled because <code>resolve(42)</code> is called inside the <code>then()</code> method. A new promise called <code>p1</code> is created in the fulfilled state with the value passed from <code>thenable</code> (that is, 42), and the fulfillment handler for <code>p1</code> receives 42 as the value.</p>
+<p>The same process can be used with <code>Promise.resolve()</code> to create a rejected promise from a thenable:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">let</span> thenable <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-2" title="2">    <span class="dt">then</span><span class="op">:</span> <span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-3" title="3">        <span class="at">reject</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-4" title="4">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="op">};</span></a>
+<a class="sourceLine" id="cb20-6" title="6"></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="kw">let</span> p1 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">resolve</span>(thenable)<span class="op">;</span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="va">p1</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb20-9" title="9">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>This example is similar to the last except that <code>thenable</code> is rejected. When <code>thenable.then()</code> executes, a new promise is created in the rejected state with a value of 42. That value is then passed to the rejection handler for <code>p1</code>.</p>
+<p><code>Promise.resolve()</code> and <code>Promise.reject()</code> work like this to allow you to easily work with non-promise thenables. A lot of libraries used thenables prior to promises being introduced in ECMAScript 6, so the ability to convert thenables into formal promises is important for backwards-compatibility with previously existing libraries. When you’re unsure if an object is a promise, passing the object through <code>Promise.resolve()</code> or <code>Promise.reject()</code> (depending on your anticipated result) is the best way to find out because promises just pass through unchanged.</p>
+<h3 id="executor-errors">Executor Errors</h3>
+<p>If an error is thrown inside an executor, then the promise’s rejection handler is called. For example:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-2" title="2">    <span class="cf">throw</span> <span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Explosion!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-4" title="4"></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="va">promise</span>.<span class="at">catch</span>(<span class="kw">function</span>(error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb21-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span>     <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, the executor intentionally throws an error. There is an implicit <code>try-catch</code> inside every executor such that the error is caught and then passed to the rejection handler. The previous example is equivalent to:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">let</span> promise <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-2" title="2">    <span class="cf">try</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-3" title="3">        <span class="cf">throw</span> <span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Explosion!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-4" title="4">    <span class="op">}</span> <span class="cf">catch</span> (ex) <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-5" title="5">        <span class="at">reject</span>(ex)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-6" title="6">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb22-8" title="8"></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="va">promise</span>.<span class="at">catch</span>(<span class="kw">function</span>(error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-10" title="10">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span>     <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb22-11" title="11"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>The executor handles catching any thrown errors to simplify this common use case, but an error thrown in the executor is only reported when a rejection handler is present. Otherwise, the error is suppressed. This became a problem for developers early on in the use of promises, and JavaScript environments address it by providing hooks for catching rejected promises.</p>
+<h2 id="global-promise-rejection-handling">Global Promise Rejection Handling</h2>
+<p>One of the most controversial aspects of promises is the silent failure that occurs when a promise is rejected without a rejection handler. Some consider this the biggest flaw in the specification as it’s the only part of the JavaScript language that doesn’t make errors apparent.</p>
+<p>Determining whether a promise rejection was handled isn’t straightforward due to the nature of promises. For instance, consider this example:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="kw">let</span> rejected <span class="op">=</span> <span class="va">Promise</span>.<span class="at">reject</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-2" title="2"></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="co">// at this point, rejected is unhandled</span></a>
+<a class="sourceLine" id="cb23-4" title="4"></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="co">// some time later...</span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="va">rejected</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb23-7" title="7">    <span class="co">// now rejected has been handled</span></a>
+<a class="sourceLine" id="cb23-8" title="8">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb23-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>You can call <code>then()</code> or <code>catch()</code> at any point and have them work correctly regardless of whether the promise is settled or not, making it hard to know precisely when a promise is going to be handled. In this case, the promise is rejected immediately but isn’t handled until later.</p>
+<p>While it’s possible that the next version of ECMAScript will address this problem, both browsers and Node.js have implemented changes to address this developer pain point. They aren’t part of the ECMAScript 6 specification but are valuable tools when using promises.</p>
+<h3 id="node.js-rejection-handling">Node.js Rejection Handling</h3>
+<p>In Node.js, there are two events on the <code>process</code> object related to promise rejection handling:</p>
+<ul>
+<li><code>unhandledRejection</code>: Emitted when a promise is rejected and no rejection handler is called within one turn of the event loop</li>
+<li><code>rejectionHandled</code>: Emitted when a promise is rejected and a rejection handler is called after one turn of the event loop</li>
+</ul>
+<p>These events are designed to work together to help identify promises that are rejected and not handled.</p>
+<p>The <code>unhandledRejection</code> event handler is passed the rejection reason (frequently an error object) and the promise that was rejected as arguments. The following code shows <code>unhandledRejection</code> in action:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">let</span> rejected<span class="op">;</span></a>
+<a class="sourceLine" id="cb24-2" title="2"></a>
+<a class="sourceLine" id="cb24-3" title="3"><span class="va">process</span>.<span class="at">on</span>(<span class="st">&quot;unhandledRejection&quot;</span><span class="op">,</span> <span class="kw">function</span>(reason<span class="op">,</span> promise) <span class="op">{</span></a>
+<a class="sourceLine" id="cb24-4" title="4">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">reason</span>.<span class="at">message</span>)<span class="op">;</span>            <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb24-5" title="5">    <span class="va">console</span>.<span class="at">log</span>(rejected <span class="op">===</span> promise)<span class="op">;</span>      <span class="co">// true</span></a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb24-7" title="7"></a>
+<a class="sourceLine" id="cb24-8" title="8">rejected <span class="op">=</span> <span class="va">Promise</span>.<span class="at">reject</span>(<span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Explosion!&quot;</span>))<span class="op">;</span></a></code></pre></div>
+<p>This example creates a rejected promise with an error object and listens for the <code>unhandledRejection</code> event. The event handler receives the error object as the first argument and the promise as the second.</p>
+<p>The <code>rejectionHandled</code> event handler has only one argument, which is the promise that was rejected. For example:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">let</span> rejected<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-2" title="2"></a>
+<a class="sourceLine" id="cb25-3" title="3"><span class="va">process</span>.<span class="at">on</span>(<span class="st">&quot;rejectionHandled&quot;</span><span class="op">,</span> <span class="kw">function</span>(promise) <span class="op">{</span></a>
+<a class="sourceLine" id="cb25-4" title="4">    <span class="va">console</span>.<span class="at">log</span>(rejected <span class="op">===</span> promise)<span class="op">;</span>              <span class="co">// true</span></a>
+<a class="sourceLine" id="cb25-5" title="5"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-6" title="6"></a>
+<a class="sourceLine" id="cb25-7" title="7">rejected <span class="op">=</span> <span class="va">Promise</span>.<span class="at">reject</span>(<span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Explosion!&quot;</span>))<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-8" title="8"></a>
+<a class="sourceLine" id="cb25-9" title="9"><span class="co">// wait to add the rejection handler</span></a>
+<a class="sourceLine" id="cb25-10" title="10"><span class="at">setTimeout</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb25-11" title="11">    <span class="va">rejected</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb25-12" title="12">        <span class="va">console</span>.<span class="at">log</span>(<span class="va">value</span>.<span class="at">message</span>)<span class="op">;</span>     <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb25-13" title="13">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb25-14" title="14"><span class="op">},</span> <span class="dv">1000</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, the <code>rejectionHandled</code> event is emitted when the rejection handler is finally called. If the rejection handler were attached directly to <code>rejected</code> after <code>rejected</code> is created, then the event wouldn’t be emitted. The rejection handler would instead be called during the same turn of the event loop where <code>rejected</code> was created, which isn’t useful.</p>
+<p>To properly track potentially unhandled rejections, use the <code>rejectionHandled</code> and <code>unhandledRejection</code> events to keep a list of potentially unhandled rejections. Then wait some period of time to inspect the list. For example:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">let</span> possiblyUnhandledRejections <span class="op">=</span> <span class="kw">new</span> <span class="at">Map</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-2" title="2"></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="co">// when a rejection is unhandled, add it to the map</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="va">process</span>.<span class="at">on</span>(<span class="st">&quot;unhandledRejection&quot;</span><span class="op">,</span> <span class="kw">function</span>(reason<span class="op">,</span> promise) <span class="op">{</span></a>
+<a class="sourceLine" id="cb26-5" title="5">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">set</span>(promise<span class="op">,</span> reason)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-6" title="6"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-7" title="7"></a>
+<a class="sourceLine" id="cb26-8" title="8"><span class="va">process</span>.<span class="at">on</span>(<span class="st">&quot;rejectionHandled&quot;</span><span class="op">,</span> <span class="kw">function</span>(promise) <span class="op">{</span></a>
+<a class="sourceLine" id="cb26-9" title="9">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">delete</span>(promise)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-10" title="10"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-11" title="11"></a>
+<a class="sourceLine" id="cb26-12" title="12"><span class="at">setInterval</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb26-13" title="13"></a>
+<a class="sourceLine" id="cb26-14" title="14">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">forEach</span>(<span class="kw">function</span>(reason<span class="op">,</span> promise) <span class="op">{</span></a>
+<a class="sourceLine" id="cb26-15" title="15">        <span class="va">console</span>.<span class="at">log</span>(<span class="va">reason</span>.<span class="at">message</span> <span class="op">?</span> <span class="va">reason</span>.<span class="at">message</span> : reason)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-16" title="16"></a>
+<a class="sourceLine" id="cb26-17" title="17">        <span class="co">// do something to handle these rejections</span></a>
+<a class="sourceLine" id="cb26-18" title="18">        <span class="at">handleRejection</span>(promise<span class="op">,</span> reason)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-19" title="19">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-20" title="20"></a>
+<a class="sourceLine" id="cb26-21" title="21">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">clear</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb26-22" title="22"></a>
+<a class="sourceLine" id="cb26-23" title="23"><span class="op">},</span> <span class="dv">60000</span>)<span class="op">;</span></a></code></pre></div>
+<p>This is a simple unhandled rejection tracker. It uses a map to store promises and their rejection reasons. Each promise is a key, and the promise’s reason is the associated value. Each time <code>unhandledRejection</code> is emitted, the promise and its rejection reason are added to the map. Each time <code>rejectionHandled</code> is emitted, the handled promise is removed from the map. As a result, <code>possiblyUnhandledRejections</code> grows and shrinks as events are called. The <code>setInterval()</code> call periodically checks the list of possible unhandled rejections and outputs the information to the console (in reality, you’ll probably want to do something else to log or otherwise handle the rejection). A map is used in this example instead of a weak map because you need to inspect the map periodically to see which promises are present, and that’s not possible with a weak map.</p>
+<p>While this example is specific to Node.js, browsers have implemented a similar mechanism for notifying developers about unhandled rejections.</p>
+<h3 id="browser-rejection-handling">Browser Rejection Handling</h3>
+<p>Browsers also emit two events to help identify unhandled rejections. These events are emitted by the <code>window</code> object and are effectively the same as their Node.js equivalents:</p>
+<ul>
+<li><code>unhandledrejection</code>: Emitted when a promise is rejected and no rejection handler is called within one turn of the event loop.</li>
+<li><code>rejectionhandled</code>: Emitted when a promise is rejected and a rejection handler is called after one turn of the event loop.</li>
+</ul>
+<p>While the Node.js implementation passes individual parameters to the event handler, the event handler for these browser events receives an event object with the following properties:</p>
+<ul>
+<li><code>type</code>: The name of the event (<code>"unhandledrejection"</code> or <code>"rejectionhandled"</code>).</li>
+<li><code>promise</code>: The promise object that was rejected.</li>
+<li><code>reason</code>: The rejection value from the promise.</li>
+</ul>
+<p>The other difference in the browser implementation is that the rejection value (<code>reason</code>) is available for both events. For example:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">let</span> rejected<span class="op">;</span></a>
+<a class="sourceLine" id="cb27-2" title="2"></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="va">window</span>.<span class="at">onunhandledrejection</span> <span class="op">=</span> <span class="kw">function</span>(event) <span class="op">{</span></a>
+<a class="sourceLine" id="cb27-4" title="4">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">event</span>.<span class="at">type</span>)<span class="op">;</span>                    <span class="co">// &quot;unhandledrejection&quot;</span></a>
+<a class="sourceLine" id="cb27-5" title="5">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">event</span>.<span class="va">reason</span>.<span class="at">message</span>)<span class="op">;</span>          <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb27-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(rejected <span class="op">===</span> <span class="va">event</span>.<span class="at">promise</span>)<span class="op">;</span>    <span class="co">// true</span></a>
+<a class="sourceLine" id="cb27-7" title="7"><span class="op">};</span></a>
+<a class="sourceLine" id="cb27-8" title="8"></a>
+<a class="sourceLine" id="cb27-9" title="9"><span class="va">window</span>.<span class="at">onrejectionhandled</span> <span class="op">=</span> <span class="kw">function</span>(event) <span class="op">{</span></a>
+<a class="sourceLine" id="cb27-10" title="10">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">event</span>.<span class="at">type</span>)<span class="op">;</span>                    <span class="co">// &quot;rejectionhandled&quot;</span></a>
+<a class="sourceLine" id="cb27-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">event</span>.<span class="va">reason</span>.<span class="at">message</span>)<span class="op">;</span>          <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb27-12" title="12">    <span class="va">console</span>.<span class="at">log</span>(rejected <span class="op">===</span> <span class="va">event</span>.<span class="at">promise</span>)<span class="op">;</span>    <span class="co">// true</span></a>
+<a class="sourceLine" id="cb27-13" title="13"><span class="op">};</span></a>
+<a class="sourceLine" id="cb27-14" title="14"></a>
+<a class="sourceLine" id="cb27-15" title="15">rejected <span class="op">=</span> <span class="va">Promise</span>.<span class="at">reject</span>(<span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Explosion!&quot;</span>))<span class="op">;</span></a></code></pre></div>
+<p>This code assigns both event handlers using the DOM Level 0 notation of <code>onunhandledrejection</code> and <code>onrejectionhandled</code>. (You can also use <code>addEventListener("unhandledrejection")</code> and <code>addEventListener("rejectionhandled")</code> if you prefer.) Each event handler receives an event object containing information about the rejected promise. The <code>type</code>, <code>promise</code>, and <code>reason</code> properties are all available in both event handlers.</p>
+<p>The code to keep track of unhandled rejections in the browser is very similar to the code for Node.js, too:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb28-1" title="1"><span class="kw">let</span> possiblyUnhandledRejections <span class="op">=</span> <span class="kw">new</span> <span class="at">Map</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-2" title="2"></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="co">// when a rejection is unhandled, add it to the map</span></a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="va">window</span>.<span class="at">onunhandledrejection</span> <span class="op">=</span> <span class="kw">function</span>(event) <span class="op">{</span></a>
+<a class="sourceLine" id="cb28-5" title="5">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">set</span>(<span class="va">event</span>.<span class="at">promise</span><span class="op">,</span> <span class="va">event</span>.<span class="at">reason</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-6" title="6"><span class="op">};</span></a>
+<a class="sourceLine" id="cb28-7" title="7"></a>
+<a class="sourceLine" id="cb28-8" title="8"><span class="va">window</span>.<span class="at">onrejectionhandled</span> <span class="op">=</span> <span class="kw">function</span>(event) <span class="op">{</span></a>
+<a class="sourceLine" id="cb28-9" title="9">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">delete</span>(<span class="va">event</span>.<span class="at">promise</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-10" title="10"><span class="op">};</span></a>
+<a class="sourceLine" id="cb28-11" title="11"></a>
+<a class="sourceLine" id="cb28-12" title="12"><span class="at">setInterval</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb28-13" title="13"></a>
+<a class="sourceLine" id="cb28-14" title="14">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">forEach</span>(<span class="kw">function</span>(reason<span class="op">,</span> promise) <span class="op">{</span></a>
+<a class="sourceLine" id="cb28-15" title="15">        <span class="va">console</span>.<span class="at">log</span>(<span class="va">reason</span>.<span class="at">message</span> <span class="op">?</span> <span class="va">reason</span>.<span class="at">message</span> : reason)<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-16" title="16"></a>
+<a class="sourceLine" id="cb28-17" title="17">        <span class="co">// do something to handle these rejections</span></a>
+<a class="sourceLine" id="cb28-18" title="18">        <span class="at">handleRejection</span>(promise<span class="op">,</span> reason)<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-19" title="19">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-20" title="20"></a>
+<a class="sourceLine" id="cb28-21" title="21">    <span class="va">possiblyUnhandledRejections</span>.<span class="at">clear</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb28-22" title="22"></a>
+<a class="sourceLine" id="cb28-23" title="23"><span class="op">},</span> <span class="dv">60000</span>)<span class="op">;</span></a></code></pre></div>
+<p>This implementation is almost exactly the same as the Node.js implementation. It uses the same approach of storing promises and their rejection values in a map and then inspecting them later. The only real difference is where the information is retrieved from in the event handlers.</p>
+<p>Handling promise rejections can be tricky, but you’ve just begun to see how powerful promises can really be. It’s time to take the next step and chain several promises together.</p>
+<h2 id="chaining-promises">Chaining Promises</h2>
+<p>To this point, promises may seem like little more than an incremental improvement over using some combination of a callback and the <code>setTimeout()</code> function, but there is much more to promises than meets the eye. More specifically, there are a number of ways to chain promises together to accomplish more complex asynchronous behavior.</p>
+<p>Each call to <code>then()</code> or <code>catch()</code> actually creates and returns another promise. This second promise is resolved only once the first has been fulfilled or rejected. Consider this example:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb29-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb29-4" title="4"></a>
+<a class="sourceLine" id="cb29-5" title="5"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb29-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb29-7" title="7"><span class="op">}</span>).<span class="at">then</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb29-8" title="8">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Finished&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb29-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>The code outputs:</p>
+<pre><code>42
+Finished</code></pre>
+<p>The call to <code>p1.then()</code> returns a second promise on which <code>then()</code> is called. The second <code>then()</code> fulfillment handler is only called after the first promise has been resolved. If you unchain this example, it looks like this:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb31-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-4" title="4"></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb31-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-7" title="7"><span class="op">}</span>)</a>
+<a class="sourceLine" id="cb31-8" title="8"></a>
+<a class="sourceLine" id="cb31-9" title="9"><span class="va">p2</span>.<span class="at">then</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb31-10" title="10">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Finished&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb31-11" title="11"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this unchained version of the code, the result of <code>p1.then()</code> is stored in <code>p2</code>, and then <code>p2.then()</code> is called to add the final fulfillment handler. As you might have guessed, the call to <code>p2.then()</code> also returns a promise. This example just doesn’t use that promise.</p>
+<h3 id="catching-errors">Catching Errors</h3>
+<p>Promise chaining allows you to catch errors that may occur in a fulfillment or rejection handler from a previous promise. For example:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb32-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb32-4" title="4"></a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb32-6" title="6">    <span class="cf">throw</span> <span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Boom!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb32-7" title="7"><span class="op">}</span>).<span class="at">catch</span>(<span class="kw">function</span>(error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb32-8" title="8">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span>     <span class="co">// &quot;Boom!&quot;</span></a>
+<a class="sourceLine" id="cb32-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, the fulfillment handler for <code>p1</code> throws an error. The chained call to the <code>catch()</code> method, which is on a second promise, is able to receive that error through its rejection handler. The same is true if a rejection handler throws an error:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb33-2" title="2">    <span class="cf">throw</span> <span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Explosion!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb33-4" title="4"></a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="va">p1</span>.<span class="at">catch</span>(<span class="kw">function</span>(error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb33-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span>     <span class="co">// &quot;Explosion!&quot;</span></a>
+<a class="sourceLine" id="cb33-7" title="7">    <span class="cf">throw</span> <span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;Boom!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb33-8" title="8"><span class="op">}</span>).<span class="at">catch</span>(<span class="kw">function</span>(error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb33-9" title="9">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span>     <span class="co">// &quot;Boom!&quot;</span></a>
+<a class="sourceLine" id="cb33-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, the executor throws an error then triggers the <code>p1</code> promise’s rejection handler. That handler then throws another error that is caught by the second promise’s rejection handler. The chained promise calls are aware of errors in other promises in the chain.</p>
+<p>I&gt; Always have a rejection handler at the end of a promise chain to ensure that you can properly handle any errors that may occur.</p>
+<h3 id="returning-values-in-promise-chains">Returning Values in Promise Chains</h3>
+<p>Another important aspect of promise chains is the ability to pass data from one promise to the next. You’ve already seen that a value passed to the <code>resolve()</code> handler inside an executor is passed to the fulfillment handler for that promise. You can continue passing data along a chain by specifying a return value from the fulfillment handler. For example:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb34-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb34-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb34-4" title="4"></a>
+<a class="sourceLine" id="cb34-5" title="5"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb34-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// &quot;42&quot;</span></a>
+<a class="sourceLine" id="cb34-7" title="7">    <span class="cf">return</span> value <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb34-8" title="8"><span class="op">}</span>).<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb34-9" title="9">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// &quot;43&quot;</span></a>
+<a class="sourceLine" id="cb34-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>The fulfillment handler for <code>p1</code> returns <code>value + 1</code> when executed. Since <code>value</code> is 42 (from the executor), the fulfillment handler returns 43. That value is then passed to the fulfillment handler of the second promise, which outputs it to the console.</p>
+<p>You could do the same thing with the rejection handler. When a rejection handler is called, it may return a value. If it does, that value is used to fulfill the next promise in the chain, like this:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb35-2" title="2">    <span class="at">reject</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb35-4" title="4"></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="va">p1</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb35-6" title="6">    <span class="co">// first fulfillment handler</span></a>
+<a class="sourceLine" id="cb35-7" title="7">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// &quot;42&quot;</span></a>
+<a class="sourceLine" id="cb35-8" title="8">    <span class="cf">return</span> value <span class="op">+</span> <span class="dv">1</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="op">}</span>).<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb35-10" title="10">    <span class="co">// second fulfillment handler</span></a>
+<a class="sourceLine" id="cb35-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// &quot;43&quot;</span></a>
+<a class="sourceLine" id="cb35-12" title="12"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, the executor calls <code>reject()</code> with 42. That value is passed into the rejection handler for the promise, where <code>value + 1</code> is returned. Even though this return value is coming from a rejection handler, it is still used in the fulfillment handler of the next promise in the chain. The failure of one promise can allow recovery of the entire chain if necessary.</p>
+<h3 id="returning-promises-in-promise-chains">Returning Promises in Promise Chains</h3>
+<p>Returning primitive values from fulfillment and rejection handlers allows passing of data between promises, but what if you return an object? If the object is a promise, then there’s an extra step that’s taken to determine how to proceed. Consider the following example:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb36-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-4" title="4"></a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb36-6" title="6">    <span class="at">resolve</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-8" title="8"></a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb36-10" title="10">    <span class="co">// first fulfillment handler</span></a>
+<a class="sourceLine" id="cb36-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb36-12" title="12">    <span class="cf">return</span> p2<span class="op">;</span></a>
+<a class="sourceLine" id="cb36-13" title="13"><span class="op">}</span>).<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb36-14" title="14">    <span class="co">// second fulfillment handler</span></a>
+<a class="sourceLine" id="cb36-15" title="15">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb36-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, <code>p1</code> schedules a job that resolves to 42. The fulfillment handler for <code>p1</code> returns <code>p2</code>, a promise already in the resolved state. The second fulfillment handler is called because <code>p2</code> has been fulfilled. If <code>p2</code> were rejected, a rejection handler (if present) would be called instead of the second fulfillment handler.</p>
+<p>The important thing to recognize about this pattern is that the second fulfillment handler is not added to <code>p2</code>, but rather to a third promise. The second fulfillment handler is therefore attached to that third promise, making the previous example equivalent to this:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb37-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-4" title="4"></a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb37-6" title="6">    <span class="at">resolve</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-8" title="8"></a>
+<a class="sourceLine" id="cb37-9" title="9"><span class="kw">let</span> p3 <span class="op">=</span> <span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb37-10" title="10">    <span class="co">// first fulfillment handler</span></a>
+<a class="sourceLine" id="cb37-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb37-12" title="12">    <span class="cf">return</span> p2<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-13" title="13"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb37-14" title="14"></a>
+<a class="sourceLine" id="cb37-15" title="15"><span class="va">p3</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb37-16" title="16">    <span class="co">// second fulfillment handler</span></a>
+<a class="sourceLine" id="cb37-17" title="17">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb37-18" title="18"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, it’s clear that the second fulfillment handler is attached to <code>p3</code> rather than <code>p2</code>. This is a subtle but important distinction, as the second fulfillment handler will not be called if <code>p2</code> is rejected. For instance:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb38-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-4" title="4"></a>
+<a class="sourceLine" id="cb38-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb38-6" title="6">    <span class="at">reject</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-8" title="8"></a>
+<a class="sourceLine" id="cb38-9" title="9"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb38-10" title="10">    <span class="co">// first fulfillment handler</span></a>
+<a class="sourceLine" id="cb38-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb38-12" title="12">    <span class="cf">return</span> p2<span class="op">;</span></a>
+<a class="sourceLine" id="cb38-13" title="13"><span class="op">}</span>).<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb38-14" title="14">    <span class="co">// second fulfillment handler</span></a>
+<a class="sourceLine" id="cb38-15" title="15">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// never called</span></a>
+<a class="sourceLine" id="cb38-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, the second fulfillment handler is never called because <code>p2</code> is rejected. You could, however, attach a rejection handler instead:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb39-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-4" title="4"></a>
+<a class="sourceLine" id="cb39-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb39-6" title="6">    <span class="at">reject</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-8" title="8"></a>
+<a class="sourceLine" id="cb39-9" title="9"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb39-10" title="10">    <span class="co">// first fulfillment handler</span></a>
+<a class="sourceLine" id="cb39-11" title="11">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb39-12" title="12">    <span class="cf">return</span> p2<span class="op">;</span></a>
+<a class="sourceLine" id="cb39-13" title="13"><span class="op">}</span>).<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb39-14" title="14">    <span class="co">// rejection handler</span></a>
+<a class="sourceLine" id="cb39-15" title="15">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb39-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, the rejection handler is called as a result of <code>p2</code> being rejected. The rejected value 43 from <code>p2</code> is passed into that rejection handler.</p>
+<p>Returning thenables from fulfillment or rejection handlers doesn’t change when the promise executors are executed. The first defined promise will run its executor first, then the second promise executor will run, and so on. Returning thenables simply allows you to define additional responses to the promise results. You defer the execution of fulfillment handlers by creating a new promise within a fulfillment handler. For example:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb40-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-4" title="4"></a>
+<a class="sourceLine" id="cb40-5" title="5"><span class="va">p1</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb40-6" title="6">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb40-7" title="7"></a>
+<a class="sourceLine" id="cb40-8" title="8">    <span class="co">// create a new promise</span></a>
+<a class="sourceLine" id="cb40-9" title="9">    <span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb40-10" title="10">        <span class="at">resolve</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-11" title="11">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb40-12" title="12"></a>
+<a class="sourceLine" id="cb40-13" title="13">    <span class="cf">return</span> p2</a>
+<a class="sourceLine" id="cb40-14" title="14"><span class="op">}</span>).<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb40-15" title="15">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb40-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, a new promise is created within the fulfillment handler for <code>p1</code>. That means the second fulfillment handler won’t execute until after <code>p2</code> is fulfilled. This pattern is useful when you want to wait until a previous promise has been settled before triggering another promise.</p>
+<h2 id="responding-to-multiple-promises">Responding to Multiple Promises</h2>
+<p>Up to this point, each example in this chapter has dealt with responding to one promise at a time. Sometimes, however, you’ll want to monitor the progress of multiple promises in order to determine the next action. ECMAScript 6 provides two methods that monitor multiple promises: <code>Promise.all()</code> and <code>Promise.race()</code>.</p>
+<h3 id="the-promise.all-method">The Promise.all() Method</h3>
+<p>The <code>Promise.all()</code> method accepts a single argument, which is an iterable (such as an array) of promises to monitor, and returns a promise that is resolved only when every promise in the iterable is resolved. The returned promise is fulfilled when every promise in the iterable is fulfilled, as in this example:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb41-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-4" title="4"></a>
+<a class="sourceLine" id="cb41-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb41-6" title="6">    <span class="at">resolve</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-8" title="8"></a>
+<a class="sourceLine" id="cb41-9" title="9"><span class="kw">let</span> p3 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb41-10" title="10">    <span class="at">resolve</span>(<span class="dv">44</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-11" title="11"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-12" title="12"></a>
+<a class="sourceLine" id="cb41-13" title="13"><span class="kw">let</span> p4 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">all</span>([p1<span class="op">,</span> p2<span class="op">,</span> p3])<span class="op">;</span></a>
+<a class="sourceLine" id="cb41-14" title="14"></a>
+<a class="sourceLine" id="cb41-15" title="15"><span class="va">p4</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb41-16" title="16">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">Array</span>.<span class="at">isArray</span>(value))<span class="op">;</span>  <span class="co">// true</span></a>
+<a class="sourceLine" id="cb41-17" title="17">    <span class="va">console</span>.<span class="at">log</span>(value[<span class="dv">0</span>])<span class="op">;</span>              <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb41-18" title="18">    <span class="va">console</span>.<span class="at">log</span>(value[<span class="dv">1</span>])<span class="op">;</span>              <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb41-19" title="19">    <span class="va">console</span>.<span class="at">log</span>(value[<span class="dv">2</span>])<span class="op">;</span>              <span class="co">// 44</span></a>
+<a class="sourceLine" id="cb41-20" title="20"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Each promise here resolves with a number. The call to <code>Promise.all()</code> creates promise <code>p4</code>, which is ultimately fulfilled when promises <code>p1</code>, <code>p2</code>, and <code>p3</code> are fulfilled. The result passed to the fulfillment handler for <code>p4</code> is an array containing each resolved value: 42, 43, and 44. The values are stored in the order the promises were passed to <code>Promise.all</code>, so you can match promise results to the promises that resolved to them.</p>
+<p>If any promise passed to <code>Promise.all()</code> is rejected, the returned promise is immediately rejected without waiting for the other promises to complete:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb42-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-4" title="4"></a>
+<a class="sourceLine" id="cb42-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb42-6" title="6">    <span class="at">reject</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-7" title="7"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-8" title="8"></a>
+<a class="sourceLine" id="cb42-9" title="9"><span class="kw">let</span> p3 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb42-10" title="10">    <span class="at">resolve</span>(<span class="dv">44</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-11" title="11"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-12" title="12"></a>
+<a class="sourceLine" id="cb42-13" title="13"><span class="kw">let</span> p4 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">all</span>([p1<span class="op">,</span> p2<span class="op">,</span> p3])<span class="op">;</span></a>
+<a class="sourceLine" id="cb42-14" title="14"></a>
+<a class="sourceLine" id="cb42-15" title="15"><span class="va">p4</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb42-16" title="16">    <span class="va">console</span>.<span class="at">log</span>(<span class="va">Array</span>.<span class="at">isArray</span>(value))   <span class="co">// false</span></a>
+<a class="sourceLine" id="cb42-17" title="17">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>                 <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb42-18" title="18"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, <code>p2</code> is rejected with a value of 43. The rejection handler for <code>p4</code> is called immediately without waiting for <code>p1</code> or <code>p3</code> to finish executing (They do still finish executing; <code>p4</code> just doesn’t wait.)</p>
+<p>The rejection handler always receives a single value rather than an array, and the value is the rejection value from the promise that was rejected. In this case, the rejection handler is passed 43 to reflect the rejection from <code>p2</code>.</p>
+<h3 id="the-promise.race-method">The Promise.race() Method</h3>
+<p>The <code>Promise.race()</code> method provides a slightly different take on monitoring multiple promises. This method also accepts an iterable of promises to monitor and returns a promise, but the returned promise is settled as soon as the first promise is settled. Instead of waiting for all promises to be fulfilled like the <code>Promise.all()</code> method, the <code>Promise.race()</code> method returns an appropriate promise as soon as any promise in the array is fulfilled. For example:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-2" title="2"></a>
+<a class="sourceLine" id="cb43-3" title="3"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb43-4" title="4">    <span class="at">resolve</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-5" title="5"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-6" title="6"></a>
+<a class="sourceLine" id="cb43-7" title="7"><span class="kw">let</span> p3 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb43-8" title="8">    <span class="at">resolve</span>(<span class="dv">44</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-9" title="9"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-10" title="10"></a>
+<a class="sourceLine" id="cb43-11" title="11"><span class="kw">let</span> p4 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">race</span>([p1<span class="op">,</span> p2<span class="op">,</span> p3])<span class="op">;</span></a>
+<a class="sourceLine" id="cb43-12" title="12"></a>
+<a class="sourceLine" id="cb43-13" title="13"><span class="va">p4</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb43-14" title="14">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb43-15" title="15"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this code, <code>p1</code> is created as a fulfilled promise while the others schedule jobs. The fulfillment handler for <code>p4</code> is then called with the value of 42 and ignores the other promises. The promises passed to <code>Promise.race()</code> are truly in a race to see which is settled first. If the first promise to settle is fulfilled, then the returned promise is fulfilled; if the first promise to settle is rejected, then the returned promise is rejected. Here’s an example with a rejection:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-2" title="2">    <span class="at">setTimeout</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-3" title="3">        <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-4" title="4">    <span class="op">},</span> <span class="dv">100</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-5" title="5"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-6" title="6"></a>
+<a class="sourceLine" id="cb44-7" title="7"><span class="kw">let</span> p2 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-8" title="8">    <span class="at">reject</span>(<span class="dv">43</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-9" title="9"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-10" title="10"></a>
+<a class="sourceLine" id="cb44-11" title="11"><span class="kw">let</span> p3 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-12" title="12">    <span class="at">setTimeout</span>(<span class="kw">function</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-13" title="13">        <span class="at">resolve</span>(<span class="dv">44</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-14" title="14">    <span class="op">},</span> <span class="dv">50</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-15" title="15"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-16" title="16"></a>
+<a class="sourceLine" id="cb44-17" title="17"><span class="kw">let</span> p4 <span class="op">=</span> <span class="va">Promise</span>.<span class="at">race</span>([p1<span class="op">,</span> p2<span class="op">,</span> p3])<span class="op">;</span></a>
+<a class="sourceLine" id="cb44-18" title="18"></a>
+<a class="sourceLine" id="cb44-19" title="19"><span class="va">p4</span>.<span class="at">catch</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb44-20" title="20">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>     <span class="co">// 43</span></a>
+<a class="sourceLine" id="cb44-21" title="21"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Here, both <code>p1</code> and <code>p3</code> use <code>setTimeout()</code> (available in both Node.js and web browsers) to delay promise fulfillment. The result is that <code>p4</code> is rejected because <code>p2</code> is rejected before either <code>p1</code> or <code>p3</code> is resolved. Even though <code>p1</code> and <code>p3</code> are eventually fulfilled, those results are ignored because they occur after <code>p2</code> is rejected.</p>
+<h2 id="inheriting-from-promises">Inheriting from Promises</h2>
+<p>Just like other built-in types, you can use a promise as the base for a derived class. This allows you to define your own variation of promises to extend what built-in promises can do. Suppose, for instance, you’d like to create a promise that can use methods named <code>success()</code> and <code>failure()</code> in addition to the usual <code>then()</code> and <code>catch()</code> methods. You could create that promise type as follows:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">class</span> MyPromise <span class="kw">extends</span> Promise <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-2" title="2"></a>
+<a class="sourceLine" id="cb45-3" title="3">    <span class="co">// use default constructor</span></a>
+<a class="sourceLine" id="cb45-4" title="4"></a>
+<a class="sourceLine" id="cb45-5" title="5">    <span class="at">success</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-6" title="6">        <span class="cf">return</span> <span class="kw">this</span>.<span class="at">then</span>(resolve<span class="op">,</span> reject)<span class="op">;</span></a>
+<a class="sourceLine" id="cb45-7" title="7">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb45-8" title="8"></a>
+<a class="sourceLine" id="cb45-9" title="9">    <span class="at">failure</span>(reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-10" title="10">        <span class="cf">return</span> <span class="kw">this</span>.<span class="at">catch</span>(reject)<span class="op">;</span></a>
+<a class="sourceLine" id="cb45-11" title="11">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb45-12" title="12"></a>
+<a class="sourceLine" id="cb45-13" title="13"><span class="op">}</span></a>
+<a class="sourceLine" id="cb45-14" title="14"></a>
+<a class="sourceLine" id="cb45-15" title="15"><span class="kw">let</span> promise <span class="op">=</span> <span class="kw">new</span> <span class="at">MyPromise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-16" title="16">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb45-17" title="17"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb45-18" title="18"></a>
+<a class="sourceLine" id="cb45-19" title="19"><span class="va">promise</span>.<span class="at">success</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-20" title="20">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>             <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb45-21" title="21"><span class="op">}</span>).<span class="at">failure</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb45-22" title="22">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb45-23" title="23"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this example, <code>MyPromise</code> is derived from <code>Promise</code> and has two additional methods. The <code>success()</code> method mimics <code>then()</code> and <code>failure()</code> mimics the <code>catch()</code> method.</p>
+<p>Each added method uses <code>this</code> to call the method it mimics. The derived promise functions the same as a built-in promise, except now you can call <code>success()</code> and <code>failure()</code> if you want.</p>
+<p>Since static methods are inherited, the <code>MyPromise.resolve()</code> method, the <code>MyPromise.reject()</code> method, the <code>MyPromise.race()</code> method, and the <code>MyPromise.all()</code> method are also present on derived promises. The last two methods behave the same as the built-in methods, but the first two are slightly different.</p>
+<p>Both <code>MyPromise.resolve()</code> and <code>MyPromise.reject()</code> will return an instance of <code>MyPromise</code> regardless of the value passed because those methods use the <code>Symbol.species</code> property (covered under in Chapter 9) to determine the type of promise to return. If a built-in promise is passed to either method, the promise will be resolved or rejected, and the method will return a new <code>MyPromise</code> so you can assign fulfillment and rejection handlers. For example:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">let</span> p1 <span class="op">=</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb46-2" title="2">    <span class="at">resolve</span>(<span class="dv">42</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb46-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb46-4" title="4"></a>
+<a class="sourceLine" id="cb46-5" title="5"><span class="kw">let</span> p2 <span class="op">=</span> <span class="va">MyPromise</span>.<span class="at">resolve</span>(p1)<span class="op">;</span></a>
+<a class="sourceLine" id="cb46-6" title="6"><span class="va">p2</span>.<span class="at">success</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb46-7" title="7">    <span class="va">console</span>.<span class="at">log</span>(value)<span class="op">;</span>         <span class="co">// 42</span></a>
+<a class="sourceLine" id="cb46-8" title="8"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb46-9" title="9"></a>
+<a class="sourceLine" id="cb46-10" title="10"><span class="va">console</span>.<span class="at">log</span>(p2 <span class="kw">instanceof</span> MyPromise)<span class="op">;</span>   <span class="co">// true</span></a></code></pre></div>
+<p>Here, <code>p1</code> is a built-in promise that is passed to the <code>MyPromise.resolve()</code> method. The result, <code>p2</code>, is an instance of <code>MyPromise</code> where the resolved value from <code>p1</code> is passed into the fulfillment handler.</p>
+<p>If an instance of <code>MyPromise</code> is passed to the <code>MyPromise.resolve()</code> or <code>MyPromise.reject()</code> methods, it will just be returned directly without being resolved. In all other ways these two methods behave the same as <code>Promise.resolve()</code> and <code>Promise.reject()</code>.</p>
+<h3 id="asynchronous-task-running">Asynchronous Task Running</h3>
+<p>In Chapter 8, I introduced generators and showed you how you can use them for asynchronous task running, like this:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">let</span> fs <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;fs&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-2" title="2"></a>
+<a class="sourceLine" id="cb47-3" title="3"><span class="kw">function</span> <span class="at">run</span>(taskDef) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-4" title="4"></a>
+<a class="sourceLine" id="cb47-5" title="5">    <span class="co">// create the iterator, make available elsewhere</span></a>
+<a class="sourceLine" id="cb47-6" title="6">    <span class="kw">let</span> task <span class="op">=</span> <span class="at">taskDef</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-7" title="7"></a>
+<a class="sourceLine" id="cb47-8" title="8">    <span class="co">// start the task</span></a>
+<a class="sourceLine" id="cb47-9" title="9">    <span class="kw">let</span> result <span class="op">=</span> <span class="va">task</span>.<span class="at">next</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-10" title="10"></a>
+<a class="sourceLine" id="cb47-11" title="11">    <span class="co">// recursive function to keep calling next()</span></a>
+<a class="sourceLine" id="cb47-12" title="12">    <span class="kw">function</span> <span class="at">step</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-13" title="13"></a>
+<a class="sourceLine" id="cb47-14" title="14">        <span class="co">// if there&#39;s more to do</span></a>
+<a class="sourceLine" id="cb47-15" title="15">        <span class="cf">if</span> (<span class="op">!</span><span class="va">result</span>.<span class="at">done</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-16" title="16">            <span class="cf">if</span> (<span class="kw">typeof</span> <span class="va">result</span>.<span class="at">value</span> <span class="op">===</span> <span class="st">&quot;function&quot;</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-17" title="17">                <span class="va">result</span>.<span class="at">value</span>(<span class="kw">function</span>(err<span class="op">,</span> data) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-18" title="18">                    <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-19" title="19">                        result <span class="op">=</span> <span class="va">task</span>.<span class="at">throw</span>(err)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-20" title="20">                        <span class="cf">return</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb47-21" title="21">                    <span class="op">}</span></a>
+<a class="sourceLine" id="cb47-22" title="22"></a>
+<a class="sourceLine" id="cb47-23" title="23">                    result <span class="op">=</span> <span class="va">task</span>.<span class="at">next</span>(data)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-24" title="24">                    <span class="at">step</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-25" title="25">                <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-26" title="26">            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-27" title="27">                result <span class="op">=</span> <span class="va">task</span>.<span class="at">next</span>(<span class="va">result</span>.<span class="at">value</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-28" title="28">                <span class="at">step</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-29" title="29">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb47-30" title="30"></a>
+<a class="sourceLine" id="cb47-31" title="31">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb47-32" title="32">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb47-33" title="33"></a>
+<a class="sourceLine" id="cb47-34" title="34">    <span class="co">// start the process</span></a>
+<a class="sourceLine" id="cb47-35" title="35">    <span class="at">step</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-36" title="36"></a>
+<a class="sourceLine" id="cb47-37" title="37"><span class="op">}</span></a>
+<a class="sourceLine" id="cb47-38" title="38"></a>
+<a class="sourceLine" id="cb47-39" title="39"><span class="co">// Define a function to use with the task runner</span></a>
+<a class="sourceLine" id="cb47-40" title="40"></a>
+<a class="sourceLine" id="cb47-41" title="41"><span class="kw">function</span> <span class="at">readFile</span>(filename) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-42" title="42">    <span class="cf">return</span> <span class="kw">function</span>(callback) <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-43" title="43">        <span class="va">fs</span>.<span class="at">readFile</span>(filename<span class="op">,</span> callback)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-44" title="44">    <span class="op">};</span></a>
+<a class="sourceLine" id="cb47-45" title="45"><span class="op">}</span></a>
+<a class="sourceLine" id="cb47-46" title="46"></a>
+<a class="sourceLine" id="cb47-47" title="47"><span class="co">// Run a task</span></a>
+<a class="sourceLine" id="cb47-48" title="48"></a>
+<a class="sourceLine" id="cb47-49" title="49"><span class="at">run</span>(<span class="kw">function</span><span class="op">*</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb47-50" title="50">    <span class="kw">let</span> contents <span class="op">=</span> <span class="kw">yield</span> <span class="at">readFile</span>(<span class="st">&quot;config.json&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-51" title="51">    <span class="at">doSomethingWith</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-52" title="52">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Done&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb47-53" title="53"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>There are some pain points to this implementation. First, wrapping every function in a function that returns a function is a bit confusing (even this sentence was confusing). Second, there is no way to distinguish between a function return value intended as a callback for the task runner and a return value that isn’t a callback.</p>
+<p>With promises, you can greatly simplify and generalize this process by ensuring that each asynchronous operation returns a promise. That common interface means you can greatly simplify asynchronous code. Here’s one way you could simplify that task runner:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">let</span> fs <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;fs&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-2" title="2"></a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="kw">function</span> <span class="at">run</span>(taskDef) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-4" title="4"></a>
+<a class="sourceLine" id="cb48-5" title="5">    <span class="co">// create the iterator</span></a>
+<a class="sourceLine" id="cb48-6" title="6">    <span class="kw">let</span> task <span class="op">=</span> <span class="at">taskDef</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-7" title="7"></a>
+<a class="sourceLine" id="cb48-8" title="8">    <span class="co">// start the task</span></a>
+<a class="sourceLine" id="cb48-9" title="9">    <span class="kw">let</span> result <span class="op">=</span> <span class="va">task</span>.<span class="at">next</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-10" title="10"></a>
+<a class="sourceLine" id="cb48-11" title="11">    <span class="co">// recursive function to iterate through</span></a>
+<a class="sourceLine" id="cb48-12" title="12">    (<span class="kw">function</span> <span class="at">step</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-13" title="13"></a>
+<a class="sourceLine" id="cb48-14" title="14">        <span class="co">// if there&#39;s more to do</span></a>
+<a class="sourceLine" id="cb48-15" title="15">        <span class="cf">if</span> (<span class="op">!</span><span class="va">result</span>.<span class="at">done</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-16" title="16"></a>
+<a class="sourceLine" id="cb48-17" title="17">            <span class="co">// resolve to a promise to make it easy</span></a>
+<a class="sourceLine" id="cb48-18" title="18">            <span class="kw">let</span> promise <span class="op">=</span> <span class="va">Promise</span>.<span class="at">resolve</span>(<span class="va">result</span>.<span class="at">value</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-19" title="19">            <span class="va">promise</span>.<span class="at">then</span>(<span class="kw">function</span>(value) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-20" title="20">                result <span class="op">=</span> <span class="va">task</span>.<span class="at">next</span>(value)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-21" title="21">                <span class="at">step</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-22" title="22">            <span class="op">}</span>).<span class="at">catch</span>(<span class="kw">function</span>(error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-23" title="23">                result <span class="op">=</span> <span class="va">task</span>.<span class="at">throw</span>(error)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-24" title="24">                <span class="at">step</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-25" title="25">            <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-26" title="26">        <span class="op">}</span></a>
+<a class="sourceLine" id="cb48-27" title="27">    <span class="op">}</span>())<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-28" title="28"><span class="op">}</span></a>
+<a class="sourceLine" id="cb48-29" title="29"></a>
+<a class="sourceLine" id="cb48-30" title="30"><span class="co">// Define a function to use with the task runner</span></a>
+<a class="sourceLine" id="cb48-31" title="31"></a>
+<a class="sourceLine" id="cb48-32" title="32"><span class="kw">function</span> <span class="at">readFile</span>(filename) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-33" title="33">    <span class="cf">return</span> <span class="kw">new</span> <span class="at">Promise</span>(<span class="kw">function</span>(resolve<span class="op">,</span> reject) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-34" title="34">        <span class="va">fs</span>.<span class="at">readFile</span>(filename<span class="op">,</span> <span class="kw">function</span>(err<span class="op">,</span> contents) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-35" title="35">            <span class="cf">if</span> (err) <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-36" title="36">                <span class="at">reject</span>(err)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-37" title="37">            <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-38" title="38">                <span class="at">resolve</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-39" title="39">            <span class="op">}</span></a>
+<a class="sourceLine" id="cb48-40" title="40">        <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-41" title="41">    <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-42" title="42"><span class="op">}</span></a>
+<a class="sourceLine" id="cb48-43" title="43"></a>
+<a class="sourceLine" id="cb48-44" title="44"><span class="co">// Run a task</span></a>
+<a class="sourceLine" id="cb48-45" title="45"></a>
+<a class="sourceLine" id="cb48-46" title="46"><span class="at">run</span>(<span class="kw">function</span><span class="op">*</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb48-47" title="47">    <span class="kw">let</span> contents <span class="op">=</span> <span class="kw">yield</span> <span class="at">readFile</span>(<span class="st">&quot;config.json&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-48" title="48">    <span class="at">doSomethingWith</span>(contents)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-49" title="49">    <span class="va">console</span>.<span class="at">log</span>(<span class="st">&quot;Done&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb48-50" title="50"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In this version of the code, a generic <code>run()</code> function executes a generator to create an iterator. It calls <code>task.next()</code> to start the task and recursively calls <code>step()</code> until the iterator is complete.</p>
+<p>Inside the <code>step()</code> function, if there’s more work to do, then <code>result.done</code> is <code>false</code>. At that point, <code>result.value</code> should be a promise, but <code>Promise.resolve()</code> is called just in case the function in question didn’t return a promise. (Remember, <code>Promise.resolve()</code> just passes through any promise passed in and wraps any non-promise in a promise.) Then, a fulfillment handler is added that retrieves the promise value and passes the value back to the iterator. After that, <code>result</code> is assigned to the next yield result before the <code>step()</code> function calls itself.</p>
+<p>A rejection handler stores any rejection results in an error object. The <code>task.throw()</code> method passes that error object back into the iterator, and if an error is caught in the task, <code>result</code> is assigned to the next yield result. Finally, <code>step()</code> is called inside <code>catch()</code> to continue.</p>
+<p>This <code>run()</code> function can run any generator that uses <code>yield</code> to achieve asynchronous code without exposing promises (or callbacks) to the developer. In fact, since the return value of the function call is always coverted into a promise, the function can even return something other than a promise. That means both synchronous and asynchronous methods work correctly when called using <code>yield</code>, and you never have to check that the return value is a promise.</p>
+<p>The only concern is ensuring that asynchronous functions like <code>readFile()</code> return a promise that correctly identifies its state. For Node.js built-in methods, that means you’ll have to convert those methods to return promises instead of using callbacks.</p>
+<p>A&gt; ### Future Asynchronous Task Running A&gt; A&gt; At the time of my writing, there is ongoing work around bringing a simpler syntax to asynchronous task running in JavaScript. Work is progressing on an <code>await</code> syntax that would closely mirror the promise-based example in the preceding section. The basic idea is to use a function marked with <code>async</code> instead of a generator and use <code>await</code> instead of <code>yield</code> when calling a function, such as: A&gt; A&gt; <code>js A&gt; (async function() { A&gt;     let contents = await readFile("config.json"); A&gt;     doSomethingWith(contents); A&gt;     console.log("Done"); A&gt; })(); A&gt;</code> A&gt; A&gt; The <code>async</code> keyword before <code>function</code> indicates that the function is meant to run in an asynchronous manner. The <code>await</code> keyword signals that the function call to <code>readFile("config.json")</code> should return a promise, and if it doesn’t, the response should be wrapped in a promise. Just as with the implementation of <code>run()</code> in the preceding section, <code>await</code> will throw an error if the promise is rejected and otherwise return the value from the promise. The end result is that you get to write asynchronous code as if it were synchronous without the overhead of managing an iterator-based state machine. A&gt; A&gt; The <code>await</code> syntax is expected to be finalized in ECMAScript 2017 (ECMAScript 8).</p>
+<h2 id="summary">Summary</h2>
+<p>Promises are designed to improve asynchronous programming in JavaScript by giving you more control and composability over asynchronous operations than events and callbacks can. Promises schedule jobs to be added to the JavaScript engine’s job queue for execution later, while a second job queue tracks promise fulfillment and rejection handlers to ensure proper execution.</p>
+<p>Promises have three states: pending, fulfilled, and rejected. A promise starts in a pending state and becomes fulfilled on a successful execution or rejected on a failure. In either case, handlers can be added to indicate when a promise is settled. The <code>then()</code> method allows you to assign a fulfillment and rejection handler and the <code>catch()</code> method allows you to assign only a rejection handler.</p>
+<p>You can chain promises together in a variety of ways and pass information between them. Each call to <code>then()</code> creates and returns a new promise that is resolved when the previous one is resolved. Such chains can be used to trigger responses to a series of asynchronous events. You can also use <code>Promise.race()</code> and <code>Promise.all()</code> to monitor the progress of multiple promises and respond accordingly.</p>
+<p>Asynchronous task running is easier when you combine generators and promises, as promises give a common interface that asynchronous operations can return. You can then use generators and the <code>yield</code> operator to wait for asynchronous responses and respond appropriately.</p>
+<p>Most new web APIs are being built on top of promises, and you can expect many more to follow suit in the future.</p>
+</body>
+</html>

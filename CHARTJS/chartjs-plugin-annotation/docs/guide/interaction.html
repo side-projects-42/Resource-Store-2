@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Interactions</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Interactions</h1>
+</header>
+<h2 id="configuration">Configuration</h2>
+<p>The following options are available at the top level. They apply to all annotations unless they are overwritten on a per-annotation basis.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;"><a href="options#scriptable-options">Scriptable</a></th>
+<th>Default</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>drawTime</code></td>
+<td><code>string</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>'afterDatasetsDraw'</code></td>
+<td>See <a href="options#draw-time">drawTime</a></td>
+</tr>
+<tr class="even">
+<td><code>dblClickSpeed</code></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td><code>350</code></td>
+<td>Time to detect a double click in ms.</td>
+</tr>
+</tbody>
+</table>
+<p>The following options are available for all annotation types. These options can be specified per annotation, or at the top level which apply to all annotations.</p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 15%" />
+<col style="width: 33%" />
+<col style="width: 42%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;"><a href="options#scriptable-options">Scriptable</a></th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>enter</code></td>
+<td><code>(context) =&gt; void</code></td>
+<td style="text-align: center;">No</td>
+<td>Called when the mouse enters the annotation.</td>
+</tr>
+<tr class="even">
+<td><code>leave</code></td>
+<td><code>(context) =&gt; void</code></td>
+<td style="text-align: center;">No</td>
+<td>Called when the mouse leaves the annotation.</td>
+</tr>
+<tr class="odd">
+<td><code>click</code></td>
+<td><code>(context) =&gt; void</code></td>
+<td style="text-align: center;">No</td>
+<td>Called when a single click occurs on the annotation.</td>
+</tr>
+<tr class="even">
+<td><code>dblClick</code></td>
+<td><code>(context) =&gt; void</code></td>
+<td style="text-align: center;">No</td>
+<td>Called when a double click occurs on the annotation.</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

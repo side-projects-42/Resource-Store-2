@@ -2,15 +2,7 @@
 
 The datastore instance tests provide attributes similar to what an agent could expect to find regarding a database configuration and specifies the expected [datastore instance metric](https://source.datanerd.us/agents/agent-specs/blob/master/Datastore-Metrics-PORTED.md#datastore-metric-namespace) that should be generated. The table below lists types attributes and whether will will always be included or optionally included in each test case.
 
-| Name                     | Present   | Description                                                            |
-| ------------------------ | --------- | ---------------------------------------------------------------------- |
-| system_hostname          | always    | the hostname of the machine                                            |
-| db_hostname              | sometimes | the hostname reported by the database adapter                          |
-| product                  | always    | the database product for this configuration                            |
-| port                     | sometimes | the port reported by the database adapter                              |
-| unix_socket              | sometimes | the path to a unix domain socket reported by a database adapter        |
-| database_path            | sometimes | the path to a filesystem database                                      |
-| expected_instance_metric | always    | the instance metric expected to be generated from the given attributes |
+<table style="width:98%;"><colgroup><col style="width: 23%" /><col style="width: 8%" /><col style="width: 67%" /></colgroup><thead><tr class="header"><th>Name</th><th>Present</th><th>Description</th></tr></thead><tbody><tr class="odd"><td>system_hostname</td><td>always</td><td>the hostname of the machine</td></tr><tr class="even"><td>db_hostname</td><td>sometimes</td><td>the hostname reported by the database adapter</td></tr><tr class="odd"><td>product</td><td>always</td><td>the database product for this configuration</td></tr><tr class="even"><td>port</td><td>sometimes</td><td>the port reported by the database adapter</td></tr><tr class="odd"><td>unix_socket</td><td>sometimes</td><td>the path to a unix domain socket reported by a database adapter</td></tr><tr class="even"><td>database_path</td><td>sometimes</td><td>the path to a filesystem database</td></tr><tr class="odd"><td>expected_instance_metric</td><td>always</td><td>the instance metric expected to be generated from the given attributes</td></tr></tbody></table>
 
 ## Implementing the test cases
 

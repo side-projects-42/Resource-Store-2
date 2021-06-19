@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-27</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-04-27">FastBoot Meeting Notes 2016-04-27</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Please add yourself.</em></p>
+<p>Tom Dale, Ron White, Dan McClain, Krati Ahuja, Arjan Singh</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li>[x] Last Week’s Action Items
+<ul>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> will review, <span class="citation" data-cites="danmcclain">@danmcclain</span> will write tests to verify with async component</li>
+<li>[x] <span class="citation" data-cites="pwfisher">@pwfisher</span> will work on FastBoot watching</li>
+<li>[x] <span class="citation" data-cites="arjansingh">@arjansingh</span> will work on adding the server response to the FastBoot service</li>
+</ul></li>
+<li>[x] High Priority Pre-1.0 Items
+<ul>
+<li>[x] simple-dom/browser attribute unification
+<ul>
+<li>[x] e.g. https://github.com/ember-fastboot/ember-cli-fastboot/issues/161</li>
+</ul></li>
+<li>[x] Allow <code>configInMeta</code>
+<ul>
+<li>[x] https://github.com/ember-fastboot/ember-cli-fastboot/issues/160</li>
+</ul></li>
+<li>[x] Performance/Memory Issues
+<ul>
+<li>[x] https://github.com/ember-fastboot/ember-cli-fastboot/issues/159</li>
+</ul></li>
+<li>[x] Unified app build</li>
+<li>[x] Cut a beta</li>
+</ul></li>
+<li>[x] Undefined attribute bindings fix in htmlbars (+glimmer?)
+<ul>
+<li>[x] <a href="https://github.com/tildeio/htmlbars/pull/455">PR</a></li>
+</ul></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Boolean attributes causing problems with fastboot
+<ul>
+<li>FastBoot can potentially produce invalid HTML (<code>&lt;div&gt;</code> inside <code>&lt;p&gt;</code>)</li>
+</ul></li>
+</ul>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to leave a comment on https://github.com/ember-fastboot/ember-cli-fastboot/pull/169 re: whether <code>deferRendering</code> should take a non-thennable, <span class="citation" data-cites="danmcclain">@danmcclain</span> will add a better error message if a non-thennable is passed</li>
+<li>[ ] Review watcher PR https://github.com/ember-fastboot/ember-fastboot-server/pull/46/files</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to review <code>FastBootResponse</code> PR
+<ul>
+<li>[ ] https://github.com/ember-fastboot/ember-fastboot-server/pull/47</li>
+</ul></li>
+<li>[ ] <span class="citation" data-cites="arjansingh">@arjansingh</span> to write http redirection code RFC</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to review Krati’s onerror pull request</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to cut a new release with https://github.com/tildeio/htmlbars/pull/455</li>
+</ul>
+</body>
+</html>

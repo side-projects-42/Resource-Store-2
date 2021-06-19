@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="tendersync">Tendersync</h1>
+    <p>Authors: Markus Roberts and Bill Kayser</p>
+    <p>
+      Tendersync allows you to sync documents stored in the
+      <a href="http://www.tenderapp.com">ENTP Tender</a>
+      <code>faqs</code> section with a local filesystem, allowing you to manage
+      your documents with git or subversion.
+    </p>
+    <p>
+      It includes a command for creating an index document for any given
+      section.
+    </p>
+    <p>
+      Find out more about Tender by visiting
+      <a href="http://www.tenderapp.com">the Tender site</a>.
+    </p>
+    <h2 id="features">Features</h2>
+    <ul>
+      <li>
+        List remote sections and documents under the <code>/faqs</code> area
+      </li>
+      <li>
+        Pull single documents or entire tree from Tender site to local
+        filesystem
+      </li>
+      <li>Push local changes back to Tender one at a time or en masse</li>
+      <li>Manage document meta-data, like keywords, in headers</li>
+      <li>Push changed versions to the server</li>
+    </ul>
+    <h2 id="synopsis">Synopsis</h2>
+    <p>
+      Create a working directory where you want to store the tender docs in a
+      hierarchy and run tendersync from there.
+    </p>
+    <pre><code>sudo gem install tendersync
+cd $workdir
+tendersync -h</code></pre>
+    <h2 id="using-tendersync">Using Tendersync</h2>
+    <p>
+      To get started, you need to pass in your account information. You only
+      need to do this once. A local file <code>.tendersync</code> is created
+      with the configuration information.
+    </p>
+    <p>This will get you set up:</p>
+    <pre><code>tendersync -u user@me.com -p password --docurl=http://company.tenderapp.com</code></pre>
+    <p>To verify it worked run the <code>ls</code> command:</p>
+    <pre><code>tendersync ls</code></pre>
+    <p>
+      Tender documents are organized into sections defined by you. At New Relic,
+      we have faqs, docs, and troubleshooting. You can specify commands to apply
+      to one or more sections by passing in section names with -s:
+    </p>
+    <pre><code>tendersync -s docs -s troubleshooting pull</code></pre>
+    <h3 id="examples">Examples</h3>
+    <p>Start with:</p>
+    <pre><code>tendersync -h</code></pre>
+    <p>Download all your docs:</p>
+    <pre><code>tendersync pull</code></pre>
+    <p>Download just the faq docs:</p>
+    <pre><code>tendersync pull -s faqs</code></pre>
+    <p>Create a git repository and save all the documents:</p>
+    <pre><code>git init
+git add .
+git commit -m &quot;First version of docs on Tender&quot;</code></pre>
+    <p>Upload docs to the server:</p>
+    <pre><code>tendersync post faqs/sinatra_support
+tendersync post docs/install-*
+tendersync post -s docs</code></pre>
+    <p>
+      Upload everything to the server (regardless of whether the content has
+      changed or not):
+    </p>
+    <pre><code>tendersync post</code></pre>
+    <h3 id="using-the-index-command">Using the <code>index</code> Command</h3>
+    <p>
+      You can generate a table of contents for any section with the index
+      command. By default index will generate a single file named
+      <code>SECTION_table_of_contents</code>.
+    </p>
+    <p>
+      In this file will be a list of all the files in the given section with
+      links to those files. Under each file link will be a bullet list of the
+      topmost sections in the document. If these sections are preceeded by
+      anchor links (A elements with the name attribute) then the bullets will
+      have links to those sections.
+    </p>
+    <p>It will look something like this:</p>
+    <pre>
+  ## Installation and configuration
+  ### [Agent Installation (Ruby)](agent-installation)
+  * [Installing the Plug-in](agent-installation#Installing_the_Plug-in)
+  * [Installing the Gem](agent-installation#Installing_the_Gem)
+</pre
+    >
+    <h4 id="customizing-the-amount-of-detail-in-the-index">
+      Customizing the amount of detail in the Index
+    </h4>
+    <p>
+      You can show sections deeper than one level in a particular document using
+      the <code>-d</code> option. The default is 1.
+    </p>
+    <pre><code>tendersync index -d 2</code></pre>
+    <h4 id="definiting-toc-groups">Definiting TOC groups</h4>
+    <p>
+      If you want to divide the table of contents into groups of related
+      documents, you can pass in a title for a group and a regular expression to
+      match against document titles that belong in that group. These group
+      definitions will be saved so you only need to enter them once.
+    </p>
+    <p>
+      Enter a group using the <code>-g</code> option passing in a title and
+      regular expression separated by a semi-colon.
+    </p>
+    <pre><code>tendersync index -g &quot;Page Details;/page/i&quot;</code></pre>
+    <p>You can add multiple groups with additional -g options:</p>
+    <pre><code>tendersync index -g &quot;Page Details;/page/i&quot; -g &quot;Installation Info;/installation/i&quot;</code></pre>
+    <p>
+      If you want to remove a group definition, you need to remove it manually
+      from the <code>.tendersync</code> file.
+    </p>
+    <h2 id="thanks">THANKS</h2>
+    <p>
+      All due regards, credit, thanks, etc., to the ENTP team for a great tool.
+    </p>
+    <h2 id="license">LICENSE</h2>
+    <p>Copyright (c) 2009 New Relic, Inc.</p>
+    <p>
+      Permission is hereby granted, free of charge, to any person obtaining a
+      copy of this software and associated documentation files (the ‘Software’),
+      to deal in the Software without restriction, including without limitation
+      the rights to use, copy, modify, merge, publish, distribute, sublicense,
+      and/or sell copies of the Software, and to permit persons to whom the
+      Software is furnished to do so, subject to the following conditions:
+    </p>
+    <p>
+      The above copyright notice and this permission notice shall be included in
+      all copies or substantial portions of the Software.
+    </p>
+    <p>
+      THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+      IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+      FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+      THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+      LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+      FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+      DEALINGS IN THE SOFTWARE.
+    </p>
+  </body>
+</html>

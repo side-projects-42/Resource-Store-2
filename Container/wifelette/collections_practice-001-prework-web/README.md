@@ -1,59 +1,66 @@
-# Bonus — Collections Practice
+Bonus — Collections Practice
+============================
 
-## Objectives
+Objectives
+----------
 
-1. Become proficient at manipulating arrays
-2. Practice using higher level Ruby enumerators like `.collect` and `.sort`
+1.  Become proficient at manipulating arrays
+2.  Practice using higher level Ruby enumerators like `.collect` and `.sort`
 
-## Instructions
+Instructions
+------------
 
 The goal of this lab is to become proficient manipulating arrays. Try experimenting with the built in Ruby methods as well as implementing your own logic to solve these. Write methods that solve each of the rspec tests.
 
-## Question 1: `#sort_array_asc`
+Question 1: `#sort_array_asc`
+-----------------------------
 
 Build a method `sort_array_asc` that takes in an array of integers and returns a copy of the array with the integers in ascending order.
 
-## Question 2: `#sort_array_desc`
+Question 2: `#sort_array_desc`
+------------------------------
 
 Build a method `sort_array_desc` that takes in an array of integers and returns a copy of the array with the integers in descending order. Remember that `.sort` takes a block in which you can specify how you want your array sorted.
 
-## Question 3: `#swap_elements`
+Question 3: `#swap_elements`
+----------------------------
 
 Build a method `swap_elements` that takes in an array and swaps the second and third elements. Remember that array indices start at `0`, so the second element has an index of `1` and the third element has an index of `2`.
 
-**Advanced:** _Try building a method_ `swap_elements_from_to` _that takes in three arguments,_ `array, index, destination_index`_, that will allow you to specify the index of the element you would like to move to a new index. So:_
+**Advanced:** *Try building a method* `swap_elements_from_to` *that takes in three arguments,* `array, index, destination_index`*, that will allow you to specify the index of the element you would like to move to a new index. So:*
 
-```ruby
-swap_elements_from_to(["a", "b", "c"],0,2) #=> ["c", "b", "a"]
-swap_elements_from_to(["a", "b", "c"],2,1) #=> ["a", "c", "b"]
-```
+    swap_elements_from_to(["a", "b", "c"],0,2) #=> ["c", "b", "a"]
+    swap_elements_from_to(["a", "b", "c"],2,1) #=> ["a", "c", "b"]
 
-**Advanced #2:** _Try writing test coverage for it!_
+**Advanced \#2:** *Try writing test coverage for it!*
 
-## Question 4: `#reverse_array`
+Question 4: `#reverse_array`
+----------------------------
 
 Build a method `reverse_array` that takes in an array of integers and returns a copy of the array with the elements in reverse order.
 
-## Question 5: `#kesha_maker`
+Question 5: `#kesha_maker`
+--------------------------
 
-Build a method called `kesha_maker` that takes in an array of string elements and replaces the third character in the string with a `$` ("dollar sign")—Ke$ha style. Use the `.each` method to iterate and build a new array to return at the end of your method, just like we did in the "My Each" lab.
+Build a method called `kesha_maker` that takes in an array of string elements and replaces the third character in the string with a `$` (“dollar sign”)—Ke$ha style. Use the `.each` method to iterate and build a new array to return at the end of your method, just like we did in the “My Each” lab.
 
-## Question 6: `#find_a`
+Question 6: `#find_a`
+---------------------
 
-Build a method `find_a` that returns all the strings in the array passed to it that `start_with?` (**hint**) the letter `"a"`. You'll want to use a high level iterator for this that finds, selects, or detects elements based on a condition.
+Build a method `find_a` that returns all the strings in the array passed to it that `start_with?` (**hint**) the letter `"a"`. You’ll want to use a high level iterator for this that finds, selects, or detects elements based on a condition.
 
-## Question 7: `#sum_array`
+Question 7: `#sum_array`
+------------------------
 
 Build a method `sum_array` that adds together all of the integers in the array and returns their sum.
 
-**Advanced:** _Try using either the_ `.inject` _method or the_ `.each_with_object` _method here._
+**Advanced:** *Try using either the* `.inject` *method or the* `.each_with_object` *method here.*
 
-## Question 8: `#add_s`
+Question 8: `#add_s`
+--------------------
 
-Build a method that adds an `"s"` to each word in the array except for the second element in the array ("feet" is already plural).
+Build a method that adds an `"s"` to each word in the array except for the second element in the array (“feet” is already plural).
 
-**Advanced:** _Iterators in Ruby are chainable, see if you can use_ `.each_with_index` _in addition to_ `.collect` _to solve this one in an elegant way. What happens if you write:_
+**Advanced:** *Iterators in Ruby are chainable, see if you can use* `.each_with_index` *in addition to* `.collect` *to solve this one in an elegant way. What happens if you write:*
 
-```ruby
-[1,2].each_with_index.collect{|element, index| }
-```
+    [1,2].each_with_index.collect{|element, index| }

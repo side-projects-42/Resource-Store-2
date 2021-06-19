@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>may-04</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-05-04">FastBoot Meeting Notes 2016-05-04</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Please add yourself.</em></p>
+<p>Tom Dale, Krati Ahuja, Marco Otte-Witte, Patrick Fisher, Ron White, Arjan Singh, Edward Faulkner, Dan McClain, Robert Jackson, Ricardo Mendes</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li><p>[x] Node version support at 1.0 launch</p>
+<ul>
+<li>[x] I want to say v4.2 because we have a loooooot of promises and fat arrows make that 100x nicer</li>
+</ul></li>
+<li><p>[x] <code>fastboot</code>/<code>ember-fastboot-server</code>/<code>fastboot-app-server</code></p>
+<ul>
+<li>[x] Been doing a lot of work in terms of cleaning up the architecture before we cut 1.0</li>
+<li>[x] See WIP at https://github.com/ember-fastboot/ember-fastboot-server/tree/fastboot-rename</li>
+</ul></li>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to leave a comment on https://github.com/ember-fastboot/ember-cli-fastboot/pull/169 re: whether <code>deferRendering</code> should take a non-thennable, <span class="citation" data-cites="danmcclain">@danmcclain</span> will add a better error message if a non-thennable is passed</li>
+<li>[x] Review watcher PR https://github.com/ember-fastboot/ember-fastboot-server/pull/46/files</li>
+<li><p>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to review <code>FastBootResponse</code> PR</p>
+<ul>
+<li>[x] https://github.com/ember-fastboot/ember-fastboot-server/pull/47</li>
+</ul></li>
+<li><p>[x] <span class="citation" data-cites="arjansingh">@arjansingh</span> to write http redirection code RFC</p>
+<ul>
+<li>[x] https://github.com/ember-fastboot/ember-fastboot-server/issues/54</li>
+</ul></li>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to review Krati’s onerror pull request</li>
+<li>[x] <span class="citation" data-cites="tomdale">@tomdale</span> to cut a new release with https://github.com/tildeio/htmlbars/pull/455</li>
+<li><p>[x] Deprecate <code>doc.title</code> - <span class="citation" data-cites="danmcclain">@danmcclain</span></p></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><p>Since we are pre-1.0, we have the opportunity to “break” support for 0.12</p>
+<ul>
+<li>Dropping 0.12 allows for use of promise/fat arrows/<code>let</code>/<code>const</code></li>
+</ul></li>
+<li><p><code>ember-fastboot-server</code> was a lot more than just a server</p>
+<ul>
+<li>cli/server/sandboxing all mixed in</li>
+<li><code>fastboot-app-server</code> is an infrastructure rewrite of what <code>ember-fastboot-server</code> should have been</li>
+<li>discussed renaming <code>ember-fastboot-server</code> to <code>ember-fastboot-middleware</code> (pre-discover of name <code>fastboot</code>)</li>
+<li><code>fastboot</code> will be refactored for spinning up the ember app, setting up dist, etc in node</li>
+<li><code>fastboot-express-middleware</code> package wraps <code>fastboot</code> for being served as a middleware for Express</li>
+<li>Refactor <em>will</em> cause breaking changes - Let <span class="citation" data-cites="tomdale">@tomdale</span> know when your addon breaks if it access <code>fastboot</code></li>
+</ul></li>
+<li>RJ: If we author in ES6 and want to target Node 0.12 via a Babel compile, let’s make sure we do it as a prepublish step rather than a runtime compile</li>
+<li>RJ: Ember CLI has made a decision to support all Node LTS releases, including Node 0.10</li>
+<li>Watcher closed per refactor of <code>fastboot</code></li>
+<li><p>Redirection RFC</p>
+<ul>
+<li>Some patching of ember is needed to work in the end</li>
+<li>bugs with <code>replaceWith</code> exist in Ember</li>
+<li>RJ: ~50% of people that use <code>replaceWith</code> are using it wrong in his experience (consider it a footgun)</li>
+<li>TD: Forcing <code>replaceWith</code> for FastBoot is a high bar without a signficant reason</li>
+<li><p>Redirecting will abort rendering immediately - Call to transition/replace stops rendering, sets headers - server sends redirect response</p></li>
+<li><p>Potential implementations - AS: reopen router - RJ: Custom location for FastBoot (avoids reopening router)</p></li>
+</ul></li>
+<li>RJ: I’d like to move ember-cli-head to either <code>ember-fastboot</code> or <code>ember-cli</code></li>
+<li><p>Consensus reached on deprecating <code>doc.title</code></p></li>
+</ul>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] <span class="citation" data-cites="kratiahuja">@kratiahuja</span> to report on whether there is a significant performance regression 0.12 -&gt; Node 4</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to cut a new release with https://github.com/tildeio/htmlbars/pull/455</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to audit GitHub and npm packages and make sure <span class="citation" data-cites="danmcclain">@danmcclain</span> has access</li>
+<li>[ ] <span class="citation" data-cites="rwjblue">@rwjblue</span> to write up constraints around steps to integrate <code>ember-cli-head</code> into <code>ember-cli</code></li>
+<li>[ ] <span class="citation" data-cites="danmcclain">@danmcclain</span> to deprecate <code>doc.title</code> prior to betas</li>
+</ul>
+</body>
+</html>

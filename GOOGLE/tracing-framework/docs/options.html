@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>options</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="options">Options</h1>
+<p>Options for the various components are specified in a key-value hash. Each component uses a unique namespace that allows the same options store to be used for all of them.</p>
+<p>Users of each component can specify options when creating the component but are not allowed to change them once the component is initialized. Some components have the ability to change their options at runtime but this is an opt-in behavior.</p>
+<h2 id="extensions">Extensions</h2>
+<h3 id="wtf.addon">wtf.addon</h3>
+<p>An array of addon manifest URLs. These addons will be either injected or loaded at runtime and can provide tracing or visualization functionality.</p>
+<h2 id="tracing">Tracing</h2>
+<p>Tracing options change the behavior of the core tracing library and instrumentation providers. They can be specified as a value to the <code>wtf.trace.start</code> method or by the global override object <code>wtf_trace_options</code>.</p>
+<h3 id="wtf.trace.mode">wtf.trace.mode</h3>
+<p>The target mode for tracing.</p>
+<ul>
+<li><code>snapshotting</code>: click to take a snapshot and open it in the UI or save to a file.</li>
+<li><code>streaming</code>: stream all events to the UI or a file.</li>
+</ul>
+<h3 id="wtf.trace.format">wtf.trace.format</h3>
+<p>The format of the resulting trace data.</p>
+<ul>
+<li><code>binary</code>: an optimized binary format that’s efficient to load and has small file sizes.</li>
+<li><code>json</code>: a JSON-based file format. Sort-of.</li>
+</ul>
+<h3 id="wtf.trace.target">wtf.trace.target</h3>
+<p>A string value indicating the target for the tracing session.</p>
+<p>Supported targets:</p>
+<ul>
+<li><code>null</code>: used for testing, a black hole.</li>
+<li><code>http[s]://host:port/path</code>: an HTTP(S) endpoint to receive POSTS.</li>
+<li><code>file://filename_prefix</code>: a local saved file with the given prefix.</li>
+<li>Custom objects: see below.</li>
+</ul>
+<h4 id="custom-objects">Custom Objects</h4>
+<p>To programmatically receive written data you can pass an object. This object must contain a <code>write</code> method and may optionally contain <code>flush</code> and <code>close</code> methods.</p>
+<ul>
+<li><code>write(Uint8Array|Array, length, done)</code>: write the given bytes up to the provided length (do not trust the array length). You must call done() when writing has completed.</li>
+<li><code>flush()</code>: write any pending data, if required.</li>
+<li><code>close()</code>: the stream is closed and no more data will be written.</li>
+</ul>
+<h3 id="wtf.trace.session.buffersize">wtf.trace.session.bufferSize</h3>
+<p>Individual trace buffer size, in bytes. The larger the size the less overhead there will be while recording traces but the larger the latency when writing the data over the network.</p>
+<h3 id="wtf.trace.session.maximummemoryusage">wtf.trace.session.maximumMemoryUsage</h3>
+<p>Maximum tracing buffer memory usage, in bytes. This, combined with <code>wtf.trace.session.bufferSize</code>, is used to determine how many buffers will be created. The larger the value the more events can be recorded and the less likely it is that data will be dropped, at the cost of extra memory.</p>
+<h3 id="wtf.trace.snapshotting.resetonsnapshot">wtf.trace.snapshotting.resetOnSnapshot</h3>
+<p>True to reset all buffer data when a snapshot occurs, otherwise data will be retained across snapshots. This can be used ensure only tracing data that occurred since the last snapshot is written.</p>
+<h3 id="wtf.trace.streaming.flushintervalms">wtf.trace.streaming.flushIntervalMs</h3>
+<p>The frequency, in milliseconds, to flush data buffers or 0 to prevent automatic flushing.</p>
+<h3 id="wtf.trace.disableproviders">wtf.trace.disableProviders</h3>
+<p>When set to true all providers and global hooks will be disabled. This is useful when including the tracing script to do file manipulation/etc.</p>
+<h3 id="wtf.trace.provider.">wtf.trace.provider.*</h3>
+<p>Each event provider can be toggled here to allow for the choice of which kind of events to include in the stream or the fidelity of the events added.</p>
+<h4 id="wtf.trace.provider.chromedebug">wtf.trace.provider.chromeDebug</h4>
+<p>Set <code>wtf.trace.provider.chromeDebug</code> to 1+ to enable the events. This will use a variety of means to attempt to gather JavaScript runtime events, such as garbage collections, JIT activity, etc. This functionality relies on the injector extension or custom builds of Chromium. It introduces some overhead, such as an additional 0.1ms per XHR open/send.</p>
+<h4 id="wtf.trace.provider.dom">wtf.trace.provider.dom</h4>
+<p>Set <code>wtf.trace.provider.dom</code> to 1+ to enable DOM instrumentation. This will add event handlers and other DOM hooks that may decrease performance slightly.</p>
+<p>Use <code>wtf.trace.initializeDomEventProperties(el, opt_recursive)</code> to setup the event hooks on new DOM elements added after the document has loaded. If this is not called on new DOM sub trees their events may not be tracked in all browsers.</p>
+<p>Use <code>wtf.trace.ignoreDomTree(el)</code> to ignore all of the events from a DOM tree. This is useful for hiding tracing/debug UI from the traces.</p>
+<h4 id="wtf.trace.provider.image">wtf.trace.provider.image</h4>
+<p>Set <code>wtf.trace.provider.image</code> to 1+ to enable Image/HTMLImageElement events.</p>
+<h4 id="wtf.trace.provider.webworker">wtf.trace.provider.webworker</h4>
+<p>Set <code>wtf.trace.provider.webworker</code> to 1+ to enable automatically instrumenting web workers as they are created and messages between workers.</p>
+<h4 id="wtf.trace.provider.xhr">wtf.trace.provider.xhr</h4>
+<p>Set <code>wtf.trace.provider.xhr</code> to 1+ to enable XHR events. This may incur additional overhead in event processing.</p>
+<h2 id="hud">HUD</h2>
+<p>HUD options pertain only to the overlay used in browser-based injected runs. They can be specified as a value passed to <code>wtf.hud.show</code> or by the global override object <code>wtf_hud_options</code>.</p>
+<h3 id="wtf.hud.dock">wtf.hud.dock</h3>
+<p>Docking position of the HUD overlay. May be one of:</p>
+<ul>
+<li><code>tl</code>: Top Left.</li>
+<li><code>tm</code>: Top Middle.</li>
+<li><code>tr</code>: Top Right.</li>
+<li><code>bl</code>: Bottom Left.</li>
+<li><code>bm</code>: Bottom Middle.</li>
+<li><code>br</code>: Bottom Right.</li>
+</ul>
+<h3 id="wtf.hud.app.modewtf.hud.app.endpoint">wtf.hud.app.mode/wtf.hud.app.endpoint</h3>
+<p>The mode used for communicating with the visualizer application. May be one of:</p>
+<ul>
+<li><code>page</code>: If set, <code>wtf.hud.app.endpoint</code> is a URL to the page that will be opened in a new window.</li>
+<li><code>remote</code>: If set, <code>wtf.hud.app.endpoint</code> is a <code>host:port</code> of a target HTTP server that will listen for POSTs.</li>
+</ul>
+<h2 id="remote-control">Remote Control</h2>
+<p>A page can be connected to a remote server for control via the <code>wtf.remote.connect</code> method. This allows for snapshotting of instances running inside of VMs or over the network that otherwise cannot run a WTF UI or save files (such as iOS/Android).</p>
+<h3 id="wtf.remote.target">wtf.remote.target</h3>
+<p>The target URI to connect to. This must be set. The wtf-controller server will list its URL on startup and that value should be used. Example: <code>ws://localhost:8084</code></p>
+<h2 id="app">App</h2>
+<p>App options are only used by the app UI. They can be specified to the <code>wtf.app.show</code> call or by the global override object <code>wtf_app_options</code>.</p>
+</body>
+</html>

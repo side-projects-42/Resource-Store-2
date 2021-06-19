@@ -1,21 +1,8 @@
----
-:layout: post
-:title: This Week in Plugins
-:nodeid: 166
-:created: 1269693900
-:tags:
-  - infrastructure
-  - feedback
-:author: rtyler
----
-
-I apologize for the lack of posts this week, I've been quite pre-occupied and a quirk in the [twipFromSvn.py](http://github.com/rtyler/continuous-blog-tools/blob/master/twipFromSvn.py) script prevented the generation of this post's contents earlier; thanks to <a id="aptureLink_UwC8b9rCqW" href="http://twitter.com/rpetti">rpetti</a> it works again!
+I apologize for the lack of posts this week, I’ve been quite pre-occupied and a quirk in the [twipFromSvn.py](http://github.com/rtyler/continuous-blog-tools/blob/master/twipFromSvn.py) script prevented the generation of this post’s contents earlier; thanks to <a href="http://twitter.com/rpetti" id="aptureLink_UwC8b9rCqW">rpetti</a> it works again!
 
 This week was an interesting week in plugin development, a slight regression in the release of [Jabber notifier plugin](http://wiki.hudson-ci.org/display/HUDSON/Jabber+Plugin) 1.7 resulted in the rapid release of a 1.8 release by `kutzi`. The [Fitnesse plugin](http://wiki.hudson-ci.org/display/HUDSON/Fitnesse+Plugin) saw multiple releases again this week, along with the [Libvirt Slaves plugin](http://wiki.hudson-ci.org/display/HUDSON/Libvirt+Slaves+Plugin) which has seen an amazing number of releases since it burst onto the plugin scene [two weeks ago](http://blog.hudson-ci.org/content/week-plugins-4).
 
-There were a few new and notable plugins released this week such as the [iPhoneView plugin](http://wiki.hudson-ci.org/display/HUDSON/iPhoneView+Plugin) which adds a fancy view to make checking Hudson all that prettier on an iPhone or iPod Touch, the [cross-platform shell plugin](http://wiki.hudson-ci.org/display/HUDSON/XShell+Plugin) was released, aiming to solve the problem of running a job on both Windows and Unix slaves. My favorite new plugin release this week has to be the [Gerrit plugin](http://wiki.hudson-ci.org/display/HUDSON/Gerrit+Plugin) which made its debut and shows a lot of potential to enable the "pre-tested commit" workflow with Git and <a id="aptureLink_NREODpoWf6" href="http://code.google.com/p/gerrit/">Gerrit</a>
-
-<!--break-->
+There were a few new and notable plugins released this week such as the [iPhoneView plugin](http://wiki.hudson-ci.org/display/HUDSON/iPhoneView+Plugin) which adds a fancy view to make checking Hudson all that prettier on an iPhone or iPod Touch, the [cross-platform shell plugin](http://wiki.hudson-ci.org/display/HUDSON/XShell+Plugin) was released, aiming to solve the problem of running a job on both Windows and Unix slaves. My favorite new plugin release this week has to be the [Gerrit plugin](http://wiki.hudson-ci.org/display/HUDSON/Gerrit+Plugin) which made its debut and shows a lot of potential to enable the “pre-tested commit” workflow with Git and <a href="http://code.google.com/p/gerrit/" id="aptureLink_NREODpoWf6">Gerrit</a>
 
 - Mar 20, 2010
   - [Fitnesse plugin](http://wiki.hudson-ci.org/display/HUDSON/Fitnesse+Plugin) 1.2
@@ -47,7 +34,7 @@ There were a few new and notable plugins released this week such as the [iPhoneV
   - [Buckminster](http://wiki.hudson-ci.org/display/HUDSON/Buckminster+PlugIn) 0.9.5
   - [Jabber notifier plugin](http://wiki.hudson-ci.org/display/HUDSON/Jabber+Plugin) 1.8
 - Mar 25, 2010
-  - [<a href="http://www.collab.net/">CollabNet</a> Plugins](http://wiki.hudson-ci.org/display/HUDSON/CollabNet+Plugin) 1.1.4
+  - [](http://wiki.hudson-ci.org/display/HUDSON/CollabNet+Plugin)[CollabNet](http://www.collab.net/) Plugins 1.1.4
   - [CVS Plug-in](http://wiki.hudson-ci.org/display/HUDSON/CVS+Plugin) 1.1
   - [Dashboard View](http://wiki.hudson-ci.org/display/HUDSON/Dashboard+View) 1.4
   - [Libvirt Slaves plugin](http://wiki.hudson-ci.org/display/HUDSON/Libvirt+Slaves+Plugin) 1.4

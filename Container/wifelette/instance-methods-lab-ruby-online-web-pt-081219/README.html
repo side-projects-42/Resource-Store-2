@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="instance-methods-lab-ruby">Instance Methods Lab Ruby</h1>
+<h2 id="learning-goals">Learning Goals</h2>
+<ul>
+<li>Define a class.</li>
+<li>Build instance methods for the class.</li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>In this lab, we will practice defining classes and building instance methods inside them. Specifically, you are going to be adding 2 instance methods to a <code>Dog</code> and <code>Person</code> class.</p>
+<h2 id="instructions">Instructions</h2>
+<p>Open this lab with <code>learn open</code> and run your tests with <code>learn</code>.</p>
+<h3 id="define-dog-in-libdog.rb">1. Define <code>Dog</code> in <code>lib/dog.rb</code></h3>
+<p>Open <code>lib/dog.rb</code> and add a class definition for a <code>Dog</code> class.</p>
+<h3 id="define-bark-in-dog">2. Define <code>#bark</code> in <code>Dog</code></h3>
+<p>Add an instance method <code>#bark</code> to your <code>Dog</code> class in <code>lib/dog.rb</code> that will puts <code>"Woof!"</code></p>
+<h3 id="define-sit-in-dog">3. Define <code>#sit</code> in <code>Dog</code></h3>
+<p>Add an instance method <code>#sit</code> to your <code>Dog</code> class in <code>lib/dog.rb</code> that will puts <code>"The Dog is sitting"</code>.</p>
+<h3 id="define-a-person-in-libperson.rb">4. Define a <code>Person</code> in <code>lib/person.rb</code></h3>
+<p>Open <code>lib/person.rb</code> and add a class definition for a <code>Person</code> class.</p>
+<h3 id="define-talk-in-person">5. Define <code>#talk</code> in <code>Person</code></h3>
+<p>Add an instance method <code>#talk</code> to your <code>Person</code> class in <code>lib/person.rb</code> that will puts <code>"Hello World!"</code></p>
+<h3 id="define-walk-in-person">6. Define <code>#walk</code> in <code>Person</code></h3>
+<p>Add an instance method <code>#walk</code> to your <code>Person</code> class in <code>lib/person.rb</code> that will puts <code>"The Person is walking"</code>.</p>
+<p>When you’re done, submit the lab with <code>learn submit</code>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>With all tests passing, you have successfully written multiple instance methods and <em>two</em> different classes!</p>
+<h3 id="additional-note-on-lab-testing">Additional Note on Lab Testing</h3>
+<p>In this lab, we asked that you code your two classes in separate <code>dog.rb</code> and <code>person.rb</code> files. You could, in theory, code both classes in the same file, or even <em>code them in opposite files</em> and still pass all tests. Why do you think that is?</p>
+<p>…</p>
+<p>…</p>
+<p>When the tests are run in this lab, RSpec loads both the <code>dog.rb</code> and <code>person.rb</code> files (this happens in the first to lines of <code>spec/spec_helper.rb</code> <a href="https://apidock.com/ruby/Kernel/require_relative">using <code>require_relative</code></a>). As long as you place your classes in one of the files that RSpec loads, the tests will have access to them.</p>
+<p>While it isn’t enforced, we do encourage you to separate classes into individual, accurately named files. In a larger application, you might not always need to load the <code>Dog</code> class when loading the <code>Person</code> class. As classes get larger, it also becomes easier to manage your code if you know each file contains <em>one</em> class. Keeping to these conventions makes it easier in the future to go back and read code you’ve previously written.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/instance-methods-lab-ruby' title='Instance Methods Lab Ruby'>Instance Methods Lab Ruby</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

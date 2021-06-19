@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="widget-change-history">Widget Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li><p>Added workaround in destructor for single box widgets (contentBox === boundingBox) Also extracted DOM removal into separate method, which can be overridden if custom widgets don’t want rendered DOM removed.</p></li>
+<li><p>Fixed UI_EVENTS js exception when dealing with nested widgets rendered by different Y instances.</p></li>
+<li><p>Fixed UI_EVENTS invoking nested widget listeners more than once (also fixed regression to Parent-Child as a result of this change).</p></li>
+<li><p>Added support for destroy(true) to Widget, which will remove and destroy all child nodes (not just the boundingBox and contentBox) contained within the Widget’s boundingBox in order to help control Node cache size over long-running applications.</p>
+<p>destroy() will maintain its current behavior due to the potentially high run-time cost of destroying all child nodes.</p>
+<p>Widget developers still need to continue with the best practice of destroying explicit node references they create, in their destructors to support the destroy() case.</p></li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li><p>HTML_PARSER now return null instead of an empty node list, if no nodes are found, when using the [selector] syntax, so that the default value will be applied for the attribute.</p></li>
+<li><p>UI_EVENTS support and skin util methods (only getSkinName currently) broken out of widget-base into separate submodules, widget-uievents and widget-skin.</p></li>
+<li><p>widget-base-ie broken out as conditional module.</p></li>
+<li><p>Fixed widget-locale support. Needed lazyAdd:false, for strings attribute</p></li>
+<li><p>Changed widget UI_EVENTS type parsing, to use EventTarget.parseType and removed after() override, since everything ends up going through on() eventually.</p></li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li><p>Minimized widget dependencies from the complete node, base rollups, to only the node and base submodules widget actually uses</p></li>
+<li><p>Fixed issue in UI_EVENTS handling, where removing the last listener for a ui event, didn’t clear out the _delegates hash even though the handler was detached (for example, in tabview, if you remove all tabs, and then add a new tab, clicking on the new tab didn’t work.)</p></li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>Fixed ticket #2528758 : using widget’s DOM event facade ends with error during destroy</li>
+<li>Fixed ticket #2528760 : _applyParsedConfig merges arrays, instead of letting user config win</li>
+<li>“init, render and destroy listeners now called synchronously, if event already fired (see Event README)”</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>“render” event now published with the defaultTargetOnly set to true.</p></li>
+<li><p>Added support for MyWidget.CSS_PREFIX static property to let developers define their own CSS PREFIX instead of yui-&lt;MyWidget.NAME&gt;.</p></li>
+<li><p>Changed default value for the tabIndex attribute to null, meaning by default a Widget’s bounding box will not be a focusable element.</p></li>
+<li><p>Widget now has built-in support for Progressive Enhancement.</p>
+<ol type="1">
+<li><p>The document element (HTML) is now stamped with a class name (yui-js-enabled) indicating that JS is enabled allowing for the creation of JS-aware Widget CSS style rules for Progressive Enhancement.</p></li>
+<li><p>Widget has support for a class name representing the “loading” state that can be used in combination with the “yui-js-enabled” class name to create style rules for widgets that are in the process of loading.<br />
+There is support for use of both a generic Widget and type-specific Widget class name by default (for example: “yui-widget-loading” and “yui-tabview-loading”).</p></li>
+<li><p>Widget’s renderer will remove the “loading” class names from the bounding box allowing the fully rendered and functional widget to be revealed.</p></li>
+</ol>
+<p>Developer Usage / Requirements</p>
+<p>Developers can take advantage of the system by following two steps:</p>
+<ol type="1">
+<li><p>Simply stamping the bounding box of their widgets with the corresponding “loading” state class name. The idea being that the markup for this widget is already on the page, and the JS components required to transform/bring the widget to life are in the process of loading.</p></li>
+<li><p>Providing the definition of the loading style for the widget(s).</p></li>
+</ol></li>
+<li><p>Removed parentNode.inDoc() check from render, to allow implementations to render to parentNodes which are document fragments. If rendering to a document fragment, the implementation is responsible for adding the document fragment to the document during the render lifecycle phase.</p></li>
+<li><p>Split widget module into the following sub-modules</p>
+<ol type="1">
+<li>widget-base : Core lifecycle and API support.</li>
+<li>widget-htmlparser : HTML parser support.</li>
+</ol>
+<p>The “widget” module, is a roll up of the widget-base and widget-htmlparser submodules.</p>
+<p>The widget-locale is a standalone module, which contains the deprecated Internationalization support and has been replaced by the Y.Intl language pack support, to allow strings to be defined separately from code.</p></li>
+<li><p>Removed moveStyles support for 3.1. Can be re-added if required, but currently does not seem to be in use.</p></li>
+<li><p>Made render event fireOnce (along with init and destroy in Base)</p></li>
+<li><p>Widget will now fire user-generated events like DOM elements do (e.g.  ‘click’, ‘mouseover’). Like all other Widget events, these events are prefixed with the Widget name (e.g. ‘menuitem:click’) and the default context of the event listener will be the Widget that fired the event.</p>
+<p>The goals/purpose of the Widget UI events are:</p>
+<ol type="1">
+<li><p>Provide developers with the ability to listen for UI events as though the Widget is an atomic element, as opposed to DOM events that will bubble up through all of the elements that compose a Widget’s UI.</p></li>
+<li><p>These are events that many Widget instances are going to want to publish and fire, so Widget does this by default to ensure that these events are fired in a performant, consistent way across Widget implementations.</p></li>
+</ol>
+<p>Additional info:</p>
+<ol type="1">
+<li><p>Widget developers don’t have to explicitly publish a given UI event in order for Widget consumers to listen for them. By default UI events are only published and fired if someone is listening for them.</p></li>
+<li><p>Widget developers can choose to publish a given UI event in order to explicitly control some aspect of the event. The most likely use case is the desire to provide the default implementation/handler for a given event. For example: a developer might want to publish a click event for a Menu Widget with the goal of providing the default click implementation/function (what gets canceled if a listener calls the preventDefault() method.)</p></li>
+<li><p>The set of user-generated events published by widget is defined by the UI_EVENTS prototype property. Widget developers can use this property to pair down or extend the number of events that are published and fired automatically.</p></li>
+<li><p>For performance, these events are only created when someone is listening, and the actual firing of these events is facilitated by a single, delegated DOM event listener.</p></li>
+</ol></li>
+<li><p>content box now expands to fill bounding box. CSS is used for browsers which support box-sizing:border-box. Expansion is handled programmatically for others (currently IE6 &amp; IE7). Maybe some edge cases which need resolution.</p></li>
+<li><p>Added an “id” attribute.</p></li>
+<li><p>Added support for auto-rendering of widgets at the end of construction, using the “render” attribute.</p></li>
+<li><p>Added support for single-box widgets (contentBox and boundingBox can point to same node).</p>
+<p>Widget developers can set CONTENT_TEMPLATE to null if they have a widget which doesn’t need dual-box support.</p></li>
+<li><p>Added _bindAttrUI and _syncAttrUI sugar methods, to bind after listeners and sync methods, by attribute name.</p></li>
+<li><p>The widget’s bounding box is now removed from the DOM and destroyed when the widget it destroyed.</p></li>
+<li><p>Added “srcNode” attribute, which acts as the root for HTML_PARSER.</p>
+<p>This allows widgets to support progressive enhancement, without having to put the burden on the user to create and point to bounding boxes, or content boxes.</p></li>
+<li><p>Added protected _getSrcNode and _applyParsedConfig methods to allow for HTML_PARSER customization, by allowing Widget developers to customize the node passed into _parseNode on the input side, and the final merged configuration on the output side of the srcNode parsing process.</p>
+<p>The default Widget _getSrcNode implementation uses “srcNode” if set, otherwise falls back to “contentBox”, for 3.0.0 compatibility.</p>
+<p>The default Widget _applyParsedConfig implementation aggregates the user configuration literal, with the configuration output from parsed node, with the user configuration taking precedence.</p>
+<p>NOTE: All HTML_PARSER related changes are backward compatible.</p>
+<p>Existing Widget implementations should still work. However HTML_PARSER implementations based on contentBox being the root node should be modified to work off of srcNode before the 3.1.0 release.</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li>No Changes</li>
+</ul>
+<h2 id="beta-1">3.0.0 beta 1</h2>
+<ul>
+<li><p>PluginHost moved down to Base.</p></li>
+<li><p>Render event args added to event facade instead of being passed across separately (e.parentNode).</p></li>
+<li><p>“hasFocus” attribute renamed to “focused”</p></li>
+<li><p>“focused” attribute is read only</p></li>
+<li>“focused” attribute is set via:
+<ol type="1">
+<li>user interaction</li>
+<li>the “focus” and “blur” methods</li>
+</ol></li>
+<li><p>Only one DOM focus event handler is used now (two for WebKit) and it is bound to the widget’s ownerDocument. This allows modal widgets to maintain a reference to the element in the document that previously had focus and to be able to restore that focus when the modal widget is hidden.</p></li>
+<li>“tabIndex” attribute was updated
+<ol type="1">
+<li>accepts a number or null</li>
+<li>more documentation</li>
+</ol></li>
+</ul>
+<h2 id="pr2---initial-release">3.0.0PR2 - Initial release</h2>
+</body>
+</html>

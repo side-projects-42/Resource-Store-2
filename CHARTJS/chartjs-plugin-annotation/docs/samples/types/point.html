@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>point</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="point">Point</h1>
+<p>```js chart-editor // <block:setup:4> const DATA_COUNT = 8; const MIN = 10; const MAX = 100;</p>
+<p>Utils.srand(5);</p>
+<p>const labels = []; for (let i = 0; i &lt; DATA_COUNT; ++i) { labels.push("" + i); }</p>
+<p>const numberCfg = { count: DATA_COUNT, min: MIN, max: MAX };</p>
+<p>const data = { labels: labels, datasets: [ { data: Utils.numbers(numberCfg), }, { data: Utils.numbers(numberCfg), }, { data: Utils.numbers(numberCfg), }, ], }; // </block:setup></p>
+<p>// <block:annotation1:1> const annotation1 = { type: “point”, scaleID: “y”, borderWidth: 3, borderColor: “black”, backgroundColor: “rgba(0,255,255,0.4)”, xValue: (ctx) =&gt; value(ctx, 0, 2, “x”), yValue: (ctx) =&gt; value(ctx, 0, 2, “y”), }; // </block:annotation1></p>
+<p>// <block:annotation2:2> const annotation2 = { type: “point”, scaleID: “y”, borderWidth: 5, borderColor: “red”, backgroundColor: “transparent”, radius: 25, xValue: (ctx) =&gt; value(ctx, 1, 4, “x”), yValue: (ctx) =&gt; value(ctx, 1, 4, “y”), }; // </block:annotation2></p>
+<p>/* <block:config:0> <em>/ const config = { type: “line”, data, options: { plugins: { annotation: { annotations: { annotation1, annotation2, }, }, }, }, }; /</em> </block:config> */</p>
+<p>// <block:utils:3> function value(ctx, datasetIndex, index, prop) { const meta = ctx.chart.getDatasetMeta(datasetIndex); return meta.controller.getParsed(index)[prop]; } // </block:utils></p>
+<p>var actions = [ { name: “Randomize”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.data = dataset.data.map(() =&gt; Utils.rand(MIN, MAX)); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Add data”, handler: function (chart) { chart.data.labels.push(chart.data.labels.length); chart.data.datasets.forEach(function (dataset, i) { dataset.data.push(Utils.rand(MIN, MAX)); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Remove data”, handler: function (chart) { chart.data.labels.shift(); chart.data.datasets.forEach(function (dataset, i) { dataset.data.shift(); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, ];</p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

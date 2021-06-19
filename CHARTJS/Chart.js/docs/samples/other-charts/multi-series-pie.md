@@ -1,57 +1,11 @@
-# Multi Series Pie
+Multi Series Pie
+================
 
-```js chart-editor
-// <block:setup:1>
-const DATA_COUNT = 5;
-const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+\`\`\`js chart-editor // const DATA\_COUNT = 5; const NUMBER\_CFG = { count: DATA\_COUNT, min: 0, max: 100 };
 
-const labels = Utils.months({ count: 7 });
-const data = {
-  labels: [
-    "Overall Yay",
-    "Overall Nay",
-    "Group A Yay",
-    "Group A Nay",
-    "Group B Yay",
-    "Group B Nay",
-    "Group C Yay",
-    "Group C Nay",
-  ],
-  datasets: [
-    {
-      backgroundColor: ["#AAA", "#777"],
-      data: [21, 79],
-    },
-    {
-      backgroundColor: ["hsl(0, 100%, 60%)", "hsl(0, 100%, 35%)"],
-      data: [33, 67],
-    },
-    {
-      backgroundColor: ["hsl(100, 100%, 60%)", "hsl(100, 100%, 35%)"],
-      data: [20, 80],
-    },
-    {
-      backgroundColor: ["hsl(180, 100%, 60%)", "hsl(180, 100%, 35%)"],
-      data: [10, 90],
-    },
-  ],
-};
-// </block:setup>
+const labels = Utils.months({ count: 7 }); const data = { labels: \[ “Overall Yay”, “Overall Nay”, “Group A Yay”, “Group A Nay”, “Group B Yay”, “Group B Nay”, “Group C Yay”, “Group C Nay”, \], datasets: \[ { backgroundColor: \[“\#AAA”, “\#777”\], data: \[21, 79\], }, { backgroundColor: \[“hsl(0, 100%, 60%)”, “hsl(0, 100%, 35%)”\], data: \[33, 67\], }, { backgroundColor: \[“hsl(100, 100%, 60%)”, “hsl(100, 100%, 35%)”\], data: \[20, 80\], }, { backgroundColor: \[“hsl(180, 100%, 60%)”, “hsl(180, 100%, 35%)”\], data: \[10, 90\], }, \], }; //
 
-// <block:config:0>
-const config = {
-  type: "pie",
-  data: data,
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        labels: {
-          generateLabels: function (chart) {
-            // Get the default label list
-            const original =
-              Chart.overrides.pie.plugins.legend.labels.generateLabels;
-            const labelsOriginal = original.call(this, chart);
+// const config = { type: “pie”, data: data, options: { responsive: true, plugins: { legend: { labels: { generateLabels: function (chart) { // Get the default label list const original = Chart.overrides.pie.plugins.legend.labels.generateLabels; const labelsOriginal = original.call(this, chart);
 
             // Build an array of colors used in the datasets of the chart
             var datasetColors = chart.data.datasets.map(function (e) {
@@ -94,11 +48,7 @@ const config = {
         },
       },
     },
-  },
-};
-// </block:config>
 
-module.exports = {
-  config: config,
-};
-```
+}, }; //
+
+module.exports = { config: config, }; \`\`\`

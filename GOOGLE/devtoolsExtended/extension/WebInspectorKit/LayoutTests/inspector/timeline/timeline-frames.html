@@ -1,47 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/timeline-test.js"></script>
-    <script>
-      function performActions() {
-        window.internals.emitInspectorDidBeginFrame();
-        console.timeStamp("FRAME 1");
-
-        window.internals.emitInspectorDidBeginFrame();
-        window.internals.emitInspectorDidCancelFrame();
-
-        window.internals.emitInspectorDidBeginFrame();
-        console.timeStamp("FRAME 2");
-        window.internals.emitInspectorDidCancelFrame();
-      }
-
-      function test() {
-        function formatRecord(record) {
-          if (
-            record.type === WebInspector.TimelineModel.RecordType.TimeStamp ||
-            record.type === WebInspector.TimelineModel.RecordType.BeginFrame
-          ) {
-            InspectorTest.dumpTimelineRecord(record);
-          }
-        }
-
-        InspectorTest.startTimeline(function () {
-          InspectorTest.evaluateInPage("performActions()", step2);
-        });
-
-        function step2() {
-          InspectorTest.stopTimeline(finish);
-        }
-
-        function finish() {
-          InspectorTest.printTimelineRecords(null, formatRecord);
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Tests reporting and canceling of didBeginFrame events in Timeline</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timeline-frames</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests reporting and canceling of didBeginFrame events in Timeline</p>
+</body>
 </html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <meta name="author" content="Christoph Pojer" />
+    <title>JavaScript Unit Testing Performance</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">JavaScript Unit Testing Performance</h1>
+      <p class="author">Christoph Pojer</p>
+    </header>
+    <p>
+      Jest is running thousands of tests at Facebook at all times, either
+      through continuous integration or invoked by engineers manually during
+      development. This worked well for years even as the people working on Jest
+      moved on to other projects within Facebook.
+    </p>
+    <p>
+      As engineers added more and more tests though, we noticed the performance
+      of Jest wasn’t going to scale. Additionally, in the last year the
+      JavaScript ecosystem has changed dramatically with the introduction of
+      things like npm3 and Babel, which we hadn’t anticipated. We formed a new
+      Jest team to address all of these issues and we’ll be sharing our progress
+      and plans on this blog from now on.
+    </p>
+    <!--truncate-->
+    <p>
+      Jest is a bit different from most test runners. We designed it to work
+      well in the context of Facebook’s infrastructure:
+    </p>
+    <ul>
+      <li>
+        <strong>Monorepo</strong> At Facebook we have a huge monorepo that
+        contains all of our JavaScript code. There are many reasons why this
+        approach is advantageous for us and there is an
+        <a href="https://www.youtube.com/watch?v=W71BTkUbdqE">awesome talk</a>
+        by a Google engineer that highlights all the benefits and drawbacks of
+        monorepos.
+      </li>
+      <li>
+        <strong>Sandboxing</strong> Another feature of Jest that’s important to
+        Facebook is how it virtualizes the test environment and wraps
+        <code>require</code> in order to sandbox code execution and isolate
+        individual tests. We’re even working on making Jest more modular so we
+        can take advantage of this functionality in other non-testing related
+        use cases.
+      </li>
+      <li>
+        <strong>providesModule</strong> If you’ve looked at any of our open
+        source JavaScript projects before, you may have noticed that we use a
+        <code>@providesModule</code> header to assign globally unique IDs to
+        modules. This does require some custom tooling, but it allows us to
+        reference modules without relative paths which has helped us move
+        incredibly fast, has scaled well as our engineering organization has
+        grown, and has fostered code sharing across the entire company. Check
+        out
+        <a
+          href="https://github.com/facebook/relay/blob/4eae620d86ed7fce1ee463c2fca88eb690d9cbde/src/container/RelayContainer.js#L9"
+          >RelayContainer</a
+        >
+        for an example of how this works in practice. One downside to this
+        approach, though, is that we’re forced to read and parse our entire
+        JavaScript codebase in order to resolve a single require statement. This
+        would obviously be prohibitively expensive without extensive caching,
+        especially for a short-lived process like Jest.
+      </li>
+    </ul>
+    <p>
+      As a result of these unique constraints, Jest may never be able to be as
+      fast as other test runners when running on our entire suite of tests.
+      However, engineers rarely need to run Jest on our entire test suite.
+      Powered by static analysis in the
+      <a href="https://github.com/facebook/node-haste">node-haste</a> project –
+      we’ve been able to make the default mode for running Jest at Facebook
+      <code>jest --onlyChanged</code>, or <code>jest -o</code>. In this mode we
+      build a reverse dependency graph to find only the affected tests that need
+      to be run based on the modules that have been changed.
+    </p>
+    <h2 id="optimal-scheduling-of-a-test-run">
+      Optimal Scheduling of a Test Run
+    </h2>
+    <p>
+      Most of the time our static analysis determines that more than one test
+      needs to be run. The number of affected tests can be anywhere from a
+      couple of tests to thousands. In order to speed this process up Jest
+      parallelizes test runs across workers. This is great because most of
+      Facebook’s development happens on remote servers with many CPU cores.
+    </p>
+    <p>
+      Recently we noticed Jest often seemed stuck
+      <em>“Waiting for 3 tests”</em> for up to a minute toward the end of a run.
+      It turned out we had a few really slow tests in our codebase that were
+      dominating the test runtime. While we were able to speed these individual
+      tests up significantly, we also made a change in how Jest schedules test
+      runs. Previously we used to schedule test runs based on file system
+      traversal, which was actually quite random. Here is an example of 11 tests
+      in gray blocks over two workers. The size of the block is the runtime of
+      the test:
+    </p>
+    <figure>
+      <img src="/img/blog/Scheduling1.png" alt="perf-basic-scheduling" />
+      <figcaption>perf-basic-scheduling</figcaption>
+    </figure>
+    <p>
+      We were randomly running a mix of fast and slow tests, and one of our
+      slowest tests ended up running as almost all the other tests were
+      completed, during which the second worker sat idle.
+    </p>
+    <p>
+      We made a change to schedule tests based on their file size which is
+      usually a good proxy for how long a test is going to take. A test with a
+      few thousand lines of code likely takes longer than a test with 15 lines
+      of code. While this sped up the entire test run by about 10%, we ended up
+      finding a better heuristic: now Jest stores the runtime of each test in a
+      cache and on subsequent runs, it schedules the slowest tests to run first.
+      Overall this helped improve the runtime of all tests by about 20%.
+    </p>
+    <p>
+      Here is an example of the same test run from before with better
+      scheduling:
+    </p>
+    <figure>
+      <img src="/img/blog/Scheduling2.png" alt="perf-improved-scheduling" />
+      <figcaption>perf-improved-scheduling</figcaption>
+    </figure>
+    <p>
+      Because we are running slow tests first, Jest can sometimes seem to take a
+      long time to start up – we only print results after the first test has
+      completed. For the future we are planning to run previously failed tests
+      first, because getting that info to developers as quickly as possible
+      matters the most.
+    </p>
+    <h2 id="inline-requires-and-lazy-mocking">
+      Inline Requires and Lazy Mocking
+    </h2>
+    <p>
+      If you have written tests using Jasmine before, they probably look like
+      this:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">const</span> sum <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;sum&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="at">describe</span>(<span class="st">&#39;sum&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="at">it</span>(<span class="st">&#39;works&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="at">expect</span>(<span class="at">sum</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">4</span>)).<span class="at">toEqual</span>(<span class="dv">9</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      One special thing we do in Jest is reset the entire module registry after
+      every single test (call to <code>it</code>) to make sure tests don’t
+      depend on each other. Before Jest, individual tests would depend on each
+      other and internal module state often leaked between them. As engineers
+      removed, reordered or refactored tests, some of them started to fail,
+      making it hard for people to understand what was going on.
+    </p>
+    <p>
+      Every single test in Jest receives a fresh new copy of all modules,
+      including new versions of all mocked dependencies which take a lot of time
+      to generate for each test. A side effect of this is that we had to call
+      <code>require</code> manually before every test, like this:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">let</span> sum<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="at">describe</span>(<span class="st">&#39;sum&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="at">beforeEach</span>(() <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    sum <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;sum&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="at">it</span>(<span class="st">&#39;works&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="at">expect</span>(<span class="at">sum</span>(<span class="dv">5</span><span class="op">,</span> <span class="dv">4</span>)).<span class="at">toEqual</span>(<span class="dv">9</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="at">it</span>(<span class="st">&#39;works too&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-10" title="10">    <span class="co">// This copy of sum is not the same as in the previous call to `it`.</span></a>
+<a class="sourceLine" id="cb2-11" title="11">    <span class="at">expect</span>(<span class="at">sum</span>(<span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>)).<span class="at">toEqual</span>(<span class="dv">5</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-12" title="12">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-13" title="13"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      We built a babel transform called
+      <a
+        href="https://github.com/facebook/fbjs/blob/master/packages/babel-preset-fbjs/plugins/inline-requires.js"
+        >inline-requires</a
+      >
+      that removes top-level require statements and inlines them in code. For
+      example, the line <code>const sum = require('sum');</code> will be removed
+      from code, but every use of <code>sum</code> in the file will be replaced
+      by <code>require('sum')</code>. With this transform we can write tests
+      just like you’d expect in Jasmine and the code gets transformed into this:
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="at">describe</span>(<span class="st">&#39;sum&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="at">it</span>(<span class="st">&#39;works&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="at">expect</span>(<span class="at">require</span>(<span class="st">&#39;sum&#39;</span>)(<span class="dv">5</span><span class="op">,</span> <span class="dv">4</span>)).<span class="at">toEqual</span>(<span class="dv">9</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      A great side-effect of inline requires is that we only require the modules
+      that we actually use within the test itself, instead of all the modules we
+      used in the entire file.
+    </p>
+    <p>
+      Which leads to another optimization: lazy mocking. The idea is to only
+      mock modules on demand, which combined with inline requires saves us from
+      mocking a lot of modules and all their recursive dependencies.
+    </p>
+    <p>
+      We were able to update all tests using a
+      <a
+        href="https://github.com/cpojer/js-codemod/blob/master/transforms/outline-require.js"
+        >codemod</a
+      >
+      in no time – it was a <em>simple</em> 50,000 line code change. Inline
+      requires and lazy mocking improved the test runtime by 50%.
+    </p>
+    <p>
+      The inline-require babel plugin is not only useful for Jest but for normal
+      JavaScript as well. It was shipped by
+      <a href="https://twitter.com/voideanvalue">Bhuwan</a> to all users of
+      <a href="http://facebook.com/">facebook.com</a> just a week ago and
+      significantly improved startup time.
+    </p>
+    <p>
+      For now, if you’d like to use this transform in Jest you’ll have to add it
+      manually to your Babel configuration. We are working on ways to make this
+      easier to opt-in.
+    </p>
+    <h2 id="repo-sync-and-caching">Repo-Sync and Caching</h2>
+    <p>
+      The open source version of Jest used to be a fork of our internal version,
+      and we’d sync Jest out only once every couple of months. This was a
+      painful manual process that required fixing up many tests every time. We
+      recently upgraded Jest and brought parity to all platforms (iOS, Android
+      and web) and then enabled our sync process. Now, every change to Jest in
+      open source is run against all of our internal tests, and there’s only a
+      single version of Jest that’s consistent everywhere.
+    </p>
+    <p>
+      The first feature we got to take advantage of after unforking was the
+      preprocessor cache. If you are using Babel together with Jest, Jest has to
+      pre-process every JavaScript file before it can execute it. We built a
+      caching layer so that each file, when unchanged, only has to be
+      transformed a single time. After we unforked Jest, we were able to easily
+      fix up the open source implementation and shipped it at Facebook. This
+      resulted in another 50% performance win. Because the cache only works on
+      the second-run, the cold start time of Jest was unaffected.
+    </p>
+    <p>
+      We also realized we were doing a lot of path operations when resolving
+      relative requires. Because the module registry is reset for every test,
+      there were thousands of calls that could be memoized. One big optimization
+      was to add a lot more caching, not just around a single test, but also
+      across test files. Previously, we would generate module metadata for the
+      automocking feature once for every test file. The object a module exports
+      never changes however, so we now share this code across test files.
+      Unfortunately, because JavaScript and Node.js don’t have shared memory, we
+      have to do all of this work at least once per worker process.
+    </p>
+    <h2 id="question-everything">Question Everything</h2>
+    <p>
+      When trying to improve performance, it’s important to also dive into the
+      systems that sit above and below your system. In the case of Jest, things
+      like Node.js and the test files themselves, for example. One of the first
+      things we did was to update Node.js at Facebook from the years-old 0.10 to
+      iojs and subsequently to Node 4. The new version of V8 helped improve
+      performance and was quite easy to upgrade to.
+    </p>
+    <p>
+      We noticed that the <code>path</code> module in Node.js is slow when
+      making thousands of path operations which was
+      <a href="https://github.com/nodejs/node/pull/5123">fixed in Node 5.7</a>.
+      Until we drop support for Node 4 internally at Facebook, we’ll ship our
+      own version of the
+      <a
+        href="https://github.com/facebook/node-haste/blob/master/src/fastpath.js"
+        >fastpath</a
+      >
+      module.
+    </p>
+    <p>
+      We next started questioning the outdated
+      <a href="https://github.com/facebook/node-haste">node-haste</a>. As
+      mentioned before, the entire project has to be parsed for
+      <code>@providesModule</code> headers to build a dependency graph. When
+      this system was originally built, <code>node_modules</code> didn’t exist
+      and our file system crawler wasn’t excluding them properly.
+    </p>
+    <p>
+      In previous versions, Jest would actually read every file in
+      <code>node_modules</code> – which contributed to the slow startup time of
+      Jest. When we picked up Jest again we replaced the entire project with a
+      new implementation, based on react-native’s packager. The startup time of
+      Jest is now less than a second even on large projects. The react-native
+      team, specifically <a href="https://twitter.com/void_0">David</a>,
+      <a href="https://twitter.com/amasad">Amjad</a> and
+      <a href="https://twitter.com/martinbigio">Martin</a> did an outstanding
+      job on this project.
+    </p>
+    <h2 id="adding-everything-up">Adding everything up</h2>
+    <p>
+      A lot of the above changes improved the test runtime by 10% or sometimes
+      even 50%. We started at a runtime of about 10 minutes for all tests, and
+      without these improvements we’d probably be at around 20 minutes by now.
+      After these improvements, though, it now consistently takes around 1
+      minute and 35 seconds to run all our tests!
+    </p>
+    <p>
+      More importantly, adding new tests causes total runtime to grow very
+      slowly. Engineers can write and run more tests without feeling the costs.
+    </p>
+    <p>
+      With Jest’s recent 0.9 release and performance improvements from the
+      <a href="https://github.com/facebook/jest/pull/599"
+        >node-haste2 integration</a
+      >, the runtime of the
+      <a href="https://github.com/facebook/relay">Relay</a> framework’s test
+      suite went down from 60 seconds to about 25 and the
+      <a href="https://github.com/facebook/react-native">react-native</a> test
+      suite now finishes in less than ten seconds on a 13” MacBook Pro.
+    </p>
+    <p>
+      We’re very happy with the wins we’ve seen so far, and we’re going to keep
+      working on Jest and making it better. If you are curious about
+      contributing to Jest, feel free get in touch on GitHub,
+      <a href="https://jestjs.io/support.html">Discord</a> or Facebook :)
+    </p>
+  </body>
+</html>

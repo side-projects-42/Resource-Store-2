@@ -4,30 +4,22 @@ Babel plugin to hoist `jest.disableAutomock`, `jest.enableAutomock`, `jest.unmoc
 
 ## Installation
 
-```sh
-$ yarn add --dev babel-plugin-jest-hoist
-```
+    $ yarn add --dev babel-plugin-jest-hoist
 
 ## Usage
 
 ### Via `babel.config.js` (Recommended)
 
-```js
-module.exports = {
-  plugins: ['jest-hoist'],
-};
-```
+    module.exports = {
+      plugins: ['jest-hoist'],
+    };
 
 ### Via CLI
 
-```sh
-$ babel --plugins jest-hoist script.js
-```
+    $ babel --plugins jest-hoist script.js
 
 ### Via Node API
 
-```javascript
-require('@babel/core').transform('code', {
-  plugins: ['jest-hoist'],
-});
-```
+    require('@babel/core').transform('code', {
+      plugins: ['jest-hoist'],
+    });

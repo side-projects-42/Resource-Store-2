@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2011-07-18-mirror-mirror-on-the-wall</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Let me preface this entire post with this:
+      <strong>I love <a href="http://contegix.com">Contegix</a></strong
+      >.
+    </p>
+    <hr />
+    <p>
+      While working on some infrastructure tasks I had long-since put-off for
+      the Jenkins project, I noticed something this weekend that scared the hell
+      out of me.
+    </p>
+    <p>
+      At some undetermined time, our
+      <a href="http://www.mirrorbrain.org">MirrorBrain</a> installation
+      <em>stopped</em> redirecting to our mirror network. Absolutely
+      <strong>zero</strong> downloads were being redirected, meaning that
+      <code>cucumber</code>, the 1U machine graciously colocated by
+      <a href="http://www.contegix.com">Contegix</a> had served up
+      <strong><em>far</em></strong> more bits than I ever wanted it to.
+    </p>
+    <p>
+      As such, I would like to publicly apologize to Contegix on behalf of the
+      Jenkins project. Their support for the project has been tremendous but
+      this glitch caused such an incredible amount of traffic to be pushed
+      through their network that I feel exceptionally bad about it (turns out,
+      Jenkins is pretty popular!)
+    </p>
+    <p>
+      Now, for the good news. In diagnosing and debugging this issue (in a
+      caffeine-fueled frenzy I might add) I managed to do a couple things:
+    </p>
+    <ul>
+      <li>I corrected the redirection relatively easily</li>
+      <li>
+        I fixed our long-standing geo-location issue,
+        <strong
+          >finally enabling redirection to our european and asian
+          mirrors!</strong
+        >
+      </li>
+    </ul>
+    <p>
+      Within 30 minutes of correcting the error, I was able to add
+      <em>two</em> mirrors in Germany, re-enable one from Taiwan and add a new
+      mirror in Japan!
+    </p>
+    <!--break-->
+    <p>
+      I’m hoping to add even more mirrors in even more regions as volunteers
+      with bandwidth step-forward, if you’re interested in hosting a mirror you
+      can drop me a line at <code>tyler@linux.com</code>.
+    </p>
+    <hr />
+  </body>
+</html>

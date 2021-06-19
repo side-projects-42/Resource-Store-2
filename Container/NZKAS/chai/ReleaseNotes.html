@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>ReleaseNotes</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="release-notes">Release Notes</h1>
+    <h2 id="section">1.8.1 / 2013-10-10</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated dependencies.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="browserify">Browserify</h3>
+    <p>
+      This is a small patch that updates the dependency tree so browserify users
+      can install chai. (Remove conditional requires)
+    </p>
+    <h2 id="section-1">1.8.0 / 2013-09-18</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>See <code>deep.equal</code> notes.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="deep-equals">Deep Equals</h3>
+    <p>
+      This version of Chai focused on a overhaul to the deep equal utility. The
+      code for this tool has been removed from the core lib and can now be found
+      at: <a href="https://github.com/chaijs/deep-eql">chai / deep-eql</a>. As
+      stated in previous releases, this is part of a larger initiative to
+      provide transparency, independent testing, and coverage for some of the
+      more complicated internal tools.
+    </p>
+    <p>
+      For the most part <code>.deep.equal</code> will behave the same as it has.
+      However, in order to provide a consistent ruleset across all types being
+      tested, the following changes have been made and <em>might</em> require
+      changes to your tests.
+    </p>
+    <p>
+      <strong>1.</strong> Strict equality for non-traversable nodes according to
+      <a href="http://wiki.ecmascript.org/doku.php?id=harmony:egal">egal</a>.
+    </p>
+    <p><em>Previously:</em> Non-traversable equal via <code>===</code>.</p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="at">expect</span>(<span class="kw">NaN</span>).<span class="va">to</span>.<span class="va">deep</span>.<span class="at">equal</span>(<span class="kw">NaN</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="at">expect</span>(<span class="op">-</span><span class="dv">0</span>).<span class="va">to</span>.<span class="va">not</span>.<span class="va">deep</span>.<span class="at">equal</span>(<span class="op">+</span><span class="dv">0</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      <strong>2.</strong> Arguments are not Arrays (and all types must be
+      equal):
+    </p>
+    <p>
+      <em>Previously:</em> Some crazy nonsense that led to empty arrays deep
+      equaling empty objects deep equaling dates.
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="at">expect</span>(<span class="kw">arguments</span>).<span class="va">to</span>.<span class="va">not</span>.<span class="va">deep</span>.<span class="at">equal</span>([])<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="at">expect</span>(<span class="va">Array</span>.<span class="va">prototype</span>.<span class="va">slice</span>.<span class="at">call</span>(<span class="kw">arguments</span>)).<span class="va">to</span>.<span class="va">deep</span>.<span class="at">equal</span>([])<span class="op">;</span></a></code></pre>
+    </div>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/156">#156</a> Empty
+        object is eql to empty array
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/192">#192</a> empty
+        object is eql to a Date object
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/194">#194</a> refactor
+        deep-equal utility
+      </li>
+    </ul>
+    <h3 id="ci-and-browser-testing">CI and Browser Testing</h3>
+    <p>
+      Chai now runs the browser CI suite using
+      <a href="http://karma-runner.github.io/">Karma</a> directed at
+      <a href="https://saucelabs.com/">SauceLabs</a>. This means we get to know
+      where our browser support stands… and we get a cool badge:
+    </p>
+    <p>
+      <a href="https://saucelabs.com/u/logicalparadox"
+        ><img
+          src="https://saucelabs.com/browser-matrix/logicalparadox.svg"
+          alt="Selenium Test Status"
+      /></a>
+    </p>
+    <p>
+      Look for the list of browsers/versions to expand over the coming releases.
+    </p>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/195">#195</a> karma test
+        framework
+      </li>
+    </ul>
+    <h2 id="section-2">1.7.2 / 2013-06-27</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="coverage-reporting">Coverage Reporting</h3>
+    <p>
+      Coverage reporting has always been available for core-developers but the
+      data has never been published for our end users. In our ongoing effort to
+      improve accountability this data will now be published via the
+      <a href="https://coveralls.io/">coveralls.io</a> service. A badge has been
+      added to the README and the full report can be viewed online at the
+      <a href="https://coveralls.io/r/chaijs/chai">chai coveralls project</a>.
+      Furthermore, PRs will receive automated messages indicating how their PR
+      impacts test coverage. This service is tied to TravisCI.
+    </p>
+    <h3 id="other-fixes">Other Fixes</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/175">#175</a> Add
+        <code>bower.json</code>. (Fix ignore all)
+      </li>
+    </ul>
+    <h2 id="section-3">1.7.1 / 2013-06-24</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="official-bower-support">Official Bower Support</h3>
+    <p>
+      Support has been added for the Bower Package Manager
+      ([bower.io])(http://bower.io/). Though Chai could be installed via Bower
+      in the past, this update adds official support via the
+      <code>bower.json</code> specification file.
+    </p>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/175">#175</a> Add
+        <code>bower.json</code>.
+      </li>
+    </ul>
+    <h2 id="section-4">1.7.0 / 2013-06-17</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>Review AssertionError update notice.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="assertionerror-update-notice">AssertionError Update Notice</h3>
+    <p>
+      Chai now uses
+      <a href="https://github.com/chaijs/assertion-error"
+        >chaijs/assertion-error</a
+      >
+      instead an internal constructor. This will allow for further
+      iteration/experimentation of the AssertionError constructor independant of
+      Chai. Future plans include stack parsing for callsite support.
+    </p>
+    <p>
+      This update constructor has a different constructor param signature that
+      conforms more with the standard <code>Error</code> object. If your plugin
+      throws and <code>AssertionError</code> directly you will need to update
+      your plugin with the new signature.
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">var</span> AssertionError <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;chai&quot;</span>).<span class="at">AssertionError</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"> * previous</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"> *</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="co"> * </span><span class="an">@param</span><span class="co"> </span><span class="cv">{Object}</span><span class="co"> options</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb3-8" title="8"></a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="cf">throw</span> <span class="kw">new</span> <span class="at">AssertionError</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-10" title="10">  <span class="dt">message</span><span class="op">:</span> <span class="st">&quot;An assertion error occurred&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-11" title="11">  <span class="dt">actual</span><span class="op">:</span> actual<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-12" title="12">  <span class="dt">expect</span><span class="op">:</span> expect<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-13" title="13">  <span class="dt">startStackFunction</span><span class="op">:</span> <span class="kw">arguments</span>.<span class="at">callee</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-14" title="14">  <span class="dt">showStack</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-15" title="15"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-16" title="16"></a>
+<a class="sourceLine" id="cb3-17" title="17"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb3-18" title="18"><span class="co"> * new</span></a>
+<a class="sourceLine" id="cb3-19" title="19"><span class="co"> *</span></a>
+<a class="sourceLine" id="cb3-20" title="20"><span class="co"> * </span><span class="an">@param</span><span class="co"> </span><span class="cv">{String}</span><span class="co"> message</span></a>
+<a class="sourceLine" id="cb3-21" title="21"><span class="co"> * </span><span class="an">@param</span><span class="co"> </span><span class="cv">{Object}</span><span class="co"> options</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="co"> * </span><span class="an">@param</span><span class="co"> </span><span class="cv">{Function}</span><span class="co"> start stack function</span></a>
+<a class="sourceLine" id="cb3-23" title="23"><span class="co"> */</span></a>
+<a class="sourceLine" id="cb3-24" title="24"></a>
+<a class="sourceLine" id="cb3-25" title="25"><span class="cf">throw</span> <span class="kw">new</span> <span class="at">AssertionError</span>(</a>
+<a class="sourceLine" id="cb3-26" title="26">  <span class="st">&quot;An assertion error occurred&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-27" title="27">  <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-28" title="28">    <span class="dt">actual</span><span class="op">:</span> actual<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-29" title="29">    <span class="dt">expect</span><span class="op">:</span> expect<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-30" title="30">    <span class="dt">showStack</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-31" title="31">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-32" title="32">  <span class="kw">arguments</span>.<span class="at">callee</span></a>
+<a class="sourceLine" id="cb3-33" title="33">)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-34" title="34"></a>
+<a class="sourceLine" id="cb3-35" title="35"><span class="co">// other signatures</span></a>
+<a class="sourceLine" id="cb3-36" title="36"><span class="cf">throw</span> <span class="kw">new</span> <span class="at">AssertionError</span>(<span class="st">&quot;An assertion error occurred&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-37" title="37"><span class="cf">throw</span> <span class="kw">new</span> <span class="at">AssertionError</span>(<span class="st">&quot;An assertion error occurred&quot;</span><span class="op">,</span> <span class="kw">null</span><span class="op">,</span> <span class="kw">arguments</span>.<span class="at">callee</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h4 id="external-dependencies">External Dependencies</h4>
+    <p>
+      This is the first non-developement dependency for Chai. As Chai continues
+      to evolve we will begin adding more; the next will likely be improved type
+      detection and deep equality. With Chai’s userbase continually growing
+      there is an higher need for accountability and documentation. External
+      dependencies will allow us to iterate and test on features independent
+      from our interfaces.
+    </p>
+    <p>
+      Note: The browser packaged version <code>chai.js</code> will ALWAYS
+      contain all dependencies needed to run Chai.
+    </p>
+    <h3 id="community-contributions">Community Contributions</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/169">#169</a> Fix deep
+        equal comparison for Date/Regexp types.
+        <span class="citation" data-cites="katsgeorgeek">[@katsgeorgeek]</span
+        >(https://github.com/katsgeorgeek)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/171">#171</a> Add
+        <code>assert.notOk()</code>.
+        <span class="citation" data-cites="Bartvds">[@Bartvds]</span
+        >(https://github.com/Bartvds)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/173">#173</a> Fix
+        <code>inspect</code> utility.
+        <span class="citation" data-cites="domenic">[@domenic]</span
+        >(https://github.com/domenic)
+      </li>
+    </ul>
+    <p>Thank you to all who took the time to contribute!</p>
+    <h2 id="section-5">1.6.1 / 2013-06-05</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated developement
+            dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="deep-equality">Deep Equality</h3>
+    <p>
+      Regular Expressions are now tested as part of all deep equality
+      assertions. In previous versions they silently passed for all scenarios.
+      Thanks to
+      <span class="citation" data-cites="katsgeorgeek">[@katsgeorgeek]</span
+      >(https://github.com/katsgeorgeek) for the contribution.
+    </p>
+    <h3 id="community-contributions-1">Community Contributions</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/161">#161</a> Fix
+        documented name for assert interface’s isDefined method.
+        <span class="citation" data-cites="brandonpayton">[@brandonpayton]</span
+        >(https://github.com/brandonpayton)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/168">#168</a> Fix
+        comparison equality of two regexps for when using deep equality.
+        <span class="citation" data-cites="katsgeorgeek">[@katsgeorgeek]</span
+        >(https://github.com/katsgeorgeek)
+      </li>
+    </ul>
+    <p>Thank you to all who took the time to contribute!</p>
+    <h3 id="additional-notes">Additional Notes</h3>
+    <ul>
+      <li>
+        Mocha has been locked at version <code>1.8.x</code> to ensure
+        <code>mocha-phantomjs</code> compatibility.
+      </li>
+    </ul>
+    <h2 id="section-6">1.6.0 / 2013-04-29</h2>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated developement
+            dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="new-assertions">New Assertions</h3>
+    <h4 id="array-members-inclusion">Array Members Inclusion</h4>
+    <p>
+      Asserts that the target is a superset of <code>set</code>, or that the
+      target and <code>set</code> have the same members. Order is not taken into
+      account. Thanks to
+      <span class="citation" data-cites="NickHeiner">[@NickHeiner]</span
+      >(https://github.com/NickHeiner) for the contribution.
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="co">// (expect/should) full set</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="at">expect</span>([<span class="dv">4</span><span class="op">,</span> <span class="dv">2</span>]).<span class="va">to</span>.<span class="va">have</span>.<span class="at">members</span>([<span class="dv">2</span><span class="op">,</span> <span class="dv">4</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="at">expect</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">2</span>]).<span class="va">to</span>.<span class="va">not</span>.<span class="va">have</span>.<span class="at">members</span>([<span class="dv">5</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">1</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">// (expect/should) inclusion</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="at">expect</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]).<span class="va">to</span>.<span class="va">include</span>.<span class="at">members</span>([<span class="dv">3</span><span class="op">,</span> <span class="dv">2</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="at">expect</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]).<span class="va">to</span>.<span class="va">not</span>.<span class="va">include</span>.<span class="at">members</span>([<span class="dv">3</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">8</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-8" title="8"></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co">// (assert) full set</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="va">assert</span>.<span class="at">sameMembers</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">1</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> <span class="st">&quot;same members&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-11" title="11"></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="co">// (assert) inclusion</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="va">assert</span>.<span class="at">includeMembers</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> [<span class="dv">2</span><span class="op">,</span> <span class="dv">1</span>]<span class="op">,</span> <span class="st">&quot;include members&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h4 id="non-inclusion-for-assert-interface">
+      Non-inclusion for Assert Interface
+    </h4>
+    <p>
+      Most <code>assert</code> functions have a negative version, like
+      <code>instanceOf()</code> has a corresponding <code>notInstaceOf()</code>.
+      However <code>include()</code> did not have a corresponding
+      <code>notInclude()</code>. This has been added.
+    </p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="va">assert</span>.<span class="at">notInclude</span>([<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span>]<span class="op">,</span> <span class="dv">8</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="va">assert</span>.<span class="at">notInclude</span>(<span class="st">&quot;foobar&quot;</span><span class="op">,</span> <span class="st">&quot;baz&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="community-contributions-2">Community Contributions</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/140">#140</a> Restore
+        <code>call</code>/<code>apply</code> methods for plugin interface.
+        <span class="citation" data-cites="RubenVerborgh">[@RubenVerborgh]</span
+        >(https://github.com/RubenVerborgh)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/148">#148</a>/<a
+          href="https://github.com/chaijs/chai/pull/153"
+          >#153</a
+        >
+        Add <code>members</code> and <code>include.members</code> assertions.
+        <a href="https://github.com/NickHeiner">#NickHeiner</a>
+      </li>
+    </ul>
+    <p>Thank you to all who took time to contribute!</p>
+    <h3 id="other-bug-fixes">Other Bug Fixes</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/142">#142</a>
+        <code>assert#include</code> will no longer silently pass on wrong-type
+        haystack.
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/158">#158</a>
+        <code>assert#notInclude</code> has been added.
+      </li>
+      <li>
+        Travis-CI now tests Node.js <code>v0.10.x</code>. Support for
+        <code>v0.6.x</code> has been removed. <code>v0.8.x</code> is still
+        tested as before.
+      </li>
+    </ul>
+    <h2 id="section-7">1.5.0 / 2013-02-03</h2>
+    <h3 id="migration-requirements">Migration Requirements</h3>
+    <p>
+      The following changes are required if you are upgrading from the previous
+      version:
+    </p>
+    <ul>
+      <li>
+        <strong>Users:</strong>
+        <ul>
+          <li>
+            <em>Update [2013-02-04]:</em> Some users may notice a small subset
+            of deep equality assertions will no longer pass. This is the result
+            of <a href="https://github.com/chaijs/chai/issues/120">#120</a>, an
+            improvement to our deep equality algorithm. Users will need to
+            revise their assertions to be more granular should this occur.
+            Further information:
+            <a href="https://github.com/chaijs/chai/issues/139">#139</a>.
+          </li>
+        </ul>
+      </li>
+      <li>
+        <strong>Plugin Developers:</strong>
+        <ul>
+          <li>No changes required.</li>
+        </ul>
+      </li>
+      <li>
+        <strong>Core Contributors:</strong>
+        <ul>
+          <li>
+            Refresh <code>node_modules</code> folder for updated developement
+            dependencies.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="community-contributions-3">Community Contributions</h3>
+    <ul>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/126">#126</a>: Add
+        <code>eqls</code> alias for <code>eql</code>.
+        <span class="citation" data-cites="RubenVerborgh">[@RubenVerborgh]</span
+        >(https://github.com/RubenVerborgh)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/127">#127</a>:
+        Performance refactor for chainable methods.
+        <span class="citation" data-cites="RubenVerborgh">[@RubenVerborgh]</span
+        >(https://github.com/RubenVerborgh)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/133">#133</a>: Assertion
+        <code>.throw</code> support for primitives.
+        <span class="citation" data-cites="RubenVerborgh">[@RubenVerborgh]</span
+        >(https://github.com/RubenVerborgh)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/137">#137</a>: Assertion
+        <code>.throw</code> support for empty messages.
+        <span class="citation" data-cites="timnew">[@timnew]</span
+        >(https://github.com/timnew)
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/pull/136">#136</a>: Fix backward
+        negation messages when using <code>.above()</code> and
+        <code>.below()</code>.
+        <span class="citation" data-cites="whatthejeff">[@whatthejeff]</span
+        >(https://github.com/whatthejeff)
+      </li>
+    </ul>
+    <p>Thank you to all who took time to contribute!</p>
+    <h3 id="other-bug-fixes-1">Other Bug Fixes</h3>
+    <ul>
+      <li>
+        Improve type detection of <code>.a()</code>/<code>.an()</code> to work
+        in cross-browser scenarios.
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/116">#116</a>:
+        <code>.throw()</code> has cleaner display of errors when WebKit
+        browsers.
+      </li>
+      <li>
+        <a href="https://github.com/chaijs/chai/issues/120">#120</a>:
+        <code>.eql()</code> now works to compare dom nodes in browsers.
+      </li>
+    </ul>
+    <h3 id="usage-updates">Usage Updates</h3>
+    <h4 id="for-users">For Users</h4>
+    <p>
+      <strong>1. Component Support:</strong> Chai now included the proper
+      configuration to be installed as a
+      <a href="https://github.com/component/component">component</a>. Component
+      users are encouraged to consult
+      <a href="http://chaijs.com">chaijs.com</a> for the latest version number
+      as using the master branch does not gaurantee stability.
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// relevant component.json</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  devDependencies<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-3" title="3">    <span class="st">&quot;chaijs/chai&quot;</span><span class="op">:</span> <span class="st">&quot;1.5.0&quot;</span></a>
+<a class="sourceLine" id="cb6-4" title="4">  <span class="op">}</span></a></code></pre>
+    </div>
+    <p>Alternatively, bleeding-edge is available:</p>
+    <pre><code>$ component install chaijs/chai</code></pre>
+    <p>
+      <strong>2. Configurable showDiff:</strong> Some test runners (such as
+      <a href="http://visionmedia.github.com/mocha/">mocha</a>) include support
+      for showing the diff of strings and objects when an equality error occurs.
+      Chai has already included support for this, however some users may not
+      prefer this display behavior. To revert to no diff display, the following
+      configuration is available:
+    </p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="va">chai</span>.<span class="va">Assertion</span>.<span class="at">showDiff</span> <span class="op">=</span> <span class="kw">false</span><span class="op">;</span> <span class="co">// diff output disabled</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="va">chai</span>.<span class="va">Assertion</span>.<span class="at">showDiff</span> <span class="op">=</span> <span class="kw">true</span><span class="op">;</span> <span class="co">// default, diff output enabled</span></a></code></pre>
+    </div>
+    <h4 id="for-plugin-developers">For Plugin Developers</h4>
+    <p>
+      <strong>1. New Utility - type</strong>: The new utility
+      <code>.type()</code> is available as a better implementation of
+      <code>typeof</code> that can be used cross-browser. It handles the
+      inconsistencies of Array, <code>null</code>, and
+      <code>undefined</code> detection.
+    </p>
+    <ul>
+      <li>
+        <strong><span class="citation" data-cites="param">@param</span></strong>
+        <em>{Mixed}</em> object to detect type of
+      </li>
+      <li>
+        <strong
+          ><span class="citation" data-cites="return">@return</span></strong
+        >
+        <em>{String}</em> object type
+      </li>
+    </ul>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="va">chai</span>.<span class="at">use</span>(<span class="kw">function</span> (c<span class="op">,</span> utils) <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="co">// some examples</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="va">utils</span>.<span class="at">type</span>(<span class="op">{}</span>)<span class="op">;</span> <span class="co">// &#39;object&#39;</span></a>
+<a class="sourceLine" id="cb9-4" title="4">  <span class="va">utils</span>.<span class="at">type</span>(<span class="kw">null</span>)<span class="op">;</span> <span class="co">// `null&#39;</span></a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="va">utils</span>.<span class="at">type</span>(<span class="kw">undefined</span>)<span class="op">;</span> <span class="co">// `undefined`</span></a>
+<a class="sourceLine" id="cb9-6" title="6">  <span class="va">utils</span>.<span class="at">type</span>([])<span class="op">;</span> <span class="co">// `array`</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h4 id="for-core-contributors">For Core Contributors</h4>
+    <p>
+      <strong>1. Browser Testing</strong>: Browser testing of the
+      <code>./chai.js</code> file is now available in the command line via
+      PhantomJS. <code>make test</code> and Travis-CI will now also rebuild and
+      test <code>./chai.js</code>. Consequently, all pull requests will now be
+      browser tested in this way.
+    </p>
+    <p>
+      <em
+        >Note: Contributors opening pull requests should still NOT include the
+        browser build.</em
+      >
+    </p>
+    <p>
+      <strong>2. SauceLabs Testing</strong>: Early SauceLab support has been
+      enabled with the file <code>./support/mocha-cloud.js</code>. Those
+      interested in trying it out should create a free
+      <a href="https://saucelabs.com/signup/plan">Open Sauce</a> account and
+      include their credentials in <code>./test/auth/sauce.json</code>.
+    </p>
+  </body>
+</html>

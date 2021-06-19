@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-02-08-breaking-hudson-1-345-released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      As I mentioned in the footer of the post on the
+      <a href="http://blog.hudson-ci.org/content/hudson-1344-released"
+        >Hudson 1.344 release</a
+      >, there were a couple big regressions in the 1.344 release that were
+      causing a number of users issues (such as
+      <a href="http://issues.hudson-ci.org/browse/HUDSON-5536">issue 5536</a>
+      and
+      <a href="http://issues.hudson-ci.org/browse/HUDSON-5546">issue 5546</a>).
+    </p>
+    <p>
+      As a result, Kohsuke and the team have quickly pushed out a hot-fix
+      release: 1.345. Here’s the break down:
+    </p>
+    <h4 id="bugs-fixed">Bugs fixed:</h4>
+    <ul>
+      <li>
+        Update center retrieval, “build now” link, and real-time console update
+        was broken in 1.344 (<a
+          href="http://issues.hudson-ci.org/browse/HUDSON-5536"
+          >issue 5536</a
+        >)
+      </li>
+      <li>
+        Fixed the backward incompatibility introduced in HUDSON-5391 fix in
+        1.344. (<a href="http://issues.hudson-ci.org/browse/HUDSON-5391"
+          >issue 5391</a
+        >)
+      </li>
+    </ul>
+    <p>
+      If you have already updated to 1.344, your “Update Center” is most likely
+      busted and you’ll need to download the <code>hudson.war</code> file
+      manually.
+    </p>
+    <p>
+      You can go grab the
+      <a href="http://hudson-ci.org/latest/hudson.war">latest .war file</a>
+      straight from <code>hudson-ci.org</code> or if you’re using a native
+      package, use your package manager to upgrade.
+    </p>
+  </body>
+</html>

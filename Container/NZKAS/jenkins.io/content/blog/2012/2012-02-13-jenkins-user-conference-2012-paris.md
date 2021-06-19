@@ -1,0 +1,19 @@
+--- :layout: post :title: Jenkins User Conference 2012 Paris :nodeid: 373 :created: 1329120060 :tags: - general - juc :author: ndeloof --- [  
+![](http://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Paris_06_Eiffelturm_4828.jpg/151px-Paris_06_Eiffelturm_4828.jpg)  
+](http://en.wikipedia.org/wiki/Tourism_in_France)
+
+(English text follows the French text)
+
+Après le succès de la [Jenkins User Conference l’an dernier à San Francisco](http://www.cloudbees.com/jenkins-user-conference-2011-session-abstracts.cb) et à l’intérêt qu’elle a soulevé, nous organisons cette année la JUC dans quatre grande villes à travers le monde. La premiére étape de cette tournée est la [JUC 2012 à Paris](http://www.cloudbees.com/juc2012.cb), le 17 avril. La conférence aura lieu la veille de [Devoxx France](http://www.devoxx.com/display/FR12/Accueil) dans les mêmes locaux. La date a été spécialement choisie pour que vous puissiez faire d’une pierre deux coups, ou plutôt deux confs !
+
+Les [inscriptions sont ouvertes](http://cloudbees-jenkins-user-confs.eventbrite.com/). Inscrivez-vous dès maintenant pour bénéficier de la réduction réservée au plus enthousiastes. Vous pouvez également [proposer un sujet](https://www.cloudbees.com/forms/jenkins-user-conference-call-papers.cb) ou bien [soutenir la conférence en tant que sponsor](http://www.cloudbees.com/jenkins-user-conference-2012-sponsorship.cb). Comme il est bien connu que les Français aiment voir leurs compatriotes sur scène, j’espère que nos nombreux développeurs jenkins francophones (les meilleurs, soit dit en passant) proposeront un sujet !
+
+Cette année, nous demandons une contribution pour les inscriptions (avec un tarif réduit avant le 18 février), afin de couvrir les frais d’organisation, mais nous vous offrirons en contrepartie le T-shirt officiel ainsi que des autocollants Jenkins. Si on se base sur la JUC 2011, [SCALE 10x](http://jenkins-ci.org/event/jenkins-scale-10x-los-angeles), ou le [FOSDEM](http://jenkins-ci.org/event/jenkins-fosdem-2012), ce sera une opporunité exceptionnelle pour rencontrer et discuter avec les dévelopeurs majeurs du coeur ou des plugins, ainsi que les nombreux utilisateurs prêts à partager leur expérience et à répondre à toutes vos questions.
+
+---
+
+Thanks to the success of [the Jenkins User Conference last year at San Francisco](http://www.cloudbees.com/jenkins-user-conference-2011-session-abstracts.cb) and high interest, this year we are bringing JUC to 4 cities around the world. And the first stop is [JUC 2012 in Paris](http://www.cloudbees.com/juc2012.cb), on April 17. This is one day before [Devoxx France](http://www.devoxx.com/display/FR12/Accueil), and in the same venue. The date is specifically chosen so that you can kill two conferences in one stone!
+
+Register for JUC Paris now (http://www.cloudbees.com/juc2012.cb) and get the Early Bird discount - which is a significant reduction in the registration fee! The conference is [accepting registrations](http://cloudbees-jenkins-user-confs.eventbrite.com/) as well as looking for [talk submissions](https://www.cloudbees.com/forms/jenkins-user-conference-call-papers.cb) and [sponsors](http://www.cloudbees.com/jenkins-user-conference-2012-sponsorship.cb). I get the impression that French people like other fellow French speaking, so I hope our French-speaking plugin developers will submit talks.
+
+This year, we are charging a small amount of money in the hope of covering the expense, but we'll give out T-shirts (which were really hot last year!) as well as stickers. And if the experience at JUC 2011, [SCALE 10x](http://jenkins-ci.org/event/jenkins-scale-10x-los-angeles), and [FOSDEM](http://jenkins-ci.org/event/jenkins-fosdem-2012) was any indication, this is a great opportunity to meet and talk with plugin/core developers, and other fellow users with whom you can discuss your experience/questions.

@@ -1,0 +1,1 @@
+\#{form @save(), enctype:'multipart/form-data'} \#{/form} \#{form @upload(), enctype:'multipart/form-data'} \#{/form} \#{form @uploadFile(), enctype:'multipart/form-data'} \#{/form} \#{form @uploadMultipleFiles(), enctype:'multipart/form-data'} \#{/form}

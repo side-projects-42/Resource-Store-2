@@ -1,37 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-<script src="../../http/tests/inspector/inspector-test.js"></script>
-<script src="../../http/tests/inspector/elements-test.js"></script>
-
-<style>
-.foo {
-    color: blue;
-}
-</style>
-
-<script>
-
-function test()
-{
-    InspectorTest.selectNodeAndWaitForStyles("foo", step2);
-
-    function step2()
-    {
-        InspectorTest.dumpSelectedElementStyles(true, false, true);
-        InspectorTest.completeTest();
-    }
-}
-
-</script>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>styles-source-lines-inline</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
 </head>
-
-<body onload="runTest()">
-<p>
-Tests that elements panel shows proper inline style locations in the sidebar panel.
-</p>
-
-<div id="foo" class="foo" style="display:none">Foo</div>
-<iframe src="resources/styles-source-lines-inline-iframe.html">
-
+<body>
+<p>Tests that elements panel shows proper inline style locations in the sidebar panel.</p>
+<p>Foo</p>
 </body>
 </html>

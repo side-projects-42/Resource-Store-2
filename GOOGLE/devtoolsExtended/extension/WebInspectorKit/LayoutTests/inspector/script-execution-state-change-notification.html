@@ -1,59 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function enableJavaScriptForPage() {
-        if (window.testRunner)
-          testRunner.overridePreference("WebKitJavaScriptEnabled", true);
-      }
-
-      function disableJavaScriptForPage() {
-        if (window.testRunner)
-          testRunner.overridePreference("WebKitJavaScriptEnabled", false);
-      }
-
-      function test() {
-        function scriptsEnabled(isEnabled) {
-          InspectorTest.addResult(
-            "PageDispatcher.scriptsEnabled should be invoked with isEnabled=" +
-              isEnabled
-          );
-        }
-
-        function disableJavaScriptTest() {
-          InspectorTest.addResult("running disableJavaScriptTest...");
-          InspectorTest.evaluateInPage(
-            "disableJavaScriptForPage();",
-            enableJavaScriptTest
-          );
-        }
-
-        function enableJavaScriptTest() {
-          InspectorTest.addResult("running enableJavaScriptTest...");
-          InspectorTest.evaluateInPage("enableJavaScriptForPage();", finish);
-        }
-
-        function finish() {
-          InspectorTest.addResult("Finished verification.");
-          InspectorTest.completeTest();
-        }
-
-        InspectorTest.addSniffer(
-          WebInspector.PageDispatcher.prototype,
-          "scriptsEnabled",
-          scriptsEnabled,
-          true
-        );
-        InspectorTest.addResult("Registered PageDispatcher.scriptsEnabled()");
-        disableJavaScriptTest();
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that whenever Script Execution state is changed outside inspector,
-      its notified to the Inspector front-end.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>script-execution-state-change-notification</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that whenever Script Execution state is changed outside inspector, its notified to the Inspector front-end.</p>
+</body>
 </html>

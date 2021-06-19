@@ -1,386 +1,50 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4639</title>
-  </head>
-  <body>
-    <h1>
-      N4639 Editors' Report -- Working Draft, Standard for Programming Language
-      C++
-    </h1>
-
-    <p>
-      2016-02-06 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Dawn Perchik (co-editor) (Embarcadero Technologies Inc) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Special thanks to Jens Maurer for performing many of the editorial fixes
-      since N4618.
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>N4639 is this Editors' Report.</li>
-      <li>
-        <a href="http://wg21.link/n4640">N4640</a> is the current working draft.
-        It replaces <a href="http://wg21.link/n4618">N4618</a>.
-      </li>
-    </ul>
-
-    <h3>Motions incorporated into working draft</h3>
-
-    <p>This revision contains only editorial changes relative to N4618.</p>
-
-    <h2>Notable editorial changes</h2>
-
-    <ul>
-      <li>
-        <p>
-          Jens Maurer performed a cleanup of the <code>valarray</code> wording,
-          converting it to use the standard formatting style and descriptive
-          elements for library wording. Thanks also to Jonathan Wakely and
-          Marshall Clow for verifying that this change preserves the normative
-          meaning.
-        </p>
-      </li>
-      <li>
-        <p>
-          [alg.partitions] is now nested under [alg.sorting] rather than
-          [alg.modifying.operations]. This is a better fit because
-          <code>partition</code> is a partial sort (just like
-          <code>nth_element</code> is), and <code>is_partitioned</code> is not a
-          mutating sequecne operation.
-        </p>
-      </li>
-    </ul>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made since N4618 is below. This list excludes
-      changes that do not affect the body text or only affect whitespace or
-      typeface. For a complete list including such changes (or for the actual
-      deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4618...n4640"
-        >draft sources on github</a
-      >.
-    </p>
-
-    <pre><code>commit f77a2b27e9e68eacedb23d675d2d257125f3a7e7
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4639</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4639-editors-report-working-draft-standard-for-programming-language-c">N4639 Editors’ Report – Working Draft, Standard for Programming Language C++</h1>
+<p>2016-02-06<br />
+Richard Smith (editor) (Google Inc)<br />
+Dawn Perchik (co-editor) (Embarcadero Technologies Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Jens Maurer for performing many of the editorial fixes since N4618.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li>N4639 is this Editors’ Report.</li>
+<li><a href="http://wg21.link/n4640">N4640</a> is the current working draft. It replaces <a href="http://wg21.link/n4618">N4618</a>.</li>
+</ul>
+<h3 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h3>
+<p>This revision contains only editorial changes relative to N4618.</p>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<ul>
+<li><p>Jens Maurer performed a cleanup of the <code>valarray</code> wording, converting it to use the standard formatting style and descriptive elements for library wording. Thanks also to Jonathan Wakely and Marshall Clow for verifying that this change preserves the normative meaning.</p></li>
+<li><p>[alg.partitions] is now nested under [alg.sorting] rather than [alg.modifying.operations]. This is a better fit because <code>partition</code> is a partial sort (just like <code>nth_element</code> is), and <code>is_partitioned</code> is not a mutating sequecne operation.</p></li>
+</ul>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made since N4618 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4618...n4640">draft sources on github</a>.</p>
+<pre><code>commit f77a2b27e9e68eacedb23d675d2d257125f3a7e7
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Mon Feb 6 19:54:31 2017 +0100
 
-    Define 'object type' only once. (#1268)
+    Define &#39;object type&#39; only once. (#1268)
 
     There were only a few references to the definition in
     1.8 [intro.object], so drop that definition and refer
-    to 'type of an object' instead.
+    to &#39;type of an object&#39; instead.
 
     Fixes #511.
 
@@ -388,7 +52,7 @@ commit fec48d5db12705f1fcec4be6a9ceb3a067c305cd
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Mon Feb 6 03:09:41 2017 +0100
 
-    [valarray.access] 'evaluates as' -&gt; 'evaluates to'. (#1337)
+    [valarray.access] &#39;evaluates as&#39; -&gt; &#39;evaluates to&#39;. (#1337)
 
 commit b79c41937b0150569e1428d1093d9504762f15dd
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -404,8 +68,8 @@ Date:   Mon Feb 6 02:01:59 2017 +0100
 
     [dcl.init.aggr] Add example for array of unknown bound (#1270)
 
-    * Consistently refer to 'array of unknown bound'
-    not 'array of unknown size'; see [dcl.array].
+    * Consistently refer to &#39;array of unknown bound&#39;
+    not &#39;array of unknown size&#39;; see [dcl.array].
 
     * [dcl.init.aggr] Add example for array of unknown bound
     as non-static data member.
@@ -418,7 +82,7 @@ commit ec9f102dec2e4624750f01cdebc6f7132361edaa
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sun Feb 5 17:39:12 2017 +0000
 
-    [cinttypes.syn] Add missing 'the', capitalize sentence
+    [cinttypes.syn] Add missing &#39;the&#39;, capitalize sentence
 
 commit e23a5df2f8819c88b87e3392d6522b747481e381
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -430,7 +94,7 @@ commit 1a0dd180eb3ea3af05cdf1f573eb6f69b0f1b152
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sun Feb 5 14:51:08 2017 +0000
 
-    Format "i^th" consistently.
+    Format &quot;i^th&quot; consistently.
 
     Fixes #653, see also #974.
 
@@ -438,9 +102,9 @@ commit 24900a40ed833ccebb1f3760efe366e4ba73109a
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sun Feb 5 14:26:33 2017 +0000
 
-    [cpp] Swap "control-line" and "if-section".
+    [cpp] Swap &quot;control-line&quot; and &quot;if-section&quot;.
 
-    With the increased vertical grammar spacing, it is expedient to put the presentation of "control-line" onto the first page so as not to require a huge gap.
+    With the increased vertical grammar spacing, it is expedient to put the presentation of &quot;control-line&quot; onto the first page so as not to require a huge gap.
 
 commit 4935ed404aa4819e63c560aa2104dbfa70d18f40
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -454,7 +118,7 @@ commit 50353bd3bb69d770d00e2fb9236bc913994b96c7
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sun Feb 5 13:03:56 2017 +0000
 
-    [associative.set.syn] Fix cross-reference link for 'multiset'
+    [associative.set.syn] Fix cross-reference link for &#39;multiset&#39;
 
     Fixes #1424.
 
@@ -478,7 +142,7 @@ commit 04fa63d98ac28457ea038b75fa05f49d14d8ab5b
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sun Feb 5 05:12:58 2017 +0100
 
-    Use 'base class subobject', not 'base subobject' (#1382)
+    Use &#39;base class subobject&#39;, not &#39;base subobject&#39; (#1382)
 
     Fixes #1379.
 
@@ -486,7 +150,7 @@ commit 2de42d5a857886ee1200990ce40f7d8e61eb2293
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sun Feb 5 04:07:38 2017 +0000
 
-    [func.bind.is{bind,place}] Don't begin sentences with code.
+    [func.bind.is{bind,place}] Don&#39;t begin sentences with code.
 
 commit 7b704e1759cb09b65c0443c9f63b4773b153d000
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
@@ -498,21 +162,21 @@ commit 1e00bc3e8addc7b263ecbc7b2f5a510c904b876c
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sun Feb 5 04:45:13 2017 +0100
 
-    [class.temporary] Use 'Clause~\ref{class.access}' (#1348)
+    [class.temporary] Use &#39;Clause~\ref{class.access}&#39; (#1348)
 
     Fixes #1347.
 
 commit 73b2294ca033dee878d678d5c79adc62e352559e
-Author: Billy O'Neal &lt;billy.oneal@gmail.com&gt;
+Author: Billy O&#39;Neal &lt;billy.oneal@gmail.com&gt;
 Date:   Sat Feb 4 19:44:16 2017 -0800
 
-    [atomics.syn] Don't describe function template overloads as "partial specializations"
+    [atomics.syn] Don&#39;t describe function template overloads as &quot;partial specializations&quot;
 
 commit 41c6bac2314892f1b51b0ef4d22fd7aedb9562a5
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Sun Feb 5 04:43:14 2017 +0100
 
-    [string.io] Don't refer to sentry by name it was not given. (#1333)
+    [string.io] Don&#39;t refer to sentry by name it was not given. (#1333)
 
 commit 4408f4667327fffa4e527995a1b73f674e459927
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -536,7 +200,7 @@ commit a665fddad337ac8316695c06730a59e2051eaa5d
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sun Feb 5 04:36:14 2017 +0100
 
-    Harmonize formatting of 'main' function. (#1308)
+    Harmonize formatting of &#39;main&#39; function. (#1308)
 
     Consistently use \tcode{main}.
     Add cross-references to [basic.start.main].
@@ -547,7 +211,7 @@ commit 6841997d7c36b2a4c14d638de00c1804d018c844
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Sun Feb 5 04:34:59 2017 +0100
 
-    [expr] Split off definition of 'composite pointer type' into dedicated paragraph. (#1300)
+    [expr] Split off definition of &#39;composite pointer type&#39; into dedicated paragraph. (#1300)
 
 commit 7fcb601a9ee72dd45f7df8001c23b9f7cb8b0aca
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
@@ -581,7 +245,7 @@ commit 4b0d533134e61f713a877dadbe6df92f64291d6a
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Fri Dec 16 16:25:04 2016 +0100
 
-    [lib] Harmonize casing for 'shall meet the requirements of ... iterator'.
+    [lib] Harmonize casing for &#39;shall meet the requirements of ... iterator&#39;.
 
     Also cross-reference the sections, not the tables, for
     iterator requirements.
@@ -598,7 +262,7 @@ commit 55a498202fb5b558cd93635a63ed111931634b0a
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sun Feb 5 02:01:30 2017 +0100
 
-    [lex.literal] Avoid references to plain 'literal' (#1277)
+    [lex.literal] Avoid references to plain &#39;literal&#39; (#1277)
 
     unless the \grammarterm is intended.
 
@@ -614,7 +278,7 @@ commit 26e92b499f7a41c7b65c7e2828a1608021adf695
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sat Feb 4 21:02:59 2017 +0100
 
-    [temp.deduct] Avoid talking about 'side effect' and 'evaluation' (#1252)
+    [temp.deduct] Avoid talking about &#39;side effect&#39; and &#39;evaluation&#39; (#1252)
 
     when discussing template instantiations.
 
@@ -624,8 +288,8 @@ Date:   Sat Feb 4 20:52:06 2017 +0100
 
     [alg.partitions] Move entire subclause to [alg.sorting]. (#1245)
 
-    The non-modifying operation is_partitioned doesn't fit into
-    'mutating sequence operations', and partitioning can be
+    The non-modifying operation is_partitioned doesn&#39;t fit into
+    &#39;mutating sequence operations&#39;, and partitioning can be
     considered a weak sort.
 
     Fixes #289.
@@ -644,10 +308,10 @@ commit 23d739974007c3f827ad2e55da60cb4358681773
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sat Feb 4 20:19:51 2017 +0100
 
-    [lib] Replace 'Notes:' elements with regular [ Note: ... -- end note] (#1160)
+    [lib] Replace &#39;Notes:&#39; elements with regular [ Note: ... -- end note] (#1160)
 
     Remove the \realnotes and \realnote macros.
-    No longer mention 'Notes:' in [structure.specifications].
+    No longer mention &#39;Notes:&#39; in [structure.specifications].
 
     Fixes #492.
 
@@ -661,7 +325,7 @@ commit a50661aa098dca6cb7b34061e2d30fd541999cd4
 Author: Jonathan Wakely &lt;github@kayari.org&gt;
 Date:   Sat Feb 4 19:00:02 2017 +0000
 
-    [locale.time.get] change undefined term "record" to "object" (#1412)
+    [locale.time.get] change undefined term &quot;record&quot; to &quot;object&quot; (#1412)
 
 commit 3f0133279c6852aa7e7c20c2b5e97f32d80847a8
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -679,7 +343,7 @@ commit 06c788de055ef33fa8aae1d479b01600c399a86b
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Sat Feb 4 19:51:51 2017 +0100
 
-    Don't parenthesize \refs after 'in'/'of'/'notwithstanding'. (#1420)
+    Don&#39;t parenthesize \refs after &#39;in&#39;/&#39;of&#39;/&#39;notwithstanding&#39;. (#1420)
 
 commit 0f8ca3d7da39bd290062408ca2b2572c40994e9a
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
@@ -703,13 +367,13 @@ commit ed8dbf4c0bce4adf96307c1d427dde0685f7dbdf
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Mon Jan 30 13:43:20 2017 +0100
 
-    [dcl.enum] Italicize 'unscoped enumeration' in its definition. (#1410)
+    [dcl.enum] Italicize &#39;unscoped enumeration&#39; in its definition. (#1410)
 
 commit c7f6a9139872aad48a944d018ce5e4b3de15ce81
 Author: Axel Naumann &lt;github@axel-naumann.de&gt;
 Date:   Thu Jan 26 17:04:41 2017 +0100
 
-    [thread.lock.algorithm] Change '0-based' to 'zero-based'.
+    [thread.lock.algorithm] Change &#39;0-based&#39; to &#39;zero-based&#39;.
 
     Conforming with other occurrences in the standard.
 
@@ -761,19 +425,19 @@ commit 94c7fdf49d51898a10c846bb0409bf07ba66256c
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Wed Jan 18 23:23:57 2017 +0100
 
-    Consistently use 'this International Standard'. (#1380)
+    Consistently use &#39;this International Standard&#39;. (#1380)
 
 commit 95977f18c0594a12a90ca050ec5f8006b4b7bf53
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Wed Jan 18 22:59:08 2017 +0100
 
-    Add missing hyphen in 'floating-point'. (#1319)
+    Add missing hyphen in &#39;floating-point&#39;. (#1319)
 
 commit 2001a03014df142f5f9a5974c64fc2ff96d4f2cd
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Jan 18 22:47:23 2017 +0100
 
-    'floating-point something', not 'floating point something' (#1384)
+    &#39;floating-point something&#39;, not &#39;floating point something&#39; (#1384)
 
     Adjust occurrences that spanned a line break in the LaTeX
     source and were therefore missed in commit
@@ -783,7 +447,7 @@ commit c8295e3a928f93cff021d88b7b1532b5a58d5114
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Jan 18 22:45:41 2017 +0100
 
-    [stmt.stmt], [dcl.attr.deprecated] Remove hyphen in 're-declared' (#1381)
+    [stmt.stmt], [dcl.attr.deprecated] Remove hyphen in &#39;re-declared&#39; (#1381)
 
     Fixes #1378.
 
@@ -805,7 +469,7 @@ commit d76a411d35b1ed933cb5d11dc492ab4489cb239e
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Tue Jan 17 23:48:02 2017 +0000
 
-    [over.ics.rank] Replace self-referential reference with 'this subclause'
+    [over.ics.rank] Replace self-referential reference with &#39;this subclause&#39;
 
 commit ee154f9dd08d93124455f408f69030862acca9eb
 Author: Alisdair Meredith &lt;public@alisdairm.net&gt;
@@ -815,13 +479,13 @@ Date:   Mon Jan 16 07:25:43 2017 -0500
 
     I believe this patch catches the last two places in the current
     draft that should be using a variant of the \Cpp macros to
-    better render the 'C++' string.
+    better render the &#39;C++&#39; string.
 
 commit 4e6dc965fc2a2f562d8bd62cafe5a1d51745a79d
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Fri Jan 13 14:32:39 2017 +0000
 
-    [re] Move long pieces of code into codeblocks and remove redundant "the result of" from return statements
+    [re] Move long pieces of code into codeblocks and remove redundant &quot;the result of&quot; from return statements
 
     This fixes overfull hboxes, see #693.
 
@@ -829,7 +493,7 @@ commit ab8f2c7c0331efbb9713a46d4c940df94a0e48f7
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Jan 10 11:04:16 2017 +0100
 
-    [mem.res.pool], [mem.res.monotonic.buffer] Do not define the otherwise unused term 'owns'. (#1260)
+    [mem.res.pool], [mem.res.monotonic.buffer] Do not define the otherwise unused term &#39;owns&#39;. (#1260)
 
     Fixes #1257.
 
@@ -837,7 +501,7 @@ commit 3acb49d296ba7efdc7542e943262138dc0eb9b74
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Fri Jan 6 19:21:45 2017 +0000
 
-    [string.insert] Change "pos1" to "pos" for overloads taking one position
+    [string.insert] Change &quot;pos1&quot; to &quot;pos&quot; for overloads taking one position
 
     Also make argument names in synopsis consistent.
 
@@ -861,19 +525,19 @@ commit 10452d174140fbcf0bfc1fab37dbdbd63913be79
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Wed Jan 4 11:45:00 2017 +0100
 
-    [complex.ops] Don't repeat declaration in "Effects:" element. (#1324)
+    [complex.ops] Don&#39;t repeat declaration in &quot;Effects:&quot; element. (#1324)
 
 commit 94c2fbabdc1057d7bc7cdb83d1585d24de3fd146
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Tue Jan 3 18:05:03 2017 +0100
 
-    [re.submatch.op] Remove excessive parentheses in "Returns:" element. (#1323)
+    [re.submatch.op] Remove excessive parentheses in &quot;Returns:&quot; element. (#1323)
 
 commit 3b81b0b9cafacee9d23b47d1a8862a9d0eee6ab7
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Jan 3 16:58:58 2017 +0100
 
-    [sf.cmath] Fix 'where' associations of Greek variable names. (#1317)
+    [sf.cmath] Fix &#39;where&#39; associations of Greek variable names. (#1317)
 
     Fixes #1291.
 
@@ -899,13 +563,13 @@ Date:   Tue Jan 3 07:36:29 2017 -0500
 
     [meta.trans.other] add missing cv for common_type (#1292)
 
-    P0435R1 says 'cv void', but the cv part was dropped.
+    P0435R1 says &#39;cv void&#39;, but the cv part was dropped.
 
 commit 09e6e6de2e92c33daa53ee1013847df68c99ad52
 Author: alexanderkscott &lt;k878208@mvrht.com&gt;
 Date:   Sat Dec 31 14:06:51 2016 +0000
 
-    [iterators, numerics] Replace 'sub-clause' by 'subclause' (#1302)
+    [iterators, numerics] Replace &#39;sub-clause&#39; by &#39;subclause&#39; (#1302)
 
 commit 2168e10fb3608d4ab84190d3d0c8cd5101dc52b9
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
@@ -931,7 +595,7 @@ commit 0b9f60c4c373e57cda055b7aba64afb674db1fff
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Wed Dec 21 18:14:54 2016 +0100
 
-    [string.view.find] Add missing 'be' (#1282)
+    [string.view.find] Add missing &#39;be&#39; (#1282)
 
 commit d49359badc2115b010dcf978d86067f1a2cfb331
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -947,7 +611,7 @@ Date:   Sun Dec 18 15:34:21 2016 -0800
 
     Fix typos in [mem.poly.allocator.mem]/9.1 and /9.5 (#1269)
 
-    (There is no "T" in scope.)
+    (There is no &quot;T&quot; in scope.)
 
 commit 666886e51092f447e9ecb6f26a2965a8c03da667
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -984,7 +648,7 @@ commit 3750b234c1699d2c7b0f83e2c52fbd65d74c4299
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Dec 15 17:43:32 2016 +0100
 
-    [unique.ptr.single.modifiers] Use 'if and only if' when calling deleter. (#1255)
+    [unique.ptr.single.modifiers] Use &#39;if and only if&#39; when calling deleter. (#1255)
 
     Fixes #248.
 
@@ -1000,7 +664,7 @@ commit f8904bd946650f240a6af76193f406377e2fb1b7
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Nov 30 19:50:31 2016 +0100
 
-    [support.limits] Rearrange section 'Implementation properties'
+    [support.limits] Rearrange section &#39;Implementation properties&#39;
 
      - Change order of subsections.
      - Remove [limits] and [c.limits] subsection headings.
@@ -1057,7 +721,7 @@ commit eacf4129776df8481599ec44e0c256590aed1ccb
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sat Dec 10 17:56:41 2016 +0000
 
-    [{ex,in}clusive.scan, transform.{ex,in}clusive.scan]: Rephase 'for each *j' in terms of indexes
+    [{ex,in}clusive.scan, transform.{ex,in}clusive.scan]: Rephase &#39;for each *j&#39; in terms of indexes
 
     Addresses #693 for this part, but is also clearer.
 
@@ -1074,7 +738,7 @@ commit 5f0f4df6ab6dfa566d394da9c4321c1015f63747
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Dec 14 12:21:10 2016 -0800
 
-    [basic.def.odr] Clarify that the "not an odr use" requirement for using
+    [basic.def.odr] Clarify that the &quot;not an odr use&quot; requirement for using
     an internal linkage constant within an inline function (etc) only
     applies to odr-uses within that inline function, and not uses elsewhere
     in the program.
@@ -1083,7 +747,7 @@ commit 2f3c3b8c3a401fd6d8f081b608db6572be01b7e0
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Dec 14 18:46:51 2016 +0100
 
-    [temp] Add variable templates to the definition of 'template'. (#1225)
+    [temp] Add variable templates to the definition of &#39;template&#39;. (#1225)
 
     Fixes #593.
 
@@ -1091,9 +755,9 @@ commit f32e068898a371b94a27f895f3863a810186e70e
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Dec 14 18:38:09 2016 +0100
 
-    [unord] Use 'key equality predicate' consistently. (#1241)
+    [unord] Use &#39;key equality predicate&#39; consistently. (#1241)
 
-    Replaces occasional uses of 'key equality function'.
+    Replaces occasional uses of &#39;key equality function&#39;.
 
     Fixes #630.
 
@@ -1101,13 +765,13 @@ commit b54f2507ffc23c0e573f4637217003b4074c33aa
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Wed Dec 14 18:37:20 2016 +0100
 
-    [strings, algorithms, diff] Replace 'routine' with 'function'. (#1217)
+    [strings, algorithms, diff] Replace &#39;routine&#39; with &#39;function&#39;. (#1217)
 
 commit 7b087da9cd6867fd6b8b499c6ec766499db48772
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Wed Dec 14 17:58:47 2016 +0100
 
-    [class.derived] Don't bother splitting last remark in note off into separate paragraph. (#1240)
+    [class.derived] Don&#39;t bother splitting last remark in note off into separate paragraph. (#1240)
 
 commit c6d00d91a0c464c528c6cd38c442ad6a11036aa7
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
@@ -1115,7 +779,7 @@ Date:   Wed Dec 14 17:22:14 2016 +0100
 
     [dcl.init, class.directory_iterator, fs.op.current_path] Split multiparagraph notes into multiple note paragraphs.
 
-    The paragraphs are unrelated and don't belong into a single note.
+    The paragraphs are unrelated and don&#39;t belong into a single note.
 
 commit f66fb79c44dc6051aa83d6489fee707a584ebe82
 Author: Johannes Laire &lt;johannes@laire.fi&gt;
@@ -1187,7 +851,7 @@ Date:   Wed Dec 14 00:22:55 2016 +0100
 
     [input.output] Add numbered headings for synopses. (#1228)
 
-    Remove now-empty 'Overview' sections.
+    Remove now-empty &#39;Overview&#39; sections.
 
     Partially addresses #566.
 
@@ -1203,7 +867,7 @@ commit a3f3773d4ca287c252a485c343348c729f60c82d
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Dec 13 23:06:39 2016 +0100
 
-    [lib] Use 'comparison function', not 'comparison operator'. (#1224)
+    [lib] Use &#39;comparison function&#39;, not &#39;comparison operator&#39;. (#1224)
 
     When talking about an operator function, use the term defined in
     [defns.comparison].
@@ -1217,9 +881,9 @@ Date:   Tue Dec 13 22:28:40 2016 +0100
     [any] Rename the ValueType template parameter to T. (#1220)
 
     The parameter has a confusing name: It is not actually the value type
-    contained in the 'any'.
+    contained in the &#39;any&#39;.
     Where the new T clashes with an existing use of T, rename the latter to VT,
-    since this is actually the value type of the 'any'.
+    since this is actually the value type of the &#39;any&#39;.
 
     Fixes #1202.
 
@@ -1227,7 +891,7 @@ commit e4bc84c405ac09ff7a5aa5b8df39d5e1f5b7bd39
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Dec 13 21:56:10 2016 +0100
 
-    [dcl.init.ref] Replace 'type qualifier' with 'cv-qualifier' in example. (#1222)
+    [dcl.init.ref] Replace &#39;type qualifier&#39; with &#39;cv-qualifier&#39; in example. (#1222)
 
     Fixes #1219.
 
@@ -1235,9 +899,9 @@ commit 1894a77ec88dd28d87985e162ef57c45580a9ad2
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Dec 13 21:53:28 2016 +0100
 
-    [list.ops] Move effects to 'Effects' element. (#1221)
+    [list.ops] Move effects to &#39;Effects&#39; element. (#1221)
 
-    Also reorder the elements so that 'Requires' is before 'Effects'.
+    Also reorder the elements so that &#39;Requires&#39; is before &#39;Effects&#39;.
 
     Fixes #796.
 
@@ -1253,7 +917,7 @@ commit 0a3f38c33d4fb7459fb507faf88591bc1828b31c
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Dec 13 18:19:08 2016 +0100
 
-    [bitset.members] Adjust confusing index entries for 'set' and 'any'. (#1218)
+    [bitset.members] Adjust confusing index entries for &#39;set&#39; and &#39;any&#39;. (#1218)
 
     Fixes #743.
 
@@ -1269,7 +933,7 @@ commit 546a162c06881491f8394babb4147941f2af53ee
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Mon Dec 12 16:45:28 2016 +0100
 
-    [pairs.spec], [tuple.creation] Avoid 'equality' of types phrasing. (#1212)
+    [pairs.spec], [tuple.creation] Avoid &#39;equality&#39; of types phrasing. (#1212)
 
     Fixes #491.
 
@@ -1283,7 +947,7 @@ commit a8a89d9144a9050b85b8bfe780340a763193a1f4
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Mon Dec 12 14:46:31 2016 +0000
 
-    [pairs.pair, tuple.cnstr] Replace 'The constructor initializes' with just 'Initializes', which is how we say it in many other places. (#1206)
+    [pairs.pair, tuple.cnstr] Replace &#39;The constructor initializes&#39; with just &#39;Initializes&#39;, which is how we say it in many other places. (#1206)
 
 commit 3c6ba0621a8e23c474f77fbee24b06d76b125dd3
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -1303,19 +967,19 @@ commit 33375c726c64c4e602b52269708441f5cdccfa77
 Author: Sergey Zubkov &lt;cubbi@cubbi.com&gt;
 Date:   Sun Dec 11 07:20:28 2016 -0500
 
-    [mem.res.syn] Call polymorphic_allocator a 'class template' (#1209)
+    [mem.res.syn] Call polymorphic_allocator a &#39;class template&#39; (#1209)
 
 commit fdb5d1a7ed71add105ee5eca4307d9a6a042ba75
 Author: Sergey Zubkov &lt;cubbi@cubbi.com&gt;
 Date:   Sun Dec 11 07:11:28 2016 -0500
 
-    [variant.bad.access] Use 'override' instead of 'virtual' in synopsis (#1208)
+    [variant.bad.access] Use &#39;override&#39; instead of &#39;virtual&#39; in synopsis (#1208)
 
 commit edba6d4a097e9de2caa79461341b3c3476941790
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sat Dec 10 19:50:28 2016 +0000
 
-    [diff.cpp03.special] Use the more correct "call function f" rather than "call function f()" to resolve overfull line and fulfil compulsion for pedantry.
+    [diff.cpp03.special] Use the more correct &quot;call function f&quot; rather than &quot;call function f()&quot; to resolve overfull line and fulfil compulsion for pedantry.
 
 commit 3c6d91088e58e56e295419efdd47ddc8a4628196
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -1339,7 +1003,7 @@ commit f9ce3d269eb5bd2ffd3bb74f79ba1298da1d83bc
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sat Dec 10 16:34:41 2016 +0000
 
-    [tuple.helper, variant.helper] Change "specialization of *class*" to "specialization of *template*".
+    [tuple.helper, variant.helper] Change &quot;specialization of *class*&quot; to &quot;specialization of *template*&quot;.
 
     The containing lines were too long (cf. #693), and the change is a mild increase in pedantic correctness.
 
@@ -1347,10 +1011,10 @@ commit faaf054bd237780b3999c4efdbbcc2b6bf88721b
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Fri Dec 9 23:32:42 2016 +0100
 
-    [limits] Use 'subnormal number' as defined by IEEE 754-2008 = ISO 60559. (#1203)
+    [limits] Use &#39;subnormal number&#39; as defined by IEEE 754-2008 = ISO 60559. (#1203)
 
-    Also add index entries for 'denormalized value' and 'value,
-    denormalized', pointing to 'number, subnormal'.
+    Also add index entries for &#39;denormalized value&#39; and &#39;value,
+    denormalized&#39;, pointing to &#39;number, subnormal&#39;.
 
     Fixes #1017.
 
@@ -1366,7 +1030,7 @@ commit b22cda3a831508a362930f6eb25d1f839f0f8ea8
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Dec 8 22:57:32 2016 +0100
 
-    [alg.lex.comparison] Remove duplicate 'Remarks:' item and comfort lone codeblock
+    [alg.lex.comparison] Remove duplicate &#39;Remarks:&#39; item and comfort lone codeblock
 
     Partially addresses #288.
 
@@ -1380,7 +1044,7 @@ commit a9159bdbf9b6baa096f2c51d9129cd03431d03bd
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Thu Dec 8 16:08:58 2016 +0100
 
-    [numeric.special] Remove redundant 'inline' specifiers in example. (#1192)
+    [numeric.special] Remove redundant &#39;inline&#39; specifiers in example. (#1192)
 
 commit ff36dc5f586abb837a3963b1b8815a245bdbc741
 Author: Johannes Laire &lt;johannes@laire.fi&gt;
@@ -1392,7 +1056,7 @@ commit b6d625f215dbac299982094cf54e4fed0999e873
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Thu Dec 8 10:06:47 2016 +0000
 
-    Hyphenate 'implementation-defined' in a few residual cases
+    Hyphenate &#39;implementation-defined&#39; in a few residual cases
 
 commit 77f36805a4adc0a5d145264fc5e5e6ab11b5e8f2
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
@@ -1425,7 +1089,7 @@ commit ff91738d4f67123fa944a76506826f7a3c14b3e2
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Dec 7 21:25:39 2016 +0100
 
-    [class.virtual] Remove awkward 'but'. (#1182)
+    [class.virtual] Remove awkward &#39;but&#39;. (#1182)
 
     Fixes #170.
 
@@ -1498,7 +1162,7 @@ commit cf522b9177c01511a8c0b7197d9e48aa2224512d
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Dec 1 23:58:40 2016 +0100
 
-    [utilities] Do not use CamelCase for 'BaseCharacteristic'. (#1164)
+    [utilities] Do not use CamelCase for &#39;BaseCharacteristic&#39;. (#1164)
 
     This is a regular English phrase used as a technical term.
 
@@ -1508,7 +1172,7 @@ commit 69d8903278277e96779c8435fedad0018fe10ee4
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Dec 1 23:52:01 2016 +0100
 
-    [re.regex] Add missing 'multiline' constant. (#1162)
+    [re.regex] Add missing &#39;multiline&#39; constant. (#1162)
 
     Fixes #1129.
 
@@ -1517,7 +1181,7 @@ Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Oct 21 11:39:17 2016 -0700
 
     [dcl.init.aggr] Wording simplification. Aggregate elements are only
-    defined for purposes of aggregate initialization; we don't need to
+    defined for purposes of aggregate initialization; we don&#39;t need to
     repeat that every time we use the term.
 
 commit cca5257d60abcf9a62f545e9c146fe2c367f843a
@@ -1568,7 +1232,6 @@ commit bcd2eb6e3cfd68d90b4b761df8dd0728e4e0629b
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Tue Nov 29 02:52:44 2016 +0000
 
-    [basic.def.odf] Clarify example by adding a variable that actually odr-uses D()
-</code></pre>
-  </body>
+    [basic.def.odf] Clarify example by adding a variable that actually odr-uses D()</code></pre>
+</body>
 </html>

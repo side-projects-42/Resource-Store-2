@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Using with webpack</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Using with webpack</h1>
+    </header>
+    <p>
+      Jest can be used in projects that use
+      <a href="https://webpack.js.org/">webpack</a> to manage assets, styles,
+      and compilation. webpack <em>does</em> offer some unique challenges over
+      other tools because it integrates directly with your application to allow
+      managing stylesheets, assets like images and fonts, along with the
+      expansive ecosystem of compile-to-JavaScript languages and tools.
+    </p>
+    <h2 id="a-webpack-example">A webpack example</h2>
+    <p>
+      Let’s start with a common sort of webpack config file and translate it to
+      a Jest setup.
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="co">// webpack.config.js</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">module</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">loaders</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb1-5" title="5">      <span class="op">{</span><span class="dt">exclude</span><span class="op">:</span> [<span class="st">&#39;node_modules&#39;</span>]<span class="op">,</span> <span class="dt">loader</span><span class="op">:</span> <span class="st">&#39;babel&#39;</span><span class="op">,</span> <span class="dt">test</span><span class="op">:</span> <span class="ss">/</span><span class="sc">\.</span><span class="ss">jsx</span><span class="sc">?$</span><span class="ss">/</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-6" title="6">      <span class="op">{</span><span class="dt">loader</span><span class="op">:</span> <span class="st">&#39;style-loader!css-loader&#39;</span><span class="op">,</span> <span class="dt">test</span><span class="op">:</span> <span class="ss">/</span><span class="sc">\.</span><span class="ss">css</span><span class="sc">$</span><span class="ss">/</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-7" title="7">      <span class="op">{</span><span class="dt">loader</span><span class="op">:</span> <span class="st">&#39;url-loader&#39;</span><span class="op">,</span> <span class="dt">test</span><span class="op">:</span> <span class="ss">/</span><span class="sc">\.</span><span class="ss">gif</span><span class="sc">$</span><span class="ss">/</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-8" title="8">      <span class="op">{</span><span class="dt">loader</span><span class="op">:</span> <span class="st">&#39;file-loader&#39;</span><span class="op">,</span> <span class="dt">test</span><span class="op">:</span> <span class="ss">/</span><span class="sc">\.(</span><span class="ss">ttf</span><span class="sc">|</span><span class="ss">eot</span><span class="sc">|</span><span class="ss">svg</span><span class="sc">)$</span><span class="ss">/</span><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-9" title="9">    ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-11" title="11">  <span class="dt">resolve</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-12" title="12">    <span class="dt">alias</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-13" title="13">      <span class="dt">config$</span><span class="op">:</span> <span class="st">&#39;./configs/app-config.js&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-14" title="14">      <span class="dt">react</span><span class="op">:</span> <span class="st">&#39;./vendor/react-master&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-15" title="15">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-16" title="16">    <span class="dt">extensions</span><span class="op">:</span> [<span class="st">&#39;&#39;</span><span class="op">,</span> <span class="st">&#39;js&#39;</span><span class="op">,</span> <span class="st">&#39;jsx&#39;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-17" title="17">    <span class="dt">modules</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb1-18" title="18">      <span class="st">&#39;node_modules&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-19" title="19">      <span class="st">&#39;bower_components&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-20" title="20">      <span class="st">&#39;shared&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-21" title="21">      <span class="st">&#39;/shared/vendor/modules&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-22" title="22">    ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-23" title="23">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-24" title="24"><span class="op">};</span></a></code></pre>
+    </div>
+    <p>
+      If you have JavaScript files that are transformed by Babel, you can
+      <a href="GettingStarted.md#using-babel">enable support for Babel</a> by
+      installing the <code>babel-jest</code> plugin. Non-Babel JavaScript
+      transformations can be handled with Jest’s
+      <a href="Configuration.md#transform-object-string-string"
+        ><code>transform</code></a
+      >
+      config option.
+    </p>
+    <h3 id="handling-static-assets">Handling Static Assets</h3>
+    <p>
+      Next, let’s configure Jest to gracefully handle asset files such as
+      stylesheets and images. Usually, these files aren’t particularly useful in
+      tests so we can safely mock them out. However, if you are using CSS
+      Modules then it’s better to mock a proxy for your className lookups.
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="er">//</span> <span class="er">package.json</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">&quot;jest&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="dt">&quot;moduleNameMapper&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/fileMock.js&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(css|less)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/styleMock.js&quot;</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>And the mock files themselves:</p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// __mocks__/styleMock.js</span></a>
+<a class="sourceLine" id="cb3-2" title="2"></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="op">{};</span></a></code></pre>
+    </div>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="co">// __mocks__/fileMock.js</span></a>
+<a class="sourceLine" id="cb4-2" title="2"></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="st">&#39;test-file-stub&#39;</span><span class="op">;</span></a></code></pre>
+    </div>
+    <h3 id="mocking-css-modules">Mocking CSS Modules</h3>
+    <p>
+      You can use an
+      <a href="https://github.com/keyanzhang/identity-obj-proxy">ES6 Proxy</a>
+      to mock
+      <a href="https://github.com/css-modules/css-modules">CSS Modules</a>:
+    </p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">yarn</span> add --dev identity-obj-proxy</a></code></pre>
+    </div>
+    <p>
+      Then all your className lookups on the styles object will be returned
+      as-is (e.g., <code>styles.foobar === 'foobar'</code>). This is pretty
+      handy for React <a href="SnapshotTesting.md">Snapshot Testing</a>.
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb6-1" title="1"><span class="er">//</span> <span class="er">package.json</span> <span class="er">(for</span> <span class="er">CSS</span> <span class="er">Modules)</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">&quot;jest&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="dt">&quot;moduleNameMapper&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-5" title="5">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/fileMock.js&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-6" title="6">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(css|less)$&quot;</span><span class="fu">:</span> <span class="st">&quot;identity-obj-proxy&quot;</span></a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb6-8" title="8">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="fu">}</span></a></code></pre>
+    </div>
+    <blockquote>
+      <p>
+        Notice that Proxy is enabled in Node 6 by default. If you are not on
+        Node 6 yet, make sure you invoke Jest using
+        <code>node --harmony_proxies node_modules/.bin/jest</code>.
+      </p>
+    </blockquote>
+    <p>
+      If <code>moduleNameMapper</code> cannot fulfill your requirements, you can
+      use Jest’s
+      <a href="Configuration.md#transform-object-string-string"
+        ><code>transform</code></a
+      >
+      config option to specify how assets are transformed. For example, a
+      transformer that returns the basename of a file (such that
+      <code>require('logo.jpg');</code> returns <code>'logo'</code>) can be
+      written as:
+    </p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// fileTransformer.js</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">const</span> path <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;path&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-5" title="5">  <span class="at">process</span>(src<span class="op">,</span> filename<span class="op">,</span> config<span class="op">,</span> options) <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-6" title="6">    <span class="cf">return</span> <span class="st">&#39;module.exports = &#39;</span> <span class="op">+</span> <span class="va">JSON</span>.<span class="at">stringify</span>(<span class="va">path</span>.<span class="at">basename</span>(filename)) <span class="op">+</span> <span class="st">&#39;;&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb7-7" title="7">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="op">};</span></a></code></pre>
+    </div>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb8-1" title="1"><span class="er">//</span> <span class="er">package.json</span> <span class="er">(for</span> <span class="er">custom</span> <span class="er">transformers</span> <span class="er">and</span> <span class="er">CSS</span> <span class="er">Modules)</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="dt">&quot;jest&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="dt">&quot;moduleNameMapper&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb8-5" title="5">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(css|less)$&quot;</span><span class="fu">:</span> <span class="st">&quot;identity-obj-proxy&quot;</span></a>
+<a class="sourceLine" id="cb8-6" title="6">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="dt">&quot;transform&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb8-8" title="8">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/fileTransformer.js&quot;</span></a>
+<a class="sourceLine" id="cb8-9" title="9">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb8-10" title="10">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      We’ve told Jest to ignore files matching a stylesheet or image extension,
+      and instead, require our mock files. You can adjust the regular expression
+      to match the file types your webpack config handles.
+    </p>
+    <p>
+      <em
+        >Note: if you are using babel-jest with additional code preprocessors,
+        you have to explicitly define babel-jest as a transformer for your
+        JavaScript code to map <code>.js</code> files to the babel-jest
+        module.</em
+      >
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb9-1" title="1"><span class="er">&quot;transform&quot;:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="dt">&quot;^.+</span><span class="ch">\\</span><span class="dt">.js$&quot;</span><span class="fu">:</span> <span class="st">&quot;babel-jest&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="dt">&quot;^.+</span><span class="ch">\\</span><span class="dt">.css$&quot;</span><span class="fu">:</span> <span class="st">&quot;custom-transformer&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-4" title="4">  <span class="er">...</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="fu">}</span></a></code></pre>
+    </div>
+    <h3 id="configuring-jest-to-find-our-files">
+      Configuring Jest to find our files
+    </h3>
+    <p>
+      Now that Jest knows how to process our files, we need to tell it how to
+      <em>find</em> them. For webpack’s <code>modulesDirectories</code>, and
+      <code>extensions</code> options there are direct analogs in Jest’s
+      <code>moduleDirectories</code> and
+      <code>moduleFileExtensions</code> options.
+    </p>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb10-1" title="1"><span class="er">//</span> <span class="er">package.json</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="dt">&quot;jest&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb10-4" title="4">    <span class="dt">&quot;moduleFileExtensions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;js&quot;</span><span class="ot">,</span> <span class="st">&quot;jsx&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-5" title="5">    <span class="dt">&quot;moduleDirectories&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;node_modules&quot;</span><span class="ot">,</span> <span class="st">&quot;bower_components&quot;</span><span class="ot">,</span> <span class="st">&quot;shared&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7">    <span class="dt">&quot;moduleNameMapper&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb10-8" title="8">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(css|less)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/styleMock.js&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-9" title="9">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(gif|ttf|eot|svg)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/fileMock.js&quot;</span></a>
+<a class="sourceLine" id="cb10-10" title="10">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb10-11" title="11">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="fu">}</span></a></code></pre>
+    </div>
+    <blockquote>
+      <p>
+        Note: <code>&lt;rootDir&gt;</code> is a special token that gets replaced
+        by Jest with the root of your project. Most of the time this will be the
+        folder where your <code>package.json</code> is located unless you
+        specify a custom <code>rootDir</code> option in your configuration.
+      </p>
+    </blockquote>
+    <p>
+      Similarly webpack’s <code>resolve.root</code> option functions like
+      setting the <code>NODE_PATH</code> env variable, which you can set, or
+      make use of the <code>modulePaths</code> option.
+    </p>
+    <div class="sourceCode" id="cb11">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb11-1" title="1"><span class="er">//</span> <span class="er">package.json</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="dt">&quot;jest&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="dt">&quot;modulePaths&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;/shared/vendor/modules&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-5" title="5">    <span class="dt">&quot;moduleFileExtensions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;js&quot;</span><span class="ot">,</span> <span class="st">&quot;jsx&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-6" title="6">    <span class="dt">&quot;moduleDirectories&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;node_modules&quot;</span><span class="ot">,</span> <span class="st">&quot;bower_components&quot;</span><span class="ot">,</span> <span class="st">&quot;shared&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-7" title="7">    <span class="dt">&quot;moduleNameMapper&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-8" title="8">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(css|less)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/styleMock.js&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-9" title="9">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(gif|ttf|eot|svg)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/fileMock.js&quot;</span></a>
+<a class="sourceLine" id="cb11-10" title="10">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb11-11" title="11">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      And finally we just have the webpack <code>alias</code> left to handle.
+      For that we can make use of the <code>moduleNameMapper</code> option
+      again.
+    </p>
+    <div class="sourceCode" id="cb12">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb12-1" title="1"><span class="er">//</span> <span class="er">package.json</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-3" title="3">  <span class="dt">&quot;jest&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="dt">&quot;modulePaths&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;/shared/vendor/modules&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-5" title="5">    <span class="dt">&quot;moduleFileExtensions&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;js&quot;</span><span class="ot">,</span> <span class="st">&quot;jsx&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-6" title="6">    <span class="dt">&quot;moduleDirectories&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;node_modules&quot;</span><span class="ot">,</span> <span class="st">&quot;bower_components&quot;</span><span class="ot">,</span> <span class="st">&quot;shared&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-7" title="7"></a>
+<a class="sourceLine" id="cb12-8" title="8">    <span class="dt">&quot;moduleNameMapper&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-9" title="9">      <span class="dt">&quot;^react(.*)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/vendor/react-master$1&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-10" title="10">      <span class="dt">&quot;^config$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/configs/app-config.js&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-11" title="11"></a>
+<a class="sourceLine" id="cb12-12" title="12">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(css|less)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/styleMock.js&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-13" title="13">      <span class="dt">&quot;</span><span class="ch">\\</span><span class="dt">.(gif|ttf|eot|svg)$&quot;</span><span class="fu">:</span> <span class="st">&quot;&lt;rootDir&gt;/__mocks__/fileMock.js&quot;</span></a>
+<a class="sourceLine" id="cb12-14" title="14">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb12-15" title="15">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      That’s it! webpack is a complex and flexible tool, so you may have to make
+      some adjustments to handle your specific application’s needs. Luckily for
+      most projects, Jest should be more than flexible enough to handle your
+      webpack config.
+    </p>
+    <blockquote>
+      <p>
+        Note: For more complex webpack configurations, you may also want to
+        investigate projects such as:
+        <a href="https://github.com/istarkov/babel-plugin-webpack-loaders"
+          >babel-plugin-webpack-loaders</a
+        >.
+      </p>
+    </blockquote>
+    <h2 id="using-with-webpack-2">Using with webpack 2</h2>
+    <p>
+      webpack 2 offers native support for ES modules. However, Jest runs in
+      Node, and thus requires ES modules to be transpiled to CommonJS modules.
+      As such, if you are using webpack 2, you most likely will want to
+      configure Babel to transpile ES modules to CommonJS modules only in the
+      <code>test</code> environment.
+    </p>
+    <div class="sourceCode" id="cb13">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb13-1" title="1"><span class="er">//</span> <span class="er">.babelrc</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-3" title="3">  <span class="dt">&quot;presets&quot;</span><span class="fu">:</span> <span class="ot">[[</span><span class="st">&quot;env&quot;</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;modules&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">}</span><span class="ot">]]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-4" title="4"></a>
+<a class="sourceLine" id="cb13-5" title="5">  <span class="dt">&quot;env&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-6" title="6">    <span class="dt">&quot;test&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-7" title="7">      <span class="dt">&quot;plugins&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;transform-es2015-modules-commonjs&quot;</span><span class="ot">]</span></a>
+<a class="sourceLine" id="cb13-8" title="8">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb13-9" title="9">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb13-10" title="10"><span class="fu">}</span></a></code></pre>
+    </div>
+    <blockquote>
+      <p>
+        Note: Jest caches files to speed up test execution. If you updated
+        .babelrc and Jest is still not working, try running Jest with
+        <code>--no-cache</code>.
+      </p>
+    </blockquote>
+    <p>
+      If you use dynamic imports (<code
+        >import('some-file.js').then(module =&gt; ...)</code
+      >), you need to enable the <code>dynamic-import-node</code> plugin.
+    </p>
+    <div class="sourceCode" id="cb14">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb14-1" title="1"><span class="er">//</span> <span class="er">.babelrc</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb14-3" title="3">  <span class="dt">&quot;presets&quot;</span><span class="fu">:</span> <span class="ot">[[</span><span class="st">&quot;env&quot;</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;modules&quot;</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">}</span><span class="ot">]]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5">  <span class="dt">&quot;plugins&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;syntax-dynamic-import&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb14-6" title="6"></a>
+<a class="sourceLine" id="cb14-7" title="7">  <span class="dt">&quot;env&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb14-8" title="8">    <span class="dt">&quot;test&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb14-9" title="9">      <span class="dt">&quot;plugins&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;dynamic-import-node&quot;</span><span class="ot">]</span></a>
+<a class="sourceLine" id="cb14-10" title="10">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb14-11" title="11">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb14-12" title="12"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      For an example of how to use Jest with Webpack with React, Redux, and
+      Node, you can view one
+      <a
+        href="https://github.com/jenniferkaplannyc/jest_react_redux_node_webpack_complex_example"
+        >here</a
+      >.
+    </p>
+  </body>
+</html>

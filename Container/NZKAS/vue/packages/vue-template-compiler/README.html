@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="vue-template-compiler">vue-template-compiler</h1>
+<blockquote>
+<p>This package is auto-generated. For pull requests please see <a href="https://github.com/vuejs/vue/tree/dev/src/platforms/web/entry-compiler.js">src/platforms/web/entry-compiler.js</a>.</p>
+</blockquote>
+<p>This package can be used to pre-compile Vue 2.0 templates into render functions to avoid runtime-compilation overhead and CSP restrictions. In most cases you should be using it with <a href="https://github.com/vuejs/vue-loader"><code>vue-loader</code></a>, you will only need it separately if you are writing build tools with very specific needs.</p>
+<h2 id="installation">Installation</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">npm</span> install vue-template-compiler</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">const</span> compiler <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;vue-template-compiler&#39;</span>)</a></code></pre></div>
+<h2 id="api">API</h2>
+<h3 id="compiler.compiletemplate-options">compiler.compile(template, <a href="#options-1">options</a>)</h3>
+<p>Compiles a template string and returns compiled JavaScript code. The returned result is an object of the following format:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">ast</span><span class="op">:</span> <span class="op">?</span>ASTElement<span class="op">,</span> <span class="co">// parsed template elements to AST</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  render: string<span class="op">,</span> <span class="co">// main render function code</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">staticRenderFns</span><span class="op">:</span> Array<span class="op">&lt;</span>string<span class="op">&gt;,</span> <span class="co">// render code for static sub trees, if any</span></a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="dt">errors</span><span class="op">:</span> Array<span class="op">&lt;</span>string<span class="op">&gt;</span> <span class="co">// template syntax errors, if any</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="op">}</span></a></code></pre></div>
+<p>Note the returned function code uses <code>with</code> and thus cannot be used in strict mode code.</p>
+<h4 id="options">Options</h4>
+<ul>
+<li><code>outputSourceRange</code> <em>new in 2.6</em>
+<ul>
+<li>Type: <code>boolean</code></li>
+<li>Default: <code>false</code></li>
+</ul>
+<p>Set this to true will cause the <code>errors</code> returned in the compiled result become objects in the form of <code>{ msg, start, end }</code>. The <code>start</code> and <code>end</code> properties are numbers that mark the code range of the error source in the template. This can be passed on to the <code>compiler.generateCodeFrame</code> API to generate a code frame for the error.</p></li>
+<li><code>whitespace</code>
+<ul>
+<li>Type: <code>string</code></li>
+<li>Valid values: <code>'preserve' | 'condense'</code></li>
+<li>Default: <code>'preserve'</code></li>
+</ul>
+<p>The default value <code>'preserve'</code> handles whitespaces as follows:</p>
+<ul>
+<li>A whitespace-only text node between element tags is condensed into a single space.</li>
+<li>All other whitespaces are preserved as-is.</li>
+</ul>
+<p>If set to <code>'condense'</code>:</p>
+<ul>
+<li>A whitespace-only text node between element tags is removed if it contains new lines. Otherwise, it is condensed into a single space.</li>
+<li>Consecutive whitespaces inside a non-whitespace-only text node are condensed into a single space.</li>
+</ul>
+<p>Using condense mode will result in smaller compiled code size and slightly improved performance. However, it will produce minor visual layout differences compared to plain HTML in certain cases.</p>
+<p><strong>This option does not affect the <code>&lt;pre&gt;</code> tag.</strong></p>
+<p>Example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb4-1" title="1"><span class="co">&lt;!-- source --&gt;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">&lt;div&gt;</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="kw">&lt;span&gt;</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    foo</a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="kw">&lt;/span&gt;</span>   <span class="kw">&lt;span&gt;</span>bar<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="co">&lt;!-- whitespace: &#39;preserve&#39; --&gt;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="kw">&lt;div&gt;</span> <span class="kw">&lt;span&gt;</span></a>
+<a class="sourceLine" id="cb4-10" title="10">  foo</a>
+<a class="sourceLine" id="cb4-11" title="11">  <span class="kw">&lt;/span&gt;</span> <span class="kw">&lt;span&gt;</span>bar<span class="kw">&lt;/span&gt;</span> <span class="kw">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb4-12" title="12"></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="co">&lt;!-- whitespace: &#39;condense&#39; --&gt;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="kw">&lt;div&gt;&lt;span&gt;</span> foo <span class="kw">&lt;/span&gt;</span> <span class="kw">&lt;span&gt;</span>bar<span class="kw">&lt;/span&gt;&lt;/div&gt;</span></a></code></pre></div></li>
+<li><p><code>modules</code></p>
+<p>It’s possible to hook into the compilation process to support custom template features. <strong>However, beware that by injecting custom compile-time modules, your templates will not work with other build tools built on standard built-in modules, e.g <code>vue-loader</code> and <code>vueify</code>.</strong></p>
+<p>An array of compiler modules. For details on compiler modules, refer to the <code>ModuleOptions</code> type in <a href="https://github.com/vuejs/vue/blob/dev/flow/compiler.js#L38-L45">flow declarations</a> and the <a href="https://github.com/vuejs/vue/tree/dev/src/platforms/web/compiler/modules">built-in modules</a>.</p></li>
+<li><p><code>directives</code></p>
+<p>An object where the key is the directive name and the value is a function that transforms an template AST node. For example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="va">compiler</span>.<span class="at">compile</span>(<span class="st">&#39;&lt;div v-test&gt;&lt;/div&gt;&#39;</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">directives</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="at">test</span> (node<span class="op">,</span> directiveMeta) <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-4" title="4">      <span class="co">// transform node based on directiveMeta</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-6" title="6">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="op">}</span>)</a></code></pre></div>
+<p>By default, a compile-time directive will extract the directive and the directive will not be present at runtime. If you want the directive to also be handled by a runtime definition, return <code>true</code> in the transform function.</p>
+<p>Refer to the implementation of some <a href="https://github.com/vuejs/vue/tree/dev/src/platforms/web/compiler/directives">built-in compile-time directives</a>.</p></li>
+<li><code>preserveWhitespace</code> <strong>Deprecated since 2.6</strong>
+<ul>
+<li>Type: <code>boolean</code></li>
+<li>Default: <code>true</code></li>
+</ul>
+<p>By default, the compiled render function preserves all whitespace characters between HTML tags. If set to <code>false</code>, whitespace between tags will be ignored. This can result in slightly better performance but may affect layout for inline elements.</p></li>
+</ul>
+<hr />
+<h3 id="compiler.compiletofunctionstemplate">compiler.compileToFunctions(template)</h3>
+<p>Similar to <code>compiler.compile</code>, but directly returns instantiated functions:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">render</span><span class="op">:</span> Function<span class="op">,</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">staticRenderFns</span><span class="op">:</span> Array<span class="op">&lt;</span>Function<span class="op">&gt;</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="op">}</span></a></code></pre></div>
+<p>This is only useful at runtime with pre-configured builds, so it doesn’t accept any compile-time options. In addition, this method uses <code>new Function()</code> so it is not CSP-compliant.</p>
+<hr />
+<h3 id="compiler.ssrcompiletemplate-options">compiler.ssrCompile(template, <a href="#options-1">options</a>)</h3>
+<blockquote>
+<p>2.4.0+</p>
+</blockquote>
+<p>Same as <code>compiler.compile</code> but generates SSR-specific render function code by optimizing parts of the template into string concatenation in order to improve SSR performance.</p>
+<p>This is used by default in <code>vue-loader@&gt;=12</code> and can be disabled using the <a href="https://vue-loader.vuejs.org/en/options.html#optimizessr"><code>optimizeSSR</code></a> option.</p>
+<hr />
+<h3 id="compiler.ssrcompiletofunctionstemplate">compiler.ssrCompileToFunctions(template)</h3>
+<blockquote>
+<p>2.4.0+</p>
+</blockquote>
+<p>Same as <code>compiler.compileToFunction</code> but generates SSR-specific render function code by optimizing parts of the template into string concatenation in order to improve SSR performance.</p>
+<hr />
+<h3 id="compiler.parsecomponentfile-options">compiler.parseComponent(file, <a href="#options-1">options</a>)</h3>
+<p>Parse a SFC (single-file component, or <code>*.vue</code> file) into a descriptor (refer to the <code>SFCDescriptor</code> type in <a href="https://github.com/vuejs/vue/blob/dev/flow/compiler.js">flow declarations</a>). This is used in SFC build tools like <code>vue-loader</code> and <code>vueify</code>.</p>
+<hr />
+<h3 id="compiler.generatecodeframetemplate-start-end">compiler.generateCodeFrame(template, start, end)</h3>
+<p>Generate a code frame that highlights the part in <code>template</code> defined by <code>start</code> and <code>end</code>. Useful for error reporting in higher-level tooling.</p>
+<h4 id="options-1">Options</h4>
+<h4 id="pad"><code>pad</code></h4>
+<p><code>pad</code> is useful when you are piping the extracted content into other pre-processors, as you will get correct line numbers or character indices if there are any syntax errors.</p>
+<ul>
+<li>with <code>{ pad: "line" }</code>, the extracted content for each block will be prefixed with one newline for each line in the leading content from the original file to ensure that the line numbers align with the original file.</li>
+<li>with <code>{ pad: "space" }</code>, the extracted content for each block will be prefixed with one space for each character in the leading content from the original file to ensure that the character count remains the same as the original file.</li>
+</ul>
+</body>
+</html>

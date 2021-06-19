@@ -1,51 +1,21 @@
-﻿<!DOCTYPE html>
-<html>
-  <head>
-    <title>CodeMirror: ECL mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css" />
-    <script src="../../lib/codemirror.js"></script>
-    <script src="ecl.js"></script>
-    <link rel="stylesheet" href="../../doc/docs.css" />
-    <style>
-      .CodeMirror {
-        border: 1px solid black;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>CodeMirror: ECL mode</h1>
-    <form>
-      <textarea id="code" name="code">
-/*
-sample useless code to demonstrate ecl syntax highlighting
-this is a multiline comment!
-*/
-
-//  this is a singleline comment!
-
-import ut;
-r := 
-  record
-   string22 s1 := '123';
-   integer4 i1 := 123;
-  end;
-#option('tmp', true);
-d := dataset('tmp::qb', r, thor);
-output(d);
-</textarea
-      >
-    </form>
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        tabMode: "indent",
-        matchBrackets: true,
-      });
-    </script>
-
-    <p>
-      Based on CodeMirror's clike mode. For more information see
-      <a href="http://hpccsystems.com">HPCC Systems</a> web site.
-    </p>
-    <p><strong>MIME types defined:</strong> <code>text/x-ecl</code>.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="codemirror-ecl-mode">CodeMirror: ECL mode</h1>
+<p>/* sample useless code to demonstrate ecl syntax highlighting this is a multiline comment! */ // this is a singleline comment! import ut; r := record string22 s1 := ‘123’; integer4 i1 := 123; end; #option(‘tmp’, true); d := dataset(‘tmp::qb’, r, thor); output(d);</p>
+<p>Based on CodeMirror’s clike mode. For more information see <a href="http://hpccsystems.com">HPCC Systems</a> web site.</p>
+<p><strong>MIME types defined:</strong> <code>text/x-ecl</code>.</p>
+</body>
 </html>

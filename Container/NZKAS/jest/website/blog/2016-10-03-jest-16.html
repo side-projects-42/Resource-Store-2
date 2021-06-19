@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2016-10-03-jest-16</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      It’s been one month since the last major release and we’ve made
+      significant improvements to Jest since. In this major release we are
+      updating the snapshot format we are using which will likely require
+      snapshots to be updated when upgrading Jest. We don’t make these changes
+      lightly and don’t expect this to happen often but we think it is necessary
+      to improve the format from time to time.
+    </p>
+    <h2 id="upgraded-cli">Upgraded CLI</h2>
+    <figure>
+      <img src="/img/blog/16-reporter.gif" alt="reporter" />
+      <figcaption>reporter</figcaption>
+    </figure>
+    <p>
+      Jest 16 features a new reporter interface that shows running tests as well
+      as a live summary and a progress bar based on the estimated test runtime
+      from previous test runs. We also improved the CLI output to work better
+      with different color schemes. If there were test failures in a previous
+      run, Jest will now always run those tests first to give useful signal to
+      users as quickly as possible.
+    </p>
+    <!--truncate-->
+    <p>We also added a lot of new features which you may find useful:</p>
+    <ul>
+      <li>
+        New CLI flags were added: A <code>--testNamePattern=pattern</code> or
+        <code>-t &lt;pattern&gt;</code> option was added to filter tests from
+        the command line much like <code>it.only</code> or <code>fit</code> does
+        in tests.
+      </li>
+      <li>Previously failed tests now always run first.</li>
+      <li>
+        <code>jest &lt;pattern&gt;</code> is now case-insensitive to make it
+        easier to filter test files.
+      </li>
+      <li>
+        A test run in watch mode can now be interrupted. During a test run,
+        simply press any of the keys used for input during watch mode
+        (<code>a</code>, <code>o</code>, <code>p</code>, <code>q</code> or
+        <code>enter</code>) to abort a test run and start a new one.
+      </li>
+      <li>
+        The <code>--bail</code> flag now also works in watch mode. Together with
+        running failed tests first, Jest’s watch mode will now feel
+        turbocharged!
+      </li>
+      <li>
+        Jest now automatically considers files and tests with the
+        <code>jsx</code> extension.
+      </li>
+      <li>
+        Jest warns about duplicate manual mock files and we improved
+        automatically created mocks for ES modules compiled with babel.
+      </li>
+      <li>
+        A <code>jest.clearAllMocks</code> function was added to clear all mocks
+        in between tests.
+      </li>
+      <li>
+        We improved module resolution when <code>moduleNameMapper</code> is
+        used.
+      </li>
+      <li>
+        Finally, a
+        <code>--findRelatedTests &lt;fileA&gt; &lt;fileB&gt;</code> cli option
+        was added to run tests related to the specified files. This is
+        especially helpful as a pre-commit hook if you’d like to run tests only
+        on a specified set of files that have tests associated with them.
+      </li>
+    </ul>
+    <p>
+      This is what Jest looks like when a test run is interrupted in watch mode:
+      <img src="/img/blog/16-watch.gif" alt="watch" />
+    </p>
+    <h2 id="snapshot-updates">Snapshot Updates</h2>
+    <p>
+      Jest’s snapshot implementation was completely rewritten. The new version
+      of the <code>jest-snapshot</code> package is now structured in a way that
+      allows for easier integration into other test runners and enables more
+      cool integrations like with
+      <a
+        href="https://voice.kadira.io/snapshot-testing-in-react-storybook-43b3b71cec4f#.qh4lzcadb"
+        >React Storybook</a
+      >. Jest doesn’t mark snapshots as obsolete in a file with skipped or
+      failing tests. We also made a number of changes to the snapshot format:
+    </p>
+    <ul>
+      <li>
+        Objects and Arrays are now printed with a trailing comma to minimize
+        future changes to snapshots.
+      </li>
+      <li>
+        We removed function names from snapshots. They were causing issues with
+        different versions of Node, with code coverage instrumentation and we
+        generally felt like it wasn’t useful signal to show to the user that the
+        name of a function has changed.
+      </li>
+      <li>Snapshots are now sorted using natural sort order within a file.</li>
+    </ul>
+    <p>
+      When upgrading to Jest 16, the diff might look similar to this one:
+      <img src="/img/blog/16-snapshots.png" alt="snapshots" />
+    </p>
+    <h2 id="test-library-updates">Test Library Updates</h2>
+    <p>
+      We finished the migration of Jasmine assertions to the new Jest matchers.
+      We added three new matchers: <code>toBeInstanceOf</code>,
+      <code>toContainEqual</code> and
+      <code>toThrowErrorMatchingSnapshot</code> . We have more readable failure
+      messages for the spy/mock matchers <code>toHaveBeenLastCalledWith</code>,
+      <code>toHaveBeenCalledWith</code>, <code>lastCalledWith</code> and
+      <code>toBeCalledWith</code>. Now that we have rewritten all assertions and
+      separated them into their own package, we’ll be working on making them
+      standalone so they can be integrated into any test framework if you’d like
+      to use them outside of Jest.
+    </p>
+    <p>
+      We also added a bunch of aliases that were requested by the community. To
+      make Jest focus on a single test you can now use either
+      <code>it.only</code> or <code>test.only</code> or keep using
+      <code>fit</code>; For skipping a test, <code>it.skip</code> or
+      <code>test.skip</code> are now available alongside of <code>xit</code>;
+      finally to define a test as concurrent you can use
+      <code>test.concurrent</code> which is useful in case your test accesses
+      network resources or databases.
+    </p>
+    <p>
+      Finally, if you’d like to overwrite the <code>expect</code> global with a
+      different assertion library like <a href="http://chaijs.com/">chai</a>,
+      this can now be done using the
+      <code>setupTestFrameworkScriptFile</code> configuration option.
+    </p>
+    <h2 id="community-update">Community Update</h2>
+    <p>
+      Over the last month lots of articles were written about Jest’s snapshot
+      testing feature, how to migrate to Jest and how to get started writing
+      tests. I also did a few live videos to explain how Jest and snapshot
+      testing works:
+    </p>
+    <ul>
+      <li>
+        <a href="https://www.facebook.com/react/videos/1035427199869020/"
+          >FB Live Video about Snapshot Testing</a
+        >.
+      </li>
+      <li>
+        <a
+          href="https://www.youtube.com/watch?v=i31VtyJSM-I&amp;feature=youtu.be"
+          >JavaScript &amp; React Testing with Kent C. Dodds</a
+        >.
+      </li>
+    </ul>
+    <p>
+      A number of people wrote articles about snapshot testing. The most
+      opinionated article that resonated with the Jest team was “<a
+        href="http://benmccormick.org/2016/09/19/testing-with-jest-snapshots-first-impressions/"
+        >Testing with Jest Snapshots: First Impressions</a
+      >”. Ben makes three great points in his blog post:
+    </p>
+    <ol type="1">
+      <li>
+        Snapshot tests are a complement for conventional tests not a
+        replacement.
+      </li>
+      <li>
+        Snapshot tests are more useful with a healthy code review process.
+      </li>
+      <li>Snapshot tests work well with auto-mocking.</li>
+    </ol>
+    <p>
+      We highly recommend reading the entire blog post. Ben did a fantastic job
+      explaining the reasons why we built snapshot testing. It’s important to
+      point out that we didn’t introduce snapshot testing to replace all other
+      forms of testing but rather as a way to enable engineers to write tests
+      for code that they otherwise wouldn’t write tests for. It works well for
+      things like React components, CLI output, error messages and many others
+      but it doesn’t solve all problems. Jest’s goal is to provide many
+      different ways to write effective tests without sacrificing performance or
+      the project’s maintainability.
+    </p>
+    <p>Other highlights about snapshot testing:</p>
+    <ul>
+      <li>
+        A React Native testing series:
+        <a
+          href="https://blog.callstack.io/unit-testing-react-native-with-the-new-jest-i-snapshots-come-into-play-68ba19b1b9fe"
+          >Part 1: Jest – Snapshot come into play</a
+        >
+        and
+        <a
+          href="https://blog.callstack.io/unit-testing-react-native-with-the-new-jest-ii-redux-snapshots-for-your-actions-and-reducers-8559f6f8050b#.putt9eipm"
+          >Part 2: Jest – Redux Snapshots for your Actions and Reducers</a
+        >.
+      </li>
+      <li>
+        <a
+          href="https://blog.grommet.io/post/2016/09/01/how-we-landed-on-jest-snapshot-testing-for-javascript"
+          >How we landed on Jest snapshot testing for JavaScript</a
+        >.
+      </li>
+      <li>
+        <a
+          href="http://guigrpa.github.io/2016/09/27/picture-this-snapshot-testing/"
+          >Picture This: Snapshot Testing</a
+        >.
+      </li>
+      <li>
+        <a
+          href="https://voice.kadira.io/snapshot-testing-in-react-storybook-43b3b71cec4f"
+          >Snapshot testing with React Storybook</a
+        >.
+      </li>
+      <li>
+        <a
+          href="https://medium.com/@ryancollinsio/testing-react-redux-applications-fee79ac0087f#.lyjl7st1n"
+          >Testing React and Redux Applications</a
+        >.
+      </li>
+      <li>
+        If you are using the popular
+        <a href="https://github.com/airbnb/enzyme">enzyme</a> testing utility,
+        there is now a project
+        <a href="https://github.com/trayio/enzyme-to-json">enzyme-to-json</a>
+        which makes it possible to use Jest’s snapshot testing feature together
+        with enzyme.
+      </li>
+    </ul>
+    <p>
+      <a
+        href="https://github.com/reactjs/redux/commit/7296d3cba1f5f899bdee5ef6695a8d21149f8d6c"
+        >Redux itself now uses Jest</a
+      >
+      and Max Stoiber wrote a
+      <a href="http://academy.plot.ly/react/6-testing/"
+        >tutorial on how to test code written with redux</a
+      >. There is also a great
+      <a
+        href="https://semaphoreci.com/community/tutorials/how-to-test-react-and-mobx-with-jest"
+        >guide on how to write tests for MobX</a
+      >. If you are using
+      <a href="https://github.com/facebookincubator/create-react-app"
+        >create-react-app</a
+      >, Jest is now included by default. Kent C. Dodds created a ton of
+      <a
+        href="https://egghead.io/lessons/javascript-use-jest-s-snapshot-testing-feature?pl=testing-javascript-with-jest-a36c4074"
+        >videos on egghead.io</a
+      >
+      that will help you get started with Jest.
+    </p>
+    <p>
+      If you are using other test runners, Kenneth Skovhus built an awesome
+      <a href="https://github.com/skovhus/jest-codemods">jest-codemods</a>
+      library that will automate the conversion for you. Codemods are awesome:
+      they’ll allow you to quickly evaluate whether Jest will work for you. Give
+      it a try!
+    </p>
+    <p>
+      The full
+      <a
+        href="https://github.com/facebook/jest/blob/master/CHANGELOG.md#jest-1600"
+        >changelog can be found on GitHub</a
+      >. Jest 16 was a true JavaScript community effort and the project now has
+      more than 220 contributors. We thank each and every one of you for your
+      help to make this project great.
+    </p>
+  </body>
+</html>

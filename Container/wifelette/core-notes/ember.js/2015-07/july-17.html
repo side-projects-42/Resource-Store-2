@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-17</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-meeting-agenda-2015-07-17">Ember Meeting Agenda 2015-07-17</h1>
+<h3 id="attendees">Attendees</h3>
+<p>Robert, Trek, Stefan, Leah, Erik, Martin, Igor, Alex</p>
+<h3 id="minutes">Minutes</h3>
+<p>SP: Awesome progress on ember-twiddle.com.</p>
+<p>LS: Updates on next F2F meeting in September.</p>
+<p>LS: updates for ember conf, and other potential future events.</p>
+<p>RJ: can we schedule F2F further out, so planning is easier.</p>
+<p>LS: Yup, lets doit by/during the next F2F</p>
+<p>TG: Docs sub-team has been meeting for a couple weeks, and the effort seems to be progressing well.</p>
+<p>TG: The docs team is trying to determine what to use for data persistence at the very early stages (use Ember Data, Something else, etc…). <code>$.ajax</code> is not good enough.</p>
+<aside>
+<p>EB: Is there an issue in ember-cli that requires python?</p>
+<p>RJ: Yes, node-gyp was used for compiling native extension for socket.io.</p>
+<p>RJ: Stef updated ember-cli in https://github.com/ember-cli/ember-cli/pull/4466 to prevent bundling optional dependencies.</p>
+</aside>
+<p>TG: Discussed the new folder structure</p>
+<p>RJ: Ember 2.0.0 beta status: currently on beta.2 should release beta.3 in the next couple days.</p>
+<p>KS: We should ensure that we release 5 betas.</p>
+<p>RJ: Sounds good, that would put us at 2015-07-31 for final release.</p>
+<p>EB: There seem to be a few regressions still present in 1.13 that we need to address.</p>
+<p>RJ: Lets discuss https://github.com/emberjs/ember.js/issues/11759 and https://github.com/emberjs/ember.js/issues/11760.</p>
+<p>AM / MM: <code>this.routeName</code> should definitely be public.</p>
+<p>RJ: What about <code>this.currentModel</code>?</p>
+<p>MM: Folks should likely use <code>this.modelFor</code> or <code>this.get('controller.model')</code> to get the model instead of relying on <code>currentModel</code>.</p>
+<p>RJ will comment on issues and get PR’s to update the documentation.</p>
+</body>
+</html>

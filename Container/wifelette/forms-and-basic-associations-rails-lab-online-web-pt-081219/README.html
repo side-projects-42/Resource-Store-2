@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="forms-and-basic-associations-rails-lab">Forms And Basic Associations Rails Lab</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Practice defining associations</li>
+<li>Practice building forms in ERB when working with nested models</li>
+</ol>
+<h2 id="a-song-library">A <code>Song</code> Library</h2>
+<p>In this lab, we’re going to make a song library that helps record thoughts about various <code>Song</code>s. Our data model looks like this:</p>
+<ul>
+<li><code>Artist</code>
+<ul>
+<li>has a <code>name</code> attribute (<code>String</code>)</li>
+<li>has many <code>Song</code>s</li>
+</ul></li>
+<li><code>Song</code>
+<ul>
+<li>has a <code>title</code> attribute (<code>String</code>)</li>
+<li>belongs to an <code>Artist</code></li>
+<li>belongs to a <code>Genre</code></li>
+<li>has many <code>Note</code>s</li>
+</ul></li>
+<li><code>Genre</code>
+<ul>
+<li>has a <code>name</code> attribute (<code>String</code>)</li>
+<li>has many <code>songs</code></li>
+</ul></li>
+<li><code>Note</code>
+<ul>
+<li>has <code>content</code> attribute (<code>String</code>)</li>
+<li>belongs to a <code>Song</code></li>
+</ul></li>
+</ul>
+<h2 id="instructions">Instructions</h2>
+<ol type="1">
+<li>The base models, controllers, and seed data have been provided for you.</li>
+<li>You should create and migrate the database before starting to develop your solution.</li>
+<li>Seeding the database provides many <code>Genre</code>s. You will add data about <code>Artist</code>s, <code>Note</code>s, and <code>Song</code>s during the development of this application. The <code>ArtistsController</code> and <code>SongsController</code> have been built out so that you can do this.</li>
+</ol>
+<p>First, connect the models by using the <code>ActiveRecord</code> association commands.</p>
+<p>Next, update the minimal <code>app/views/songs/new.html.erb</code>.</p>
+<p>This view should have a form that provides:</p>
+<ul>
+<li>A text input box that sets the <code>Song</code>’s title.</li>
+<li>A text input box for the <code>Artist</code>.</li>
+<li>A selection box for <code>Genre</code>. Users should be able to pick amongst existing genres only.</li>
+<li>Several text input boxes to add notes to the song.</li>
+</ul>
+<p>This is a challenging lab because we want you to use Rails’ powerful nested form builder view helpers. Here are some hints:</p>
+<ul>
+<li>You might need to reference information on passing an <code>Array</code> using <code>strong_params</code></li>
+<li>It’s easy to get confused between getting an <code>Artist</code> <em>instance</em> from a <code>Song</code> and an <code>Artist</code>’s name. To help make your form work easier, solve the <code>spec/models/song_spec.rb</code> <em>first</em>. You can run a single spec by invoking it with e.g. <code>rspec spec/models/song_spec.rb</code></li>
+<li>Make use of the references below!</li>
+<li>While we direct you to update <code>new.html.erb</code>, you’re going to need to make changes in multiple models and the <code>SongsController</code>.</li>
+</ul>
+<h2 id="references">References</h2>
+<ul>
+<li><a href="https://guides.rubyonrails.org/association_basics.html#has-many-association-reference"><code>has_many</code> association reference</a></li>
+<li><a href="https://guides.rubyonrails.org/association_basics.html#belongs-to-association-reference"><code>belongs_to</code> association reference</a></li>
+<li><a href="https://apidock.com/rails/v5.2.3/ActiveRecord/NestedAttributes/ClassMethods/accepts_nested_attributes_for"><code>accepts_nested_attributes_for</code></a></li>
+<li><a href="https://apidock.com/rails/ActionController/Parameters/permit">Specifying which parameters are accepted in Rails Controllers</a></li>
+<li><a href="https://api.rubyonrails.org/v5.2.3/classes/ActionView/Helpers/FormHelper.html#method-i-fields_for"><code>fields_for</code> form helper</a></li>
+</ul>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/forms-and-basic-associations-rails-lab' title='Forms And Basic Associations Rails Lab'>Forms And Basic Associations Rails Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

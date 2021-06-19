@@ -1,10 +1,12 @@
-# GitBook Sample Plugin
+GitBook Sample Plugin
+=====================
 
 This is a sample plugin for GitBook.
 
 Install it using: `$ npm install gitbook-plugin`
 
-## How GitBook plugin works?
+How GitBook plugin works?
+-------------------------
 
 A plugin for GitBook is a node package that can be published on [NPM](http://www.npmjs.org).
 
@@ -20,77 +22,66 @@ Examples: `gitbook-plugin-mixpanel`, `gitbook-plugin-googleanalytics`, `gitbook-
 
 The package.json should contain a `engine` field using [the standard norm](https://www.npmjs.org/doc/json.html#engines).
 
-```
-"engines": {
-    "gitbook": "*"
-}
-```
+    "engines": {
+        "gitbook": "*"
+    }
 
 For example if you want your plugin to supports only GitBook version supperior to 0.3.1:
 
-```
-"engines": {
-    "gitbook": ">=0.3.1"
-}
-```
+    "engines": {
+        "gitbook": ">=0.3.1"
+    }
 
 ### entry point
 
 The plugin entry point should return an object with some metadata.
 
-#### "book"
+#### “book”
 
-Type: `Object`
-Default value: `{}`
+Type: `Object` Default value: `{}`
 
-#### "book.assets"
+#### “book.assets”
 
-Type: `String`
-Default value: `null`
+Type: `String` Default value: `null`
 
 Path to the assets folder to copy
 
-#### "book.js"
+#### “book.js”
 
-Type: `Array`
-Default value: `[]`
+Type: `Array` Default value: `[]`
 
 List of javascript file to add to the html pages (relative to the assets folder).
 
-#### "book.css"
+#### “book.css”
 
-Type: `Array`
-Default value: `[]`
+Type: `Array` Default value: `[]`
 
 List of css file to add to the html pages (relative to the assets folder).
 
-#### "book.html"
+#### “book.html”
 
-Type: `Object`
-Default value: `{}`
+Type: `Object` Default value: `{}`
 
-Map of position -> code, html snippets to add to each page. The code could be a function.
+Map of position -&gt; code, html snippets to add to each page. The code could be a function.
 
-#### "book.templates"
+#### “book.templates”
 
-Type: `Object`
-Default value: `{}`
+Type: `Object` Default value: `{}`
 
 Templates to override default templates, only use this option if you want to change entirely how the book is rendered.
 
-This object is a map: "name" -> "file", with names:
+This object is a map: “name” -&gt; “file”, with names:
 
-- "site": page for a file from the `site` format
-- "page": page for the `page` format
+-   “site”: page for a file from the `site` format
+-   “page”: page for the `page` format
 
-#### "hooks"
+#### “hooks”
 
-Type: `Object`
-Default value: `{}`
+Type: `Object` Default value: `{}`
 
-Map of "name" -> Function that needs to be called during build process. With names:
+Map of “name” -&gt; Function that needs to be called during build process. With names:
 
-- "init": just after initialization, before generation
-- "finish": after generation and everything is finished
+-   “init”: just after initialization, before generation
+-   “finish”: after generation and everything is finished
 
 Each hook can return a promise.

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>time-line</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="time-scale">Time Scale</h1>
+<p>```js chart-editor // <block:actions:2> const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data.forEach(function (dataObj, j) { const newVal = Utils.rand(0, 100);</p>
+<pre><code>      if (typeof dataObj === &quot;object&quot;) {
+        dataObj.y = newVal;
+      } else {
+        dataset.data[j] = newVal;
+      }
+    });
+  });
+  chart.update();
+},</code></pre>
+<p>}, ]; // </block:actions></p>
+<p>// <block:setup:1> const DATA_COUNT = 7; const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };</p>
+<p>const data = { labels: [ // Date Objects Utils.newDate(0), Utils.newDate(1), Utils.newDate(2), Utils.newDate(3), Utils.newDate(4), Utils.newDate(5), Utils.newDate(6), ], datasets: [ { label: “My First dataset”, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), borderColor: Utils.CHART_COLORS.red, fill: false, data: Utils.numbers(NUMBER_CFG), }, { label: “My Second dataset”, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), borderColor: Utils.CHART_COLORS.blue, fill: false, data: Utils.numbers(NUMBER_CFG), }, { label: “Dataset with point data”, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.green, 0.5), borderColor: Utils.CHART_COLORS.green, fill: false, data: [ { x: Utils.newDateString(0), y: Utils.rand(0, 100), }, { x: Utils.newDateString(5), y: Utils.rand(0, 100), }, { x: Utils.newDateString(7), y: Utils.rand(0, 100), }, { x: Utils.newDateString(15), y: Utils.rand(0, 100), }, ], }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data: data, options: { plugins: { title: { text: “Chart.js Time Scale”, display: true, }, }, scales: { x: { type: “time”, time: { // Luxon format string tooltipFormat: “DD T”, }, title: { display: true, text: “Date”, }, }, y: { title: { display: true, text: “value”, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

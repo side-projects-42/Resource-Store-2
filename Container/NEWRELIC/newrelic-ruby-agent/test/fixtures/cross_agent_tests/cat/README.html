@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3 id="cat-map-test-details">CAT Map test details</h3>
+    <p>
+      The CAT map test cases in <code>cat_map.json</code> are meant to be used
+      to verify the attributes that agents collect and attach to analytics
+      transaction events for the CAT map project.
+    </p>
+    <p>
+      <strong>NOTE</strong> currently <code>nr.apdexPerfZone</code> is not
+      covered by these tests, make sure you test for this yourself until it is
+      added to these tests.
+    </p>
+    <p>
+      Each test case should correspond to a simulated transaction in the agent
+      under test. Here’s what the various fields in each test case mean:
+    </p>
+    <table>
+      <colgroup>
+        <col style="width: 6%" />
+        <col style="width: 93%" />
+      </colgroup>
+      <thead>
+        <tr class="header">
+          <th>Name</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td><code>name</code></td>
+          <td>A human-meaningful name for the test case.</td>
+        </tr>
+        <tr class="even">
+          <td><code>appName</code></td>
+          <td>
+            The name of the New Relic application for the simulated transaction.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><code>transactionName</code></td>
+          <td>The final name of the simulated transaction.</td>
+        </tr>
+        <tr class="even">
+          <td><code>transactionGuid</code></td>
+          <td>The GUID of the simulated transaction.</td>
+        </tr>
+        <tr class="odd">
+          <td><code>inboundPayload</code></td>
+          <td>
+            The (non-serialized) contents of the
+            <code>X-NewRelic-Transaction</code> HTTP request header on the
+            simulated transaction. Note that this value should be serialized to
+            JSON, obfuscated using the CAT obfuscation algorithm, and
+            Base64-encoded before being used in the header value. Note also that
+            the <code>X-NewRelic-ID</code> header should be set on the simulated
+            transaction, though its value is not specified in these tests.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><code>expectedIntrinsicFields</code></td>
+          <td>
+            A set of key-value pairs that are expected to be present in the
+            analytics event generated for the simulated transaction. These
+            fields should be present in the first hash of the analytic event
+            payload (built-in agent-supplied fields).
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><code>nonExpectedIntrinsicFields</code></td>
+          <td>
+            An array of attribute names that should <em>not</em> be present in
+            the analytics event generated for the simulated transaction.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><code>outboundRequests</code></td>
+          <td>
+            An array of objects representing outbound requests that should be
+            made in the context of the simulated transaction. See the table
+            below for details. Only present if the test case involves making
+            outgoing requests from the simulated transaction.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      Here’s what the fields of each entry in the
+      <code>outboundRequests</code> array mean:
+    </p>
+    <table>
+      <colgroup>
+        <col style="width: 11%" />
+        <col style="width: 88%" />
+      </colgroup>
+      <thead>
+        <tr class="header">
+          <th>Name</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td><code>outboundTxnName</code></td>
+          <td>
+            The name of the simulated transaction at the time this outbound
+            request is made. Your test driver should set the transaction name to
+            this value prior to simulating the outbound request.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><code>expectedOutboundPayload</code></td>
+          <td>
+            The expected (un-obfuscated) content of the outbound
+            <code>X-NewRelic-Transaction</code> request header for this request.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

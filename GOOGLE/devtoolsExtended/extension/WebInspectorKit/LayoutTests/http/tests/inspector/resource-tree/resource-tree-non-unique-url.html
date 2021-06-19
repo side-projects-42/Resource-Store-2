@@ -1,41 +1,18 @@
-<html>
-  <head>
-    <script src="../inspector-test.js"></script>
-    <script src="../resources-test.js"></script>
-    <script src="resource-tree-test.js"></script>
-    <script>
-      function loadIframe() {
-        var iframe = document.createElement("iframe");
-        document.body.appendChild(iframe);
-        iframe.src = "resources/resource-tree-non-unique-url-iframe.html";
-      }
-
-      function test() {
-        WebInspector.showPanel("resources");
-        InspectorTest.addSniffer(
-          WebInspector.FrameTreeElement.prototype,
-          "appendResource",
-          onResource,
-          true
-        );
-
-        var cssRequestsCount = 0;
-        function onResource(resource) {
-          if (resource.url.match(/\.css$/) && ++cssRequestsCount === 2) {
-            InspectorTest.addResult("Resources Tree:");
-            InspectorTest.dumpResourcesTree();
-            InspectorTest.completeTest();
-          }
-        }
-
-        InspectorTest.evaluateInPage("loadIframe();");
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>
-      Tests resources panel shows several resources with the same url if they
-      were loaded with inspector already opened.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>resource-tree-non-unique-url</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests resources panel shows several resources with the same url if they were loaded with inspector already opened.</p>
+</body>
 </html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2015-08-13-update-wiki-and-issue-tracker-outage</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      <a
+        href="https://jenkins-ci.org/content/wiki-and-issue-tracker-outage-over-weekend"
+        >I recently wrote about the two day outage of our wiki and issue
+        tracker</a
+      >:
+    </p>
+    <blockquote>
+      <p>
+        While this was a rather lengthy outage, it could have been much worse.
+        We lost none of the data, after all.
+      </p>
+    </blockquote>
+    <p>
+      <a href="http://osuosl.org/blog/mysql1-vip-post-mortem"
+        >OSUOSL have since published their post mortem</a
+      >. I was <em>really</em> wrong about not losing any data:
+    </p>
+    <blockquote>
+      <p>
+        A further complication was that our backups were pointed at mysql2,
+        which was out-of-date with mysql1, due to the initial synchronization
+        failures. Fortunately, we had the binary logs from the 17th through the
+        30th. This means that though most data could be restored, some data from
+        between the 15th and the 17th was lost.
+      </p>
+    </blockquote>
+    <p>
+      For our issue tracker, that means that issues JENKINS-29432 to
+      JENKINS-29468 were lost, as well as comments posted from about July 15
+      12:20 PM to July 17 2 AM (UTC). We know this thanks to the
+      <a href="http://groups.google.com/group/jenkinsci-issues/topics"
+        >jenkinsci-issues</a
+      >
+      mailing list where the lost issues and comments can be looked up for
+      reposting.
+    </p>
+    <p>We unfortunately don’t have such a record from our wiki.</p>
+  </body>
+</html>

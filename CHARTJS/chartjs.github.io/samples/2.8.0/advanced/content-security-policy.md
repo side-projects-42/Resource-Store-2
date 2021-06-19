@@ -1,0 +1,1 @@
+In order to support a strict content security policy (`default-src 'self'`), this page manually loads `Chart.min.css` and turns off the automatic style injection by setting `Chart.platform.disableCSSInjection = true;`.

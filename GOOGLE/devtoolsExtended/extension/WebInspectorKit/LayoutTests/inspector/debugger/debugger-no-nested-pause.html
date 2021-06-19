@@ -1,43 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      function testFunction() {
-        testFunction.invocationCount++;
-        debugger;
-      }
-
-      testFunction.invocationCount = 0;
-
-      var test = function () {
-        InspectorTest.startDebuggerTest(step1);
-
-        function step1() {
-          InspectorTest.runTestFunctionAndWaitUntilPaused(step2);
-        }
-
-        function step2() {
-          InspectorTest.evaluateInConsole(
-            "testFunction(); testFunction.invocationCount",
-            step3
-          );
-          InspectorTest.addResult("Set timer for test function.");
-        }
-
-        function step3(result) {
-          InspectorTest.addResult("testFunction.invocationCount = " + result);
-          InspectorTest.completeDebuggerTest();
-        }
-      };
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that debugger will skip breakpoint hit when script execution is
-      already paused.
-      <a href="https://bugs.webkit.org/show_bug.cgi?id=41768">See bug</a>
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>debugger-no-nested-pause</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that debugger will skip breakpoint hit when script execution is already paused. <a href="https://bugs.webkit.org/show_bug.cgi?id=41768">See bug</a></p>
+</body>
 </html>

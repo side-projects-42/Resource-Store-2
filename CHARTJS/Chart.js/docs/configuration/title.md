@@ -1,75 +1,66 @@
-# Title
+Title
+=====
 
 The chart title defines text to draw at the top of the chart.
 
-## Title Configuration
+Title Configuration
+-------------------
 
 Namespace: `options.plugins.title`, the global options for the chart title is defined in `Chart.defaults.plugins.title`.
 
-| Name       | Type                               | Default                | [Scriptable](../general/options.md#scriptable-options) | Description                                                                                                                               |
-| ---------- | ---------------------------------- | ---------------------- | :----------------------------------------------------: | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `align`    | `string`                           | `'center'`             |                          Yes                           | Alignment of the title. [more...](#align)                                                                                                 |
-| `color`    | [`Color`](../general/colors.md)    | `Chart.defaults.color` |                          Yes                           | Color of text.                                                                                                                            |
-| `display`  | `boolean`                          | `false`                |                          Yes                           | Is the title shown?                                                                                                                       |
-| `fullSize` | `boolean`                          | `true`                 |                          Yes                           | Marks that this box should take the full width/height of the canvas. If `false`, the box is sized and placed above/beside the chart area. |
-| `position` | `string`                           | `'top'`                |                          Yes                           | Position of title. [more...](#position)                                                                                                   |
-| `font`     | `Font`                             | `{weight: 'bold'}`     |                          Yes                           | See [Fonts](../general/fonts.md)                                                                                                          |
-| `padding`  | [`Padding`](../general/padding.md) | `10`                   |                          Yes                           | Padding to apply around the title. Only `top` and `bottom` are implemented.                                                               |
-| `text`     | `string`\|`string[]`               | `''`                   |                          Yes                           | Title text to display. If specified as an array, text is rendered on multiple lines.                                                      |
+<table style="width:98%;"><colgroup><col style="width: 3%" /><col style="width: 13%" /><col style="width: 8%" /><col style="width: 21%" /><col style="width: 53%" /></colgroup><thead><tr class="header"><th>Name</th><th>Type</th><th>Default</th><th style="text-align: center;"><a href="../general/options.md#scriptable-options">Scriptable</a></th><th>Description</th></tr></thead><tbody><tr class="odd"><td><code>align</code></td><td><code>string</code></td><td><code>'center'</code></td><td style="text-align: center;">Yes</td><td>Alignment of the title. <a href="#align">more…</a></td></tr><tr class="even"><td><code>color</code></td><td><a href="../general/colors.md"><code>Color</code></a></td><td><code>Chart.defaults.color</code></td><td style="text-align: center;">Yes</td><td>Color of text.</td></tr><tr class="odd"><td><code>display</code></td><td><code>boolean</code></td><td><code>false</code></td><td style="text-align: center;">Yes</td><td>Is the title shown?</td></tr><tr class="even"><td><code>fullSize</code></td><td><code>boolean</code></td><td><code>true</code></td><td style="text-align: center;">Yes</td><td>Marks that this box should take the full width/height of the canvas. If <code>false</code>, the box is sized and placed above/beside the chart area.</td></tr><tr class="odd"><td><code>position</code></td><td><code>string</code></td><td><code>'top'</code></td><td style="text-align: center;">Yes</td><td>Position of title. <a href="#position">more…</a></td></tr><tr class="even"><td><code>font</code></td><td><code>Font</code></td><td><code>{weight: 'bold'}</code></td><td style="text-align: center;">Yes</td><td>See <a href="../general/fonts.md">Fonts</a></td></tr><tr class="odd"><td><code>padding</code></td><td><a href="../general/padding.md"><code>Padding</code></a></td><td><code>10</code></td><td style="text-align: center;">Yes</td><td>Padding to apply around the title. Only <code>top</code> and <code>bottom</code> are implemented.</td></tr><tr class="even"><td><code>text</code></td><td><code>string</code>|<code>string[]</code></td><td><code>''</code></td><td style="text-align: center;">Yes</td><td>Title text to display. If specified as an array, text is rendered on multiple lines.</td></tr></tbody></table>
 
 ### Position
 
 Possible title position values are:
 
-- `'top'`
-- `'left'`
-- `'bottom'`
-- `'right'`
+-   `'top'`
+-   `'left'`
+-   `'bottom'`
+-   `'right'`
 
-## Align
+Align
+-----
 
 Alignment of the title. Options are:
 
-- `'start'`
-- `'center'`
-- `'end'`
+-   `'start'`
+-   `'center'`
+-   `'end'`
 
-## Example Usage
+Example Usage
+-------------
 
-The example below would enable a title of 'Custom Chart Title' on the chart that is created.
+The example below would enable a title of ‘Custom Chart Title’ on the chart that is created.
 
-```javascript
-var chart = new Chart(ctx, {
-  type: "line",
-  data: data,
-  options: {
-    plugins: {
-      title: {
-        display: true,
-        text: "Custom Chart Title",
+    var chart = new Chart(ctx, {
+      type: "line",
+      data: data,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: "Custom Chart Title",
+          },
+        },
       },
-    },
-  },
-});
-```
+    });
 
 This example shows how to specify separate top and bottom title text padding:
 
-```javascript
-var chart = new Chart(ctx, {
-  type: "line",
-  data: data,
-  options: {
-    plugins: {
-      title: {
-        display: true,
-        text: "Custom Chart Title",
-        padding: {
-          top: 10,
-          bottom: 30,
+    var chart = new Chart(ctx, {
+      type: "line",
+      data: data,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: "Custom Chart Title",
+            padding: {
+              top: 10,
+              bottom: 30,
+            },
+          },
         },
       },
-    },
-  },
-});
-```
+    });

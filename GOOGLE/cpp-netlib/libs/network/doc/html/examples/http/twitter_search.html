@@ -1,361 +1,115 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>twitter_search</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="navigation">Navigation</h3>
+<ul>
+<li><a href="../../reference.html" title="Reference Manual">next</a></li>
+<li><a href="atom_reader.html" title="Atom feed reader">previous</a> |</li>
+<li><a href="../../contents.html">cpp-netlib v0.11.2</a> »</li>
+<li><a href="../../examples.html">Examples</a> »</li>
+</ul>
+<p><span id="id1"></span></p>
+<h1 id="twitter-search">Twitter search<a href="#twitter-search" class="headerlink" title="Permalink to this headline">¶</a></h1>
+<p>This example uses <a href="https://dev.twitter.com/docs/using-search" class="reference external">Twitter’s search API</a> to list recent tweets given a user query. New features introduced here include the URI builder and <code>uri::encoded</code> function.</p>
+<h2 id="the-code">The code<a href="#the-code" class="headerlink" title="Permalink to this headline">¶</a></h2>
+<pre><code>#include &lt;boost/network/protocol/http/client.hpp&gt;
+#include &quot;rapidjson/rapidjson.h&quot;
+#include &quot;rapidjson/document.h&quot;
+#include &lt;iostream&gt;
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+int main(int argc, char *argv[]) {
+    using namespace boost::network;
+    using namespace rapidjson;
 
-    <title>Twitter search &mdash; cpp-netlib v0.11.2</title>
+    if (argc != 2) {
+        std::cout &lt;&lt; &quot;Usage: &quot; &lt;&lt; argv[0] &lt;&lt; &quot; &lt;query&gt;&quot; &lt;&lt; std::endl;
+        return 1;
+    }
 
-    <link rel="stylesheet" href="../../_static/pyramid.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    try {
+        http::client client;
 
-    <script type="text/javascript">
-      var DOCUMENTATION_OPTIONS = {
-        URL_ROOT: "../../",
-        VERSION: "0.11.2",
-        COLLAPSE_INDEX: false,
-        FILE_SUFFIX: ".html",
-        HAS_SOURCE: true,
-      };
-    </script>
-    <script type="text/javascript" src="../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="cpp-netlib v0.11.2" href="../../contents.html" />
-    <link rel="up" title="Examples" href="../../examples.html" />
-    <link rel="next" title="Reference Manual" href="../../reference.html" />
-    <link rel="prev" title="Atom feed reader" href="atom_reader.html" />
-    <link
-      rel="stylesheet"
-      href="http://fonts.googleapis.com/css?family=Neuton&amp;subset=latin"
-      type="text/css"
-      media="screen"
-      charset="utf-8"
-    />
-    <link
-      rel="stylesheet"
-      href="http://fonts.googleapis.com/css?family=Nobile:regular,italic,bold,bolditalic&amp;subset=latin"
-      type="text/css"
-      media="screen"
-      charset="utf-8"
-    />
-    <!--[if lte IE 6]>
-      <link
-        rel="stylesheet"
-        href="../../_static/ie6.css"
-        type="text/css"
-        media="screen"
-        charset="utf-8"
-      />
-    <![endif]-->
-  </head>
-  <body role="document">
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../reference.html" title="Reference Manual" accesskey="N"
-            >next</a
-          >
-        </li>
-        <li class="right">
-          <a href="atom_reader.html" title="Atom feed reader" accesskey="P"
-            >previous</a
-          >
-          |
-        </li>
-        <li class="nav-item nav-item-0">
-          <a href="../../contents.html">cpp-netlib v0.11.2</a> &raquo;
-        </li>
-        <li class="nav-item nav-item-1">
-          <a href="../../examples.html" accesskey="U">Examples</a> &raquo;
-        </li>
-      </ul>
-    </div>
+        uri::uri base_uri(&quot;http://search.twitter.com/search.json&quot;);
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
-            <div class="section" id="twitter-search">
-              <span id="id1"></span>
-              <h1>
-                Twitter search<a
-                  class="headerlink"
-                  href="#twitter-search"
-                  title="Permalink to this headline"
-                  >¶</a
-                >
-              </h1>
-              <p>
-                This example uses
-                <a
-                  class="reference external"
-                  href="https://dev.twitter.com/docs/using-search"
-                  >Twitter&#8217;s search API</a
-                >
-                to list recent tweets given a user query. New features
-                introduced here include the URI builder and
-                <code class="docutils literal"
-                  ><span class="pre">uri::encoded</span></code
-                >
-                function.
-              </p>
-              <div class="section" id="the-code">
-                <h2>
-                  The code<a
-                    class="headerlink"
-                    href="#the-code"
-                    title="Permalink to this headline"
-                    >¶</a
-                  >
-                </h2>
-                <div class="highlight-c++">
-                  <div class="highlight">
-                    <pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;boost/network/protocol/http/client.hpp&gt;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;rapidjson/rapidjson.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&quot;rapidjson/document.h&quot;</span><span class="cp"></span>
-<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+        std::cout &lt;&lt; &quot;Searching Twitter for query: &quot; &lt;&lt; argv[1] &lt;&lt; std::endl;
+        uri::uri search;
+        search &lt;&lt; base_uri &lt;&lt; uri::query(&quot;q&quot;, uri::encoded(argv[1]));
+        http::client::request request(search);
+        http::client::response response = client.get(request);
 
-<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-    <span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">network</span><span class="p">;</span>
-    <span class="k">using</span> <span class="k">namespace</span> <span class="n">rapidjson</span><span class="p">;</span>
+        Document d;
+        if (!d.Parse&lt;0&gt;(response.body().c_str()).HasParseError()) {
+            const Value &amp;results = d[&quot;results&quot;];
+            for (SizeType i = 0; i &lt; results.Size(); ++i)
+            {
+                const Value &amp;user = results[i][&quot;from_user_name&quot;];
+                const Value &amp;text = results[i][&quot;text&quot;];
+                std::cout &lt;&lt; &quot;From: &quot; &lt;&lt; user.GetString() &lt;&lt; std::endl
+                          &lt;&lt; &quot;  &quot; &lt;&lt; text.GetString() &lt;&lt; std::endl
+                          &lt;&lt; std::endl;
+            }
+        }
+    }
+    catch (std::exception &amp;e) {
+        std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;
+    }
 
-    <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Usage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &lt;query&gt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-    <span class="p">}</span>
+    return 0;
+}</code></pre>
+<p>Note</p>
+<p>To parse the results of these queries, this example uses <a href="https://github.com/miloyip/rapidjson" class="reference external">rapidjson</a>, a header-only library that is released under the <a href="http://www.opensource.org/licenses/mit-license.php" class="reference external">MIT License</a>.</p>
+<h2 id="building-and-running-twitter_search">Building and running <code>twitter_search</code><a href="#building-and-running-twitter-search" class="headerlink" title="Permalink to this headline">¶</a></h2>
+<pre><code>$ cd ~/cpp-netlib-build
+$ make twitter_search</code></pre>
+<p>Twitter provides a powerful set of operators to modify the behaviour of search queries. Some examples are provided below:</p>
+<pre><code>$ ./example/twitter_search &quot;Lady Gaga&quot;</code></pre>
+<p>Returns any results that contain the exact phrase “Lady Gaga”.</p>
+<pre><code>$ ./example/twitter_search &quot;#olympics&quot;</code></pre>
+<p>Returns any results with the #olympics hash tag.</p>
+<pre><code>$ ./example/twitter_search &quot;flight :(&quot;</code></pre>
+<p>Returns any results that contain “flight” and have a negative attitude.</p>
+<p>More examples can be found on <a href="https://dev.twitter.com/docs/using-search" class="reference external">Twitter’s search API</a> page.</p>
+<h2 id="diving-into-the-code">Diving into the code<a href="#diving-into-the-code" class="headerlink" title="Permalink to this headline">¶</a></h2>
+<pre><code>uri::uri base_uri(&quot;http://search.twitter.com/search.json&quot;);
 
-    <span class="k">try</span> <span class="p">{</span>
-        <span class="n">http</span><span class="o">::</span><span class="n">client</span> <span class="n">client</span><span class="p">;</span>
-
-        <span class="n">uri</span><span class="o">::</span><span class="n">uri</span> <span class="n">base_uri</span><span class="p">(</span><span class="s">&quot;http://search.twitter.com/search.json&quot;</span><span class="p">);</span>
-
-        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Searching Twitter for query: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-        <span class="n">uri</span><span class="o">::</span><span class="n">uri</span> <span class="n">search</span><span class="p">;</span>
-        <span class="n">search</span> <span class="o">&lt;&lt;</span> <span class="n">base_uri</span> <span class="o">&lt;&lt;</span> <span class="n">uri</span><span class="o">::</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">,</span> <span class="n">uri</span><span class="o">::</span><span class="n">encoded</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
-        <span class="n">http</span><span class="o">::</span><span class="n">client</span><span class="o">::</span><span class="n">request</span> <span class="n">request</span><span class="p">(</span><span class="n">search</span><span class="p">);</span>
-        <span class="n">http</span><span class="o">::</span><span class="n">client</span><span class="o">::</span><span class="n">response</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
-
-        <span class="n">Document</span> <span class="n">d</span><span class="p">;</span>
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">d</span><span class="p">.</span><span class="n">Parse</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">body</span><span class="p">().</span><span class="n">c_str</span><span class="p">()).</span><span class="n">HasParseError</span><span class="p">())</span> <span class="p">{</span>
-            <span class="k">const</span> <span class="n">Value</span> <span class="o">&amp;</span><span class="n">results</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s">&quot;results&quot;</span><span class="p">];</span>
-            <span class="k">for</span> <span class="p">(</span><span class="n">SizeType</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">results</span><span class="p">.</span><span class="n">Size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
-            <span class="p">{</span>
-                <span class="k">const</span> <span class="n">Value</span> <span class="o">&amp;</span><span class="n">user</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&quot;from_user_name&quot;</span><span class="p">];</span>
-                <span class="k">const</span> <span class="n">Value</span> <span class="o">&amp;</span><span class="n">text</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s">&quot;text&quot;</span><span class="p">];</span>
-                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;From: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">user</span><span class="p">.</span><span class="n">GetString</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
-                          <span class="o">&lt;&lt;</span> <span class="s">&quot;  &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">text</span><span class="p">.</span><span class="n">GetString</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span>
-                          <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-    <span class="k">catch</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</pre>
-                  </div>
-                </div>
-                <div class="admonition note">
-                  <p class="first admonition-title">Note</p>
-                  <p class="last">
-                    To parse the results of these queries, this example uses
-                    <a
-                      class="reference external"
-                      href="https://github.com/miloyip/rapidjson"
-                      >rapidjson</a
-                    >, a header-only library that is released under the
-                    <a
-                      class="reference external"
-                      href="http://www.opensource.org/licenses/mit-license.php"
-                      >MIT License</a
-                    >.
-                  </p>
-                </div>
-              </div>
-              <div class="section" id="building-and-running-twitter-search">
-                <h2>
-                  Building and running
-                  <code class="docutils literal"
-                    ><span class="pre">twitter_search</span></code
-                  ><a
-                    class="headerlink"
-                    href="#building-and-running-twitter-search"
-                    title="Permalink to this headline"
-                    >¶</a
-                  >
-                </h2>
-                <div class="highlight-bash">
-                  <div class="highlight">
-                    <pre><span></span>$ <span class="nb">cd</span> ~/cpp-netlib-build
-$ make twitter_search
-</pre>
-                  </div>
-                </div>
-                <p>
-                  Twitter provides a powerful set of operators to modify the
-                  behaviour of search queries. Some examples are provided below:
-                </p>
-                <div class="highlight-bash">
-                  <div class="highlight">
-                    <pre><span></span>$ ./example/twitter_search <span class="s2">&quot;Lady Gaga&quot;</span>
-</pre>
-                  </div>
-                </div>
-                <p>
-                  Returns any results that contain the exact phrase &#8220;Lady
-                  Gaga&#8221;.
-                </p>
-                <div class="highlight-bash">
-                  <div class="highlight">
-                    <pre><span></span>$ ./example/twitter_search <span class="s2">&quot;#olympics&quot;</span>
-</pre>
-                  </div>
-                </div>
-                <p>Returns any results with the #olympics hash tag.</p>
-                <div class="highlight-bash">
-                  <div class="highlight">
-                    <pre><span></span>$ ./example/twitter_search <span class="s2">&quot;flight :(&quot;</span>
-</pre>
-                  </div>
-                </div>
-                <p>
-                  Returns any results that contain &#8220;flight&#8221; and have
-                  a negative attitude.
-                </p>
-                <p>
-                  More examples can be found on
-                  <a
-                    class="reference external"
-                    href="https://dev.twitter.com/docs/using-search"
-                    >Twitter&#8217;s search API</a
-                  >
-                  page.
-                </p>
-              </div>
-              <div class="section" id="diving-into-the-code">
-                <h2>
-                  Diving into the code<a
-                    class="headerlink"
-                    href="#diving-into-the-code"
-                    title="Permalink to this headline"
-                    >¶</a
-                  >
-                </h2>
-                <div class="highlight-c++">
-                  <div class="highlight">
-                    <pre><span></span><span class="n">uri</span><span class="o">::</span><span class="n">uri</span> <span class="n">base_uri</span><span class="p">(</span><span class="s">&quot;http://search.twitter.com/search.json&quot;</span><span class="p">);</span>
-
-<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Searching Twitter for query: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-<span class="n">uri</span><span class="o">::</span><span class="n">uri</span> <span class="n">search</span><span class="p">;</span>
-<span class="n">search</span> <span class="o">&lt;&lt;</span> <span class="n">base_uri</span> <span class="o">&lt;&lt;</span> <span class="n">uri</span><span class="o">::</span><span class="n">query</span><span class="p">(</span><span class="s">&quot;q&quot;</span><span class="p">,</span> <span class="n">uri</span><span class="o">::</span><span class="n">encoded</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]));</span>
-</pre>
-                  </div>
-                </div>
-                <p>
-                  The
-                  <code class="xref py py-mod docutils literal"
-                    ><span class="pre">cpp-netlib</span></code
-                  >
-                  URI builder uses a stream-like syntax to allow developers to
-                  construct more complex URIs. The example above re-uses the
-                  same base URI and allows the command line argument to be used
-                  as part of the URI query. The builder also supports percent
-                  encoding using the
-                  <code class="docutils literal"
-                    ><span class="pre">encoded</span></code
-                  >
-                  directive.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-          <h3><a href="../../contents.html">Table Of Contents</a></h3>
-          <ul>
-            <li>
-              <a class="reference internal" href="#">Twitter search</a>
-              <ul>
-                <li>
-                  <a class="reference internal" href="#the-code">The code</a>
-                </li>
-                <li>
-                  <a
-                    class="reference internal"
-                    href="#building-and-running-twitter-search"
-                    >Building and running
-                    <code class="docutils literal"
-                      ><span class="pre">twitter_search</span></code
-                    ></a
-                  >
-                </li>
-                <li>
-                  <a class="reference internal" href="#diving-into-the-code"
-                    >Diving into the code</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ul>
-
-          <h4>Previous topic</h4>
-          <p class="topless">
-            <a href="atom_reader.html" title="previous chapter"
-              >Atom feed reader</a
-            >
-          </p>
-          <h4>Next topic</h4>
-          <p class="topless">
-            <a href="../../reference.html" title="next chapter"
-              >Reference Manual</a
-            >
-          </p>
-          <div id="searchbox" style="display: none" role="search">
-            <h3>Quick search</h3>
-            <form class="search" action="../../search.html" method="get">
-              <input type="text" name="q" />
-              <input type="submit" value="Go" />
-              <input type="hidden" name="check_keywords" value="yes" />
-              <input type="hidden" name="area" value="default" />
-            </form>
-            <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-            </p>
-          </div>
-          <script type="text/javascript">
-            $("#searchbox").show(0);
-          </script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../reference.html" title="Reference Manual">next</a>
-        </li>
-        <li class="right">
-          <a href="atom_reader.html" title="Atom feed reader">previous</a> |
-        </li>
-        <li class="nav-item nav-item-0">
-          <a href="../../contents.html">cpp-netlib v0.11.2</a> &raquo;
-        </li>
-        <li class="nav-item nav-item-1">
-          <a href="../../examples.html">Examples</a> &raquo;
-        </li>
-      </ul>
-    </div>
-    <div class="footer" role="contentinfo">
-      &copy; Copyright 2008-2014, Glyn Matthews, Dean Michael Berris; 2013
-      Google, Inc.. Last updated on Mar 29, 2016. Created using
-      <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.
-    </div>
-  </body>
+std::cout &lt;&lt; &quot;Searching Twitter for query: &quot; &lt;&lt; argv[1] &lt;&lt; std::endl;
+uri::uri search;
+search &lt;&lt; base_uri &lt;&lt; uri::query(&quot;q&quot;, uri::encoded(argv[1]));</code></pre>
+<p>The <code>cpp-netlib</code> URI builder uses a stream-like syntax to allow developers to construct more complex URIs. The example above re-uses the same base URI and allows the command line argument to be used as part of the URI query. The builder also supports percent encoding using the <code>encoded</code> directive.</p>
+<h3 id="table-of-contents"><a href="../../contents.html">Table Of Contents</a></h3>
+<ul>
+<li><a href="#" class="reference internal">Twitter search</a>
+<ul>
+<li><a href="#the-code" class="reference internal">The code</a></li>
+<li><a href="#building-and-running-twitter-search" class="reference internal">Building and running <code class="docutils literal">twitter_search</code></a></li>
+<li><a href="#diving-into-the-code" class="reference internal">Diving into the code</a></li>
+</ul></li>
+</ul>
+<h4 id="previous-topic">Previous topic</h4>
+<p><a href="atom_reader.html" title="previous chapter">Atom feed reader</a></p>
+<h4 id="next-topic">Next topic</h4>
+<p><a href="../../reference.html" title="next chapter">Reference Manual</a></p>
+<h3 id="quick-search">Quick search</h3>
+<p>Enter search terms or a module, class or function name.</p>
+<h3 id="navigation-1">Navigation</h3>
+<ul>
+<li><a href="../../reference.html" title="Reference Manual">next</a></li>
+<li><a href="atom_reader.html" title="Atom feed reader">previous</a> |</li>
+<li><a href="../../contents.html">cpp-netlib v0.11.2</a> »</li>
+<li><a href="../../examples.html">Examples</a> »</li>
+</ul>
+<p>© Copyright 2008-2014, Glyn Matthews, Dean Michael Berris; 2013 Google, Inc.. Last updated on Mar 29, 2016. Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.</p>
+</body>
 </html>

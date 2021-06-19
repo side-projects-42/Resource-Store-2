@@ -1,22 +1,10 @@
----
-:layout: post
-:title: Reinforcements for the Subversion Plugin
-:nodeid: 590
-:created: 1438114001
-:tags:
-  - development
-  - guest post
-  - plugins
-:author: daniel-beck
----
-
 _This is a guest post by Manuel Recena Soto (aka recena)._
 
 Users of the plug-in know that it has undergone [very important changes](https://wiki.jenkins-ci.org/display/JENKINS/Subversion+Plugin#SubversionPlugin-ChangeLog) in the last two years.
 
 Unfortunately, some of these changes resulted in regressions for some users that weren’t properly addressed in subsequent releases. Many users were therefore forced to keep using an older release of the plugin to keep their instances running.
 
-To fix this difficult situation I've decided to dedicate my spare time to improving the plug-in and attempting to restore the stability that an essential plug-in like this requires.
+To fix this difficult situation I’ve decided to dedicate my spare time to improving the plug-in and attempting to restore the stability that an essential plug-in like this requires.
 
 In order to do so, [me](https://github.com/recena/), my colleague [Steven Christou](https://github.com/christ66) and other members of the community have drawn up a plan.
 

@@ -1,0 +1,1 @@
+Tests XHR breakpoints.

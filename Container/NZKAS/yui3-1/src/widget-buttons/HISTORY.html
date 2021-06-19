@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="widget-buttons-change-history">Widget Buttons Change History</h1>
+<h2 id="section">3.5.0</h2>
+<ul>
+<li>Configurations of named button types, e.g. “close”, are now merged with the user-provided configuration allowing overriding of the default options for the named button.</li>
+</ul>
+<h2 id="section-1">3.4.1</h2>
+<ul>
+<li><p>Added support for <code>classNames</code> property for button configurations which will add the CSS class names to the button Node. The default “close” button uses this, adding a <code>yui3-button-close</code> CSS class to itself. [Ticket #2531091]</p></li>
+<li><p>Fixed the default template for the “close” button to not contain malformed HTML by replacing the <code>&lt;div&gt;</code> element inside of a <code>&lt;span&gt;</code> with a <code>&lt;span&gt;</code>. The in-lined CSS in the style attribute on the button was moved into an external CSS file which provides the basic styling for the default “close” button for both the Sam and Night skins. The CSS class <code>yui3-widget-buttons</code> is now applied to the <code>boundingBox</code> of Widgets which use WidgetButtons. [Ticket #2530952]</p></li>
+<li><p>Fixed a bug where instance-level properties were not being initialized causing references to bubble-up the chain to the prototype incorrectly. [Ticket #2530998]</p></li>
+</ul>
+<h2 id="section-2">3.4.0</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

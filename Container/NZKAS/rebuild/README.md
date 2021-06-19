@@ -1,6 +1,6 @@
 # Rebuild
 
-Rebuild is a simple utility that does just one thing: it watches one or more files or directories for changes and runs a command when they change. That's it. It's intended to be used with command line build systems, but you can't really use it for anything.
+Rebuild is a simple utility that does just one thing: it watches one or more files or directories for changes and runs a command when they change. That’s it. It’s intended to be used with command line build systems, but you can’t really use it for anything.
 
 ## Installation
 

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>
+      2015-10-25-jenkins-2-0-proposal-introduce-a-policy-for-api-deprecation
+    </title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Over the past few weeks there has been a vibrant discussion happening on
+      the
+      <a href="http://groups.google.com/group/jenkinsci-dev/topics"
+        >jenkinsci-dev@</a
+      >
+      mailing list as to what “<a
+        href="https://wiki.jenkins-ci.org/display/JENKINS/Jenkins+2.0"
+        >Jenkins 2.0</a
+      >” means. While Jenkins does not currently adhere to
+      <a href="http://semver.org/">semantic versioning</a>, the change of a
+      major version number does indicate a major milestone for the community.
+    </p>
+    <p>
+      Project founder,
+      <a href="https://github.com/kohsuke">Kohsuke Kawaguchi</a> presented his
+      vision for <strong>Jenkins 2.0</strong> in a
+      <a href="https://www.youtube.com/watch?v=2eVyc_n8i1c">office hours</a>
+      session, the slides for which can be found
+      <a
+        href="https://docs.google.com/presentation/d/12ikbbQoMvus_l_q23BxXhYXnW9S5zsVNwIKZ9N8udg4"
+        >in this Google Presentation</a
+      >. Roughly paraphrasing Kohsuke’s vision, 2.0 is primarily about making
+      things better for the thousands of users out there.
+    </p>
+    <p>
+      This week, we’ll be reviewing some <em>key areas</em> of the “Jenkins 2.0”
+      proposal. Asking you, the user community, to provide feedback on these
+      proposals, going from Jenkins internals to user interface.
+    </p>
+    <p>
+      Today’s post involves a proposal to introduce a policy for
+      <strong>API deprecation</strong> from community members
+      <a href="https://github.com/olivergondza">Oliver Gondža</a> and
+      <a href="https://github.com/daniel-beck">Daniel Beck</a>. Extensibility is
+      the heart of Jenkins, but over the past ten years we’ve not had a proper
+      API deprecation policy other than “try not to break plugins, ever.”
+    </p>
+    <p>Daniel, expanding more on the problem wrote:</p>
+    <blockquote>
+      <p>
+        We have no backward compatibility policy besides “compatibility
+        matters”. With 1000+ plugins and basically the entire core being
+        available to plugins, a lot of difficult or impossible to remove cruft
+        has accumulated over the last ten years. This limits both what can be
+        changed in core, and makes documentation difficult to use for plugin
+        developers.
+      </p>
+    </blockquote>
+    <p>
+      The two have put together a detailed proposal under
+      <strong
+        ><a href="https://issues.jenkins-ci.org/browse/JENKINS-31035"
+          >JENKINS-31035</a
+        ></strong
+      >
+      which suggests we:
+    </p>
+    <blockquote>
+      <p>
+        limit the availability in APIs (classes, methods, fields, …) provided by
+        core to a number of releases. Depending on the feature, this can range
+        from a few months, to a few years (e.g. two years being about 100
+        releases of Jenkins and eight LTS baselines).
+      </p>
+      <p>[…]</p>
+    </blockquote>
+    <p>
+      I highly encourage you to read the entire proposal
+      <a href="https://issues.jenkins-ci.org/browse/JENKINS-31035"
+        >on the issue tracker</a
+      >, where we are trying to collect feedback/history.
+    </p>
+    <h3 id="providing-feedback">Providing Feedback</h3>
+    <p>
+      We’re asking you to read the proposal in
+      <a href="https://issues.jenkins-ci.org/browse/JENKINS-31035"
+        >JENKINS-31035</a
+      >
+      and provide feedback if you have it.
+    </p>
+    <p>
+      If you have ever logged in to the
+      <a href="https://issues.jenkins-ci.org">issue tracker</a> or the
+      <a href="https://wiki.jenkins-ci.org/">wiki</a>, you have a “Jenkins user
+      account” which means you’ll be able to log into the issue tracker and vote
+      for, or comment on the issue linked above.
+    </p>
+    <p>
+      (<em>note</em>: if you have forgotten your password, use
+      <a href="https://jenkins-ci.org/account/">the account app</a> to reset
+      it.)
+    </p>
+    <p>
+      We’re going to review feedback, make any necessary adjustments and either
+      approve or reject the proposal two weeks from today.
+    </p>
+    <p>Stay tuned, and help make Jenkins 2.0 great!</p>
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p><a href="https://cocoapods.org/pods/PLCrashReporter"><img src="https://img.shields.io/cocoapods/v/PLCrashReporter.svg" alt="CocoaPods" /></a> <a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg" alt="Carthage compatible" /></a> <a href="https://swift.org/package-manager"><img src="https://img.shields.io/badge/SwiftPM-compatible-brightgreen.svg" alt="SwiftPM compatible" /></a></p>
+<h1 id="plcrashreporter">PLCrashReporter</h1>
+<p>PLCrashReporter is a reliable open source library that provides an in-process live crash reporting framework for use on iOS, macOS and tvOS. The library detects crashes and generates reports to help your investigation and troubleshooting with the information of application, system, process, thread, etc. as well as stack traces.</p>
+<p>The easiest way to use PLCrashReporter is by using <a href="https://appcenter.ms">AppCenter</a>. However, if you want to use PLCrashReporter directly, grab the latest release at <a href="https://github.com/microsoft/plcrashreporter/releases">releases page</a>.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Uses only supported and public APIs/ABIs for crash reporting.</li>
+<li>The most accurate stack unwinding available, using DWARF and Apple Compact Unwind frame data.</li>
+<li>First released in 2008, and used in hundreds of thousands of apps. PLCrashReporter has seen a tremendous amount of user testing.</li>
+<li>Does not interfere with debugging in lldb/gdb</li>
+<li>Easy to integrate with existing or custom crash reporting services.</li>
+<li>Backtraces for all active threads are provided.</li>
+<li>Provides full register state for the crashed thread.</li>
+</ul>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Xcode 11 or above.</li>
+<li>Minimum supported platforms: iOS 9, macOS 10.9, tvOS 9, Mac Catalyst 13.0.</li>
+</ul>
+<h2 id="decoding-crash-reports">Decoding Crash Reports</h2>
+<p>Crash reports are output as protobuf-encoded messages, and may be decoded using the CrashReporter library or any <a href="https://developers.google.com/protocol-buffers/">Google Protocol Buffers</a> decoder.</p>
+<p>In addition to the in-library decoding support, you may use the included <code>plcrashutil</code> binary to convert crash reports to apple’s standard iPhone text format. This may be passed to the symbolicate tool.</p>
+<p><code>plcrashutil convert --format=iphone example_report.plcrash | symbolicatecrash</code> Future library releases may include built-in re-usable formatters, for outputting alternative formats directly from the phone.</p>
+<h2 id="usage">Usage</h2>
+<p>PLCrashReporter can be added to your app via <a href="https://guides.cocoapods.org/using/using-cocoapods.html">CocoaPods</a>, <a href="https://github.com/Carthage/Carthage#quick-start">Carthage</a>, <a href="https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app">Swift Package Manager</a>, or by manually adding the binaries to your project.</p>
+<h3 id="example">Example</h3>
+<p>The following example shows a way how to initialize crash reporter. Please note that enabling in-process crash reporting will conflict with any attached debuggers.</p>
+<pre><code>@import CrashReporter;
+
+...
+
+// It is strongly recommended that local symbolication only be enabled for non-release builds.
+// Use PLCrashReporterSymbolicationStrategyNone for release versions.
+PLCrashReporterConfig *config = [[PLCrashReporterConfig alloc] initWithSignalHandlerType: PLCrashReporterSignalHandlerTypeMach
+                                                                   symbolicationStrategy: PLCrashReporterSymbolicationStrategyAll];
+PLCrashReporter *crashReporter = [[PLCrashReporter alloc] initWithConfiguration: config];
+
+// Enable the Crash Reporter.
+NSError *error;
+if (![crashReporter enableCrashReporterAndReturnError: &amp;error]) {
+    NSLog(@&quot;Warning: Could not enable crash reporter: %@&quot;, error);
+}</code></pre>
+<p>Checking collected crash report can be done in the following way:</p>
+<pre><code>if ([crashReporter hasPendingCrashReport]) {
+    NSError *error;
+
+    // Try loading the crash report.
+    NSData *data = [crashReporter loadPendingCrashReportDataAndReturnError: &amp;error];
+    if (data == nil) {
+        NSLog(@&quot;Failed to load crash report data: %@&quot;, error);
+        return;
+    }
+
+    // Retrieving crash reporter data.
+    PLCrashReport *report = [[PLCrashReport alloc] initWithData: data error: &amp;error];
+    if (report == nil) {
+        NSLog(@&quot;Failed to parse crash report: %@&quot;, error);
+        return;
+    }
+
+    // We could send the report from here, but we&#39;ll just print out some debugging info instead.
+    NSString *text = [PLCrashReportTextFormatter stringValueForCrashReport: report withTextFormat: PLCrashReportTextFormatiOS];
+    NSLog(@&quot;%@&quot;, text);
+
+    // Purge the report.
+    [crashReporter purgePendingCrashReport];
+}</code></pre>
+<h2 id="building">Building</h2>
+<h3 id="prerequisites-1">Prerequisites</h3>
+<ul>
+<li>A Mac running macOS compliant with Xcode requirements.</li>
+<li>Xcode 11 or above.</li>
+</ul>
+<p>Also, next optional tools are used to build additional resources:</p>
+<ul>
+<li>Doxygen to generate the documentation. See <a href="https://github.com/doxygen/doxygen">the official Doxygen repository</a> for more information or use <a href="https://brew.sh">Homebrew</a> to install it.</li>
+<li>GraphViz to generate the documentation. See <a href="https://www.graphviz.org/download/">the official GraphViz website</a> for more information or use <a href="https://brew.sh">Homebrew</a> to install it.</li>
+<li><code>protobuf-c</code> to convert Protocol Buffer <code>.proto</code> files to C descriptor code. See <a href="https://github.com/protobuf-c/protobuf-c">the official protobuf-c repository</a> for more information or use <a href="https://brew.sh">Homebrew</a> to install it.</li>
+</ul>
+<h3 id="building-1">Building</h3>
+<ul>
+<li>Open a new window for your Terminal.</li>
+<li><p>Go to PLCrashReporter’s root folder and run</p>
+<pre><code>xcodebuild -configuration Release -target &#39;CrashReporter&#39;</code></pre>
+<p>to create binaries for all platforms.</p></li>
+</ul>
+<h2 id="contributing">Contributing</h2>
+<p>We are looking forward to your contributions via pull requests.</p>
+<p>To contribute to PLCrashReporter, you need the tools mentioned above to build PLCrashReporter for all architectures and <code>protobuf-c</code> to convert Protocol Buffer <code>.proto</code> files to C descriptor code.</p>
+<h3 id="code-of-conduct">Code of Conduct</h3>
+<p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="mailto:opencode@microsoft.com" class="email">opencode@microsoft.com</a> with any additional questions or comments.</p>
+</body>
+</html>

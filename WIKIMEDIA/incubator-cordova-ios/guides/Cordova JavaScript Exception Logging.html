@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cordova JavaScript Exception Logging</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<h1 id="cordova-javascript-exception-logging">Cordova JavaScript Exception Logging</h1>
+<p>In Cordova 1.7.0, adding a few files to your project will enable you to effectively log JavaScript errors to your console at a lower level, without using JavaScript code (window.onerror, console.log).</p>
+<p>NOTE: when you include these files, it will <strong>always pop up a warning dialog at startup</strong>, to remind you that you have these classes included. This is to prevent you from inadvertently shipping this code for the App Store, where this code is not allowed (it uses a private interface).</p>
+<ol type="1">
+<li>Install <strong>Cordova 1.7.0</strong></li>
+<li>In your app, add the whole <strong>debugview</strong> folder from <strong>~/Documents/CordovaLib/Classes/debugview</strong> (where ~ signifies your Home folder). Make sure you select the radiobutton - <strong>“Create groups for any added folders”</strong></li>
+<li><p>In your app’s <strong>MainViewController.m</strong>, uncomment/add this code:</p>
+<pre><code>- (CDVCordovaView*) newCordovaViewWithFrame:(CGRect)bounds
+{
+    return [[CDVDebugWebView alloc] initWithFrame:bounds];
+}</code></pre></li>
+<li><p>Don’t forget to add the import at the top of your <strong>MainViewController.m</strong> file as well:</p>
+<pre><code>#import &quot;CDVDebugWebView.h&quot;</code></pre></li>
+</ol>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>bubble</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="bubble-chart">Bubble Chart</h1>
+<p>```js chart-editor // <block:setup:2> const DATA_COUNT = 16; const MIN_XY = -150; const MAX_XY = 100; Utils.srand(110);</p>
+<p>const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data = generateData(); }); chart.update(); }, },]; // </block:setup></p>
+<p>// <block:data:1> function generateData() { var data = []; var i;</p>
+<p>for (i = 0; i &lt; DATA_COUNT; ++i) { data.push({ x: Utils.rand(MIN_XY, MAX_XY), y: Utils.rand(MIN_XY, MAX_XY), v: Utils.rand(0, 1000), }); }</p>
+<p>return data; }</p>
+<p>const data = { datasets: [ { data: generateData(), }, { data: generateData(), }, ], }; // </block:data></p>
+<p>// <block:options:0> function channelValue(x, y, values) { return x &lt; 0 &amp;&amp; y &lt; 0 ? values[0] : x &lt; 0 ? values[1] : y &lt; 0 ? values[2] : values[3]; }</p>
+<p>function colorize(opaque, context) { var value = context.raw; var x = value.x / 100; var y = value.y / 100; var r = channelValue(x, y, [250, 150, 50, 0]); var g = channelValue(x, y, [0, 50, 150, 250]); var b = channelValue(x, y, [0, 150, 150, 250]); var a = opaque ? 1 : (0.5 * value.v) / 1000;</p>
+<p>return “rgba(” + r + “,” + g + “,” + b + “,” + a + “)”; }</p>
+<p>const config = { type: “bubble”, data: data, options: { aspectRatio: 1, plugins: { legend: false, tooltip: false, }, elements: { point: { backgroundColor: colorize.bind(null, false),</p>
+<pre><code>    borderColor: colorize.bind(null, true),
+
+    borderWidth: function (context) {
+      return Math.min(Math.max(1, context.datasetIndex + 1), 8);
+    },
+
+    hoverBackgroundColor: &quot;transparent&quot;,
+
+    hoverBorderColor: function (context) {
+      return Utils.color(context.datasetIndex);
+    },
+
+    hoverBorderWidth: function (context) {
+      return Math.round((8 * context.raw.v) / 1000);
+    },
+
+    radius: function (context) {
+      var size = context.chart.width;
+      var base = Math.abs(context.raw.v) / 1000;
+      return (size / 24) * base;
+    },
+  },
+},</code></pre>
+<p>}, }; // </block:options></p>
+<p>module.exports = { actions, config, }; ```</p>
+</body>
+</html>

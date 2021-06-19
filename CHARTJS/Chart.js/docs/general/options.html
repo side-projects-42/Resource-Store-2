@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>options</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="options">Options</h1>
+<h2 id="option-resolution">Option resolution</h2>
+<p>Options are resolved from top to bottom, using a context dependent route.</p>
+<h3 id="chart-level-options">Chart level options</h3>
+<ul>
+<li>options</li>
+<li>overrides[<code>config.type</code>]</li>
+<li>defaults</li>
+</ul>
+<h3 id="dataset-level-options">Dataset level options</h3>
+<p><code>dataset.type</code> defaults to <code>config.type</code>, if not specified.</p>
+<ul>
+<li>dataset</li>
+<li>options.datasets[<code>dataset.type</code>]</li>
+<li>options</li>
+<li>overrides[<code>config.type</code>].datasets[<code>dataset.type</code>]</li>
+<li>defaults.datasets[<code>dataset.type</code>]</li>
+<li>defaults</li>
+</ul>
+<h3 id="dataset-animation-options">Dataset animation options</h3>
+<ul>
+<li>dataset.animation</li>
+<li>options.datasets[<code>dataset.type</code>].animation</li>
+<li>options.animation</li>
+<li>overrides[<code>config.type</code>].datasets[<code>dataset.type</code>].animation</li>
+<li>defaults.datasets[<code>dataset.type</code>].animation</li>
+<li>defaults.animation</li>
+</ul>
+<h3 id="dataset-element-level-options">Dataset element level options</h3>
+<p>Each scope is looked up with <code>elementType</code> prefix in the option name first, then wihtout the prefix. For example, <code>radius</code> for <code>point</code> element is looked up using <code>pointRadius</code> and if that does not hit, then <code>radius</code>.</p>
+<ul>
+<li>dataset</li>
+<li>options.datasets[<code>dataset.type</code>]</li>
+<li>options.datasets[<code>dataset.type</code>].elements[<code>elementType</code>]</li>
+<li>options.elements[<code>elementType</code>]</li>
+<li>options</li>
+<li>overrides[<code>config.type</code>].datasets[<code>dataset.type</code>]</li>
+<li>overrides[<code>config.type</code>].datasets[<code>dataset.type</code>].elements[<code>elementType</code>]</li>
+<li>defaults.datasets[<code>dataset.type</code>]</li>
+<li>defaults.datasets[<code>dataset.type</code>].elements[<code>elementType</code>]</li>
+<li>defaults.elements[<code>elementType</code>]</li>
+<li>defaults</li>
+</ul>
+<h3 id="scale-options">Scale options</h3>
+<ul>
+<li>options.scales</li>
+<li>overrides[<code>config.type</code>].scales</li>
+<li>defaults.scales</li>
+<li>defaults.scale</li>
+</ul>
+<h3 id="plugin-options">Plugin options</h3>
+<p>A plugin can provide <code>additionalOptionScopes</code> array of paths to additionally look for its options in. For root scope, use empty string: <code>''</code>. Most core plugins also take options from root scope.</p>
+<ul>
+<li>options.plugins[<code>plugin.id</code>]</li>
+<li>(options.[<code>...plugin.additionalOptionScopes</code>])</li>
+<li>overrides[<code>config.type</code>].plugins[<code>plugin.id</code>]</li>
+<li>defaults.plugins[<code>plugin.id</code>]</li>
+<li>(defaults.[<code>...plugin.additionalOptionScopes</code>])</li>
+</ul>
+<h2 id="scriptable-options">Scriptable Options</h2>
+<p>Scriptable options also accept a function which is called for each of the underlying data values and that takes the unique argument <code>context</code> representing contextual information (see <a href="options.md#option-context">option context</a>). A resolver is passed as second parameter, that can be used to access other options in the same context.</p>
+<p>:::tip Note</p>
+<p>The <code>context</code> argument should be validated in the scriptable function, because the function can be invoked in different contexts. The <code>type</code> field is a good candidate for this validation.</p>
+<p>:::</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1">color<span class="op">:</span> <span class="kw">function</span>(context) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">    <span class="kw">var</span> index <span class="op">=</span> <span class="va">context</span>.<span class="at">dataIndex</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">var</span> value <span class="op">=</span> <span class="va">context</span>.<span class="va">dataset</span>.<span class="at">data</span>[index]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="cf">return</span> value <span class="op">&lt;</span> <span class="dv">0</span> <span class="op">?</span> <span class="st">&#39;red&#39;</span> :  <span class="co">// draw negative values in red</span></a>
+<a class="sourceLine" id="cb1-5" title="5">        index <span class="op">%</span> <span class="dv">2</span> <span class="op">?</span> <span class="st">&#39;blue&#39;</span> :    <span class="co">// else, alternate values in blue and green</span></a>
+<a class="sourceLine" id="cb1-6" title="6">        <span class="st">&#39;green&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="op">},</span></a>
+<a class="sourceLine" id="cb1-8" title="8">borderColor<span class="op">:</span> <span class="kw">function</span>(context<span class="op">,</span> options) <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-9" title="9">    <span class="kw">var</span> color <span class="op">=</span> <span class="va">options</span>.<span class="at">color</span><span class="op">;</span> <span class="co">// resolve the value of another scriptable option: &#39;red&#39;, &#39;blue&#39; or &#39;green&#39;</span></a>
+<a class="sourceLine" id="cb1-10" title="10">    <span class="cf">return</span> <span class="va">Chart</span>.<span class="va">helpers</span>.<span class="at">color</span>(color).<span class="at">lighten</span>(<span class="fl">0.2</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="op">}</span></a></code></pre></div>
+<h2 id="indexable-options">Indexable Options</h2>
+<p>Indexable options also accept an array in which each item corresponds to the element at the same index. Note that if there are less items than data, the items are looped over. In many cases, using a <a href="#scriptable-options">function</a> is more appropriate if supported.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1">color<span class="op">:</span> [</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="st">&quot;red&quot;</span><span class="op">,</span> <span class="co">// color for data at index 0</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="st">&quot;blue&quot;</span><span class="op">,</span> <span class="co">// color for data at index 1</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="st">&quot;green&quot;</span><span class="op">,</span> <span class="co">// color for data at index 2</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="st">&quot;black&quot;</span><span class="op">,</span> <span class="co">// color for data at index 3</span></a>
+<a class="sourceLine" id="cb2-6" title="6">  <span class="co">//...</span></a>
+<a class="sourceLine" id="cb2-7" title="7">]<span class="op">;</span></a></code></pre></div>
+<h2 id="option-context">Option Context</h2>
+<p>The option context is used to give contextual information when resolving options and currently only applies to <a href="#scriptable-options">scriptable options</a>. The object is preserved, so it can be used to store and pass information between calls.</p>
+<p>There are multiple levels of context objects:</p>
+<ul>
+<li><code>chart</code>
+<ul>
+<li><code>dataset</code>
+<ul>
+<li><code>data</code></li>
+</ul></li>
+<li><code>scale</code>
+<ul>
+<li><code>tick</code></li>
+</ul></li>
+<li><code>tooltip</code></li>
+</ul></li>
+</ul>
+<p>Each level inherits its parent(s) and any contextual information stored in the parent is available through the child.</p>
+<p>The context object contains the following properties:</p>
+<h3 id="chart">chart</h3>
+<ul>
+<li><code>chart</code>: the associated chart</li>
+<li><code>type</code>: <code>'chart'</code></li>
+</ul>
+<h3 id="dataset">dataset</h3>
+<p>In addition to <a href="#chart">chart</a></p>
+<ul>
+<li><code>active</code>: true if element is active (hovered)</li>
+<li><code>dataset</code>: dataset at index <code>datasetIndex</code></li>
+<li><code>datasetIndex</code>: index of the current dataset</li>
+<li><code>index</code>: same as <code>datasetIndex</code></li>
+<li><code>mode</code>: the update mode</li>
+<li><code>type</code>: <code>'dataset'</code></li>
+</ul>
+<h3 id="data">data</h3>
+<p>In addition to <a href="#dataset">dataset</a></p>
+<ul>
+<li><code>active</code>: true if element is active (hovered)</li>
+<li><code>dataIndex</code>: index of the current data</li>
+<li><code>parsed</code>: the parsed data values for the given <code>dataIndex</code> and <code>datasetIndex</code></li>
+<li><code>raw</code>: the raw data values for the given <code>dataIndex</code> and <code>datasetIndex</code></li>
+<li><code>element</code>: the element (point, arc, bar, etc.) for this data</li>
+<li><code>index</code>: same as <code>dataIndex</code></li>
+<li><code>type</code>: <code>'data'</code></li>
+</ul>
+<h3 id="scale">scale</h3>
+<p>In addition to <a href="#chart">chart</a></p>
+<ul>
+<li><code>scale</code>: the associated scale</li>
+<li><code>type</code>: <code>'scale'</code></li>
+</ul>
+<h3 id="tick">tick</h3>
+<p>In addition to <a href="#scale">scale</a></p>
+<ul>
+<li><code>tick</code>: the associated tick object</li>
+<li><code>index</code>: tick index</li>
+<li><code>type</code>: <code>'tick'</code></li>
+</ul>
+<h3 id="tooltip">tooltip</h3>
+<p>In addition to <a href="#chart">chart</a></p>
+<ul>
+<li><code>tooltip</code>: the tooltip object</li>
+<li><code>tooltipItems</code>: the items the tooltip is displaying</li>
+</ul>
+</body>
+</html>

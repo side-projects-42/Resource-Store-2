@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="log4js-node-build-status">
+      log4js-node
+      <a href="http://travis-ci.org/nomiddlename/log4js-node"
+        ><img
+          src="https://secure.travis-ci.org/nomiddlename/log4js-node.png?branch=master"
+          alt="Build Status"
+      /></a>
+    </h1>
+    <p>
+      This is a conversion of the
+      <a href="https://github.com/stritti/log4js">log4js</a> framework to work
+      with <a href="http://nodejs.org">node</a>. I’ve mainly stripped out the
+      browser-specific code and tidied up some of the javascript.
+    </p>
+    <p>Out of the box it supports the following features:</p>
+    <ul>
+      <li>coloured console logging</li>
+      <li>replacement of node’s console.log functions (optional)</li>
+      <li>file appender, with log rolling based on file size</li>
+      <li>SMTP appender</li>
+      <li>GELF appender</li>
+      <li>hook.io appender</li>
+      <li>Loggly appender</li>
+      <li>Logstash UDP appender</li>
+      <li>multiprocess appender (useful when you’ve got worker processes)</li>
+      <li>a logger for connect/express servers</li>
+      <li>configurable log message layout/patterns</li>
+      <li>
+        different log levels for different log categories (make some parts of
+        your app log as DEBUG, others only ERRORS, etc.)
+      </li>
+    </ul>
+    <p>
+      NOTE: from log4js 0.5 onwards you’ll need to explicitly enable replacement
+      of node’s console.log functions. Do this either by calling
+      <code>log4js.replaceConsole()</code> or configuring with an object or json
+      file like this:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">appenders</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="op">{</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;console&quot;</span> <span class="op">}</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="dt">replaceConsole</span><span class="op">:</span> <span class="kw">true</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="op">}</span></a></code></pre>
+    </div>
+    <h2 id="installation">installation</h2>
+    <p>npm install log4js</p>
+    <h2 id="usage">usage</h2>
+    <p>Minimalist version:</p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">var</span> log4js <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;log4js&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">var</span> logger <span class="op">=</span> <span class="va">log4js</span>.<span class="at">getLogger</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="va">logger</span>.<span class="at">debug</span>(<span class="st">&quot;Some debug messages&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      By default, log4js outputs to stdout with the coloured layout (thanks to
+      <a href="http://github.com/masylum">masylum</a>), so for the above you
+      would see:
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">[<span class="ex">2010-01-17</span> 11:43:37.987] [DEBUG] [default] - Some debug messages</a></code></pre>
+    </div>
+    <p>
+      See example.js for a full example, but here’s a snippet (also in
+      fromreadme.js):
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">var</span> log4js <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;log4js&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="co">//console log is loaded by default, so you won&#39;t normally need to do this</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="co">//log4js.loadAppender(&#39;console&#39;);</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="va">log4js</span>.<span class="at">loadAppender</span>(<span class="st">&quot;file&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="co">//log4js.addAppender(log4js.appenders.console());</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="va">log4js</span>.<span class="at">addAppender</span>(<span class="va">log4js</span>.<span class="va">appenders</span>.<span class="at">file</span>(<span class="st">&quot;logs/cheese.log&quot;</span>)<span class="op">,</span> <span class="st">&quot;cheese&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-7" title="7"></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="kw">var</span> logger <span class="op">=</span> <span class="va">log4js</span>.<span class="at">getLogger</span>(<span class="st">&quot;cheese&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="va">logger</span>.<span class="at">setLevel</span>(<span class="st">&quot;ERROR&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-10" title="10"></a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="va">logger</span>.<span class="at">trace</span>(<span class="st">&quot;Entering cheese testing&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="va">logger</span>.<span class="at">debug</span>(<span class="st">&quot;Got cheese.&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-13" title="13"><span class="va">logger</span>.<span class="at">info</span>(<span class="st">&quot;Cheese is Gouda.&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="va">logger</span>.<span class="at">warn</span>(<span class="st">&quot;Cheese is quite smelly.&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-15" title="15"><span class="va">logger</span>.<span class="at">error</span>(<span class="st">&quot;Cheese is too ripe!&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-16" title="16"><span class="va">logger</span>.<span class="at">fatal</span>(<span class="st">&quot;Cheese was breeding ground for listeria.&quot;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>Output:</p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1">[<span class="ex">2010-01-17</span> 11:43:37.987] [ERROR] cheese - Cheese is too ripe!</a>
+<a class="sourceLine" id="cb5-2" title="2">[<span class="ex">2010-01-17</span> 11:43:37.990] [FATAL] cheese - Cheese was breeding ground for listeria.</a></code></pre>
+    </div>
+    <p>The first 5 lines of the code above could also be written as:</p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">var</span> log4js <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;log4js&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="va">log4js</span>.<span class="at">configure</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">appenders</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="op">{</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;console&quot;</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="op">{</span> <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;file&quot;</span><span class="op">,</span> <span class="dt">filename</span><span class="op">:</span> <span class="st">&quot;logs/cheese.log&quot;</span><span class="op">,</span> <span class="dt">category</span><span class="op">:</span> <span class="st">&quot;cheese&quot;</span> <span class="op">},</span></a>
+<a class="sourceLine" id="cb6-6" title="6">  ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h2 id="configuration">configuration</h2>
+    <p>
+      You can configure the appenders and log levels manually (as above), or
+      provide a configuration file
+      (<code>log4js.configure('path/to/file.json')</code>), or a configuration
+      object. The configuration file location may also be specified via the
+      environment variable LOG4JS_CONFIG (<code
+        >export LOG4JS_CONFIG=path/to/file.json</code
+      >). An example file can be found in <code>test/log4js.json</code>. An
+      example config file with log rolling is in
+      <code>test/with-log-rolling.json</code>. By default, the configuration
+      file is checked for changes every 60 seconds, and if changed, reloaded.
+      This allows changes to logging levels to occur without restarting the
+      application.
+    </p>
+    <p>To turn off configuration file change checking, configure with:</p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">var</span> log4js <span class="op">=</span> <span class="at">require</span>(<span class="st">&quot;log4js&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="va">log4js</span>.<span class="at">configure</span>(<span class="st">&quot;my_log4js_configuration.json&quot;</span><span class="op">,</span> <span class="op">{}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>To specify a different period:</p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="va">log4js</span>.<span class="at">configure</span>(<span class="st">&quot;file.json&quot;</span><span class="op">,</span> <span class="op">{</span> <span class="dt">reloadSecs</span><span class="op">:</span> <span class="dv">300</span> <span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      For FileAppender you can also pass the path to the log directory as an
+      option where all your log files would be stored.
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="va">log4js</span>.<span class="at">configure</span>(<span class="st">&quot;my_log4js_configuration.json&quot;</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="dt">cwd</span><span class="op">:</span> <span class="st">&quot;/absolute/path/to/log/dir&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      If you have already defined an absolute path for one of the FileAppenders
+      in the configuration file, you could add a “absolute”: true to the
+      particular FileAppender to override the cwd option passed. Here is an
+      example configuration file:
+    </p>
+    <h4 id="my_log4js_configuration.json">my_log4js_configuration.json</h4>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode json"
+      ><code class="sourceCode json"><a class="sourceLine" id="cb10-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="dt">&quot;appenders&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb10-4" title="4">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;file&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-5" title="5">      <span class="dt">&quot;filename&quot;</span><span class="fu">:</span> <span class="st">&quot;relative/path/to/log_file.log&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-6" title="6">      <span class="dt">&quot;maxLogSize&quot;</span><span class="fu">:</span> <span class="dv">20480</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-7" title="7">      <span class="dt">&quot;backups&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-8" title="8">      <span class="dt">&quot;category&quot;</span><span class="fu">:</span> <span class="st">&quot;relative-logger&quot;</span></a>
+<a class="sourceLine" id="cb10-9" title="9">    <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb10-10" title="10">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb10-11" title="11">      <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;file&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-12" title="12">      <span class="dt">&quot;absolute&quot;</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-13" title="13">      <span class="dt">&quot;filename&quot;</span><span class="fu">:</span> <span class="st">&quot;/absolute/path/to/log_file.log&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-14" title="14">      <span class="dt">&quot;maxLogSize&quot;</span><span class="fu">:</span> <span class="dv">20480</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-15" title="15">      <span class="dt">&quot;backups&quot;</span><span class="fu">:</span> <span class="dv">10</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb10-16" title="16">      <span class="dt">&quot;category&quot;</span><span class="fu">:</span> <span class="st">&quot;absolute-logger&quot;</span></a>
+<a class="sourceLine" id="cb10-17" title="17">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb10-18" title="18">  <span class="ot">]</span></a>
+<a class="sourceLine" id="cb10-19" title="19"><span class="fu">}</span></a></code></pre>
+    </div>
+    <p>
+      Documentation for most of the core appenders can be found on the
+      <a href="https://github.com/nomiddlename/log4js-node/wiki/Appenders"
+        >wiki</a
+      >, otherwise take a look at the tests and the examples.
+    </p>
+    <h2 id="documentation">Documentation</h2>
+    <p>
+      See the
+      <a href="https://github.com/nomiddlename/log4js-node/wiki">wiki</a>.
+      Improve the
+      <a href="https://github.com/nomiddlename/log4js-node/wiki">wiki</a>,
+      please.
+    </p>
+    <p>
+      There’s also
+      <a href="https://github.com/nomiddlename/log4js-example"
+        >an example application</a
+      >.
+    </p>
+    <h2 id="contributing">Contributing</h2>
+    <p>
+      Contributions welcome, but take a look at the
+      <a href="https://github.com/nomiddlename/log4js-node/wiki/Contributing"
+        >rules</a
+      >
+      first.
+    </p>
+    <h2 id="license">License</h2>
+    <p>
+      The original log4js was distributed under the Apache 2.0 License, and so
+      is this. I’ve tried to keep the original copyright and author credits in
+      place, except in sections that I have rewritten extensively.
+    </p>
+  </body>
+</html>

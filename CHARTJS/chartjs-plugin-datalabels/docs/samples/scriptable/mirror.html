@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>mirror</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="mirror">Mirror</h1>
+<p>Use <a href="../../guide/options.md#scriptable-options">scriptable options</a> to mirror the <a href="../../guide/positioning.md#anchoring"><em>anchor</em></a>, <a href="../../guide/positioning.md#alignment-and-offset"><em>align</em></a> and <a href="../../guide/positioning.md#rotation"><em>rotation</em></a> options around the horizontal scale origin.</p>
+<p>```js chart-editor // <block:setup:2> var DATA_COUNT = 16; var labels = [];</p>
+<p>Utils.srand(0);</p>
+<p>for (var i = 0; i &lt; DATA_COUNT; ++i) { labels.push("" + i); } // </block:setup></p>
+<p>var config = /* <block:config:0> */ { type: “bar”, data: { labels: labels, datasets: [ { backgroundColor: Utils.color(0), borderColor: Utils.color(0), data: Utils.numbers({ count: DATA_COUNT, min: -100, max: 100, }), }, ], }, options: { plugins: { datalabels: { align: function (context) { var value = context.dataset.data[context.dataIndex]; return value &gt; 0 ? “end” : “start”; }, anchor: function (context) { var value = context.dataset.data[context.dataIndex]; return value &gt; 0 ? “end” : “start”; }, borderRadius: 4, color: “white”, rotation: function (context) { var value = context.dataset.data[context.dataIndex]; return value &gt; 0 ? 45 : 180 - 45; }, backgroundColor: function (context) { return context.dataset.backgroundColor; }, formatter: Math.round, padding: 6, }, },</p>
+<pre><code>// Core options
+aspectRatio: 5 / 3,
+layout: {
+  padding: {
+    top: 32,
+    right: 24,
+    bottom: 24,
+    left: 0,
+  },
+},
+elements: {
+  line: {
+    fill: false,
+  },
+  point: {
+    hoverRadius: 7,
+    radius: 5,
+  },
+},</code></pre>
+<p>}, }; // </block:config></p>
+<p>var actions = [ { name: “Randomize”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.backgroundColor = dataset.borderColor = Utils.color(); dataset.data = dataset.data.map(function (value) { return Utils.rand(-100, 100); }); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Add data”, handler: function (chart) { chart.data.labels.push(chart.data.labels.length); chart.data.datasets.forEach(function (dataset, i) { dataset.data.push(Utils.rand(-100, 100)); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Remove data”, handler: function (chart) { chart.data.labels.shift(); chart.data.datasets.forEach(function (dataset, i) { dataset.data.shift(); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, ];</p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

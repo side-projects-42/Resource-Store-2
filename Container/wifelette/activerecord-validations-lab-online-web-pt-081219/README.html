@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="activerecord-validations-lab">ActiveRecord Validations Lab</h1>
+<h1 id="basic-validations">Basic Validations</h1>
+<p>Add validations to these models such that…</p>
+<ol type="1">
+<li>All authors have a name</li>
+<li>No two authors have the same name</li>
+<li>Author phone numbers are exactly ten digits</li>
+<li>All posts have a title</li>
+<li>Post content is at least 250 characters long</li>
+<li>Post summary is a maximum of 250 characters</li>
+<li>Post category is either <code>Fiction</code> or <code>Non-Fiction</code> This step requires an <code>inclusion</code> validator, which was not outlined in the README lesson. You’ll need to refer to the <a href="https://guides.rubyonrails.org/active_record_validations.html">Rails guide</a> to look up how to use it.</li>
+</ol>
+<h1 id="custom-validations">Custom Validations</h1>
+<p>Finally, add a custom validator to <code>Post</code> that ensures the title is sufficiently clickbait-y. If the title does not contain “Won’t Believe”, “Secret”, “Top [number]”, or “Guess”, the validator should add a validation.</p>
+<p>Use the <a href="https://guides.rubyonrails.org/active_record_validations.html#custom-methods">Custom methods</a> style of validator found in the Rails documentation.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/activerecord-validations-lab'>ActiveRecord Validations Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

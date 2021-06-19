@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="tv-land-active-record-associations-lab">TV Land Active Record Associations Lab</h1>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>Create and modify tables using Active Record migrations.</li>
+<li>Build associations between models using Active Record macros.</li>
+</ul>
+<h2 id="overview">Overview</h2>
+<p>In this lab, we’ll be working with a TV show domain model. We will have a show, network, and character model. They will be associated in the following way:</p>
+<ul>
+<li>An actor has many characters and has many shows through characters.</li>
+<li>A character belongs to an actor and belongs to a show.</li>
+<li>A show has many characters and has many actors through characters.</li>
+</ul>
+<p>We’ve given you a few migrations in the <code>db/migrate</code> directory to create the networks and shows table, but you’ll have to add additional tables and modify these existing tables as per the guidelines below.</p>
+<p><strong>Remember to run <code>rake db:migrate</code> in the terminal before you run your tests and after you make any new migrations!</strong></p>
+<h2 id="instructions">Instructions</h2>
+<p>The tests in this lab are run for each model/migration - actor, character, network (solution already provided), and show. Because of this, when run, you will see <em>all the tests</em> for the Actor model first, then _all the tests for Character, etc… the tricky thing here is that <strong>you will not be able to pass all the tests for Actor until the migrations for other models are working</strong>.</p>
+<p>This makes sense, and mirrors normal development of associations - you can’t ask an Actor instance about what characters it has if there isn’t characters table or a model configured.</p>
+<h3 id="migrations">Migrations</h3>
+<ul>
+<li>Write a migration for the actors table. An actor should have a <code>first_name</code> and a <code>last_name</code>.</li>
+<li>Write a migration for the characters table. A character should have a <code>name</code>, <code>actor_id</code>, and a <code>show_id</code>––a character will belong to a show (the show migration is already provided) and an actor, and we’ll keep track of this relationship with these database table columns.</li>
+<li>Write a migration that adds the column <code>catchphrase</code> to your character model.</li>
+</ul>
+<h3 id="associations">Associations</h3>
+<ul>
+<li>Associate the <code>Actor</code> model with the <code>Character</code> and <code>Show</code> model. An actor should have many characters and many shows through characters.</li>
+<li>Write a method in the <code>Actor</code> class, <code>#full_name</code>, that returns the first and last name of an actor.</li>
+<li><p>Write a method in the <code>Actor</code> class, <code>#list_roles</code>, that lists all of the characters that actor has alongside the show that the character is in. So, for instance, if we had an actor, Peter Dinklage, a character, Tyrion Lannister, and a show, Game of Thrones, we with</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">peter = <span class="dt">Actor</span>.new(<span class="st">:first_name</span> =&gt; <span class="st">&quot;Peter&quot;</span>, <span class="st">:last_name</span> =&gt; <span class="st">&quot;Dinklage&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">tyrion = <span class="dt">Character</span>.new(<span class="st">:name</span> =&gt; <span class="st">&quot;Tyrion Lannister&quot;</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3">tyrion.actor = peter</a>
+<a class="sourceLine" id="cb1-4" title="4">thrones = <span class="dt">Show</span>.new(<span class="st">:name</span> =&gt; <span class="st">&quot;Game of Thrones&quot;</span>)</a>
+<a class="sourceLine" id="cb1-5" title="5">tyrion.show = thrones</a>
+<a class="sourceLine" id="cb1-6" title="6">tyrion.save</a></code></pre></div>
+<p>And then, when we run <code>peter.list_roles</code>, we would get an Array containing a string with both the character and the show:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1">[<span class="st">&#39;Tyrion Lannister - Game of Thrones&#39;</span>]</a></code></pre></div></li>
+<li><p>Define a method in the <code>Character</code> class, <code>#say_that_thing_you_say</code>, using a given character’s catchphrase. Using Tyrion as an example again, the returned string should look like the following:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1">tyrion.catchphrase = <span class="st">&#39;A Lannister always pays his debts&#39;</span></a>
+<a class="sourceLine" id="cb3-2" title="2">tyrion.say_that_thing_you_say</a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="co">#=&gt; &#39;Tyrion Lannister always says: A Lannister always pays his debts&#39;</span></a></code></pre></div></li>
+<li><p>Define a method in the <code>Show</code> class called <code>#actors_list</code> that returns an Array of the full names of each actor associated with the a show. Remember, a show should have many actors through characters.</p></li>
+<li><p>While we’ve connected shows, characters and actors together, we haven’t connected these models to the existing network model. Update the associations so that a show belongs to a network. In the network model, an association has already been added so that a network has many shows.</p>
+<p><strong>Note</strong>: Once connected, this allows us to do some interesting things, like chain-building. We could, for instance, create a character, and with that character created, tell Active Record to <em>chain build</em> an associated show. With a <em>show</em> created on the spot, we can immediately tell Active Record to then <em>chain build an associated network.</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">rick = <span class="dt">Character</span>.new(<span class="st">:name</span> =&gt; <span class="st">&quot;Rick Grimes&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">rick.build_show(<span class="st">:name</span> =&gt; <span class="st">&quot;The Walking Dead&quot;</span>).build_network(<span class="st">:call_letters</span> =&gt; <span class="st">&quot;AMC&quot;</span>)</a></code></pre></div>
+<p>This doesn’t <em>save</em> these instances, but will set up the right associations for us and when we save our character, the new show and network are also saved.</p></li>
+</ul>
+<h3 id="final-migrations">Final Migrations</h3>
+<p>For the last couple of tests, update the shows table with a new migration. This migration should add a <code>day</code> column to indicate which day of the week the show is on, a <code>genre</code> column for the show genre, and <code>season</code> to indicate which season the show is currently on. All three should be strings.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li>Rails Guide - <a href="http://guides.rubyonrails.org/association_basics.html">Active Record Associations</a></li>
+<li>API dock - <a href="http://apidock.com/rails/ActiveRecord/Associations">Active Record Associations</a></li>
+<li>Rails Guide - <a href="http://edgeguides.rubyonrails.org/active_record_migrations.html">Active Record Migrations</a></li>
+</ul>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/activerecord-tvland' title='TV Land ActiveRecord Associations Lab'>TV Land ActiveRecord Associations Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

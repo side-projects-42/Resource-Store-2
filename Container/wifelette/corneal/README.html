@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<figure>
+<img src="http://thebrianemory.github.io/corneal/images/corneal-small.png" alt="Corneal" /><figcaption>Corneal</figcaption>
+</figure>
+<h2 id="why-this-exists">Why this exists</h2>
+<p>When I was creating my first major Sinatra project, <a href="https://github.com/thebrianemory/cook-this-way">Cook This Way</a>, while doing <a href="https://learn.co/with/thebrianemory">Learn Verified</a>, I was looking for a way to build a Sinatra skeleton similar to running</p>
+<pre><code>rails new APP-NAME</code></pre>
+<p><a href="https://github.com/c7/hazel">Hazel</a> was the closest thing I could find and this gem is based largely off of it. While it did provide a pretty good initial setup, I still had to tweak some things. The views were sitting in the root directory while I wanted them to reside in an app folder along with my models and controllers. There was also no environment.rb in the config folder as I had become accustom to having.</p>
+<p>I also wanted to create a gem for future Learn students so they could easily get started building their projects. Although built with them in mind, this can get you off and running with any Sinatra app.</p>
+<p>Install the gem, run <code>corneal new APP-NAME</code>, run <code>bundle install</code>, and you’re all set! You can start up your server with <code>shotgun</code> and verify everything is working. It is as simple as that.</p>
+<p>It uses a file structure similar to what you would see with Rails.</p>
+<p>Directory structure:</p>
+<pre><code>├── config.ru
+├── Gemfile
+├── Gemfile.lock
+├── Rakefile
+├── README
+├── app
+│   ├── controllers
+│   │   └── application_controller.rb
+│   ├── models
+│   └── views
+│       ├── layout.erb
+│       └── welcome.erb
+├── config
+│   ├── initializers
+│   └── environment.rb
+├── db
+│   └── migrate
+├── lib
+│   └── .gitkeep
+└── public
+|   ├── images
+|   ├── javascripts
+|   └── stylesheets
+|       └── main.css
+└── spec
+    ├── application_controller_spec.rb
+    └── spec_helper.rb</code></pre>
+<h2 id="installation">Installation</h2>
+<pre><code>gem install corneal</code></pre>
+<h2 id="commands">Commands</h2>
+<pre><code>corneal -v              # Show Corneal version number
+corneal help [COMMAND]  # Describe available commands or one specific command
+corneal new APP-NAME    # Creates a new Sinatra application
+corneal model NAME      # Generate a model
+corneal controller NAME # Generate a controller
+corneal scaffold NAME   # Generate a model with its associated views and controllers</code></pre>
+<p>The controller generator also have an optional views flag <code>--no-views</code> to create controllers without views.</p>
+<h2 id="using-corneal">Using Corneal</h2>
+<p>To generate your app:</p>
+<pre><code>corneal new APP-NAME</code></pre>
+<p>After Corneal is done generating your app, run <code>bundle install</code> from your app’s directory:</p>
+<pre><code>cd APP-NAME
+bundle install</code></pre>
+<p>You can then start your server with <code>shotgun</code>:</p>
+<pre><code>shotgun</code></pre>
+<p>You can generate a model and migration file:</p>
+<pre><code>corneal model NAME</code></pre>
+<p>You can also generate an entire MVC structure complete with a migration file:</p>
+<pre><code>corneal scaffold NAME</code></pre>
+<p>The resulting structure will look like this:</p>
+<pre><code>└─app
+  ├── controllers
+  │   ├──application_controller.rb
+  │   └──new_model_controller.rb
+  ├── models
+  │   └──new_model.rb
+  └── views
+      ├──new_models
+      │  ├──index.html.rb.erb
+      │  ├──show.html.rb.erb
+      │  ├──new.html.rb.erb
+      │  └──edit.html.rb.erb
+      ├── layout.erb
+      └── welcome.erb</code></pre>
+<p>You can also add your model attributes when you generate the scaffold structure and have them added to your migration file:</p>
+<pre><code>corneal [model/scaffold] NAME name:string age:integer</code></pre>
+<pre><code>class CreateUsers &lt; ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+      t.string :name
+      t.age :integer
+
+      t.timestamps null: false
+    end
+  end
+end</code></pre>
+<p>Visit <a href="http://localhost:9393/">http://localhost:9393/</a> to verify your app is running.</p>
+<p>You can also verify it is working by running <code>rspec</code> to see the passing test:</p>
+<pre><code>1 example, 0 failures</code></pre>
+<h2 id="contributing">Contributing</h2>
+<p>Bug reports and pull requests are welcome on GitHub at https://github.com/thebrianemory/corneal This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the <a href="http://contributor-covenant.org">Contributor Covenant</a> code of conduct.</p>
+<h2 id="license">License</h2>
+<pre><code>Copyright (c) 2016 Brian Emory
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+&quot;Software&quot;), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</code></pre>
+</body>
+</html>

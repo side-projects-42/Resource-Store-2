@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Hooks</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="hooks">Hooks</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Hooks allow MediaWiki Core to call extensions or allow one extension to call another extension. For more information and a list of hooks, see https://www.mediawiki.org/wiki/Manual:Hooks</p>
+<p>Starting in MediaWiki 1.35, each hook called by MediaWiki Core has an associated interface with a single method. To call the hook, obtain a “hook runner” object, which implements the relevant interface, and call the relevant method. To handle a hook event in an extension, create a handler object which implements the interface.</p>
+<p>The name of the interface is the name of the hook with “Hook” added to the end. Interfaces are typically placed in the namespace of their primary caller.</p>
+<p>The method name for the hook is the name of the hook, prefixed with “on”.</p>
+<p>Several hooks had colons in their name, which are invalid in an interface or method name. These hooks have interfaces and method names in which the colons are replaced with underscores.</p>
+<p>For example, if the hook is called <code>Mash</code>, we might have the interface:</p>
+<pre><code>interface MashHook {
+    public function onMash( $banana );
+}</code></pre>
+<p>Hooks can be defined and called by extensions. The extension should define a hook interface for each hook, as described above.</p>
+<h2 id="hookcontainer">HookContainer</h2>
+<p>HookContainer is a service which is responsible for maintaining a list of hook handlers and calling those handlers when requested. HookContainer is not aware of hook interfaces or parameter types.</p>
+<p>HookContainer provides hook metadata. For example, <code>isRegistered()</code> tells us whether there are any handlers for a given hook event.</p>
+<p>A HookContainer instance can be obtained from the global service locator with MediaWikiServices::getHookContainer(). When implementing a service that needs to call a hook, a HookContainer object should be passed to the constructor of the service.</p>
+<h2 id="hook-runner-classes">Hook runner classes</h2>
+<p>A hook runner is a class which implements hook interfaces, proxying the calls to <code>HookContainer::run()</code>.</p>
+<p>MediaWiki has two hook runner classes: HookRunner and ApiHookRunner. ApiHookRunner has proxy methods for all hooks which are called by the Action API. HookRunner has proxy methods for all hooks which are called by other parts of Core. Some hooks are implemented in both classes.</p>
+<p>Extensions which call hooks should create their own hook runner class, by analogy with the ones in Core. Hook runner classes are effectively internal to the module which calls the relevant hooks. Reorganisation of the hook calling code may lead to methods being removed from hook runner classes. Thus, it is safer for extensions to define their own hook runner classes even if they are calling Core hooks.</p>
+<p>New code should typically be written in a service which takes a HookContainer as a constructor parameter. However, for the convenience of existing static functions in MediaWiki Core, <code>Hooks::runner()</code> may be used to obtain a HookRunner instance. This is equivalent to</p>
+<pre><code>new HookRunner( MediaWikiServices::getInstance()-&gt;getHookContainer() )</code></pre>
+<p>For example, to call the hook <code>Mash</code>, as defined above, in static code:</p>
+<pre><code>Hooks::runner()-&gt;onMash( $banana );</code></pre>
+<h2 id="how-to-handle-a-hook-event-in-an-extension">How to handle a hook event in an extension</h2>
+<p>In extension.json, there is a new attribute called <code>HookHandlers</code>. This is an object mapping the handler name to an ObjectFactory specification describing how to create the handler object. The specification will typically have a <code>class</code> member with the name of the handler class. For example, in an extension called <code>FoodProcessor</code>, we may have:</p>
+<pre><code>&quot;HookHandlers&quot;: {
+    &quot;main&quot;: {
+        &quot;class&quot;: &quot;MediaWiki\\Extension\\FoodProcessor\\HookHandler&quot;
+    }
+}</code></pre>
+<p>Then in the Hooks attribute, instead of a function name, the value will be the handler name:</p>
+<pre><code>&quot;Hooks&quot;: {
+    &quot;Mash&quot;: &quot;main&quot;
+}</code></pre>
+<p>Or more explicitly, by using an object instead of a string for the handler:</p>
+<pre><code>&quot;Hooks&quot;: {
+    &quot;Mash&quot;: {
+        &quot;handler&quot;: &quot;main&quot;
+    }
+}</code></pre>
+<p>Note that while your HookHandler class will implement an interface that ends with the word “Hook”, in <code>extension.json</code> you should omit the word “Hook” from the key in the <code>Hooks</code> definition. For example, in the definitions above, the key must be “Mash”, not “MashHook”.</p>
+<p>Then the extension will define a handler class:</p>
+<pre><code>namespace MediaWiki\Extension\FoodProcessor;
+
+class HookHandler implements MashHook {
+    public function onMash( $banana ) {
+        // Implementation goes here
+    }
+}</code></pre>
+<h2 id="service-dependencies">Service dependencies</h2>
+<p>The ObjectFactory specification in HookHandlers can contain a list of services which should be instantiated and provided to the constructor or factory function for the handler. For example:</p>
+<pre><code>&quot;HookHandlers&quot;: {
+    &quot;main&quot;: {
+        &quot;class&quot;: &quot;MediaWiki\\Extension\\FoodProcessor\\HookHandler&quot;,
+        &quot;services&quot;: [ &quot;ReadOnlyMode&quot; ]
+    }
+}</code></pre>
+<p>However, care should be taken with this feature. Some services have expensive constructors, so requesting them when handling commonly-called hooks may damage performance. Also, some services may not be safe to construct from within a hook call.</p>
+<p>The safest pattern for service injection is to use a separate handler for each hook, and to inject only the services needed by that hook.</p>
+<p>Calling a hook with the <code>noServices</code> option disables service injection. If a handler for such a hook specifies services, an exception will be thrown when the hook is called.</p>
+<h2 id="returning-and-aborting">Returning and aborting</h2>
+<p>If a hook handler returns false, HookContainer will stop iterating through the list of handlers and will immediately return false.</p>
+<p>If a hook handler returns true, or if there is no return value (causing it to effectively return null), then HookContainer will continue to call any other remaining handlers. Eventually HookContainer::run() will return true.</p>
+<p>If there were no registered handlers, HookContainer::run() will return true.</p>
+<p>Some hooks are declared to be “not abortable”. If a handler for a non-abortable hook returns false, an exception will be thrown. A hook is declared to be not abortable by passing <code>[ "abortable" =&gt; false ]</code> in the $options parameter to HookContainer::run().</p>
+<p>Aborting is properly used to enforce a convention that only one extension may handle a given hook call.</p>
+<p>Aborting is sometimes used as a generic return value, to indicate that the caller should stop performing some action.</p>
+<p>Most hook callers do not check the return value from HookContainer::run() and there is no real concept of aborting. The only effect of returning <code>false</code> from a handler of these hooks is to break other extensions.</p>
+<p>Theoretically, extensions which are registered first in LocalSettings.php will be called first, and thus will have the first opportunity to abort a hook call. This behaviour should not be relied upon. In the new hook system, handlers registered in the legacy way are called first, before handlers registered in the new way.</p>
+<h2 id="parameters-passed-by-reference">Parameters passed by reference</h2>
+<p>The typical way for a handler to return data to the caller is by modifying a parameter which was passed by reference. This is sometimes called “replacement”.</p>
+<p>Reference parameters were somewhat overused in early versions of MediaWiki. You may find that some parameters passed by reference cannot reasonably be modified. Replacement either has no effect on the caller or would cause unexpected or inconsistent effects. Handlers should generally only replace a parameter when it is clear from the documentation that replacement is expected.</p>
+<h2 id="how-to-define-a-new-hook">How to define a new hook</h2>
+<ul>
+<li>Create a hook interface, typically in a subnamespace called <code>Hook</code> relative to the caller namespace. For example, if the caller is in a namespace called <code>MediaWiki\Foo</code>, the hook interface might be placed in <code>MediaWiki\Foo\Hook</code>.</li>
+<li>Add an implementation to the relevant HookRunner class.</li>
+</ul>
+<h2 id="hook-deprecation">Hook deprecation</h2>
+<p>Core hooks are deprecated by adding them to an array in the DeprecatedHooks class. Hooks declared in extensions may be deprecated by listing them in the <code>DeprecatedHooks</code> attribute:</p>
+<pre><code>&quot;DeprecatedHooks&quot;: {
+    &quot;Mash&quot;: {
+        &quot;deprecatedVersion&quot;: &quot;2.0&quot;,
+        &quot;component&quot;: &quot;FoodProcessor&quot;
+    }
+}</code></pre>
+<p>If the <code>component</code> is not specified, it defaults to the name of the extension.</p>
+<p>The hook interface should be marked as deprecated by adding <span class="citation" data-cites="deprecated">@deprecated</span> to the interface doc comment. The interface doc comment is a better place for <span class="citation" data-cites="deprecated">@deprecated</span> than the method doc comment, because this causes the interface to be deprecated for implementation. Deprecating the method only causes calling to be deprecated, not handling.</p>
+<p>Deprecating a hook in this way activates a migration system called <strong>call filtering</strong>. Extensions opt in to call filtering of deprecated hooks by <strong>acknowledging</strong> deprecation. An extension acknowledges deprecation with the <code>deprecated</code> parameter in the <code>Hooks</code> attribute:</p>
+<pre><code>&quot;Hooks&quot;: {
+    &quot;Mash&quot;: {
+        &quot;handler&quot;: &quot;main&quot;,
+        &quot;deprecated&quot;: true
+    }
+}</code></pre>
+<p>If deprecation is acknowledged by the extension:</p>
+<ul>
+<li>If MediaWiki knows that the hook is deprecated, the handler will not be called. The call to the handler is filtered.</li>
+<li>If MediaWiki does not have the hook in its list of deprecated hooks, the handler will be called anyway.</li>
+</ul>
+<p>Deprecation acknowledgement is a way for the extension to say that it has made some other arrangement for implementing the relevant functionality and does not need the handler for the deprecated hook to be called.</p>
+<h3 id="call-filtering-example">Call filtering example</h3>
+<p>Suppose the hook <code>Mash</code> is deprecated in MediaWiki 2.0, and is replaced by a new one called <code>Slice</code>. In our example extension FoodProcessor 1.0, the <code>Mash</code> hook is handled. In FoodProcessor 2.0, both <code>Mash</code> and <code>Slice</code> have handlers, but deprecation of <code>Mash</code> is acknowledged. Thus:</p>
+<ul>
+<li>With MediaWiki 2.0 and FoodProcessor 1.0, <code>onMash</code> is called but raises a deprecation warning.</li>
+<li>With MediaWiki 2.0 and FoodProcessor 2.0, <code>onMash</code> is filtered, and <code>onSlice</code> is called.</li>
+<li>With MediaWiki 1.0 and FoodProcessor 2.0, <code>onMash</code> is called, since it is not yet deprecated in Core. <code>onSlice</code> is not called since it does not yet exist in Core.</li>
+</ul>
+<p>So the call filtering system provides both forwards and backwards compatibility.</p>
+<h3 id="silent-deprecation">Silent deprecation</h3>
+<p>Developers sometimes use two stages of deprecation: “soft” deprecation in which the deprecated entity is merely discouraged in documentation, and “hard” deprecation in which a warning is raised. When you soft-deprecate a hook, it is important to register it as deprecated so that call filtering is activated. Activating call filtering simplifies the task of migrating extensions to the new hook.</p>
+<p>To deprecate a hook without raising deprecation warnings, use the “silent” flag:</p>
+<pre><code>&quot;DeprecatedHooks&quot;: {
+    &quot;Mash&quot;: {
+        &quot;deprecatedVersion&quot;: &quot;2.0&quot;,
+        &quot;component&quot;: &quot;FoodProcessor&quot;,
+        &quot;silent&quot;: true
+    }
+}</code></pre>
+<p>As with hard deprecation, <span class="citation" data-cites="deprecated">@deprecated</span> should be added to the interface.</p>
+</body>
+</html>

@@ -1,25 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      console.log("log");
-      console.debug("debug");
-      console.info("info");
-      console.warn("warn");
-      console.error("error");
-
-      function test() {
-        InspectorTest.dumpConsoleMessages();
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that Web Inspector won't crash if some console have been logged by
-      the time it's opening.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-log-before-inspector-open</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that Web Inspector won’t crash if some console have been logged by the time it’s opening.</p>
+</body>
 </html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>addons</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="framework-addons">Framework Addons</h1>
+<p>The tracing framework supports addons that can be used to provide additional event recording, custom behaviors, and custom visualizations. Addons are defined via manifest files that describe their behavior and are used for loading and injecting code at runtime. Addon manifests can define actions and code that should be run during tracing runs and/or triggers and code that is used by the application when processing a trace.</p>
+<h2 id="manifest-files">Manifest Files</h2>
+<p>Each addon gets a single manifest file. This file is JSON-based and should be browser parsable (that means no comments/trailing commas/etc). An addon should share a single manifest file if it’s providing linked functionality between tracing and apps.</p>
+<pre><code>{
+  &quot;name&quot;: &quot;My Addon&quot;,
+  &quot;required_version&quot;: &quot;1.0.5&quot;, // required version of WTF
+  &quot;tracing&quot;: { // only include if needed
+    &quot;scripts&quot;: [
+      // Scripts that are inserted into the page, in order
+      &quot;some/file.js&quot;
+    ],
+    &quot;options&quot;: [
+      {
+        &quot;title&quot;: &quot;Section A&quot;,
+        &quot;widgets&quot;: [
+          {
+            &quot;type&quot;: &quot;label&quot;,
+            &quot;title&quot;: &quot;Something:&quot;,
+            &quot;value&quot;: &quot;woo&quot;
+          },
+          {
+            &quot;type&quot;: &quot;checkbox&quot;,
+            &quot;key&quot;: &quot;my.option.value&quot;,
+            &quot;title&quot;: &quot;Some option&quot;,
+            &quot;default&quot;: false
+          },
+          {
+            &quot;type&quot;: &quot;dropdown&quot;,
+            &quot;key&quot;: &quot;my.option.value&quot;,
+            &quot;title&quot;: &quot;Some choice:&quot;,
+            &quot;options&quot;: [
+              {&quot;value&quot;: &quot;a&quot;, &quot;title&quot;: &quot;A&quot;}
+            ],
+            &quot;default&quot;: &quot;a&quot;
+          },
+          {
+            &quot;type&quot;: &quot;textbox&quot;,
+            &quot;key&quot;: &quot;my.option.value&quot;,
+            &quot;title&quot;: &quot;Some input:&quot;,
+            &quot;empty&quot;: &quot;I&#39;m empty!&quot;,
+            &quot;default&quot;: &quot;Default value!&quot;
+          }
+        ]
+      }
+    ]
+  },
+  &quot;app&quot;: { // only include if needed
+    &quot;scripts&quot;: [
+      // Scripts that are inserted into a hidden iframe, in order
+      &quot;some/file.js&quot;
+    ],
+    &quot;options&quot;: [], // same as above
+    &quot;triggers&quot;: [
+      {
+        &quot;type&quot;: &quot;event&quot;,
+        &quot;name&quot;: &quot;my.custom.event&quot;
+      }
+    ]
+  }
+}</code></pre>
+<h2 id="tracing-addons">Tracing Addons</h2>
+<p>Due to the issues around script injection, tracing addons must define all scripts required in their manifest. Browser injection addons will then read these files and insert the scripts immediately after WTF has been initialized but before any user code executes.</p>
+<h3 id="usage">Usage</h3>
+<p>To use an addon with injected tracing (such as via a browser addon) one must have the addon manifest listed in the <code>wtf.addon</code> options list at the time of page load. The browser addon will take care of injecting the scripts and wiring up the runtime features.</p>
+<p>When manually embedding the tracing framework (via a <code>&lt;script&gt;</code> tag) one must also manually embed the addon scripts and register their manifests:</p>
+<pre><code>&lt;script src=&quot;wtf_trace_web_js_compiled.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  var options = {...};
+  wtf.trace.prepare(options);
+&lt;/script&gt;
+&lt;script src=&quot;my/addon1/fileA.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;my/addon1/fileB.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  wtf.addon.registerAddon(&#39;my/addon1/addon1.json&#39;);
+&lt;/script&gt;
+&lt;script&gt;
+  wtf.hud.prepare();
+  wtf.trace.start();
+&lt;/script&gt;</code></pre>
+<p>Note that <code>registerAddon</code> will only accept URLs that are either on the same domain or have proper CORS headers. If you need to use cross-origin manifests you can also pass the JSON object directly to <code>registerAddon</code>:</p>
+<pre><code>&lt;script src=&quot;wtf_trace_web_js_compiled.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  var options = {...};
+  wtf.trace.prepare(options);
+&lt;/script&gt;
+&lt;script src=&quot;my/addon1/fileA.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;my/addon1/fileB.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  wtf.addon.registerAddon(&#39;my/addon1/addon1.json&#39;, {
+    &quot;name&quot;: &quot;My Extension&quot;,
+    ...
+  });
+&lt;/script&gt;
+&lt;script&gt;
+  wtf.hud.prepare();
+  wtf.trace.start();
+&lt;/script&gt;</code></pre>
+<h3 id="scripts">Scripts</h3>
+<p>The scripts provided are executed in the page context. They should assume nothing about the global environment and try not to pollute it at the risk of breaking the page. Scripts may use the global <code>wtf</code> object to add event providers, control the operation of the tracing system, etc.</p>
+<p>For information on how to add events to the trace see <a href="api.md">api</a>.</p>
+<h3 id="actions">Actions</h3>
+<p>When running in the browser where the HUD is available an addon can define a set of actions that will be shown as buttons next the standard ones. When the action is invoked, either by a button press or an optional shortcut key, the given global function will be called.</p>
+<p>Buttons are added with the <code>wtf.hud.addButton</code> API:</p>
+<pre><code>wtf.hud.addButton({
+  title: &#39;Do something!&#39;,
+  icon: &#39;data:...&#39;, // (21x21 icon - prefer a data URI of SVG content)
+  shortcut: &#39;shift+f3&#39;, // optional,
+  callback: this.buttonClicked_,
+  scope: this
+});</code></pre>
+<p>TODO(benvanik): enable togglable actions via result-like objects returned from the call.</p>
+<p>If building an addon that should work both under node and the browser be sure to check if <code>wtf.hud</code> is defined before attempting to call any methods on it.</p>
+<h2 id="app-addons">App Addons</h2>
+<p>Application addons run inside a hidden iframe sandbox inside of the application. Each addon gets loaded when a document is opened and destroyed when it is closed.</p>
+<p>Addons have access to the <code>wtf.db</code> namespace on the global object as well as a few helper libraries, such as <a href="http://d3js.org/">d3</a>. Any other scripts can be inserted via the manifest.</p>
+<h3 id="documentview">documentView</h3>
+<p>A global object <code>documentView</code> is available that contains APIs related to the currently loaded document.</p>
+<pre><code>// The wtf.db.Database instance of the document view.
+documentView.db;</code></pre>
+<h3 id="panels">Panels</h3>
+<p>Addons can add any number of panels to the tab bar in the UI. Panels have their own iframes and can contain any content, such as custom scripts or stylesheets.</p>
+<pre><code>documentView.createTabPanel(&#39;mypanel&#39;, &#39;My Panel&#39;, {
+  // Stylesheets to add to the iframe, if any.
+  stylesheets: [&#39;some.css&#39;],
+  // Scripts to add to the document, if any.
+  scripts: [&#39;some.js&#39;]
+}, function(document) {
+  // Called back when the tab is created. &#39;document&#39; is the iframe document.
+
+  // Setup a UI (or use a script).
+  var el = document.createElement(&#39;div&#39;);
+  document.body.appendChild(el);
+
+  // Optionally return some handlers for some events.
+  return {
+    onLayout: function(width, height) {
+      // Called if the tab is resized with the new width/height.
+    },
+    onVisbilityChange: function(visible) {
+      // Called when the tab is shown/hidden.
+    }
+  };
+});</code></pre>
+</body>
+</html>

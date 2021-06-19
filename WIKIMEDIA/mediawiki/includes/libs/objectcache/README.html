@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="wikimediaobjectcache">wikimedia/objectcache</h1>
+<h2 id="statistics">Statistics</h2>
+<p>Sent to StatsD under MediaWiki’s namespace.</p>
+<h3 id="wanobjectcache">WANObjectCache</h3>
+<p>The default WANObjectCache provided by MediaWikiServices disables these statistics in processes where <code>$wgCommandLineMode</code> is true.</p>
+<h4 id="wanobjectcache.kclass.cache_action_and_result"><code>wanobjectcache.{kClass}.{cache_action_and_result}</code></h4>
+<p>Upon cache access via <code>WANObjectCache::getWithSetCallback()</code>, this measures the time spent in that method.</p>
+<ul>
+<li>Type: Measure (in milliseconds).</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+<li>Variable <code>result</code>: One of:
+<ul>
+<li><code>"hit.good"</code>: A non-expired value was returned (and call did not get chosen for pre-emptive refresh).</li>
+<li><code>"hit.refresh"</code>: A non-expired value was returned (and call was chosen for a pre-emptive refresh, and an async refresh was scheduled).</li>
+<li><code>"hit.volatile"</code>: A value was found that was generated and stored less than 0.1s ago, and returned as-is despite appearing to also be expired already. This amount of time is considered negligible in terms of clock accuracy, and by random chance we usually decide to treat these as a cache hit (see <code>RECENT_SET_HIGH_MS</code>).</li>
+<li><code>"hit.stale"</code>: An expired value was found, but we are within the allowed stale period specified by a <code>lockTSE</code> option, and the current request did not get the regeneration lock. The stale value is returned as-is.</li>
+<li><code>"miss.compute"</code>: A new value was computed by the callback and returned. No non-expired value was found, and if this key needed a regeneration lock, we got the lock.</li>
+<li><code>"miss.busy"</code>: A busy value was produced by a <code>busyValue</code> callback and returned. No non-expired value was found, and we tried to use a regeneration lock (per the <code>busyValue</code> option), but the current request did not get the lock.</li>
+<li><code>"renew.compute"</code>: Artificial demand from an async refresh, led to a new value being computed by the callback. These are like <code>"miss.compute"</code>, but in response to <code>"hit.refresh"</code>.</li>
+<li><code>"renew.busy"</code>: Artificial demand from an async refresh failed to produce a value. The key used the <code>busyValue</code> option, and could not get a regeneration lock.</li>
+</ul></li>
+</ul>
+<h4 id="wanobjectcache.kclass.regen_set_delay"><code>wanobjectcache.{kClass}.regen_set_delay</code></h4>
+<p>Upon cache update due to a cache miss or async refresh, this measures the time spent in <code>WANObjectCache::getWithSetCallback()</code>, from the start of the method to right after the new value has been computed by the callback.</p>
+<p>This essentially measures the whole method (including retrieval of any old value, validation, any regeneration locks, and the callback), except for the time spent in sending the value to the backend store.</p>
+<ul>
+<li>Type: Measure (in milliseconds).</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+</ul>
+<h4 id="wanobjectcache.kclass.regen_set_bytes"><code>wanobjectcache.{kClass}.regen_set_bytes</code></h4>
+<p>Upon cache update due to a cache miss or async refresh, this estimates the size of a newly computed value sent to the backend store.</p>
+<ul>
+<li>Type: Counter (in bytes).</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+</ul>
+<h4 id="wanobjectcache.kclass.regen_walltime"><code>wanobjectcache.{kClass}.regen_walltime</code></h4>
+<p>Upon cache update due to a cache miss or async refresh, this measures the time spent in the regeneration callback when computing a new value.</p>
+<ul>
+<li>Type: Measure (in milliseconds).</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+</ul>
+<h4 id="wanobjectcache.kclass.ck_touch.result"><code>wanobjectcache.{kClass}.ck_touch.{result}</code></h4>
+<p>Call counter from <code>WANObjectCache::touchCheckKey()</code>.</p>
+<ul>
+<li>Type: Counter.</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+<li>Variable <code>result</code>: One of <code>"ok"</code> or <code>"error"</code>.</li>
+</ul>
+<h4 id="wanobjectcache.kclass.ck_reset.result"><code>wanobjectcache.{kClass}.ck_reset.{result}</code></h4>
+<p>Call counter from <code>WANObjectCache::resetCheckKey()</code>.</p>
+<ul>
+<li>Type: Counter.</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+<li>Variable <code>result</code>: One of <code>"ok"</code> or <code>"error"</code>.</li>
+</ul>
+<h4 id="wanobjectcache.kclass.delete.result"><code>wanobjectcache.{kClass}.delete.{result}</code></h4>
+<p>Call counter from <code>WANObjectCache::delete()</code>.</p>
+<ul>
+<li>Type: Counter.</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+<li>Variable <code>result</code>: One of <code>"ok"</code> or <code>"error"</code>.</li>
+</ul>
+<h4 id="wanobjectcache.kclass.cooloff_bounce"><code>wanobjectcache.{kClass}.cooloff_bounce</code></h4>
+<p>This counter is incremented whenever a new value was computed, but not stored.</p>
+<p>Upon a cache miss or async refresh, the <code>WANObjectCache::getWithSetCallback()</code> method usually recomputes the value from the callback, and sends it to a backend store.</p>
+<p>If regenerating the value takes longer than a certain threshold of time (e.g. 50ms), then for popular keys it is likely that many web servers will generate and store the value simultaneously when the key is entirely absent from the cache. In this case, the cool-off feature can be used to protect backend stores against network congestion. This protection is implemented with a lock and subsequent cool-off period. The winner stores their value, while other web servers just return their value without storing it.</p>
+<ul>
+<li>Type: Counter.</li>
+<li>Variable <code>kClass</code>: The first part of your cache key.</li>
+</ul>
+<p>When the regeneration callback is slow, the following scenarios may use the cool-off feature:</p>
+<ul>
+<li><p>Storing the first interim value for tombstoned keys.</p>
+<p>If a key is currently tombstoned due to a recent <code>delete()</code> action, and thus in “hold-off”, then the key may not be written to. A mutex lock will let one web server generate the new value and (until the hold-off is over) the generated value will be considered an interim (temporary) value only. Requests that cannot get the lock will use the last stored interim value. If there is no interim value yet, then requests that cannot get the lock may still generate their own value. Here, the cool-off feature is used to decide which requests stores their interim value.</p></li>
+<li><p>Storing the first interim value for stale keys.</p>
+<p>If a key is currently in “hold-off” due to a recent <code>touchCheckKey()</code> action, then the key may not be written to. A mutex lock will let one web request generate the new value and (until the hold-off is over) such value will be considered an interim (temporary) value only. Requests that lose the lock, will instead return the last stored interim value, or (if it remained in cache) the stale value preserved from before <code>touchCheckKey()</code> was called. If there is no stale value and no interim value yet, then multiple requests may need to generate the value simultaneously. In this case, the cool-off feature is used to decide which requests store their interim value.</p>
+<p>The same logic applies when the callback passed to getWithSetCallback() in the “touchedCallback” parameter starts returning an updated timestamp due to a dependency change.</p></li>
+<li><p>Storing the first value when <code>lockTSE</code> is used.</p>
+<p>When <code>lockTSE</code> is in use, and no stale value is found on the backend, and no <code>busyValue</code> callback is provided, then multiple requests may generate the value simultaneously; the cool-off is used to decide which requests store their interim value.</p></li>
+</ul>
+</body>
+</html>

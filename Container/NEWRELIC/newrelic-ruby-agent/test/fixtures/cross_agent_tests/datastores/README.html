@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h2 id="datastore-instance-tests">Datastore instance tests</h2>
+    <p>
+      The datastore instance tests provide attributes similar to what an agent
+      could expect to find regarding a database configuration and specifies the
+      expected
+      <a
+        href="https://source.datanerd.us/agents/agent-specs/blob/master/Datastore-Metrics-PORTED.md#datastore-metric-namespace"
+        >datastore instance metric</a
+      >
+      that should be generated. The table below lists types attributes and
+      whether will will always be included or optionally included in each test
+      case.
+    </p>
+    <table>
+      <colgroup>
+        <col style="width: 23%" />
+        <col style="width: 8%" />
+        <col style="width: 67%" />
+      </colgroup>
+      <thead>
+        <tr class="header">
+          <th>Name</th>
+          <th>Present</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>system_hostname</td>
+          <td>always</td>
+          <td>the hostname of the machine</td>
+        </tr>
+        <tr class="even">
+          <td>db_hostname</td>
+          <td>sometimes</td>
+          <td>the hostname reported by the database adapter</td>
+        </tr>
+        <tr class="odd">
+          <td>product</td>
+          <td>always</td>
+          <td>the database product for this configuration</td>
+        </tr>
+        <tr class="even">
+          <td>port</td>
+          <td>sometimes</td>
+          <td>the port reported by the database adapter</td>
+        </tr>
+        <tr class="odd">
+          <td>unix_socket</td>
+          <td>sometimes</td>
+          <td>
+            the path to a unix domain socket reported by a database adapter
+          </td>
+        </tr>
+        <tr class="even">
+          <td>database_path</td>
+          <td>sometimes</td>
+          <td>the path to a filesystem database</td>
+        </tr>
+        <tr class="odd">
+          <td>expected_instance_metric</td>
+          <td>always</td>
+          <td>
+            the instance metric expected to be generated from the given
+            attributes
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <h2 id="implementing-the-test-cases">Implementing the test cases</h2>
+    <p>
+      The idea behind these test cases are that you are able to determine a set
+      of configuration properties from a database connection, and based on those
+      properties you should generate the <code>expected_instance_metric</code>.
+      Sometimes the properties available are minimal and will mean that you will
+      need to fall back to defaults to obtain some of the information. When
+      there is missing information from a database adapter the guiding principle
+      is to fill in the defaults when they can be inferred, but do not make
+      guesses that could be incorrect or misleading. Some agents may have access
+      to better data and may not need to make inferences. If this applies to
+      your agent then many of these tests will not be applicable.
+    </p>
+  </body>
+</html>

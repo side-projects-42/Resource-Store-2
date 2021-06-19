@@ -146,8 +146,7 @@
           this.applewebkit3 = true;
         }
       } else if (
-
-      /* for Gecko */
+        /* for Gecko */
         typeof Components == "object" &&
         (/Gecko\/(\d{8})/.test(ua) ||
           (navigator.product == "Gecko" &&

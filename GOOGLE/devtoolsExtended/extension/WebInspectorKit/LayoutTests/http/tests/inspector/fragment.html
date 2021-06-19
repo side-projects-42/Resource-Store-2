@@ -1,49 +1,18 @@
-<html>
-  <head>
-    <script src="inspector-test.js"></script>
-    <script type="text/javascript">
-      function loadIFrame() {
-        var iframe = document.createElement("iframe");
-        iframe.src = "resources/fragment-frame.html#34";
-        iframe.onload = frameLoaded;
-        document.body.appendChild(iframe);
-      }
-
-      function frameLoaded() {
-        console.log("Done.");
-      }
-
-      function test() {
-        InspectorTest.addConsoleSniffer(step2);
-        InspectorTest.evaluateInPage("loadIFrame()", function () {});
-
-        function step2() {
-          InspectorTest.runAfterPendingDispatches(step3);
-        }
-
-        function step3() {
-          var childFrame =
-            WebInspector.resourceTreeModel.mainFrame.childFrames[0];
-          InspectorTest.addResult("Child frame url: " + childFrame.url);
-          var childFrameResource = childFrame.resources()[0];
-          InspectorTest.addResult(
-            "Child frame resource url: " + childFrameResource.url
-          );
-          WebInspector.showPanel("network");
-
-          function filterFrame(request) {
-            return request.url.indexOf("fragment-frame.html") !== -1;
-          }
-
-          var request =
-            WebInspector.panels.network.requests.filter(filterFrame)[0];
-          InspectorTest.addResult("Child frame request url: " + request.url);
-          InspectorTest.completeTest(step2);
-        }
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests fragment is stripped from url by resource and page agents.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>fragment</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests fragment is stripped from url by resource and page agents.</p>
+</body>
 </html>

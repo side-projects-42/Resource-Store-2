@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="hashketball">Hashketball</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Practice building nested hashes.</li>
+<li>Practice iterating over nested hashes.</li>
+</ol>
+<h2 id="instructions">Instructions</h2>
+<p>Great news! You’re going to an NBA game! The only catch is that you’ve been volunteered to keep stats at the game.</p>
+<p>Fork and clone this lab and run the test suite to get started. You’ll be coding your solution in <code>hashketball.rb</code>.</p>
+<h3 id="part-1-building-the-hash">Part 1: Building the Hash</h3>
+<p>The first method you will define is called <code>game_hash</code>. This method contains and returns a hash nested in the following manner:</p>
+<ul>
+<li>The top level of the hash has two keys: <code>:home</code>, for the home team, and <code>:away</code>, for the away team.</li>
+<li>The values of the <code>:home</code> and <code>:away</code> keys are hashes. These hashes have the following keys:
+<ul>
+<li><code>:team_name</code></li>
+<li><code>:colors</code></li>
+<li><code>:players</code></li>
+</ul></li>
+<li>The <code>:team_name</code> key points to a string of the team name.</li>
+<li>The <code>:colors</code> key points to an array of strings that are that team’s colors.</li>
+<li>The <code>:players</code> key points to an array of players. Each player (i.e. each index item of the array) is represented by a hash whose names (as strings) are the keys to a hash containing their stats. The values for each player’s names and their stats can be found in the table below. The stats keys should be formatted like this:
+<ul>
+<li><code>:player_name</code></li>
+<li><code>:number</code></li>
+<li><code>:shoe</code></li>
+<li><code>:num_points_scored</code></li>
+<li><code>:rebounds</code></li>
+<li><code>:assists</code></li>
+<li><code>:steals</code></li>
+<li><code>:blocks</code></li>
+<li><code>:slam_dunks</code></li>
+</ul></li>
+</ul>
+<p>Use the following data to populate your <code>game_hash</code> as outlined above. Remember to run <code>learn</code> to see what the tests expect.</p>
+<p>Home Team:</p>
+<ul>
+<li>team name: Brooklyn Nets</li>
+<li>colors: Black, White</li>
+<li>players:</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Stat</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Player Name</strong></td>
+<td style="text-align: center;">Alan Anderson</td>
+<td style="text-align: center;">Reggie Evans</td>
+<td style="text-align: center;">Brook Lopez</td>
+<td style="text-align: center;">Mason Plumlee</td>
+<td style="text-align: center;">Jason Terry</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Number</strong></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Shoe</strong></td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Points</strong></td>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Rebounds</strong></td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Assists</strong></td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Steals</strong></td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Blocks</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Slam Dunks</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<p>Away Team:</p>
+<ul>
+<li>team name: Charlotte Hornets</li>
+<li>colors: Turquoise, Purple</li>
+<li>players:</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 14%" />
+<col style="width: 18%" />
+<col style="width: 15%" />
+<col style="width: 12%" />
+<col style="width: 19%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Stat</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+<th style="text-align: center;">Info</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><strong>Player Name</strong></td>
+<td style="text-align: center;">Jeff Adrien</td>
+<td style="text-align: center;">Bismak Biyombo</td>
+<td style="text-align: center;">DeSagna Diop</td>
+<td style="text-align: center;">Ben Gordon</td>
+<td style="text-align: center;">Brendan Haywood</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Number</strong></td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Shoe</strong></td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">15</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Points</strong></td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">33</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Rebounds</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Assists</strong></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Steals</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><strong>Blocks</strong></td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><strong>Slam Dunks</strong></td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">12</td>
+</tr>
+</tbody>
+</table>
+<h3 id="step-2-building-methods">Step 2: Building Methods</h3>
+<h3 id="calling-methods-within-methods">Calling Methods within Methods</h3>
+<p>You’ll be building a series of methods that operate on the above game hash to return certain information about the teams and players. Each method will operate on the game hash by calling the <code>game_hash</code> method that returns the <code>game_hash</code>. In other words, since our <code>game_hash</code> method returns our hash, you can think of the <code>game_hash</code> like a variable that points to our hash and operate on it just as you would with hashes in previous lessons.</p>
+<p>For example, let’s say we want to build a method, <code>home_team_name</code>, that returns the name of the home team, <code>"Brooklyn Nets"</code>. We can call the method <code>game_hash</code> inside of our <code>home_team_name</code> method and operate on the game_hash:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">def</span> home_team_name</a>
+<a class="sourceLine" id="cb1-2" title="2">  game_hash[<span class="st">:home</span>][<span class="st">:team_name</span>]</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">end</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">puts home_team_name</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="co"># =&gt; &quot;Brooklyn Nets&quot;</span></a></code></pre></div>
+<p>Now that we understand how we are going to operate on the <code>game_hash</code> inside of the methods we’re building, let’s build those methods:</p>
+<h3 id="iterating-through-nested-levels">Iterating through Nested Levels:</h3>
+<p>This lab requires us to iterate through the many levels of our nested hash. DON’T TAKE YOUR UNDERSTANDING OF YOUR HASH FOR GRANTED. Every time you iterate into a new level of the hash, immediately place a <code>binding.pry</code> there. Then, run RSpec with the <code>learn</code> command to see what the key/value pairs of that hash are.</p>
+<p>Let’s take a look at an example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">def</span> good_practices</a>
+<a class="sourceLine" id="cb2-2" title="2">  game_hash.each <span class="kw">do</span> |location, team_data|</a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="co">#are you ABSOLUTELY SURE what &#39;location&#39; and &#39;team data&#39; are? use binding.pry to find out!</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    binding.pry</a>
+<a class="sourceLine" id="cb2-5" title="5">      team_data.each <span class="kw">do</span> |attribute, data|</a>
+<a class="sourceLine" id="cb2-6" title="6">        <span class="co">#are you ABSOLUTELY SURE what &#39;attribute&#39; and &#39;team data&#39; are? use binding.pry to find out!</span></a>
+<a class="sourceLine" id="cb2-7" title="7">        binding.pry</a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9">        <span class="co">#what is &#39;data&#39; at each loop through out .each block? when will the following line of code work and when will it break?</span></a>
+<a class="sourceLine" id="cb2-10" title="10">        data.each <span class="kw">do</span> |data_item|</a>
+<a class="sourceLine" id="cb2-11" title="11">            binding.pry</a>
+<a class="sourceLine" id="cb2-12" title="12">      <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-14" title="14">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="kw">end</span></a></code></pre></div>
+<p>Open up the <code>hashketball.rb</code> file and copy and paste the above method. Then, beneath the <code>end</code> that closes the method definition, call the method (<code>good_practices</code>) and, in your terminal, run the file with <code>ruby hashketball.rb</code>. Play around with the methods in each binding until you get comfortable with the iteration. This should give you a stronger sense of how we iterate through so many levels of a nested hash and what happens on each level. <strong>Use this method of placing LOTS of bindings when you iterate in order to solve this lab.</strong></p>
+<p>Okay, <em>now</em> we’re ready to build out methods:</p>
+<h3 id="method-building">Method Building</h3>
+<ul>
+<li><p>Build a method, <code>num_points_scored</code> that takes in an argument of a player’s name and returns the number of points scored for that player.</p>
+<ul>
+<li>Think about where in the hash you will find a player’s <code>:points</code>. How can you iterate down into that level? Think about the return value of your method. Remember that <code>.each</code> returns the original collection that you are iterating over. How can you return the number of points for a particular player?</li>
+</ul></li>
+<li>Build a method, <code>shoe_size</code>, that takes in an argument of a player’s name and returns the shoe size for that player.
+<ul>
+<li>Think about how you will find the shoe size of the correct player. How can you check and see if a player’s name matches the name that has been passed into the method as an argument?</li>
+</ul></li>
+<li>Build a method, <code>team_colors</code>, that takes in an argument of the team name and returns an array of that teams colors.</li>
+<li>Build a method, <code>team_names</code>, that operates on the game hash to return an array of the team names.</li>
+<li>Build a method, <code>player_numbers</code>, that takes in an argument of a team name and returns an array of the jersey number’s for that team.</li>
+<li><p>Build a method, <code>player_stats</code>, that takes in an argument of a player’s name and returns a hash of that player’s stats. The stat hash <em>should not include the player’s name</em>.</p>
+<ul>
+<li>Once you find the hash of stats for the correct player, think about how to remove a key/value pair from a hash. The <code>delete_if</code> enumerator might be a good place to start.</li>
+<li><p>Check out the following example of the expected return value of the <code>player_stats</code> method:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">player_stats</span>(<span class="st">&quot;Alan Anderson&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2">=<span class="op">&gt;</span> <span class="kw">{</span> :<span class="ex">number</span> =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb3-3" title="3">     :<span class="ex">shoe</span> =<span class="op">&gt;</span> 16,</a>
+<a class="sourceLine" id="cb3-4" title="4">     :<span class="ex">points</span> =<span class="op">&gt;</span> 22,</a>
+<a class="sourceLine" id="cb3-5" title="5">     :<span class="ex">rebounds</span> =<span class="op">&gt;</span> 12,</a>
+<a class="sourceLine" id="cb3-6" title="6">     :<span class="ex">assists</span> =<span class="op">&gt;</span> 12,</a>
+<a class="sourceLine" id="cb3-7" title="7">     :<span class="ex">steals</span> =<span class="op">&gt;</span> 3,</a>
+<a class="sourceLine" id="cb3-8" title="8">     :<span class="ex">blocks</span> =<span class="op">&gt;</span> 1,</a>
+<a class="sourceLine" id="cb3-9" title="9">     :<span class="ex">slam_dunks</span> =<span class="op">&gt;</span> 1</a>
+<a class="sourceLine" id="cb3-10" title="10">   <span class="kw">}</span></a></code></pre></div></li>
+</ul></li>
+<li>Build a method, <code>big_shoe_rebounds</code>, that will return the number of rebounds associated with the player that has the largest shoe size. Break this one down into steps:
+<ul>
+<li>First, find the player with the largest shoe size</li>
+<li>Then, return that player’s number of rebounds</li>
+<li>Remember to think about return values here. Use <code>binding.pry</code> to drop into your method and understand what it is returning and why.</li>
+</ul></li>
+</ul>
+<p><strong>Bonus Questions:</strong></p>
+<p>Define methods to return the answer to the following questions:</p>
+<ol type="1">
+<li><p>Which player has the most points? Call the method <code>most_points_scored</code>.</p></li>
+<li><p>Which team has the most points? Call the method <code>winning_team</code>.</p></li>
+<li><p>Which player has the longest name? Call the method <code>player_with_longest_name</code>.</p></li>
+</ol>
+<p><strong>Super Bonus:</strong></p>
+<ol type="1">
+<li>Write a method that returns true if the player with the longest name had the most steals. Call the method <code>long_name_steals_a_ton?</code>.</li>
+</ol>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="http://www.codecademy.com/dashboard">Codecademy</a> - <a href="http://external.codecademy.com/courses/ruby-beginner-en-0i8v1/0/1">A Night at the Movies</a></li>
+</ul>
+</body>
+</html>

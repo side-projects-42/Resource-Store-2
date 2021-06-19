@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>july-28</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-07-28">ember-cli Meeting Notes - 2016-07-28</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Kelly Selden</li>
+<li>Katie Gengler</li>
+<li>Jake Bixby</li>
+<li>Chad Hietala</li>
+<li>Alex Navasardyan</li>
+<li>David Hamilton</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>[ ] Nathan - Release Ember CLI 2.8.0-beta.1</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="json-file-blueprint-merging-rfc-61">JSON file blueprint merging (RFC #61)</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/rfcs/pull/61">Link to RFC.</a></li>
+<li><a href="https://github.com/ember-cli/rfcs/pull/61#issuecomment-236009672">Review notes.</a></li>
+<li>Nathan will be gatekeeper for moving to Final Comment Period given the feedback we’ve provided or will bring back in front of this group if it diverges from conversation already had.</li>
+</ul>
+<h3 id="module-unification">Module Unification</h3>
+<ul>
+<li><a href="https://github.com/danmcclain/ember-resolver/tree/new-resolver">ember-resolver</a> work is ongoing.</li>
+<li>Effort inside of Ember CLI should being as we’re closing in on a working resolver.</li>
+<li>Opportunity to refactor <code>lib/broccoli/ember-app.js</code>.</li>
+<li>Constraints
+<ul>
+<li>Ensure that we’re not painting ourselves into a corner for linker/packager.</li>
+<li>Needs to support having multiple “rootes” and processing them individually.</li>
+<li>Keep everything separate as long as possible to prevent invalidating the world.</li>
+</ul></li>
+<li>Should keep moving forward on the pod module migrator. <a href="https://github.com/rwjblue/ember-module-migrator/issues/3">Issue</a></li>
+<li><span class="citation" data-cites="chadhietala">@chadhietala</span> built an underlying tool for comparing dep graphs: <a href="https://github.com/chadhietala/fs-graph-diff">fs-graph-diff</a></li>
+<li>Nathan will create a quest issue after current priorities subside.</li>
+</ul>
+</body>
+</html>

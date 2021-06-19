@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>style_guide</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="style-guide">Style Guide</h1>
+<h2 id="javascript">JavaScript</h2>
+<p>Two documents of interest:</p>
+<ul>
+<li><a href="https://google.github.io/styleguide/javascriptguide.xml">Google JavaScript Style Guide</a></li>
+<li><a href="https://developers.google.com/closure/compiler/docs/js-for-compiler">Annotating JavaScript for the Closure Compiler</a></li>
+</ul>
+<p>Settings for your editor:</p>
+<ul>
+<li>80 columns max</li>
+<li>2-space indents, not tabs</li>
+<li>No trailing whitespace, no extraneous linefeeds</li>
+<li>Newline at end of file</li>
+</ul>
+<h3 id="linting">Linting</h3>
+<p>Use the <a href="https://developers.google.com/closure/utilities/">Closure linter</a> to lint and automatically fix some errors (of certain types).</p>
+<pre><code># Fix regular errors (missing goog.require/provide, etc)
+anvil build :fixstyle
+
+# Run full lint
+anvil build :lint</code></pre>
+</body>
+</html>

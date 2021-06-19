@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cordova Settings File</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<h1 id="cordova-settings-file">Cordova Settings File</h1>
+<p>The <strong>Cordova.plist settings file</strong> controls various settings of Cordova. This is application wide, and not set per CDVViewController instance.</p>
+<ol type="1">
+<li>A list of <strong>Plugins</strong> allowed to be used in a CDVViewController (set in the Plugins dictionary - key is the servicename used in JavaScript, and the value is the Objective-C class for the plugin that is a CDVPlugin sub-class)</li>
+<li>A <strong>white-list</strong> of hosts (with no scheme nor path, hostnames or IP addresses only) that Cordova is allowed to connect to (set in the ExternalHosts array - wildcards allowed)</li>
+<li><p>Various <strong>other</strong> settings (defaults err on not breaking existing apps)</p>
+<ol type="a">
+<li><p><strong>UIWebViewBounce (boolean, defaults to YES)</strong> - set to NO if you don’t want the WebView to rubber-band</p></li>
+<li><p><strong>TopActivityIndicator (string, defaults to ‘gray’)</strong> - this is the top spinning throbber in the status/battery bar, valid values are “whiteLarge”, “white” and “gray”</p></li>
+<li><p><strong>EnableLocation (boolean, defaults to NO)</strong> - set to YES, to initialize the Geolocation plugin at start-up (so the fix on your location can be more accurate)</p></li>
+<li><p><strong>EnableViewportScale (boolean, defaults to NO)</strong> - set to YES to prevent viewport scaling through a meta tag</p></li>
+<li><p><strong>AutoHideSplashScreen (boolean, defaults to YES)</strong> - set to NO to control when the splashscreen is hidden through a JavaScript API</p></li>
+<li><p><strong>ShowSplashScreenSpinner (boolean, defaults to YES)</strong> - set to NO to hide the splash-screen spinner</p></li>
+<li><p><strong>MediaPlaybackRequiresUserAction (boolean, defaults to NO)</strong> - set to YES to not allow autoplayed HTML5 video</p></li>
+<li><p><strong>AllowInlineMediaPlayback (boolean, defaults to NO)</strong> - set to YES to allow inline HTML5 media playback, also, the video element in the HTML document must also include the webkit-playsinline attribute</p></li>
+<li><p><strong>OpenAllWhitelistURLsInWebView (boolean, defaults to NO)</strong> - set to YES to open all white-listed URLs in the main WebView</p></li>
+<li><p><strong>BackupWebStorage (boolean, defaults to YES)</strong> - set to NO to prevent the backup of localStorage and WebSQL databases to the Documents/Backups folder. This was a fix for this <a href="http://phonegap.com/2012/04/18/ios-5-1-and-the-embedded-uiwebview-with-cordova/">Apple bug</a></p></li>
+</ol></li>
+</ol>
+</body>
+</html>

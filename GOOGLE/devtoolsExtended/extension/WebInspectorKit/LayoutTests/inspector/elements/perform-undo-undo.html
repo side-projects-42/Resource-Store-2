@@ -1,54 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        var containerNode;
-        InspectorTest.expandElementsTree(step1);
-
-        function step1(node) {
-          containerNode = InspectorTest.expandedNodeWithId("container");
-          InspectorTest.addResult("========= Original ========");
-          InspectorTest.dumpElementsTree(containerNode);
-          step2();
-        }
-
-        function step2() {
-          function callback() {
-            InspectorTest.addResult("===== Modified element =====");
-            InspectorTest.dumpElementsTree(containerNode);
-            step3();
-          }
-          containerNode.setAttribute("", 'foo="bar"', callback);
-        }
-
-        function step3() {
-          function callback() {
-            InspectorTest.addResult("===== Undo 1 =====");
-            InspectorTest.dumpElementsTree(containerNode);
-            step4();
-          }
-          WebInspector.domAgent.undo(callback);
-        }
-
-        function step4() {
-          function callback() {
-            InspectorTest.addResult("===== Undo 2 =====");
-            InspectorTest.dumpElementsTree(containerNode);
-            InspectorTest.completeTest();
-          }
-          WebInspector.domAgent.undo(callback);
-        }
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that client can call undo multiple times with non-empty history.
-    </p>
-
-    <div style="display: none" id="container"></div>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>perform-undo-undo</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that client can call undo multiple times with non-empty history.</p>
+</body>
 </html>

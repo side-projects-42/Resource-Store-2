@@ -1,21 +1,12 @@
----
-title: 🃏 Jest 19: Immersive Watch Mode & Test Platform Improvements
-author: Rogelio Guzman
-authorURL: http://twitter.com/rogeliog
-authorFBID: 511230566
----
-
-Today we are pleased to ship version 19 of the Jest testing platform. It's the biggest Jest release we have shipped so far and we are quite excited to show you what we've built over the last two months:
+Today we are pleased to ship version 19 of the Jest testing platform. It’s the biggest Jest release we have shipped so far and we are quite excited to show you what we’ve built over the last two months:
 
 ## Immersive Watch Mode
 
 We [completely rewrote the watch mode](https://github.com/facebook/jest/pull/2362) to make it instant and more extensible. As a result, the experience of using it really is immersive: tests re-run instantly after a file change and we made it easy to select the right tests.
 
-<!--truncate-->
-
 ## Snapshot Updates
 
-We made a couple of changes to the snapshot format. We don't make changes like this often and only consider them if they actually improve how snapshots work. As well as introducing a snapshot version number we accumulated a number of changes we wanted to make to the format for a while:
+We made a couple of changes to the snapshot format. We don’t make changes like this often and only consider them if they actually improve how snapshots work. As well as introducing a snapshot version number we accumulated a number of changes we wanted to make to the format for a while:
 
 - We dropped the “test” prefix in snapshot names from top level `test` or `it` calls.
 - We improved the printing of React elements to cause less changes when the last prop in an element changes.
@@ -23,40 +14,36 @@ We made a couple of changes to the snapshot format. We don't make changes like t
 
 Before:
 
-```
-exports[`test snap 1`] = `
-<header>
-  <h1>
-    Jest \"19\"
-  </h1>
-  <Subtitle
-    name="Painless JavaScript Testing" />
-</header>
-`;
-```
+    exports[`test snap 1`] = `
+    <header>
+      <h1>
+        Jest \"19\"
+      </h1>
+      <Subtitle
+        name="Painless JavaScript Testing" />
+    </header>
+    `;
 
 After (no “test” prefix, better JSX rendering, version header):
 
-```
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+    // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`snap 1`] = `
-<header>
-  <h1>
-    Jest "19"
-  </h1>
-  <Subtitle
-    name="Painless JavaScript Testing"
-  />
-</header>
-`;
-```
+    exports[`snap 1`] = `
+    <header>
+      <h1>
+        Jest "19"
+      </h1>
+      <Subtitle
+        name="Painless JavaScript Testing"
+      />
+    </header>
+    `;
 
-We decided it's a good time to introduce versioned snapshots to ensure all developers are using a compatible version of Jest. Here's how we warn you about the need to update your snapshot:
+We decided it’s a good time to introduce versioned snapshots to ensure all developers are using a compatible version of Jest. Here’s how we warn you about the need to update your snapshot:
 
 ![snapshot-version](/img/blog/19-snapshot-version.png)
 
-Please make sure you revert any local changes before updating to make the transition smooth and to ensure you aren't including any unwanted changes from failing tests in your new snapshots.
+Please make sure you revert any local changes before updating to make the transition smooth and to ensure you aren’t including any unwanted changes from failing tests in your new snapshots.
 
 ## Improved printing of skipped tests
 
@@ -71,7 +58,7 @@ Jest 19 ships with two new coverage-related arguments which you can run from CLI
 - `--collectCoverageFrom`
 - `--coverageDirectory`
 
-We now also error on invalid CLI arguments instead of ignoring them. But we've got your back with helpful error message like the one below, e.g. when you try running `jest --watc`:
+We now also error on invalid CLI arguments instead of ignoring them. But we’ve got your back with helpful error message like the one below, e.g. when you try running `jest --watc`:
 
 ![cli-error](/img/blog/19-cli-error.png)
 
@@ -81,7 +68,7 @@ We now also error on invalid CLI arguments instead of ignoring them. But we've g
 - [`expect.stringContaining`](/docs/expect.html#expectstringcontainingstring)
 - [`jest.spyOn`](/docs/jest-object.html#jestspyonobject-methodname)
 
-We're close to almost full feature parity with the `expect` npm package. [Michael Jackson](https://twitter.com/mjackson), the author of the package, agreed to [donate](https://github.com/facebook/jest/issues/1679) it to the Jest project, which means that `jest-matchers` will be renamed to `expect`. Since our version of `expect` is not intended to be fully compatible, [Christopher Chedeau](https://twitter.com/Vjeux) is working on a codemod to make the transition painless. Christopher also worked on a number of improvements to `jest-matchers` which enables it to be used outside of Jest and even [works inside browsers](https://github.com/facebook/jest/pull/2795).
+We’re close to almost full feature parity with the `expect` npm package. [Michael Jackson](https://twitter.com/mjackson), the author of the package, agreed to [donate](https://github.com/facebook/jest/issues/1679) it to the Jest project, which means that `jest-matchers` will be renamed to `expect`. Since our version of `expect` is not intended to be fully compatible, [Christopher Chedeau](https://twitter.com/Vjeux) is working on a codemod to make the transition painless. Christopher also worked on a number of improvements to `jest-matchers` which enables it to be used outside of Jest and even [works inside browsers](https://github.com/facebook/jest/pull/2795).
 
 ## [eslint-plugin-jest](https://github.com/facebook/jest/tree/master/packages/eslint-plugin-jest) – our very own ESLint plugin
 
@@ -95,13 +82,13 @@ You can install it using `npm install --save-dev eslint-plugin-jest` or `yarn ad
 
 ## New public package: [jest-validate](https://github.com/facebook/jest/tree/master/packages/jest-validate)
 
-While we refactored the validation and normalization code for Jest's configuration, we were so happy with the new error messaging that we extracted it to its own module to share it with everyone. With Jest 19 we welcome `jest-validate` to our self-sustained packages family.
+While we refactored the validation and normalization code for Jest’s configuration, we were so happy with the new error messaging that we extracted it to its own module to share it with everyone. With Jest 19 we welcome `jest-validate` to our self-sustained packages family.
 
-`jest-validate` is a generic configuration validation tool that helps you with warnings, errors and deprecation messages in your JavaScript tool. It's also capable of showing users friendly examples of correct configuration and it comes with a simple but powerful API. We hope it'll make a good addition to your projects!
+`jest-validate` is a generic configuration validation tool that helps you with warnings, errors and deprecation messages in your JavaScript tool. It’s also capable of showing users friendly examples of correct configuration and it comes with a simple but powerful API. We hope it’ll make a good addition to your projects!
 
 ![validate](/img/blog/19-validate.png)
 
-We're happy to announce that `jest-validate` is validating config options of [prettier](https://github.com/jlongster/prettier) since [v0.12](https://github.com/jlongster/prettier/blob/master/CHANGELOG.md#0120). Feel free to add it to your project, try it, send us feedback and improve it by making pull requests on GitHub.
+We’re happy to announce that `jest-validate` is validating config options of [prettier](https://github.com/jlongster/prettier) since [v0.12](https://github.com/jlongster/prettier/blob/master/CHANGELOG.md#0120). Feel free to add it to your project, try it, send us feedback and improve it by making pull requests on GitHub.
 
 ## Improved asymmetric matchers
 
@@ -119,7 +106,7 @@ As a part of our cleanups and fixes we removed the `mocksPattern` configuration 
 
 ## Revamped documentation
 
-As you may have already seen, [Hector Ramos](https://twitter.com/hectorramos) and [Kevin Lacker](https://twitter.com/lacker) gave Jest's documentation a fresh new look. We changed the way we organize the website and it now features Docs and API as separate pages:
+As you may have already seen, [Hector Ramos](https://twitter.com/hectorramos) and [Kevin Lacker](https://twitter.com/lacker) gave Jest’s documentation a fresh new look. We changed the way we organize the website and it now features Docs and API as separate pages:
 
 - Under [Docs](https://jestjs.io/docs/getting-started.html#content) you can find an introduction to Jest, including [Getting Started](https://jestjs.io/docs/getting-started.html#content) or [Testing Asynchronous Code](https://jestjs.io/docs/asynchronous.html#content) and handy guides like [Snapshot Testing](https://jestjs.io/docs/snapshot-testing.html#content), [Testing React Native App](https://jestjs.io/docs/tutorial-react-native.html#content), [Using with webpack](https://jestjs.io/docs/webpack.html#content) or [Migrating to Jest](https://jestjs.io/docs/migration-guide.html#content) and many more!
 - The [API](https://jestjs.io/docs/api.html) section on the other hand lists all available methods exposed by Jest: the `expect` and `jest` objects, mock functions, globals, along with configuration options from _package.json_ and from the CLI.
@@ -129,15 +116,15 @@ The homepage was completely redesigned to be more descriptive of what Jest is ab
 ## Community Updates
 
 - We really loved this talk: “[Introduction to Jest](https://www.youtube.com/watch?v=tvy0bSgwtTo)“ by Vas Boroviak.
-- Follow [@fbjest on Twitter](http://twitter.com/fbjest).
-- The Jest Core team syncs once a week to discuss current and future issues. If you'd like to work on Jest, let us know, submit a few pull requests and join our weekly team meetings.
+- Follow <span class="citation" data-cites="fbjest">\[@fbjest on Twitter\]</span>(http://twitter.com/fbjest).
+- The Jest Core team syncs once a week to discuss current and future issues. If you’d like to work on Jest, let us know, submit a few pull requests and join our weekly team meetings.
 - The awesome engineers at Artsy wrote [about Jest as part of their 2017 frontend stack](http://artsy.github.io/blog/2017/02/05/Front-end-JavaScript-at-Artsy-2017/).
 - Stephen Scott wrote a detailed article about [testing React components](https://medium.freecodecamp.com/the-right-way-to-test-react-components-548a4736ab22) in which he weighs the pros and cons of different approaches.
-- [Using Jest with vue.js](https://medium.com/@kentaromiura_the_js_guy/jest-for-all-episode-1-vue-js-d616bccbe186#.r8ryxlw98) got a lot easier after reading Cristian Carlesso's blog post.
+- [Using Jest with vue.js](https://medium.com/@kentaromiura_the_js_guy/jest-for-all-episode-1-vue-js-d616bccbe186#.r8ryxlw98) got a lot easier after reading Cristian Carlesso’s blog post.
 - [Michele Bertoli wrote a book about React Design Patterns and Best Practices](https://twitter.com/cpojer/status/825004258219130880) which features an entire section about Jest.
 - Improved `--notify` command that shows an operating system notification which [can now also re-run tests from the notification](https://github.com/facebook/jest/pull/2727). This is actually a Jest feature and we are just checking if you are still reading this blog post.
 - Jest is now part of [react-boilerplate](https://twitter.com/mxstbr/status/820326656439177217).
-- Read about the [hidden powers of Jest's matchers](https://medium.com/@boriscoder/the-hidden-power-of-jest-matchers-f3d86d8101b0#.pn10z1pzx).
+- Read about the [hidden powers of Jest’s matchers](https://medium.com/@boriscoder/the-hidden-power-of-jest-matchers-f3d86d8101b0#.pn10z1pzx).
 
 Finally, we are happy to announce that the [ava](https://github.com/avajs/ava) test runner has adopted parts of the Jest platform and is now shipping with basic [snapshot support](https://github.com/avajs/ava#snapshot-testing) and is using [pretty-format](https://github.com/facebook/jest/tree/master/packages/pretty-format). Consolidating test infrastructure makes it easier to learn how to test applications and enables us to share best practices. We are looking forward to see what we can learn from existing test libraries in the future.
 

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="episodes">Episodes</h1>
+<p>A framework for timing performance of web apps. This package contains libraries to measure timing metrics in web applications. You can use it to measure something small entirely on the client side, or you can use it to send beacons to a server and gather end-to-end measurements of your application.</p>
+<p>This library is a port of Steve Souders’s <a href="http://stevesouders.com/episodes/">Episodes JS library</a> with some additional modifications and additions of our own.</p>
+<h2 id="using-episodes">Using Episodes</h2>
+<p>Add the <code>episodes</code> package to your pubspec.yaml file, selecting a version range that works with your version of the SDK. For example:</p>
+<pre><code>dependencies:
+  episodes: &quot;&gt;=0.3.0 &lt;0.3.1&quot;</code></pre>
+<p>Then you can directly import the episodes library via <code>packages:episodes/episodes.dart</code>. This library exposes the <code>Episodes</code> class, which contains methods you can use to instrument your code.</p>
+<p>You can call mark() to mark points in time, or call measure() to record intervals between two such points. You can later extract the results as a graphical timeline in HTML, as HTML tables, or you can send them to a listener via window.postMessage.</p>
+<p>There is an associated Reporter class for listening to the window.postMessage notifications. This can be customized in suitable ways. For example, the default case is like the original episodes library; there is also a <a href="http://yahoo.github.com/boomerang/doc/">Yahoo Boomerang</a> compatible reporter available.</p>
+<h1 id="a-note-about-versions">A note about versions</h1>
+<p>This package follows <a href="http://semver.org/">semantic versioning</a>. Prior to 1.0, we follow a similar scheme to semantic versioning. We treat the ‘patch’ number as the ‘minor’ version, and use + as a patch. So a change from 0.3.0 to 0.3.0+1 is a non-breaking change, but a change from 0.3.0 to 0.3.1 is considered a breaking change. Additionally we try to match the minor version with the current milestone from the Dart SDK. The first release of episodes is versioned as 0.3.0 because it was developed under the first M3 release of the Dart SDK. If Dart M4 has breaking changes, our library at that point will jump to version 0.4.</p>
+</body>
+</html>

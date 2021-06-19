@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-06</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="august-06-2015">August 06 2015</h1>
+<h2 id="topics">Topics</h2>
+<p>Guides: Ember CLI</p>
+<ul>
+<li>“Installing addons” top-level section (+1 MK, TD, TG)</li>
+<li>CLI Config
+<ul>
+<li>Move “Understanding Ember” config to config section</li>
+<li>Move debugging section (<a href="https://github.com/emberjs/guides/pull/529">PR #529</a>)</li>
+</ul></li>
+<li>Should we include an <code>ember generate</code> command with code snippets?</li>
+</ul>
+<p>Guides: Services</p>
+<ul>
+<li>Merge <a href="https://github.com/emberjs/guides/pull/532">PR #532</a> and then flesh it out</li>
+<li>What would make good examples?
+<ul>
+<li>Radio player</li>
+<li>Flash notifications</li>
+</ul></li>
+</ul>
+<p>Guides: Test helpers documentation breaks JSHint</p>
+<ul>
+<li>Globals are legacy cruft</li>
+<li>How to properly fix this going forward?</li>
+</ul>
+<p>Guides: Maintenance</p>
+<ul>
+<li>Version switcher</li>
+<li><code>need help</code> issue tag introduced to signal beginner-friendly issues</li>
+<li>Google still points to <code>v1.10</code></li>
+<li>New architecture/deploy pipeline</li>
+<li>Should we update old versions?</li>
+</ul>
+<p>Guides: Animations</p>
+<ul>
+<li>Ping Edward, TD, and TG</li>
+</ul>
+<p>Guides: Ember Data</p>
+<ul>
+<li>No advances (LK)</li>
+<li>Redistribute to BM/SP/CP</li>
+</ul>
+<p>Guides: Closure Actions</p>
+<ul>
+<li>Ping MB</li>
+</ul>
+<h2 id="minutes">Minutes</h2>
+<p>Attendees: Trek (TG), Tom (TD), Michael (MK), Christoffer (CP), Brendan (BM), Steffan (SP), Matthew (MB), locks (LK)</p>
+<p>MK: what about links to outside sources?</p>
+<p>TD: core team says don’t want to get in business of aggregating</p>
+<p>links, but okay to link to aggregators</p>
+<p>TG: even link to subsections of aggregators, eg on testing</p>
+<p>TG: i will deliver the bad news</p>
+<p>MK: addons, extending - go in getting started, break up?</p>
+<p>TD: break up</p>
+<p>TG: even if it’s one page, get the structure right</p>
+<p>TD: creating addons is a different story</p>
+<p>we are all on board</p>
+<p>MK: should we put configuring stuff in configuring section?</p>
+<p>TD: understanding section should be about mental model</p>
+<p>MK: not what it does now</p>
+<p>TD: okay to move this stuff to configuring section</p>
+<p>TG: okay for moving debugging stuff, okay with joost’s stuff</p>
+<p>TD: we should have examples of configuration options, a guide on</p>
+<p>options for app configuration, a list of options</p>
+<p>TG: will ask joost to update</p>
+<p>MK: the services pull request - where to go</p>
+<p>much discussion ensued about how to explain services</p>
+<p>TG: in favor of merging and then updating as necessary</p>
+<p>TD: the guide is pretty barebones, but okay to merge</p>
+<p>TG: more useful than now, and then let’s figure out somebody to expand</p>
+<p>LK: they have been very responsive, so let’s hammer out the current</p>
+<p>comments and then merge</p>
+<p>TG: me or tom will flesh out after</p>
+<p>MK: jshint pr</p>
+<p>TD: testing helpers explanation is old and outdated, but we don’t</p>
+<p>have bandwidth to update, change is good</p>
+<p>TG: agreed</p>
+<p>TD: given situation is a clusterf**, what do we do?</p>
+<p>TG: real fix is to make test helpers behave properly, not document</p>
+<p>our sad reality</p>
+<p>TD: i am okay with this</p>
+<p>TG: let’s merge and then create an issue to fix the underlying problem</p>
+<p>MK: animations, anybody know where edward is at</p>
+<p>TG: don’t know, not critical that it gets in, not high priority</p>
+<p>MK: i will ping edward</p>
+<p>LK: haven’t had time to work on ember data/models, stefan and wecc</p>
+<p>want to help</p>
+<p>MK: you should delegate to them</p>
+<p>CP: brenden has some experience</p>
+<p>BM: yeah, will sync up with locks</p>
+<p>MK: ember generate for code blocks</p>
+<p>TD: inconsistent command with output</p>
+<p>general feeling that it should be explained more in text, not just put above</p>
+<p>TG: issues/prs around warning about old versions</p>
+<p>TD: seems like a good idea, no real downside except annoying if</p>
+<p>you’re using an old version regularly</p>
+<p>TG: redeploying is a pain, bigger issue is google points to 1.10</p>
+<p>LK: also people always complain about version switching taking to root</p>
+<p>MK: not that big a deal, just close them</p>
+<p>TG: give it time, you will get annoyed</p>
+<p>MK: what about separating structure from content</p>
+<p>TG: doesn’t work well if we change the structure of the site with</p>
+<p>different levels</p>
+<p>TD: fixing things like this are good for community involvement</p>
+<p>MK: how do we get out the word about things we want help with</p>
+<p>TD: i will tweet it</p>
+</body>
+</html>

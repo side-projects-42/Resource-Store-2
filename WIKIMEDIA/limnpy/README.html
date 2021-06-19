@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="limnpy">limnpy</h1>
+<p>A library for creating <a href="https://github.com/wikimedia/limn">limn</a> compatible datasources and datafiles</p>
+<ul>
+<li><a href="#introdcution">Introduction</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#usage">Library Usage</a>
+<ul>
+<li><a href="#acceptable-data-formats">Acceptable Data Formats</a></li>
+<li><a href="#graphs">Graphs</a></li>
+<li><a href="#dashboards">Dashboards</a></li>
+</ul></li>
+<li><a href="#command-line-utility">Command Line Utility</a></li>
+</ul>
+<h2 id="introduction">Introduction</h2>
+<p><a href="github.com/wikimedia/limn"><code>limn</code></a>, a visualization tool for non-programmers, still requires at least one or two programmers to generate the datasources which can be plotted. In order to make a timeseries available for plotting with <code>limn</code> you need to generate an appropriately formatted csv file (known as a <code>datafile</code>) as well as a valid YAML file with metadata (known as a <code>datasource</code>). <code>limnpy</code> aims to solve the simple cases where you’ve prepared the timeseries data and just want to write a <code>datafile</code> and <code>datasource</code> pair without worrying about the details.</p>
+<h2 id="installation">Installation</h2>
+<p><code>limnpy</code> is packaged with setuptools, so you have some options, but I recommend either</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="ex">pip</span> install -e git+git://github.com/wikimedia/limnpy.git#egg=limnpy-0.1.0</a></code></pre></div>
+<h2 id="usage">Usage</h2>
+<p>To dump data to file simply construct an instance of a <code>limnpy.DataSource</code> and call its <code>write()</code> method.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="im">import</span> limnpy, datetime</a>
+<a class="sourceLine" id="cb2-2" title="2">rows <span class="op">=</span> [{<span class="st">&#39;date&#39;</span> : datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), <span class="st">&#39;x&#39;</span> : <span class="dv">1</span>, <span class="st">&#39;y&#39;</span> : <span class="dv">2</span>},</a>
+<a class="sourceLine" id="cb2-3" title="3">        {<span class="st">&#39;date&#39;</span> : datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="st">&#39;x&#39;</span> : <span class="dv">7</span>, <span class="st">&#39;y&#39;</span> : <span class="dv">9</span>},]</a>
+<a class="sourceLine" id="cb2-4" title="4">ds <span class="op">=</span> limnpy.DataSource(<span class="st">&#39;test_source&#39;</span>, <span class="st">&#39;Test Source&#39;</span>, rows)</a>
+<a class="sourceLine" id="cb2-5" title="5">ds.write()</a></code></pre></div>
+<p>which should create the files <code>./datasources/test_source.yaml</code> and <code>./datafiles/test_source.csv</code>. To control the location of these files, you can pass in the <code>basedir</code> argument to the <code>write()</code> method which directs limnpy to place the YAML and csv files in <code>BASEDIR/{datasources,datafiles,graphs}</code>, creating any missing directories along the way.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1">ds.write(basedir<span class="op">=</span><span class="st">&#39;../in/a/directory/far/far/away/&#39;</span>)</a></code></pre></div>
+<p>Just calling the constructor with the appropriate arguments should really handle most cases, but for everything else you can just direclty manipulate the <code>source</code> and <code>data</code> fields before calling <code>write()</code>. The <code>source</code> field is just a nested <code>dict</code>/<code>list</code> object which directly maps to the YAML/JSON datasource file and the <code>data</code> attribute returns a reference to the internal <code>pandas.DataFrame</code> object which limnpy uses to store the data and labels. This has the perk of making lots of standard data cleaning/tranforming taks relatively easy (if you are familiar with <code>pandas</code>)</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1">ds_scaled <span class="op">=</span> limnpy.DataSource(<span class="st">&#39;scaled&#39;</span>, <span class="st">&#39;Data Scaled by a factor of 1000&#39;</span>, ds.data <span class="op">*</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2">ds_scaled.write()</a>
+<a class="sourceLine" id="cb4-3" title="3">combined <span class="op">=</span> limnpy.DataSource(<span class="st">&#39;combined&#39;</span>, <span class="st">&#39;Combined&#39;</span>, pd.merge(ds.data, ds_scaled.data))</a></code></pre></div>
+<p>One brief note about making limnpy work with your specific limn installation. If your dashboard is called fluff.wmflabs.org a common layout might look like:</p>
+<pre><code>limn_install/limn-data
+limn_install/limn-data/datasources/fluff
+limn_install/limn-data/datafiles/fluff
+limn_install/limn-data/graphs/fluff</code></pre>
+<p>If this is your setup, you’ll need to include the <code>fluff</code> directory in the datafile path within your datasouce. To do this, just add the <code>limn_group</code> keyword argument to the <code>DataSource</code> constructor like this:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1">ds <span class="op">=</span> limnpy.DataSource(limn_id<span class="op">=</span><span class="st">&#39;test_source&#39;</span>, limn_name<span class="op">=</span><span class="st">&#39;Test Source&#39;</span>, limn_group<span class="op">=</span><span class="st">&#39;fluff&#39;</span>, data<span class="op">=</span>rows)</a></code></pre></div>
+<h3 id="acceptable-data-formats">Acceptable Data Formats</h3>
+<p>Because <code>limnpy</code> uses <code>pandas.DataFrame</code> objects internally, it defers the parsing of the constructor’s <code>data</code> argument to the <code>pandas.DataFrame</code> constructor. This means that you can construct a <code>DataSource</code> object from whatever format your data already exist in. The only catch is that the <code>DataSource</code> needs to know the column labels for things like figuring out which column contains the dates and eventually showing the Limn graph maker the name of the particular column which they are plotting. So, if the datasource you pass in does not represent the column names, you need to pass in a list of strings as the optional <code>labels</code> parameter</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1">rows <span class="op">=</span> [[datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), <span class="dv">1</span>, <span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb7-2" title="2">        [datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="dv">7</span>, <span class="dv">9</span>]</a>
+<a class="sourceLine" id="cb7-3" title="3">ds <span class="op">=</span> DataSource(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;Name&#39;</span>, rows, labels<span class="op">=</span>[<span class="st">&#39;date&#39;</span>, <span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>])</a>
+<a class="sourceLine" id="cb7-4" title="4"></a>
+<a class="sourceLine" id="cb7-5" title="5">rows <span class="op">=</span> [{<span class="st">&#39;date&#39;</span> : datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), <span class="st">&#39;x&#39;</span> : <span class="dv">1</span>, <span class="st">&#39;y&#39;</span> : <span class="dv">2</span>},</a>
+<a class="sourceLine" id="cb7-6" title="6">        {<span class="st">&#39;date&#39;</span> : datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="st">&#39;x&#39;</span> : <span class="dv">7</span>, <span class="st">&#39;y&#39;</span> : <span class="dv">9</span>}]</a>
+<a class="sourceLine" id="cb7-7" title="7">ds <span class="op">=</span> DataSource(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;Name&#39;</span>, rows)</a>
+<a class="sourceLine" id="cb7-8" title="8"></a>
+<a class="sourceLine" id="cb7-9" title="9">rows <span class="op">=</span> {<span class="st">&#39;date&#39;</span> : [datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>)],</a>
+<a class="sourceLine" id="cb7-10" title="10">        <span class="st">&#39;x&#39;</span> : [<span class="dv">1</span>, <span class="dv">7</span>],</a>
+<a class="sourceLine" id="cb7-11" title="11">        <span class="st">&#39;y&#39;</span> : [<span class="dv">2</span>, <span class="dv">9</span>]}</a>
+<a class="sourceLine" id="cb7-12" title="12">ds <span class="op">=</span> DataSource(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;Name&#39;</span>, rows)</a>
+<a class="sourceLine" id="cb7-13" title="13"></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
+<a class="sourceLine" id="cb7-15" title="15">rows <span class="op">=</span> pd.DataFrame(rows)</a>
+<a class="sourceLine" id="cb7-16" title="16">ds <span class="op">=</span> DataSource(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;Name&#39;</span>, rows)</a></code></pre></div>
+<p>Lastly, because the date information requires some special handling, the DataSource needs to know which column contains the dates. By default a <code>DataSource</code> looks for a column labeled <code>date</code>, but this can be overridden using the <code>date_key</code> optional parameter:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1">rows <span class="op">=</span> [{<span class="st">&#39;first_seen&#39;</span> : datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), <span class="st">&#39;x&#39;</span> : <span class="dv">1</span>, <span class="st">&#39;y&#39;</span> : <span class="dv">2</span>},</a>
+<a class="sourceLine" id="cb8-2" title="2">        {<span class="st">&#39;first_seen&#39;</span> : datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="st">&#39;x&#39;</span> : <span class="dv">7</span>, <span class="st">&#39;y&#39;</span> : <span class="dv">9</span>}]</a>
+<a class="sourceLine" id="cb8-3" title="3">ds <span class="op">=</span> DataSource(<span class="st">&#39;id&#39;</span>, <span class="st">&#39;Name&#39;</span>, rows, date_key<span class="op">=</span><span class="st">&#39;first_seen&#39;</span>)</a></code></pre></div>
+<h3 id="graphs">Graphs</h3>
+<p>Another common task is the automatic generation of a graph. To construct a graph from a <code>limnpy.DataSource</code> object containing all columns, just call <code>ds.write_graph()</code>. Or, to specify a particular set of columns to plot from a <code>DataSource</code>, call</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1">ds.write_graph([<span class="st">&#39;x&#39;</span>])</a></code></pre></div>
+<p>To make a graph which contains columns from more than one DataSeries, you can directly construct an instance of <code>limnpy.Graph</code> by explicitly adding columns one at a time and then calling its <code>write()</code> method.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1">rows1 <span class="op">=</span> [[datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), <span class="dv">1</span>, <span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb10-2" title="2">         [datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="dv">7</span>, <span class="dv">9</span>]]</a>
+<a class="sourceLine" id="cb10-3" title="3">s1 <span class="op">=</span> limnpy.DataSource(<span class="st">&#39;source1&#39;</span>, <span class="st">&#39;Source 1&#39;</span>, rows1, labels<span class="op">=</span>[<span class="st">&#39;date&#39;</span>, <span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>])</a>
+<a class="sourceLine" id="cb10-4" title="4">s1.write(basedir<span class="op">=</span><span class="st">&#39;doctest_tmp&#39;</span>)</a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6">rows2 <span class="op">=</span> [[datetime.date(<span class="dv">2012</span>, <span class="dv">9</span>, <span class="dv">1</span>), <span class="dv">19</span>, <span class="dv">22</span>],</a>
+<a class="sourceLine" id="cb10-7" title="7">         [datetime.date(<span class="dv">2012</span>, <span class="dv">10</span>, <span class="dv">1</span>), <span class="dv">27</span>, <span class="dv">29</span>]]</a>
+<a class="sourceLine" id="cb10-8" title="8">s2 <span class="op">=</span> limnpy.DataSource(<span class="st">&#39;source2&#39;</span>, <span class="st">&#39;Source 2&#39;</span>, rows2, labels<span class="op">=</span>[<span class="st">&#39;date&#39;</span>, <span class="st">&#39;x&#39;</span>, <span class="st">&#39;y&#39;</span>])</a>
+<a class="sourceLine" id="cb10-9" title="9">s2.write(basedir<span class="op">=</span><span class="st">&#39;doctest_tmp&#39;</span>)</a>
+<a class="sourceLine" id="cb10-10" title="10"></a>
+<a class="sourceLine" id="cb10-11" title="11">g <span class="op">=</span> limnpy.Graph(<span class="st">&#39;custom_graom&#39;</span>, <span class="st">&#39;Custom Graph&#39;</span>)</a>
+<a class="sourceLine" id="cb10-12" title="12">g.add_metric(s1, <span class="st">&#39;x&#39;</span>, <span class="st">&#39;Custom Label for X&#39;</span>)</a>
+<a class="sourceLine" id="cb10-13" title="13">g.add_metric(s2, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;Custom Label for Y&#39;</span>)</a>
+<a class="sourceLine" id="cb10-14" title="14">g.write()</a></code></pre></div>
+<h3 id="dashboards">Dashboards</h3>
+<p>If you need to make a lot of dashboards, or don’t want to worry about manually writing valid JSON, this tool is for you. You can programmatically construct an instance of <code>limnpy.Dashboard</code> and then call its <code>write()</code> method to create the appropriate file. First, call the constructor and specify the slug, title, and heading:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1">db <span class="op">=</span> limnpy.Dashboard(<span class="st">&#39;sobchak&#39;</span>, <span class="st">&#39;Sobchak Security&#39;</span>, <span class="st">&#39;Dashboard&#39;</span>)</a></code></pre></div>
+<p>Which will construct a dashboard object which will be accessible at “your.domain.org/dashboards/sobchak”. To add actual graphs you then call the dashboard object’s <code>add_graph(name, graph_ids)</code> method, like this:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1">db.add_tab(<span class="st">&#39;core&#39;</span>, [<span class="st">&#39;intruders&#39;</span>])</a>
+<a class="sourceLine" id="cb12-2" title="2">db.add_tab(<span class="st">&#39;core&#39;</span>, [intruder_graph.__graph__[<span class="st">&#39;id&#39;</span>]])</a></code></pre></div>
+<p>Alternatively, you can pass in a list of <code>dict</code>s to the Dashbaord contructor, which is formatted like this:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb13-1" title="1">[{<span class="st">&#39;name&#39;</span> : <span class="st">&#39;core&#39;</span>, <span class="st">&#39;graph_ids&#39;</span> : [<span class="st">&#39;intruders_total&#39;</span>, <span class="st">&#39;intruders_daily&#39;</span>]},</a>
+<a class="sourceLine" id="cb13-2" title="2"> {<span class="st">&#39;name&#39;</span> : <span class="st">&#39;ancillary&#39;</span>, <span class="st">&#39;graph_ids&#39;</span> : [<span class="st">&#39;false_alarms&#39;</span>]}]</a></code></pre></div>
+<p>And to finally create the JSON file which the server will read, call <code>db.write(basedir)</code> to place the file in the appropriate subdirectory (‘dashboards’) of ‘basedir’</p>
+<h2 id="command-line-utility">Command Line Utility</h2>
+<p>Installing <code>limnpy</code> also installs <code>limnify</code>, which is a highly customizable tool for taking turning a csv-like file into a limn-compatible datasource or graph which can be directly served by a limn installation. In the simplest case, you just call</p>
+<pre><code>$ limnify my_data.csv</code></pre>
+<p>and it creates the files <code>./datafiles/my_data.csv</code> and <code>./datasources/my_data.yaml</code>. But inevitably, your data will have it’s own oddities. <code>limnify</code> allows you to accomodate a variety of ways in which your data may need special care by using the various options described below. But it’s probably worth noting three main things about what <code>limnify</code> expects so you don’t get a bunch of errors:</p>
+<ul>
+<li>it needs to know which column contains the date (just like the rest of <code>limnpy</code>)</li>
+<li>it needs to give each column a name so that end limn users to tell what is what</li>
+<li>it can accomodate “long” format data which it will pivot by summing the values in certain columns when grouped by other columns.</li>
+</ul>
+<p>Here is the help page:</p>
+<pre><code>$ limnify --help
+usage: limnify [-h] [--delim DELIM] [--header HEADER [HEADER ...]]
+               [--datecol DATECOL] [--datefmt DATEFMT] [--pivot]
+               [--metriccol METRICCOL] [--valcol VALCOL] [--basedir BASEDIR]
+               [--name NAME [NAME ...]] [--id ID] [--write_graph WRITE_GRAPH]
+               data
+
+positional arguments:
+  data                  name of file to be limnified
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --delim DELIM         delim to use for input file (default: ,)
+  --header HEADER [HEADER ...]
+                        this is a space separated list of names to use as the
+                        header rowIf your data doesn&#39;t already have a header
+                        row you will need to pass in a list of names to use,
+                        otherwise itwill assume the first row is a header and
+                        then produce confusing data sources. Remember, these
+                        names will bedisplayed in the graph editing interface
+                        (default: None)
+  --datecol DATECOL     the date column name or index--required if it is
+                        different from `date` (default: 0)
+  --datefmt DATEFMT     format to use with datetime.strptime, default uses
+                        dateutil.parser.parse (default: None)
+  --pivot               whether to try and pivot the data (only supports sum
+                        aggregation for now) (default: False)
+  --metriccol METRICCOL
+                        the column name or index to use for creating the
+                        column (metric) names when pivoting (default: 1)
+  --valcol VALCOL       the column in which to find the actual data to be
+                        plotted when pivoting (default: 2)
+  --basedir BASEDIR     directory in which to place the output datasources,
+                        datafiles and graphs directories (default: .)
+  --name NAME [NAME ...]
+                        name of datasource which will be displayed in the UI
+                        (default: None)
+  --id ID               the slug / id used to uniquely identify the datasource
+                        within a limn installation (default: None)
+  --write_graph WRITE_GRAPH
+                        whether to write a graph file containing all columns
+                        from the datasource (default: False)</code></pre>
+<p>Here is a simple example:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1">$ <span class="fu">head</span> -n2 test.tsv</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="ex">2013-01-01_00</span>   Asia    535984</a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="ex">2013-01-01_00</span>   Africa  20536</a>
+<a class="sourceLine" id="cb16-4" title="4">$ <span class="ex">limnify</span> --datefmt=<span class="st">&quot;%Y-%m-%d_%H&quot;</span> --pivot --header Hour Continent Count --datecol=Hour test.tsv</a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb16-6" title="6">$ <span class="fu">head</span> datafiles/test.csv</a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="fu">date</span>,Africa,Asia,Europe,North America,Oceania,South America,Unknown</a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="ex">2013/01</span>/<span class="ex">01</span>,20536.0,535984.0,1863240.0,1963952.0,86483.0,71855.0,4908.0</a></code></pre></div>
+</body>
+</html>

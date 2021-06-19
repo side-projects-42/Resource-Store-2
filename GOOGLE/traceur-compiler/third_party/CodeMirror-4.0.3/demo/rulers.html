@@ -1,73 +1,30 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Ruler Demo</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../doc/docs.css" />
-
-<link rel="stylesheet" href="../lib/codemirror.css" />
-<script src="../lib/codemirror.js"></script>
-<script src="../addon/display/rulers.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border-top: 1px solid #888;
-    border-bottom: 1px solid #888;
-  }
-  .ruler1 {
-    border-left: 1px solid #fcc;
-  }
-  .ruler2 {
-    border-left: 1px solid #f5f577;
-  }
-  .ruler3 {
-    border-left: 1px solid #cfc;
-  }
-  .ruler4 {
-    border-left: 1px solid #aff;
-  }
-  .ruler5 {
-    border-left: 1px solid #ccf;
-  }
-  .ruler6 {
-    border-left: 1px solid #fcf;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a class="active" href="#">Ruler demo</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Ruler Demo</h2>
-
-  <script type="text/javascript">
-    var nums = "0123456789",
-      space = "          ";
-    var rulers = [],
-      value = "";
-    for (var i = 1; i <= 6; i++) {
-      rulers.push({ className: "ruler" + i, column: i * 10 });
-      for (var j = 1; j < i; j++) value += space;
-      value += nums + "\n";
-    }
-    var editor = CodeMirror(document.body.lastChild, {
-      rulers: rulers,
-      value: value + value + value,
-      lineNumbers: true,
-    });
-  </script>
-
-  <p>
-    Demonstration of the
-    <a href="../doc/manual.html#addon_rulers">rulers</a> addon, which displays
-    vertical lines at given column offsets.
-  </p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>rulers</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Ruler Demo</p>
+<p><a href="http://codemirror.net"><img src="../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../index.html">Home</a></li>
+<li><a href="../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="#" class="active">Ruler demo</a></li>
+</ul>
+<h2 id="ruler-demo">Ruler Demo</h2>
+<p>Demonstration of the <a href="../doc/manual.html#addon_rulers">rulers</a> addon, which displays vertical lines at given column offsets.</p>
+</body>
+</html>

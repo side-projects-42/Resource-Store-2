@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="jobqueuearch">JobQueue Architecture</h1>
+<p>Notes on the Job queuing system architecture.</p>
+<h2 id="introduction">Introduction</h2>
+<p>The data model consist of the following main components:</p>
+<ul>
+<li>The Job object represents a particular deferred task that happens in the background. All jobs subclass the Job object and put the main logic in the function called run().</li>
+<li>The JobQueue object represents a particular queue of jobs of a certain type. For example there may be a queue for email jobs and a queue for CDN purge jobs.</li>
+</ul>
+<h2 id="job-queues">Job queues</h2>
+<p>Each job type has its own queue and is associated to a storage medium. One queue might save its jobs in redis while another one uses would use a database.</p>
+<p>Storage medium are defined in a queue class. Before using it, you must define in $wgJobTypeConf a mapping of the job type to a queue class.</p>
+<p>The factory class JobQueueGroup provides helper functions:</p>
+<ul>
+<li>getting the queue for a given job</li>
+<li>route new job insertions to the proper queue</li>
+</ul>
+<p>The following queue classes are available:</p>
+<ul>
+<li>JobQueueDB (stores jobs in the <code>job</code> table in a database)</li>
+<li>JobQueueRedis (stores jobs in a redis server)</li>
+</ul>
+<p>All queue classes support some basic operations (though some may be no-ops):</p>
+<ul>
+<li>enqueueing a batch of jobs</li>
+<li>dequeueing a single job</li>
+<li>acknowledging a job is completed</li>
+<li>checking if the queue is empty</li>
+</ul>
+<p>Some queue classes (like JobQueueDB) may dequeue jobs in random order while other queues might dequeue jobs in exact FIFO order. Callers should thus not assume jobs are executed in FIFO order.</p>
+<p>Also note that not all queue classes will have the same reliability guarantees. In-memory queues may lose data when restarted depending on snapshot and journal settings (including journal fsync() frequency). Some queue types may totally remove jobs when dequeued while leaving the ack() function as a no-op; if a job is dequeued by a job runner, which crashes before completion, the job will be lost. Some jobs, like purging CDN caches after a template change, may not require durable queues, whereas other jobs might be more important.</p>
+<h2 id="job-queue-aggregator">Job queue aggregator</h2>
+<p>The aggregators are used by nextJobDB.php, which is a script that will return a random ready queue (on any wiki in the farm) that can be used with runJobs.php. This can be used in conjunction with any scripts that handle wiki farm job queues. Note that $wgLocalDatabases defines what wikis are in the wiki farm.</p>
+<p>Since each job type has its own queue, and wiki-farms may have many wikis, there might be a large number of queues to keep track of. To avoid wasting large amounts of time polling empty queues, aggregators exists to keep track of which queues are ready.</p>
+<p>The following queue aggregator classes are available:</p>
+<ul>
+<li>JobQueueAggregatorRedis (uses a redis server to track ready queues)</li>
+</ul>
+<p>Some aggregators cache data for a few minutes while others may be always up to date. This can be an important factor for jobs that need a low pickup time (or latency).</p>
+<h2 id="jobs">Jobs</h2>
+<p>Callers should also try to make jobs maintain correctness when executed twice. This is useful for queues that actually implement ack(), since they may recycle dequeued but un-acknowledged jobs back into the queue to be attempted again. If a runner dequeues a job, runs it, but then crashes before calling ack(), the job may be returned to the queue and run a second time. Jobs like cache purging can happen several times without any correctness problems. However, a pathological case would be if a bug causes the problem to systematically keep repeating. For example, a job may always throw a DB error at the end of run(). This problem is trickier to solve and more obnoxious for things like email jobs, for example. For such jobs, it might be useful to use a queue that does not retry jobs.</p>
+</body>
+</html>

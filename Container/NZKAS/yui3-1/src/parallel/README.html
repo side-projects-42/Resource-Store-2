@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>A concurrent parallel processor to help in running several async functions.</p>
+<pre><code>var stack = new Y.Parallel();
+
+for (var i = 0; i &lt; 15; i++) {
+    Y.io(&#39;./api/json/&#39; + i, {
+        on: {
+            success: stack.add(function() {
+                Y.log(&#39;Done!&#39;);
+            })
+        }
+    });
+}
+
+stack.done(function() {
+    Y.log(&#39;All IO requests complete!&#39;);
+});</code></pre>
+</body>
+</html>

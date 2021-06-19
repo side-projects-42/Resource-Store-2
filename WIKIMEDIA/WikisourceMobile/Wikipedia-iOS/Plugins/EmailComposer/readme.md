@@ -1,4 +1,4 @@
-Added Cordova 1.5 support March 2012 - @RandyMcMillan
+Added Cordova 1.5 support March 2012 - <span class="citation" data-cites="RandyMcMillan">@RandyMcMillan</span>
 
 • You will need to add MessageUI.framework to your project if it is not already included.
 

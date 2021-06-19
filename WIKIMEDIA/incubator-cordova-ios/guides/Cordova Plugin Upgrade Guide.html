@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Cordova Plugin Upgrade Guide</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<h1 id="cordova-plugin-upgrade-guide">Cordova Plugin Upgrade Guide</h1>
+<p>This document is for developers who need to upgrade their Cordova plugins to a newer Cordova version. Starting with Cordova 1.5.0, some classes have been renamed, which will require the plugin to be upgraded. Make sure your project itself has been upgraded using the “Cordova Upgrade Guide” document.</p>
+<h2 id="upgrading-older-cordova-plugins-to-2.1.0">Upgrading older Cordova plugins to 2.1.0</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 2.1.0</li>
+<li>Follow the <strong>“Upgrading older Cordova plugins to 2.0.0”</strong> section, if necessary</li>
+<li>No changes in plugin structure from 1.9.x</li>
+<li><p>Change in the method signature of the CordovaLib’s JSONKit method categories, they are prefixed with “cdvjk_” now:</p>
+<p>e.g.</p>
+<pre><code> [myDict cdvjk_JSONString];</code></pre>
+<p>instead of:</p>
+<pre><code> [myDict JSONString];</code></pre></li>
+</ol>
+<h2 id="upgrading-older-cordova-plugins-to-2.0.0">Upgrading older Cordova plugins to 2.0.0</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 2.0.0</li>
+<li>Follow the <strong>“Upgrading older Cordova plugins to 1.9.0”</strong> section, if necessary</li>
+<li>No changes in plugin structure from 1.9.x</li>
+<li><p>Change in import header use: in 2.0.0, Cordova projects use the CordovaLib project as a subproject, it now uses the CORDOVA_FRAMEWORK styled import like this:</p>
+<pre><code> #import &lt;Cordova/CDV.h&gt;</code></pre>
+<p>instead of like this:</p>
+<pre><code> #import &quot;CDV.h&quot;</code></pre>
+<p>So now in 2.0.0, Cordova import headers are unified.</p></li>
+</ol>
+<p><strong>NOTE:</strong> The deprecated for 2.0.0 CDVPlugin methods <strong>verifyArguments</strong> and <strong>appViewController</strong> have been removed.</p>
+<h2 id="upgrading-older-cordova-plugins-to-1.9.0">Upgrading older Cordova plugins to 1.9.0</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 1.9.0</li>
+<li>Follow the <strong>“Upgrading older Cordova plugins to 1.8.0”</strong> section, if necessary</li>
+<li>No changes in plugin structure from 1.8.x</li>
+</ol>
+<h2 id="upgrading-older-cordova-plugins-to-1.8.0">Upgrading older Cordova plugins to 1.8.0</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 1.8.0</li>
+<li>Follow the <strong>“Upgrading older Cordova plugins to 1.7.0”</strong> section, if necessary</li>
+<li>No changes in plugin structure from 1.7.x</li>
+</ol>
+<h2 id="upgrading-older-cordova-plugins-to-1.7.0">Upgrading older Cordova plugins to 1.7.0</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 1.7.0</li>
+<li>Follow the <strong>“Upgrading older Cordova plugins to 1.6.0”</strong> section, if necessary</li>
+<li>No changes in plugin structure from 1.6.x</li>
+</ol>
+<h2 id="upgrading-older-cordova-plugins-to-1.6.x">Upgrading older Cordova plugins to 1.6.x</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 1.6.x</li>
+<li>Follow the <strong>“Upgrading older Cordova plugins to 1.5.0”</strong> section, if necessary</li>
+<li>See the <strong>1.6.0 Plugin Notes</strong> section for new functionality available to plugins</li>
+<li><p>The global <strong>“Cordova”</strong> (upper-case C) was renamed to <strong>“cordova”</strong> (lower-case c) to match the cordova-js Android implementation in 1.5.0 that is now common to Android, Blackberry and iOS. Please rename your calls to reflect the new lower-case <strong>c</strong>, or you can add a shim (which will support older versions) like so:</p>
+<ol type="a">
+<li><p>Wrap your plugin JavaScript in a temporary scope (self-executing function) - see <a href="http://ejohn.org/apps/learn/#57">“Temporary Scope”</a> or <a href="https://github.com/phonegap/phonegap-plugins/wiki/Wrapping-your-Plugin&#39;s-JavaScript">this</a></p></li>
+<li><p>Inside your temporary scope, set a <strong>local var</strong> to the global PhoneGap/Cordova/cordova object, for the exec function</p>
+<pre><code> var cordovaRef = window.PhoneGap || window.Cordova || window.cordova; // old to new fallbacks</code></pre></li>
+<li><p>Replace any <strong>PhoneGap</strong> or <strong>Cordova</strong> or <strong>cordova</strong> in your plugin JavaScript (within the temporary scope), with <strong>cordovaRef</strong> above</p></li>
+</ol></li>
+</ol>
+<h2 id="upgrading-older-cordova-plugins-to-1.5.0">Upgrading older Cordova plugins to 1.5.0</h2>
+<ol type="1">
+<li><strong>Install</strong> Cordova 1.5.0</li>
+<li>Replace macro occurrences of <strong>“PHONEGAP_FRAMEWORK”</strong> with <strong>“CORDOVA_FRAMEWORK”</strong></li>
+<li>Replace import occurrences of <strong>“&lt;PhoneGap/”</strong> with <strong>“&lt;Cordova/”</strong></li>
+<li>Replace class prefixes of <strong>PG</strong> with <strong>CDV</strong> (for example <strong>PG</strong>Plugin becomes <strong>CDV</strong>Plugin)</li>
+<li>Replace occurrences of <strong>[self appViewController]</strong> with <strong>self.viewController</strong>.</li>
+<li>See the <strong>1.5.0 Plugin Notes</strong> section for new functionality available to plugins</li>
+</ol>
+<h2 id="plugin-notes">1.6.0 Plugin Notes</h2>
+<ol type="1">
+<li><p>There is a new CDVCommandDelegate protocol method available:</p>
+<pre><code>- (void) registerPlugin:(CDVPlugin*)plugin withClassName:(NSString*)className;</code></pre>
+<p>You use this in your plugin to initialize another plugin that your plugin needs to be available and running (dependency), and all plugins can access the registered plugin from the <strong>getCommandInstance</strong> method of the CDVCommandDelegate. This is a substitute for listing a plugin your plugin depends on, in <strong>Cordova.plist/Plugins</strong>.</p></li>
+<li><p>There is a new <strong>IsAtLeastiOSVersion</strong> macro available in <strong>CDVAvailability.h</strong>:</p>
+<pre><code>// Returns YES if it is at least version specified as NSString(X)
+if (IsAtLeastiOSVersion(@&quot;5.1&quot;)) {
+    // do something for iOS 5.1 or greater
+}</code></pre></li>
+<li><p>There are <strong>Compatibility headers</strong> available for versions 0.9.6 and 1.5.0, in <strong>~/Documents/CordovaLib/Classes/compatibility</strong> (where ~ signifies your Home folder). See the <strong>“README.txt”</strong> in that folder for instructions.</p>
+<p>Note that including these headers are all or nothing - you can’t have a mix and match of plugin versions, if you include the 0.9.6 compatibility header - all your plugins must be of the same “version”. It is highly recommended that you upgrade your plugins to the current version instead of using these stop-gap headers.</p>
+<p>The 1.5.0 header shouldn’t be used - this is included for the <a href="https://issues.apache.org/jira/browse/CB-330">LocalStorage patch</a> and is for using core plugins as general plugins that easily support multiple versions, and may be removed in the future.</p></li>
+</ol>
+<h2 id="plugin-notes-1">1.5.0 Plugin Notes</h2>
+<ol type="1">
+<li>The UIViewController returned from the <strong>viewController property</strong> will be a CDVViewController subclass.</li>
+<li>The <strong>appDelegate method</strong> basically returns an (id) now, and is the same as calling <strong>[[UIApplication sharedApplication] delegate]</strong>. In the past it returned a PhoneGapDelegate class.</li>
+<li>There is a new <strong>commandDelegate property</strong> now, which gives access to the <a href="https://github.com/apache/incubator-cordova-ios/blob/master/CordovaLib/Classes/CDVCommandDelegate.h">CDVCommandDelegate protocol</a> used by the app</li>
+<li>There is a new header file <strong>CDVAvailability.h</strong> that defines Cordova versions during compile time - to check for the current version during run-time, call <strong>[CDVViewController cordovaVersion]</strong></li>
+</ol>
+</body>
+</html>

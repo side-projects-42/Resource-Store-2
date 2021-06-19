@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <meta name="author" content="Christoph Pojer" />
+    <title>Jest 11.0</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Jest 11.0</h1>
+      <p class="author">Christoph Pojer</p>
+    </header>
+    <p>
+      Today we’re announcing a switch to major revisions for Jest with Jest 11.0
+      being the first major release. Jest has been used by Facebook engineers
+      and on our continuous integration systems for years and we believe Jest
+      has been way beyond a “1.0 release” for a long time. This is similar to a
+      change
+      <a
+        href="http://facebook.github.io/react/blog/2016/02/19/new-versioning-scheme.html"
+        >the React team has made</a
+      >.
+    </p>
+    <p>
+      If you are using Jest 0.9 or Jest 0.10 the upgrade should be seamless. All
+      changes from the last few months were rolled into Jest 11.0.
+    </p>
+    <h3 id="new-in-jest-11.0.">New in Jest 11.0.</h3>
+    <h4 id="babel-integration-and-simplified-setup">
+      Babel Integration and Simplified Setup
+    </h4>
+    <p>
+      <code>babel-jest</code> was adopted within the newly modularized Jest
+      <a href="https://github.com/facebook/jest/tree/master/packages"
+        >repository</a
+      >
+      and it is now seamlessly integrated into Jest. If you are upgrading from
+      an older version of Jest or are looking to adopt Jest, we recommend
+      reading the
+      <a href="https://jestjs.io/docs/getting-started.html"
+        >Getting Started guide</a
+      >.
+    </p>
+    <!--truncate-->
+    <p>
+      Previously Jest provided APIs such as <code>jest.dontMock</code> which
+      unmocks a module that is subsequently being required using the
+      <code>require</code> function. Testing code usually looked like this:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="va">jest</span>.<span class="at">dontMock</span>(<span class="st">&#39;LikeButton&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">const</span> LikeButton <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;LikeButton&#39;</span>)<span class="op">;</span> <span class="co">// LikeButton is unmocked</span></a></code></pre>
+    </div>
+    <p>
+      However, together with ES2015 import statements this will no longer work.
+      Per the specification <code>import</code>s are hoisted to the top of their
+      code block. Code written like this:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="va">jest</span>.<span class="at">dontMock</span>(<span class="st">&#39;LikeButton&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="im">import</span> LikeButton <span class="im">from</span> <span class="st">&#39;LikeButton&#39;</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>when executed, would actually be run in this order:</p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="im">import</span> LikeButton <span class="im">from</span> <span class="st">&#39;LikeButton&#39;</span><span class="op">;</span> <span class="co">// This happens before the dontMock call.</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="va">jest</span>.<span class="at">dontMock</span>(<span class="st">&#39;LikeButton&#39;</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      The LikeButton module would therefore be mocked even though we explicitly
+      call <code>dontMock</code>.
+    </p>
+    <p>
+      When the latest versions of Jest and babel-jest are used together, calls
+      to the new APIs <code>jest.unmock</code>, <code>jest.mock</code>,
+      <code>jest.disableAutomock</code> and <code>jest.enableAutomock</code> are
+      hoisted to the top of their block, before ES2015 import statements.
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">jest</span>.<span class="at">unmock</span>(<span class="st">&#39;LikeButton&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="im">import</span> LikeButton <span class="im">from</span> <span class="st">&#39;LikeButton&#39;</span><span class="op">;</span> <span class="co">// LikeButton is properly unmocked!</span></a></code></pre>
+    </div>
+    <h4 id="automocking-improvements">(Auto)Mocking Improvements</h4>
+    <p>
+      We have made numerous improvements and bug fixes to Jest’s automocking
+      feature, improved npm3 support and added new manual mocking APIs. Many
+      people have expressed a desire use Jest with the automocking feature
+      disabled. A global configuration option
+      <a href="https://jestjs.io/docs/api.html#automock-boolean"
+        ><code>automock</code></a
+      >, which can be set to <code>false</code>, was added.
+    </p>
+    <p>
+      We have also added two new APIs to simplify manual mocks.
+      <code>jest.mock</code> specifies a manual mock factory for a specific
+      test:
+    </p>
+    <pre><code>// Implement a mock for a hypothetical &quot;sum&quot; module.
+jest.mock(&#39;sum&#39;, () =&gt; {
+  return (a, b) =&gt; a + b;
+});
+
+const sum = require(&#39;sum&#39;);
+sum(1, 4); // 5</code></pre>
+    <p>
+      And <code>jest.fn</code> was added to make it easier to create mock
+      functions:
+    </p>
+    <pre><code>// Create a mock function
+const mockFn = jest.fn(() =&gt; 42);
+mockFn(); // 42
+expect(mockFn.calls.length).toEqual(1);</code></pre>
+    <h4 id="performance">Performance</h4>
+    <p>
+      We recently wrote about some
+      <a
+        href="https://jestjs.io/blog/2016/03/11/javascript-unit-testing-performance.html"
+        >performance improvements</a
+      >
+      we’ve made in Jest. Most notably, startup time has been improved and we
+      are now in a comfortable place with regards to performance.
+    </p>
+    <h4 id="jasmine-and-test-assertion-improvements">
+      Jasmine and Test Assertion Improvements
+    </h4>
+    <p>
+      When Jest was open sourced it shipped with Jasmine 1. Jest was designed to
+      work with any test assertion library and optional Jasmine 2 support was
+      added through an
+      <a href="https://github.com/facebook/jest/pull/330"
+        >external contribution</a
+      >
+      at the end of last year. This change delivers better performance and
+      provides a better APIs over the previous version of Jasmine. As such, we
+      have converted all our JavaScript tests at Facebook to Jasmine 2. With
+      Jest 11 we are making Jasmine 2 the new default. Jasmine 1 can be enabled
+      through the
+      <a href="https://jestjs.io/docs/api.html#testrunner-string"
+        ><code>testRunner</code></a
+      >
+      configuration option.
+    </p>
+    <p>
+      We have also made many updates around Jasmine. The failure messages for
+      custom matchers provided for Jest’s mock functions were improved and will
+      now also work for Jasmine spies. Skipped tests, when using
+      <code>fit</code> or <code>fdescribe,</code> are now properly reported at
+      the end of a test run.
+    </p>
+    <h4 id="other-changes">Other Changes</h4>
+    <p>
+      The <code>jest --watch</code> command has been rewritten and improved. By
+      default it now only runs tests related to changed files. If you want to
+      run all tests on every change, you can run <code>jest --watch=all</code>.
+      The verbose logger output has also been improved and we’ve added more
+      helpful warnings and error messages. We added a
+      <a href="https://jestjs.io/docs/api.html#testenvironment-string"
+        ><code>testEnvironment</code></a
+      >
+      configuration option to customize the test environment. For example, when
+      building a node service, a special <code>node</code> environment instead
+      of <code>jsdom</code> can be used. Finally, the website and all
+      documentation have been completely rewritten.
+    </p>
+    <p>
+      All changes from the past few months can be found in the
+      <a href="https://github.com/facebook/jest/blob/master/CHANGELOG.md"
+        >CHANGELOG</a
+      >.
+    </p>
+    <h3 id="contributions-and-jests-future">Contributions And Jest’s future</h3>
+    <p>
+      Over the last six months, Jest has received significant changes from a
+      huge number of new contributors. I’d like to thank all the open source
+      contributors and Facebook employees for their help in making Jest better
+      for everyone. New contributors: Alexander Juarez, Christian Lentfort,
+      Cristian Carlesso, Dan Abramov, Dmitrii Abramov, Evan Jacobs, James
+      Friend, James Ide, Jeff Carpenter, Joe Lencioni, Michael Diolosa, Nik
+      Graf, Pavel Prokopenko, Pavel Volokitin, Sebastian Mayr and ShihChi Huang.
+    </p>
+    <p>
+      With your support we are looking forward to making Jest even better in the
+      coming months. We are currently working on improved React (Native)
+      testing, enhanced code coverage support and are planning to open source
+      our internal test runner that allows multiple Jest projects to be run with
+      a single run-command.
+    </p>
+  </body>
+</html>

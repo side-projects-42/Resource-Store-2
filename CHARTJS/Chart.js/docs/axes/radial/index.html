@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="radial-axes">Radial Axes</h1>
+<p>Radial axes are used specifically for the radar and polar area chart types. These axes overlay the chart area, rather than being positioned on one of the edges. One radial axis is included by default in Chart.js.</p>
+<ul>
+<li><a href="./linear.md">radialLinear</a></li>
+</ul>
+<h2 id="visual-components">Visual Components</h2>
+<p>A radial axis is composed of visual components that can be individually configured. These components are:</p>
+<ul>
+<li><a href="#angle-lines">angle lines</a></li>
+<li><a href="#grid-lines">grid lines</a></li>
+<li><a href="#point-labels">point labels</a></li>
+<li><a href="#ticks">ticks</a></li>
+</ul>
+<h3 id="angle-lines">Angle Lines</h3>
+<p>The grid lines for an axis are drawn on the chart area. They stretch out from the center towards the edge of the canvas. In the example below, they are red.</p>
+<p>```js chart-editor // <block:setup:1> const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “My First dataset”, backgroundColor: “rgba(54, 162, 235, 0.5)”, borderColor: “rgb(54, 162, 235)”, borderWidth: 1, data: [10, 20, 30, 40, 50, 0, 5], }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “radar”, data, options: { scales: { r: { angleLines: { color: “red”, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h3 id="grid-lines">Grid Lines</h3>
+<p>The grid lines for an axis are drawn on the chart area. In the example below, they are red.</p>
+<p>```js chart-editor // <block:setup:1> const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “My First dataset”, backgroundColor: “rgba(54, 162, 235, 0.5)”, borderColor: “rgb(54, 162, 235)”, borderWidth: 1, data: [10, 20, 30, 40, 50, 0, 5], }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “radar”, data, options: { scales: { r: { grid: { color: “red”, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h3 id="point-labels">Point Labels</h3>
+<p>The point labels indicate the value for each angle line. In the example below, they are red.</p>
+<p>```js chart-editor // <block:setup:1> const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “My First dataset”, backgroundColor: “rgba(54, 162, 235, 0.5)”, borderColor: “rgb(54, 162, 235)”, borderWidth: 1, data: [10, 20, 30, 40, 50, 0, 5], }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “radar”, data, options: { scales: { r: { pointLabels: { color: “red”, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h3 id="ticks">Ticks</h3>
+<p>The ticks are used to label values based on how far they are from the center of the axis. In the example below, they are red.</p>
+<p>```js chart-editor // <block:setup:1> const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “My First dataset”, backgroundColor: “rgba(54, 162, 235, 0.5)”, borderColor: “rgb(54, 162, 235)”, borderWidth: 1, data: [10, 20, 30, 40, 50, 0, 5], }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “radar”, data, options: { scales: { r: { ticks: { color: “red”, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+</body>
+</html>

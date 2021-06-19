@@ -2603,8 +2603,8 @@
               // remove the given handler for the given type
               if (handler) delete events[type][handler.guid];
               // remove all handlers for the given type
+              // Handle the removal of namespaced events
               else
-                // Handle the removal of namespaced events
                 for (var handle in events[type])
                   if (namespace.test(events[type][handle].type))
                     delete events[type][handle];
@@ -3885,8 +3885,8 @@
         });
       // Otherwise, assume that it's an object of key/value pairs
       // Serialize the key/values
+      // If the value is an array then the key names need to be repeated
       else
-        // If the value is an array then the key names need to be repeated
         for (var j in a)
           if (jQuery.isArray(a[j]))
             jQuery.each(a[j], function () {

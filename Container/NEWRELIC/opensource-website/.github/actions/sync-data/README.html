@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <p align="center">
+      <a href="https://github.com/actions/javascript-action/actions"
+        ><img
+          alt="javscript-action status"
+          src="https://github.com/actions/javascript-action/workflows/units-test/badge.svg"
+      /></a>
+    </p>
+    <h1 id="create-a-javascript-action">Create a JavaScript Action</h1>
+    <p>
+      Use this template to bootstrap the creation of a JavaScript
+      action.:rocket:
+    </p>
+    <p>
+      This template includes tests, linting, a validation workflow, publishing,
+      and versioning guidance.
+    </p>
+    <p>
+      If you are new, there’s also a simpler introduction. See the
+      <a href="https://github.com/actions/hello-world-javascript-action"
+        >Hello World JavaScript Action</a
+      >
+    </p>
+    <h2 id="create-an-action-from-this-template">
+      Create an action from this template
+    </h2>
+    <p>
+      Click the <code>Use this Template</code> and provide the new repo details
+      for your action
+    </p>
+    <h2 id="code-in-master">Code in Master</h2>
+    <p>Install the dependencies</p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="ex">npm</span> install</a></code></pre>
+    </div>
+    <p>Run the tests :heavy_check_mark:</p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">$ <span class="ex">npm</span> test</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3"> <span class="ex">PASS</span>  ./index.test.js</a>
+<a class="sourceLine" id="cb2-4" title="4">  ✓ <span class="ex">throws</span> invalid number (3ms)</a>
+<a class="sourceLine" id="cb2-5" title="5">  ✓ <span class="bu">wait</span> 500 ms (504ms)</a>
+<a class="sourceLine" id="cb2-6" title="6">  ✓ <span class="bu">test</span> runs (95ms)</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="ex">...</span></a></code></pre>
+    </div>
+    <h2 id="change-action.yml">Change action.yml</h2>
+    <p>
+      The action.yml contains defines the inputs and output for your action.
+    </p>
+    <p>
+      Update the action.yml with your name, description, inputs and outputs for
+      your action.
+    </p>
+    <p>
+      See the
+      <a
+        href="https://help.github.com/en/articles/metadata-syntax-for-github-actions"
+        >documentation</a
+      >
+    </p>
+    <h2 id="change-the-code">Change the Code</h2>
+    <p>
+      Most toolkit and CI/CD operations involve async operations so the action
+      is run in an async function.
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">const</span> core <span class="op">=</span> <span class="at">require</span>(<span class="st">&#39;@actions/core&#39;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-2" title="2">...</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">async</span> <span class="kw">function</span> <span class="at">run</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">  <span class="cf">try</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-6" title="6">      ...</a>
+<a class="sourceLine" id="cb3-7" title="7">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-8" title="8">  <span class="cf">catch</span> (error) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="va">core</span>.<span class="at">setFailed</span>(<span class="va">error</span>.<span class="at">message</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-10" title="10">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="op">}</span></a>
+<a class="sourceLine" id="cb3-12" title="12"></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="at">run</span>()</a></code></pre>
+    </div>
+    <p>
+      See the
+      <a
+        href="https://github.com/actions/toolkit/blob/master/README.md#packages"
+        >toolkit documentation</a
+      >
+      for the various packages.
+    </p>
+    <h2 id="package-for-distribution">Package for distribution</h2>
+    <p>
+      GitHub Actions will run the entry point from the action.yml. Packaging
+      assembles the code into one file that can be checked in to Git, enabling
+      fast and reliable execution and preventing the need to check in
+      node_modules.
+    </p>
+    <p>
+      Actions are run from GitHub repos. Packaging the action will create a
+      packaged action in the dist folder.
+    </p>
+    <p>Run package</p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">npm</span> run package</a></code></pre>
+    </div>
+    <p>Since the packaged index.js is run from the dist folder.</p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">git</span> add dist</a></code></pre>
+    </div>
+    <h2 id="create-a-release-branch">Create a release branch</h2>
+    <p>
+      Users shouldn’t consume the action from master since that would be latest
+      code and actions can break compatibility between major versions.
+    </p>
+    <p>Checkin to the v1 release branch</p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1">$ <span class="fu">git</span> checkout -b v1</a>
+<a class="sourceLine" id="cb6-2" title="2">$ <span class="fu">git</span> commit -a -m <span class="st">&quot;v1 release&quot;</span></a></code></pre>
+    </div>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1">$ <span class="fu">git</span> push origin v1</a></code></pre>
+    </div>
+    <p>Your action is now published! :rocket:</p>
+    <p>
+      See the
+      <a
+        href="https://github.com/actions/toolkit/blob/master/docs/action-versioning.md"
+        >versioning documentation</a
+      >
+    </p>
+    <h2 id="usage">Usage</h2>
+    <p>You can now consume the action by referencing the v1 branch</p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode yaml"
+      ><code class="sourceCode yaml"><a class="sourceLine" id="cb8-1" title="1"><span class="fu">uses:</span><span class="at"> actions/javascript-action@v1</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="fu">with:</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="fu">milliseconds:</span><span class="at"> </span><span class="dv">1000</span></a></code></pre>
+    </div>
+    <p>
+      See the
+      <a href="https://github.com/actions/javascript-action/actions"
+        >actions tab</a
+      >
+      for runs of this action! :rocket:
+    </p>
+  </body>
+</html>

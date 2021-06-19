@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>responsive</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="responsive-charts">Responsive Charts</h1>
+<p>When it comes to changing the chart size based on the window size, a major limitation is that the canvas <em>render</em> size (<code>canvas.width</code> and <code>.height</code>) can <strong>not</strong> be expressed with relative values, contrary to the <em>display</em> size (<code>canvas.style.width</code> and <code>.height</code>). Furthermore, these sizes are independent from each other and thus the canvas <em>render</em> size does not adjust automatically based on the <em>display</em> size, making the rendering inaccurate.</p>
+<p>The following examples <strong>do not work</strong>:</p>
+<ul>
+<li><code>&lt;canvas height="40vh" width="80vw"&gt;</code>: <strong>invalid</strong> values, the canvas doesn’t resize (<a href="https://codepen.io/chartjs/pen/oWLZaR">example</a>)</li>
+<li><code>&lt;canvas style="height:40vh; width:80vw"&gt;</code>: <strong>invalid</strong> behavior, the canvas is resized but becomes blurry (<a href="https://codepen.io/chartjs/pen/WjxpmO">example</a>)</li>
+<li><code>&lt;canvas style="margin: 0 auto;"&gt;</code>: <strong>invalid</strong> behavior, the canvas continually shrinks. Chart.js needs a dedicated container for each canvas and this styling should be applied there.</li>
+</ul>
+<p>Chart.js provides a <a href="#configuration-options">few options</a> to enable responsiveness and control the resize behavior of charts by detecting when the canvas <em>display</em> size changes and update the <em>render</em> size accordingly.</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<p>Namespace: <code>options</code></p>
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 4%" />
+<col style="width: 3%" />
+<col style="width: 83%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>responsive</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Resizes the chart canvas when its container does (<a href="#important-note">important note…</a>).</td>
+</tr>
+<tr class="even">
+<td><code>maintainAspectRatio</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>Maintain the original canvas aspect ratio <code>(width / height)</code> when resizing.</td>
+</tr>
+<tr class="odd">
+<td><code>aspectRatio</code></td>
+<td><code>number</code></td>
+<td><code>2</code></td>
+<td>Canvas aspect ratio (i.e. <code>width / height</code>, a value of 1 representing a square canvas). Note that this option is ignored if the height is explicitly defined either as attribute or via the style.</td>
+</tr>
+<tr class="even">
+<td><code>onResize</code></td>
+<td><code>function</code></td>
+<td><code>null</code></td>
+<td>Called when a resize occurs. Gets passed two arguments: the chart instance and the new size.</td>
+</tr>
+<tr class="odd">
+<td><code>resizeDelay</code></td>
+<td><code>number</code></td>
+<td><code>0</code></td>
+<td>Delay the resize update by give amount of milliseconds. This can ease the resize process by debouncing update of the elements.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="important-note">Important Note</h2>
+<p>Detecting when the canvas size changes can not be done directly from the <code>canvas</code> element. Chart.js uses its parent container to update the canvas <em>render</em> and <em>display</em> sizes. However, this method requires the container to be <strong>relatively positioned</strong> and <strong>dedicated to the chart canvas only</strong>. Responsiveness can then be achieved by setting relative values for the container size (<a href="https://codepen.io/chartjs/pen/YVWZbz">example</a>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">&lt;div</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ot">  class=</span><span class="st">&quot;chart-container&quot;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ot">  style=</span><span class="st">&quot;position: relative; height:40vh; width:80vw&quot;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">&lt;canvas</span><span class="ot"> id=</span><span class="st">&quot;chart&quot;</span><span class="kw">&gt;&lt;/canvas&gt;</span></a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="kw">&lt;/div&gt;</span></a></code></pre></div>
+<p>The chart can also be programmatically resized by modifying the container size:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="va">chart</span>.<span class="va">canvas</span>.<span class="va">parentNode</span>.<span class="va">style</span>.<span class="at">height</span> <span class="op">=</span> <span class="st">&quot;128px&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="va">chart</span>.<span class="va">canvas</span>.<span class="va">parentNode</span>.<span class="va">style</span>.<span class="at">width</span> <span class="op">=</span> <span class="st">&quot;128px&quot;</span><span class="op">;</span></a></code></pre></div>
+<p>Note that in order for the above code to correctly resize the chart height, the <a href="#configuration-options"><code>maintainAspectRatio</code></a> option must also be set to <code>false</code>.</p>
+<h2 id="printing-resizable-charts">Printing Resizable Charts</h2>
+<p>CSS media queries allow changing styles when printing a page. The CSS applied from these media queries may cause charts to need to resize. However, the resize won’t happen automatically. To support resizing charts when printing, you need to hook the <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeprint">onbeforeprint</a> event and manually trigger resizing of each chart.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">function</span> <span class="at">beforePrintHandler</span>() <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="cf">for</span> (<span class="kw">var</span> id <span class="kw">in</span> <span class="va">Chart</span>.<span class="at">instances</span>) <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="va">Chart</span>.<span class="at">instances</span>[id].<span class="at">resize</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="op">}</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="op">}</span></a></code></pre></div>
+<p>You may also find that, due to complexities in when the browser lays out the document for printing and when resize events are fired, Chart.js is unable to properly resize for the print layout. To work around this, you can pass an explicit size to <code>.resize()</code> then use an <a href="https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onafterprint">onafterprint</a> event to restore the automatic size when done.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="va">window</span>.<span class="at">addEventListener</span>(<span class="st">&quot;beforeprint&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="va">myChart</span>.<span class="at">resize</span>(<span class="dv">600</span><span class="op">,</span> <span class="dv">600</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="va">window</span>.<span class="at">addEventListener</span>(<span class="st">&quot;afterprint&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="va">myChart</span>.<span class="at">resize</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+</body>
+</html>

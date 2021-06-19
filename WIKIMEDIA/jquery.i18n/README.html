@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="jquery.i18n">jQuery.i18n</h1>
+<p><a href="https://npmjs.com/package/@wikimedia/jquery.i18n"><img src="https://img.shields.io/npm/v/@wikimedia/jquery.i18n.svg" alt="npm" /></a></p>
+<blockquote>
+<p>NOTE: For jquery independent version of this library, see https://github.com/wikimedia/banana-i18n</p>
+</blockquote>
+<p>jQuery.i18n is a jQuery based Javascript internationalization library. It helps you to internationalize your web applications easily.</p>
+<p>This is a project by Wikimedia foundation’s <a href="https://www.mediawiki.org/wiki/Wikimedia_Language_engineering">Language Engineering team</a> and used in some of the Wikimedia Foundation projects like Universal Language Selector.</p>
+<p>The jquery.i18n library uses a json based localization file format, “banana”, which is used as the localization file format for MediaWiki and other projects.</p>
+<h1 id="features">Features</h1>
+<ul>
+<li>Simple file format - JSON. Easily readable for humans and machines.</li>
+<li>Author and metadata information is not lost anywhere. There are other file formats using comments to store this.</li>
+<li>Uses MediaWiki convention for placeholders. Easily readable and proven convention. Example: <code>There are $1 cars</code></li>
+<li>Supports plural conversion without using extra messages for all plural forms. Plural rule handling is done using CLDR. Covers a wide range of languages</li>
+<li>Supports gender. By passing the gender value, you get correct sentences according to gender.</li>
+<li>Supports grammar forms. jquery.i18n has a basic but extensible grammar conversion support</li>
+<li>Fallback chains for all languages.</li>
+<li>Data api- the message key. Example: <code>&lt;li data-i18n="message-key"&gt;&lt;/li&gt;</code>.</li>
+<li>Dynamic change of interface language without refreshing a webpage.</li>
+<li>Nestable grammar, plural, gender support. These constructs can be nested to any arbitrary level for supporting sophisticated message localization</li>
+<li>Message documentation through special language code <code>qqq</code></li>
+<li>Extensible message parser to add or customize magic words in the messages. Example: <code>{sitename}</code> or <code>[[link]]</code></li>
+</ul>
+<h2 id="quick-start">Quick start</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">git</span> clone https://github.com/wikimedia/jquery.i18n.git</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="bu">cd</span> jquery.i18n</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="fu">git</span> submodule update --init</a></code></pre></div>
+<h2 id="testing">Testing</h2>
+<pre class="shell"><code>npm install</code></pre>
+<p>To run tests locally, run <code>npm test</code>, and this will run the tests.</p>
+<h1 id="message-file-format">Message File Format</h1>
+<p>The message files are json formatted. As a convention, you can have a folder named i18n inside your source code. For each language or locale, have a file named like languagecode.json.</p>
+<p>Example:</p>
+<pre><code>App
+    |--src
+    |--doc
+    |--i18n
+        |--ar.json
+        |--de.json
+        |--en.json
+        |--he.json
+        |--hi.json
+        |--fr.json
+        |--qqq.json</code></pre>
+<p>A simple en.json file example is given below</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">&quot;@metadata&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="dt">&quot;authors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Alice&quot;</span><span class="ot">,</span> <span class="st">&quot;David&quot;</span><span class="ot">,</span> <span class="st">&quot;Santhosh&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="dt">&quot;last-updated&quot;</span><span class="fu">:</span> <span class="st">&quot;2012-09-21&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="dt">&quot;locale&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-6" title="6">    <span class="dt">&quot;message-documentation&quot;</span><span class="fu">:</span> <span class="st">&quot;qqq&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="dt">&quot;AnotherMetadata&quot;</span><span class="fu">:</span> <span class="st">&quot;AnotherMedatadataValue&quot;</span></a>
+<a class="sourceLine" id="cb4-8" title="8">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb4-9" title="9">  <span class="dt">&quot;appname-title&quot;</span><span class="fu">:</span> <span class="st">&quot;Example Application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-10" title="10">  <span class="dt">&quot;appname-sub-title&quot;</span><span class="fu">:</span> <span class="st">&quot;An example application with jquery.i18n&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-11" title="11">  <span class="dt">&quot;appname-header-introduction&quot;</span><span class="fu">:</span> <span class="st">&quot;Introduction&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-12" title="12">  <span class="dt">&quot;appname-about&quot;</span><span class="fu">:</span> <span class="st">&quot;About this application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-13" title="13">  <span class="dt">&quot;appname-footer&quot;</span><span class="fu">:</span> <span class="st">&quot;Footer text&quot;</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="fu">}</span></a></code></pre></div>
+<p>The json file should be a valid json. The <code>@metadata</code> holds all kind of data that are not messages. You can store author information, copyright, updated date or anything there.</p>
+<p>Messages are key-value pairs. It is a good convention to prefix your appname to message keys to make the messages unique. It acts as the namespace for the message keys. It is also a good convention to have the message keys with <code>-</code> separated words, all in lower case.</p>
+<p>If you are curious to see some real jquery.i18n message file from other projects:</p>
+<ul>
+<li>message files of MediaWiki https://github.com/wikimedia/mediawiki-core/tree/master/languages/i18n</li>
+<li>message files from jquery.uls project https://github.com/wikimedia/jquery.uls/blob/master/i18n</li>
+</ul>
+<h2 id="single-message-file-for-all-languages">Single message file for all languages</h2>
+<p>There are some alternate message file formats supported for different use cases. If your application is not big, and want all the translation in a single file, you can have it as shown in the below example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">&quot;@metadata&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="dt">&quot;authors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Alice&quot;</span><span class="ot">,</span> <span class="st">&quot;David&quot;</span><span class="ot">,</span> <span class="st">&quot;Santhosh&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="dt">&quot;last-updated&quot;</span><span class="fu">:</span> <span class="st">&quot;2012-09-21&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">&quot;locale&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="dt">&quot;message-documentation&quot;</span><span class="fu">:</span> <span class="st">&quot;qqq&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-7" title="7">    <span class="dt">&quot;AnotherMetadata&quot;</span><span class="fu">:</span> <span class="st">&quot;AnotherMedatadataValue&quot;</span></a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb5-9" title="9">  <span class="dt">&quot;en&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-10" title="10">    <span class="dt">&quot;appname-title&quot;</span><span class="fu">:</span> <span class="st">&quot;Example Application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-11" title="11">    <span class="dt">&quot;appname-sub-title&quot;</span><span class="fu">:</span> <span class="st">&quot;An example application with jquery.i18n&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-12" title="12">    <span class="dt">&quot;appname-header-introduction&quot;</span><span class="fu">:</span> <span class="st">&quot;Introduction&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-13" title="13">    <span class="dt">&quot;appname-about&quot;</span><span class="fu">:</span> <span class="st">&quot;About this application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-14" title="14">    <span class="dt">&quot;appname-footer&quot;</span><span class="fu">:</span> <span class="st">&quot;Footer text&quot;</span></a>
+<a class="sourceLine" id="cb5-15" title="15">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb5-16" title="16">  <span class="dt">&quot;ml&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-17" title="17">    <span class="dt">&quot;appname-title&quot;</span><span class="fu">:</span> <span class="st">&quot;അപ്ലിക്കേഷന്‍ ഉദാഹരണം&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-18" title="18">    <span class="dt">&quot;appname-sub-title&quot;</span><span class="fu">:</span> <span class="st">&quot;jquery.i18n ഉപയോഗിച്ചുള്ള അപ്ലിക്കേഷന്‍ ഉദാഹരണം&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-19" title="19">    <span class="dt">&quot;appname-header-introduction&quot;</span><span class="fu">:</span> <span class="st">&quot;ആമുഖം&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-20" title="20">    <span class="dt">&quot;appname-about&quot;</span><span class="fu">:</span> <span class="st">&quot;ഈ അപ്ലിക്കേഷനെപ്പറ്റി&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-21" title="21">    <span class="dt">&quot;appname-footer&quot;</span><span class="fu">:</span> <span class="st">&quot;അടിക്കുറിപ്പു്&quot;</span></a>
+<a class="sourceLine" id="cb5-22" title="22">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb5-23" title="23"><span class="fu">}</span></a></code></pre></div>
+<p>Here the json file contains language code as key-value and messagekey-message pairs as the value for all language pairs. You can choose this format or per-language file formats depending on your use case. Per-language files are more convenient for collaboration, version controlling, scalability, etc.</p>
+<p>In this approach, it is also possible to give a file name as the value of language code.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb6-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">&quot;@metadata&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-3" title="3">    <span class="dt">&quot;authors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Alice&quot;</span><span class="ot">,</span> <span class="st">&quot;David&quot;</span><span class="ot">,</span> <span class="st">&quot;Santhosh&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="dt">&quot;last-updated&quot;</span><span class="fu">:</span> <span class="st">&quot;2012-09-21&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="dt">&quot;locale&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-6" title="6">    <span class="dt">&quot;message-documentation&quot;</span><span class="fu">:</span> <span class="st">&quot;qqq&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="dt">&quot;AnotherMetadata&quot;</span><span class="fu">:</span> <span class="st">&quot;AnotherMedatadataValue&quot;</span></a>
+<a class="sourceLine" id="cb6-8" title="8">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb6-9" title="9">  <span class="dt">&quot;en&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-10" title="10">    <span class="dt">&quot;appname-title&quot;</span><span class="fu">:</span> <span class="st">&quot;Example Application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-11" title="11">    <span class="dt">&quot;appname-sub-title&quot;</span><span class="fu">:</span> <span class="st">&quot;An example application with jquery.i18n&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-12" title="12">    <span class="dt">&quot;appname-header-introduction&quot;</span><span class="fu">:</span> <span class="st">&quot;Introduction&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-13" title="13">    <span class="dt">&quot;appname-about&quot;</span><span class="fu">:</span> <span class="st">&quot;About this application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-14" title="14">    <span class="dt">&quot;appname-footer&quot;</span><span class="fu">:</span> <span class="st">&quot;Footer text&quot;</span></a>
+<a class="sourceLine" id="cb6-15" title="15">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb6-16" title="16">  <span class="dt">&quot;ml&quot;</span><span class="fu">:</span> <span class="st">&quot;path/to/ml.json&quot;</span></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="fu">}</span></a></code></pre></div>
+<h1 id="translation">Translation</h1>
+<p>To translate the jquery.i18n application, depending on the expertise of the translator, there are multiple ways.</p>
+<ul>
+<li>Editing the json files directly - Suitable for translators with technical background. Also suitable if your application is small and you want to work with only a small number of languages</li>
+<li>Providing a translation interface along with your application: Suitable for proprietary or private applications with significant amount of translators</li>
+<li>Using open source translation platforms like translatewiki.net. The MediaWiki and jquery.uls from previous examples use translatewiki.net for crowdsourced message translation. Translatewiki.net can update your code repo at regular intervals with updated translations. Highly recommended if your application is opensource and want it to be localized to as many as languages possible with maximum number of translators.</li>
+</ul>
+<h1 id="usage">Usage</h1>
+<h2 id="switching-locale">Switching locale</h2>
+<p>While initializing the <code>jquery.i18n</code>, the locale for the page can be given using the <code>locale</code> option. For example</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">locale</span><span class="op">:</span> <span class="st">&quot;he&quot;</span><span class="op">,</span> <span class="co">// Locale is Hebrew</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>In case locale option is not given, <code>jquery.i18n</code> plugin will use the language attribute given for the html tag. For example</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">&lt;html</span><span class="ot"> lang=</span><span class="st">&quot;he&quot;</span><span class="ot"> dir=</span><span class="st">&quot;rtl&quot;</span><span class="kw">&gt;&lt;/html&gt;</span></a></code></pre></div>
+<p>In this case, the locale will be he(Hebrew). If that <code>lang</code> attribute is also missing, it will try to use the locale specified by the browser.</p>
+<p>It is possible to switch to another locale after plugin is initialized. See below example:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="dt">locale</span><span class="op">:</span> <span class="st">&quot;he&quot;</span><span class="op">,</span> <span class="co">// Locale is Hebrew</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;message-hello&quot;</span>)<span class="op">;</span> <span class="co">// This will give the Hebrew translation of message key `message-hello`.</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">locale</span> <span class="op">=</span> <span class="st">&quot;ml&quot;</span><span class="op">;</span> <span class="co">// Now onwards locale is &#39;Malayalam&#39;</span></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;message-hello&quot;</span>)<span class="op">;</span> <span class="co">// This will give the Malayalam translation of message key `message-hello`.</span></a></code></pre></div>
+<h2 id="message-loading">Message Loading</h2>
+<p>JSON formatted messages can be loaded to the plugin using multiple ways.</p>
+<h3 id="dynamic-loading-using-load-method.">Dynamic loading using <code>load</code> method.</h3>
+<p>Following example shows loading messages for two locales- localex, and localey. Here localex and localey are just examples. They should be valid IS0 639 language codes(eg: en, ml, hi, fr, ta etc)</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">load</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="dt">localex</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="st">&quot;message-key1&quot;</span><span class="op">:</span> <span class="st">&quot;message1&quot;</span><span class="op">,</span> <span class="co">// Message for localex.</span></a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-5" title="5">  <span class="dt">localey</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-6" title="6">    <span class="st">&quot;message-key1&quot;</span><span class="op">:</span> <span class="st">&quot;message1&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-7" title="7">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>If we want to load the messages for a specific locale, it can be done like this:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">load</span>(</a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="op">{</span></a>
+<a class="sourceLine" id="cb11-3" title="3">    <span class="st">&quot;message-hello&quot;</span><span class="op">:</span> <span class="st">&quot;Hello World&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="st">&quot;message-welcome&quot;</span><span class="op">:</span> <span class="st">&quot;Welcome&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb11-5" title="5">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb11-6" title="6">  <span class="st">&quot;en&quot;</span></a>
+<a class="sourceLine" id="cb11-7" title="7">)<span class="op">;</span></a></code></pre></div>
+<p>Note the second argument for the <code>load</code> method. It should be a valid language code.</p>
+<p>It is also possible to refer messages from an external URL. See below example</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">load</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb12-2" title="2">  <span class="dt">en</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="st">&quot;message-hello&quot;</span><span class="op">:</span> <span class="st">&quot;Hello World&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="st">&quot;message-welcome&quot;</span><span class="op">:</span> <span class="st">&quot;Welcome&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-5" title="5">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb12-6" title="6">  <span class="dt">hi</span><span class="op">:</span> <span class="st">&quot;i18n/messages-hi.json&quot;</span><span class="op">,</span> <span class="co">// Messages for Hindi</span></a>
+<a class="sourceLine" id="cb12-7" title="7">  <span class="dt">de</span><span class="op">:</span> <span class="st">&quot;i18n/messages-de.json&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Messages for a locale can be also loaded in parts. Example</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">load</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb13-2" title="2">  <span class="dt">en</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="st">&quot;message-hello&quot;</span><span class="op">:</span> <span class="st">&quot;Hello World&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-4" title="4">    <span class="st">&quot;message-welcome&quot;</span><span class="op">:</span> <span class="st">&quot;Welcome&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-5" title="5">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb13-6" title="6"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-7" title="7"></a>
+<a class="sourceLine" id="cb13-8" title="8"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">load</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb13-9" title="9">  <span class="co">// This does not remove the previous messages.</span></a>
+<a class="sourceLine" id="cb13-10" title="10">  <span class="dt">en</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb13-11" title="11">    <span class="st">&quot;message-header&quot;</span><span class="op">:</span> <span class="st">&quot;Header&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-12" title="12">    <span class="st">&quot;message-footer&quot;</span><span class="op">:</span> <span class="st">&quot;Footer&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-13" title="13">    <span class="co">// This will overwrite message-welcome message</span></a>
+<a class="sourceLine" id="cb13-14" title="14">    <span class="st">&quot;message-welcome&quot;</span><span class="op">:</span> <span class="st">&quot;Welcome back&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb13-15" title="15">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb13-16" title="16"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Since it is desirable to render interface messages instantly and not after a delay of loading the message files from a server, make sure that the messages are present at client side before using jQuery.i18n.</p>
+<p>The library should expose an API to load an object containing key-value pair of messages. Example: <code>$.i18n.load(data)</code>. This will return a <code>jQuery.Promise</code>.</p>
+<h1 id="jquery.i18n-plugin">jquery.i18n plugin</h1>
+<p>The jQuery plugin defines <code>$.i18n()</code> and <code>$.fn.i18n()</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb14-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;message-key-sample1&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;message-key-sample1&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;Found $1 {{plural:$1|result|results}}&quot;</span><span class="op">,</span> <span class="dv">10</span>)<span class="op">;</span> <span class="co">// Message key itself is message text</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;Showing $1 out of $2 {{plural:$2|result|results}}&quot;</span><span class="op">,</span> <span class="dv">5</span><span class="op">,</span> <span class="dv">100</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;User X updated {{gender|his|her}} profile&quot;</span><span class="op">,</span> <span class="st">&quot;male&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb14-6" title="6"></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="at">$</span>(<span class="st">&quot;#foo&quot;</span>).<span class="at">i18n</span>()<span class="op">;</span> <span class="co">// to translate the element matching jquery selector based on data-i18n key</span></a></code></pre></div>
+<h2 id="data-api">Data API</h2>
+<p>It is possible to display localized messages without any custom JavaScript. For the HTML tags, add an attribute data-i18n with value as the message key. Example:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">&lt;li</span><span class="ot"> data-i18n=</span><span class="st">&quot;message-key&quot;</span><span class="kw">&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb15-2" title="2">.</a></code></pre></div>
+<p>It is also possible to have the above li node with fallback text already in place.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">&lt;li</span><span class="ot"> data-i18n=</span><span class="st">&quot;message-key&quot;</span><span class="kw">&gt;</span>Fallback text<span class="kw">&lt;/li&gt;</span></a></code></pre></div>
+<p>The framework will place the localized message corresponding to message-key as the text value of the node. Similar to $(‘selector’).i18n( … ). This will not work for dynamically created elements.</p>
+<p>Note that if data-i18n contains html markup, that html will not be used as the element content, instead, the text version will be used. But if the message key is prefixed with <code>[html]</code>, the element’s html will be changed. For example <code>&lt;li data-i18n="[html]message-key"&gt;Fallback html&lt;/li&gt;</code>, in this if the message-key has a value containing HTML markup, the <code>&lt;li&gt;</code> tags html will be replaced by that html.</p>
+<p>If you want to change the html of the element, you can also use: <code>$(selector).html($.i18n(messagekey))</code></p>
+<h1 id="examples">Examples</h1>
+<p>See https://thottingal.in/projects/js/jquery.i18n/demo/</p>
+<h1 id="message-format">Message format</h1>
+<h2 id="placeholders">Placeholders</h2>
+<p>Messages take parameters. They are represented by $1, $2, $3, … in the message texts, and replaced at run time. Typical parameter values are numbers (Example: “Delete 3 versions?”), or user names (Example: “Page last edited by $1”), page names, links, and so on, or sometimes other messages.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">var</span> message <span class="op">=</span> <span class="st">&quot;Welcome, $1&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="st">&quot;Alice&quot;</span>)<span class="op">;</span> <span class="co">// This gives &quot;Welcome, Alice&quot;</span></a></code></pre></div>
+<h2 id="plurals">Plurals</h2>
+<p>To make the syntax of sentence correct, plural forms are required. jquery.i18n support plural forms in the message using the syntax <code>{{PLURAL:$1|pluralform1|pluralform2|...}}</code></p>
+<p>For example:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">var</span> message <span class="op">=</span> <span class="st">&quot;Found $1 {{PLURAL:$1|result|results}}&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span> <span class="co">// This gives &quot;Found 1 result&quot;</span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span> <span class="co">// This gives &quot;Found 4 results&quot;</span></a></code></pre></div>
+<p>Note that {{PLURAL:…}} is not case sensitive. It can be {{plural:…}} too.</p>
+<p>In case of English, there are only 2 plural forms, but many languages use more than 2 plural forms. All the plural forms can be given in the above syntax, separated by pipe(|). The number of plural forms for each language is defined in <a href="https://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html">CLDR</a>. You need to provide all those plural forms for a language. Please note that many languages will require the inclusion of <code>CLDRPluralRuleParser.js</code> (<a href="https://github.com/santhoshtr/CLDRPluralRuleParser/tree/8baf9aedc428924fe6ee508b3d952cb5564efb3a/src">from here</a>) as well as this project’s own files to work properly.</p>
+<p>For example, English has 2 plural forms and the message format will look like <code>{{PLURAL:$1|one|other}}</code>. for Arabic there are 6 plural forms and format will look like <code>{{PLURAL:$1|zero|one|two|few|many|other}}</code>.</p>
+<p>You cannot skip a plural form from the middle or beginning. However, you can skip from end. For example, in Arabic, if the message is like <code>{{PLURAL:$1|A|B}}</code>, for 0, A will be used, for numbers that fall under one, two, few, many, other categories B will be used.</p>
+<p>If there is an explicit plural form to be given for a specific number, it is possible with the following syntax</p>
+<pre><code>var message = &#39;Box has {{PLURAL:$1|one egg|$1 eggs|12=a dozen eggs}}.&#39;;
+$.i18n(message, 4 ); // Gives &quot;Box has 4 eggs.&quot;
+$.i18n(message, 12 ); // Gives &quot;Box has a dozen eggs.&quot;</code></pre>
+<h2 id="gender">Gender</h2>
+<p>Similar to plural, depending on gender of placeholders, mostly user names, the syntax changes dynamically. An example in English is “Alice changed her profile picture” and “Bob changed his profile picture”. To support this {{GENDER…}} syntax can be used as shown in example</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">var</span> message <span class="op">=</span> <span class="st">&quot;$1 changed {{GENDER:$2|his|her}} profile picture&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="st">&quot;Alice&quot;</span><span class="op">,</span> <span class="st">&quot;female&quot;</span>)<span class="op">;</span> <span class="co">// This gives &quot;Alice changed her profile picture&quot;</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="st">&quot;Bob&quot;</span><span class="op">,</span> <span class="st">&quot;male&quot;</span>)<span class="op">;</span> <span class="co">// This gives &quot;Bob changed his profile picture&quot;</span></a></code></pre></div>
+<p>Note that {{GENDER:…}} is not case sensitive. It can be {{gender:…}} too.</p>
+<h2 id="grammar">Grammar</h2>
+<div class="sourceCode" id="cb21"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb21-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>(<span class="op">{</span> <span class="dt">locale</span><span class="op">:</span> <span class="st">&quot;fi&quot;</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb21-2" title="2"></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="kw">var</span> message <span class="op">=</span> <span class="st">&quot;{{grammar:genitive|$1}}&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb21-4" title="4"></a>
+<a class="sourceLine" id="cb21-5" title="5"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="st">&quot;talo&quot;</span>)<span class="op">;</span> <span class="co">// This gives &quot;talon&quot;</span></a>
+<a class="sourceLine" id="cb21-6" title="6"></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="va">$</span>.<span class="at">i18n</span>().<span class="at">locale</span> <span class="op">=</span> <span class="st">&quot;hy&quot;</span><span class="op">;</span> <span class="co">// Switch to locale Armenian</span></a>
+<a class="sourceLine" id="cb21-8" title="8"><span class="va">$</span>.<span class="at">i18n</span>(message<span class="op">,</span> <span class="st">&quot;Մաունա&quot;</span>)<span class="op">;</span> <span class="co">// This gives &quot;Մաունայի&quot;</span></a></code></pre></div>
+<h2 id="directionality-safe-isolation">Directionality-safe isolation</h2>
+<p>To avoid BIDI corruption that looks like “(Foo_(Bar”, which happens when a string is inserted into a context with the reverse directionality, you can use <code>{{bidi:…}}</code>. Directionality-neutral characters at the edge of the string can get wrongly interpreted by the BIDI algorithm. This would let you embed your substituted string into a new BIDI context, //e.g.//:</p>
+<p>“<code>Shalom, {{bidi:$1}}, hi!</code>”</p>
+<p>The embedded context’s directionality is determined by looking at the argument for <code>$1</code>, and then explicitly inserted into the Unicode text, ensuring correct rendering (because then the bidi algorithm “knows” the argument text is a separate context).</p>
+<h1 id="fallback">Fallback</h1>
+<p>The plugin takes an option ‘fallback’ with the default value ‘en’. The library reuses the fallback data available in MediaWiki for calculating the language fallbacks. Fallbacks are used when a message key is not found in a locale. Example fallbacks: sa-&gt;hi-&gt;en or tt-&gt;tt-cyrl-&gt;ru.</p>
+<p>See jquery.i18n.fallbacks.js in the source.</p>
+<h1 id="magic-word-support">Magic word support</h1>
+<ul>
+<li>For plural, gender and grammar support, MediaWiki template-like syntax - {{…}} will be used.</li>
+<li>There will be a default implementation for all these in $.i18n.language[‘default’]</li>
+<li>The plural, gender and grammar methods in <code>$.i18n.language[ 'default' ]</code> can be overridden or extended in <code>$.i18n.language['languageCode']</code>.</li>
+<li>Language-specific rules about Gender and Grammar can be written in languages/langXYZ.js files</li>
+<li>Plural forms will be dynamically calculated using the CLDR plural parser.</li>
+</ul>
+<h2 id="extending-the-parser">Extending the parser</h2>
+<p>Following example illustrates extending the parser to support more magic words</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb22-1" title="1"><span class="va">$</span>.<span class="at">extend</span>(<span class="va">$</span>.<span class="va">i18n</span>.<span class="va">parser</span>.<span class="at">emitter</span><span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-2" title="2">  <span class="co">// Handle SITENAME keywords</span></a>
+<a class="sourceLine" id="cb22-3" title="3">  <span class="dt">sitename</span><span class="op">:</span> <span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-4" title="4">    <span class="cf">return</span> <span class="st">&quot;Wikipedia&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-5" title="5">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb22-6" title="6">  <span class="co">// Handle LINK keywords</span></a>
+<a class="sourceLine" id="cb22-7" title="7">  <span class="dt">link</span><span class="op">:</span> <span class="kw">function</span> (nodes) <span class="op">{</span></a>
+<a class="sourceLine" id="cb22-8" title="8">    <span class="cf">return</span> <span class="st">&#39;&lt;a href=&quot;&#39;</span> <span class="op">+</span> nodes[<span class="dv">1</span>] <span class="op">+</span> <span class="st">&#39;&quot;&gt;&#39;</span> <span class="op">+</span> nodes[<span class="dv">0</span>] <span class="op">+</span> <span class="st">&quot;&lt;/a&gt;&quot;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb22-9" title="9">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb22-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>This will parse the message</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb23-1" title="1"><span class="va">$</span>.<span class="at">i18n</span>(<span class="st">&quot;{{link:{{SITENAME}}|https://en.wikipedia.org}}&quot;</span>)<span class="op">;</span></a></code></pre></div>
+<p>to</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;https://en.wikipedia.org&quot;</span><span class="kw">&gt;</span>Wikipedia<span class="kw">&lt;/a&gt;</span></a></code></pre></div>
+<h1 id="message-documentation">Message documentation</h1>
+<p>The message keys and messages won’t give a enough context about the message being translated to the translator. Whenever a developer adds a new message, it is a usual practice to document the message to a file named qqq.json with same message key.</p>
+<p>Example qqq.json:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb25-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb25-2" title="2">  <span class="dt">&quot;@metadata&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb25-3" title="3">    <span class="dt">&quot;authors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Developer Name&quot;</span><span class="ot">]</span></a>
+<a class="sourceLine" id="cb25-4" title="4">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb25-5" title="5">  <span class="dt">&quot;appname-title&quot;</span><span class="fu">:</span> <span class="st">&quot;Application name. Transliteration is recommended&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb25-6" title="6">  <span class="dt">&quot;appname-sub-title&quot;</span><span class="fu">:</span> <span class="st">&quot;Brief explanation of the application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb25-7" title="7">  <span class="dt">&quot;appname-header-introduction&quot;</span><span class="fu">:</span> <span class="st">&quot;Text for the introduction header&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb25-8" title="8">  <span class="dt">&quot;appname-about&quot;</span><span class="fu">:</span> <span class="st">&quot;About this application text&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb25-9" title="9">  <span class="dt">&quot;appname-footer&quot;</span><span class="fu">:</span> <span class="st">&quot;Footer text&quot;</span></a>
+<a class="sourceLine" id="cb25-10" title="10"><span class="fu">}</span></a></code></pre></div>
+<p>In MediaWiki and its hundreds of extensions, message documentation is a strictly followed practice. There is a grunt task to check whether all messages are documented or not. See https://www.npmjs.org/package/grunt-banana-checker</p>
+</body>
+</html>

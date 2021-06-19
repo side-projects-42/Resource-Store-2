@@ -10,12 +10,10 @@ If possible, please help the maintainers by leveraging the following [convention
 
 ### Example
 
-```bash
-git add src/data/projects/newrelic-nr1-github.json
-git add src/data/project-main-content/newrelic-nr1-github.mdx
-git commit -m "chore(nr1-github): adjusting config and content"
-git push
-```
+    git add src/data/projects/newrelic-nr1-github.json
+    git add src/data/project-main-content/newrelic-nr1-github.mdx
+    git commit -m "chore(nr1-github): adjusting config and content"
+    git push
 
 ## Use `fix`
 
@@ -25,11 +23,9 @@ git push
 
 ### Example
 
-```bash
-git add src/pages/code-of-conduct.mdx
-git commit -m "fix: typo and prop error in the code of conduct"
-git push
-```
+    git add src/pages/code-of-conduct.mdx
+    git commit -m "fix: typo and prop error in the code of conduct"
+    git push
 
 ## Use `feat`
 
@@ -38,8 +34,6 @@ git push
 
 ### Example
 
-```bash
-git add src/pages/video.js
-git commit -m "feat(media): creating a video landing page"
-git push
-```
+    git add src/pages/video.js
+    git commit -m "feat(media): creating a video landing page"
+    git push

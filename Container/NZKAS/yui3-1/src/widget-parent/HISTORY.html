@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="widget-parent-change-history">Widget Parent Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li><p>Fixed issue with children not being destroyed, when parent.destroy() is called.</p></li>
+<li><p>Added if (sibling.get(“rendered”)) check before trying to insert children after/before siblings. This is not required for the out of the box Parent/Child implementation, but is useful for custom implementations which customize children to render asynchronously.</p>
+<p>See #2529863</p></li>
+<li><p>Fixed issue where previously rendered children, added to an empty parent, would not get rendered into the parent’s child container node.</p>
+<p>Based on the pull request from andreas-karlsson, with the root fix <em>and</em> unit test (nicely done): https://github.com/yui/yui3/pull/25</p></li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Changed instanceof to Y.instanceOf, to prevent leaks in IE7</li>
+<li><p>Renamed “type” in child configuration, to “childType”, so that children can have a “type” attribute for it’s own context (A FormElement widget for examplei, with a “type”).</p>
+“type” is still supported but deprecated for backward compatibility, so it’s only used to define a child widget type if “childType” is not provided.</li>
+<li><p>Fixed remove(), to actually remove child from DOM also.</p></li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>No changes</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li>“childAdded” event renamed to “addChild”</li>
+<li>“childRemoved” event renamed to “removeChild”</li>
+<li>Now augmented with Y.ArrayList</li>
+<li>“selection” attribute now returns an Y.ArrayList or Widget</li>
+<li>Removed “children” attribute since that functionality is provided by Y.ArrayList
+<ul>
+<li>Can retrieve # of child via the size() method</li>
+<li>Can iterate children via this.each()</li>
+<li>Can retrieve a individual child via the item() method</li>
+</ul></li>
+<li>add method will always return a Y.ArrayList instance for easy chaining</li>
+<li>removeAll method will always return a Y.ArrayList instance for easy chaining</li>
+<li>added selectAll() and deselectAll() methods</li>
+<li>widget UI will render children added/inserted children after widget is rendered</li>
+<li>widget UI will update when a child is removed</li>
+</ul>
+</body>
+</html>

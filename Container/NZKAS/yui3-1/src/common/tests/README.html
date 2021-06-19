@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ci-testing">CI Testing</h1>
+<p>These XML files define the tests that should be used by CI.</p>
+<h2 id="smoke.xml">smoke.xml</h2>
+<p>Smoke tests. They test basic functionality only, providing some assurance that the system under test will not catastrophically fail.</p>
+<h2 id="unit.xml">unit.xml</h2>
+<p>Unit tests. Each test quickly validates a single unit of code, independently from other tests, and free from external dependencies.</p>
+<h2 id="coverage.xml">coverage.xml</h2>
+<p>The subset of unit tests that are coverage-ready. This means they:</p>
+<ol type="1">
+<li><p>Use build/yui/yui.js (not yui-debug.js or yui-min.js) for the seed.</p></li>
+<li><p>Respect the ?filter=raw query string parameter by setting the filter config property in the test like this:</p>
+<p>var Y = YUI({ filter: (window.location.search.match(/[?&amp;]filter=([^&amp;]+)/) || [])[1] || ‘min’ });</p></li>
+<li><p>Use modules that can be instrumented by YUI Test Coverage.</p></li>
+</ol>
+</body>
+</html>

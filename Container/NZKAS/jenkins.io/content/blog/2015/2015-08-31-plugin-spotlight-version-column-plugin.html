@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2015-08-31-plugin-spotlight-version-column-plugin</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Most Jenkins masters with a
+      <a href="https://wiki.jenkins-ci.org/display/JENKINS/Distributed+builds"
+        >distributed build</a
+      >
+      configuration will leverage nodes that run a <code>slave.jar</code> to
+      start a slave agent. Regardless of whether the <code>slave.jar</code> is
+      launched through a Java Web Start or SSH launcher, the jar will be copied
+      from <code>http://yourserver:port/jnlpJars/slave.jar</code> to the build
+      node. Keeping this jar up to date ensures that it picks up the newest
+      features in a more recent release, such as the
+      <a
+        href="http://jenkins-ci.org/content/your-java-web-start-slaves-will-be-always-clean"
+        >self-restart feature</a
+      >
+      to keep slave JVMs “clean” and to automatically reconnect to their master.
+      Additionally, newer versions of this component may fix bugs or implement
+      newer protocol versions with various improvements.
+    </p>
+    <h2 id="what-is-the-version-column-plugin">
+      What is the Version Column Plugin?
+    </h2>
+    <p>
+      Launch methods designed to pull the latest <code>slave.jar</code>
+      <a href="https://issues.jenkins-ci.org/browse/JENKINS-16490"
+        >are not always reliable</a
+      >
+      and some launch methods don’t even try to update the
+      <code>slave.jar</code>. Therefore it can be useful to see what
+      <code>slave.jar</code> version is running on a given build node and take
+      offline any nodes which fails to update to the latest version of the jar.
+    </p>
+    <p>
+      The Version Column Plugin allows Jenkins masters to do just this, adding a
+      new column to the “Manage Nodes” view and a new option for version
+      enforcement on the node configuration screen.
+    </p>
+    <h2 id="getting-started">Getting started</h2>
+    <p>
+      After installing the Version Column Plugin, navigate to the list of nodes
+      in your Jenkins instance by clicking <em>Build Executor Status</em> in the
+      executors widget below the side panel on the Jenkins home page.
+    </p>
+    <p>
+      If the plugin installed successfully, you will see a new column simply
+      called “Version”. This column displays the version of the
+      <code>slave.jar</code> that each build node is using.
+    </p>
+    <p>
+      <img
+        src="/sites/default/files/images/versioncolumn-plugin-screenshot-1-2.png"
+      />
+    </p>
+    <p>
+      This column is simply displaying the versions, so enforcement of
+      <code>slave.jar</code> versions will need to be configured elsewhere. To
+      activate this, click on the “Configure” link in the node manager’s
+      left-hand menu.
+    </p>
+    <p>
+      You will then see a set of options for slaves. To activate version
+      enforcement, check the “Version” box and apply your changes.
+    </p>
+    <p>
+      <img
+        src="/sites/default/files/images/versioncolumn-plugin-screenshot-2.png"
+      />
+    </p>
+    <p>
+      When you update Jenkins, there’s a chance it’ll come with a new version of
+      <code>slave.jar</code>. Now if the <code>slave.jar</code> on a particular
+      slave doesn’t get updated automatically, the master will take it offline
+      and show a warning next to the out-of-date slave’s version number:
+    </p>
+    <p>
+      <img
+        src="/sites/default/files/images/versioncolumn-plugin-screenshot-3.png"
+      />
+    </p>
+    <p>
+      The Version Column Plugin is available for download in the Jenkins plugin
+      manager or from
+      <a href="https://wiki.jenkins-ci.org/display/JENKINS/VersionColumn+Plugin"
+        >its wiki page</a
+      >.
+    </p>
+  </body>
+</html>

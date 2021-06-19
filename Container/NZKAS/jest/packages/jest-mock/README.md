@@ -16,41 +16,35 @@ One important note: function prototypes are handled specially by this mocking fr
 
 Inspects the argument and returns its schema in the following recursive format:
 
-```
-{
-  type: ...
-  members: {}
-}
-```
+    {
+      type: ...
+      members: {}
+    }
 
 Where type is one of `array`, `object`, `function`, or `ref`, and members is an optional dictionary where the keys are member names and the values are metadata objects. Function prototypes are defined simply by defining metadata for the `member.prototype` of the function. The type of a function prototype should always be `object`. For instance, a simple class might be defined like this:
 
-```js
-const classDef = {
-  type: 'function',
-  members: {
-    staticMethod: {type: 'function'},
-    prototype: {
-      type: 'object',
+    const classDef = {
+      type: 'function',
       members: {
-        instanceMethod: {type: 'function'},
+        staticMethod: {type: 'function'},
+        prototype: {
+          type: 'object',
+          members: {
+            instanceMethod: {type: 'function'},
+          },
+        },
       },
-    },
-  },
-};
-```
+    };
 
 Metadata may also contain references to other objects defined within the same metadata object. The metadata for the referent must be marked with `refID` key and an arbitrary value. The referrer must be marked with a `ref` key that has the same value as object with refID that it refers to. For instance, this metadata blob:
 
-```js
-const refID = {
-  type: 'object',
-  refID: 1,
-  members: {
-    self: {ref: 1},
-  },
-};
-```
+    const refID = {
+      type: 'object',
+      refID: 1,
+      members: {
+        self: {ref: 1},
+      },
+    };
 
 defines an object with a slot named `self` that refers back to the object.
 
@@ -60,7 +54,7 @@ Generates a stand-alone function with members that help drive unit tests or conf
 
 ##### `.mock`
 
-An object with three members, `calls`, `instances` and `invocationCallOrder`, which are all lists. The items in the `calls` list are the arguments with which the function was called. The "instances" list stores the value of 'this' for each call to the function. This is useful for retrieving instances from a constructor. The `invocationCallOrder` lists the order in which the mock was called in relation to all mock calls, starting at 1.
+An object with three members, `calls`, `instances` and `invocationCallOrder`, which are all lists. The items in the `calls` list are the arguments with which the function was called. The “instances” list stores the value of ‘this’ for each call to the function. This is useful for retrieving instances from a constructor. The `invocationCallOrder` lists the order in which the mock was called in relation to all mock calls, starting at 1.
 
 ##### `.mockReturnValueOnce(value)`
 

@@ -1,23 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      console.log("http://www.chromium.org/");
-      console.log("follow http://www.chromium.org/");
-      console.log("string", "http://www.chromium.org/");
-      console.log(123, "http://www.chromium.org/");
-
-      function test() {
-        InspectorTest.dumpConsoleMessages(false, true);
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>
-      Test that console.log() would linkify the links.
-      <a href="http://crbug.com/231074">Bug 231074.</a>
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-log-linkify-links</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Test that console.log() would linkify the links. <a href="http://crbug.com/231074">Bug 231074.</a></p>
+</body>
 </html>

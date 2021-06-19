@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p><a href="https://www.npmjs.com/package/oojs-ui"><img src="https://img.shields.io/npm/v/oojs-ui.svg?style=flat" alt="npm" /></a> <a href="https://packagist.org/packages/oojs/oojs-ui"><img src="https://img.shields.io/packagist/v/oojs/oojs-ui.svg?style=flat" alt="Packagist" /></a></p>
+<h1 id="ooui">OOUI</h1>
+<p>OOUI is a component-based JavaScript UI library. Key features:</p>
+<ul>
+<li>Common widgets, layouts, and dialogs</li>
+<li>Classes, elements, and mixins to create custom interfaces</li>
+<li>Internationalization and localization, like right-to-left (RTL) languages support</li>
+<li>Theme-ability</li>
+<li>Built-in icons</li>
+<li>Accessibility features</li>
+</ul>
+<p>It is the standard library for Web products at the Wikimedia Foundation, having been originally created for use by <a href="https://www.mediawiki.org/wiki/VisualEditor">VisualEditor</a>.</p>
+<h2 id="quick-start">Quick start</h2>
+<p>The library is available on <a href="https://www.npmjs.com/package/oojs-ui">npm</a>. To install:</p>
+<pre lang="bash">
+$ npm install oojs-ui
+</pre>
+<p>Once installed, include the following scripts and styles to get started:</p>
+<pre lang="html">
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<script src="node_modules/oojs/dist/oojs.min.js"></script>
+
+<script src="node_modules/oojs-ui/dist/oojs-ui.min.js"></script>
+<script src="node_modules/oojs-ui/dist/oojs-ui-wikimediaui.min.js"></script>
+<link rel="stylesheet" href="node_modules/oojs-ui/dist/oojs-ui-wikimediaui.min.css">
+</pre>
+<h2 id="loading-the-library">Loading the library</h2>
+<p>While the distribution directory is chock-full of files, you will normally load only the following three:</p>
+<ul>
+<li><code>oojs-ui.js</code>, containing the full library;</li>
+<li>One of <code>oojs-ui-wikimediaui.css</code> or <code>oojs-ui-apex.css</code>, containing theme-specific styles; and</li>
+<li>One of <code>oojs-ui-wikimediaui.js</code> or <code>oojs-ui-apex.js</code>, containing theme-specific code</li>
+</ul>
+<p>You can load additional icon packs from files named <code>oojs-ui-wikimediaui-icons-*.css</code> or <code>oojs-ui-apex-icons-*.css</code>.</p>
+<p>The remaining files make it possible to load only parts of the whole library.</p>
+<p>Furthermore, every CSS file has a right-to-left (RTL) version available, to be used on pages using right-to-left languages if your environment doesn’t automatically flip them as needed.</p>
+<h2 id="issue-tracker">Issue tracker</h2>
+<p>Found a bug or missing feature? Please report it in our <a href="https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=PHID-PROJ-dgmoevjqeqlerleqzzx5">issue tracker Phabricator</a>!</p>
+<h2 id="contributing">Contributing</h2>
+<p>We are always delighted when people contribute patches. To setup your development environment:</p>
+<ol type="1">
+<li><p>Clone the repo: <code>$ git clone https://gerrit.wikimedia.org/r/oojs/ui oojs-ui</code></p></li>
+<li><p>Move into the library directory:<br><code>$ cd oojs-ui</code></p></li>
+<li><p>Install <a href="https://getcomposer.org/download/">composer</a> and make sure running <code>composer</code> will execute it (<em>e.g.</em> add it to <code>$PATH</code> in POSIX environments).</p></li>
+<li><p>Install dev dependencies:<br><code>$ npm install</code></p></li>
+<li><p>Build the library (you can alternatively use <code>grunt quick-build</code> if you don’t need to rebuild the PNGs):<br><code>$ grunt build</code></p></li>
+<li><p>You can see a suite of demos in <code>/demos</code> by executing:<br><code>$ npm run-script demos</code></p></li>
+<li><p>You can also copy the distribution files from the dist directory into your project.</p></li>
+</ol>
+<p>We use <a href="https://gerrit.wikimedia.org/">Gerrit</a> for code review, and <a href="https://phabricator.wikimedia.org">Phabricator</a> to track issues. To contribute patches or join discussions all you need is a <a href="https://wikitech.wikimedia.org/w/index.php?title=Special:CreateAccount&amp;returnto=Help%3AGetting+Started">developer account</a>.</p>
+<ul>
+<li>If you’ve found a bug, or wish to request a feature <a href="https://phabricator.wikimedia.org/maniphest/task/edit/form/1/?projects=PHID-PROJ-dgmoevjqeqlerleqzzx5">raise a ticket on Phabricator</a>.</li>
+<li>To submit your patch, follow <a href="https://www.mediawiki.org/wiki/Gerrit/Getting_started">the “getting started” quick-guide</a>. We try to review patches within a week.</li>
+<li>We automatically lint and style-check changes to JavaScript, PHP, LESS/CSS, Ruby and JSON files. You can test these yourself with <code>npm test</code> and <code>composer test</code> locally before pushing changes. SVG files should be squashed in advance of committing with <a href="https://github.com/svg/svgo">SVGO</a> using <code>svgo --pretty --disable=removeXMLProcInst --disable=cleanupIDs &lt;filename&gt;</code>.</li>
+</ul>
+<p>A new version of the library is released most weeks on Tuesdays.</p>
+<h2 id="community">Community</h2>
+<p>Get updates, ask questions and join the discussion with maintainers and contributors:</p>
+<ul>
+<li>Join the Wikimedia Developers mailing list, <a href="https://lists.wikimedia.org/mailman/listinfo/wikitech-l">wikitech-l</a>.</li>
+<li>Chat with the maintainers on <code>#wikimedia-dev</code> on <code>irc.freenode.net</code>.</li>
+<li>Ask questions on <a href="https://stackoverflow.com/tags/oojs-ui/info">StackOverflow</a>.</li>
+<li>Watchlist the <a href="https://www.mediawiki.org/wiki/OOUI">documentation</a> on MediaWiki to stay updated.</li>
+</ul>
+<h2 id="versioning">Versioning</h2>
+<p>We use the <a href="http://semver.org/">Semantic Versioning guidelines</a>.</p>
+<p>Releases will be numbered in the following format:</p>
+<p><code>&lt;major&gt;.&lt;minor&gt;.&lt;patch&gt;</code></p>
+<h2 id="release">Release</h2>
+<p>Release process:</p>
+<pre lang="bash">
+
+    $ cd path/to/oojs-ui/
+    $ git remote update
+    $ git checkout -B release -t origin/master
+
+    # Ensure tests pass
+    $ npm install && composer update && npm test && composer test
+
+    # Avoid using "npm version patch" because that creates
+    # both a commit and a tag, and we shouldn't tag until after
+    # the commit is merged.
+
+    # Update release notes
+    # Copy the resulting list into a new section at the top of History.md and edit
+    # into five sub-sections, in order:
+    # * Breaking changes
+    # * Deprecations
+    # * Features
+    # * Styles
+    # * Code
+    $ git log --format='* %s (%aN)' --no-merges --reverse v$(node -e 'console.log(require("./package.json").version);')...HEAD | grep -v "Localisation updates from" | sort
+    $ edit History.md
+
+    # Update the version number
+    $ edit package.json
+
+    $ git add -p
+    $ git commit -m "Tag vX.X.X"
+    $ git review
+
+    # After merging:
+    $ git remote update
+    $ git checkout origin/master
+    $ git tag "vX.X.X"
+    $ npm run publish-build && git push --tags && npm publish
+
+</pre>
+</body>
+</html>

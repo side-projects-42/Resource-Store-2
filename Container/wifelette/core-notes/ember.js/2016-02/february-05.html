@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>february-05</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember.js-core-team-2016-02-05">Ember.js Core Team 2016-02-05</h1>
+<h4 id="topics">Topics</h4>
+<ul>
+<li>Pods update?</li>
+<li>glimmer progress update</li>
+<li>Retiring legacy view addons in first LTS release (when is first LTS?)</li>
+<li>Get +1s for removing <code>ember-htmlbars-component-generation</code> [GC]</li>
+<li>Quick recap of feature flag policy [YK]</li>
+<li>next steps for https://github.com/emberjs/ember.js/pull/12575 ? <span class="citation" data-cites="stefanpenner">[@stefanpenner]</span></li>
+<li>next steps for https://github.com/emberjs/rfcs/pull/97 <span class="citation" data-cites="stefanpenner">[@stefanpenner]</span></li>
+</ul>
+<p>SP will be a few minutes late, likely arrive around 11:20 PST or so.</p>
+<h2 id="notes">Notes</h2>
+<p>MB: Pods status?</p>
+<p>RJ: Dan has been continuing to move ideas forward, but we need to circle around with Dan/Yehuda/Robert to see if we can move.</p>
+<p>YK: Yes, I agree. I do not believe that my concerns are terribly complicated, so we can almost certainly come up with a good solution.</p>
+<p>DG: I think that the module form that was proposed at the last meeting was the strongest proposal, and the main blocker was the presence of support for multiple supported paths. We should be able to close those loop holes.</p>
+<p><strong>Glimmer progress update</strong></p>
+<p>YK: We have a new testing harness that allows to better test both old htmlbars and new glimmer</p>
+<p>GC: Example usage at https://github.com/emberjs/ember.js/pull/12914</p>
+<p>RJ: Serabe has been reading and catching up</p>
+<p>RJ: We’ve started porting adding tests to the glimmer package, and symlinking them to the htmlbars package.</p>
+<p>YK: There are a set of test helpers that are available in each package as the implementation</p>
+<p>YK: We don’t even need a feature flag since testing the rendering can be done alone</p>
+<p>RJ: If 2.5 goes to beta before this is done, we can mark the FF false and strip it out of builds.</p>
+<p>RJ: I’m pretty happy with the progress. It is nice to have a better test harness to move forward.</p>
+<p>YK: We implemented truthy and falsy semantics yeterday. Chad is doing some work. We have helpers working so people can implement helpers. Copying the helper over, then rewriting the tests.</p>
+<p>TD: Are you running the node tests with glimmer and ember?</p>
+<p>GC: We need to get to the point where we switch the renderer</p>
+<p>TD: It would be nice, during the rethink in tests, if there was a way to say a test should run in node.</p>
+<p>YK: we did one cheat (jQuery) that makes that not work, but it is a good constraint to keep in mind. Will think about it.</p>
+<p>TD: We had a node regression, and I’d just like the testing to be better so we can catch them in the future.</p>
+<p>TD: How is glimmer provided?</p>
+<p>RJ: We import it and compile the TS code with Ember</p>
+<p>YK: unrelated but there is a general issue with dependencies. “i need this asset to build” but that isn’t a thing</p>
+<p>RJ: I perceive the problems are solved, but lets talk offline about the use cases</p>
+<p>YK: if and each have a symmetrical problem, the basic case is simple but the specific Ember implementation requires some protocol. Glimmer needs to be flexible enough that you can swap out some inner part.</p>
+<p>RJ: each and components are the biggest things, once those get done I presume we can have others help make progress</p>
+<p>YK: yes</p>
+<p>RJ: I said this probably won’t be 2.5, want to get your opinion on it. Not do the 1.13 rush</p>
+<p>YK: a lot depends on how unstable it feels</p>
+<p>RJ: whether is feels unstable or not I don’t want to do it close</p>
+<p>YK: There are fewer hacks than in 1.13’s glimmer. Once one thing works many others should.</p>
+<p>RJ: We’re about a month from the cycle turnover (branch point)</p>
+<p>KS: I understand the caution and that the last integration was alpha, that being said I don’t want to discount talking about it at EmberConf</p>
+<p>RJ: Right. I’m not saying no, just want to be cautious and get it right.</p>
+<p>YK: I spent the day arguing with Mozilla about this. We should not be rushing it for anything specific.</p>
+<p>YK: I think two weeks before with a small number of edge cases is ok. all apps would run on it at two weeks before I think. Must be feature complete.</p>
+<p><strong>Retiring legacy view addons in first LTS release (when is first LTS?)</strong></p>
+<p>RJ: Two questions: 1, can we retire legacy view addons with the LTS?</p>
+<p>(much discussion)</p>
+<p>RJ: 2.4 will be the first LTS release</p>
+<p><strong>ember-htmlbars-component-generation</strong></p>
+<p>GC: This feature flag has been disabled at this point, can we remove associated code?</p>
+<p>YK: The issue is that we cannot support, the old glimmer v1 engine is broken in ways that prevent the tests to pass with this feature enabled.</p>
+<p>SP: Feature flags are intended to be enabled/disabled/removed/etc, this is exactly what the point of feature flagging is. We should remove it.</p>
+<p><strong>next steps for https://github.com/emberjs/ember.js/pull/12575</strong></p>
+<p>SP: Make test helpers fire native events instead of using jquery events. I want next steps</p>
+<p>RJ: I want to merge right now</p>
+<p>SP: I want to merge now and use it in real apps and test. It is behind a FF</p>
+<p>go go go</p>
+<p><strong>next steps for https://github.com/emberjs/rfcs/pull/97</strong></p>
+<p>SP: Prefetch RFC for models.</p>
+<p>(discussion)</p>
+<p>YK: This needs to consider the programming model at large</p>
+<p>SP: I want there to be an example or path forward for this. I’m frustrated.</p>
+<p>GC: Let’s review and read and revisit</p>
+</body>
+</html>

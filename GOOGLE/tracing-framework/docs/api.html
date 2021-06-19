@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>api</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="tracing-api">Tracing API</h1>
+<p>TODO(benvanik): more information.</p>
+<p>Get a time compatible with the tracing framework:</p>
+<pre><code>// Consistent time; high-resolution if available
+var time = wtf.now();</code></pre>
+<p>Emitting an instance event:</p>
+<pre><code>// Create the event and cache the event object:
+var myEvent = wtf.trace.events.createInstance(&#39;myEvent(uint32 foo)&#39;);
+// At some point in the future, append it:
+myEvent(12345);</code></pre>
+<p>Emitting a scope event:</p>
+<pre><code>// Create the event and cache the event object:
+var myScopeEvent = wtf.trace.events.createScope(&#39;myScopeEvent(utf8 bar)&#39;);
+// Enter/leave the scope:
+var scope = myScopeEvent(&#39;hello world&#39;);
+// ...
+return wtf.trace.leaveScope(scope, someResult);</code></pre>
+<p>Automatic instrumentation of a function:</p>
+<pre><code>// Instrument an individual method:
+var someCall = wtf.trace.instrument(function(a, b) {
+  return a + b;
+}, &#39;someCall(uint32 a, uint32 b)&#39;);
+// Instrument an individual method on a prototype:
+myType.prototype[&#39;someCall&#39;] = wtf.trace.instrument(
+    myType.prototype[&#39;someCall&#39;],
+    &#39;someCall(uint32 a, uint32 b)&#39;,
+    &#39;MyType#&#39;);</code></pre>
+<p>Automatic instrumentation of an entire type:</p>
+<pre><code>// Instrument a type:
+my.Type = wtf.trace.instrumentType(
+    my.Type, &#39;my.Type(uint8 a, uint8 b)&#39;, {
+      foo: &#39;foo(uint8 a)&#39;
+    });</code></pre>
+<p>If you find yourself neededing to add arguments to a scope that was automatically created or is added conditionally, consider using an append event.</p>
+<pre><code>// Create the appending event:
+var appendMyData = wtf.trace.events.createInstance(
+    &#39;my.custom.append(uint32 a, uint32 b)&#39;,
+    wtf.data.EventFlag.APPEND_SCOPE_DATA);
+// Call the method inside of scopes:
+var scope = ...enter scope...();
+appendMyData(123, 456);
+wtf.trace.leaveScope(scope);</code></pre>
+<p>If (and only if!) you’re doing some debugging and need a bunch of data in your scopes you can use the super slow <code>wtf.trace.appendScopeData</code> method:</p>
+<pre><code>var scope = ...enter scope...();
+// The value can be any JSONifiable value (numbers/arrays/objects).
+wtf.trace.appendScopeData(&#39;myBlob&#39;, {
+  &#39;complex&#39;: [&#39;objects&#39;],
+  &#39;prop&#39;: 123.456
+});
+wtf.trace.leaveScope(scope);</code></pre>
+<p>If you need to do any expensive work that you don’t want to show up as user time, use the built-in helper scope:</p>
+<pre><code>var traceScope = wtf.trace.enterTracingScope();
+// Expensive work...
+wtf.trace.leaveScope(traceScope);</code></pre>
+<p>To prevent DOM event listeners from appearing in the trace, wrap them with <code>wtf.trace.ignoreListener</code> before attaching them:</p>
+<pre><code>var el = document.createElement(&#39;a&#39;);
+el.onclick = wtf.trace.ignoreListener(function(e) {
+  // Clicked and untraced
+});
+el.addEventListener(&#39;click&#39;, wtf.trace.ignoreListener(function(e) {
+  // Clicked and untraced
+}), false);</code></pre>
+<p>Supported types in event signatures:</p>
+<ul>
+<li>int8/uint8</li>
+<li>int16/uint16</li>
+<li>int32/uint32</li>
+<li>float32</li>
+<li>ascii</li>
+<li>utf8</li>
+<li>any of the int/float types as type[] for an array</li>
+</ul>
+<p>TODO: add more types (float64/number, typed arrays, etc)</p>
+</body>
+</html>

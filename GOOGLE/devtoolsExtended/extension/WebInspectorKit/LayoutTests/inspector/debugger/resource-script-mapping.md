@@ -1,0 +1,1 @@
+Tests ResourceScriptMapping class.

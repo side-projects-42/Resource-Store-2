@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>logarithmic</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="logarithmic-axis">Logarithmic Axis</h1>
+<p>The logarithmic scale is used to chart numerical data. It can be placed on either the x or y-axis. As the name suggests, logarithmic interpolation is used to determine where a value lies on the axis.</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<p>!!!include(axes/cartesian/_common.md)!!!</p>
+<p>!!!include(axes/_common.md)!!!</p>
+<h2 id="tick-configuration">Tick Configuration</h2>
+<h3 id="logarithmic-axis-specific-options">Logarithmic Axis specific options</h3>
+<p>Namespace: <code>options.scales[scaleId]</code></p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 3%" />
+<col style="width: 88%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>format</code></td>
+<td><code>object</code></td>
+<td></td>
+<td>The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat"><code>Intl.NumberFormat</code></a> options used by the default label formatter</td>
+</tr>
+</tbody>
+</table>
+<p>!!!include(axes/cartesian/_common_ticks.md)!!!</p>
+<p>!!!include(axes/_common_ticks.md)!!!</p>
+<h2 id="internal-data-format">Internal data format</h2>
+<p>Internally, the logarithmic scale uses numeric data.</p>
+</body>
+</html>

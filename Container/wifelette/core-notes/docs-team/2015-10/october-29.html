@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>october-29</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Attending:</p>
+<ul>
+<li>David Baker</li>
+<li>Michael Kaiser-Nyman</li>
+<li>Ricardo Mendes</li>
+</ul>
+<hr />
+<p>MKN: Lots of new people contributing. HTML Proofer is awesome. Thanks locks for guiding <span class="citation" data-cites="grapho">@grapho</span>.</p>
+<hr />
+<p>LK: I will have a PR for tutorial today.</p>
+<p>DB: I’ll look over PR. Also people at Denver meetup would love to help.</p>
+<p>MKN: Help Wanted label is where to go.</p>
+<p>LK: For some things, we need the core contributors to do 80% so that everybody else knows where to go</p>
+<p>MKN: Maybe after first 1/2 of tutorial is done, we could chunk off the rest.</p>
+<p>DB: What about the model of contributors writing and editors making print-worthy?</p>
+<p>LK: Quality can vary dramatically, we might not be able to merge some people’s contributions at all, and coordinating the editing after something has been merged.</p>
+<p>MKN: What about just trying this out with a few people from Denver?</p>
+<p>LK: That works. Let’s bill it as they are writing a rough draft.</p>
+<hr />
+<p>DB: What about having the first page from <code>ember new</code> be more styled and give more info/direction?</p>
+<p>LK: Already some people think Ember CLI does too much. Also this is a core decision.</p>
+<p>MKN: Maybe have it give a link to the Ember Guides?</p>
+<p>LK: And maybe other resources?</p>
+<p>DB: Even just styled with image or something.</p>
+<hr />
+<p>DB: I’m happy to help out with the redesign here and there.</p>
+<p>LK: Sounds good. The style will be slightly different from what Thoughtbot delivered - improved contrast, slightly different layout, etc.</p>
+<p>DB: Can we have the CSS live in one place, rather than split among Guides, API docs, and website?</p>
+<p>LK: There is different infrastructure for everything - YUI, Middleman, etc. Work would need to be done to sync everything up.</p>
+<hr />
+<p>MKN: I need to open an issue for the old version warning.</p>
+<p>LK: saladfork is the one to take that on.</p>
+<hr />
+<p>LK: DB - another thing people can help out with are deprecations in the API guides.</p>
+<p>MKN: See https://github.com/emberjs/website/issues/2256</p>
+<hr />
+<p>LK: Also this: https://github.com/emberjs/website/issues/1994</p>
+<p>MKN: That should be closed.</p>
+<hr />
+<p>DB: There’s no central place to know where to go to help out with things.</p>
+<p>MKN + LK: That’s true. Things are confusing and split out all over the place.</p>
+<p>DB: Maybe we should have a list of where to contribute somewhere?</p>
+<p>MKN: DB if you are passionate about trying to organize the mess, you could start by mapping things out and opening an issue just to document what the status quo is.</p>
+<hr />
+<p>MKN: Change highlighting (https://github.com/emberjs/guides/issues/624) - should we do this?</p>
+<p>LK: We don’t really have a standard of how code snippets should look - most are always incomplete for brevity. Also some continue previous examples. Some use elipses. Best would be to point to a repo with the full file.</p>
+<p>MKN: Let’s standardize on always using elipses except for <code>import Ember from 'ember'</code>.</p>
+<p>LK: Yes, until Ember CLI 2 is released - then we will always include <code>import</code>s.</p>
+<p>MKN: I will open a PR on the contributing guidelines, and also an issue to audit all the guides.</p>
+<p>DB: What about just code snippets that aren’t in files?</p>
+<p>MKN: Let’s make this standard only apply to things with filenames.</p>
+<p>LK: Line numbers make things confusing if it isn’t a complete file.</p>
+<p>MKN: Let’s take the line numbers off.</p>
+<hr />
+<p>DB: https://github.com/emberjs/data/issues/2905#issuecomment-152032438 points to a problem in the Guides around model metadata.</p>
+<p>MKN: I’ll ping bmac and wecc on this.</p>
+</body>
+</html>

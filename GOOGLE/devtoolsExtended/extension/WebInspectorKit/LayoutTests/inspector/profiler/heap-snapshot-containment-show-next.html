@@ -1,63 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="heap-snapshot-test.js"></script>
-    <script>
-      function test() {
-        var instanceCount = 25;
-        function createHeapSnapshot() {
-          return InspectorTest.createHeapSnapshot(instanceCount);
-        }
-
-        InspectorTest.runHeapSnapshotTestSuite([
-          function testShowNext(next) {
-            InspectorTest.takeAndOpenSnapshot(createHeapSnapshot, step1);
-
-            function step1() {
-              InspectorTest.switchToView("Containment", step2);
-            }
-
-            function step2() {
-              InspectorTest.findAndExpandWindow(step3);
-            }
-
-            function step3(row) {
-              var rowsShown = InspectorTest.countDataRows(row);
-              InspectorTest.assertEquals(
-                true,
-                rowsShown <= instanceCount,
-                "shown more instances than created: " +
-                  rowsShown +
-                  " > " +
-                  instanceCount
-              );
-              if (rowsShown < instanceCount) {
-                var buttonsNode = InspectorTest.findButtonsNode(row);
-                InspectorTest.assertEquals(true, !!buttonsNode, "buttons node");
-                InspectorTest.clickShowMoreButton(
-                  "showNext",
-                  buttonsNode,
-                  step3
-                );
-              } else if (rowsShown === instanceCount) {
-                var buttonsNode = InspectorTest.findButtonsNode(row);
-                InspectorTest.assertEquals(
-                  false,
-                  !!buttonsNode,
-                  "buttons node found when all instances are shown!"
-                );
-                setTimeout(next, 0);
-              }
-            }
-          },
-        ]);
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>
-      Tests Containment view of detailed heap snapshots. Repeated clicks on
-      &quot;Show Next&quot; button must show all nodes.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>heap-snapshot-containment-show-next</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests Containment view of detailed heap snapshots. Repeated clicks on “Show Next” button must show all nodes.</p>
+</body>
 </html>

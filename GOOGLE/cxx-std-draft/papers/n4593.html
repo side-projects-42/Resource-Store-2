@@ -1,366 +1,44 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>n4593</title>
-  </head>
-  <body>
-    <h1>
-      N4593 Editor's Report -- Working Draft, Standard for Programming Language
-      C++
-    </h1>
-
-    <p>
-      2016-05-30 <br />
-      Richard Smith <br />
-      Google Inc <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4594">N4594</a> is the current working draft.
-        It replaces <a href="http://wg21.link/n4582">N4582</a>.
-      </li>
-      <li>N4593 is this Editor's Report for the current working draft.</li>
-    </ul>
-
-    <h3>Motions incorporated into working draft</h3>
-
-    <p>This revision contains only editorial changes relative to N4582.</p>
-
-    <h3>Notable editorial changes since N4582</h3>
-
-    <ul>
-      <li>
-        Rearranged subclause hierarchy of [class] to nest topics related to
-        class members under [class.mem]; significant editorial rewording of
-        [class.mem].
-      </li>
-      <li>
-        Added subclauses of [expr.prim] for the different topics covered
-        therein.
-      </li>
-      <li>
-        Reordered subclauses of [utilities]: [intseq] moved earlier so it is
-        grouped with the other components of <code>&lt;utility&gt;</code>
-      </li>
-      <li>Systematic cleanup of formatting of <em>Effects:</em> paragraphs.</li>
-      <li>Reinstated missing fix for CWG908.</li>
-      <li>
-        Updated uses of type traits, replacing
-        <code>foo&lt;T&gt;::type</code> with <code>foo_t&lt;T&gt;</code> and
-        <code>foo&lt;T&gt;::value</code> with <code>foo_v&lt;T&gt;</code>.
-      </li>
-    </ul>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>A log of all editorial fixes made since N4582 is below:</p>
-
-    <pre><code>commit ab81f6044bebb78b10af5adead693ab61f993564
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4593</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4593-editors-report-working-draft-standard-for-programming-language-c">N4593 Editor’s Report – Working Draft, Standard for Programming Language C++</h1>
+<p>2016-05-30<br />
+Richard Smith<br />
+Google Inc<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4594">N4594</a> is the current working draft. It replaces <a href="http://wg21.link/n4582">N4582</a>.</li>
+<li>N4593 is this Editor’s Report for the current working draft.</li>
+</ul>
+<h3 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h3>
+<p>This revision contains only editorial changes relative to N4582.</p>
+<h3 id="notable-editorial-changes-since-n4582">Notable editorial changes since N4582</h3>
+<ul>
+<li>Rearranged subclause hierarchy of [class] to nest topics related to class members under [class.mem]; significant editorial rewording of [class.mem].</li>
+<li>Added subclauses of [expr.prim] for the different topics covered therein.</li>
+<li>Reordered subclauses of [utilities]: [intseq] moved earlier so it is grouped with the other components of <code>&lt;utility&gt;</code></li>
+<li>Systematic cleanup of formatting of <em>Effects:</em> paragraphs.</li>
+<li>Reinstated missing fix for CWG908.</li>
+<li>Updated uses of type traits, replacing <code>foo&lt;T&gt;::type</code> with <code>foo_t&lt;T&gt;</code> and <code>foo&lt;T&gt;::value</code> with <code>foo_v&lt;T&gt;</code>.</li>
+</ul>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of all editorial fixes made since N4582 is below:</p>
+<pre><code>commit ab81f6044bebb78b10af5adead693ab61f993564
 Author: Marshall Clow &lt;marshall@idio.com&gt;
 Date:   Mon May 30 16:04:10 2016 -0700
 
@@ -390,7 +68,7 @@ commit d0fbc8b31a740a9206e9fa030aff5a7962e15fc3
 Author: Faisal Vali &lt;faisalv@yahoo.com&gt;
 Date:   Mon May 30 17:57:44 2016 -0500
 
-    [class.member.lookup] 'overloading resolution' sounds odd - every other reference to the process uses 'overload resolution' (#723)
+    [class.member.lookup] &#39;overloading resolution&#39; sounds odd - every other reference to the process uses &#39;overload resolution&#39; (#723)
 
 commit 4e86203d582991750be400a2e64da0ccedd6d08f
 Author: timsong-cpp &lt;rs2740@gmail.com&gt;
@@ -398,15 +76,15 @@ Date:   Mon May 30 18:56:58 2016 -0400
 
     [ext.manip] fix typo in put_money description (#717)
 
-    There's no way `os &lt;&lt; put_money(...)` could be a formatted *input* function; presumably a formatted *output* function is meant. Also add cross reference to [ostream.formatted.reqmts].
+    There&#39;s no way `os &lt;&lt; put_money(...)` could be a formatted *input* function; presumably a formatted *output* function is meant. Also add cross reference to [ostream.formatted.reqmts].
 
 commit d4c4a314a3037c2d7b21565ecd0bc96de988ac52
 Author: timsong-cpp &lt;rs2740@gmail.com&gt;
 Date:   Mon May 30 18:39:13 2016 -0400
 
-    [algorithms] [numeric.ops] Crossref "writable" (#706)
+    [algorithms] [numeric.ops] Crossref &quot;writable&quot; (#706)
 
-    Add cross-references to [iterator.requirements.general] for "writable"
+    Add cross-references to [iterator.requirements.general] for &quot;writable&quot;
     for [alg.replace], [alg.fill], [alg.partitions], [partial.sum] and
     [adjacent.difference].
 
@@ -418,10 +96,10 @@ Date:   Mon May 30 18:38:19 2016 -0400
 
     [alg.random.sample] reword and add cross-reference (#705)
 
-    MeowIterator is not a named requirement, so reworded as "shall satisfy
-    the requirements of a meow iterator", consistent with the wording in
+    MeowIterator is not a named requirement, so reworded as &quot;shall satisfy
+    the requirements of a meow iterator&quot;, consistent with the wording in
     [algorithms.general]/5. Added cross-references to [meow.iterators], and
-    to [iterator.requirements.general] for "writable".
+    to [iterator.requirements.general] for &quot;writable&quot;.
 
     Partially addresses #697 and #696.
 
@@ -429,14 +107,14 @@ commit 8c1fef8f8f6c190f12f744c568bb1b92de70c579
 Author: Alisdair Meredith &lt;public@alisdairm.net&gt;
 Date:   Mon May 30 18:31:53 2016 -0400
 
-    [meta.unary.prop] Consistent formatting for 'void' (#684)
+    [meta.unary.prop] Consistent formatting for &#39;void&#39; (#684)
 
-    * [meta.unary.prop] Consistent formatting for 'void'
+    * [meta.unary.prop] Consistent formatting for &#39;void&#39;
 
     Fixes #544.
 
-    Update all use of 'void' in type traits tables to use the codified
-    form \tcode{void}.  There was one use of the phrase "void types"
+    Update all use of &#39;void&#39; in type traits tables to use the codified
+    form \tcode{void}.  There was one use of the phrase &quot;void types&quot;
     that I deliberately chose to not touch.
 
     A second issue I stumbled over in this edit was inconsistent use
@@ -470,13 +148,13 @@ Date:   Fri May 27 12:01:23 2016 -0700
     [allocator.requirements] Fix incorrect variable references (#727)
 
     Two move operations for the allocators refer to `a` or `a1`, though the code uses `u`.  Fix the description to match the code.
-    Also, change the phrase "equals" to "is equal to", which matches other uses in the standard (see [unique.ptr]/4.1 for an example).
+    Also, change the phrase &quot;equals&quot; to &quot;is equal to&quot;, which matches other uses in the standard (see [unique.ptr]/4.1 for an example).
 
 commit 118e6d9510c5030cc7214ae63de7838108bb42e6
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
 Date:   Wed May 11 18:30:40 2016 +0100
 
-    [directory_iterator.members] [rec.dir.itr.members] fix "skip_permissions_denied"
+    [directory_iterator.members] [rec.dir.itr.members] fix &quot;skip_permissions_denied&quot;
 
 commit f7cbf1b60470ca1fc7d3efa92c0224c707213cf9
 Author: Alisdair Meredith &lt;alisdairm@me.com&gt;
@@ -497,13 +175,13 @@ commit 6251fa16f6dcf4f95f7eaf0df75793a08db30d6a
 Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
 Date:   Thu Apr 28 20:00:25 2016 -0500
 
-    Remove the semicolon in "Returns: expr;" (#718)
+    Remove the semicolon in &quot;Returns: expr;&quot; (#718)
 
 commit dd19e2ef4964f15b209322e32b792ef2c3429837
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Apr 28 17:41:35 2016 -0700
 
-    Revert "[memory.polymorphic.allocator] Coding style fixes (and minor rewording of p8)"
+    Revert &quot;[memory.polymorphic.allocator] Coding style fixes (and minor rewording of p8)&quot;
 
     This reverts commit 2d900093b196229acbda984d254b141bc98f6adc.
 
@@ -515,7 +193,7 @@ commit 40363dba5923e1b41c06877931362fc3e05e4b96
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Apr 28 17:28:39 2016 -0700
 
-    [expr.delete] Clarify how an "otherwise" binds and remove a redundant cross-reference.
+    [expr.delete] Clarify how an &quot;otherwise&quot; binds and remove a redundant cross-reference.
 
 commit 4b1e2e02dd73fec42d5b25fbf274095957133430
 Author: Geoff Romer &lt;gromer@google.com&gt;
@@ -527,10 +205,10 @@ commit ebebd8d2dffe5432334aaa4b2cd72930a6e816da
 Author: Hubert Tong &lt;hstong@ca.ibm.com&gt;
 Date:   Mon Apr 18 22:44:03 2016 -0400
 
-    Add name "high" to locale::narrow in [category.ctype]
+    Add name &quot;high&quot; to locale::narrow in [category.ctype]
 
     In [locale.ctype.members], the returns clause for locale::narrow refers
-    to "high". For correct binding, the corresponding parameter should be
+    to &quot;high&quot;. For correct binding, the corresponding parameter should be
     named as such.
 
 commit 6c3c605365daa66476ff687c840d74b15e49cf03
@@ -549,7 +227,7 @@ commit 3137a4cd43807559136b0c725a72abdd70edf7ff
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Fri Apr 15 19:51:27 2016 -0700
 
-    Fix definition and uses of "value initialize*"/"value-initialize*" (#708)
+    Fix definition and uses of &quot;value initialize*&quot;/&quot;value-initialize*&quot; (#708)
 
     Fixes #708.
 
@@ -557,7 +235,7 @@ commit 3d05daec1068246d2a55812c0c14204d067f2417
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Fri Apr 15 19:39:29 2016 -0700
 
-    Un-\term "allocation function" and "deallocation function" (#707)
+    Un-\term &quot;allocation function&quot; and &quot;deallocation function&quot; (#707)
 
     Fixes #707.
 
@@ -575,7 +253,7 @@ commit 4d548679bc5550714c5afb04030627cab9f36968
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Fri Apr 15 18:39:20 2016 -0700
 
-    Use "As if by" in \effects which lack a code introduction (#694 part 2)
+    Use &quot;As if by&quot; in \effects which lack a code introduction (#694 part 2)
 
     Fixes #694.
 
@@ -586,9 +264,9 @@ Date:   Fri Apr 15 16:51:08 2016 -0700
     Fix \effects throughout the library (#694 part 1)
 
     Fixes include:
-    * insert ':' before codeblocks (#694)
+    * insert &#39;:&#39; before codeblocks (#694)
     * fix punctuation and capitalization
-    * turn long \tcode'd code into codeblocks
+    * turn long \tcode&#39;d code into codeblocks
     * fix inconsistencies
     * other minor edits in \effects clauses noticed while scanning thru source
 
@@ -604,7 +282,7 @@ commit 2400aa57386c7adf2215f5674b51d51a6485f9d7
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 18:50:49 2016 -0700
 
-    [allocator.requirements] Fix missing colon for "u" in Table 27 (#195)
+    [allocator.requirements] Fix missing colon for &quot;u&quot; in Table 27 (#195)
 
     Fixes #195.
 
@@ -620,7 +298,7 @@ commit 8e98a59012743cd32fcdaf2183e772a0bc223144
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 18:38:24 2016 -0700
 
-    [thread.lock.unique.cons] Fix tense of "own" (#204)
+    [thread.lock.unique.cons] Fix tense of &quot;own&quot; (#204)
 
     Fixes #204.
 
@@ -628,7 +306,7 @@ commit 3d4cd42bac33862b949d0fa68620c5b8fcc00374
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 18:34:37 2016 -0700
 
-    [temp.deduct.type] Add missing "of" (#217)
+    [temp.deduct.type] Add missing &quot;of&quot; (#217)
 
     Fixes #217.
 
@@ -636,7 +314,7 @@ commit 7067dbba9d3fed9a357de5590b1aba286b95ee07
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 18:28:13 2016 -0700
 
-    Un-grammarterm "parameter-type-list" (#213)
+    Un-grammarterm &quot;parameter-type-list&quot; (#213)
 
     Fixes #213.
 
@@ -660,7 +338,7 @@ commit 341a474adb085a9c7a201ad0b628ed80b889bce4
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 17:27:09 2016 -0700
 
-    Hyphenate "default initializ*" (#337)
+    Hyphenate &quot;default initializ*&quot; (#337)
 
     Fixes #337.
 
@@ -676,7 +354,7 @@ commit e76648fba7bb44de8656848cbcf1279e0618729c
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 17:08:46 2016 -0700
 
-    [basic.start.dynamic, temp.inst] Don't hyphenate "side-effects"
+    [basic.start.dynamic, temp.inst] Don&#39;t hyphenate &quot;side-effects&quot;
 
     Fixes #475.
 
@@ -684,7 +362,7 @@ commit c2be17ea9b55fc46cef5732375a9218fdd82ee79
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 17:03:14 2016 -0700
 
-    [unique.ptr.single.ctor, tuple.elem] Add "a" before "non-reference type"
+    [unique.ptr.single.ctor, tuple.elem] Add &quot;a&quot; before &quot;non-reference type&quot;
 
     Fixes #460.
 
@@ -698,13 +376,13 @@ commit a05bcde4a0de9ef92bef94dc13d25efcd9bb4e87
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 16:19:29 2016 -0700
 
-    [memory.polymorphic.allocator.mem] Fix wording "construct an object X at p"
+    [memory.polymorphic.allocator.mem] Fix wording &quot;construct an object X at p&quot;
 
 commit db237d65285f176d794bb0434d42133c708d7f45
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Thu Apr 14 15:19:19 2016 -0700
 
-    [memory.resource.prot] Clarify that "it" is the dynamic_cast expression in the note in p7
+    [memory.resource.prot] Clarify that &quot;it&quot; is the dynamic_cast expression in the note in p7
 
     Fixes #695.
 
@@ -744,7 +422,7 @@ commit 3f72ecddae95fd2a2f485019da16e02c928aef2f
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Apr 13 22:09:28 2016 -0700
 
-    [memory.polymorphic.allocator.mem] Fix wording of "constructing a std::pair&lt;T1,T2&gt; object at p"
+    [memory.polymorphic.allocator.mem] Fix wording of &quot;constructing a std::pair&lt;T1,T2&gt; object at p&quot;
 
 commit f88ca1d56ad40e57357cb5b88daf53d2d4ad5e34
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -756,7 +434,7 @@ commit 9b189835ce28223ff18f3d24437a931497f09388
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Apr 13 17:36:23 2016 -0700
 
-    [sf.cmath] Reference parameters in Returns clauses by adding "where $n$ is |n|".
+    [sf.cmath] Reference parameters in Returns clauses by adding &quot;where $n$ is |n|&quot;.
 
 commit e5e95300c796f056ba9d9f5284b3b4e2e530cf45
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -768,13 +446,13 @@ commit ad9ada121cff0d82c0f5aa3b764b905952699dbe
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Apr 13 17:00:54 2016 -0700
 
-    [sf.cmath] Replace "Returns: The X functions return" with "Returns:" for consistency.
+    [sf.cmath] Replace &quot;Returns: The X functions return&quot; with &quot;Returns:&quot; for consistency.
 
 commit 08b872a9c9f38ebf172322874765ed499b3df6c2
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Apr 13 15:53:22 2016 -0700
 
-    [string::find, string::rfind] Change "obtain:" to "hold:" for consistency.
+    [string::find, string::rfind] Change &quot;obtain:&quot; to &quot;hold:&quot; for consistency.
 
 commit 7f9d7f759df375a916e312cb41f194397c7754c9
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -786,7 +464,7 @@ commit e5723da0ae260544b6800eddb8f9ee151f5754c1
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Apr 13 14:20:01 2016 -0700
 
-    [temp.deduct.partial, temp.class.spec.match] Italicise "at least as specialized" and add indexes to 'more specialized'.
+    [temp.deduct.partial, temp.class.spec.match] Italicise &quot;at least as specialized&quot; and add indexes to &#39;more specialized&#39;.
 
     Fixes #318.
 
@@ -859,14 +537,14 @@ commit a2e4bc75e7e0ce13d900d81d1ef823bc74788496
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Apr 12 15:04:51 2016 -0700
 
-    [dcl.ambig.res] Combine example into the paragraph that it's an example
+    [dcl.ambig.res] Combine example into the paragraph that it&#39;s an example
     of, to parallel the other paragraphs in this subclause.
 
 commit 94d61601737fef05d03b66ed4b07145817948acb
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Apr 12 14:58:12 2016 -0700
 
-    [dcl.ambig.res] Avoid suggesting "disambiguation" that changes the
+    [dcl.ambig.res] Avoid suggesting &quot;disambiguation&quot; that changes the
     meaning of the program. Remove redundant sentence that obscures the
     meaning of the type-id versus function-style cast disambiguation rule.
     Remove example that actually contains no ambiguity, and merge and
@@ -947,7 +625,7 @@ commit bc54ae08d34baf3ae1cff792a7934b9a1a815c75
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Apr 6 16:17:04 2016 -0700
 
-    [optional.object.swap] Clarify wording in throws clause from "P0220R1: optional (section 5)"
+    [optional.object.swap] Clarify wording in throws clause from &quot;P0220R1: optional (section 5)&quot;
 
 commit 68024dc30a6167a909e8b3d9715d7ca6ba64373b
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -1037,7 +715,7 @@ commit 8f8f90bbc0c6607998d80f2ca0951b040ec5e160
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Mon Apr 4 16:14:17 2016 -0700
 
-    [move.iterator],[unique.ptr.special] Use "Let ... denote" instead of "Let ... be" for consistency.
+    [move.iterator],[unique.ptr.special] Use &quot;Let ... denote&quot; instead of &quot;Let ... be&quot; for consistency.
 
     Patch from webrown.cpp@gmail.com.
 
@@ -1045,7 +723,7 @@ commit 67dd2ad74b14b78ceca34d44f22dca7ceb4787b2
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Mon Apr 4 16:56:28 2016 -0700
 
-    [unique.ptr.special] Move ',' outside of \tcode{}.
+    [unique.ptr.special] Move &#39;,&#39; outside of \tcode{}.
 
 commit eb6d427e325f4ddb19280da10ebb387ba8498575
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -1067,7 +745,7 @@ commit be071c84245573e44ed833eb928e048e4b3a8d67
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Mon Apr 4 15:31:47 2016 -0700
 
-    Consistently employ _t/_v suffixes when mentioning any type trait's resulting type/value.
+    Consistently employ _t/_v suffixes when mentioning any type trait&#39;s resulting type/value.
 
     Additional fixes for #221.
     Patch from webrown.cpp@gmail.com.
@@ -1130,7 +808,7 @@ commit 53c8e9ad3622645e1b5199d68c400c1768903a31
 Author: Eelis van der Weegen &lt;eelis@eelis.net&gt;
 Date:   Thu Mar 24 12:39:34 2016 +0100
 
-    [intro.object] Refer to 'name' as a term, not a grammar term.
+    [intro.object] Refer to &#39;name&#39; as a term, not a grammar term.
 
 commit 5c8435cbf3721eefc02eae58543adc73b51d889f
 Author: Aaron Ballman &lt;aaron@aaronballman.com&gt;
@@ -1148,7 +826,7 @@ commit 2ceb76014e572abbb1637313342ad4af94cefcbb
 Author: FrankHB &lt;frankhb1989@gmail.com&gt;
 Date:   Wed Mar 23 13:15:05 2016 +0800
 
-    [numarray] Use "compound assignment". Fix missing title in [gslice.array.comp.assign].
+    [numarray] Use &quot;compound assignment&quot;. Fix missing title in [gslice.array.comp.assign].
 
     Signed-off-by: FrankHB &lt;frankhb1989@gmail.com&gt;
 
@@ -1205,7 +883,6 @@ Date:   Tue Jan 19 00:22:53 2016 +0000
 
     Make the entirety of [class.static.data]/5 a note
 
-    .. and change the index reference of restrictions on local static data members accordingly.
-</code></pre>
-  </body>
+    .. and change the index reference of restrictions on local static data members accordingly.</code></pre>
+</body>
 </html>

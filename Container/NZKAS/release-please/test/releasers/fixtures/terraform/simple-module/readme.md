@@ -1,10 +1,10 @@
-# Terraform Module
+Terraform Module
+================
 
-## Usage
+Usage
+-----
 
-```hcl
-module "vpc" {
-    source  = "terraform-google-modules/mine/google"
-    version = "~> 12.0"
-}
-```
+    module "vpc" {
+        source  = "terraform-google-modules/mine/google"
+        version = "~> 12.0"
+    }

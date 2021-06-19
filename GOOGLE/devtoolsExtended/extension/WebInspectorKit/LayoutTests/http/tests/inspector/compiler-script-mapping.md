@@ -1,0 +1,1 @@
+Tests SourceMap and CompilerScriptMapping.

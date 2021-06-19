@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="console-change-history">Console Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>CSS classes generated from the <code>style</code> attribute changed from, e.g., <code>yui3-inline-console</code> to <code>yui3-console-inline</code>.</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>CSS class references updated from <code>yui-*</code> to <code>yui3-*</code>.</p></li>
+<li><p>Internal reorganization (API and functionality unaffected)</p></li>
+<li><p>Fixed double escapement of <code>&amp;</code> when used with ConsoleFilters and hiding and showing content with HTML entities.</p></li>
+<li><p>Strings broken out into Intl. language resource bundles. English (en, default) and Spanish (es) supported.</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li><p>Added attribute <code>style</code> to allow <code>inline-block</code>, <code>block</code>, or <code>absolute</code> positioning.</p></li>
+<li><p>Moved the hidden state CSS to the sam skin and increased rule specificity.</p></li>
+<li><p><code>printBuffer</code> no longer throws an error when called against an empty buffer.</p></li>
+<li><p>Removed <code>label</code> property from normalized message object since it was just a copy of category.</p></li>
+<li><p>Moved <code>collapsed</code> CSS class to the <code>boundingBox</code> and now <code>collapse()</code> resizes the <code>boundingBox</code> accordingly.</p></li>
+<li><p>Added <code>useBrowserConsole</code> attribute as a pass through to the YUI config. Default to <code>false</code> so when a <code>Console</code> is instantiated, messages are redirected to <code>Console</code> rather than duplicated there.</p></li>
+<li><p><code>collapse()</code>, <code>expand()</code>, and <code>log()</code> are now chain-able.</p></li>
+</ul>
+<h2 id="beta1">3.0.0beta1</h2>
+<ul>
+<li><p><code>logSource</code> attribute added to configure listening for events from a specific target. Also useful for subscribing to all log events across multiple YUI instances.</p></li>
+<li><p>Lowered <code>consoleLimit</code> default to 300.</p></li>
+<li><p><code>printLimit</code> attribute added to limit the number of entries from the buffer to output in a given <code>printBuffer()</code> call.</p></li>
+<li><p><code>printBuffer(max)</code> argument added to limit the number of entries to print in this cycle.</p></li>
+<li><p>Changed from <code>setTimeout</code> to <code>setInterval</code> to chunk DOM output.</p></li>
+<li><p><code>logLevel</code> constants changed to strings and categories outside info, warn, and error are not treated as info.</p></li>
+<li><p>CSS updates.</p></li>
+<li><p>Support for <code>height</code> and <code>width</code> attribute configuration.</p></li>
+<li><p>Changed <code>&lt;input type="button"&gt;</code> to <code>&lt;button type="button"&gt;</code>.</p></li>
+<li><p>Added <code>collapse()</code>/<code>expand()</code>.</p></li>
+<li><p>Entry addition and removal now occurs off DOM.</p></li>
+<li><p>Entry removal checks that the target Node is present before removing it.</p></li>
+<li><p><code>Y.config.debug</code> explicitly set to false during print cycle to avoid infinite loops.</p></li>
+</ul>
+<h2 id="pr2">3.0.0pr2</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

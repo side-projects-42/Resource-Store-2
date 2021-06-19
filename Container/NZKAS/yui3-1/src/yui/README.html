@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="yui-core">YUI Core</h1>
+<p>Provides core YUI functionality, including module registration and usage, language/array/object utilities, browser detection, and dynamic loading of script and css files.</p>
+<p>The <code>yui</code> module is a rollup of <code>yui-base</code> (the core module registration and sandbox system, plus utilities), and the following optional submodules:</p>
+<ul>
+<li><code>yui-base</code>: The Modules required to make YUI run</li>
+<li><code>loader</code>: Provides dynamic module loading.</li>
+</ul>
+<p><code>yui-base</code> contains:</p>
+<ul>
+<li><code>yui-core</code>: The Modules required to make YUI run</li>
+<li>The module registration system (<code>YUI.add()</code> and <code>YUI().use()</code>).</li>
+<li>Core YUI utilities such as <code>cached()</code>, <code>merge()</code> and <code>mix()</code>.</li>
+<li><code>Lang</code>: Language utilities, type checking, etc.</li>
+<li><code>Object</code>: Object manipulation and iteration utilities.</li>
+<li><code>Array</code>: Array manipulation and iteration utilities.</li>
+<li><code>get</code>: Provides dynamic loading of JavaScript and CSS</li>
+<li><code>yui-log</code>: Adds support for <code>Y.log()</code> and friends.</li>
+<li><code>yui-later</code>: An abstraction around <code>setTimeout</code> and <code>setInterval</code>.</li>
+<li><code>intl-base</code>: Provides dynamic loading of language packs.</li>
+</ul>
+<p><code>yui-core</code> contains:</p>
+<ul>
+<li>The module registration system (<code>YUI.add()</code> and <code>YUI().use()</code>).</li>
+<li>Core YUI utilities such as <code>cached()</code>, <code>merge()</code> and <code>mix()</code>.</li>
+<li><code>Lang</code>: Language utilities, type checking, etc.</li>
+<li><code>Object</code>: Object manipulation and iteration utilities.</li>
+<li><code>Array</code>: Array manipulation and iteration utilities.</li>
+</ul>
+<p><strong>NOTE</strong> As of 3.4.0PR2 yui-throttle is not in the core yui package, it’s a standalone module.</p>
+</body>
+</html>

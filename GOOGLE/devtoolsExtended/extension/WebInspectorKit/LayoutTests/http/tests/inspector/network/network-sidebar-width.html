@@ -1,51 +1,19 @@
-<html>
-  <head>
-    <script src="../inspector-test.js"></script>
-    <script src="../network-test.js"></script>
-    <script>
-      function test() {
-        InspectorTest.makeSimpleXHR(
-          "GET",
-          "resources/resource.php",
-          true,
-          step2
-        );
-
-        var oldSetting;
-        function step2() {
-          var panel = WebInspector.panel("network");
-          var setting = WebInspector.settings[panel._sidebarWidthSettingName()];
-          var request =
-            WebInspector.panel("network").requests[
-              WebInspector.panel("network").requests.length - 1
-            ];
-
-          oldSetting = setting.get();
-          panel.show();
-
-          setting.set(undefined);
-          panel._showRequest(request);
-          InspectorTest.addResult(
-            "Sidebar width: " + panel.sidebarElement.offsetWidth
-          );
-          panel._toggleGridMode();
-
-          setting.set(242);
-          panel._showRequest(request);
-          InspectorTest.addResult(
-            "Sidebar width: " + panel.sidebarElement.offsetWidth
-          );
-          panel._closeVisibleRequest(request);
-
-          setting.set(oldSetting);
-
-          InspectorTest.completeTest();
-        }
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests network panel sidebar width with and without preference set.</p>
-    <a href="https://bugs.webkit.org/show_bug.cgi?id=65256">Bug 65256</a>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>network-sidebar-width</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests network panel sidebar width with and without preference set.</p>
+<p><a href="https://bugs.webkit.org/show_bug.cgi?id=65256">Bug 65256</a></p>
+</body>
 </html>

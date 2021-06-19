@@ -1,31 +1,23 @@
-Google BSD license <https://developers.google.com/google-bsd-license>
-Copyright 2012 Google Inc. <wrightt@google.com>
+Google BSD license <a href="https://developers.google.com/google-bsd-license" class="uri">https://developers.google.com/google-bsd-license</a> Copyright 2012 Google Inc. <a href="mailto:wrightt@google.com" class="email">wrightt@google.com</a>
 
-## Example Proxy Clients
+Example Proxy Clients
+---------------------
 
-- Browser HTML
-  \- <http://localhost:9221> supports HTML-formatted list of devices, pages, and DevTools UI.
+-   Browser HTML - <a href="http://localhost:9221" class="uri">http://localhost:9221</a> supports HTML-formatted list of devices, pages, and DevTools UI.
 
-- Browser JSON
-  \- <http://localhost:9221/json> supports JSON-formatted output.
+-   Browser JSON - <a href="http://localhost:9221/json" class="uri">http://localhost:9221/json</a> supports JSON-formatted output.
 
-- Browser JS
-  \- [wdp_client.html](wdp_client.html) demonstrates DevTools command I/O, e.g. "Page.navigate".
+-   Browser JS - [wdp\_client.html](wdp_client.html) demonstrates DevTools command I/O, e.g. “Page.navigate”.
 
-- NodeJS
-  \- [wdp_client.js](wdp_client.js) is the command-line equivalent of [wdp_client.html](wdp_client.html).
+-   NodeJS - [wdp\_client.js](wdp_client.js) is the command-line equivalent of [wdp\_client.html](wdp_client.html).
 
-- C
-  \- [wi_client.c](wi_client.c) a minimal webinspector client.
+-   C - [wi\_client.c](wi_client.c) a minimal webinspector client.
 
-## Example System Clients
+Example System Clients
+----------------------
 
-- Device attach/remove listener
-  \- [dl_client.c](dl_client.c)
+-   Device attach/remove listener - [dl\_client.c](dl_client.c)
 
-- WebSocket "echo" client (for ws_echo\* testing)
-  \- [ws_client.html](ws_client.html)
+-   WebSocket “echo” client (for ws\_echo\* testing) - [ws\_client.html](ws_client.html)
 
-- WebSocket "echo" servers
-  \- [ws_echo1.c](ws_echo1.c) uses blocking I/O
-  \- [ws_echo2.c](ws_echo2.c) uses non-blocking I/O
+-   WebSocket “echo” servers - [ws\_echo1.c](ws_echo1.c) uses blocking I/O - [ws\_echo2.c](ws_echo2.c) uses non-blocking I/O

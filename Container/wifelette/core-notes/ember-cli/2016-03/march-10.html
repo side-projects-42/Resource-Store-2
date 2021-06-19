@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>march-10</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-03-10">ember-cli Meeting Notes - 2016-03-10</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Katie Gengler</li>
+<li>Kelly Selden</li>
+<li>Jake Bixby</li>
+<li>Stefan Penner</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>(Nathan) - Summarize feedback on ember mv into issue.</li>
+<li>(Stef) - Investigate output size to make sure it looks good.</li>
+<li>(Stef) - Review Jake’s PR.</li>
+<li>(Nathan) - Create an issue in RFCs repos for collating extensibility approach.</li>
+<li>(All) - Collect extensibility needs.</li>
+<li>(Stef) - Publish helpers that make it easy for Selenium.</li>
+<li>(All) - Update project plan.</li>
+<li>(Nathan) - Communication plan for our project plans in moving those public.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="x-forwarded-">X-Forwarded-*</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/ember-cli/pull/5524">Initial change landed.</a></li>
+<li><a href="https://github.com/ember-cli/ember-cli/pull/5599">…but it breaks Symfony.</a></li>
+<li>Set a new default, make it configurable.</li>
+<li>Unless somebody can prove that it’s “more-correct” one way or another.</li>
+</ul>
+<h3 id="output-build-sizes">Output Build Sizes</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/ember-cli/pull/4358">PR seems ready.</a></li>
+<li>Check it out to make sure, can merge after that.</li>
+</ul>
+<h3 id="ember-mv"><code>ember mv</code></h3>
+<ul>
+<li><a href="https://github.com/ember-cli/rfcs/issues/38">Issue</a></li>
+<li>ember-cli-rename</li>
+<li>Calls ember-cli-mv to handle things</li>
+<li>Hit a wall with handlebars and AST processing.</li>
+<li>Not able to reach 100%, by rule (halting problem)</li>
+<li>Need to revisit with some help from someone who understands AST transforms</li>
+<li>Want to move it into ember-watson possibly?</li>
+</ul>
+<h3 id="gitignore-dist"><code>.gitignore</code> &amp; <code>dist</code></h3>
+<ul>
+<li><a href="https://github.com/ember-cli/rfcs/issues/37">Issue</a></li>
+<li>People rely on that folder being present.</li>
+<li>Goal is to avoid problems with symlinking since the “reference” would always be there.</li>
+<li>Investigate cordova/electron using –output-path</li>
+<li>If problem exists, output-path + symlink different path?</li>
+<li>Transient folder, always represents the previous build.</li>
+<li>Maybe this is a thing that we need to account for in extensibility?</li>
+</ul>
+<h3 id="ember-cli-2.4-issues">ember-cli 2.4 issues</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/ember-cli-blueprint-test-helpers/pull/35"><code>assertThrows</code> is broken</a></li>
+<li>Review and land.</li>
+</ul>
+<h3 id="extensibility-primitive">Extensibility Primitive</h3>
+<ul>
+<li>Tabled for now until we’ve collected issues.</li>
+</ul>
+</body>
+</html>

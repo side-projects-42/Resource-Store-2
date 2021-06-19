@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="collection-change-history">Collection Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>Sparse arrays are now handled correctly in the non-native fallback implementation of <code>Y.Array.lastIndexOf()</code>. [Ticket #2530966]</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>Sparse arrays are now handled correctly in the non-native implementations of <code>Array.every</code>, <code>Array.filter</code>, <code>Array.find</code>, <code>Array.map</code>, and <code>Array.reduce</code>. [Ticket #2530376]</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>[!] The <code>sort</code> parameter of <code>Array.unique</code> has been deprecated. It still works, but you’re encouraged not to use it as it will be removed from a future version of YUI.</li>
+<li><code>Array.lastIndexOf</code> now supports the <code>fromIndex</code> parameter as specified in ES5.</li>
+<li>Improved the performance of <code>Array.filter</code>, <code>Array.map</code>, <code>Array.reduce</code>, and <code>Array.unique</code>, especially in browsers without native ES5 array extras.</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><code>array-extras</code> is the base submodule for the package.</li>
+<li>Added <code>ArrayList</code> for generic iterable objects.</li>
+<li><code>Array.forEach</code> is an alias for <code>Array.each</code>.</li>
+<li>Added <code>Array.invoke</code> to execute a named method on an array of objects.</li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li><code>unique</code> with <code>sort</code> works.</li>
+</ul>
+<h2 id="b1">3.0.0b1</h2>
+<ul>
+<li>Fixed load time fork assumptions.</li>
+</ul>
+<h2 id="pr1">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

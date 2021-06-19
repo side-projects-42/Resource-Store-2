@@ -1,379 +1,48 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4799</title>
-  </head>
-  <body>
-    <h1>N4799 Editors' Report -- Programming Languages -- C++</h1>
-
-    <p>
-      2019-01-21 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Dawn Perchik (co-editor) (Bright Side Computing, LLC) <br />
-      Jens Maurer (co-editor) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4800">N4800</a> is the current C++ working
-        draft. It replaces <a href="http://wg21.link/n4791">N4791</a>.
-      </li>
-      <li>N4799 is this Editors' Report.</li>
-    </ul>
-
-    <h2>Motions incorporated into working draft</h2>
-
-    <p>This revision contains only editorial changes relative to N4791.</p>
-
-    <h2>Notable editorial changes</h2>
-
-    <h3><code>DECAY_COPY</code></h3>
-
-    <p>
-      <code>DECAY_COPY</code> has been renamed to <em>decay-copy</em> for
-      consistency with other exposition-only entities, and moved from
-      [thread.decaycopy] to [expos.only.func].
-    </p>
-
-    <h3>Other changes to section labels</h3>
-
-    <p>
-      [iterator.container] has been merged into [iterator.range], and
-      [range.prim] has been merged into [range.access].
-    </p>
-
-    <p>
-      The parts of [range.adaptors] that create new ranges rather than adapting
-      existing ranges have been split into a separate [range.factories].
-    </p>
-
-    <p>
-      The parts of [dcl.init] relating to indeterminate values have been moved
-      to a new [basic.indet].
-    </p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made to the working draft since N4791 is below.
-      This list excludes changes that do not affect the body text or only affect
-      whitespace or typeface. For a complete list including such changes (or for
-      the actual deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4791...n4800"
-        >draft sources on github</a
-      >.
-    </p>
-
-    <pre><code>commit 2831ba3b8e1862a8a0e52d540b61062e72e89d6d
-Author: Arthur O'Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4799</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4799-editors-report-programming-languages-c">N4799 Editors’ Report – Programming Languages – C++</h1>
+<p>2019-01-21<br />
+Richard Smith (editor) (Google Inc)<br />
+Dawn Perchik (co-editor) (Bright Side Computing, LLC)<br />
+Jens Maurer (co-editor)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4800">N4800</a> is the current C++ working draft. It replaces <a href="http://wg21.link/n4791">N4791</a>.</li>
+<li>N4799 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<p>This revision contains only editorial changes relative to N4791.</p>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<h3 id="decay_copy"><code>DECAY_COPY</code></h3>
+<p><code>DECAY_COPY</code> has been renamed to <em>decay-copy</em> for consistency with other exposition-only entities, and moved from [thread.decaycopy] to [expos.only.func].</p>
+<h3 id="other-changes-to-section-labels">Other changes to section labels</h3>
+<p>[iterator.container] has been merged into [iterator.range], and [range.prim] has been merged into [range.access].</p>
+<p>The parts of [range.adaptors] that create new ranges rather than adapting existing ranges have been split into a separate [range.factories].</p>
+<p>The parts of [dcl.init] relating to indeterminate values have been moved to a new [basic.indet].</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made to the working draft since N4791 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4791...n4800">draft sources on github</a>.</p>
+<pre><code>commit 2831ba3b8e1862a8a0e52d540b61062e72e89d6d
+Author: Arthur O&#39;Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
 Date:   Mon Jan 14 11:15:11 2019 -0500
 
-    [depr.strstreambuf.virtuals] Hyphenate "implementation-defined"
+    [depr.strstreambuf.virtuals] Hyphenate &quot;implementation-defined&quot;
 
 commit d333390f0dd56dc9143731c1be00f66bc3752479
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -400,19 +69,19 @@ Date:   Tue Jan 15 00:56:07 2019 +0100
     [thread.condition] Improve description of efficiency of condition_variable.
 
 commit 281a8bd29f97b5249eae68fe0280e2dfda5ac714
-Author: Arthur O'Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
+Author: Arthur O&#39;Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
 Date:   Mon Jan 7 18:37:20 2019 -0500
 
-    [ranges.syn] Fix a typo: "fowarding"
+    [ranges.syn] Fix a typo: &quot;fowarding&quot;
 
 commit 099022dbf1642541ab0d1c380ed26e8fb1244d86
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Jan 2 22:29:51 2019 +0100
 
-    [unreachable.sentinel] 'open interval' -&gt; 'unbounded interval'
+    [unreachable.sentinel] &#39;open interval&#39; -&gt; &#39;unbounded interval&#39;
 
 commit a9fdd8589a51617d5d60bf59263d1567076718ba
-Author: Arthur O'Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
+Author: Arthur O&#39;Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
 Date:   Tue Jan 1 21:40:09 2019 -0500
 
     Fix some `operator&lt;=&gt;` declarations with the wrong number of parameters.
@@ -425,11 +94,11 @@ Date:   Tue Jan 1 14:56:43 2019 +0100
 
     [expr.prim.id.dtor] Fix comment in example.
 
-    In translation phase 3, the "0.T" in the line of code is parsed as a (single) preprocessing-token.
+    In translation phase 3, the &quot;0.T&quot; in the line of code is parsed as a (single) preprocessing-token.
 
-    In phase 7, this preprocessing token is converted into a user-defined-floating-literal whose ud-suffix component is "T".
+    In phase 7, this preprocessing token is converted into a user-defined-floating-literal whose ud-suffix component is &quot;T&quot;.
 
-    At no point is the "0." partial token a floating-point literal. At most, it is the fractional-constant component in a bigger user-defined-floating-literal token.
+    At no point is the &quot;0.&quot; partial token a floating-point literal. At most, it is the fractional-constant component in a bigger user-defined-floating-literal token.
 
     Fixes #2630.
 
@@ -443,10 +112,10 @@ commit ede68b76f56ebb5bdf0692ab0ac2e5bcb68de96a
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sun Dec 30 10:45:33 2018 +0100
 
-    [description] Drop 'informative' from the heading.
+    [description] Drop &#39;informative&#39; from the heading.
 
     This subclause contains many normative definitions
-    (e.g. [operators]); marking it as 'informative' is
+    (e.g. [operators]); marking it as &#39;informative&#39; is
     misleading.
 
 commit 5884d91293055be8b1ab494ef2ee5e675caad00c
@@ -456,7 +125,7 @@ Date:   Sun Dec 30 10:41:21 2018 +0100
     [expos.only.types] Exposition-only types apply more generally,
 
     not just to capture language linkage.  For example,
-    'node-handle' is an entire exposition-only class.
+    &#39;node-handle&#39; is an entire exposition-only class.
 
 commit ce10ce47647e61ef8a308ad0aefcb2ff1094017a
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -467,23 +136,23 @@ Date:   Sun Dec 30 10:28:16 2018 +0100
     Also introduce the descriptive mechanism of an
     exposition-only function.
     Remove [thread.decaycopy] by moving its contents here.
-    Use the spelling 'decay-copy' (italics code font) instead of
+    Use the spelling &#39;decay-copy&#39; (italics code font) instead of
     introducing an intermediate meta-macro DECAY_COPY.
 
 commit 6833990f6e090644df012c11ebc55b26c7580565
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sat Dec 29 21:33:54 2018 +0100
 
-    [range.refinements] Rephrase heading to not use 'common range'
+    [range.refinements] Rephrase heading to not use &#39;common range&#39;
 
-    'Common range' means iterator and end marker have the same type;
+    &#39;Common range&#39; means iterator and end marker have the same type;
     see [range.req.general].  This is not what this subclause is about.
 
 commit 5874ecd6f82612873d4a40e14a3e93947b2ebab6
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sat Dec 29 13:27:54 2018 +0100
 
-    [special.mem.concepts] Use 'models ... only if' phrasing for semantic constraints.
+    [special.mem.concepts] Use &#39;models ... only if&#39; phrasing for semantic constraints.
 
 commit 1c3b991fac1b6668f42bde6824435f8ece037a10
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -498,7 +167,7 @@ commit 3afb777a04ddb2e31292c4cf011475db5b65a9fc
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Fri Dec 28 00:25:45 2018 +0100
 
-    [dcl.typedef] Use 'redeclare', not 'redefine'
+    [dcl.typedef] Use &#39;redeclare&#39;, not &#39;redefine&#39;
 
 commit e88e605f3561546ab47d327d1865a576c415bc7b
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -599,7 +268,7 @@ Date:   Thu Oct 25 19:16:06 2018 +0200
     [basic.lookup,over.call.func] Clarify lookup rules for function calls.
 
     Also add cross-references to [class.member.lookup] when
-    talking about 'looked up in the class of the object expression'
+    talking about &#39;looked up in the class of the object expression&#39;
     in [basic.lookup.classref].
 
 commit 0cd2126ddab16740d38a302f0da7fee5658f5fbb
@@ -696,7 +365,7 @@ Date:   Wed Dec 19 21:41:46 2018 +0100
 
     [reverse.iterators] Use the public accessor function,
 
-    not the exposition-only member 'current', from non-member functions.
+    not the exposition-only member &#39;current&#39;, from non-member functions.
 
 commit 3d9f80e990daf459a85cff539bd2ce64c0986886
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
@@ -722,13 +391,13 @@ commit e7c5655a9a4746b895937aee4fdadfad30f02cfa
 Author: Alberto Barbati &lt;2210776+iaanus@users.noreply.github.com&gt;
 Date:   Tue Dec 18 16:02:35 2018 +0100
 
-    [dcl.constexpr] Add "consteval" to subclause heading (#2597)
+    [dcl.constexpr] Add &quot;consteval&quot; to subclause heading (#2597)
 
 commit a88d02d8d77e730bbf2730b6988a8b63319496c3
 Author: Eelis van der Weegen &lt;eelis@eelis.net&gt;
 Date:   Wed Dec 12 16:43:21 2018 +0100
 
-    [temp.mem.func] Remove inappropriate parentheses in 'Array&lt;T&gt;::operator[]()'.
+    [temp.mem.func] Remove inappropriate parentheses in &#39;Array&lt;T&gt;::operator[]()&#39;.
 
 commit 4d9447fb590bf7fdc302706eb1560e6a402eca95
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
@@ -756,13 +425,12 @@ commit 9cf2dd2247af79721f4961c96dd9c57003556c94
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Dec 7 16:06:05 2018 -0800
 
-    [lex.key] Fix relative order of 'do' and 'double' in keywords table.
+    [lex.key] Fix relative order of &#39;do&#39; and &#39;double&#39; in keywords table.
 
 commit 607ec0d6d6ce7c6e72c1cae63d22bbdf40eebd2c
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
 Date:   Fri Dec 7 19:28:30 2018 -0400
 
-    [iterator.concept.bidir] Add comma for clarity
-</code></pre>
-  </body>
+    [iterator.concept.bidir] Add comma for clarity</code></pre>
+</body>
 </html>

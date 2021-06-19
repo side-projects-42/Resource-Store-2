@@ -1,18 +1,6 @@
----
-:layout: post
-:title: Integrating Kubernetes and Jenkins
-:nodeid: 585
-:created: 1437747464
-:tags:
-  - general
-  - plugins
-  - video
-:author: daniel-beck
----
-
 [Kubernetes](http://kubernetes.io/) is an open-source project by Google that provides a platform for managing Docker containers as a cluster. In their own words:
 
-> Kubernetes is an open source orchestration system for Docker containers. It handles scheduling onto nodes in a compute cluster and actively manages workloads to ensure that their state matches the users declared intentions. Using the concepts of "labels" and "pods", it groups the containers which make up an application into logical units for easy management and discovery.
+> Kubernetes is an open source orchestration system for Docker containers. It handles scheduling onto nodes in a compute cluster and actively manages workloads to ensure that their state matches the users declared intentions. Using the concepts of “labels” and “pods”, it groups the containers which make up an application into logical units for easy management and discovery.
 
 Kubernetes-related services by Google are the [Google Container Engine](https://cloud.google.com/container-engine/), a Kubernetes-powered platform for hosting and managing Docker containers, and the [Google Container Registry](https://cloud.google.com/tools/container-registry/#overview), a private Docker image registry.
 

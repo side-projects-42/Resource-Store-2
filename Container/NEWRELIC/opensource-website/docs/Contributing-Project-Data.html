@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Contributing-Project-Data</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      The process to contribute new data or update existing data to
+      <code>opensource.newrelic.com</code> is the same.
+    </p>
+    <ol type="1">
+      <li><code>Fork</code> this repository.</li>
+      <li>
+        Add/update the two project metadata files (described below) to your
+        forked <code>opensource-website</code> repository.
+      </li>
+      <li>
+        Submit a <code>Pull Request</code> back to this project containing your
+        new or updated files.
+      </li>
+      <li>
+        If/when your <code>PR</code> is accepted, the automation in this project
+        will populate a related file in the
+        <code>src/data/project-stats</code> directory, build the site, and
+        deploy a new version of the code (including your project’s new data) to
+        <code>opensource.newrelic.com</code>.
+      </li>
+    </ol>
+    <p>
+      To add your project to <code>opensource.newrelic.com</code>, you must
+      include <strong>the following two metadata files</strong>. To accept and
+      merge a PR, we check that these files are present, and if you’re
+      submitting an update, that at least one of these files has been changed.
+    </p>
+    <h2 id="project-metadata-json">1. Project metadata (JSON)</h2>
+    <p>
+      The JSON file contains the base information about the project detail
+      pages, as well as the project search/exploration page.
+    </p>
+    <p>
+      <strong>File format:</strong>
+      <code>src/data/projects/[GITHUB_ORG_NAME]-[GITHUB_REPO_NAME].json</code>
+    </p>
+    <p>
+      <strong>Example:</strong>
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/src/data/projects/newrelic-nr1-github.json"
+        >src/data/projects/newrelic-nr1-github.json</a
+      >
+    </p>
+    <p>
+      <strong>Template:</strong>
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/examples/projects.json"
+        >examples/projects.json</a
+      >
+    </p>
+    <h3 id="note-about-projecttags">Note about projectTags</h3>
+    <p>
+      The Project metadata file contains a <code>projectTags</code> field that
+      <em>must</em> match the available Project Tags located in
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/src/data/project-tags/project-tags.json"
+        >src/data/project-tags/project-tags.json</a
+      >. Also, don’t include your project <code>language</code> as a tag;
+      filtering on languages isn’t meant to be facilitated by the
+      <code>projectTags</code> field. If your project should warrant a new
+      <code>tag</code>, please include an update to
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/src/data/project-tags/project-tags.json"
+        >src/data/project-tags/project-tags.json</a
+      >
+      in your Pull Request.
+    </p>
+    <h2 id="project-metadata-mdx">2. Project metadata (MDX)</h2>
+    <p>
+      This MDX file contains the markdown and optional React components that
+      populate the left-hand column of a project detail page.
+    </p>
+    <p>
+      <strong>File format:</strong>
+      <code
+        >src/data/project-main-content/[GITHUB_ORG_NAME]-[GITHUB_REPO_NAME].mdx</code
+      >
+    </p>
+    <p>
+      <strong>Example:</strong>
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/src/data/project-main-content/newrelic-nr1-github.mdx"
+        >src/data/project-main-content/newrelic-nr1-github.mdx</a
+      >
+    </p>
+    <p>
+      <strong>Template:</strong>
+      <a
+        href="https://github.com/newrelic/opensource-website/blob/develop/examples/project-main-content.mdx"
+        >examples/project-main-content.mdx</a
+      >
+    </p>
+  </body>
+</html>

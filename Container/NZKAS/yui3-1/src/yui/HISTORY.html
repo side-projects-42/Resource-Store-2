@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="yui-core-change-history">YUI Core Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li><p>Sparse arrays are now handled correctly in the non-native fallback implementation of <code>Y.Array.indexOf()</code>. [Ticket #2530966]</p></li>
+<li><p><code>Y.mix()</code> will no longer shadow prototype properties on the receiver unless the <code>overwrite</code> parameter is true. This was the pre-3.4.0 behavior, but was changed in 3.4.0. We’re changing it back to preserve backwards compatibility. [Ticket #2530501]</p></li>
+<li><p>The non-native fallback implementation of <code>Y.Object.keys()</code> now contains a workaround for buggy browsers that treat function <code>prototype</code> properties as enumerable in violation of the ES5 spec.</p></li>
+<li><p><code>Y.Object.size()</code> now returns <code>0</code> for non-objects. This was the pre-3.4.0 behavior, but regressed in 3.4.0. [Ticket #2531069]</p></li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li>Added <code>Y.Array.dedupe()</code>, which provides an optimized solution for deduping arrays of strings. When you know an array contains only strings, use <code>dedupe</code>, since it’s faster than <code>unique</code>.</li>
+<li><code>Y.Lang.isArray()</code> now uses the native ES5 <code>Array.isArray()</code> method when possible.</li>
+<li><code>Y.Object()</code> now uses the native ES5 <code>Object.create()</code> method when possible.</li>
+<li><code>Y.Object.keys()</code> now uses the native ES5 <code>Object.keys()</code> method when possible.</li>
+<li>Sparse arrays are now handled correctly in the non-native fallback implementations of <code>Y.Array.each</code>, <code>Y.Array.hash</code>, and <code>Y.Array.some</code>. [Ticket #2530376]</li>
+<li>Added async:true support to Get, to dispatch scripts/link nodes in parallel. NOTE: Order of execution is not guaranteed (it’s not required for the YUI Module use case, for which this feature was introduced - to improve performance). onSuccess is called once, after all files are loaded.</li>
+<li>Added onProgress callback support to Get, which is useful when dispatching multiple scripts using the [] syntax. onProgress is called when each script is done loading.</li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Added fast path for repeat calls to <code>use()</code> with the same arguments.</li>
+<li>Added a <code>Y.destroy()</code> method, which destroys the YUI instance.</li>
+<li>Added <code>Y.Lang.now()</code>, which returns the current time in milliseconds.</li>
+<li>Added <code>YUI.GlobalConfig</code> to allow three stages of configuration (<code>YUI.GlobalConfig</code> –&gt; <code>YUI_Config</code> –&gt; instance configs). This is helpful in non-browser environments for supplying a global config for the YUI container.</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>Added <code>Y.Lang.sub()</code>, which is a very lightweight version of <code>Y.substitute()</code>.</li>
+<li><code>Y.Array.hash()</code> no longer skips falsy values.</li>
+<li>Script errors in module and <code>use()</code> callback functions are caught and routed through <code>Y.error</code>.</li>
+<li><code>Y.error</code> invokations can be monitored with the <code>errorFn</code> configuration.</li>
+<li>Returning <code>true</code> from the <code>errorFn</code> will prevent the script error from halting further script execution.</li>
+<li>Added UA properties for mobile devices and ensured that UA is only evaluated once.</li>
+<li>The YUI global will overwrite itself when included again, while attempting to preserve the global environment of previous instances.</li>
+<li>Added a remote loader service submodule.</li>
+<li>Added a features submodule. This is used by the capability-based loader when dispatching to a remote loader service.</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>Removed the limit on the number of config objects you can supply to the <code>YUI</code> constructor.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li>YUI will attempt to fetch newly discovered dependencies after a module is dynamically loaded.</li>
+<li>The <code>documentElement</code> (<code>&lt;html&gt;</code>) is now stamped with a <code>yui3-js-enabled</code> classname to indicate that JS is enabled. This allows for the creation of JS-aware CSS style rules that progressively enhance the page.</li>
+<li>Added the ability to define a global configuration object (<code>YUI_config</code>).</li>
+<li>Added <code>Y.Object.some()</code> and <code>Y.some()</code>, which are analogous to <code>Y.Array.some()</code>.</li>
+<li>UA refinements for Chrome, Android and other browsers/platforms.</li>
+<li>Inserted script nodes get <code>charset="utf-8"</code> by default.</li>
+<li>Added <code>last()</code> to <code>Queue</code> for LIFO support.</li>
+<li>Added throttle utility to buffer expensive functions that are called frequently.</li>
+<li>The <code>YUI.add()</code> callback now gets the module name as the second parameter for generic processing of similar modules.</li>
+<li>Added <code>intl-base</code> submodule to process the decision tree for selecting language packs when dynamically loading internationalized modules.</li>
+<li><code>Y.guid()</code> generates identifiers that are safe to use as HTML attributes.</li>
+<li>Improved persistent messaging for missing modules/functionality.</li>
+<li>Bootstrapping improved to prevent simultaneous loading of resources when multiple instances are launched at the same moment.</li>
+<li>The YUI script source URL is read in order to try to dynamically determine the base path for loading resources on demand.</li>
+<li>The core loads without errors in non-browser environments.</li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li>Extracted the loader from the seed file. If loader is not available, but <code>get</code> is and dependencies are missing, the loader will be fetched before continuing.</li>
+<li>User agent detection is more granular. For example, Firefox 3.5 reports Gecko 1.91 rather than 1.9.</li>
+<li>Fixed <code>Y.UA.os</code>.</li>
+<li>Added additional mobile device detection.</li>
+<li>Get utility cleans up attribues before purging nodes.</li>
+<li><code>Y.cached</code> accepts a parameter to refresh a cached value.</li>
+<li><code>yui-log</code> and <code>yui-later</code> are now optional modules that are included with <code>yui.js</code>.</li>
+<li><code>queue-base</code> is no longer a submodule of <code>queue</code> – it’s now part of <code>yui-base</code>.</li>
+<li>All YUI submodules end up in the <code>yui</code> build directory.</li>
+<li>Dynamic loading can be disabled by setting the <code>bootstrap</code> config to <code>false</code>.</li>
+</ul>
+<h2 id="beta-1">3.0.0 beta 1</h2>
+<h3 id="core">Core</h3>
+<ul>
+<li><code>Y.fail</code> has been renamed to <code>Y.error</code> so that <code>Y.fail</code> can be used for the assertion engine.</li>
+<li><code>Y.stamp</code> now accepts a <code>readOnly</code> parameter to be used when you are only interested in reading an existing guid rather than creating a new one.</li>
+<li><code>Y.stamp</code> defends against stamping items that can’t be stamped.</li>
+<li>Added to <code>Y.Object</code>: <code>values()</code>, <code>hasKey()</code>, <code>hasValue()</code>, <code>size()</code>, <code>getValue()</code>, <code>setValue()</code> (the latter two are for manipulating nested values).</li>
+<li><code>Y.use</code> calls are queued during dynamic loading.</li>
+<li>Added <code>Y.cached</code> for function memoizing</li>
+<li>Added <code>numericSort</code> to <code>Y.Array</code>.</li>
+<li>The <code>yui:log</code> event broadcasts globally.</li>
+</ul>
+<h3 id="lang">Lang</h3>
+<ul>
+<li>Added <code>Y.Lang.type</code> (<code>typeof</code> abstraction) and refactored some ‘is’ methods to use it.</li>
+</ul>
+<h3 id="get">Get</h3>
+<ul>
+<li>Accepts an attribute collection config to apply to inserted nodes.</li>
+<li><code>id</code> attributes are globally unique</li>
+<li>Now accepts <code>purgethreshold</code> as a config option. This will set the number of transactions required before auto removing nodes from previous transactions (default is 20).</li>
+</ul>
+<h3 id="loader">Loader</h3>
+<ul>
+<li><code>yuitest</code> renamed to <code>test</code>, now requires <code>collection</code>.</li>
+<li>Lots of new module metadata.</li>
+<li>Added <code>onCSS</code>.</li>
+<li>Loader requests are queued globally.</li>
+<li>Accepts <code>jsAttributes</code> and <code>cssAttributes</code> configs for adding attributes to inserted nodes</li>
+<li>Added <code>force</code> config.</li>
+</ul>
+<h3 id="ua">UA</h3>
+<ul>
+<li>Added <code>secure</code> property for SSL detection.</li>
+<li>Added <code>os</code> property for OS detection.</li>
+<li>Added Adobe Air and Google Caja detection.</li>
+</ul>
+<h2 id="pr2">3.0.0pr2</h2>
+<h3 id="core-1">Core</h3>
+<ul>
+<li>The initial dependency calculation should not allow automatic rollup.</li>
+<li><code>Y.fail</code> will throw/rethrow errors by default (<code>throwFail</code> is now <code>true</code>).</li>
+<li><code>Y.namespace</code> reverted to scrub <code>YAHOO</code> out if included as the first level of the namespace.</li>
+<li><code>useConsole</code> config changed to <code>useBrowserConsole</code>.</li>
+</ul>
+<h3 id="array">Array</h3>
+<ul>
+<li>Added <code>Y.Array.some()</code>.</li>
+</ul>
+<h3 id="get-1">Get</h3>
+<ul>
+<li>Protects against trailing commas in the array of files to load.</li>
+</ul>
+<h3 id="loader-1">Loader</h3>
+<ul>
+<li><code>get</code> requires <code>yui-base</code>.</li>
+<li><code>loader</code> requires <code>get</code>.</li>
+<li>Combo URL build process defends against undefined modules.</li>
+<li>Added combo handler support for CSS.</li>
+<li>Filters are correctly applied to combo and fullpath URLs.</li>
+<li>Added <code>compat</code>, <code>profiler</code>, <code>yuitest</code>, <code>widget</code>, <code>stylesheet</code>, <code>classnamemanager</code>, <code>overlay</code>, <code>plugin</code>, <code>slider</code>, and <code>console</code> modules.</li>
+<li>Added <code>io</code> submodules.</li>
+<li><code>queue</code> requires <code>event</code>.</li>
+<li>Added submodule metadata logic.</li>
+<li>Added plugin metadata logic.</li>
+<li>Added skin metadata logic.</li>
+</ul>
+<h2 id="pr1">3.0.0pr1</h2>
+<ul>
+<li>Initial release.</li>
+</ul>
+</body>
+</html>

@@ -1,43 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      function evalSource() {
-        function b() {
-          console.trace();
-        }
-
-        function a() {
-          b();
-        }
-
-        a();
-      }
-
-      function doEvalSource() {
-        setTimeout(function () {
-          eval("(" + evalSource + ")()//# sourceURL=evalURL.js");
-        }, 0);
-      }
-
-      function test() {
-        function callback() {
-          InspectorTest.dumpConsoleMessages();
-          InspectorTest.completeTest();
-        }
-        InspectorTest.evaluateInPage("doEvalSource()");
-        InspectorTest.addConsoleSniffer(callback);
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that when console.trace is called in eval'ed script ending with //#
-      sourceURL=url it will dump a stack trace that will have the url as the
-      script source.
-      <a href="https://bugs.webkit.org/show_bug.cgi?id=47252">Bug 47252.</a>
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-trace-in-eval</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that when console.trace is called in eval’ed script ending with //# sourceURL=url it will dump a stack trace that will have the url as the script source. <a href="https://bugs.webkit.org/show_bug.cgi?id=47252">Bug 47252.</a></p>
+</body>
 </html>

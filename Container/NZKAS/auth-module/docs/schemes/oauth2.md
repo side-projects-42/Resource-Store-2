@@ -6,32 +6,28 @@
 
 ## Usage
 
-```js
-this.$auth.loginWith("social");
-```
+    this.$auth.loginWith("social");
 
 ## Options
 
-```js
-auth: {
-  strategies: {
-    social: {
-      _scheme: 'oauth2',
-      authorization_endpoint: 'https://accounts.google.com/o/oauth2/auth',
-      userinfo_endpoint: 'https://www.googleapis.com/oauth2/v3/userinfo',
-      scope: ['openid', 'profile', 'email'],
-      access_type: undefined,
-      access_token_endpoint: undefined,
-      response_type: 'token',
-      token_type: 'Bearer',
-      redirect_uri: undefined,
-      client_id: 'SET_ME',
-      token_key: 'access_token',
-      state: 'UNIQUE_AND_NON_GUESSABLE'
+    auth: {
+      strategies: {
+        social: {
+          _scheme: 'oauth2',
+          authorization_endpoint: 'https://accounts.google.com/o/oauth2/auth',
+          userinfo_endpoint: 'https://www.googleapis.com/oauth2/v3/userinfo',
+          scope: ['openid', 'profile', 'email'],
+          access_type: undefined,
+          access_token_endpoint: undefined,
+          response_type: 'token',
+          token_type: 'Bearer',
+          redirect_uri: undefined,
+          client_id: 'SET_ME',
+          token_key: 'access_token',
+          state: 'UNIQUE_AND_NON_GUESSABLE'
+        }
+      }
     }
-  }
-}
-```
 
 ### `authorization_endpoint`
 

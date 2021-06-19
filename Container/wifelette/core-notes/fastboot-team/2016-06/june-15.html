@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>june-15</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-06-15">FastBoot Meeting Notes 2016-06-15</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Please add yourself.</em></p>
+<p>Dan McClain, Krati Ahuja, Arjan Singh, Patrick Fisher, Ron White, Tom Dale, Edward Faulkner, Robert Jackson</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li>[x] Last Week’s Action Items
+<ul>
+<li>[x] Review watch PR: https://github.com/ember-fastboot/ember-cli-fastboot/pull/200/files</li>
+<li>[x] Review PR (Arjan): https://github.com/ember-fastboot/fastboot/pull/65</li>
+<li>[ ] Tom to review/refresh path to 1.0 doc to allow people to track progress/contributen</li>
+<li>[ ] RJ to write up proposal of path forward for ember-cli and ember-cli-head integration</li>
+<li>[x] DM to release new betas</li>
+<li>[ ] https://github.com/ember-fastboot/ember-cli-fastboot/issues/56
+<ul>
+<li>Someone will attempt to pick it up</li>
+</ul></li>
+</ul></li>
+<li>[x] Revisit Release Date readiness: <a href="https://github.com/ember-fastboot/ember-cli-fastboot/issues/98">Roadmap 1.0</a></li>
+<li>[x] <a href="https://github.com/ember-fastboot/ember-cli-fastboot/pull/200/files">Watcher PR to ember-cli-fastboot</a></li>
+<li>[x] <code>concatFiles</code> deprecation, related to <a href="https://github.com/ember-fastboot/ember-cli-fastboot/pull/217#issuecomment-226207533">PR #217</a>
+<ul>
+<li>[ ] Deprecations in general</li>
+</ul></li>
+<li>[ ] Website vs Readmes: Outdated &amp; Missing docs
+<ul>
+<li>[ ] Disabling Imports (<a href="https://github.com/ember-fastboot/ember-cli-fastboot/issues/57">issue</a> <span class="citation" data-cites="danmcclain">@danmcclain</span> to address)</li>
+<li>[x] Scheduling afterRender inside of DidInsertElement (<a href="https://github.com/ember-fastboot/ember-cli-fastboot/issues/207">related issue</a>)</li>
+</ul></li>
+<li>[x] 38 issues: We should triage</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Discussion of whether <code>afterRender</code> should be invoked in FastBoot</li>
+<li>Anything that touches the DOM in <code>afterRender</code> should only be scheduled from inside a DOM-only hook (like <code>didInsertElement</code>)</li>
+<li><a href="https://github.com/ember-fastboot/ember-cli-fastboot/pull/200">Watcher PR</a>
+<ul>
+<li>DM: There’s been some review of the Watcher PR. Rob had made some comments on it. Most of the comments are around using the existing server <code>reload</code> mechanism. We also noticed that every time you reload the app, it does an <code>npm install</code>. If you’re going to be modifying your <code>package.json</code> we should probably have people manually restart.
+<ul>
+<li>RJ: In Ember CLI in general, <code>package.json</code> changes require a server restart anyway.</li>
+<li>PF: That was an intentional decision to make sure <code>FastBoot.require()</code>d dependencies were available.</li>
+<li>TD: Broccoli is perfect for caching node_modules when the package.json changes, we could build a broccoli task to handle the npm install, rather than explicitly calling npm install</li>
+<li>EF: Browserify could be a viable alternative rather than our somewhat hacky solution of calling npm install. Need to build a stable plug (rather than calling npm install on build OR deployment). npm could change between building and deploying, killing your app in prod</li>
+<li>RJ: We expect dist/fastboot/node_modules to be present, this will be killed by broccoli rebuild.</li>
+<li>PF: Can we treat these optimizations as a separate task?</li>
+<li>Let’s bring in Ember-suave</li>
+<li>Land this as is, then suave-ize ember-cli-fastboot</li>
+</ul></li>
+</ul></li>
+<li>1.0 readiness
+<ul>
+<li>No tasks are blockers for 1.0</li>
+<li>testing for addons
+<ul>
+<li>First pass: Does the app boot with the addon</li>
+<li>ember-try is more configurable to allow customized testing</li>
+<li>TD: Hold off until the grand test unification RFC lands
+<ul>
+<li>RJ: willing to add FastBoot related primatives</li>
+</ul></li>
+<li>TD: Do we want to us another driver to test fastboot or do we want to implement our own subset of a browser so that we can run some tests against the response</li>
+<li>EF: extract the URLs that are hit in your existing tests then make sure those don’t blow up against FastBoot</li>
+<li>TD: At the end of the day: people can run selenium tests if they need them</li>
+</ul></li>
+<li>performance regressions
+<ul>
+<li>AS: feels like 2x the regular build time (which would likely be a minimum increase)</li>
+<li>RJ: We should be able to reduce the number of things we are doing twice</li>
+<li>TD: Tree shaking is a good time to address this</li>
+<li>Separate vendor files for Browser vs Node
+<ul>
+<li><code>app.import</code> could be fastboot aware</li>
+<li>TD: wants to write an RFC to introduce build targets in ember-cli</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><code>concatFiles</code> has been deprecated
+<ul>
+<li>ember-cli will remove this in the future</li>
+<li>RJ: we use it for stripping out initializers</li>
+</ul></li>
+<li>Documentation
+<ul>
+<li>Policy RE public vs private</li>
+<li>Inline code doc: YUIDoc and doc blocking</li>
+</ul></li>
+<li>We should triage our issues
+<ul>
+<li>RJ: We should be better at labelling issues</li>
+</ul></li>
+</ul>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] Land watcher PR as is</li>
+<li>[ ] Suave ember-cli-fastboot</li>
+<li>[ ] RJ to write up proposal of path forward for ember-cli and ember-cli-head integration
+<ul>
+<li>[ ] Brain dump with someone to write this up so that RJ is not blocking</li>
+</ul></li>
+<li>[ ] Tom to review/refresh path to 1.0 doc to allow people to track progress/contribute</li>
+<li>[ ] Tom to RFC ember-cli RE: <code>concatFiles</code></li>
+</ul>
+</body>
+</html>

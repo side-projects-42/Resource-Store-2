@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="gitbook-sample-plugin">GitBook Sample Plugin</h1>
+<p>This is a sample plugin for GitBook.</p>
+<p>Install it using: <code>$ npm install gitbook-plugin</code></p>
+<h2 id="how-gitbook-plugin-works">How GitBook plugin works?</h2>
+<p>A plugin for GitBook is a node package that can be published on <a href="http://www.npmjs.org">NPM</a>.</p>
+<h3 id="package.json">package.json</h3>
+<h4 id="name">name</h4>
+<p>The package name should begin with <code>gitbook-plugin-</code>. And if your plugin is a theme, it should begin with <code>gitbook-theme-</code>.</p>
+<p>Examples: <code>gitbook-plugin-mixpanel</code>, <code>gitbook-plugin-googleanalytics</code>, <code>gitbook-theme-dark</code></p>
+<h4 id="engine">engine</h4>
+<p>The package.json should contain a <code>engine</code> field using <a href="https://www.npmjs.org/doc/json.html#engines">the standard norm</a>.</p>
+<pre><code>&quot;engines&quot;: {
+    &quot;gitbook&quot;: &quot;*&quot;
+}</code></pre>
+<p>For example if you want your plugin to supports only GitBook version supperior to 0.3.1:</p>
+<pre><code>&quot;engines&quot;: {
+    &quot;gitbook&quot;: &quot;&gt;=0.3.1&quot;
+}</code></pre>
+<h3 id="entry-point">entry point</h3>
+<p>The plugin entry point should return an object with some metadata.</p>
+<h4 id="book">“book”</h4>
+<p>Type: <code>Object</code> Default value: <code>{}</code></p>
+<h4 id="book.assets">“book.assets”</h4>
+<p>Type: <code>String</code> Default value: <code>null</code></p>
+<p>Path to the assets folder to copy</p>
+<h4 id="book.js">“book.js”</h4>
+<p>Type: <code>Array</code> Default value: <code>[]</code></p>
+<p>List of javascript file to add to the html pages (relative to the assets folder).</p>
+<h4 id="book.css">“book.css”</h4>
+<p>Type: <code>Array</code> Default value: <code>[]</code></p>
+<p>List of css file to add to the html pages (relative to the assets folder).</p>
+<h4 id="book.html">“book.html”</h4>
+<p>Type: <code>Object</code> Default value: <code>{}</code></p>
+<p>Map of position -&gt; code, html snippets to add to each page. The code could be a function.</p>
+<h4 id="book.templates">“book.templates”</h4>
+<p>Type: <code>Object</code> Default value: <code>{}</code></p>
+<p>Templates to override default templates, only use this option if you want to change entirely how the book is rendered.</p>
+<p>This object is a map: “name” -&gt; “file”, with names:</p>
+<ul>
+<li>“site”: page for a file from the <code>site</code> format</li>
+<li>“page”: page for the <code>page</code> format</li>
+</ul>
+<h4 id="hooks">“hooks”</h4>
+<p>Type: <code>Object</code> Default value: <code>{}</code></p>
+<p>Map of “name” -&gt; Function that needs to be called during build process. With names:</p>
+<ul>
+<li>“init”: just after initialization, before generation</li>
+<li>“finish”: after generation and everything is finished</li>
+</ul>
+<p>Each hook can return a promise.</p>
+</body>
+</html>

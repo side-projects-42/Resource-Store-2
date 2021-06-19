@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="music-explorer">Music Explorer</h1>
+<p>Music Explorer is an example application demonstrating the use of Nokia Music API together with standard Windows Phone 8 audio features to create an immersive music experience. It shows how to take advantage of Nokia Music API features such as searching for artists by name and requesting top artists and new releases, and it also shows how to launch Nokia Music application from within another application to play mix radio or show artist/product information.</p>
+<figure>
+<img src="/doc/screenshots/me_panorama_full_small.png?raw?true" alt="Full panorama" /><figcaption>Full panorama</figcaption>
+</figure>
+<p>The example has been developed with Silverlight for Windows Phone devices and tested to work on Lumia devices with Windows Phone 8.</p>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/music-explorer</p>
+<p>For more information on implementation and porting, visit Lumia Developer’s Library: http://developer.nokia.com/Resources/Library/Lumia/#!code-examples/music-explorer.html</p>
+<h2 id="usage">1. Usage</h2>
+<p>This is a simple build-and-run solution. Learn about what you can do with Nokia Music API related features by trying out the application.</p>
+<h2 id="prerequisites">2. Prerequisites</h2>
+<ul>
+<li>C# basics</li>
+<li>Windows 8</li>
+<li>Microsoft Visual Studio Express for Windows Phone 2012</li>
+<li>NuGet 2.1 (https://nuget.org/), Visual Studio extension to install and update third-party libraries and tools in Visual Studio</li>
+</ul>
+<h2 id="project-structure-and-implementation">3. Project structure and implementation</h2>
+<h2 id="folders">3.1 Folders</h2>
+<ul>
+<li>The root folder contains the project file, the license information and this file (release_notes.txt).</li>
+<li><code>MusicExplorer</code>: Root folder for the implementation files.<br />
+</li>
+<li><code>Assets</code>: Graphic assets like icons and tiles.</li>
+<li><code>Properties</code>: Application property files.</li>
+<li><code>Resources</code>: Application resources.</li>
+<li><code>Models</code>: <code>MainViewModel</code> and models to bind data and user interface.</li>
+</ul>
+<h2 id="important-files-and-classes">3.2 Important files and classes</h2>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>ArtistPage.xaml</code>
+</td>
+<td>
+The page showing artist specific info in a pivot component.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>ArtistPage.xaml.cs</code>
+</td>
+<td>
+The code-behind file of the artist page.
+</td>
+</tr>
+<tr class="odd">
+<td>
+<code>MainPage.xaml</code>
+</td>
+<td>
+The main page of the application with the panorama component.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>MainPage.xaml.cs</code>
+</td>
+<td>
+The code-behind file of the main page.
+</td>
+</tr>
+<tr class="odd">
+<td>
+<code>MusicApi.cs</code>
+</td>
+<td>
+Class responsible of communicating with the Nokia Music API.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>MainViewModel.cs</code>
+</td>
+<td>
+Binds data and user interface.
+</td>
+</tr>
+</tbody>
+</table>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 31%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+Class
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>ArtistPage</code>
+</td>
+<td>
+This class handles almost half of the UI.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>MainPage</code>
+</td>
+<td>
+This class handles almost half of the UI.
+</td>
+</tr>
+<tr class="odd">
+<td>
+<code>MainViewModel</code>
+</td>
+<td>
+This class is responsible for binding the data and UI together.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>MusicApi</code>
+</td>
+<td>
+This class is responsible for all the communication to Nokia Music API.
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="used-apiswindows-phone-components">3.3 Used APIs/Windows Phone Components</h2>
+<ul>
+<li>Microsoft.Phone.Maps.Services</li>
+<li>Microsoft.Phone.Controls.Toolkit</li>
+<li>Microsoft.Xna.Framework</li>
+<li>Microsoft.Xna.Framework.Media</li>
+<li>Newtonsoft.Json</li>
+<li>Nokia.Music.Wp8</li>
+<li>System.Device.Location</li>
+<li>Windows.Devices.Geolocation</li>
+</ul>
+<h2 id="compatibility">4. Compatibility</h2>
+<ul>
+<li>Windows Phone 8</li>
+</ul>
+<p>Tested to work on Nokia Lumia 920 and Nokia Lumia 1520. Developed with Microsoft Visual Studio Express for Windows Phone 2012.</p>
+<h2 id="required-capabilities">4.1 Required Capabilities</h2>
+<ul>
+<li><code>ID_CAP_LOCATION</code></li>
+<li><code>ID_CAP_MAP</code></li>
+<li><code>ID_CAP_MEDIALIB_AUDIO</code></li>
+<li><code>ID_CAP_MEDIALIB_PLAYBACK</code></li>
+<li><code>ID_CAP_NETWORKING</code></li>
+<li><code>ID_CAP_SENSORS</code></li>
+</ul>
+<h2 id="known-issues">4.2 Known Issues</h2>
+<p>None.</p>
+<h2 id="building-installing-and-running-the-application">5. Building, installing, and running the application</h2>
+<h2 id="preparations">5.1 Preparations</h2>
+<p>Make sure you have the following installed: * Windows 8 * Windows Phone SDK 8.0 * Latest NuGet Package Manager (&gt;2.7.1) from https://nuget.org/ to enable NuGet Package Restore</p>
+<h2 id="using-the-windows-phone-8-sdk">5.2 Using the WINDOWS PHONE 8 SDK</h2>
+<ol type="1">
+<li>Open the SLN file: File &gt; Open Project, select the file MusicExplorer.sln</li>
+<li>Select the target ‘Emulator WXGA’.</li>
+<li>Press F5 to build the project and run it on the Windows Phone Emulator.</li>
+</ol>
+<h2 id="deploying-to-windows-phone-8">5.3 Deploying to Windows Phone 8</h2>
+<p>Please see official documentation for deploying and testing applications on Windows Phone devices: http://msdn.microsoft.com/en-us/library/gg588378%28v=vs.92%29.aspx</p>
+<h2 id="license">6. License</h2>
+<p>See the license text file delivered with this project.</p>
+<h2 id="related-documentation">7. Related documentation</h2>
+<p>“Nokia Music API” documentation published on Nokia Lumia Developer’s Library (http://www.developer.nokia.com/Resources/Library/Lumia/#!nokia-music-api.html) describes the properties and usage of Nokia Music API in detail.</p>
+<p>“Optimising for Nokia phablets” documentation on Nokia Lumia Developer’s Library (http://developer.nokia.com/Resources/Library/Lumia/#!optimising-for-nokia-phablets.html) describes how to optimize applications for large screen, different aspect ratios, and multiple resolutions.</p>
+<h2 id="version-history">8. Version history</h2>
+<ul>
+<li>1.1.0.0 Major UI-rework (new tile based design replacing list based design, utilizing images of higher resolution in 1080p devices and NuGet package restore support.</li>
+<li>1.0.1.0 Bug fix to handle exception when location is set off</li>
+<li>1.0.0.0 First release</li>
+<li>0.4.0.0 Minor fixes</li>
+<li>0.3.0.0 Public beta</li>
+</ul>
+</body>
+</html>

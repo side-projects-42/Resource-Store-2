@@ -1,0 +1,1 @@
+Test editor tokenAtTextPosition method.

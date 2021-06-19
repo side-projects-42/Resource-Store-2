@@ -1,14 +1,9 @@
 Rich Text Editor
 ================
 
-The Rich Text Editor is a UI control that allows for the rich formatting
-of text content, including common structural treatments like lists, 
-formatting treatments like bold and italic text.
+The Rich Text Editor is a UI control that allows for the rich formatting of text content, including common structural treatments like lists, formatting treatments like bold and italic text.
 
-The current release of the Rich Text Editor for YUI 3 is the base utility 
-layers that provide a foundation on which you can create an Editor. 
-**This version of Editor does not contain a GUI of any kind.**
-
+The current release of the Rich Text Editor for YUI 3 is the base utility layers that provide a foundation on which you can create an Editor. **This version of Editor does not contain a GUI of any kind.**
 
     YUI().use('editor-base', function(Y) {
 
@@ -28,5 +23,3 @@ layers that provide a foundation on which you can create an Editor.
         editor.render('#editor');
 
     });
-
-

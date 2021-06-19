@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="attribute-change-history">Attribute Change History</h1>
+<h2 id="section">3.4.1</h2>
+<ul>
+<li>No changes.</li>
+</ul>
+<h2 id="section-1">3.4.0</h2>
+<ul>
+<li><p>Added params to constructor, to support call to addAttrs on construction with user values, when augmenting and invoking constructor manually.</p>
+<p>Also broke out addAttrs logic on construction (introduced for Node), into it’s own _initAttrs method to facilitate customization.</p></li>
+</ul>
+<h2 id="section-2">3.3.0</h2>
+<ul>
+<li>Changed instanceof to Y.instanceOf, to prevent leaks in IE7</li>
+</ul>
+<h2 id="section-3">3.2.0</h2>
+<ul>
+<li>Added protected helper method (_getAttrCfg) to return the configuration for a given attribute.</li>
+</ul>
+<h2 id="section-4">3.1.1</h2>
+<ul>
+<li>Fixed ticket #2528753 : Sub attribute value crashed after setting another sub attribute.</li>
+</ul>
+<h2 id="section-5">3.1.0</h2>
+<ul>
+<li><p>writeOnce can be set to “initOnly”, which can be used to prevent the user from setting the value outside of the initial configuration when using the addAttrs.</p>
+<p>When used with Base, this means that the user can only define a value for the Attribute during construction.</p></li>
+<li><p>Attribute change events are now published with the defaultTargetOnly property set to true.</p></li>
+<li><p>newVal property of event object passed to change event listeners will now be the value returned from the Attribute’s getter (if defined)</p></li>
+<li><p>setter, getter, validator and valueFn can now be specified as strings, referring to the method names to be invoked on the Attribute instance.</p></li>
+</ul>
+<h2 id="section-6">3.0.0</h2>
+<ul>
+<li><p>set/get can now be called for ad-hoc attributes (attributes which have not been added/configured).</p></li>
+<li><p>Fixed issue where custom getters were being called with undefined values, for the initial set.</p></li>
+<li><p>Limited the case for which an attribute will not notify after listeners, if the value is unchanged after a set, to primitive values (values for which Lang.isObject(newVal) returns false).</p>
+<p>This allows after listeners to be invoked, when resetting the value to the same object reference, which has properties updated, or arrays with elements modified.</p></li>
+<li><p>Attribute broken up into attribute-base and attribute-complex submodules.</p>
+<p>attribute-complex adds support for complex attributes ({x.y.z : 5}) to addAttrs.</p></li>
+</ul>
+<h2 id="beta-1">3.0.0 beta 1</h2>
+<ul>
+<li><p>Removed Attribute.CLONE support in the interests of simplicity. Was not being used. Can re-evaluate support if real world demand for it exists.</p></li>
+<li><p>Changed “set” and “get” configuration properties for setter and getter methods to “setter” and “getter” respectively.</p></li>
+<li><p>Added support for setter to return Attribute.INVALID_VALUE to prevent attribute state from being changed.</p>
+<p>This allows developers to combine setter and validator functionality into one method if performance optimization is required.</p></li>
+<li><p>“validator” is now invoked before “setter”.</p></li>
+<li><p>Renamed xxxAtt and xxxAtts methods to xxxAttr, xxxAttrs for consistency.</p></li>
+<li><p>“after” listeners are only notified if attribute value really changes (preVal !== newVal).</p></li>
+<li><p>Extending classes can now overwrite ATTRS configuration properties from super classes, including writeOnce and readOnly attributes.</p>
+<p>The ATTRS configurations are merged across the class hierarchy, before they are used to initialize the attributes.</p></li>
+<li><p>addAttr now prevents re-adding attributes which are already configured in order to maintain consistent state.</p></li>
+<li><p>Event prefix wrapper functions (on, after etc.) removed - Event.Target now accepts an event prefix configuration value</p></li>
+<li><p>Added additional log messages to assist with debugging.</p></li>
+<li><p>Attribute change events are no longer fired for initial set.</p></li>
+<li><p>Split up State add/get/remove into add/addAll, get/getAll, remove/removeAll to avoid having to create object literals for critical path [ add/get single key values ].</p></li>
+<li><p>Attribute getter, setter, validator now also receive attribute name as the 2nd arg (val, name).</p></li>
+<li><p>If Attributes initialized through addAttrs have a user provided value which is not valid, the initial attribute value will revert to the default value in the attribute configuration, if it exists.</p></li>
+<li><p>reset() no longer resets readOnly or writeOnce attributes. Only publically settable values are reset.</p></li>
+<li><p>Added modifyAttr method, to allow component developer to modify configuration of an attribute which has already been added. The set of attribute configuration properties which can be modified after it has been added are limited to getter, readOnly, writeOnce and broadcast.</p></li>
+<li><p>Added support for lazy attribute configuration. Base uses this feature to lazily intialize all Attributes on the first call to get/set, for performance optimization.</p>
+<p>lazyAdd:true/false can be used to over-ride this behavior for a particular attribute.</p></li>
+</ul>
+<h2 id="pr2">3.0.0PR2</h2>
+<ul>
+<li><p>Added valueFn support, to allowing static attribute values configuration to set instance based values.</p></li>
+<li><p>Added reset method.</p></li>
+<li><p>Added private setter for use by class implementation code to set readOnly, writeOnce values.</p></li>
+</ul>
+<h2 id="pr1---initial-release">3.0.0PR1 - Initial release</h2>
+</body>
+</html>

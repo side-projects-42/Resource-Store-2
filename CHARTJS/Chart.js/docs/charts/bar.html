@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>bar</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="bar-chart">Bar Chart</h1>
+<p>A bar chart provides a way of showing data values represented as vertical bars. It is sometimes used to show trend data, and the comparison of multiple data sets side by side.</p>
+<p>```js chart-editor // <block:setup:1> const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { label: “My First Dataset”, data: [65, 59, 80, 81, 56, 55, 40], backgroundColor: [ “rgba(255, 99, 132, 0.2)”, “rgba(255, 159, 64, 0.2)”, “rgba(255, 205, 86, 0.2)”, “rgba(75, 192, 192, 0.2)”, “rgba(54, 162, 235, 0.2)”, “rgba(153, 102, 255, 0.2)”, “rgba(201, 203, 207, 0.2)”, ], borderColor: [ “rgb(255, 99, 132)”, “rgb(255, 159, 64)”, “rgb(255, 205, 86)”, “rgb(75, 192, 192)”, “rgb(54, 162, 235)”, “rgb(153, 102, 255)”, “rgb(201, 203, 207)”, ], borderWidth: 1, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “bar”, data: data, options: { scales: { y: { beginAtZero: true, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h2 id="dataset-properties">Dataset Properties</h2>
+<p>Namespaces:</p>
+<ul>
+<li><code>data.datasets[index]</code> - options for this dataset only</li>
+<li><code>options.datasets.bar</code> - options for all bar datasets</li>
+<li><code>options.elements.bar</code> - options for all <a href="../configuration/elements.md#bar-configuration">bar elements</a></li>
+<li><code>options</code> - options for the whole chart</li>
+</ul>
+<p>The bar chart allows a number of properties to be specified for each dataset. These are used to set display properties for a specific dataset. For example, the color of the bars is generally set this way. Only the <code>data</code> option needs to be specified in the dataset namespace.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th style="text-align: center;"><a href="../general/options.md#scriptable-options">Scriptable</a></th>
+<th style="text-align: center;"><a href="../general/options.md#indexable-options">Indexable</a></th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#styling"><code>backgroundColor</code></a></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>'rgba(0, 0, 0, 0.1)'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>base</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#barpercentage"><code>barPercentage</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>0.9</code></td>
+</tr>
+<tr class="even">
+<td><a href="#barthickness"><code>barThickness</code></a></td>
+<td><code>number</code>|<code>string</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>borderColor</code></a></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>'rgba(0, 0, 0, 0.1)'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#borderskipped"><code>borderSkipped</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>'start'</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#borderwidth"><code>borderWidth</code></a></td>
+<td><code>number</code>|<code>object</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>0</code></td>
+</tr>
+<tr class="even">
+<td><a href="#borderradius"><code>borderRadius</code></a></td>
+<td><code>number</code>|<code>object</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>0</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#categorypercentage"><code>categoryPercentage</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>0.8</code></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>clip</code></a></td>
+<td><code>number</code>|<code>object</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#data-structure"><code>data</code></a></td>
+<td><code>object</code>|<code>object[]</code>| <code>number[]</code>|<code>string[]</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><strong>required</strong></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>grouped</code></a></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>true</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#interactions"><code>hoverBackgroundColor</code></a></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#interactions"><code>hoverBorderColor</code></a></td>
+<td><a href="../general/colors.md"><code>Color</code></a></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#interactions"><code>hoverBorderWidth</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>1</code></td>
+</tr>
+<tr class="even">
+<td><a href="#interactions"><code>hoverBorderRadius</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">Yes</td>
+<td><code>0</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>indexAxis</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>'x'</code></td>
+</tr>
+<tr class="even">
+<td><a href="#maxbarthickness"><code>maxBarThickness</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><a href="#styling"><code>minBarLength</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>label</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>''</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>order</code></a></td>
+<td><code>number</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>0</code></td>
+</tr>
+<tr class="even">
+<td><a href="../configuration/elements.md#point-styles"><code>pointStyle</code></a></td>
+<td><code>string</code>|<code>Image</code></td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">-</td>
+<td><code>'circle'</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>skipNull</code></a></td>
+<td><code>boolean</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>stack</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td><code>'bar'</code></td>
+</tr>
+<tr class="odd">
+<td><a href="#general"><code>xAxisID</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td>first x axis</td>
+</tr>
+<tr class="even">
+<td><a href="#general"><code>yAxisID</code></a></td>
+<td><code>string</code></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;">-</td>
+<td>first y axis</td>
+</tr>
+</tbody>
+</table>
+<p>All these values, if <code>undefined</code>, fallback to the scopes described in <a href="../general/options">option resolution</a></p>
+<h3 id="example-dataset-configuration">Example dataset configuration</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1">data<span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">datasets</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-4" title="4">      <span class="dt">barPercentage</span><span class="op">:</span> <span class="fl">0.5</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-5" title="5">      <span class="dt">barThickness</span><span class="op">:</span> <span class="dv">6</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-6" title="6">      <span class="dt">maxBarThickness</span><span class="op">:</span> <span class="dv">8</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-7" title="7">      <span class="dt">minBarLength</span><span class="op">:</span> <span class="dv">2</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-8" title="8">      <span class="dt">data</span><span class="op">:</span> [<span class="dv">10</span><span class="op">,</span> <span class="dv">20</span><span class="op">,</span> <span class="dv">30</span><span class="op">,</span> <span class="dv">40</span><span class="op">,</span> <span class="dv">50</span><span class="op">,</span> <span class="dv">60</span><span class="op">,</span> <span class="dv">70</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-9" title="9">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  ]<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="op">}</span></a></code></pre></div>
+<h3 id="general">General</h3>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 95%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>base</code></td>
+<td>Base value for the bar in data units along the value axis. If not set, defaults to the value axis base value.</td>
+</tr>
+<tr class="even">
+<td><code>clip</code></td>
+<td>How to clip relative to chartArea. Positive value allows overflow, negative value clips that many pixels inside chartArea. <code>0</code> = clip at chartArea. Clipping can also be configured per side: <code>clip: {left: 5, top: false, right: -2, bottom: 0}</code></td>
+</tr>
+<tr class="odd">
+<td><code>grouped</code></td>
+<td>Should the bars be grouped on index axis. When <code>true</code>, all the datasets at same index value will be placed next to each other centering on that index value. When <code>false</code>, each bar is placed on its actual index-axis value.</td>
+</tr>
+<tr class="even">
+<td><code>indexAxis</code></td>
+<td>The base axis of the dataset. <code>'x'</code> for vertical bars and <code>'y'</code> for horizontal bars.</td>
+</tr>
+<tr class="odd">
+<td><code>label</code></td>
+<td>The label for the dataset which appears in the legend and tooltips.</td>
+</tr>
+<tr class="even">
+<td><code>order</code></td>
+<td>The drawing order of dataset. Also affects order for stacking, tooltip, and legend.</td>
+</tr>
+<tr class="odd">
+<td><code>skipNull</code></td>
+<td>If <code>true</code>, null or undefined values will not be used for spacing calculations when determining bar size.</td>
+</tr>
+<tr class="even">
+<td><code>stack</code></td>
+<td>The ID of the group to which this dataset belongs to (when stacked, each group will be a separate stack). <a href="#stacked-bar-charts">more</a></td>
+</tr>
+<tr class="odd">
+<td><code>xAxisID</code></td>
+<td>The ID of the x-axis to plot this dataset on.</td>
+</tr>
+<tr class="even">
+<td><code>yAxisID</code></td>
+<td>The ID of the y-axis to plot this dataset on.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="styling">Styling</h3>
+<p>The style of each bar can be controlled with the following properties:</p>
+<table>
+<colgroup>
+<col style="width: 28%" />
+<col style="width: 71%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>backgroundColor</code></td>
+<td>The bar background color.</td>
+</tr>
+<tr class="even">
+<td><code>borderColor</code></td>
+<td>The bar border color.</td>
+</tr>
+<tr class="odd">
+<td><a href="#borderskipped"><code>borderSkipped</code></a></td>
+<td>The edge to skip when drawing bar.</td>
+</tr>
+<tr class="even">
+<td><a href="#borderwidth"><code>borderWidth</code></a></td>
+<td>The bar border width (in pixels).</td>
+</tr>
+<tr class="odd">
+<td><a href="#borderradius"><code>borderRadius</code></a></td>
+<td>The bar border radius (in pixels).</td>
+</tr>
+<tr class="even">
+<td><code>minBarLength</code></td>
+<td>Set this to ensure that bars have a minimum length in pixels.</td>
+</tr>
+<tr class="odd">
+<td><code>pointStyle</code></td>
+<td>Style of the point for legend. <a href="../configuration/elements.md#point-styles">more…</a></td>
+</tr>
+</tbody>
+</table>
+<p>All these values, if <code>undefined</code>, fallback to the associated <a href="../configuration/elements.md#bar-configuration"><code>elements.bar.*</code></a> options.</p>
+<h4 id="borderskipped">borderSkipped</h4>
+<p>This setting is used to avoid drawing the bar stroke at the base of the fill, or disable the border radius. In general, this does not need to be changed except when creating chart types that derive from a bar chart.</p>
+<p>:::tip Note For negative bars in a vertical chart, <code>top</code> and <code>bottom</code> are flipped. Same goes for <code>left</code> and <code>right</code> in a horizontal chart. :::</p>
+<p>Options are:</p>
+<ul>
+<li><code>'start'</code></li>
+<li><code>'end'</code></li>
+<li><code>'bottom'</code></li>
+<li><code>'left'</code></li>
+<li><code>'top'</code></li>
+<li><code>'right'</code></li>
+<li><code>false</code></li>
+</ul>
+<h4 id="borderwidth">borderWidth</h4>
+<p>If this value is a number, it is applied to all sides of the rectangle (left, top, right, bottom), except <a href="#borderskipped"><code>borderSkipped</code></a>. If this value is an object, the <code>left</code> property defines the left border width. Similarly, the <code>right</code>, <code>top</code>, and <code>bottom</code> properties can also be specified. Omitted borders and <a href="#borderskipped"><code>borderSkipped</code></a> are skipped.</p>
+<h4 id="borderradius">borderRadius</h4>
+<p>If this value is a number, it is applied to all corners of the rectangle (topLeft, topRight, bottomLeft, bottomRight), except corners touching the <a href="#borderskipped"><code>borderSkipped</code></a>. If this value is an object, the <code>topLeft</code> property defines the top-left corners border radius. Similarly, the <code>topRight</code>, <code>bottomLeft</code>, and <code>bottomRight</code> properties can also be specified. Omitted corners and those touching the <a href="#borderskipped"><code>borderSkipped</code></a> are skipped. For example if the <code>top</code> border is skipped, the border radius for the corners <code>topLeft</code> and <code>topRight</code> will be skipped as well.</p>
+<p>:::tip Stacked Charts When the border radius is supplied as a number and the chart is stacked, the radius will only be applied to the bars that are at the edges of the stack or where the bar is floating. The object syntax can be used to override this behavior. :::</p>
+<h3 id="interactions">Interactions</h3>
+<p>The interaction with each bar can be controlled with the following properties:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>hoverBackgroundColor</code></td>
+<td>The bar background color when hovered.</td>
+</tr>
+<tr class="even">
+<td><code>hoverBorderColor</code></td>
+<td>The bar border color when hovered.</td>
+</tr>
+<tr class="odd">
+<td><code>hoverBorderWidth</code></td>
+<td>The bar border width when hovered (in pixels).</td>
+</tr>
+<tr class="even">
+<td><code>hoverBorderRadius</code></td>
+<td>The bar border radius when hovered (in pixels).</td>
+</tr>
+</tbody>
+</table>
+<p>All these values, if <code>undefined</code>, fallback to the associated <a href="../configuration/elements.md#bar-configuration"><code>elements.bar.*</code></a> options.</p>
+<h3 id="barpercentage">barPercentage</h3>
+<p>Percent (0-1) of the available width each bar should be within the category width. 1.0 will take the whole category width and put the bars right next to each other. <a href="#barpercentage-vs-categorypercentage">more…</a></p>
+<h3 id="categorypercentage">categoryPercentage</h3>
+<p>Percent (0-1) of the available width each category should be within the sample width. <a href="#barpercentage-vs-categorypercentage">more…</a></p>
+<h3 id="barthickness">barThickness</h3>
+<p>If this value is a number, it is applied to the width of each bar, in pixels. When this is enforced, <code>barPercentage</code> and <code>categoryPercentage</code> are ignored.</p>
+<p>If set to <code>'flex'</code>, the base sample widths are calculated automatically based on the previous and following samples so that they take the full available widths without overlap. Then, bars are sized using <code>barPercentage</code> and <code>categoryPercentage</code>. There is no gap when the percentage options are 1. This mode generates bars with different widths when data are not evenly spaced.</p>
+<p>If not set (default), the base sample widths are calculated using the smallest interval that prevents bar overlapping, and bars are sized using <code>barPercentage</code> and <code>categoryPercentage</code>. This mode always generates bars equally sized.</p>
+<h3 id="maxbarthickness">maxBarThickness</h3>
+<p>Set this to ensure that bars are not sized thicker than this.</p>
+<h2 id="scale-configuration">Scale Configuration</h2>
+<p>The bar chart sets unique default values for the following configuration from the associated <code>scale</code> options:</p>
+<table>
+<colgroup>
+<col style="width: 4%" />
+<col style="width: 3%" />
+<col style="width: 2%" />
+<col style="width: 89%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>offset</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>If true, extra space is added to both edges and the axis is scaled to fit into the chart area.</td>
+</tr>
+<tr class="even">
+<td><code>grid.offset</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>If true, the bars for a particular data point fall between the grid lines. The grid line will move to the left by one half of the tick interval. If false, the grid line will go right down the middle of the bars. <a href="#offsetgridlines">more…</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-scale-configuration">Example scale configuration</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1">options <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">scales</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="dt">x</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-4" title="4">      <span class="dt">grid</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">        <span class="dt">offset</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="op">};</span></a></code></pre></div>
+<h3 id="offset-grid-lines">Offset Grid Lines</h3>
+<p>If true, the bars for a particular data point fall between the grid lines. The grid line will move to the left by one half of the tick interval, which is the space between the grid lines. If false, the grid line will go right down the middle of the bars. This is set to true for a category scale in a bar chart while false for other scales or chart types by default.</p>
+<h2 id="default-options">Default Options</h2>
+<p>It is common to want to apply a configuration setting to all created bar charts. The global bar chart settings are stored in <code>Chart.overrides.bar</code>. Changing the global options only affects charts created after the change. Existing charts are not changed.</p>
+<h2 id="barpercentage-vs-categorypercentage">barPercentage vs categoryPercentage</h2>
+<p>The following shows the relationship between the bar percentage option and the category percentage option.</p>
+<pre><code>// categoryPercentage: 1.0
+// barPercentage: 1.0
+Bar:        | 1.0 | 1.0 |
+Category:   |    1.0    |
+Sample:     |===========|
+
+// categoryPercentage: 1.0
+// barPercentage: 0.5
+Bar:          |.5|  |.5|
+Category:  |      1.0     |
+Sample:    |==============|
+
+// categoryPercentage: 0.5
+// barPercentage: 1.0
+Bar:             |1.0||1.0|
+Category:        |   .5   |
+Sample:     |==================|</code></pre>
+<h2 id="data-structure">Data Structure</h2>
+<p>All of the supported <a href="../general/data-structures.md">data structures</a> can be used with bar charts.</p>
+<h2 id="stacked-bar-chart">Stacked Bar Chart</h2>
+<p>Bar charts can be configured into stacked bar charts by changing the settings on the X and Y axes to enable stacking. Stacked bar charts can be used to show how one data series is made up of a number of smaller pieces.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">var</span> stackedBar <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;bar&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="dt">scales</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-6" title="6">      <span class="dt">x</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-7" title="7">        <span class="dt">stacked</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-8" title="8">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-9" title="9">      <span class="dt">y</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-10" title="10">        <span class="dt">stacked</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-11" title="11">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-12" title="12">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-13" title="13">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-14" title="14"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h2 id="horizontal-bar-chart">Horizontal Bar Chart</h2>
+<p>A horizontal bar chart is a variation on a vertical bar chart. It is sometimes used to show trend data, and the comparison of multiple data sets side by side. To achieve this you will have to set the <code>indexAxis</code> property in the options object to <code>'y'</code>. The default for this property is <code>'x'</code> and thus will show vertical bars.</p>
+<p>```js chart-editor // <block:setup:1> const labels = Utils.months({ count: 7 }); const data = { labels: labels, datasets: [ { axis: “y”, label: “My First Dataset”, data: [65, 59, 80, 81, 56, 55, 40], fill: false, backgroundColor: [ “rgba(255, 99, 132, 0.2)”, “rgba(255, 159, 64, 0.2)”, “rgba(255, 205, 86, 0.2)”, “rgba(75, 192, 192, 0.2)”, “rgba(54, 162, 235, 0.2)”, “rgba(153, 102, 255, 0.2)”, “rgba(201, 203, 207, 0.2)”, ], borderColor: [ “rgb(255, 99, 132)”, “rgb(255, 159, 64)”, “rgb(255, 205, 86)”, “rgb(75, 192, 192)”, “rgb(54, 162, 235)”, “rgb(153, 102, 255)”, “rgb(201, 203, 207)”, ], borderWidth: 1, }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “bar”, data, options: { indexAxis: “y”, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<h3 id="horizontal-bar-chart-config-options">Horizontal Bar Chart config Options</h3>
+<p>The configuration options for the horizontal bar chart are the same as for the <a href="#scale-configuration">bar chart</a>. However, any options specified on the x-axis in a bar chart, are applied to the y-axis in a horizontal bar chart.</p>
+<h2 id="internal-data-format">Internal data format</h2>
+<p><code>{x, y, _custom}</code> where <code>_custom</code> is an optional object defining stacked bar properties: <code>{start, end, barStart, barEnd, min, max}</code>. <code>start</code> and <code>end</code> are the input values. Those two are repeated in <code>barStart</code> (closer to origin), <code>barEnd</code> (further from origin), <code>min</code> and <code>max</code>.</p>
+</body>
+</html>

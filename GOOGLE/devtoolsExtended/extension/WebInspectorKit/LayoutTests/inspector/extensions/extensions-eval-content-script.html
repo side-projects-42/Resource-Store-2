@@ -1,51 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/extensions-test.js"></script>
-    <script type="text/javascript">
-      window.whereAmI = "main world";
-
-      testRunner.setIsolatedWorldSecurityOrigin(632, "file:///");
-      testRunner.evaluateScriptInIsolatedWorld(
-        632,
-        "window.whereAmI = 'brave new world'"
-      );
-
-      function extension_testEvalInMainWorldImplicit(nextTest) {
-        webInspector.inspectedWindow.eval(
-          "whereAmI",
-          callbackAndNextTest(extension_onEval, nextTest)
-        );
-      }
-
-      function extension_testEvalInMainWorldExplicit(nextTest) {
-        webInspector.inspectedWindow.eval(
-          "whereAmI",
-          { useContentScriptContext: false },
-          callbackAndNextTest(extension_onEval, nextTest)
-        );
-      }
-
-      function extension_testEvalInContentScriptContext(nextTest) {
-        webInspector.inspectedWindow.eval(
-          "whereAmI",
-          { useContentScriptContext: true },
-          callbackAndNextTest(extension_onEval, nextTest)
-        );
-      }
-
-      function extension_onEval(value, isException) {
-        output(
-          "Evaluate: " +
-            JSON.stringify(value) +
-            " (exception: " +
-            isException +
-            ")"
-        );
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests WebInspector extension API</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>extensions-eval-content-script</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests WebInspector extension API</p>
+</body>
 </html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="selenium-tests">Selenium tests</h1>
+<h2 id="getting-started">Getting started</h2>
+<p>See <a href="https://www.mediawiki.org/wiki/Selenium/Node.js" class="uri">https://www.mediawiki.org/wiki/Selenium/Node.js</a> for how to best run these locally. Below the internal prerequisites are documented, but you might not need to install these yourself.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><a href="https://www.chromium.org/">Chromium</a> or <a href="https://www.google.com/chrome/">Chrome</a></li>
+<li><a href="https://chromedriver.chromium.org/downloads">ChromeDriver</a></li>
+<li><a href="https://nodejs.org/en/">Node.js</a></li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>There are three supported modes of running the tests.</p>
+<h4 id="headless">Headless</h4>
+<p>The Selenium tests default to headless mode, unless a <code>DISPLAY</code> environment variable is set. This variable may be set on Linux desktop and XQuartz environments. To run headless there, unset the <code>DISPLAY</code> environment variable first.</p>
+<pre><code>npm run selenium</code></pre>
+<p>Or:</p>
+<pre><code>DISPLAY= npm run selenium</code></pre>
+<h4 id="visible-browser">Visible browser</h4>
+<p>To see the browser window, ensure the <code>DISPLAY</code> variable is set. On Linux desktop and in XQuartz environments this is probably set already. On macOS, set it to a dummy value like <code>1</code>.</p>
+<pre><code>DISPLAY=1 npm run selenium</code></pre>
+<h4 id="video-recording">Video recording</h4>
+<p>To capture a video, the tests have to run in the context of an X11 server, with the <code>DISPLAY</code> environment variable set to its display name. If the shell has no X11 server or if you want to hide the output, you can also launch a virtual X11 display using Xvfb. Recording videos is currently supported only on Linux, and is triggered by the <code>DISPLAY</code> value starting with a colon (as Xvfb typically would).</p>
+<p>Example test run in <a href="https://gerrit.wikimedia.org/g/fresh">Fresh</a>.</p>
+<pre><code>fresh-node -env -net
+export DISPLAY=:1
+Xvfb &quot;$DISPLAY&quot; -screen 0 1280x1024x24 &amp;
+npm run selenium-test</code></pre>
+<h4 id="filter">Filter</h4>
+<p>Run a specific spec:</p>
+<pre><code>npm run selenium -- --spec tests/selenium/specs/page.js</code></pre>
+<p>To filter by test case, e.g. with the name containing “preferences”:</p>
+<pre><code>npm run selenium -- --mochaOpts.grep preferences</code></pre>
+<h4 id="configuration">Configuration</h4>
+<p>The following environment variables decide where to find MediaWiki and how to login:</p>
+<ul>
+<li><code>MW_SERVER</code>: The value of <code>$wgServer</code>.</li>
+<li><code>MW_SCRIPT_PATH</code>: The value of <code>$wgScriptPath</code>.</li>
+<li><code>MEDIAWIKI_USER</code>: Username of a wiki account with sysop rights.</li>
+<li><code>MEDIAWIKI_PASSWORD</code>: Password for this user.</li>
+</ul>
+<h2 id="further-reading">Further reading</h2>
+<ul>
+<li><a href="https://www.mediawiki.org/wiki/Selenium/Node.js">Selenium/Node.js</a> on mediawiki.org</li>
+</ul>
+</body>
+</html>

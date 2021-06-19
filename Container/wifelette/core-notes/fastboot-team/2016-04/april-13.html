@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>april-13</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-04-13">FastBoot Meeting Notes 2016-04-13</h1>
+<h2 id="attendees">Attendees</h2>
+<p>Tom Dale, Dan McClain, Krati Ahuja, Arjan Singh, Stanley Stuart, Terence Lee</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li>[x] Dropping Node 0.10 support (<span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+<li>[x] Hot reload (<span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+<li>[x] EmberConf update &amp; FastBoot website (<span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+<li>[x] App author guide (<span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+<li>[x] Deferring render API (<span class="citation" data-cites="tomdale">@tomdale</span>)</li>
+<li>[ ] <code>treeForApp</code> Broccoli filter for addon authors (<span class="citation" data-cites="ronco">@ronco</span>)</li>
+<li>[ ] <code>ember fastboot:test</code> (<span class="citation" data-cites="cibernox">@cibernox</span>)</li>
+<li>[x] <code>FastBootRequest</code> (<span class="citation" data-cites="danmcclain">@danmcclain</span>)</li>
+<li>[x] Ember onerror hook in fastboot (<span class="citation" data-cites="kratiahuja">@kratiahuja</span>)</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<p>Not explicitly dropping 0.10, reached consensus on dropping it, will emit dep warnings until 1.0, removing from build matrix</p>
+<p>Tom to add tests for in flight requests when hot reloads</p>
+<p>Ember 2.7 was (arbitrialily) chosen as the release date for FastBoot 1.0 (Announced at EmberConf)</p>
+<p><a href="https://ember-fastboot.com">FastBoot site</a> hosted by Heroku (thanks <span class="citation" data-cites="hone">@hone</span>), CDN and all the good stuff, using heroku build process for fastboot deploys</p>
+<p><a href="https://github.com/heroku/heroku-buildpack-emberjs">Heroku buildpack</a> is the place to point people experimenting with FastBoot</p>
+<p>FastBoot site is doc source for FastBoot, Tom is working on a guide for app updates</p>
+<p>Bustle is using GraphQL to render the app via components (which are isolated via GraphQL service), problem is FastBoot uses promise chain from Model hook, but aforementioned approach does not use the model chain, 2 approaches to fix, one hack, one long term. In fastboot service, your component could notify that we need to delay the rendering. UX decision for approach, FastBoot should support. <span class="citation" data-cites="danmcclain">@danmcclain</span> to PR his code that previously implements a pattern for this</p>
+<p>DM: I am separating out the request information from the raw Express request object to our own <code>FastBootRequest</code>. I want to deprecate the <code>cookies</code>, <code>headers</code>, etc. properties on the FastBoot service and move them into a separate <code>fastboot.request</code> property which exposes the <code>FastBootRequest</code> object.</p>
+<p>DM: I also want to separate out <code>host</code> and <code>protocol</code> and added <code>path</code>.</p>
+<p>KA: One issue we’re running into is error handling. If an exception gets thrown inside a <code>run.later</code> or something, the node process crashes. I will work on adding an Ember.onerror handler to catch these.</p>
+<h2 id="action-items">Action Items</h2>
+<ul>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> to deprecate Node 0.10 support by removing from Travis build matrix
+<ul>
+<li>[ ] We will not explicitly remove Contextify support until 1.0.0</li>
+<li>[ ] We will add a deprecation warning</li>
+</ul></li>
+<li>[ ] <span class="citation" data-cites="danmcclain">@danmcclain</span> will push PR for deferring rendering via promise chain</li>
+<li>[ ] <span class="citation" data-cites="danmcclain">@danmcclain</span> will update FastBootRequest PR to implement get for headers so users don’t have to call <code>toLowerCase</code> on headers</li>
+<li>[ ] <span class="citation" data-cites="danmcclain">@danmcclain</span> will submit PR to update FastBoot service to deprecate old access to request details</li>
+<li>[ ] <span class="citation" data-cites="kratiahuja">@kratiahuja</span> will add error handling via <code>Ember.onerror</code> and other mechanisms to avoid crashing the process</li>
+<li>[ ] <span class="citation" data-cites="tomdale">@tomdale</span> will sync up with <span class="citation" data-cites="fivetanley">@fivetanley</span> to merge in build refactor</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,4 @@
+Loader Bug
+==========
+
+Loaded scripts:

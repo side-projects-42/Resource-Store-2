@@ -1,585 +1,141 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>n4566</title>
-  </head>
-  <body>
-    <h1>
-      N4566 Editor's Report -- Working Draft, Standard for Programming Language
-      C++
-    </h1>
-
-    <p>
-      2015-11-09 <br />
-      Richard Smith <br />
-      Google Inc <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Very special thanks to Dawn Perchik, who performed nearly all the edits
-      for motions moved at Kona (any errors are mine).
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4567">N4567</a> is the current working draft.
-        It replaces <a href="http://wg21.link/n4527">N4527</a>.
-      </li>
-      <li>N4566 is this Editor's Report for the current working draft.</li>
-    </ul>
-
-    <h3>Motions incorporated into working draft</h3>
-
-    <h4>Core working group motions</h4>
-
-    <p>
-      CWG motion 1:
-      <a href="http://wg21.link/p0164r0">Core issue resolutions</a> from 21
-      issues applied, resolving 23 issues:
-    </p>
-
-    <ul>
-      <li><a href="http://wg21.link/cwg1274">1274</a></li>
-      <li><a href="http://wg21.link/cwg1391">1391</a></li>
-      <li><a href="http://wg21.link/cwg1722">1722</a></li>
-      <li>
-        <a href="http://wg21.link/cwg1847">1847</a> (no changes, resolved by
-        1391)
-      </li>
-      <li><a href="http://wg21.link/cwg1863">1863</a></li>
-      <li><a href="http://wg21.link/cwg1949">1949</a></li>
-      <li>
-        <a href="http://wg21.link/cwg1975">1975</a> (wording removed by CWG
-        motion 4)
-      </li>
-      <li><a href="http://wg21.link/cwg1981">1981</a></li>
-      <li><a href="http://wg21.link/cwg1990">1990</a></li>
-      <li><a href="http://wg21.link/cwg2000">2000</a></li>
-      <li><a href="http://wg21.link/cwg2004">2004</a></li>
-      <li><a href="http://wg21.link/cwg2006">2006</a></li>
-      <li><a href="http://wg21.link/cwg2015">2015</a></li>
-      <li>
-        <a href="http://wg21.link/cwg2016">2016</a> (no changes, resolved by
-        1990)
-      </li>
-      <li><a href="http://wg21.link/cwg2019">2019</a></li>
-      <li><a href="http://wg21.link/cwg2024">2024</a></li>
-      <li><a href="http://wg21.link/cwg2026">2026</a></li>
-      <li><a href="http://wg21.link/cwg2027">2027</a></li>
-      <li><a href="http://wg21.link/cwg2031">2031</a></li>
-      <li><a href="http://wg21.link/cwg2052">2052</a></li>
-      <li><a href="http://wg21.link/cwg2075">2075</a></li>
-      <li><a href="http://wg21.link/cwg2101">2101</a></li>
-      <li><a href="http://wg21.link/cwg2120">2120</a></li>
-    </ul>
-
-    <p>
-      CWG motion 2:
-      <a href="http://wg21.link/p0001r1"
-        >P0001R1 "Remove Deprecated Use of the <code>register</code> Keyword"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 3:
-      <a href="http://wg21.link/p0002r1"
-        >P0002R1 "Remove Deprecated <code>operator++(bool)</code>"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 4:
-      <a href="http://wg21.link/p0012r1"
-        >P0012R1 "Make exception specifications be part of the type system,
-        version 5"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 5:
-      <a href="http://wg21.link/p0061r1"
-        >P0061R1 "<code>__has_include</code> for C++17"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 6:
-      <a href="http://wg21.link/p0134r0"
-        >P0134R0 "Introducing a name for
-        <em>brace-or-equal-initializers</em> for non-static data members"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 7:
-      <a href="http://wg21.link/p0136r1"
-        >P0136R1 "Rewording inheriting constructors (core issue 1941 et al)"</a
-      >
-    </p>
-
-    <h4>Library working group motions</h4>
-
-    <p>
-      LWG motion 1:
-      <a href="http://wg21.link/p0165r0">Library issue resolutions</a> for 34
-      issues applied:
-    </p>
-
-    <ul>
-      <li><a href="http://wg21.link/lwg1169">1169</a></li>
-      <li><a href="http://wg21.link/lwg2072">2072</a></li>
-      <li><a href="http://wg21.link/lwg2101">2101</a></li>
-      <li><a href="http://wg21.link/lwg2111">2111</a></li>
-      <li><a href="http://wg21.link/lwg2119">2119</a></li>
-      <li><a href="http://wg21.link/lwg2127">2127</a></li>
-      <li><a href="http://wg21.link/lwg2133">2133</a></li>
-      <li><a href="http://wg21.link/lwg2156">2156</a></li>
-      <li><a href="http://wg21.link/lwg2218">2218</a></li>
-      <li><a href="http://wg21.link/lwg2219">2219</a></li>
-      <li><a href="http://wg21.link/lwg2244">2244</a></li>
-      <li><a href="http://wg21.link/lwg2250">2250</a></li>
-      <li><a href="http://wg21.link/lwg2259">2259</a></li>
-      <li><a href="http://wg21.link/lwg2336">2336</a></li>
-      <li><a href="http://wg21.link/lwg2353">2353</a></li>
-      <li><a href="http://wg21.link/lwg2367">2367</a></li>
-      <li><a href="http://wg21.link/lwg2380">2380</a></li>
-      <li><a href="http://wg21.link/lwg2384">2384</a></li>
-      <li><a href="http://wg21.link/lwg2385">2385</a></li>
-      <li><a href="http://wg21.link/lwg2435">2435</a></li>
-      <li><a href="http://wg21.link/lwg2447">2447</a></li>
-      <li><a href="http://wg21.link/lwg2462">2462</a></li>
-      <li><a href="http://wg21.link/lwg2466">2466</a></li>
-      <li><a href="http://wg21.link/lwg2469">2469</a></li>
-      <li><a href="http://wg21.link/lwg2473">2473</a></li>
-      <li><a href="http://wg21.link/lwg2476">2476</a></li>
-      <li><a href="http://wg21.link/lwg2477">2477</a></li>
-      <li><a href="http://wg21.link/lwg2483">2483</a></li>
-      <li><a href="http://wg21.link/lwg2484">2484</a></li>
-      <li><a href="http://wg21.link/lwg2485">2485</a></li>
-      <li><a href="http://wg21.link/lwg2486">2486</a></li>
-      <li><a href="http://wg21.link/lwg2487">2487</a></li>
-      <li><a href="http://wg21.link/lwg2489">2489</a></li>
-      <li><a href="http://wg21.link/lwg2492">2492</a></li>
-      <li>
-        Note: <a href="http://wg21.link/lwg2181">2181</a> resolution from
-        P0165R0 was <em>not</em> applied by this motion
-      </li>
-    </ul>
-
-    <p>
-      LWG motion 2:
-      <a href="http://wg21.link/p0165r0">Library issue resolutions</a> for 4
-      issues applied:
-    </p>
-
-    <ul>
-      <li><a href="http://wg21.link/lwg2224">2224</a></li>
-      <li><a href="http://wg21.link/lwg2234">2234</a></li>
-      <li><a href="http://wg21.link/lwg2273">2273</a></li>
-      <li><a href="http://wg21.link/lwg2495">2495</a></li>
-    </ul>
-
-    <p>
-      LWG motion 3:
-      <a href="http://wg21.link/p0004r1"
-        >P0004R1 "Remove Deprecated <code>iostreams</code> aliases"</a
-      >
-    </p>
-
-    <p>
-      LWG motion 4:
-      <a href="http://wg21.link/p0006r0"
-        >P0006R0 "Adopt Type Traits Variable Templates for C++17"</a
-      >
-    </p>
-
-    <p>
-      LWG motion 5:
-      <a href="http://wg21.link/p0092r1"
-        >P0092R1 "Polishing <code>&lt;chrono&gt;</code>"</a
-      >
-    </p>
-
-    <p>
-      LWG motion 6:
-      <a href="http://wg21.link/p0007r1"
-        >P0007R1 "Constant View: A proposal for a
-        <code>std::as_const</code> helper function template"</a
-      >
-    </p>
-
-    <p>
-      LWG motion 7:
-      <a href="http://wg21.link/p0156r0"
-        >P0156R0 "Variadic <code>lock_guard</code> (rev 3)"</a
-      >
-    </p>
-
-    <p>
-      LWG motion 9:
-      <a href="http://wg21.link/p0074r0"
-        >P0074R0 "Making <code>std::owner_less</code> more flexible"</a
-      >
-    </p>
-
-    <p>
-      LWG motion 10:
-      <a href="http://wg21.link/p0013r1">P0013R1 "Logical type traits rev 2"</a>
-      (plus <code>_v</code> templates as LWG motion 4 was applied)
-    </p>
-
-    <h3>Editorial changes to papers as moved</h3>
-
-    <h4>CWG motion 1, issue 1990</h4>
-
-    <p>
-      Italicized the term "conversion function" in its definition (and added
-      index entry).
-    </p>
-
-    <h4>CWG motion 3</h4>
-
-    <p>
-      The Annex C entry was added into a section for Clause 5 [expr], instead of
-      a section for Clause D [depr], because that is where the normative wording
-      for this feature used to live.
-    </p>
-
-    <h4>CWG motion 4</h4>
-
-    <p>
-      The change to [except.spec] 15.4p1 could not be applied, but the current
-      wording is correct. Editorially fixed formatting errors in wording,
-      reformatted text for consistency and readability, and fixed use of macros.
-    </p>
-
-    <p>
-      The change in the formulation of function pointer decay that avoids
-      suggesting that only possibly-throwing functions decay has been applied to
-      two more places in [except.handle].
-    </p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>A log of all editorial fixes made since N4527 is below:</p>
-
-    <pre><code>commit de6f56a818884092d4ce4aa5e49af9f357007901
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4566</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4566-editors-report-working-draft-standard-for-programming-language-c">N4566 Editor’s Report – Working Draft, Standard for Programming Language C++</h1>
+<p>2015-11-09<br />
+Richard Smith<br />
+Google Inc<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Very special thanks to Dawn Perchik, who performed nearly all the edits for motions moved at Kona (any errors are mine).</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4567">N4567</a> is the current working draft. It replaces <a href="http://wg21.link/n4527">N4527</a>.</li>
+<li>N4566 is this Editor’s Report for the current working draft.</li>
+</ul>
+<h3 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h3>
+<h4 id="core-working-group-motions">Core working group motions</h4>
+<p>CWG motion 1: <a href="http://wg21.link/p0164r0">Core issue resolutions</a> from 21 issues applied, resolving 23 issues:</p>
+<ul>
+<li><a href="http://wg21.link/cwg1274">1274</a></li>
+<li><a href="http://wg21.link/cwg1391">1391</a></li>
+<li><a href="http://wg21.link/cwg1722">1722</a></li>
+<li><a href="http://wg21.link/cwg1847">1847</a> (no changes, resolved by 1391)</li>
+<li><a href="http://wg21.link/cwg1863">1863</a></li>
+<li><a href="http://wg21.link/cwg1949">1949</a></li>
+<li><a href="http://wg21.link/cwg1975">1975</a> (wording removed by CWG motion 4)</li>
+<li><a href="http://wg21.link/cwg1981">1981</a></li>
+<li><a href="http://wg21.link/cwg1990">1990</a></li>
+<li><a href="http://wg21.link/cwg2000">2000</a></li>
+<li><a href="http://wg21.link/cwg2004">2004</a></li>
+<li><a href="http://wg21.link/cwg2006">2006</a></li>
+<li><a href="http://wg21.link/cwg2015">2015</a></li>
+<li><a href="http://wg21.link/cwg2016">2016</a> (no changes, resolved by 1990)</li>
+<li><a href="http://wg21.link/cwg2019">2019</a></li>
+<li><a href="http://wg21.link/cwg2024">2024</a></li>
+<li><a href="http://wg21.link/cwg2026">2026</a></li>
+<li><a href="http://wg21.link/cwg2027">2027</a></li>
+<li><a href="http://wg21.link/cwg2031">2031</a></li>
+<li><a href="http://wg21.link/cwg2052">2052</a></li>
+<li><a href="http://wg21.link/cwg2075">2075</a></li>
+<li><a href="http://wg21.link/cwg2101">2101</a></li>
+<li><a href="http://wg21.link/cwg2120">2120</a></li>
+</ul>
+<p>CWG motion 2: <a href="http://wg21.link/p0001r1">P0001R1 “Remove Deprecated Use of the <code>register</code> Keyword”</a></p>
+<p>CWG motion 3: <a href="http://wg21.link/p0002r1">P0002R1 “Remove Deprecated <code>operator++(bool)</code>”</a></p>
+<p>CWG motion 4: <a href="http://wg21.link/p0012r1">P0012R1 “Make exception specifications be part of the type system, version 5”</a></p>
+<p>CWG motion 5: <a href="http://wg21.link/p0061r1">P0061R1 “<code>__has_include</code> for C++17”</a></p>
+<p>CWG motion 6: <a href="http://wg21.link/p0134r0">P0134R0 “Introducing a name for <em>brace-or-equal-initializers</em> for non-static data members”</a></p>
+<p>CWG motion 7: <a href="http://wg21.link/p0136r1">P0136R1 “Rewording inheriting constructors (core issue 1941 et al)”</a></p>
+<h4 id="library-working-group-motions">Library working group motions</h4>
+<p>LWG motion 1: <a href="http://wg21.link/p0165r0">Library issue resolutions</a> for 34 issues applied:</p>
+<ul>
+<li><a href="http://wg21.link/lwg1169">1169</a></li>
+<li><a href="http://wg21.link/lwg2072">2072</a></li>
+<li><a href="http://wg21.link/lwg2101">2101</a></li>
+<li><a href="http://wg21.link/lwg2111">2111</a></li>
+<li><a href="http://wg21.link/lwg2119">2119</a></li>
+<li><a href="http://wg21.link/lwg2127">2127</a></li>
+<li><a href="http://wg21.link/lwg2133">2133</a></li>
+<li><a href="http://wg21.link/lwg2156">2156</a></li>
+<li><a href="http://wg21.link/lwg2218">2218</a></li>
+<li><a href="http://wg21.link/lwg2219">2219</a></li>
+<li><a href="http://wg21.link/lwg2244">2244</a></li>
+<li><a href="http://wg21.link/lwg2250">2250</a></li>
+<li><a href="http://wg21.link/lwg2259">2259</a></li>
+<li><a href="http://wg21.link/lwg2336">2336</a></li>
+<li><a href="http://wg21.link/lwg2353">2353</a></li>
+<li><a href="http://wg21.link/lwg2367">2367</a></li>
+<li><a href="http://wg21.link/lwg2380">2380</a></li>
+<li><a href="http://wg21.link/lwg2384">2384</a></li>
+<li><a href="http://wg21.link/lwg2385">2385</a></li>
+<li><a href="http://wg21.link/lwg2435">2435</a></li>
+<li><a href="http://wg21.link/lwg2447">2447</a></li>
+<li><a href="http://wg21.link/lwg2462">2462</a></li>
+<li><a href="http://wg21.link/lwg2466">2466</a></li>
+<li><a href="http://wg21.link/lwg2469">2469</a></li>
+<li><a href="http://wg21.link/lwg2473">2473</a></li>
+<li><a href="http://wg21.link/lwg2476">2476</a></li>
+<li><a href="http://wg21.link/lwg2477">2477</a></li>
+<li><a href="http://wg21.link/lwg2483">2483</a></li>
+<li><a href="http://wg21.link/lwg2484">2484</a></li>
+<li><a href="http://wg21.link/lwg2485">2485</a></li>
+<li><a href="http://wg21.link/lwg2486">2486</a></li>
+<li><a href="http://wg21.link/lwg2487">2487</a></li>
+<li><a href="http://wg21.link/lwg2489">2489</a></li>
+<li><a href="http://wg21.link/lwg2492">2492</a></li>
+<li>Note: <a href="http://wg21.link/lwg2181">2181</a> resolution from P0165R0 was <em>not</em> applied by this motion</li>
+</ul>
+<p>LWG motion 2: <a href="http://wg21.link/p0165r0">Library issue resolutions</a> for 4 issues applied:</p>
+<ul>
+<li><a href="http://wg21.link/lwg2224">2224</a></li>
+<li><a href="http://wg21.link/lwg2234">2234</a></li>
+<li><a href="http://wg21.link/lwg2273">2273</a></li>
+<li><a href="http://wg21.link/lwg2495">2495</a></li>
+</ul>
+<p>LWG motion 3: <a href="http://wg21.link/p0004r1">P0004R1 “Remove Deprecated <code>iostreams</code> aliases”</a></p>
+<p>LWG motion 4: <a href="http://wg21.link/p0006r0">P0006R0 “Adopt Type Traits Variable Templates for C++17”</a></p>
+<p>LWG motion 5: <a href="http://wg21.link/p0092r1">P0092R1 “Polishing <code>&lt;chrono&gt;</code>”</a></p>
+<p>LWG motion 6: <a href="http://wg21.link/p0007r1">P0007R1 “Constant View: A proposal for a <code>std::as_const</code> helper function template”</a></p>
+<p>LWG motion 7: <a href="http://wg21.link/p0156r0">P0156R0 “Variadic <code>lock_guard</code> (rev 3)”</a></p>
+<p>LWG motion 9: <a href="http://wg21.link/p0074r0">P0074R0 “Making <code>std::owner_less</code> more flexible”</a></p>
+<p>LWG motion 10: <a href="http://wg21.link/p0013r1">P0013R1 “Logical type traits rev 2”</a> (plus <code>_v</code> templates as LWG motion 4 was applied)</p>
+<h3 id="editorial-changes-to-papers-as-moved">Editorial changes to papers as moved</h3>
+<h4 id="cwg-motion-1-issue-1990">CWG motion 1, issue 1990</h4>
+<p>Italicized the term “conversion function” in its definition (and added index entry).</p>
+<h4 id="cwg-motion-3">CWG motion 3</h4>
+<p>The Annex C entry was added into a section for Clause 5 [expr], instead of a section for Clause D [depr], because that is where the normative wording for this feature used to live.</p>
+<h4 id="cwg-motion-4">CWG motion 4</h4>
+<p>The change to [except.spec] 15.4p1 could not be applied, but the current wording is correct. Editorially fixed formatting errors in wording, reformatted text for consistency and readability, and fixed use of macros.</p>
+<p>The change in the formulation of function pointer decay that avoids suggesting that only possibly-throwing functions decay has been applied to two more places in [except.handle].</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of all editorial fixes made since N4527 is below:</p>
+<pre><code>commit de6f56a818884092d4ce4aa5e49af9f357007901
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Nov 4 14:28:15 2015 -0800
 
     [dcl.constexpr] Consistently describe rules for validity of constexpr
-    function definitions as "requirements" so that the cross-references
+    function definitions as &quot;requirements&quot; so that the cross-references
     to this definition use the same term as the definition itself.
 
 commit 4dbad61e6eee2552c29e1c50c4d34db906d25009
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Oct 7 14:32:19 2015 -0700
 
-    [cstdint.syn] &lt;cstdint&gt; defines no functions; don't suggest that it does.
+    [cstdint.syn] &lt;cstdint&gt; defines no functions; don&#39;t suggest that it does.
 
 commit f853831b14614a47d6ea11d29837c88d6ef4bb8a
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -623,13 +179,13 @@ commit 283dae57ee352153cd2954c98e6e1c747d137a29
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Oct 28 16:02:39 2015 -0700
 
-    [gram.expr] Add an index to the definition of "composite pointer type"
+    [gram.expr] Add an index to the definition of &quot;composite pointer type&quot;
 
 commit d550da35efc7b8b410a19fd25317521f538c5f7c
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Oct 28 15:51:38 2015 -0700
 
-    [gram.expr] Add an index to definition of term "cv-combined type"
+    [gram.expr] Add an index to definition of term &quot;cv-combined type&quot;
 
 commit b2fcd697f378a212f2e6dc5225c74a2b7566be76
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -637,7 +193,7 @@ Date:   Wed Oct 28 15:43:34 2015 -0700
 
     [unord.req] Change object to value to match cleanup after merge with LWG2059.
 
-    Referenced cleanup is "[unord.req] Made intro wording for Table 103 more consistent."
+    Referenced cleanup is &quot;[unord.req] Made intro wording for Table 103 more consistent.&quot;
 
 commit 9fb82225f03cda7f1ee5427b87f986e7b010ff47
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -660,7 +216,7 @@ commit e00fab806aef1855364bc416265b74e5da94aa99
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Oct 21 17:44:42 2015 -0700
 
-    [temp.class.spec.match] Repeat a portion of an example so we don't
+    [temp.class.spec.match] Repeat a portion of an example so we don&#39;t
     separate the declaration and use of some template specializations
     by several pages.
 
@@ -689,7 +245,7 @@ commit 15124e411210030af3f85173014d09f72ce82741
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Wed Oct 21 09:42:02 2015 -1000
 
-    [class.union] Make terms "union-like class" and "variant member" indexed definitions.
+    [class.union] Make terms &quot;union-like class&quot; and &quot;variant member&quot; indexed definitions.
 
 commit e1961df118a01532677b22335f2e0d739addfe76
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
@@ -709,7 +265,7 @@ Date:   Wed Oct 7 13:38:37 2015 -0700
 
     [new.delete.array] Add missing changes from LWG206.
 
-    The relevant editor's report indicates that the wording changes were
+    The relevant editor&#39;s report indicates that the wording changes were
     reworded, but that rewording lost a normative requirement (that a
     replacement `operator new[](size_t, nothrow_t)` returns a pointer
     as if produced by calling `operator new[](size_t)`).
@@ -720,7 +276,7 @@ commit 777e2a9aacd404db27f7563212cd12c3f571f9ac
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Wed Sep 30 11:06:56 2015 -0700
 
-    [temp.dep] Remove duplicate 'if'.
+    [temp.dep] Remove duplicate &#39;if&#39;.
 
 commit 37776fa9f469e563f3288835e9e6c9d6fb7a2f88
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -732,7 +288,7 @@ commit 059b074a86953da500b9aa18c59c93adcb984d3c
 Author: Daniel Frey &lt;d.frey@gmx.de&gt;
 Date:   Fri Sep 18 19:58:15 2015 +0200
 
-    Change "typename decay&lt;F&gt;::type" to "decay_t&lt;F&gt;"
+    Change &quot;typename decay&lt;F&gt;::type&quot; to &quot;decay_t&lt;F&gt;&quot;
 
     Looks like this one was overlooked when `decay_t` (and the other `_t` helpers) were introduced.
 
@@ -750,7 +306,7 @@ Date:   Mon Sep 14 14:34:33 2015 +0800
 
     [tuple.assign] Fix typo
 
-    Fixed redundant ')'.
+    Fixed redundant &#39;)&#39;.
 
 commit 24264e56e289991f247daed172d9a6960a85395b
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -776,7 +332,7 @@ commit 6bc0318540e528031dac40fb54eee3c93a856616
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Jul 9 17:56:12 2015 -0700
 
-    [dcl.enum] Fix italicization of non-definition of "underlying type".
+    [dcl.enum] Fix italicization of non-definition of &quot;underlying type&quot;.
 
 commit 6739a892b2d92410f56a0b6d6055082f287031dc
 Author: Aaron Ballman &lt;aaron@aaronballman.com&gt;
@@ -820,7 +376,7 @@ commit efc600e757239d00baf759efac7cd979fe0152b3
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Thu Jul 9 17:41:00 2015 -0700
 
-    [dcl.fct.def.delete], [dcl.constexpr], [class.friend]: Replace "implicitly inline" with "implicitly an inline function", because the latter is the term defined in 7.1.2.
+    [dcl.fct.def.delete], [dcl.constexpr], [class.friend]: Replace &quot;implicitly inline&quot; with &quot;implicitly an inline function&quot;, because the latter is the term defined in 7.1.2.
 
 commit 299ec33999ca8d57ce40d5663373d8da46de0baa
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -837,7 +393,7 @@ commit 90352854d99ee3e3b2f935bba47c6749365d52d8
 Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
 Date:   Mon Jun 29 13:21:25 2015 -0700
 
-    [class.union] Change "but not" to "but it shall not have" as suggested by Hubert Tong.
+    [class.union] Change &quot;but not&quot; to &quot;but it shall not have&quot; as suggested by Hubert Tong.
 
 commit c62428ecedb6ddc076e3d1b37e9e2bfad591b7bc
 Author: Aaron Ballman &lt;aaron@aaronballman.com&gt;
@@ -891,7 +447,6 @@ commit 2c4c7a5b9098a6231bf3885fe96fbc9deb2f047f
 Author: Maurice Bos &lt;m-ou.se@m-ou.se&gt;
 Date:   Fri May 8 11:32:55 2015 +0200
 
-    s/template classes/class templates/
-</code></pre>
-  </body>
+    s/template classes/class templates/</code></pre>
+</body>
 </html>

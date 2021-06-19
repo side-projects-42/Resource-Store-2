@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Project-Structure</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>This project is made up of a few components:</p>
+    <ul>
+      <li>
+        React code, components, and page templates built primarily in
+        <a href="https://mdxjs.com/">MDX</a>
+      </li>
+      <li>
+        Static
+        <a
+          href="https://github.com/newrelic/opensource-website/tree/main/src/data"
+          >data</a
+        >
+        for each open source project listed and promoted on the site, including:
+        <ul>
+          <li><code>project metadata</code> in the data/projects directory</li>
+          <li>
+            <code>project stats</code> in the data/project-stats directory
+          </li>
+          <li>
+            <code>markdown content</code> in the data/project-main-content
+            directory
+          </li>
+        </ul>
+      </li>
+      <li>
+        Static pages that promote New Relic’s engagement in open standards and
+        highlight specific features and collections in New Relic’s open source
+        capabilities.
+      </li>
+      <li>
+        Automation to handle:
+        <ul>
+          <li>
+            updating dynamic data in the <code>project stats</code> and
+            <code>project metadata</code> directories
+          </li>
+          <li>building the static pages</li>
+          <li>deploying the site to a static hosting platform</li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>pageupdater</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="pageupdater">PageUpdater</h1>
+<p>This document provides an overview of the usage of PageUpdater and DerivedPageDataUpdater.</p>
+<h2 id="pageupdater-1"><code>PageUpdater</code></h2>
+<p><code>PageUpdater</code> is the canonical way to create page revisions, that is, to perform edits.</p>
+<p><code>PageUpdater</code> is a stateful, handle-like object that allows new revisions to be created on a given wiki page using the <code>saveRevision()</code> method. <code>PageUpdater</code> provides setters for defining the new revision’s content as well as meta-data such as change tags. <code>saveRevision()</code> stores the new revision’s primary content and metadata, and triggers the necessary updates to derived secondary data and cached artifacts e.g. in the <code>ParserCache</code> and the CDN layer, using a <code>DerivedPageDataUpdater</code>.</p>
+<p><code>PageUpdater</code> instances follow the below life cycle, defined by a number of methods:</p>
+<pre><code>                        +----------------------------+
+                        |                            |
+                        |             new            |
+                        |                            |
+                        +------|--------------|------+
+                               |              |
+          grabParentRevision()-|              |
+          or hasEditConflict()-|              |
+                               |              |
+                      +--------v-------+      |
+                      |                |      |
+                      |  parent known  |      |
+                      |                |      |
+Enables---------------+--------|-------+      |
+  safe operations based on     |              |-saveRevision()
+  the parent revision, e.g.    |              |
+  section replacement or       |              |
+  edit conflict resolution.    |              |
+                               |              |
+                saveRevision()-|              |
+                               |              |
+                        +------v--------------v------+
+                        |                            |
+                        |      creation committed    |
+                        |                            |
+Enables-----------------+----------------------------+
+  wasSuccess()
+  isUnchanged()
+  isNew()
+  getState()
+  getNewRevision()
+  etc.</code></pre>
+<p>The stateful nature of <code>PageUpdater</code> allows it to be used to safely perform transformations that depend on the new revision’s parent revision, such as replacing sections or applying 3-way conflict resolution, while protecting against race conditions using a compare-and-swap (CAS) mechanism: after calling code used the <code>grabParentRevision()</code> method to access the edit’s logical parent, <code>PageUpdater</code> remembers that revision, and ensure that that revision is still the page’s current revision when performing the atomic database update for the revision’s primary meta-data when <code>saveRevision()</code> is called. If another revision was created concurrently, <code>saveRevision()</code> will fail, indicating the problem with the “edit-conflict” code in the status object.</p>
+<p>Typical usage for programmatic revision creation (with <code>$page</code> being a WikiPage as of 1.32, to be replaced by a repository service later):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">$updater</span> = <span class="kw">$page</span>-&gt;newPageUpdater<span class="ot">(</span> <span class="kw">$user</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">$updater</span>-&gt;setContent<span class="ot">(</span> SlotRecord::<span class="kw">MAIN</span><span class="ot">,</span> <span class="kw">$content</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="kw">$updater</span>-&gt;setRcPatrolStatus<span class="ot">(</span> RecentChange::<span class="kw">PRC_PATROLLED</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">$newRev</span> = <span class="kw">$updater</span>-&gt;saveRevision<span class="ot">(</span> <span class="kw">$comment</span> <span class="ot">);</span></a></code></pre></div>
+<p>Usage with content depending on the parent revision</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode php"><code class="sourceCode php"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">$updater</span> = <span class="kw">$page</span>-&gt;newPageUpdater<span class="ot">(</span> <span class="kw">$user</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">$parent</span> = <span class="kw">$updater</span>-&gt;grabParentRevision<span class="ot">();</span></a>
+<a class="sourceLine" id="cb3-3" title="3"><span class="kw">$content</span> = <span class="kw">$parent</span>-&gt;getContent<span class="ot">(</span> SlotRecord::<span class="kw">MAIN</span> <span class="ot">)</span>-&gt;replaceSection<span class="ot">(</span> <span class="kw">$section</span><span class="ot">,</span> <span class="kw">$sectionContent</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">$updater</span>-&gt;setContent<span class="ot">(</span> SlotRecord::<span class="kw">MAIN</span><span class="ot">,</span> <span class="kw">$content</span> <span class="ot">);</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">$newRev</span> = <span class="kw">$updater</span>-&gt;saveRevision<span class="ot">(</span> <span class="kw">$comment</span><span class="ot">,</span> <span class="kw">EDIT_UPDATE</span> <span class="ot">);</span></a></code></pre></div>
+<p>In both cases, all secondary updates will be triggered automatically.</p>
+<h1 id="derivedpagedataupdater"><code>DerivedPageDataUpdater</code></h1>
+<p><code>DerivedPageDataUpdater</code> is a stateful, handle-like object that caches derived data representing a revision, and can trigger updates of cached copies of that data, e.g. in the links tables, <code>page_props</code>, the <code>ParserCache</code>, and the CDN layer.</p>
+<p><code>DerivedPageDataUpdater</code> is used by <code>PageUpdater</code> when creating new revisions, but can also be used independently when performing meta data updates during undeletion, import, or when puring a page. It’s a stepping stone on the way to a more complete refactoring of WikiPage.</p>
+<p><strong>NOTE</strong>: Avoid direct usage of <code>DerivedPageDataUpdater</code>. In the future, we want to define interfaces for the different use cases of <code>DerivedPageDataUpdater</code>, particularly providing access to post-PST content and <code>ParserOutput</code> to callbacks during revision creation, which currently use <code>WikiPage::prepareContentForEdit</code>, and allowing updates to be triggered on purge, import, and undeletion, which currently use <code>WikiPage::doEditUpdates()</code> and <code>Content::getSecondaryDataUpdates()</code>.</p>
+<p>The primary reason for <code>DerivedPageDataUpdater</code> to be stateful is internal caching of state that avoids the re-generation of <code>ParserOutput</code> and re-application of pre-save-transformations (PST).</p>
+<p><code>DerivedPageDataUpdater</code> instances follow the below life cycle, defined by a number of methods:</p>
+<pre><code>                     +---------------------------------------------------------------------+
+                     |                                                                     |
+                     |                                 new                                 |
+                     |                                                                     |
+                     +---------------|------------------|------------------|---------------+
+                                     |                  |                  |
+               grabCurrentRevision()-|                  |                  |
+                                     |                  |                  |
+                         +-----------v----------+       |                  |
+                         |                      |       |-prepareContent() |
+                         |    knows current     |       |                  |
+                         |                      |       |                  |
+Enables------------------+-----|-----|----------+       |                  |
+  pageExisted()                |     |                  |                  |
+  wasRedirect()                |     |-prepareContent() |                  |-prepareUpdate()
+                               |     |                  |                  |
+                               |     |    +-------------v------------+     |
+                               |     |    |                          |     |
+                               |     +----&gt;        has content       |     |
+                               |          |                          |     |
+Enables------------------------|----------+--------------------------+     |
+  isChange()                   |                              |            |
+  isCreation()                 |-prepareUpdate()              |            |
+  getSlots()                   |              prepareUpdate()-|            |
+  getTouchedSlotRoles()        |                              |            |
+  getCanonicalParserOutput()   |                  +-----------v------------v-----------------+
+                               |                  |                                          |
+                               +------------------&gt;                 has revision             |
+                                                  |                                          |
+Enables-------------------------------------------+------------------------|-----------------+
+  updateParserCache()                                                      |
+  runSecondaryDataUpdates()                                                |-doUpdates()
+                                                                           |
+                                                               +-----------v---------+
+                                                               |                     |
+                                                               |     updates done    |
+                                                               |                     |
+                                                               +---------------------+</code></pre>
+<ul>
+<li><p><code>grabCurrentRevision()</code> returns the logical parent revision of the target revision. It is guaranteed to always return the same revision for a given <code>DerivedPageDataUpdater</code> instance. If called before <code>prepareUpdate()</code>, this fixates the logical parent to be the page’s current revision. If called for the first time after <code>prepareUpdate()</code>, it returns the revision passed as the ‘oldrevision’ option to <code>prepareUpdate()</code>, or, if that wasn’t given, the parent of $revision parameter passed to <code>prepareUpdate()</code>.</p></li>
+<li><p><code>prepareContent()</code> is called before the new revision is created, to apply pre-save-transformation (PST) and allow subsequent access to the canonical <code>ParserOutput</code> of the revision. <code>getSlots()</code> and <code>getCanonicalParserOutput()</code> as well as <code>getSecondaryDataUpdates()</code> may be used after <code>prepareContent()</code> was called. Calling <code>prepareContent()</code> with the same parameters again has no effect. Calling it again with mismatching parameters, or calling it after <code>prepareUpdate()</code> was called, triggers a <code>LogicException</code>.</p></li>
+<li><p><code>prepareUpdate()</code> is called after the new revision has been created. This may happen right after the revision was created, on the same instance on which <code>prepareContent()</code> was called, or later (possibly much later), on a fresh instance in a different process, due to deferred or asynchronous updates, or during import, undeletion, purging, etc. <code>prepareUpdate()</code> is required before a call to <code>doUpdates()</code>, and it also enables calls to <code>getSlots()</code> and <code>getCanonicalParserOutput()</code> as well as <code>getSecondaryDataUpdates()</code>. Calling <code>prepareUpdate()</code> with the same parameters again has no effect. Calling it again with mismatching parameters, or calling it with parameters mismatching the ones <code>prepareContent()</code> was called with, triggers a <code>LogicException</code>.</p></li>
+<li><p><code>getSecondaryDataUpdates()</code> returns <code>DataUpdates</code> that represent derived data for the revision. These may be used to update such data, e.g. in <code>ApiPurge</code>, <code>RefreshLinksJob</code>, and the <code>refreshLinks</code> script.</p></li>
+<li><p><code>doUpdates()</code> triggers the updates defined by <code>getSecondaryDataUpdates()</code>, and also causes updates to cached artifacts in the <code>ParserCache</code>, the CDN layer, etc. This is primarily used by PageUpdater, but also by <code>PageArchive</code> during undeletion, and when importing revisions from XML. <code>doUpdates()</code> can only be called after <code>prepareUpdate()</code> was used to initialize the <code>DerivedPageDataUpdater</code> instance for a specific revision. Calling it before <code>prepareUpdate()</code> is called raises a <code>LogicException</code>.</p></li>
+</ul>
+<p>A <code>DerivedPageDataUpdater</code> instance is intended to be re-used during different stages of complex update operations that often involve callbacks to extension code via MediaWiki’s hook mechanism, or deferred or even asynchronous execution of Jobs and <code>DeferredUpdates</code>. Since these mechanisms typically do not provide a way to pass a <code>DerivedPageDataUpdater</code> directly, <code>WikiPage::getDerivedPageDataUpdater()</code> has to be used to obtain a <code>DerivedPageDataUpdater</code> for the update currently in progress - re-using the same <code>DerivedPageDataUpdater</code> if possible avoids re-generation of <code>ParserOutput</code> objects and other expensively derived artifacts.</p>
+<p>This mechanism for re-using a <code>DerivedPageDataUpdater</code> instance without passing it directly requires a way to ensure that a given <code>DerivedPageDataUpdater</code> instance can actually be used in the calling code’s context. For this purpose, <code>WikiPage::getDerivedPageDataUpdater()</code> calls the <code>isReusableFor()</code> method on <code>DerivedPageDataUpdater</code>, which ensures that the given instance is applicable to the given parameters. In other words, <code>isReusableFor()</code> predicts whether calling <code>prepareContent()</code> or <code>prepareUpdate()</code> with a given set of parameters will trigger a <code>LogicException.</code> In that case, <code>WikiPage::getDerivedPageDataUpdater()</code> creates a fresh <code>DerivedPageDataUpdater</code> instance.</p>
+</body>
+</html>

@@ -4,43 +4,40 @@ Overlay Change History
 3.4.1
 -----
 
-  * No changes, see Widget and extensions for changes to dependencies.
+-   No changes, see Widget and extensions for changes to dependencies.
 
 3.4.0
 -----
 
-  * No changes, see Widget and extensions for changes to dependencies.
+-   No changes, see Widget and extensions for changes to dependencies.
 
 3.3.0
 -----
 
-  * No changes, see Widget and extensions for changes to dependencies.
+-   No changes, see Widget and extensions for changes to dependencies.
 
 3.2.0
 -----
 
-  * No changes, see Widget and extensions for changes to dependencies.
+-   No changes, see Widget and extensions for changes to dependencies.
 
 3.1.1
 -----
 
-  * No changes.
+-   No changes.
 
 3.1.0
 -----
 
-  * Added WidgetConstrain support to the packaged Overlay class.
+-   Added WidgetConstrain support to the packaged Overlay class.
 
-  * Fixed centering when content is set in constructor.
+-   Fixed centering when content is set in constructor.
 
 3.0.0
 -----
 
-  * Initial release.
+-   Initial release.
 
-  * Modified progressive enhancement use case, to use Document Fragments instead
-    of `innerHTML` to preserve event listeners.
+-   Modified progressive enhancement use case, to use Document Fragments instead of `innerHTML` to preserve event listeners.
 
-  * Fixed use of `centered`, `x` and `y` in the constructor. These all needed
-    `lazyAdd` configuration since they had setters which modified other
-    attribute state.
+-   Fixed use of `centered`, `x` and `y` in the constructor. These all needed `lazyAdd` configuration since they had setters which modified other attribute state.

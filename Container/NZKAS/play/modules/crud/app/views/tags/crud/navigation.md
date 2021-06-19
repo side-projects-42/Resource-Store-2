@@ -1,0 +1,4 @@
+- [&{'crud.home'}](<@%7BCRUD.index()%7D>)
+- &gt; [&{\_caller.type.name}](<@%7Blist()%7D>)
+- &gt; [${\_caller.object?.toString()?.escape()?.raw()}](<@%7Bshow(_caller.object._key())%7D>)
+- &gt; [&{'crud.blank'}](<@%7Bblank()%7D>)

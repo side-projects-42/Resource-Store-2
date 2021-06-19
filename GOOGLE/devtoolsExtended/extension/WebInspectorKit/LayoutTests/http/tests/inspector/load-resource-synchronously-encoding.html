@@ -1,37 +1,18 @@
-<html>
-  <head>
-    <script src="inspector-test.js"></script>
-    <script>
-      function test() {
-        var phpURL = WebInspector.ParsedURL.completeURL(
-          WebInspector.inspectedPageURL,
-          "resources/load-resource-synchronously-encoding.php"
-        );
-
-        function executeTest(charset) {
-          var data = InspectorFrontendHost.loadResourceSynchronously(
-            phpURL + "?charset=" + charset
-          );
-          InspectorTest.addResult("'" + data + "' (" + data.length + ")");
-          data = InspectorFrontendHost.loadResourceSynchronously(
-            phpURL + "?charset=" + charset + "&needEncoding=true"
-          );
-          InspectorTest.addResult(
-            "'" + data + "' (" + data.length + ") (with charset)"
-          );
-        }
-        executeTest("US-ASCII");
-        executeTest("1251");
-        executeTest("1252");
-        executeTest("utf-8");
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>
-      Tests that InspectorFrontendHost.loadResourceSynchronously() correctly
-      loads non-ASCII resources.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>load-resource-synchronously-encoding</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that InspectorFrontendHost.loadResourceSynchronously() correctly loads non-ASCII resources.</p>
+</body>
 </html>

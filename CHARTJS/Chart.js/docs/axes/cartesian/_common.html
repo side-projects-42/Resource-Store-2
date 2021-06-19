@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>_common</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h3 id="common-options-to-all-cartesian-axes">Common options to all cartesian axes</h3>
+<p>Namespace: <code>options.scales[scaleId]</code></p>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 4%" />
+<col style="width: 84%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>bounds</code></td>
+<td><code>string</code></td>
+<td><code>'ticks'</code></td>
+<td>Determines the scale bounds. <a href="./index.md#scale-bounds">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>position</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Position of the axis. <a href="./index.md#axis-position">more…</a></td>
+</tr>
+<tr class="odd">
+<td><code>axis</code></td>
+<td><code>string</code></td>
+<td></td>
+<td>Which type of axis this is. Possible values are: <code>'x'</code>, <code>'y'</code>. If not set, this is inferred from the first character of the ID which should be <code>'x'</code> or <code>'y'</code>.</td>
+</tr>
+<tr class="even">
+<td><code>offset</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>If true, extra space is added to the both edges and the axis is scaled to fit into the chart area. This is set to <code>true</code> for a bar chart by default.</td>
+</tr>
+<tr class="odd">
+<td><code>title</code></td>
+<td><code>object</code></td>
+<td></td>
+<td>Scale title configuration. <a href="../labelling.md#scale-title-configuration">more…</a></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

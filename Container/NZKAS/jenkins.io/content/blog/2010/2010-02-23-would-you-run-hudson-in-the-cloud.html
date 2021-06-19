@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-02-23-would-you-run-hudson-in-the-cloud</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      One of my favorite bloggers on the subject of continuous integration,
+      <a id="aptureLink_e9BNkKIorq" href="http://twitter.com/builddoctor"
+        >The Build Doctor</a
+      >, posed this question in
+      <a
+        href="http://www.build-doctor.com/2010/02/23/continuous-integration-in-the-cloud-good-idea/"
+        >a recent post</a
+      >:
+    </p>
+    <blockquote>
+      <p>Continuous Integration in the cloud: good idea?</p>
+    </blockquote>
+    <p>
+      The topic of running a CI server in a virtualized environment, such as
+      with
+      <a
+        id="aptureLink_nJiKPqGQ1T"
+        href="http://en.wikipedia.org/wiki/Amazon%20Elastic%20Compute%20Cloud"
+        >Amazon’s EC2 service</a
+      >, is an interesting issue, particularly in the Hudson community. About 10
+      months ago Kohsuke
+      <a href="http://weblogs.java.net/blog/2009/05/18/hudson-ec2-plugin"
+        >announced the Hudson EC2 plugin</a
+      >
+      which has seen slow, but steady development since then, including support
+      for the
+      <a href="http://www.ubuntu.com/cloud/private">Ubuntu Enterprise Cloud</a>
+      which was added to the plugin in a release last Monday.
+    </p>
+    <p>
+      As The Build Doctor and his readers point out, continuous integration is a
+      difficult task to offload into the cloud because of the immense hardware
+      demands constant building and testing presents. That said, Hudson
+      <em>does</em> very effectively manage spinning slaves up and down on
+      demand if you’ve configured it as such. Implication being: running Hudson
+      in the cloud may be more efficient to meet peak demands without needing to
+      run a large farm of machines.<img
+        src="http://agentdero.cachefly.net/continuousblog/hudson_in_the_cloud.png"
+        align="right"
+      />
+    </p>
+    <p>
+      If you’re interested in trying out the
+      <a href="http://wiki.hudson-ci.org/display/HUDSON/Amazon+EC2+Plugin"
+        >EC2 plugin</a
+      >, check out
+      <a id="aptureLink_6E30Ex9PTT" href="http://www.sonatype.com/"
+        >Sonatype’s</a
+      >
+      post on
+      <a
+        href="http://www.sonatype.com/people/2009/06/nexus-open-source-and-hudson-on-ec2/"
+        >Nexus Open Source and Hudson on EC2</a
+      >
+      might be a good start.
+    </p>
+    <p>Would you run Hudson in the cloud?</p>
+  </body>
+</html>

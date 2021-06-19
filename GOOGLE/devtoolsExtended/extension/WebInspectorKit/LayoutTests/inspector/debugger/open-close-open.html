@@ -1,40 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/debugger-test.js"></script>
-    <script>
-      function test() {
-        InspectorTest.evaluateInPage(
-          "frontendReopeningCount",
-          function (result) {
-            if (result._description === "0")
-              InspectorTest.evaluateInPage("reopenFrontend()");
-            else {
-              InspectorTest.runDebuggerTestSuite([
-                function testSourceFrameContent(next) {
-                  InspectorTest.showScriptSource(
-                    "open-close-open.html",
-                    didShowScriptSource
-                  );
-
-                  function didShowScriptSource(sourceFrame) {
-                    InspectorTest.dumpSourceFrameContents(sourceFrame);
-                    next();
-                  }
-                },
-              ]);
-            }
-          }
-        );
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      Tests that scripts panel displays resource content correctly after the
-      open - close - open sequence.
-      <a href="https://bugs.webkit.org/show_bug.cgi?id=56747">Bug 56747</a>
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>open-close-open</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that scripts panel displays resource content correctly after the open - close - open sequence. <a href="https://bugs.webkit.org/show_bug.cgi?id=56747">Bug 56747</a></p>
+</body>
 </html>

@@ -1,26 +1,14 @@
----
-:layout: post
-:title: Literate builds, WTF?
-:nodeid: 440
-:created: 1379964130
-:tags:
-  - development
-  - plugins
-  - javaone
-:author: kohsuke
----
-
 (This is a guest post by Stephen Connolly)
 
-Every developer, at some stage, will be handed a project to maintain that somebody else was responsible for. If you are lucky, the developer will not have left the organization yet and you get a brief Knowledge Transfer as the developer packs up their desk before heading on to their new job. If you are unlucky, you don't even get given the details of where the source code is hiding.
+Every developer, at some stage, will be handed a project to maintain that somebody else was responsible for. If you are lucky, the developer will not have left the organization yet and you get a brief Knowledge Transfer as the developer packs up their desk before heading on to their new job. If you are unlucky, you don’t even get given the details of where the source code is hiding.
 
 Now begins the detective work, as you try to figure out how to build and release the project, set up Jenkins jobs to build the project and run the tests…
 
-It doesn't have to be this way, you know!
+It doesn’t have to be this way, you know!
 
-What if I told you there was a file sitting at the top level that told you exactly how to build the project and do the important things? You'd be interested, wouldn't you?
+What if I told you there was a file sitting at the top level that told you exactly how to build the project and do the important things? You’d be interested, wouldn’t you?
 
-When I tell you it's the README file? “But that's all lies. Nobody keeps that up to date. Argh!!!”
+When I tell you it’s the README file? “But that’s all lies. Nobody keeps that up to date. Argh!!!”
 
 But what if Jenkins reads the README file and uses it for the build definition? Now you not only have a CI system ensuring that the build definition is correct, but you have less work to do setting up the job.
 
@@ -34,7 +22,7 @@ First of all, because Jenkins will be looking at all your branches, you need a w
 
 You tell Jenkins that a branch is one to build by putting a marker file in the root of the branch. By default the marker file is called `.cloudbees.md`. If the marker file is present and empty, then the literate job type will assume the build instructions are in `README.md`. If the marker file is present and has build instructions, then the literate job type will just use those instructions.
 
-In order to make it easy to provide the instructions, there is rather minimal formatting requirements for a literate description of a project's build commands.
+In order to make it easy to provide the instructions, there is rather minimal formatting requirements for a literate description of a project’s build commands.
 
 The minimal description is just a section with the word `build` and a verbatim code block in that section. Here is the obligatory minimal “hello world” project description:
 
@@ -42,7 +30,7 @@ The minimal description is just a section with the word `build` and a verbatim c
 
         echo hello world
 
-or if you don't like indenting you could use the GitHub style triple-back-tick
+or if you don’t like indenting you could use the GitHub style triple-back-tick
 
     # Build
 
@@ -64,7 +52,7 @@ Part of what makes this a [literate style](http://en.wikipedia.org/wiki/Literate
 
     That was just perfect. Time for a cup of tea
 
-The first section heading containing the word `build` identifies the section that is assumed to be the build instructions. (The keyword that is searched for is configurable, but not yet exposed in the literate plugin's UI). The following is also a valid `README.md` for printing hello world:
+The first section heading containing the word `build` identifies the section that is assumed to be the build instructions. (The keyword that is searched for is configurable, but not yet exposed in the literate plugin’s UI). The following is also a valid `README.md` for printing hello world:
 
     Our super hello world project
     =============================
@@ -166,7 +154,7 @@ You need to have bullet points in your `build` section that can match each of th
 
 That is a mostly complete detail of how the `build` and `environment` sections work. In general everything except verbatim code blocks and bullet points with code snippets get ignored.
 
-There are other sections that the literate project type allows for, these are called “task” sections. We haven't written the code to support them yet, but the idea is that these will work a bit like basic build promotions with the promoted builds plugin. There will be a UI in Jenkins that lets you kick off any of the task sections that you define as being valid for the job type, in pretty much exactly the same was as the promoted builds plugin works.
+There are other sections that the literate project type allows for, these are called “task” sections. We haven’t written the code to support them yet, but the idea is that these will work a bit like basic build promotions with the promoted builds plugin. There will be a UI in Jenkins that lets you kick off any of the task sections that you define as being valid for the job type, in pretty much exactly the same was as the promoted builds plugin works.
 
 After that, everything else in the `README.md` is ignored.
 
@@ -203,7 +191,7 @@ And then we create a `.jenkins/hudson.tasks.junit.JUnitResultArchiver.xml` file 
       <testDataPublishers/>
     </hudson.tasks.junit.JUnitResultArchiver>
 
-The literate plugin adds an Action to all Free-style projects that allows exporting these XML configuration snippets in a `.zip` file for unpacking into your project's source control. Each publisher/notifier has its own file, so it should be easy to mix and match configuration across different projects and enable/disable specific publishers just by adding/removing each publisher's file.
+The literate plugin adds an Action to all Free-style projects that allows exporting these XML configuration snippets in a `.zip` file for unpacking into your project’s source control. Each publisher/notifier has its own file, so it should be easy to mix and match configuration across different projects and enable/disable specific publishers just by adding/removing each publisher’s file.
 
 The XML itself can be a bit ugly, so there is a second level integration, where a Publisher/Notifier plugin can implement its own DSL. The literate plugin ships with two such DSLs. One for archiving artifacts and the other for JUnit test results. So the above XML file could be replaced by a `.jenkins/junit.lst` file with the following contents
 
@@ -212,7 +200,7 @@ The XML itself can be a bit ugly, so there is a second level integration, where 
 
 ## Not everything makes sense in source control though…
 
-There are always going to be things that you need to configure in Jenkins. So for example there may be some sources of branches that you don't trust. A good example would be pull requests on GitHub. We have a concept of branch properties in the literate project type that will allow defining what exactly a trusted branch source should be allowed do and what an untrusted branch source should be allowed do. It does not make sense for that information to be embedded within the untrusted branch itself.
+There are always going to be things that you need to configure in Jenkins. So for example there may be some sources of branches that you don’t trust. A good example would be pull requests on GitHub. We have a concept of branch properties in the literate project type that will allow defining what exactly a trusted branch source should be allowed do and what an untrusted branch source should be allowed do. It does not make sense for that information to be embedded within the untrusted branch itself.
 
 Similarly coordination between different Jenkins projects is something that does not make sense in source control. The names of those Jenkins projects (and even their existence) is not knowable from source control. It does not make sense to keep that information in source control.
 
@@ -220,14 +208,14 @@ Information about how to map the description of the build environment in the `RE
 
 In other words, literate projects do not remove the need to configure things in Jenkins. They do however remove a lot of the need, and especially the need to tweak the exact build commands and the location of where build results should be picked up from.
 
-## What's not done yet?
+## What’s not done yet?
 
 Here is a list of some things I want to see for literate builds:
 
 - A literate build step so that people can use some of the literate magic in their free-style projects while they migrate them to literate-style
 - Support for literate task promotion flows (I think Kohsuke has signed up to help deliver this)
 - Exposing the configuration points such as the marker file name (a global config option as well as per-project override) and the keywords to search for in the `README.md` (this is mostly UI work)
-- Adding in some support for other markup languages (I'd really like to see AsciiDoc formatted README parsing, e.g. `README.asc`)
+- Adding in some support for other markup languages (I’d really like to see AsciiDoc formatted README parsing, e.g. `README.asc`)
 - Branch properties for untrusted builds (to do things like restrict the build execution to one explicit environment, put an elastic build timeout in place, wrap the shell commands in a chroot jail, etc)
 - Branch properties for build secrets (So that the `production` and `staging` branches can get the keys to deploy into their respective environments.
 - Collapsing the intermediate level in the UI when there is only one build environment.
@@ -247,12 +235,12 @@ Last week Kohsuke set up a new “Experimental” update center in Jenkins OSS. 
 
 The “Experimental” update center includes plugins that have `alpha` or `beta` in their version number, while the other update centers now exclude those plugin versions.
 
-So if you want to play with these plugins you need to change your Jenkins instance's update center URI to:
+So if you want to play with these plugins you need to change your Jenkins instance’s update center URI to:
 
     http://updates.jenkins-ci.org/experimental/update-center.json
 
 I would recommend that you use a test Jenkins instance for playing with.
 
-(WARNING: shameless plug) You could also just fire up a Jenkins in the cloud using CloudBee's DEV@cloud service and follow [these handy instructions](http://developer-blog.cloudbees.com/2013/09/how-to-try-literate-builds-on-devcloud.html) to enable access to the experimental plugins:
+(WARNING: shameless plug) You could also just fire up a Jenkins in the cloud using CloudBee’s DEV@cloud service and follow [these handy instructions](http://developer-blog.cloudbees.com/2013/09/how-to-try-literate-builds-on-devcloud.html) to enable access to the experimental plugins:
 
-The 10 best bug reports on literate builds before the Jenkins User Conference next month will receive a prise from CloudBees, Inc. I was able to get a commitment that the prise would be at least a T-shirt. I am hoping to get some more swag added to the prize pool. CloudBees employees or relatives of CloudBees employees are not eligible for the bug report prise!
+The 10 best bug reports on literate builds before the Jenkins User Conference next month will receive a prise from CloudBees, Inc. I was able to get a commitment that the prise would be at least a T-shirt. I am hoping to get some more swag added to the prize pool. CloudBees employees or relatives of CloudBees employees are not eligible for the bug report prise!

@@ -1,636 +1,109 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4688</title>
-  </head>
-  <body>
-    <h1>N4688 Editors' Report -- Programming Languages -- C++</h1>
-
-    <p>
-      2017-07-30 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Dawn Perchik (co-editor) (Embarcadero Technologies Inc) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Special thanks to Jens Maurer, Jonathan Wakely, and Eelis van der Weegen
-      for performing many of the editorial fixes since N4659.
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4687">N4687</a> is the current working draft
-        for C++20. It replaces <a href="http://wg21.link/n4659">N4659</a>.
-      </li>
-      <li>N4688 is this Editors' Report.</li>
-    </ul>
-
-    <h2>Motions incorporated into working draft</h2>
-
-    <h3>Core working group motions</h3>
-
-    <p>
-      CWG motion 1:
-      <a href="http://wg21.link/p0710r1">Core issue resolution</a> for 1 issue
-      in "ready" status applied:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/cwg2253">2253</a> Unnamed bit-fields and
-        zero-initialization
-      </li>
-    </ul>
-
-    <p>
-      CWG motion 2:
-      <a href="http://wg21.link/p0711r0">Core issue resolutions</a> for 6 issues
-      in "tentatively ready" status applied, resolving 8 issues:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/cwg1523">1523</a> Point of declaration in
-        range-based for
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg1704">1704</a> Type checking in explicit
-        instantiation of variable templates
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg1728">1728</a> Type of an explicit
-        instantiation of a variable template (no changes, resolved by 1704)
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg1836">1836</a> Use of class type being
-        defined in trailing-return-type
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg2273">2273</a> Inheriting constructors vs
-        implicit default constructor
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg2277">2277</a> Ambiguity inheriting
-        constructors with default arguments (no changes, resolved by 2273)
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg2287">2287</a> Pointer-interconvertibility
-        in non-standard-layout unions
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg2290">2290</a> Unclear specification for
-        overload resolution and deleted special member functions
-      </li>
-    </ul>
-
-    <p>
-      CWG motion 3:
-      <a href="http://wg21.link/p0727r0"
-        >P0727R0 "Temporary objects vs temporary expressions"</a
-      >, resolving 3 core issue:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/cwg943">943</a> Is <code>T()</code> a
-        temporary?
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg1076">1076</a> Value categories and lvalue
-        temporaries
-      </li>
-      <li>
-        <a href="http://wg21.link/cwg1299">1299</a> "Temporary objects" vs
-        "temporary expressions"
-      </li>
-    </ul>
-
-    <p>
-      CWG motion 4:
-      <a href="http://wg21.link/p0683r1"
-        >P0683R1 "Default member initializers for bit-fields"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 5:
-      <a href="http://wg21.link/p0704r1"
-        >P0704R1 "Fixing <code>const</code>-qualified pointers to members"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 6:
-      <a href="http://wg21.link/p0409r2"
-        >P0409R2 "Allow lambda capture <code>[=, this]</code>"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 7:
-      <a href="http://wg21.link/p0306r4"
-        >P0306R4 "Comma omission and comma deletion"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 8:
-      <a href="http://wg21.link/p0329r4">P0329R4 "Designated initialization"</a>
-    </p>
-
-    <p>
-      CWG motion 9:
-      <a href="http://wg21.link/p0428r2"
-        >P0428R2 "Familiar template syntax for generic lambdas"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 10:
-      <a href="http://wg21.link/p0702r1"
-        >P0702R1 "Language support for constructor template argument
-        deduction"</a
-      >
-    </p>
-
-    <p>
-      CWG motion 11: <a href="http://wg21.link/p0734r0">P0734R0 "Concepts"</a>
-      <strong>with changes, see below</strong>
-    </p>
-
-    <p>CWG motion 12 applies to the Modules TS.</p>
-
-    <h3>Library working group motions</h3>
-
-    <p>LWG motion 13-14 apply to the Coroutines TS.</p>
-
-    <p>LWG motion 15-22 apply to the Ranges TS.</p>
-
-    <p>LWG motion 23-29 apply to the Networking TS.</p>
-
-    <p>LWG motion 30 applies to the Parallelism TS.</p>
-
-    <p>
-      LWG motion 31:
-      <a href="http://wg21.link/p0698r0">Library issue resolutions</a> for 12
-      issues in "Ready" and "Tentatively Ready" status applied:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/lwg2444">2444</a> Inconsistent complexity for
-        <code>std::sort_heap</code>
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2593">2593</a> Moved-from state of
-        <code>Allocator</code>s
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2597">2597</a>
-        <code>std::log</code> misspecified for complex numbers
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2783">2783</a>
-        <code>stack::emplace()</code> and <code>queue::emplace()</code> should
-        return <code>decltype(auto)</code>
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2932">2932</a> Constraints on parallel
-        algorithm implementations are underspecified
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2937">2937</a> Is
-        <code>equivalent("existing_thing", "not_existing_thing")</code> an
-        error?
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2940">2940</a>
-        <code>result_of</code> specification also needs a little cleanup
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2942">2942</a>
-        <a href="http://wg21.link/lwg2873">LWG 2873</a>'s resolution missed
-        <code>weak_ptr::owner_before</code>
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2954">2954</a> Specialization of the
-        convenience variable templates should be prohibited
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2961">2961</a> Bad postcondition for
-        <code>set_default_resource</code>
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2966">2966</a> Incomplete resolution of US
-        74
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2974">2974</a> Diagnose out of bounds
-        <code>tuple_element</code> / <code>variant_alternative</code>
-      </li>
-    </ul>
-
-    <p>
-      LWG motion 32:
-      <a href="http://wg21.link/p0699r0">Library issue resolutions</a> for 2
-      issues in "Immediate" status applied:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/lwg2901">2901</a> <code>variant</code>s cannot
-        properly support allocators
-      </li>
-      <li>
-        <a href="http://wg21.link/lwg2956">2956</a>
-        <code>filesystem::canonical()</code> still defined in terms of
-        <code>absolute(p, base)</code>
-      </li>
-    </ul>
-
-    <p>
-      LWG motion 33:
-      <a href="http://wg21.link/p0463r1">P0463R1 "Endian, just endian"</a>
-    </p>
-
-    <p>
-      LWG motion 34:
-      <a href="http://wg21.link/p0682r1"
-        >P0682R1: "Repairing elementary string conversions"</a
-      >, resolving 1 library issue:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/lwg2955">2955</a> <code>to_chars</code> /
-        <code>from_chars</code> depend on <code>std::string</code>
-      </li>
-    </ul>
-
-    <p>
-      LWG motion 35:
-      <a href="http://wg21.link/p0739r0"
-        >P0739R0 "Some improvements to class template argument deduction
-        integration into the standard library"</a
-      >, resolving 2 as-yet-unnumbered library issues
-    </p>
-
-    <p>
-      LWG motion 36:
-      <a href="http://wg21.link/p0674r1"
-        >P0674R1 "Extending <code>make_shared</code> to support arrays"</a
-      >, resolving 1 library issue:
-    </p>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/lwg2070">2070</a>
-        <code>allocate_shared</code> should use
-        <code>allocator_traits&lt;A&gt;::construct</code>
-      </li>
-    </ul>
-
-    <h2>Notable editorial changes</h2>
-
-    <h3>Motions</h3>
-
-    <ul>
-      <li>
-        CWG 11: The grammar production for a <code>concept</code> definition
-        missed the trailing <code>;</code>. This has been rectified editorially,
-        reflecting the obvious intent of the committee. Two changes adding
-        "concepts" to lists of entities have not been changed, because a concept
-        is a template and "templates" in general were already in the relevant
-        list. Several other changes were made rephrasing the wording to match
-        the prevailing style of the working draft.
-      </li>
-    </ul>
-
-    <h3>Stable name changes</h3>
-
-    <p>
-      The "Cross references from ISO C++ 2014" section has been replaced by a
-      "Cross references from ISO C++ 2017" section.
-    </p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made since N4659 is below. This list excludes
-      changes that do not affect the body text or only affect whitespace or
-      typeface. For a complete list including such changes (or for the actual
-      deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4659...n4687"
-        >draft sources on github</a
-      >.
-    </p>
-
-    <pre><code>commit 9b13e3785ef95f3c7ac159177a03bccd610b774b
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4688</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4688-editors-report-programming-languages-c">N4688 Editors’ Report – Programming Languages – C++</h1>
+<p>2017-07-30<br />
+Richard Smith (editor) (Google Inc)<br />
+Dawn Perchik (co-editor) (Embarcadero Technologies Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Jens Maurer, Jonathan Wakely, and Eelis van der Weegen for performing many of the editorial fixes since N4659.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4687">N4687</a> is the current working draft for C++20. It replaces <a href="http://wg21.link/n4659">N4659</a>.</li>
+<li>N4688 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<h3 id="core-working-group-motions">Core working group motions</h3>
+<p>CWG motion 1: <a href="http://wg21.link/p0710r1">Core issue resolution</a> for 1 issue in “ready” status applied:</p>
+<ul>
+<li><a href="http://wg21.link/cwg2253">2253</a> Unnamed bit-fields and zero-initialization</li>
+</ul>
+<p>CWG motion 2: <a href="http://wg21.link/p0711r0">Core issue resolutions</a> for 6 issues in “tentatively ready” status applied, resolving 8 issues:</p>
+<ul>
+<li><a href="http://wg21.link/cwg1523">1523</a> Point of declaration in range-based for</li>
+<li><a href="http://wg21.link/cwg1704">1704</a> Type checking in explicit instantiation of variable templates</li>
+<li><a href="http://wg21.link/cwg1728">1728</a> Type of an explicit instantiation of a variable template (no changes, resolved by 1704)</li>
+<li><a href="http://wg21.link/cwg1836">1836</a> Use of class type being defined in trailing-return-type</li>
+<li><a href="http://wg21.link/cwg2273">2273</a> Inheriting constructors vs implicit default constructor</li>
+<li><a href="http://wg21.link/cwg2277">2277</a> Ambiguity inheriting constructors with default arguments (no changes, resolved by 2273)</li>
+<li><a href="http://wg21.link/cwg2287">2287</a> Pointer-interconvertibility in non-standard-layout unions</li>
+<li><a href="http://wg21.link/cwg2290">2290</a> Unclear specification for overload resolution and deleted special member functions</li>
+</ul>
+<p>CWG motion 3: <a href="http://wg21.link/p0727r0">P0727R0 “Temporary objects vs temporary expressions”</a>, resolving 3 core issue:</p>
+<ul>
+<li><a href="http://wg21.link/cwg943">943</a> Is <code>T()</code> a temporary?</li>
+<li><a href="http://wg21.link/cwg1076">1076</a> Value categories and lvalue temporaries</li>
+<li><a href="http://wg21.link/cwg1299">1299</a> “Temporary objects” vs “temporary expressions”</li>
+</ul>
+<p>CWG motion 4: <a href="http://wg21.link/p0683r1">P0683R1 “Default member initializers for bit-fields”</a></p>
+<p>CWG motion 5: <a href="http://wg21.link/p0704r1">P0704R1 “Fixing <code>const</code>-qualified pointers to members”</a></p>
+<p>CWG motion 6: <a href="http://wg21.link/p0409r2">P0409R2 “Allow lambda capture <code>[=, this]</code>”</a></p>
+<p>CWG motion 7: <a href="http://wg21.link/p0306r4">P0306R4 “Comma omission and comma deletion”</a></p>
+<p>CWG motion 8: <a href="http://wg21.link/p0329r4">P0329R4 “Designated initialization”</a></p>
+<p>CWG motion 9: <a href="http://wg21.link/p0428r2">P0428R2 “Familiar template syntax for generic lambdas”</a></p>
+<p>CWG motion 10: <a href="http://wg21.link/p0702r1">P0702R1 “Language support for constructor template argument deduction”</a></p>
+<p>CWG motion 11: <a href="http://wg21.link/p0734r0">P0734R0 “Concepts”</a> <strong>with changes, see below</strong></p>
+<p>CWG motion 12 applies to the Modules TS.</p>
+<h3 id="library-working-group-motions">Library working group motions</h3>
+<p>LWG motion 13-14 apply to the Coroutines TS.</p>
+<p>LWG motion 15-22 apply to the Ranges TS.</p>
+<p>LWG motion 23-29 apply to the Networking TS.</p>
+<p>LWG motion 30 applies to the Parallelism TS.</p>
+<p>LWG motion 31: <a href="http://wg21.link/p0698r0">Library issue resolutions</a> for 12 issues in “Ready” and “Tentatively Ready” status applied:</p>
+<ul>
+<li><a href="http://wg21.link/lwg2444">2444</a> Inconsistent complexity for <code>std::sort_heap</code></li>
+<li><a href="http://wg21.link/lwg2593">2593</a> Moved-from state of <code>Allocator</code>s</li>
+<li><a href="http://wg21.link/lwg2597">2597</a> <code>std::log</code> misspecified for complex numbers</li>
+<li><a href="http://wg21.link/lwg2783">2783</a> <code>stack::emplace()</code> and <code>queue::emplace()</code> should return <code>decltype(auto)</code></li>
+<li><a href="http://wg21.link/lwg2932">2932</a> Constraints on parallel algorithm implementations are underspecified</li>
+<li><a href="http://wg21.link/lwg2937">2937</a> Is <code>equivalent("existing_thing", "not_existing_thing")</code> an error?</li>
+<li><a href="http://wg21.link/lwg2940">2940</a> <code>result_of</code> specification also needs a little cleanup</li>
+<li><a href="http://wg21.link/lwg2942">2942</a> <a href="http://wg21.link/lwg2873">LWG 2873</a>’s resolution missed <code>weak_ptr::owner_before</code></li>
+<li><a href="http://wg21.link/lwg2954">2954</a> Specialization of the convenience variable templates should be prohibited</li>
+<li><a href="http://wg21.link/lwg2961">2961</a> Bad postcondition for <code>set_default_resource</code></li>
+<li><a href="http://wg21.link/lwg2966">2966</a> Incomplete resolution of US 74</li>
+<li><a href="http://wg21.link/lwg2974">2974</a> Diagnose out of bounds <code>tuple_element</code> / <code>variant_alternative</code></li>
+</ul>
+<p>LWG motion 32: <a href="http://wg21.link/p0699r0">Library issue resolutions</a> for 2 issues in “Immediate” status applied:</p>
+<ul>
+<li><a href="http://wg21.link/lwg2901">2901</a> <code>variant</code>s cannot properly support allocators</li>
+<li><a href="http://wg21.link/lwg2956">2956</a> <code>filesystem::canonical()</code> still defined in terms of <code>absolute(p, base)</code></li>
+</ul>
+<p>LWG motion 33: <a href="http://wg21.link/p0463r1">P0463R1 “Endian, just endian”</a></p>
+<p>LWG motion 34: <a href="http://wg21.link/p0682r1">P0682R1: “Repairing elementary string conversions”</a>, resolving 1 library issue:</p>
+<ul>
+<li><a href="http://wg21.link/lwg2955">2955</a> <code>to_chars</code> / <code>from_chars</code> depend on <code>std::string</code></li>
+</ul>
+<p>LWG motion 35: <a href="http://wg21.link/p0739r0">P0739R0 “Some improvements to class template argument deduction integration into the standard library”</a>, resolving 2 as-yet-unnumbered library issues</p>
+<p>LWG motion 36: <a href="http://wg21.link/p0674r1">P0674R1 “Extending <code>make_shared</code> to support arrays”</a>, resolving 1 library issue:</p>
+<ul>
+<li><a href="http://wg21.link/lwg2070">2070</a> <code>allocate_shared</code> should use <code>allocator_traits&lt;A&gt;::construct</code></li>
+</ul>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<h3 id="motions">Motions</h3>
+<ul>
+<li>CWG 11: The grammar production for a <code>concept</code> definition missed the trailing <code>;</code>. This has been rectified editorially, reflecting the obvious intent of the committee. Two changes adding “concepts” to lists of entities have not been changed, because a concept is a template and “templates” in general were already in the relevant list. Several other changes were made rephrasing the wording to match the prevailing style of the working draft.</li>
+</ul>
+<h3 id="stable-name-changes">Stable name changes</h3>
+<p>The “Cross references from ISO C++ 2014” section has been replaced by a “Cross references from ISO C++ 2017” section.</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made since N4659 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4659...n4687">draft sources on github</a>.</p>
+<pre><code>commit 9b13e3785ef95f3c7ac159177a03bccd610b774b
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sun Jul 30 16:13:25 2017 -0700
 
@@ -657,7 +130,7 @@ commit 9f16f5ae4a54f2478d268c408100c5a005d3f278
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Sat Jul 22 00:57:55 2017 +0200
 
-    [expr] Use 'possibly converted' for discarded-value expression.
+    [expr] Use &#39;possibly converted&#39; for discarded-value expression.
 
     Fixes #1597.
 
@@ -673,7 +146,7 @@ commit 1314cc49a106fac2acba29e0e301343f857ba252
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Wed May 10 13:24:59 2017 -0700
 
-    Change the return type of monotonic_buffer_resource's deleted assignment
+    Change the return type of monotonic_buffer_resource&#39;s deleted assignment
 
     ... to monotonic_buffer_resource&amp; for consistency with the default definition of the builtin assignment operator. This change has no normative effect, it only eliminates the inconsistency as a potential source of confusion.
 
@@ -710,7 +183,7 @@ commit ad966418d82b4e5480ad390a5f75ffbf37385f37
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Jul 28 17:16:07 2017 -0700
 
-    [temp] Add missing ';' to grammar for concept-definition.
+    [temp] Add missing &#39;;&#39; to grammar for concept-definition.
 
     Despite being a normative change, this matches the overwhelmingly
     obvious intent of the committee.
@@ -721,7 +194,7 @@ commit afd6d4f065219067f372dafd1bb590a912775b41
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Jul 28 17:13:28 2017 -0700
 
-    [temp.constr.normal] Give a proper definition for "normalization".
+    [temp.constr.normal] Give a proper definition for &quot;normalization&quot;.
 
 commit 38408888321282f9c0788ec9c40e2bd2f464617b
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -745,7 +218,7 @@ commit 182937c038dec15efaf5521d53d06960d6f1d661
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Fri Jul 28 11:20:18 2017 -0700
 
-    [dcl.fct] Move use of "parameter-type-list" to after its definition.
+    [dcl.fct] Move use of &quot;parameter-type-list&quot; to after its definition.
 
     Split rules on function redeclarations out of rules for determining the
     type of an individual function.
@@ -761,7 +234,7 @@ commit ff1242c4aa50958fa0380208eb0f2c45e3a8fea2
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Tue Jul 25 13:49:18 2017 +0100
 
-    [meta.endian] Simplify wording, avoid "shall"
+    [meta.endian] Simplify wording, avoid &quot;shall&quot;
 
 commit 17820beb537c1576fe906228d741b64b9b2e8fc1
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -779,7 +252,7 @@ commit de236bab92922adc3c38f6fc0eb1fb4ec2a17c16
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Jul 24 00:36:24 2017 -0700
 
-    [temp.inst] Fix typo 'the the'.
+    [temp.inst] Fix typo &#39;the the&#39;.
 
 commit a76a3886035f484866add3a12af43c3b21143aa1
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -791,7 +264,7 @@ commit 9a94a384336cb37974b3a8803dcf2424812ec854
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Jul 24 00:27:55 2017 -0700
 
-    [temp.class.spec] Fix typo "the primary" -&gt; "the primary template".
+    [temp.class.spec] Fix typo &quot;the primary&quot; -&gt; &quot;the primary template&quot;.
 
 commit 7240fc98453bad27eb6112ae98b0f8e8fad8e39a
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -815,7 +288,7 @@ commit 6568af0b4270bfc1497882a108741fa01ebeaa70
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sun Jul 23 23:54:34 2017 -0700
 
-    [temp] Add note around example to explain what it's an example of, and
+    [temp] Add note around example to explain what it&#39;s an example of, and
     add missing paragraph numbers.
 
 commit d37aa67b1bf795d4d98e79a9cc7ca8278608dc4f
@@ -849,7 +322,7 @@ commit 763a125ca686aae8aaed3fd8f779bf5ad7ca1a5c
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sun Jul 23 14:58:25 2017 -0700
 
-    [expr.prim.req] Repair meaningless "A requirement is one that [..]" phrasing.
+    [expr.prim.req] Repair meaningless &quot;A requirement is one that [..]&quot; phrasing.
 
 commit fcbeb9e63ad175128a1d7a9f5dc70536f5e2be81
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -890,7 +363,7 @@ commit cd2cc5c4709f4b8295d71d9fed92f3f2b2393f77
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Jul 15 14:49:27 2017 -0700
 
-    [alg.equal] Fix misapplication of P0467R2: change "no" to "an" in bullet
+    [alg.equal] Fix misapplication of P0467R2: change &quot;no&quot; to &quot;an&quot; in bullet
     3.2.
 
     Fixes #1578.
@@ -916,13 +389,13 @@ commit 8d45c56ea7224266462c6c807987676bcf35e93e
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Sat Jul 15 14:13:14 2017 -0700
 
-    Add missing index entries for 'alignas', alignof', 'noexcept'.
+    Add missing index entries for &#39;alignas&#39;, alignof&#39;, &#39;noexcept&#39;.
 
 commit 6114f86c1479a9ebf3b27fae694e9157a1a12423
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sat Jul 15 15:51:17 2017 -0400
 
-    Move reference to LIA-1 into a new section 'Bibliography'
+    Move reference to LIA-1 into a new section &#39;Bibliography&#39;
 
 commit 488ef200887417bfa6124896549c09447a8c2fa9
 Author: JF Bastien &lt;github@jfbastien.com&gt;
@@ -930,7 +403,7 @@ Date:   Mon Jul 10 22:39:29 2017 -0400
 
     Clarify a note on cmpxchg
 
-    The "thus" part absolutely does not follow from the preceding note text, and isn't even correct on its own. Since this is a note I assume this is an editorial change and doesn't need an issue.
+    The &quot;thus&quot; part absolutely does not follow from the preceding note text, and isn&#39;t even correct on its own. Since this is a note I assume this is an editorial change and doesn&#39;t need an issue.
 
 commit f268d45e51ddadcb21036185900a602c9a502413
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -956,10 +429,10 @@ commit 921ef046dc2daab44f6c7638aef3a03f85a06909
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Fri Apr 7 21:14:43 2017 +0200
 
-    Replace 'encouraged' with 'should'.
+    Replace &#39;encouraged&#39; with &#39;should&#39;.
 
     Consistent with ISO Directives, Part 2, encouragement for
-    implementations is supposed to use 'should', not 'encouraged'.
+    implementations is supposed to use &#39;should&#39;, not &#39;encouraged&#39;.
 
     Fixes #1601.
 
@@ -981,7 +454,7 @@ commit 0207b6c6c40a884292a2a7ff1ea8c8a7d08b9d9f
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Apr 5 21:14:24 2017 +0200
 
-    Spell 'well-defined' with a hyphen when it is an adjective.
+    Spell &#39;well-defined&#39; with a hyphen when it is an adjective.
 
     Fixes #1587.
 
@@ -989,13 +462,13 @@ commit 2044cbd25d588150bb0a19cc8df2992a88a29e1e
 Author: Richard Smith &lt;richard-github@metafoo.co.uk&gt;
 Date:   Sat Jul 15 11:41:57 2017 -0700
 
-    [basic.def.odr] Replace mid-sentence period with "; and"
+    [basic.def.odr] Replace mid-sentence period with &quot;; and&quot;
 
 commit 95ac3d662c788cdabc382509be4c273e5c80b334
 Author: lewissbaker &lt;lewissbaker@users.noreply.github.com&gt;
 Date:   Thu Jul 6 21:42:46 2017 +0930
 
-    [stmt.if] Fix spelling mistake in 'if constexpr' wording. (#1653)
+    [stmt.if] Fix spelling mistake in &#39;if constexpr&#39; wording. (#1653)
 
 commit 48da313836eb57fd8282649c6c17b50a9cb97c3a
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
@@ -1009,8 +482,8 @@ commit 1268aa09067159b94a6f83267d0a539b81dbbdc6
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Jun 20 14:45:07 2017 -0700
 
-    [meta.unary.prop] Fix typo 'remove_all_extents&lt;T&gt;' which should say
-    'remove_all_extents_t&lt;T&gt;', introduced editorially in commit 79974877.
+    [meta.unary.prop] Fix typo &#39;remove_all_extents&lt;T&gt;&#39; which should say
+    &#39;remove_all_extents_t&lt;T&gt;&#39;, introduced editorially in commit 79974877.
 
     Fixes #1644.
 
@@ -1020,10 +493,10 @@ Date:   Mon Jun 19 01:56:28 2017 +1000
 
     [basic.stc.dynamic.safety] Update cross-reference to effects of using invalid pointer values. (#1636)
 
-    Updated the Note describing "invalid pointer values" to refer to [basic.stc] rather than [basic.stc.dynamic.deallocation].
+    Updated the Note describing &quot;invalid pointer values&quot; to refer to [basic.stc] rather than [basic.stc.dynamic.deallocation].
 
-    The relevant description of "invalid pointer values" reads:
-    "Indirection through an invalid pointer value and passing an invalid pointer value to a deallocation function have undeﬁned behavior. Any other use of an invalid pointer value has implementation-deﬁned behavior."
+    The relevant description of &quot;invalid pointer values&quot; reads:
+    &quot;Indirection through an invalid pointer value and passing an invalid pointer value to a deallocation function have undeﬁned behavior. Any other use of an invalid pointer value has implementation-deﬁned behavior.&quot;
 
     Previously the reference was correct, as this text was in [basic.stc.dynamic.deallocation]/4, but the text was moved to [basic.stc]/4 by P0137R1; without updating the reference.
 
@@ -1035,7 +508,7 @@ commit 5eeec28487dd99e9e2441fc3e64e33b7a957a8fe
 Author: Eelis &lt;github.com@contacts.eelis.net&gt;
 Date:   Sat Jun 17 15:45:17 2017 +0200
 
-    For 'signal-safe', refer to [support.signal], not [csignal.syn]. (#1640)
+    For &#39;signal-safe&#39;, refer to [support.signal], not [csignal.syn]. (#1640)
 
 commit 8c005473ba69d52314d5c399c9c9adb6429cc7ed
 Author: Zhihao Yuan &lt;lichray@gmail.com&gt;
@@ -1099,7 +572,7 @@ commit 07e4d9ceea888564765a2821a0a7d883dd315acb
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Tue Apr 11 14:19:51 2017 -0700
 
-    [except.spec] Add missing '~' in comment in example.
+    [except.spec] Add missing &#39;~&#39; in comment in example.
 
     Thanks to Sergey P. Derevyago for reporting this!
 
@@ -1107,7 +580,7 @@ commit 98b39118c529e4ed72d707ba325412a61d734f16
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Mar 28 21:55:42 2017 +0200
 
-    [filesystems] Change '!predicate' phrasing to 'predicate is false'.
+    [filesystems] Change &#39;!predicate&#39; phrasing to &#39;predicate is false&#39;.
 
     Fixes #1535.
 
@@ -1123,7 +596,7 @@ commit e030dc8c97ac3da75817ac4867e7c403e55de252
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Mar 28 21:38:48 2017 +0200
 
-    [any.cons] Use 'contained value', not 'contained object'. (#1582)
+    [any.cons] Use &#39;contained value&#39;, not &#39;contained object&#39;. (#1582)
 
     Fixes #1580.
 
@@ -1149,19 +622,19 @@ commit b12acc0d4aa1095ed0306e31155c1662205c2437
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Sun Mar 26 16:44:14 2017 +0100
 
-    [category.ctype] Replace unnecessary placeholder type by the usual 'see below'
+    [category.ctype] Replace unnecessary placeholder type by the usual &#39;see below&#39;
 
 commit fc9599aea58a7ea7e671f9b304cc1fe3f89c2a8b
 Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
 Date:   Sat Mar 25 20:37:39 2017 +0800
 
-    [utility] Change 'nonzero' to more appropriate words. (#1575)
+    [utility] Change &#39;nonzero&#39; to more appropriate words. (#1575)
 
 commit 5d438d2569decb770062966bb347cc4b1eb075b0
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Mar 23 22:14:14 2017 +0100
 
-    [mem.poly.allocator.mem], [string.view.iterators] Replace 'method' with 'member function'.
+    [mem.poly.allocator.mem], [string.view.iterators] Replace &#39;method&#39; with &#39;member function&#39;.
 
     Fixes #1573.
 
@@ -1169,7 +642,7 @@ commit 6d5ac829064fb264cac2805b0e8fdf193b32b62c
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Mar 22 00:25:58 2017 +0100
 
-    [intro.memory] Replace undefined 'field' with 'member' in note.
+    [intro.memory] Replace undefined &#39;field&#39; with &#39;member&#39; in note.
 
     Fixes #1569.
 
@@ -1177,7 +650,6 @@ commit f04c1dcee22cc5f1dd6d99448f8de4da8ba31ed3
 Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
 Date:   Fri Mar 24 23:54:54 2017 +0000
 
-    [except.handle, except.spec, fs.op.temp_dir_path] Fix typos
-</code></pre>
-  </body>
+    [except.handle, except.spec, fs.op.temp_dir_path] Fix typos</code></pre>
+</body>
 </html>

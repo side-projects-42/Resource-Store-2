@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="displaying-associations-rails">Displaying Associations Rails</h1>
+<p>In the previous unit, we used validations and forms to create a management dashboard for songs and artists. Now we’re ready to start connecting those models and using their relationships to display more interesting data.</p>
+<ul>
+<li><p>In the controllers, this lab will require you to write <code>show</code> and <code>index</code> actions for both <code>Song</code> and <code>Artist</code>.</p></li>
+<li><p>You’ll need to add a foreign key by writing your own migration.</p></li>
+<li><p>You’ll need to set up the association in the model classes.</p></li>
+<li><p>You’ll need to format and link to the songs and artists according to the specs.</p></li>
+</ul>
+<p>Additionally, you’ll find that the specs require two special methods, <code>Artist#song_count</code> and <code>Song#artist_name</code>. These methods are meant to protect the views from complexity that belongs in the model.</p>
+<p>They are also a great example of a software design principle called the <a href="https://en.wikipedia.org/wiki/Law_of_Demeter">Law of Demeter</a>, which is sometimes called the “one dot” rule in object-oriented languages like Ruby. In other words, <code>ruby user.best_friend</code> is better than <code>ruby user.friends.find_by(best: true)</code> because all of the “friend”-related complexity is hidden away within the user model. This <strong>protects</strong> user-related code from future changes to friend functionality.</p>
+<p>For example, if the above architecture changed such that best friendship was determined by the highest “friendship” value instead of a boolean <code>best</code> flag, the “two-dots” code would need to be changed <em>everywhere</em>, but the first snippet, which obeys the Law of Demeter, hides that complexity in the <code>User#best_friend</code> method, whose definition can be changed without having to track down and update every single usage.</p>
+<p class="util--hide">
+View <a href='https://learn.co/lessons/displaying-associations-rails-lab'>Displaying Associations Data Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

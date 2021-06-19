@@ -1,383 +1,43 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4821</title>
-  </head>
-  <body>
-    <h1>N4821 Editors' Report -- Programming Languages -- C++</h1>
-
-    <p>
-      2019-06-17 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      Jens Maurer (co-editor) <br />
-      Dawn Perchik (co-editor) (Bright Side Computing, LLC) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4820">N4820</a> is the current C++ working
-        draft. It replaces <a href="http://wg21.link/n4810">N4810</a>.
-      </li>
-      <li>N4821 is this Editors' Report.</li>
-    </ul>
-
-    <h2>Motions incorporated into working draft</h2>
-
-    <p>
-      Fixed missing application of a portion of
-      <a href="http://wg21.link/p1032r1">P1032R1</a>, originally applied by
-      2018-11 LWG Motion 11.
-    </p>
-
-    <p>
-      P1032R1 section 10 instructs that a set of changes be systematically
-      applied to all <code>char_traits</code> specializations. As part of the
-      same set of motions,
-      <a href="http://wg21.link/p0482r6">P0482R6</a> (2018-11 CWG Motion 11)
-      added two new <code>char_traits</code> specializations. The intent was for
-      P1032R1 to also apply to the new specializations, assuming both motions
-      passed (which they did).
-    </p>
-
-    <p>
-      The application of P1032R1 section 10 to the
-      <code>char_traits</code> specializations added by P0482R6 was missed by
-      editorial oversight, which is repaired in N4820.
-    </p>
-
-    <h2>Notable editorial changes</h2>
-
-    <h3>Changes to section labels</h3>
-
-    <p>
-      To increase stability of references to the standard, labels are now also
-      shown for tables and figures, in addition to the existing labels for
-      sections.
-    </p>
-
-    <p>
-      The editors hope that the use of stable table labels enables papers to say
-      which tables the changes the papers describe affect increases clarity.
-    </p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made to the working draft since N4810 is below.
-      This list excludes changes that do not affect the body text or only affect
-      whitespace or typeface. For a complete list including such changes (or for
-      the actual deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4810...n4820"
-        >draft sources on GitHub</a
-      >.
-    </p>
-
-    <pre><code>commit 62c2f858b7c954750069f3514e2de2f58464df65
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4821</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4821-editors-report-programming-languages-c">N4821 Editors’ Report – Programming Languages – C++</h1>
+<p>2019-06-17<br />
+Richard Smith (editor) (Google Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+Jens Maurer (co-editor)<br />
+Dawn Perchik (co-editor) (Bright Side Computing, LLC)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4820">N4820</a> is the current C++ working draft. It replaces <a href="http://wg21.link/n4810">N4810</a>.</li>
+<li>N4821 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<p>Fixed missing application of a portion of <a href="http://wg21.link/p1032r1">P1032R1</a>, originally applied by 2018-11 LWG Motion 11.</p>
+<p>P1032R1 section 10 instructs that a set of changes be systematically applied to all <code>char_traits</code> specializations. As part of the same set of motions, <a href="http://wg21.link/p0482r6">P0482R6</a> (2018-11 CWG Motion 11) added two new <code>char_traits</code> specializations. The intent was for P1032R1 to also apply to the new specializations, assuming both motions passed (which they did).</p>
+<p>The application of P1032R1 section 10 to the <code>char_traits</code> specializations added by P0482R6 was missed by editorial oversight, which is repaired in N4820.</p>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<h3 id="changes-to-section-labels">Changes to section labels</h3>
+<p>To increase stability of references to the standard, labels are now also shown for tables and figures, in addition to the existing labels for sections.</p>
+<p>The editors hope that the use of stable table labels enables papers to say which tables the changes the papers describe affect increases clarity.</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made to the working draft since N4810 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4810...n4820">draft sources on GitHub</a>.</p>
+<pre><code>commit 62c2f858b7c954750069f3514e2de2f58464df65
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Mar 18 14:06:16 2019 -0700
 
@@ -398,13 +58,13 @@ Date:   Thu Mar 28 18:21:23 2019 -0400
 
     [temp.expl.spec] Fix grammar (add missing article)
 
-    Added "an" before "explicit" to make the sentence grammatically correct.
+    Added &quot;an&quot; before &quot;explicit&quot; to make the sentence grammatically correct.
 
 commit d45c031e2b504cf5b609595751ae22e7122dd4e3
 Author: Akira Takahashi &lt;faithandbrave@gmail.com&gt;
 Date:   Thu Apr 11 19:54:15 2019 +0900
 
-    [memory.syn] Add declaration of primary template "atomic"
+    [memory.syn] Add declaration of primary template &quot;atomic&quot;
 
     Partial specializations are declared thereafter.
 
@@ -412,7 +72,7 @@ commit f64094025dbbec5daa268f1b5a98f6de37c4e2c2
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Thu Apr 11 12:55:18 2019 +0200
 
-    [equal.range] Fix formatting of 'Returns' clause. (#2823)
+    [equal.range] Fix formatting of &#39;Returns&#39; clause. (#2823)
 
 commit f90f4ea7ba38fef6675c0900d93543dded8c7260
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
@@ -444,7 +104,7 @@ commit 40c9aa75e8f32e8bab935c04459bf8f648aa89b0
 Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
 Date:   Mon Apr 29 10:52:32 2019 -0700
 
-    [atomics.types.operations] Fix typo "indeteminate"
+    [atomics.types.operations] Fix typo &quot;indeteminate&quot;
 
     Fixes #2849
 
@@ -452,7 +112,7 @@ commit 569f41ce7410becceaf5537c148b1bc420139bb0
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Apr 30 11:21:10 2019 +0200
 
-    [macros] Adjust \tref to include the word 'Table' in the link text. (#2851)
+    [macros] Adjust \tref to include the word &#39;Table&#39; in the link text. (#2851)
 
 commit 0bae532004c6117b2111d6622d85bd13577a4aaa
 Author: Random Internet Cat &lt;jason.e.cobb@gmail.com&gt;
@@ -464,9 +124,9 @@ commit 0f666fa7b5c5a1f869ca0e3bb2506389546a45bd
 Author: Natsu &lt;chino@hotococoa.moe&gt;
 Date:   Wed May 1 03:20:56 2019 +0800
 
-    [cstdio.syn] Rename parameter of function "rename" (#2840)
+    [cstdio.syn] Rename parameter of function &quot;rename&quot; (#2840)
 
-    The second parameter of function "rename" is called "new", which is a keyword in C++.
+    The second parameter of function &quot;rename&quot; is called &quot;new&quot;, which is a keyword in C++.
 
 commit 8b3480987ee9962cb4191b9230fd9ff6083a273d
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
@@ -478,7 +138,7 @@ commit 65194f717a16bb57da02e7bd1aea02c835dc89d1
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
 Date:   Tue Apr 30 15:33:17 2019 -0400
 
-    [algorithms.requirements] Say 'below to account for clause move (#2812)
+    [algorithms.requirements] Say &#39;below to account for clause move (#2812)
 
 commit 27e371dae3fc6484cc2f1bf65d06f9578efd3c32
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
@@ -498,7 +158,7 @@ commit da5050ce1092b76ba93699bfd0d6424cd984830a
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Tue Apr 30 13:10:02 2019 -0700
 
-    [coroutine.traits.primary] Hyphenate "program-defined" (#2810)
+    [coroutine.traits.primary] Hyphenate &quot;program-defined&quot; (#2810)
 
 commit f3d90566f3ca7798fec4fe36c425d03d7dfd8e0f
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -507,16 +167,16 @@ Date:   Wed May 1 07:24:45 2019 +0100
     [ranges.dangling] Fix namespace of ranges::dangling (#2829)
 
     This fixes an editorial mistake in P1252R2; the original proposal correctly
-    defined "dangling" in namespace std::ranges (see P0896R1).
+    defined &quot;dangling&quot; in namespace std::ranges (see P0896R1).
 
 commit 70f8c128e6bef2bf01373ab7c673dee318a89fd6
 Author: frederick-vs-ja &lt;de34@live.cn&gt;
 Date:   Fri May 3 05:29:59 2019 +0800
 
-    [iterators] Add "ranges::" for "iterator_t" (#2860)
+    [iterators] Add &quot;ranges::&quot; for &quot;iterator_t&quot; (#2860)
 
-    "inserter" and "insert_iterator" are in namespace "std", so
-    "ranges::iterator_t" should be used in their declarations.
+    &quot;inserter&quot; and &quot;insert_iterator&quot; are in namespace &quot;std&quot;, so
+    &quot;ranges::iterator_t&quot; should be used in their declarations.
 
 commit 7ac32d9c5b134b7e899186b6df8e57aeed7253f1
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -554,7 +214,7 @@ commit 32c67d4ee782903e1f051c94e68816a9e188b11f
 Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
 Date:   Sat May 18 11:24:20 2019 -0400
 
-    [fs.path.query,fs.op.equivalent] Use 'otherwise', not 'else' (#2883)
+    [fs.path.query,fs.op.equivalent] Use &#39;otherwise&#39;, not &#39;else&#39; (#2883)
 
 commit 40241be416a0babfc41015be4a69ce1a9aa76358
 Author: Casey Carter &lt;Casey@Carter.net&gt;
@@ -622,7 +282,7 @@ commit f788e132dbfe4252f2852b6123d0bac4674e7dd5
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue May 28 22:28:49 2019 +0200
 
-    [allocator.adaptor.syn] Avoid confusing term 'memory resource'. (#2904)
+    [allocator.adaptor.syn] Avoid confusing term &#39;memory resource&#39;. (#2904)
 
 commit b2e16a61cdbbf177fd8f9e868c9d611d4d9fa50f
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -634,9 +294,9 @@ commit 5dce3660fdf06d4c63efeffc329d9a9436c51ea5
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed May 29 21:54:28 2019 +0200
 
-    [time.zone.info] Add missing 'Returns' items. (#2901)
+    [time.zone.info] Add missing &#39;Returns&#39; items. (#2901)
 
-    Also add a missing 'Effects' item.
+    Also add a missing &#39;Effects&#39; item.
 
 commit b9f2d303359502de27d399b13e5de41432ce6909
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -648,7 +308,7 @@ commit 871b9e1d91ad939afe46b66e6139a527e773200e
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Thu May 30 11:29:17 2019 -0700
 
-    [coroutine.handle,coroutine.handle.export.import] "static" before "constexpr" (#2811)
+    [coroutine.handle,coroutine.handle.export.import] &quot;static&quot; before &quot;constexpr&quot; (#2811)
 
 commit 899cce08197bb3311e6942dee134cee470625342
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -678,17 +338,17 @@ commit b6f44de194a2e5702d9658c0e5ed1a8f4f647ece
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Jun 5 22:39:40 2019 +0200
 
-    [module.interface] Use 'namespace-definition',
+    [module.interface] Use &#39;namespace-definition&#39;,
 
-    not the undefined term 'namespace-declaration'.
+    not the undefined term &#39;namespace-declaration&#39;.
 
 commit 04e32a6e79d2a51eeb930e89356dfda27bed841d
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Fri Jun 7 01:56:40 2019 +0200
 
-    [unord.req] Consistently use 'Average case x, worst case y.' (#2921)
+    [unord.req] Consistently use &#39;Average case x, worst case y.&#39; (#2921)
 
-    Changed from sometimes having 'Worst case' start a separate sentence.
+    Changed from sometimes having &#39;Worst case&#39; start a separate sentence.
 
 commit 7830d39615bf46563303156ca5f6609c02dd5820
 Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
@@ -737,7 +397,7 @@ Date:   Thu Mar 28 09:20:53 2019 +0000
 
     [dcl.type.elab] Mix struct/class in example
 
-    Extend the example to show that the choice of 'class' or 'struct' in an
+    Extend the example to show that the choice of &#39;class&#39; or &#39;struct&#39; in an
     elaborated-type-name referring to a class is not significant.
 
 commit a0f56d5ceb8aeb45549b173164302ef263f0d3c4
@@ -756,13 +416,13 @@ commit 99ec26cfca252dd5f8843ccf54ded17ed95b2436
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Mon Apr 29 22:34:58 2019 +0200
 
-    [dcl.stc,dcl.type.cv] Avoid redundancy when specifying 'mutable'.
+    [dcl.stc,dcl.type.cv] Avoid redundancy when specifying &#39;mutable&#39;.
 
 commit 506b67005b66af3afbc6edd7bedc772750d0710b
 Author: Krystian Stasiowski &lt;sdkrystian@gmail.com&gt;
 Date:   Wed Jun 12 18:57:20 2019 -0400
 
-    [namespace.def] Remove redundant mention of "global scope".
+    [namespace.def] Remove redundant mention of &quot;global scope&quot;.
 
     The global scope is a namespace scope.
 
@@ -807,7 +467,7 @@ Date:   Tue May 28 08:55:10 2019 +0200
 
     [expr.sizeof,expr.alignof,expr.unary.noexcept] Clarify value category.
 
-    Also remove the undefined term 'constant' and
+    Also remove the undefined term &#39;constant&#39; and
     instead add a note pointing to [expr.const].
 
 commit 45d9fae43d97355735d81a839a5dbb7abec60aa4
@@ -828,9 +488,9 @@ commit a02993d3ca83b88140eb5b03f5798ba2f9a77203
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Tue Jun 4 18:28:48 2019 -0700
 
-    [range.semi.wrap] Rename "semiregular" to "semiregular-box"
+    [range.semi.wrap] Rename &quot;semiregular&quot; to &quot;semiregular-box&quot;
 
-    ...to avoid confusion with the concept `Semiregular`. Update the uses in [range.single.view, range.filter.view,range.transform.view], and add a reference to [range.single.view] which now precedes [range.semi.wrap] since the "range factories" were pulled out into a separate subclause before the "range adaptors."
+    ...to avoid confusion with the concept `Semiregular`. Update the uses in [range.single.view, range.filter.view,range.transform.view], and add a reference to [range.single.view] which now precedes [range.semi.wrap] since the &quot;range factories&quot; were pulled out into a separate subclause before the &quot;range adaptors.&quot;
 
 commit 042e0356bced518954c5ca1c9425226dbeb8b64a
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -856,9 +516,9 @@ commit c60c94398be23f2e5a407c8e3461b692c8fe508d
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Jun 11 20:24:38 2019 +0200
 
-    [lex] Fix stray uses of 'source character set'
+    [lex] Fix stray uses of &#39;source character set&#39;
 
-    where it is obvious that 'basic source character set'
+    where it is obvious that &#39;basic source character set&#39;
     is meant.
 
 commit 2ee3d07e93049866f6602829dd0ebf469e25f0d2
@@ -874,22 +534,22 @@ Date:   Sat Jul 21 16:21:40 2018 +0200
     [dcl.array] Rework description.
 
     Group examples with the corresponding normative statements.
-    Clarify the meaning of 'array type'.
-    Use 'declarator-id' instead of 'identifier'.
+    Clarify the meaning of &#39;array type&#39;.
+    Use &#39;declarator-id&#39; instead of &#39;identifier&#39;.
 
 commit f6ad222bfafd939180c9c65f7b0116d0d340001b
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Mon May 27 09:20:57 2019 +0200
 
-    [range.prim.size] Clarify by adding 'respectively'.
+    [range.prim.size] Clarify by adding &#39;respectively&#39;.
 
 commit b3b1f637f12e2d0b71e351f5c9c3f6acd5059eaa
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Fri Jun 14 14:21:05 2019 -0700
 
-    [library-wide] Use "model" instead of "satisfy" for semantic library concept requirements
+    [library-wide] Use &quot;model&quot; instead of &quot;satisfy&quot; for semantic library concept requirements
 
-    Consistently use "satisfy" to mean the syntactic requirements are met, and "model" to mean the semantic requirements are met.
+    Consistently use &quot;satisfy&quot; to mean the syntactic requirements are met, and &quot;model&quot; to mean the semantic requirements are met.
 
     Updates: [structure.requirements],[customization.point.object],[res.on.requirements],[concepts], and [range.semi.wrap].
 
@@ -899,7 +559,7 @@ commit b50067fe2dec316efc24ae80ae352f33eb31c3af
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Sun Apr 14 12:36:57 2019 -0700
 
-    [range.counted] Introduce "Counted view"
+    [range.counted] Introduce &quot;Counted view&quot;
 
     Fixes #2825.
 
@@ -921,17 +581,16 @@ Date:   Sun Sep 9 00:11:36 2018 +0900
 
     [expr.new] Harmonize rules of constant array bounds &gt; 0
 
-    While "shall evaluate to a strictly positive value" is not wrong,
-    "shall be greater than zero" is easier and is used in [dcl.array] to
+    While &quot;shall evaluate to a strictly positive value&quot; is not wrong,
+    &quot;shall be greater than zero&quot; is easier and is used in [dcl.array] to
     describe the same rule.
 
 commit 15c8259726b565f2a9b3adacdcc85a0727841c7c
 Author: Casey Carter &lt;Casey@Carter.net&gt;
 Date:   Mon Jun 17 09:52:08 2019 -0700
 
-    [library-wide] Use "meet" for non-concept type requirements (#2796)
+    [library-wide] Use &quot;meet&quot; for non-concept type requirements (#2796)
 
-    Partially addresses #1263.
-</code></pre>
-  </body>
+    Partially addresses #1263.</code></pre>
+</body>
 </html>

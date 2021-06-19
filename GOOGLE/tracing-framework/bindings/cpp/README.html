@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="wtf-c-bindings">WTF C++ Bindings</h1>
+<p>This directory contains C++ bindings for generating wtf-traces from your C++ codebase. APIs and macros exist for:</p>
+<ul>
+<li>Standalone events</li>
+<li>Scopes</li>
+<li>Arbitrary arguments</li>
+<li>Enabling WTF for threads</li>
+<li>Saving traces to files or memory</li>
+</ul>
+<h2 id="general-usage-by-example">General Usage By Example</h2>
+<p>See comments in macro.h and runtime.h. Some brief examples are below.</p>
+<pre><code>#include &lt;wtf/macros.h&gt;
+
+// Enable tracing for a thread. This usually goes at the top of your thread&#39;s
+// Run() method.
+WTF_THREAD_ENABLE(&quot;MyThreadName&quot;);
+
+// Trace a scope. This will nest properly and show up as a horizontal bar for
+// the duration. We also log a singleton event at the mid point of some work.
+void ClassName::Process() {
+  WTF_SCOPE0(&quot;ClassName#Process&quot;);
+  for (int i = 0; i &lt; 5; i++) {
+    if (i == 3) {
+      WTF_EVENT0(&quot;ClassName#ProcessMidPoint&quot;);
+    }
+  }
+}
+
+// The above outputs a scope with no arguments. If you have simple arguments,
+// they are sometimes useful in a trace. We also want to log a singleton
+// event when something goes wrong.
+void ClassName::ProcessRange(int start, int end) {
+  WTF_SCOPE(&quot;ClassName#ProcessRange: start, end&quot;, int32_t, int32_t)(start, end);
+  for (int i = start; i &lt;= end; i++) {
+    if (!ProcessFrame(i)) {
+      WTF_EVENT(&quot;ClassName#ProcessFrameFailed: index&quot;, int32_t)(i);
+    }
+  }
+}
+
+// Save a trace.
+if (!wtf::Runtime::GetInstance()-&gt;SaveToFile(local_file_name)) {
+  std::cerr &lt;&lt; &quot;Error saving file: &quot; &lt;&lt; local_file_name;
+  return;
+}</code></pre>
+<h2 id="installing">Installing</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>In order to build the bindings, you need a functioning C++ compiler and GNU make. The compiler must be relatively recent, as non trivial template and atomics are used (as introduced in C++11).</p>
+<p>In addition to a C++ compiler and GNU make, the following libraries are required:</p>
+<ul>
+<li>gtest (for building tests only)</li>
+</ul>
+<p><em>On Ubuntu:</em></p>
+<pre><code># Install library prerequisites.
+sudo apt-get install libgtest-dev
+
+# Install clang.
+sudo apt-get install clang
+
+# Or gcc, if you prefer.
+sudo apt-get install g++</code></pre>
+<h3 id="building">Building</h3>
+<pre><code># Makes all library targets. This does not build testing targets.
+make all
+
+#Builds and runs testing targets. gtest must be found.
+make test
+
+# Installs headers and libraies to PREFIX
+make install [PREFIX=/usr/local]
+
+# Cleans all generated files.
+make clean</code></pre>
+<h3 id="switching-compilers">Switching Compilers</h3>
+<p>Standard GNU make configuration variables drive compiler selection. Change the value of CXX to customize:</p>
+<pre><code># Select clang.
+export CXX=clang++
+
+# Select gcc.
+export CXX=g++
+
+# Override on the command line.
+make test CXX=clang++</code></pre>
+<h3 id="testing">Testing</h3>
+<h4 id="linuxgcc">Linux/GCC:</h4>
+<pre><code>make clean &amp;&amp; make test THREADING=pthread CXX=g++
+make clean &amp;&amp; make test THREADING=single CXX=g++</code></pre>
+<h4 id="linuxclang">Linux/clang:</h4>
+<pre><code>make clean &amp;&amp; make test THREADING=pthread CXX=clang++
+make clean &amp;&amp; make test THREADING=single CXX=clang++</code></pre>
+<p>TODO: The following is hoaky but is where we are at while building out the test suite:</p>
+<ul>
+<li>Make sure to load the tmptestbuf.wtf-trace file in the viewer and ensure it works.</li>
+<li>If running a threaded build, load the largest of the tmp_threaded_torture_test*.wtf-trace files you can and verify that the SaveToFile scope looks reasonable.</li>
+</ul>
+<h3 id="threading">Threading</h3>
+<p>By default, the library builds with threading enabled, using the C++11 std::thread facilities. If this works for your target platform, it is the preferred setting. This should work on modern:</p>
+<ul>
+<li>Windows</li>
+<li>Linux</li>
+<li>OSX/iOS (needs further verification)</li>
+</ul>
+<p>As of February 2017, it is known to not work on:</p>
+<ul>
+<li>Android (specifically, C++11 thread local support is severely limited/broken)</li>
+<li>Myriad2 (with vendor provided libraries)</li>
+</ul>
+<p>The threading library can be changed when building via the makefile by passing:</p>
+<ul>
+<li><code>THREADING=pthread</code> : Compiles with support for vanilla pthread. Does not use any threading extensions added as part of the C++11 standard. Corresponds to <code>-DWTF_PTHREAD_THREADED</code> in sources.</li>
+<li><code>THREADING=single</code> : Disables threading. No synchronization is done. There must never be more than one concurrent stream of execution. Suitable for some embedded scenarios. Corresponds to <code>-DWTF_SINGLE_THREADED</code> in sources.</li>
+<li><code>THREADING=std</code> : Default. Uses the C++11 standard threading facilities.</li>
+</ul>
+<h3 id="integrations">Integrations</h3>
+<p>The bindings have no dependencies outside of the standard library, and the Makefile should be taken as the canonical way to integrate it into your project. For simple integrations, it should be sufficient to simply include all of the <code>LIBRARY_SOURCES</code> files in whatever you are compiling and add a <code>-I</code> include directory to include <code>bindings/cpp/include</code>. If building with a non-standard threading library, you must make sure that the appropriate macro is defined for anything that includes the headers (<code>-DWTF_PTHREAD_THREADED</code> or <code>-DWTF_SINGLE_THREADED</code>). Failing to do this part will result in undefined symbols at link time.</p>
+<p>You are also free to use the Makefile as-is if it suits your needs. We are open to contributions which add a real build system, but honestly, everywhere that the authors use WTF, the build system is different and it has been more expedient to keep the sources so simple as to not require anything exotic.</p>
+<h4 id="myriad2-compile-only---still-a-work-in-progress">Myriad2 (compile only - still a work in progress):</h4>
+<pre><code>export MDK_HOME=...
+
+make clean &amp;&amp; make libwtf.a \
+  THREADING=single \
+  CXX=&quot;$(which $MDK_HOME/tools/*/linux64/sparc-myriad-elf-*/bin/sparc-myriad-elf-g++)&quot; \
+  CPPFLAGS+=-DMA2150 \
+  CPPFLAGS+=-U__STRICT_ANSI__ \
+  CPPFLAGS+=-I$MDK_HOME/mdk/common/drivers/myriad2/socDrivers/leon/bm/include \
+  CPPFLAGS+=-I$MDK_HOME/mdk/common/drivers/myriad2/socDrivers/leon/bm/arch/ma2x5x/include \
+  CPPFLAGS+=-I$MDK_HOME/mdk/common/shared/include</code></pre>
+<h3 id="customizing">Customizing</h3>
+<p>See the variables at the top of the Makefile for what can be overriden. Overriding can be done by appending VAR=value to the make command line.</p>
+</body>
+</html>

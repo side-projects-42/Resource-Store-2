@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="selenium-tests">Selenium tests</h1>
+<p>For more information see https://www.mediawiki.org/wiki/Selenium</p>
+<h2 id="setup">Setup</h2>
+<p>See https://www.mediawiki.org/wiki/MediaWiki-Docker/Extension/AbuseFilter</p>
+<h2 id="run-all-specs">Run all specs</h2>
+<pre><code>npm run selenium-test</code></pre>
+<h2 id="run-specific-tests">Run specific tests</h2>
+<p>Filter by file name:</p>
+<pre><code>npm run selenium-test -- --spec tests/selenium/specs/[FILE-NAME]</code></pre>
+<p>Filter by file name and test name:</p>
+<pre><code>npm run selenium-test -- --spec tests/selenium/specs/[FILE-NAME] --mochaOpts.grep [TEST-NAME]</code></pre>
+</body>
+</html>

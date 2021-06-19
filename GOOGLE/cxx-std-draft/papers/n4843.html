@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4843</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4843-editors-report-programming-languages-c">N4843 Editors’ Report – Programming Languages – C++</h1>
+<p>2019-11-27<br />
+Richard Smith (editor) (Google Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+Jens Maurer (co-editor)<br />
+Dawn Perchik (co-editor) (Bright Side Computing, LLC)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Marshall Clow, Jeff Garland, and Daniel Sunderland for providing LaTeX sources for the LWG “Mandating” papers.</p>
+<p>Special thanks to Johel Ernesto Guerrero Peña for reviewing the edits for many of the motions and catching numerous issues.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4842">N4842</a> is the committee draft for C++20. It replaces <a href="http://wg21.link/n4835">N4835</a>.</li>
+<li>N4843 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<h3 id="core-working-group-motions">Core working group motions</h3>
+<p>CWG motion 1: <a href="http://wg21.link/p1969r0">Core issue resolutions</a> for 4 issues in “ready” status applied: <strong>(DR)</strong></p>
+<ul>
+<li><a href="http://wg21.link/cwg2280">2280</a> Matching a usual deallocation function with placement <code>new</code></li>
+<li><a href="http://wg21.link/cwg2382">2382</a> Array allocation overhead for non-allocating placement <code>new</code></li>
+<li><a href="http://wg21.link/cwg2416">2416</a> Explicit specializations vs <code>constexpr</code> and <code>consteval</code></li>
+<li><a href="http://wg21.link/cwg2441">2441</a> Inline function parameters</li>
+</ul>
+<p>CWG motion 2: <a href="http://wg21.link/p1968r0">Core issue resolutions</a> for 18 issues in “tentatively ready” status applied, resolving 19 issues: <strong>(DR)</strong></p>
+<ul>
+<li><a href="http://wg21.link/cwg1621">1621</a> Member initializers in anonymous unions</li>
+<li><a href="http://wg21.link/cwg2126">2126</a> Lifetime-extended temporaries in constant expressions</li>
+<li><a href="http://wg21.link/cwg2282">2282</a> Consistency with mismatched aligned/non-over-aligned allocation/deallocation functions</li>
+<li><a href="http://wg21.link/cwg2347">2347</a> Passing short scoped enumerations to ellipsis</li>
+<li><a href="http://wg21.link/cwg2374">2374</a> Overly permissive specification of <code>enum</code> <em>direct-list-initialization</em></li>
+<li><a href="http://wg21.link/cwg2399">2399</a> Unclear referent of “expression” in <em>assignment-expression</em></li>
+<li><a href="http://wg21.link/cwg2419">2419</a> Loss of generality treating pointers to objects as one-element arrays</li>
+<li><a href="http://wg21.link/cwg2422">2422</a> Incorrect grammar for <em>deduction-guide</em></li>
+<li><a href="http://wg21.link/cwg2424">2424</a> <code>constexpr</code> initialization requirements for variant members</li>
+<li><a href="http://wg21.link/cwg2426">2426</a> Reference to destructor that cannot be invoked</li>
+<li><a href="http://wg21.link/cwg2427">2427</a> Deprecation of volatile operands and unevaluated contexts</li>
+<li><a href="http://wg21.link/cwg2429">2429</a> Initialization of <code>thread_local</code> variables referenced by lambdas</li>
+<li><a href="http://wg21.link/cwg2430">2430</a> Completeness of return and parameter types of member functions</li>
+<li><a href="http://wg21.link/cwg2431">2431</a> Full-expressions and temporaries bound to references</li>
+<li><a href="http://wg21.link/cwg2432">2432</a> Return types for defaulted <code>&lt;=&gt;</code></li>
+<li><a href="http://wg21.link/cwg2433">2433</a> Variable templates in the ODR</li>
+<li><a href="http://wg21.link/cwg2437">2437</a> Conversion of <code>std::strong_ordering</code> in a defaulted <code>operator&lt;=&gt;</code></li>
+<li><a href="http://wg21.link/cwg2439">2439</a> Undefined term in definition of “usable in constant expressions” <strong>resolved by CWG 2126</strong></li>
+<li><a href="http://wg21.link/cwg2442">2442</a> Incorrect requirement for default arguments</li>
+</ul>
+<p>CWG motion 3: <a href="http://wg21.link/p1971r0">Core NB comment resolutions</a>, resolving 17 NB comments:</p>
+<ul>
+<li>NB RU 007: Relax pointer value / aliasing rules</li>
+<li>NB US 019: Update ISO 9899 document reference from C11 to C17</li>
+<li>NB US 020: Update ISO 9899 document reference from C11 to C17</li>
+<li>NB CA 038: Consider trailing <em>requires-clause</em>s for function identity</li>
+<li>NB US 042: Relax pointer value / aliasing rules <strong>in P1971R1 this is incorrectly listed as US047</strong></li>
+<li>NB CZ 044: Allow constexpr <code>construct_at</code> / <code>destroy_at</code> for automatic storage duration</li>
+<li>NB US 052: Non-executed <code>return</code> statements in coroutines</li>
+<li>NB US 053: Mandate the return type for <code>return_void</code> and <code>return_value</code> to be <code>void</code></li>
+<li>NB US 065: Apply Coroutines TS issue 24 from <a href="http://wg21.link/p0664r8">P0664R8</a></li>
+<li>NB GB 079: Add example for <em>private-module-fragment</em> <strong>with editorial changes; see below</strong></li>
+<li>NB US 087: Header unit imports cannot be cyclic, either</li>
+<li>NB US 095: Equivalence of <em>requires-clause</em>s</li>
+<li>NB US 109: Non-templates may also have associated constraints</li>
+<li>NB CA 110: Associated constraints for non-template functions</li>
+<li>NB US 111: Constraint normalization and negation</li>
+<li>NB US 132: Macros from the command-line not exported by header units</li>
+<li>NB US 367: Instead of header inclusion, also permit header unit import</li>
+<li>NB CA 378: Remove constrained non-template functions</li>
+</ul>
+<p>CWG motion 4: <a href="http://wg21.link/p1972r0">P1972R0 “US105 Check satisfaction of constraints for non-templates when forming pointer to function”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 105: Check satisfaction of constraints for non-templates when forming pointer to function</li>
+</ul>
+<p>CWG motion 5: <a href="http://wg21.link/p1975r0">P1975R0 “Fixing the wording of parenthesized aggregate-initialization”</a></p>
+<p>CWG motion 6: <a href="http://wg21.link/p1874r1">P1874R1 “Dynamic initialization order of non-local variables in modules”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 082: Define order of initialization for globals in modules</li>
+</ul>
+<p>CWG motion 7: <a href="http://wg21.link/p1946r0">P1946R0 “Allow defaulting comparisons by value”</a></p>
+<p>CWG motion 8: <a href="http://wg21.link/p1907r1">P1907R1 “Inconsistencies with non-type template parameters”</a>, resolving 5 NB comments: <strong>with changes; see below</strong></p>
+<ul>
+<li>NB US 092: Array members should have strong structural equality</li>
+<li>NB US 093: Move definition of “strong structural equality” near its use in [temp.param]</li>
+<li>NB US 100: Reference types should not have strong structural equality</li>
+<li>NB US 102: Allow non-type template parameters of floating-point type</li>
+<li>NB US 114: Class types as non-type template arguments</li>
+</ul>
+<p>CWG motion 9: <a href="http://wg21.link/p1979r0">P1979R0 “Resolution to US086”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 086: Treatment of non-exported imports</li>
+</ul>
+<p>CWG motion 10: <a href="http://wg21.link/p1980r0">P1980R0 “Declaration matching for non-dependent <em>requires-clause</em>s”</a>, resolving 2 NB comments:</p>
+<ul>
+<li>NB US 095: Equivalence of <em>requires-clause</em>s</li>
+<li>NB CA 096: Declaration matching for non-dependent <em>requires-clause</em>s</li>
+</ul>
+<h3 id="library-working-group-motions">Library working group motions</h3>
+<h4 id="issues">Issues</h4>
+<p>LWG motion 1: <a href="http://wg21.link/p1917r0">Library issue resolutions</a> for 27 issues in “Ready” and “Tentatively Ready” status, resolving 3 NB comments:</p>
+<ul>
+<li><a href="http://wg21.link/lwg3070">3070</a> <code>path::lexically_relative</code> causes surprising results if a filename can also be a <em>root-name</em></li>
+<li><a href="http://wg21.link/lwg3103">3103</a> Errors in taking subview of <code>span</code> should be ill-formed where possible</li>
+<li><a href="http://wg21.link/lwg3149">3149</a> <code>default_constructible</code> should require default initialization</li>
+<li><a href="http://wg21.link/lwg3190">3190</a> <code>std::allocator::allocate</code> sometimes returns too little storage</li>
+<li><a href="http://wg21.link/lwg3218">3218</a> Modifier for <code>%d</code> parse flag does not match POSIX and format specification</li>
+<li><a href="http://wg21.link/lwg3221">3221</a> Result of <code>year_month</code> arithmetic with <code>months</code> is ambiguous</li>
+<li><a href="http://wg21.link/lwg3222">3222</a> <a href="http://wg21.link/p0574r1">P0574R1</a> introduced preconditions on non-existent parameters</li>
+<li><a href="http://wg21.link/lwg3224">3224</a> <code>zoned_time</code> constructor from <code>TimeZonePtr</code> does not specify initialization of <code>tp_</code></li>
+<li><a href="http://wg21.link/lwg3225">3225</a> <code>zoned_time</code> converting constructor shall not be <code>noexcept</code></li>
+<li><a href="http://wg21.link/lwg3230">3230</a> Format specifier <code>%y</code>/<code>%Y</code> is missing locale alternative versions</li>
+<li><a href="http://wg21.link/lwg3231">3231</a> year_month_day_last::day specification does not cover !ok() values</li>
+<li><a href="http://wg21.link/lwg3232">3232</a> Inconsistency in <code>zoned_time</code> deduction guides</li>
+<li><a href="http://wg21.link/lwg3235">3235</a> <code>parse</code> manipulator without abbreviation is not callable</li>
+<li><a href="http://wg21.link/lwg3241">3241</a> <em>chrono-spec</em> grammar ambiguity in [time.format]</li>
+<li><a href="http://wg21.link/lwg3244">3244</a> Constraints for <code>Source</code> in [fs.path.req] insufficiently constrainty</li>
+<li><a href="http://wg21.link/lwg3245">3245</a> Unnecessary restriction on <code>%p</code> parse specifier</li>
+<li><a href="http://wg21.link/lwg3246">3246</a> What are the constraints on the template parameter of <code>basic_format_arg</code>?</li>
+<li><a href="http://wg21.link/lwg3253">3253</a> <code>basic_syncbuf::basic_syncbuf()</code> should not be <code>explicit</code></li>
+<li><a href="http://wg21.link/lwg3256">3256</a> Feature testing macro for <code>constexpr</code> algorithms</li>
+<li><a href="http://wg21.link/lwg3257">3257</a> Missing feature testing macro update from <a href="http://wg21.link/p0858">P0858</a></li>
+<li><a href="http://wg21.link/lwg3259">3259</a> The definition of constexpr iterators should be adjusted</li>
+<li><a href="http://wg21.link/lwg3266">3266</a> <code>to_chars(bool)</code> should be deleted</li>
+<li><a href="http://wg21.link/lwg3272">3272</a> <code>%I%p</code> should parse/format <code>duration</code> since midnight</li>
+<li><a href="http://wg21.link/lwg3273">3273</a> Specify <code>weekday_indexed</code> to range of [0, 7]</li>
+<li><a href="http://wg21.link/lwg3274">3274</a> Missing feature test macro for <code>&lt;span&gt;</code></li>
+<li><a href="http://wg21.link/lwg3276">3276</a> Class <code>split_view::outer_iterator::value_type</code> should inherit from <code>view_interface</code></li>
+<li><a href="http://wg21.link/lwg3277">3277</a> Pre-increment on prvalues is not a requirement of <code>weakly_incrementable</code></li>
+<li>NB GB 166: Feature-test macro for <code>span</code> <strong>resolved by LWG 3274</strong></li>
+<li>NB US 261: Pre-increment on an rvalue iterator <strong>resolved by LWG 3277</strong></li>
+<li>NB US 297: <code>split_view::iterator::value_type</code> should inherit from <code>view_interface</code> <strong>resolved by LWG 3276</strong></li>
+</ul>
+<h4 id="papers">Papers</h4>
+<p>LWG motion 2: <a href="http://wg21.link/p1855r0">P1855R0 “Make <code>&lt;compare&gt;</code> freestanding”</a>, resolving 6 NB comments:</p>
+<ul>
+<li>NB RU 009: Make <code>&lt;compare&gt;</code> a freestanding header</li>
+<li>NB FI 010: Make <code>&lt;compare&gt;</code> a freestanding header</li>
+<li>NB US 158: Ensure <code>&lt;coroutine&gt;</code> can be used as a freestanding header despite including <code>&lt;compare&gt;</code></li>
+<li>NB US 159: Make <code>&lt;compare&gt;</code> a freestanding header</li>
+<li>NB GB 160: Make <code>&lt;compare&gt;</code> a freestanding header</li>
+<li>NB PL 161: Make <code>&lt;compare&gt;</code> a freestanding header</li>
+</ul>
+<p>LWG motion 3: <a href="http://wg21.link/p1690r1">P1690R1 “Refinement proposal for P0919 heterogeneous lookup for unordered containers”</a>, resolving 4 NB comments:</p>
+<ul>
+<li>NB US 235: Heterogenous lookup using <code>Hash::transparent_key_equal</code> is problematic</li>
+<li>NB US 236: Novel heterogenous lookup is problematic</li>
+<li>NB PL 237: Novel heterogenous hash lookup is problematic</li>
+<li>NB US 238: Heterogenous lookup using <code>Hash::transparent_key_equal</code> is problematic</li>
+</ul>
+<p>LWG motion 4: <a href="http://wg21.link/p1872r0">P1872R0 “<code>span</code> should have <code>size_type</code>, not <code>index_type</code>”</a>, resolving 3 NB comments:</p>
+<ul>
+<li>NB FR 240: Rename <code>span::index_type</code> to <code>span::size_type</code></li>
+<li>NB PL 248: Rename <code>span::index_type</code> to <code>span::size_type</code></li>
+<li>NB US 245: Rename <code>span::index_type</code> to <code>span::size_type</code></li>
+</ul>
+<p>LWG motion 5: <a href="http://wg21.link/p1965r0">P1965R0 “Hidden friends”</a>, resolving 1 LWG issue and 1 NB comment:</p>
+<ul>
+<li><a href="http://wg21.link/lwg3239">3239</a> Hidden friends should be specified more narrowly</li>
+<li>NB DE 165: Regular unqualified lookup of functions specified as friends</li>
+</ul>
+<p>LWG motion 6: <a href="http://wg21.link/p1716r3">P1716R3 “<code>ranges</code> comparison algorithms are over-constrained”</a>, resolving 4 NB comments:</p>
+<ul>
+<li>NB GB 183: Adopt P1716</li>
+<li>NB US 267: Ranges compare algorithms are over-constrained</li>
+<li>NB US 306: Relax constraints on ranges comparison algorithms</li>
+<li>NB PL 312: Fix constraints on ranges comparison algorithms</li>
+</ul>
+<p>LWG motion 7: <a href="http://wg21.link/p1869r1">P1869R1 “Rename <code>condition_variable_any</code> interruptible wait methods”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB PL 363: <code>wait_until</code> has misleading naming</li>
+</ul>
+<p>LWG motion 8: <a href="http://wg21.link/p1961r0">P1961R0 “Harmonizing the definitions of total order for pointers”</a>, resolving 2 NB comments:</p>
+<ul>
+<li>NB US 176: Harmonize definitions of total order for pointers</li>
+<li>NB US 220: Harmonize definitions of total order for pointers</li>
+</ul>
+<p>LWG motion 9: <a href="http://wg21.link/p1878r1">P1878R1 “Constraining <code>readable</code> types”</a>, resolving 1 LWG issue and 3 NB comments:</p>
+<ul>
+<li><a href="http://wg21.link/lwg3279">3279</a> <code>shared_ptr&lt;int&gt;&amp;</code> does not not satisfy <code>readable</code></li>
+<li>NB US 263: Make <code>shared_ptr&lt;int&gt;&amp;</code> satisfy <code>readable</code></li>
+<li>NB US 264: Problems with <code>readable</code> concept</li>
+<li>NB US 268: <code>iter_swap</code> should be callable with rvalue iterators</li>
+</ul>
+<p>LWG motion 10: <a href="http://wg21.link/p1871r1">P1871R1 “Concept traits should be named after concepts”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 257: Avoid double negatives for ranges opt-in variable templates</li>
+</ul>
+<p>LWG motion 11: <a href="http://wg21.link/p1456r1">P1456R1 “Move-only views”</a>, resolving 2 NB comments: <strong>with changes; see below</strong></p>
+<ul>
+<li>NB GB 277: Conflict of <code>istream_view</code> and <code>view</code> requirements</li>
+<li>NB FR 281: Copyability of <code>view</code></li>
+</ul>
+<p>LWG motion 12: <a href="http://wg21.link/p1391r4">P1391R4 “Range constructor for <code>std::string_view</code>”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 232: Make <code>string_view</code> constructible from contiguous character ranges</li>
+</ul>
+<p>LWG motion 13: <a href="http://wg21.link/p1394r4">P1394R4 “Range constructor for <code>std::span</code>”</a>, resolving 3 NB comments:</p>
+<ul>
+<li>NB US 233: Integrate <code>span</code> constructors with range concepts</li>
+<li>NB US 246: <code>span</code> should be constructible from a contiguous range</li>
+<li>NB PL 251: <code>span</code> should be constructible from a contiguous range</li>
+</ul>
+<p>LWG motion 14 was withdrawn.</p>
+<p>LWG motion 15: <a href="http://wg21.link/p1862r1">P1862R1 “Ranges adaptors for non-copyable iterators”</a></p>
+<p>LWG motions 11 and 15 together resolve 1 NB comment:</p>
+<ul>
+<li>NB GB 270: Collateral damage with move-only input iterators</li>
+</ul>
+<p>LWG motions 11-15 together resolve 2 NB comments:</p>
+<ul>
+<li>NB US 272: API improvements for ranges</li>
+<li>NB DE 288: Overspecification of return types of view adaptors</li>
+</ul>
+<p>LWG motion 16: <a href="http://wg21.link/p1870r1">P1870R1 “<code>forwarding-range&lt;T&gt;</code> is too subtle”</a>, resolving 2 NB comments: <strong>with changes; see below</strong></p>
+<ul>
+<li>NB US 279: Use variable template opt-in for <em><code>forwarding-range</code></em></li>
+<li>NB GB 280: Rename <em><code>forwarding-range</code></em> to avoid near-clash with <code>forward_range</code></li>
+</ul>
+<p>LWG motion 17: <a href="http://wg21.link/p1865r1">P1865R1 “Add <code>max()</code> to <code>latch</code> and <code>barrier</code>”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 365: For <code>latch</code> and <code>barrier</code>, do not require full range of <code>ptrdiff_t</code></li>
+</ul>
+<p>LWG motion 18: <a href="http://wg21.link/p1960r0">P1960R0 “NB comment changes reviewed by SG1”</a>, resolving 5 NB comments:</p>
+<ul>
+<li>NB US 355: Make <code>atomic_ref&lt;T&gt;::notify_one</code> and <code>atomic_ref&lt;T&gt;::notify_all</code> <code>const</code></li>
+<li>NB US 356: Make <code>atomic_ref&lt;T&gt;::is_lock_free</code> type-specific, not object-specifc</li>
+<li>NB US 358: Make <code>atomic_ref&lt;</code><em>float</em><code>&gt;::operator=</code> <code>const</code></li>
+<li>NB US 359: Incorrect return value in specification of atomic increment / decrement</li>
+<li>NB US 364: Clarify spurious failure for <code>try_acquire</code></li>
+</ul>
+<p>LWG motion 19: <a href="http://wg21.link/p1902r1">P1902R1 “Missing feature-test macros 2017-2019”</a>, resolving 6 NB comments: <strong>with changes; see below</strong></p>
+<ul>
+<li>NB FI 015: Missing feature-testing macros</li>
+<li>NB GB 146: Add a feature-test macro for concepts</li>
+<li>NB GB 147: Add a feature-test macro for <code>consteval</code></li>
+<li>NB US 150: Add feature-test macro for “familiar template syntax for generic lambdas”</li>
+<li>NB US 167: Feature-test macro for non-member <code>ssize()</code></li>
+<li>NB DE 168: Feature-test macros for <code>constexpr</code></li>
+</ul>
+<p>LWG motion 20: <a href="http://wg21.link/p0883r2">P0883R2 “Fixing atomic initialization”</a>, resolving 1 LWG issue and 4 NB comments:</p>
+<ul>
+<li><a href="http://wg21.link/lwg2334">2334</a> <code>atomic</code>’s default constructor requires “uninitialized” state even for types with non-trivial default-constructor</li>
+<li>NB RU 006: Adopt P0883 (value-initialize atomics by default)</li>
+<li>NB DE 018: Value-initialize atomics by default</li>
+<li>NB US 351: Value-initialize atomics by default</li>
+<li>NB CA 353: Value-initialize atomics by default</li>
+</ul>
+<p>LWG motion 21: <a href="http://wg21.link/p1959r0">P1959R0 “Remove <code>std::weak_equality</code> and <code>std::strong_equality</code>”</a>, resolving 2 NB comments:</p>
+<ul>
+<li>NB US 170: Remove <code>strong_equality</code> and <code>weak_equality</code></li>
+<li>NB CA 173: Remove <code>weak_equality</code></li>
+</ul>
+<p>LWG motion 22: <a href="http://wg21.link/p1892r1">P1892R1 “Extended locale-specific presentation specifiers for <code>std::format</code>”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB GB 226: Make locale-dependent formats for <code>std::format()</code> congruent with default formatting</li>
+</ul>
+<p>LWG motion 23: <a href="http://wg21.link/p1645r1">P1645R1 “<code>constexpr</code> for <code>&lt;numeric&gt;</code> algorithms”</a>, resolving 1 NB comment:</p>
+<ul>
+<li>NB US 320: Make numeric algorithms <code>constexpr</code></li>
+</ul>
+<h4 id="mandating">Mandating</h4>
+<p>LWG motion 24: <a href="http://wg21.link/p1718r2">P1718R2 “Mandating the standard library: Clause 25 - Algorithms library”</a></p>
+<p>LWG motion 25: <a href="http://wg21.link/p1719r2">P1719R2 “Mandating the standard library: Clause 26 - Numerics library”</a></p>
+<p>LWG motion 26: <a href="http://wg21.link/p1686r2">P1686R2 “Mandating the standard library: Clause 27 - Time library”</a></p>
+<p>LWG motion 27: <a href="http://wg21.link/p1720r2">P1720R2 “Mandating the standard library: Clause 28 - Localization library”</a></p>
+<p>LWG motion 28: <a href="http://wg21.link/p1721r2">P1721R2 “Mandating the standard library: Clause 29 - Input/Output library”</a></p>
+<p>LWG motion 29: <a href="http://wg21.link/p1722r2">P1722R2 “Mandating the standard library: Clause 30 - Regular Expression library”</a></p>
+<p>LWG motion 30: <a href="http://wg21.link/p1723r2">P1723R2 “Mandating the standard library: Clause 31 - Atomics library”</a></p>
+<p>LWG motion 31: <a href="http://wg21.link/p1622r3">P1622R3 “Mandating the standard library: Clause 32 - Thread support library”</a></p>
+<h2 id="notable-changes-to-papers-as-moved">Notable changes to papers as moved</h2>
+<h3 id="cwg-motion-3">CWG motion 3</h3>
+<p>The note added as part of the resolution of NB GB 079 was reworded editorially, as described below in the list of editorial NB comment resolutions.</p>
+<h3 id="cwg-motion-8">CWG motion 8</h3>
+<p>The following feature test macro changes were made for this paper, after consultation with SG10:</p>
+<p>The feature test macro <code>__cpp_nontype_template_parameter_class</code> has been removed to indicate that the feature added by <a href="http://wg21.link/p0732r2">P0732R2</a> is no longer present in the same form.</p>
+<p>The value of the feature test macro <code>__cpp_nontype_template_args</code> has been increased to <code>201911L</code> to indicate support for <a href="http://wg21.link/p1907r1">P1907R1</a>.</p>
+<h3 id="lwg-motion-11">LWG motion 11</h3>
+<p>The description of this paper specifies that:</p>
+<blockquote>
+<p>each such <code>base()</code> member [of a range adaptor, that returns a copy of the underlying view] be replaced to by two overloads: a <code>const</code>-qualified overload that requires the type of the underlying view to model CopyConstructible, and a <code>&amp;&amp;</code>-qualified overload that extracts the underlying view from the adaptor</p>
+</blockquote>
+<p>but the wording changes omitted explicit editing instructions to make these changes to the <code>take_while_view</code>, <code>drop_view</code>, <code>drop_while_view</code> and <code>elements_view</code> range adaptors, which were added by <a href="http://wg21.link/p1035r7">P1035R7</a> (2019-07 LWG Motion 23), after R0 of this paper was authored.</p>
+<p>Consistent with the proposal in the paper, and after consulting the paper authors and the LWG chair, the corresponding changes were also applied to the additional range adaptors listed above.</p>
+<h3 id="lwg-motion-16">LWG motion 16</h3>
+<p>This paper removed the exposition-only concept <em><code>range-impl</code></em>, inlining it into its only remaining user, the <code>range</code> concept. However, two uses of <em><code>range-impl</code></em> were left behind. These have been updated and suitably adjusted to refer to <code>range</code> instead.</p>
+<p>LWG motion 13 (<a href="http://wg21.link/p1394r4">P1394R4</a>) added a couple of new uses of the exposition-only concept <em><code>forwarding-range</code></em>, which was removed by this paper. These uses have been replaced with <code>safe_range</code>.</p>
+<h3 id="lwg-motion-19">LWG motion 19</h3>
+<p>Did not add the macro <code>__cpp_lib_atomic_ref</code>. This macro already existed with the specified value.</p>
+<p>Did not change the value of the <code>__cpp_lib_chrono</code> macro. The requested new value of this macro (<code>201803L</code>) is actually lower than the current value (<code>201907L</code>, not <code>201611L</code> as listed in <a href="http://wg21.link/p1902r1">P1902R1</a>). The chair of SG10 has confirmed that the request to change this macro’s value is an error. The pre-existing, higher value is retained.</p>
+<p>Did not change the value of the <code>__cpp_lib_ranges</code> macro. The requested new value of this macro (<code>201907L</code>) is lower than the value <code>201911L</code> introduced by <a href="http://wg21.link/po1716r3">P1716R3</a> (LWG motion 6).</p>
+<h2 id="disposition-of-editorial-nb-comments-on-c-2020-cd1">Disposition of editorial NB comments on C++ 2020 CD1</h2>
+<p>Listed below are draft disposition for all comments that were filed as editorial in the ISO 14882 CD (2019) NB comments. Except where otherwise noted, these dispositions only represent the current viewpoint of the Project Editor.</p>
+<p>US 021: Accepted, fixed in 50e55ce9.</p>
+<ul>
+<li>Split index entries to “block (execution)” and “block (statement)”.</li>
+<li>Also added the statement form to Clause 3, Terms and Definitions.</li>
+</ul>
+<p>GB 022: Accepted with modifications, fixed in 8cc6bd34.</p>
+<ul>
+<li><p>The relevant change had already been made to [using.headers], but this corresponding change was missed.</p></li>
+<li><p><strong>Modified resolution:</strong> Added a cross-reference to [using.headers] instead of the suggested cross-reference to [headers].</p></li>
+</ul>
+<p>JP 023: Accepted, fixed in 868934f7.</p>
+<p>JP 030: No consensus for change.</p>
+<ul>
+<li>The text immediately following the grammar makes it clear that both lowercase <code>p</code> and uppercase <code>P</code> are permitted.</li>
+</ul>
+<p>US 031: No consensus for change.</p>
+<ul>
+<li>The example appears to be valid as-is; adding <code>!= 0</code> does not appear to serve any purpose.</li>
+</ul>
+<p>GB 032: Accepted, fixed in 84a1cd53.</p>
+<p>US 037: No consensus for change.</p>
+<ul>
+<li>The proposed change is not editorial. Forwarded to SG2 for consideration and rejected.</li>
+</ul>
+<p>FR 039: Accepted with modifications, fixed in 68a6dfef.</p>
+<ul>
+<li><p><strong>Filed as technical</strong>; SG2 concluded the wording is confusing, already does what the comment requests (except that ADL also finds friend declarations in a class in the same conditions under which member lookup would find member declarations in the class). Recategorized as editorial to clarify the wording.</p></li>
+<li><p><strong>Modified resolution:</strong> Definition of “interface” (of a module) inlined into its only use (and removed), making it clear that [basic.lookup.argdep]/4.4 only finds exported declarations.</p></li>
+</ul>
+<p>JP 045: Accepted, fixed in d401794f.</p>
+<ul>
+<li>This fixes a misapplication of the resolution of CWG 2381.</li>
+</ul>
+<p>US 047: Accepted with modifications, fixed in 785f689d.</p>
+<ul>
+<li><strong>Modified resolution:</strong> Instead of removing the redundant sentence, it was converted into a note and moved after the following sentence of which it is a consequence.</li>
+</ul>
+<p>US 052: Accepted, fixed by <a href="http://wg21.link/p1971r0">P1971R0</a> (CWG motion 3).</p>
+<ul>
+<li>The proposed change is not editorial. Forwarded to CWG for consideration and accepted.</li>
+</ul>
+<p>JP 057: Accepted, fixed in a06b7a49.</p>
+<p>GB 078: Accepted, fixed in e3bb2eba.</p>
+<ul>
+<li>Italicized references to <em>digit</em>s that intended to refer to the grammar production.</li>
+<li>Also made some nearby editorial improvements: added cross-references and fixed an adjacent grammar issue (“is” / “are”) in [diff.cpp14.library].</li>
+</ul>
+<p>GB 079: Accepted, fixed by <a href="http://wg21.link/p1971r0">P1971R0</a> (CWG motion 3).</p>
+<ul>
+<li>Forwarded to SG2 for consideration. Accepted and example added by CWG.</li>
+<li>Added note prior to example editorially revised after consultation with CWG.</li>
+</ul>
+<p>US 085: No consensus for change.</p>
+<ul>
+<li>Per the description in [module.import], translation units are imported, modules are not. The wording appears to be correct as-is.</li>
+</ul>
+<p>US 088: Accepted with modifications, fixed in d382ea4e.</p>
+<ul>
+<li><strong>Modified resolution:</strong> Instead of either of the proposed renamings, renamed [module.global] to [module.global.frag] and renamed [cpp.glob.frag] to [cpp.global.frag].</li>
+</ul>
+<p>GB 089: Accepted, fixed in fa42d5a6.</p>
+<p>US 099: Accepted, fixed in 9b0502bf.</p>
+<p>US 106: No consensus for change.</p>
+<ul>
+<li>Forwarded to CWG for consideration and rejected.</li>
+</ul>
+<p>US 108: Accepted, fixed in 2f42a930.</p>
+<p>US 153: No consensus for change.</p>
+<ul>
+<li>Forwarded to LWG for consideration; rejected by LEWG.</li>
+</ul>
+<p>US 154: Duplicate of US 153.</p>
+<p>GB 155: Accepted, fixed in 98e57ff5.</p>
+<ul>
+<li><strong>LWG concurs with this direction</strong></li>
+</ul>
+<p>JP 177: Accepted, fixed in 8be40ff0.</p>
+<ul>
+<li>Replaces a reference to ISO/IEC/IEEE 60599 with a reference to the intended ISO/IEC/IEEE 60559.</li>
+<li>IEC 60599 is “Mineral oil-filled electrical equipment in service – guidance on the interpretation of dissolved and free gases analysis”</li>
+<li>ISO/IEC/IEEE 60559 is “Information Technology - Microprocessor Systems – Floating-Point Arithmetic”</li>
+</ul>
+<p>GB 200: No consensus for change.</p>
+<ul>
+<li>The example already includes all combinations of <code>const</code>/non-<code>const</code> LHS and RHS, as described by paragraph 6. The suggested combinations <code>b == d</code> and <code>a == c</code> are both identical to <code>a == d</code>. (Note that only <code>a</code> and <code>c</code> are used on the LHS, and only <code>b</code> and <code>d</code> are used on the RHS.)</li>
+</ul>
+<p>US 216: Accepted, fixed in dfcc4691.</p>
+<ul>
+<li><strong>LWG concurs with this direction</strong></li>
+</ul>
+<p>JP 218: <strong>Unresolved, reassigned to LWG</strong></p>
+<ul>
+<li>Forwarded to LWG for consideration; <a href="https://cplusplus.github.io/LWG/issue3310">LWG issue 3310</a> opened to track this comment.</li>
+</ul>
+<p>JP 219: <strong>Unresolved, reassigned to LWG</strong></p>
+<ul>
+<li>Forwarded to LWG for consideration; <a href="https://cplusplus.github.io/LWG/issue3310">LWG issue 3310</a> opened to track this comment.</li>
+</ul>
+<p>GB 225: <strong>Unresolved, reassigned to LWG</strong></p>
+<ul>
+<li>Proposed change is not editorial. Forwarded to LWG for consideration. <a href="https://cplusplus.github.io/LWG/issue3327">LWG issue 3327</a> opened to track this comment.</li>
+</ul>
+<p>US 242: No consensus for change.</p>
+<ul>
+<li><p>Organizationally, it seems more consistent to list <code>span</code> near the sequence containers, just as we list <code>string_view</code> near `string.</p></li>
+<li><p>Forwarded to LWG for consideration and rejected.</p></li>
+</ul>
+<p>US 258: Accepted, fixed in f36f871c.</p>
+<p>GB 280: Accepted, fixed by <a href="http://wg21.link/p1870r1">P1870R1</a> (LWG motion 16).</p>
+<ul>
+<li>Forwarded to LEWG to select a better name or reject, LEWG selected <code>safe_range</code> as a replacement non-exposition-only concept name.</li>
+</ul>
+<p>US 295: Accepted with modifications, fixed in 53f0651e.</p>
+<ul>
+<li>Instead of proposed change, incorporated the leading “If <code>ref_is_glvalue</code> is <code>true</code>” into the bullets and removed the bullet nesting to clarify the meaning of the “Otherwise”s.</li>
+</ul>
+<p>JP 314: Accepted with modifications, fixed in 136312cf.</p>
+<ul>
+<li>This is not an ISO “Terms and Definitions” Clause, so the rules for such a Clause do not apply.</li>
+<li><strong>Modified resolution:</strong> Renamed subclause from “Terms and Definitions” to “Preamble” to make it clear that this is not an ISO “Terms and Definitions” Clause. Also moved [algorithms.parallel] paragraph 1 into this subclause to avoid a hanging paragraph.</li>
+</ul>
+<p>JP 319: Accepted, fixed in 5ac298cc.</p>
+<p>US 325: No consensus for change.</p>
+<ul>
+<li>We do not wish to perform this reorganization at this stage, but will reconsider the organization of the standard library clauses for a future standard.</li>
+</ul>
+<p>US 327: <strong>Unresolved, reassigned to LEWG</strong></p>
+<ul>
+<li>The proposed change is not editorial. Forwarded to LEWG for consideration.</li>
+<li>Duplicate of PL 326, which may be addressed by <a href="http://wg21.link/p1956">P1956</a>.</li>
+</ul>
+<p>US 328: <strong>Unresolved, reassigned to LEWG</strong></p>
+<ul>
+<li>The proposed change is not editorial. Forwarded to LEWG for consideration.</li>
+<li>Duplicate of PL 326, which may be addressed by <a href="http://wg21.link/p1956">P1956</a>.</li>
+</ul>
+<p>US 330: No consensus for change.</p>
+<ul>
+<li>The wording to which this comment is objecting was removed by <a href="http://wg21.link/p1355r2">P1355R2</a>, which was adopted by 2019-07 LWG Motion 2.</li>
+</ul>
+<p>JP 338: Accepted, fixed in 742f1086.</p>
+<p>JP 339: Accepted, fixed in 25a08918.</p>
+<p>JP 340: Accepted, fixed in f88f6747.</p>
+<p>JP 341: Accepted, fixed in d545c37d.</p>
+<p>JP 343: Accepted, fixed in 9252441e.</p>
+<p>JP 348: Accepted, fixed in 01dea5f5.</p>
+<ul>
+<li>Per [iosfwd.syn]p1, the duplication of default template arguments between <code>&lt;iosfwd&gt;</code> and <code>&lt;syncstream&gt;</code> does not prevent a translation unit including both.</li>
+<li>An LWG issue will be opened to consider whether we should require more of the iostreams headers to include <code>&lt;iosfwd&gt;</code>; currently only <code>&lt;ios&gt;</code> and <code>&lt;iostream&gt;</code> are guaranteed to provide the forward declarations. Similarly LWG should consider whether <code>&lt;istream&gt;</code> and <code>&lt;ostream&gt;</code> should be guaranteed to include <code>&lt;ios&gt;</code>.</li>
+</ul>
+<p>JP 349: Accepted, fixed in adcf12ea.</p>
+<ul>
+<li>See JP 348.</li>
+</ul>
+<p>JP 350: Accepted, fixed in 53b429c9.</p>
+<ul>
+<li>See JP 348.</li>
+</ul>
+<p>US 357: Accepted with modifications, fixed in af747d64.</p>
+<ul>
+<li><strong>Modified resolution:</strong> A different revised wording was chosen for the notes: “The specialization <code>atomic&lt;bool&gt;</code> uses the primary template.”</li>
+</ul>
+<p>US 359: Accepted, fixed by <a href="http://wg21.link/p1960r0">P1960R0</a> (LWG motion 18).</p>
+<ul>
+<li>Forwarded to SG1 for consideration and accepted by LWG.</li>
+</ul>
+<p>JP 362: Accepted with modifications, fixed in 195d5bab.</p>
+<ul>
+<li><strong>Modified resolution:</strong> In addition to adding the missing <code>[[nodiscard]]</code>, also added the missing <code>static</code> and <code>int</code> from the synopsis.</li>
+</ul>
+<p>CA 366: Accepted, fixed in eaf23727.</p>
+<p>JP 373: Accepted with modifications, fixed in 41058d90.</p>
+<ul>
+<li><strong>Modified resolution:</strong> In addition to requested changes, also added cross-reference to [temp.pre] for the <em>requires-clause</em> grammar production.</li>
+</ul>
+<p>JP 374: Accepted, fixed in dbc3d6a5.</p>
+<p>JP 376: Accepted, fixed in 8b5c768e.</p>
+<h3 id="late-comments">Late comments</h3>
+<p>CH 02: Accepted, fixed in 5ee93fd7.</p>
+<h2 id="notable-editorial-changes">Notable editorial changes</h2>
+<h3 id="typeface">Typeface</h3>
+<p>The typeface used for grammar productions has been changed from italic to a slanted sans-serif font in order to distinguish grammar productions from defined terms. Many other options have been considered, but this option provided the most visually appealing outcome.</p>
+<p>Please inform the editors if you discover any places where the wrong typeface is used for a grammar production or other italicized term.</p>
+<h3 id="section-moves">Section moves</h3>
+<p>Moved [temp.deduct.guide] under [temp.class], alongside the description of members of class templates.</p>
+<p>Moved [range.istream] under [range.factories]. <code>basic_istream_view</code> is a range factory not a range adaptor.</p>
+<h3 id="section-label-changes">Section label changes</h3>
+<ul>
+<li>[module.global] -&gt; [module.global.frag]</li>
+<li>[cpp.glob.frag] -&gt; [cpp.global.frag]</li>
+</ul>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made to the working draft since N4835 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4835...n4842">draft sources on github</a>.</p>
+<pre><code>commit 8a4e51ea8270705e747383c7e7d0513228d94e94
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Oct 10 22:49:36 2019 +0200
+
+    [basic.lval] Adjust cross-reference in the note. (#3288)
+
+commit 6af984eaa62b63e60dd34d6a609807a85f4c8d36
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Oct 10 22:30:19 2019 +0200
+
+    [over.binary] Define &#39;comparison operator function&#39; and related terms
+
+    and use them consistently.
+
+commit 29c5bda6e44e3742109f6f2af415caa8c198619c
+Author: Casey Carter &lt;cartec69@gmail.com&gt;
+Date:   Fri Oct 11 14:13:29 2019 -0700
+
+    [set.symmetric.difference] Strike duplicated sentence from paragraph 2 (#3293)
+
+commit 5ac298cc18601a4da82a25f9ed3c3dd8e24021d9
+Author: Casey Carter &lt;cartec69@gmail.com&gt;
+Date:   Fri Oct 11 14:14:33 2019 -0700
+
+    [alg.min.max] Correct errors in paragraph 22 (#3292)
+
+    ...from incorporation of P0896R4.
+
+commit 767f7a885ef28e9a1c66d1b90cb344296eefebc4
+Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
+Date:   Sat Oct 12 08:26:49 2019 +0100
+
+    [readable.traits] Add template argument list to constrained specialization (#3294)
+
+commit bfff83e94a1d66abcd90b813a4c0d31c1e637cf9
+Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
+Date:   Wed Oct 16 20:14:54 2019 +0100
+
+    [range.subrange.access] Fix typo (#3299)
+
+commit f741def78c391a329bc694733c4fb8626457886e
+Author: Jonathan Wakely &lt;cxx@kayari.org&gt;
+Date:   Wed Oct 16 20:16:27 2019 +0100
+
+    [iterator.concept.winc] Fix &quot;extended integral type&quot; (#3301)
+
+    The term defined in [basic.fundamental] is &quot;extended integer type&quot;.
+
+commit 723b75c03633b43c8c1dbe3b75d2e8f70a2f8fe0
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Oct 16 21:46:29 2019 +0200
+
+    [class.dtor] Remove incorrect note about trivial vs. constexpr. (#3249)
+
+commit 242354653b6d8412c9ab5a9fd6e47eb3805e0e93
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 18 22:04:27 2019 +0200
+
+    [time.cal.ymd.overview] Typo fix: comma at end of sentence. (#3304)
+
+commit 5a31c73501ef440d7f1e8414a8e59c64778f0433
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 18 22:29:19 2019 +0200
+
+    [time.zone.db.tzdb] Add missing &#39;\pnum&#39;. (#3305)
+
+commit 271360753f2a5b8f7701a007ebb1f240d95cccea
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Sat Oct 19 18:19:37 2019 -0700
+
+    [cmp.alg] Correct weak_ordering::equal to the intended
+    weak_ordering::equivalent.
+
+    Also add some missing formatting.
+
+commit 9af3fc206fb538760af373b78d49f9658a0eeec8
+Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
+Date:   Mon Oct 21 21:06:07 2019 +0100
+
+    [basic.scope.class] Reinstate a qualification that was lost in 0e26279b88c3b8b0a09babdeec8418d383f07419.
+
+    Without the introductory sentence that was deleted by that commit, we need to say explicitly that we are talking about a declaration _in a class_.
+
+commit 22725b81fd2afc383aa793a740776024c33457a8
+Author: Krystian Stasiowski &lt;sdkrystian@gmail.com&gt;
+Date:   Tue Oct 22 04:46:48 2019 -0400
+
+    [class.access] Allocation order of data members is described in [expr.rel] (#3316)
+
+commit e4b690b6bafc31681b97b7d301e4ab25f881a185
+Author: Krystian Stasiowski &lt;sdkrystian@gmail.com&gt;
+Date:   Tue Oct 22 04:48:20 2019 -0400
+
+    [stmt.dcl] Vacuous initialization is defined in [basic.life] (#3314)
+
+commit 9f23d5cdd291492980bbd3a4cea6650a600c87f9
+Author: Casey Carter &lt;Casey@Carter.net&gt;
+Date:   Thu Oct 24 00:19:56 2019 -0700
+
+    [multimap.modifiers] &quot;Mandates&quot; should be &quot;Constraints&quot; (#3322)
+
+    Fixes an editorial error merging P1463R1.
+
+commit 868934f7330c1444d09451a50fac224e9ed2eb62
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 21:56:52 2019 +0200
+
+    [intro.structure] &#39;Note n to entry&#39; is also a note.
+
+    Fixes NB JP 23 (C++20 CD)
+
+commit 84a1cd53841535b72b798a7349cfc914b26eae91
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 21:16:11 2019 +0200
+
+    [basic.lookup.argdep] Add missing namespace qualification in example.
+
+    Fixes NB GB 032 (C++20 CD)
+
+commit d401794faf9b136c7f85aa109afdd6d03a767c9a
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 21:10:51 2019 +0200
+
+    [expr.type] Fix typo when using &#39;reference-related&#39;.
+
+    Fixes NB JP 045 (C++20 CD)
+
+commit fa42d5a6e20abe9e8aab3276202d4f23b31b782e
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 22:04:25 2019 +0200
+
+    [module.reach] Clearly separate translation units in example.
+
+    Fixes NB GB 089 (C++20 CD)
+
+commit 9b0502bf56cbfe4fe2b8407d1e2367613213080b
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 15:58:21 2019 +0200
+
+    [temp.param] Strike redundant normative sentence.
+
+    Non-type template parameters of non-reference non-class type are
+    prvalues, thus the usual reference initialization rules
+    create a temporary.
+
+    Fixes NB US099 (C++20 CD)
+
+commit 8be40ff0693d5a09310c25a5fff6c14dcfc89717
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:56:34 2019 +0200
+
+    [cmp.alg] Fix typo for &#39;ISO/IEC/IEEE 60559&#39;.
+
+    Fixes NB JP 177 (C++20 CD)
+
+commit f36f871c3bc780c13a5ba5ef2b7952c45d6d4cf5
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 15:42:02 2019 +0200
+
+    [iterator.requirements.general] Define &#39;reachable from&#39; to avoid confusion
+
+    with &#39;reachable&#39; used finding declarations in modules.
+
+    Fixes NB US 258 (C++20 CD)
+
+commit 742f108675594d0c116eda7faa75ebf9637dbee2
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 10:51:40 2019 +0200
+
+    [time.cal.day.nonmembers] Fix return type of operator&quot;&quot;d
+
+    Fixes NB JP 338 (C++20 CD)
+
+commit 9252441e422b601301c20c93d6117f07d0e1128c
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 10:52:56 2019 +0200
+
+    [time.cal.year.nonmembers] Fix return type of operator&quot;&quot;y
+
+    Fixes NB JP 343 (C++20 CD)
+
+commit d545c37d9306fe70d41ed24f93dc36b2728d0383
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:44:43 2019 +0200
+
+    [time.cal.month.members] Remove nested-name-specifier from declaration.
+
+    Fixes NB JP 341 (C++20 CD)
+
+commit 25a089189834ab99c3150ff5fb2b3eb342d8a0e4
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:45:45 2019 +0200
+
+    [time.cal.month.members] Remove nested-name-specifier from declaration.
+
+    Fixes NB JP 339 (C++20 CD)
+
+commit f88f6747eb11504bd8a811576a5375f86bf815cd
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:46:33 2019 +0200
+
+    [time.cal.month.members] Remove nested-name-specifier from declaration.
+
+    Fixes NB JP 340 (C++20 CD)
+
+commit 53b429c9fd826876c80b150d913986c815d69932
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:23:00 2019 +0200
+
+    [syncstream.osyncstream.overview] Add default template arguments for &#39;basic_osyncstream&#39;.
+
+    Fixes NB JP 350 (C++20 CD)
+
+commit adcf12ea4385a1e2fb122b078a36c38d956b57be
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:25:34 2019 +0200
+
+    [syncstream.syncbuf.overview]  Add default template arguments for &#39;basic_syncbuf&#39;.
+
+    Fixes NB JP 349 (C++20 CD)
+
+commit 01dea5f57681a079b6da91b872fe0ce68d261c5f
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:27:50 2019 +0200
+
+    [syncstream.syn] Add default template arguments
+
+    in the header synopsis for &#39;basic_syncbuf&#39; and &#39;basic_osyncstream&#39;.
+
+    Fixes NB JP 348 (C++20 CD)
+
+commit 41058d905c1b232ee574f318f0ba9c8b747eaaac
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 21:06:30 2019 +0200
+
+    [diff.cpp17.lex] Add cross-references for &#39;requires&#39; keyword.
+
+    Fixes NB JP 373 (C++20 CD)
+
+commit dbc3d6a57cbf3e3c281d77c5492ffdc418a42658
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 20:48:56 2019 +0200
+
+    [xrefdelta] Fix typo for &#39;fmtflags&#39;.
+
+    Fixes NB NL 374 (C++20 CD)
+
+commit 8b5c768e3fdcd5fbd99bdb501ca3a48e710737c3
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Oct 25 20:54:29 2019 +0200
+
+    [depr.impldec] Fix cross-reference for &#39;deleted function&#39;.
+
+    Fixes NB JP 376 (C++20 CD)
+
+commit b421913edbb17ba66c1dc57caf5264a19cbb7668
+Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
+Date:   Mon Oct 28 18:56:14 2019 +0000
+
+    [ios.members.static] Add &quot;static&quot; to declaration
+
+commit a06b7a497ef2950c07144e97ae0d5919c2dca5d9
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Tue Oct 29 12:31:36 2019 +0100
+
+    [dcl.list.init] Make spacing around &amp; declarator operator locally consistent. (#3353)
+
+    Fixes NB JP 057 (C++20 CD)
+
+commit d382ea4e94f9d2d99bb08936d13f5a90772a292e
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Tue Oct 29 12:32:05 2019 +0100
+
+    [module.global,cpp.glob.frag] Rename labels to ...global.frag. (#3351)
+
+    That is, rename [module.global] to [module.global.frag]
+    and [cpp.glob.frag] to [cpp.global.frag].
+
+    Fixes NB US 088 (C++20 CD)
+
+commit 136312cffd9014daa49afe907d2da45d3dd5dfe8
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Tue Oct 29 12:32:44 2019 +0100
+
+    [algorithms.parallel.defns] Rename to &#39;Preamble&#39; (#3350)
+
+    and avoid hanging paragraph in [algorithms.parallel]
+    by moving it here.
+
+    Fixes NB JP 314 (C++20 CD)
+
+commit 195d5bab790c05c5f049c490b0af28fe1b94c22d
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Tue Oct 29 12:36:56 2019 +0100
+
+    [thread.jthread.static] Repeat &#39;[[nodiscard]]&#39; from synopsis. (#3326)
+
+    Fixes NB JP 362 (C++20 CD)
+
+commit af747d6426c77527c681a5d8dd9cb0a4d66cfbf0
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 11:12:26 2019 +0200
+
+    [atomics.ref.int,atomics.types.int] Clarify notes on atomic/_ref&lt;bool&gt; specializations.
+
+    Fixes NB US 357 (C++20 CD)
+
+commit 785f689d314f45719ee7036b3d7420d7ed7b5ab2
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 20:41:34 2019 +0200
+
+    [expr.prim.id.unqual] Excise redundant special case for the type
+
+    of the template parameter object.
+
+    Fixes NB US 047 (C++20 CD)
+
+commit 2f42a9303a61a498294a21ce73e6513ec43be011
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 21:05:37 2019 +0200
+
+    [temp.constr.decl] Missing case when constraints are associated with a declaration.
+
+    Fixes NB US 108 (C++20 CD)
+
+commit 50e55ce976e2c3ce02340dd034ea2f0c373f0f53
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 26 22:34:52 2019 +0200
+
+    [defns.block.stmt] Add definition of block as a compound statement.
+
+    Also clean up index entries to differentiate
+    &#39;to block execution&#39; from &#39;compound statement&#39;.
+
+    Fixes NB US 021 (C++20 CD)
+
+commit e3bb2eba678062aa433e49758fd5c1f99c2760a6
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sun Oct 27 21:03:12 2019 +0100
+
+    [namespace.future,diff.cpp14.library] Properly refer to grammar &#39;digit&#39;
+
+    when defining reserved namespace names.
+
+    Fixes NB GB 078 (C++20 CD)
+
+commit 8cc6bd34b1075d9e1ad4e8226fcffd56084a9396
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Oct 31 01:08:46 2019 +0100
+
+    [intro.compliance] The standard library also offers header units.
+
+    Fixes NB GB 022 (C++20 CD)
+
+commit f563f13c549f85a227d33100b17118acd2fae22b
+Author: Casey Carter &lt;Casey@Carter.net&gt;
+Date:   Wed Oct 30 17:53:51 2019 -0700
+
+    [range.join.iterator] Remove spurious paragraph number. (#3358)
+
+commit 53f0651e981ac5a1b22eedc16e0c3ba54a585f08
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Oct 31 02:01:42 2019 +0100
+
+    [range.join.iterator] Clarify if ... otherwise ladder.
+
+    Fixes NB US 295 (C++20 CD)
+
+commit 673d504e1b61c1a392aa9dea8318e66fb08744ae
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Nov 1 08:26:28 2019 +0100
+
+    [class.copy.assign] Remove semicolon in &#39;of the form&#39; phrase.
+
+    This improves consistency with other such phrases.
+
+    Fixes late comment CH 02.
+
+commit 42eddb8cedc876bf0df4f9f7e0c28febec38454d
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Oct 21 11:46:26 2019 -0700
+
+    [lex.key] Don&#39;t use a colon to introduce a floating table.
+
+    This table floated off to a different page, so the colon pointed
+    nowhere.
+
+commit 2bb2cd92adf5f73f62c502a595528c52321852f8
+Author: Nikita Kniazev &lt;nok.raven@gmail.com&gt;
+Date:   Mon Nov 4 22:50:05 2019 +0300
+
+    [basic.types] Replace macro constant with constexpr variable
+
+commit ee2879195da176ab31a841b8c5c833730d55b756
+Author: Sebastian &lt;12844423+seb-mtl@users.noreply.github.com&gt;
+Date:   Tue Nov 5 11:23:55 2019 -0500
+
+    [thread.jthread.class] close namespace in synopsis
+
+commit f8a564a086d539202f8811a0fe004eda6dc0ddbc
+Author: Akira Takahashi &lt;faithandbrave@gmail.com&gt;
+Date:   Thu Nov 7 17:44:07 2019 +0900
+
+    [time.cal.day.nonmembers] Add missing closing brace to p6 (operator-)
+
+commit cff2b503ae97fa83529cb274fe12043510e0f1e9
+Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
+Date:   Fri Nov 8 21:01:46 2019 +0000
+
+    [conv.rank] Fix cross-reference to expr.arith.conv (#3384)
+
+commit 68a6dfef6e0880c33193f68a5c035efc8cdf3e09
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Nov 8 23:14:49 2019 +0100
+
+    [basic.lookup.argdep] Inline the definition of &#39;interface&#39;.
+
+    Fixes NB FR 039 (C++20 CD)
+
+commit 98e57ff591d2bd1d258074e06d51fe1cb3e7279d
+Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
+Date:   Fri Nov 8 21:57:42 2019 +0000
+
+    [macros, structure.specifications] Rename &quot;Expects:&quot;/&quot;Ensures:&quot; to &quot;Preconditions:&quot;/&quot;Postconditions:&quot;
+
+    Also adjust a few hyphenation hints where needed.
+
+    Fixes NB GB 155 (C++20 CD)
+
+commit dfcc469164f05145aa029a3d33a0ab8721ad0d2f
+Author: Thomas Köppe &lt;tkoeppe@google.com&gt;
+Date:   Fri Nov 8 22:16:00 2019 +0000
+
+    [util.smartpr.atomic] Moves subclause from &quot;Utilities&quot; to &quot;Atomics&quot;.
+
+    Also renames several headings from &quot;Atomic specializations ...&quot; to
+    &quot;Partial specializations ...&quot;, and adds a cross reference to [smartptr].
+
+    Fixes NB US 216 (C++20 CD)
+
+commit 4d1e9eb84636960724a5553101d578bc1683e702
+Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
+Date:   Mon Nov 11 18:20:16 2019 +0800
+
+    [structure.specifications] Rename remaining &quot;Expects&quot;/&quot;Ensures&quot; to &quot;Preconditions&quot;/&quot;Postconditions&quot;
+
+commit 7b08a8bac497cc297a38c925bc87a64dc79bde32
+Author: Casey Carter &lt;Casey@Carter.net&gt;
+Date:   Tue Nov 12 11:24:18 2019 -0800
+
+    [iterator.concept.writable] Correct repeated word. (#3369)
+
+commit 81f1d689f51fe823d7f6faa659f03b2d787aebf6
+Author: Casey Carter &lt;Casey@Carter.net&gt;
+Date:   Tue Nov 12 11:25:47 2019 -0800
+
+    [range.filter.overview] Avoid double-negative. (#3355)
+
+commit a6f1f0000d274b406900a462297160f6de3a6d55
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Tue Nov 19 14:46:46 2019 -0800
+
+    [temp.expl.spec] There is no such thing as a &quot;consteval property&quot;.
+    Rephrase to use the correct term &quot;immediate function&quot;.
+
+commit 2ea2858eda939494fce400ea265965cce6b84e1e
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Tue Nov 19 14:51:00 2019 -0800
+
+    [dcl.inline] Move note that &#39;inline&#39; doesn&#39;t affect linkage somewhere
+    more suitable.
+
+commit 7e730f899be7336a1d0c87a24a53167be7f834d6
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Tue Nov 19 15:58:44 2019 -0800
+
+    [basic.compound] [numeric.ops.midpoint] Unify terminology used to
+    identify array elements.
+
+    [expr.add] [expr.rel] [expr.eq] [numeric.ops.midpoint] Remove unused
+    name &quot;x&quot; from footnote.
+
+commit e9a3d1ddf21212a160c3b57aeec57acf8fe84c97
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Tue Nov 19 17:32:07 2019 -0800
+
+    [expr.const] Fix wording confusion over &quot;is a core constant expression&quot;
+    versus &quot;does not disqualify some other expression from being a core
+    constant expression&quot;.
+
+commit 19148dbc8e3a92148a5fb28bee62994998743605
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Tue Nov 19 19:39:09 2019 -0800
+
+    [module.private.frag] Fix description of the private module fragment in
+    the note, and update the example to match a revised version from Nathan
+    Sidwell.
+
+commit 88b87a2f54e44501d84385d1f07d6cdc6b3f4857
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Mon Nov 18 14:34:28 2019 -0800
+
+    [temp.constr.op] Reword comment in example added for US111 as suggested by Casey
+
+commit 818e377c13b4b2cc80b292310aba2430538f0d56
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Wed Nov 20 12:44:00 2019 -0800
+
+    [temp.constr.op] Stop talking about the programmer&#39;s intent being
+    unclear in a note; instead merely clarify the language&#39;s response
+    to the various options available to the programmer.
+
+commit b369c9229f9b3223c967ab00ccb1e54eafec6a7a
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Wed Nov 20 13:37:07 2019 -0800
+
+    [over.over] Extract the non-template function case from the description
+    of the target type and rearrange so that it better parallels the
+    function template specialization case.
+
+commit 6ec7eb80fcf30c44632bba59826e4f26c53688ee
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Tue Nov 12 19:11:20 2019 -0800
+
+    [temp.param] [temp.arg.nontype] Update examples and redundant duplicated
+    wording to match P1907R1.
+
+commit 0c61ad109ef8847f9bcaea4cb725537fda0ba99d
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Fri Nov 15 16:57:10 2019 -0800
+
+    [cpp.predefined] Bump value of __cpp_nontype_template_args to 201911L
+    for P1907R1, and remove __cpp_nontype_template_parameter_class to
+    indicate that the feature added by P0732R2 is no longer present in that
+    form.
+
+commit 7bf810a07f8223b57a0ab1d7eb5d9e82e99cdef7
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Wed Nov 13 18:12:12 2019 -0800
+
+    [concept.equivalencerelation] Rename to [concept.equiv].
+
+commit dde89d6d2a478b18351a4ba94a0523417fe05996
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Nov 13 22:15:27 2019 +0100
+
+    [range.cmp] Avoid introducing unused &#39;P&#39;
+
+commit 1dd384aad27415a1415ad9e81273141ce73a7ce2
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Fri Nov 15 16:37:26 2019 -0800
+
+    [range.adaptors] Extend the changes from P1456R1 to also apply to
+    take_while_view, drop_view, drop_while_view, and elements_view.
+
+    These are covered by the direction proposed in the paper, but were
+    inadvertently omitted from the list of things to change in the wording.
+
+commit 6d9db6ae5b3ece80558b95a519d939b58db67623
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Wed Nov 20 17:52:31 2019 -0800
+
+    [range.view] Make the requirement for constant-time move operations and
+    destruction explicit in the description of when a type models view.
+
+commit de25e23ff5306c69fa74893824d8df7c03197429
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Fri Nov 15 16:52:09 2019 -0800
+
+    [string.view] Shorten stable name [string.view.deduction] -&gt; [string.view.deduct]
+
+    Also replace commas with periods in lists of constraints.
+
+commit 6c4806f2704b758b8af506e4f24a4a0931cfdcdf
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Nov 14 10:01:08 2019 +0100
+
+    [span.cons] Rephrase constraint on input element type to avoid
+    overfull \hbox.
+
+commit 25738f733e5e720fc303effa73da391679750499
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Nov 14 22:22:17 2019 +0100
+
+    [span.cons] Do not attempt to initialize size_ with an iterator.
+
+commit 39665f5324d82b92947d6594a04693e28faf7d81
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Fri Nov 15 17:44:07 2019 -0800
+
+    [range.range] Fix example to clarify who/what is being specialized for/with/on what.
+
+commit bceff414a33f9ceed3a1823a885067a5d0ba6091
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Sat Nov 23 17:57:05 2019 -0800
+
+    [range.range] [span.cons] Update remaining uses of removed
+    exposition-only concepts range-impl and forwarding-range with range and
+    safe_range as appropriate.
+
+commit e6428e59d58c1c2822c98a15605e2443552a5d35
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Tue Nov 19 13:32:22 2019 -0800
+
+    [version.syn] Revert __cpp_lib_chrono back to 201907L as directed by @brevzin in #3476.
+
+commit af48b063f9618123d2890796ae9dc95e39fc92f9
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Fri Nov 15 13:15:36 2019 -0800
+
+    [atomics.types.generic] Added reference to [atomics.types.operations] in synopsis
+
+commit ab483d487983af8c5ee0c2b25b9da40908f1ed9a
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Sat Nov 16 01:50:56 2019 -0800
+
+    [basic.compound] Fix the wording &quot;A pointer to objects&quot;.
+
+commit ad91aa2b2b62305250e7667c53276c794e3eee8d
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Thu Nov 14 17:10:58 2019 -0800
+
+    [format.string.std] Use bullets to list the effects of the locale-specific form on each arithmetic type.
+
+commit dea4ded28cf7e315b728f3ad31f0af96f9ff58e8
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Thu Nov 14 17:15:49 2019 -0800
+
+    [format.string.std] Provide a definition for the locale-specific form.
+
+commit d1d3793c1fa08eb4246ac8f218e7a949ae61e28b
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Fri Nov 22 20:51:26 2019 -0800
+
+    [format.string.std] &#39;decimal radix separator&#39; -&gt; &#39;radix separator&#39;.
+
+    The use of the word &#39;decimal&#39; here is not intended to mean &quot;only base
+    10&quot;, and so serves only to confuse the reader.
+
+commit 411531100c0d3e922753935f30835e2cfded2ded
+Author: Dawn Perchik &lt;dperchik@embarcadero.com&gt;
+Date:   Thu Nov 14 10:38:32 2019 -0800
+
+    [numeric.ops] Reformat itemdecl declarations to match the &lt;numeric&gt; synopsis.
+
+commit 6c20c2b4cdfc304d58a093e2ce1f49944ac4e8da
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Sat Nov 16 01:51:16 2019 +0000
+
+    [rand.util.seedseq] Add cross-reference for &quot;writable&quot;.
+
+    Co-Authored-By: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
+
+commit 6ceb2a6b7627d608bd5e4dde5ccd12da70fe20bb
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Nov 18 16:29:30 2019 -0800
+
+    [time.clock.cast.fn] Fix inappropriate phrasing of &quot;Mandates:&quot; element.
+
+commit 938c089abd5a0516b18dd965a74a68ebd571b2dc
+Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
+Date:   Wed Nov 20 12:13:53 2019 -0800
+
+    [thread] Add missing _v&#39;s to uses of type traits in Mandates elements.
+
+commit dd294d43f074dd5f218aaa6e216afb1ce512a5ac
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Wed Nov 20 12:15:33 2019 -0800
+
+    [thread.req.timing] Remove &quot;note&quot; markers around note.
+
+    This change was present in P1622R3 but the markup for the change was
+    missing. However, the change was requested by LWG and intended to be
+    made by this paper.
+
+commit ff9a0d2ce8ffb31b6a6a7321aaf7d6c2653b2029
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Sat Nov 23 21:44:21 2019 -0800
+
+    [atomics.types.operations] Remove uses of deprecated ATOMIC_VAR_INIT
+    from examples.
+
+commit fc48c9b846c348a78eae1592d1c0f1aee1336008
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sun Nov 24 23:04:53 2019 +0100
+
+    [dcl.decl] Avoid double negative.
+
+commit c16eb1cb7b104090f9cc41d6fd31ae5ed7fcb30e
+Author: Eelis van der Weegen &lt;eelis@eelis.net&gt;
+Date:   Sun Nov 24 14:30:28 2019 +0100
+
+    [complex.ops] Remove empty paragraph.
+
+commit abf6868cbdbcbe16fcd699c878e2533cbe4c800a
+Author: Krystian Stasiowski &lt;sdkrystian@gmail.com&gt;
+Date:   Fri Nov 22 16:15:04 2019 -0500
+
+    [temp.local] Change &quot;template-parameter&quot; to &quot;name of a template parameter&quot;
+
+commit 739c4d48ed7a3b7d4f365e344cd178165dee2c2e
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Nov 21 23:36:54 2019 +0100
+
+    [lib] Replace &#39;this subclause&#39; with numbered subclause references.
+
+commit bffe678f815d3dd241cc71ed5816074b80d2dfff
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Nov 21 21:29:32 2019 +0100
+
+    [lib] Remove &#39;Constructs an object of type ...&#39; phrases
+
+    for constructors; this effect is implied by the
+    core language.  Only simple phrases are removed;
+    more complex sentence structures are left unchanged.
+
+commit ad5767e6057bb05d8bd185e3bb3bfb18eed87dc0
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Thu Nov 21 00:41:14 2019 +0100
+
+    [dcl.fct.def.coroutine] Use &#39;encloses&#39; instead of imprecise &#39;contains&#39;.
+
+    The phrase &#39;the function-body encloses X&#39; is also used
+    in [dcl.constexpr].
+
+commit c1c6a1d1a402f421e70faf233256c36d43d05d95
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Nov 25 11:46:54 2019 -0800
+
+    [dcl.constexpr] Make cross-reference for &quot;encloses&quot; more precise.
+
+commit 1457b30569d1611af2e12e50ed481673042e0875
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Nov 25 12:04:35 2019 -0800
+
+    [dcl.type.elab] Make cross-references for &quot;class&quot; and &quot;union&quot; more precise.
+
+commit 129f699e50e3052ca65da1ff69776fa277f86ef5
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Nov 25 12:11:05 2019 -0800
+
+    [class.pre] [class.union] Clean up definition of &#39;union&#39;.
+
+    Move primary definition from [class.pre] to [class.union]. Add note to
+    [class.pre] specifying where to look for the meaning of the class-key.
+    Move note on aggregate classes from [class.pre] to [class.prop].
+
+commit 02e9b5da556ff8c6476dbb9648e692266cf2bb22
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Nov 20 23:54:35 2019 +0100
+
+    [any.cons,any.assign] Remove redundant postconndition for moves.
+
+    [lib.types.movedfrom] already specifies that moved-from
+    objects are left in a valid but unspecified state.
+
+commit 19a66878a8c7ba122c06b5b14a43ec206b8f59bd
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Nov 20 21:46:19 2019 +0100
+
+    [temp.deduct.guide] Move into [temp.class].
+
+    Deduction guides apply only to class templates, so their
+    descriptions should be located in close proximity.
+
+commit 0ef6404655fb0d94b15cab11aef7bb5899d47a78
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Nov 20 23:44:45 2019 +0100
+
+    [temp.concept] Move grammar non-terminal concept-definition here.
+
+    Also move concept-name here, both from [temp.pre].
+
+commit 0606c872e07ac3658ad32050d79449a7379c4e70
+Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
+Date:   Tue Nov 19 17:14:41 2019 +0800
+
+    [time.cal.wdidx.nonmembers] Remove extra &quot;
+
+commit c64f4bd12c57e883bdb32ff69e00f2e3e26ed665
+Author: morinmorin &lt;mimomorin@gmail.com&gt;
+Date:   Sun Nov 17 12:46:48 2019 +0900
+
+    [concept.regularinvocable] move iref to a better place
+
+commit 2ca40df7253fd4be7e730950e57159584bf7b5f6
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Fri Nov 15 17:34:13 2019 -0800
+
+    [defns.access] Clarify definition of &quot;access&quot;.
+
+    Add cross-linking between the places that introduce accesses and the
+    definition of the term, and add a note explaining that we only ever
+    access objects of scalar type.
+
+commit 24f3e89e08993598a297ab00af5468ce81a2ec05
+Author: Casey Carter &lt;Casey@Carter.net&gt;
+Date:   Fri Nov 15 17:06:23 2019 -0800
+
+    [range.istream] Relocate under [range.factories]
+
+    Resolves #3468.
+
+commit 4bec8476c91d0c731dd19f637e76a34fdc9422fd
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Nov 15 22:08:46 2019 +0100
+
+    [format.arg] Fix parameter type for basic_format_arg constructor.
+
+commit 16972c271e418d2aaf9689e936fa5c61447c17e3
+Author: Kerdek &lt;Kerdek@users.noreply.github.com&gt;
+Date:   Wed Nov 13 22:50:23 2019 -0500
+
+    [basic.life] Use idiomatic wording.
+
+    Periods of construction and destruction are not referred to as phases anywhere else.
+
+commit 1586e4b48ca6b787c282c1731e738226068c8de9
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sun Oct 20 21:57:20 2019 +0200
+
+    [numerics,input.output] Consistently use ios_base::failure.
+
+    Do not refer to the inherited member in a derived class.
+
+commit f426cfbdbae8aed86273e3868ce7382e647926c0
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sat Oct 19 22:17:34 2019 +0200
+
+    [std] Remove &#39;shall&#39; from notes.
+
+    Also update the automatic check script to prevent
+    future regressions.
+
+commit d26d3bd5c4fa6e9c2e7ecd2c00c5a6080c9ea4de
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Oct 16 23:27:10 2019 +0200
+
+    [std] Fix cross-references pointing to entire clauses now that we have &#39;preamble&#39; sections.
+
+commit 02e41833de8737368fe1f31c19dfff468050012e
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Nov 25 16:51:27 2019 -0800
+
+    [dcl.type.elab] Clarify that there is no expected correlation between
+    using &#39;class&#39; or &#39;struct&#39; in a class definition and using the same
+    keyword in an elaborated-type-specifier.
+
+commit 225cc43d7d92c7854cdb3726b951f96032e0f48b
+Author: Arthur O&#39;Dwyer &lt;arthur.j.odwyer@gmail.com&gt;
+Date:   Mon Sep 16 00:06:39 2019 -0600
+
+    [lib] Replace &quot;shall not X&quot; with &quot;does not X&quot; when it describes library behavior.
+
+    In these places we aren&#39;t saying &quot;it&#39;s UB if X happens&quot;; we&#39;re literally
+    specifying the behavior of a library function as &quot;X does not happen,
+    we promise.&quot;
+
+    Jonathan Wakely points out that there is still room for the user to cause UB
+    by specializing `pair`, `duration`, `function`, etc. such that their specializations
+    do X. In that case, the UB happens due to [namespace.std] p2, which requires
+    that &quot;the [program-defined] specialization meets the standard library requirements
+    for the original template.&quot;
+
+commit 035d46b4c40655e5f4f69f77e8c5a1106eab89bd
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Wed Oct 16 21:37:17 2019 +0200
+
+    [time.duration.cast,time.point.cast] Rename subclause to &#39;Conversions&#39;.
+
+    The subclause describes functions beyond
+    duration_cast and time_point_cast.
+
+commit 029f630c324dc958b288e8bd2268ae7791a7089c
+Author: Richard Smith &lt;richard@metafoo.co.uk&gt;
+Date:   Mon Mar 11 16:20:44 2019 -0700
+
+    [lex.charset] Fix various issues with the description of UCNs.
+
+    Clarify that \U sequences not beginning 00 are ill-formed. Clarify
+    handling of code points naming reserved or noncharacter code points.
+    Remove unnecessary circumlocution through &quot;short identifiers&quot; by
+    directly talking about code points. Use code point values directly
+    rather than using C++ 0x notation.
+
+    [lex.string] Fix description of what UCNs mean, and convert it to a
+    note.
+
+commit b5cd9909ffa2b0a44509aebabac7df8b92385298
+Author: Johel Ernesto Guerrero Peña &lt;johelegp@gmail.com&gt;
+Date:   Tue Nov 26 12:25:22 2019 -0400
+
+    [ranges.syn, range.adaptors] Name view template parameter V for consistency (#3514)
+
+    P1035 used `R` for such template parameters, introducing an inconsistency.
+
+commit bddd47cb9ded922626b9930b5165af438dcd6c72
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Tue Nov 26 21:01:07 2019 +0100
+
+    [temp.param] Move grammar non-terminal &#39;type-constraint&#39; here
+
+    from [temp.pre].
+    Also move the definition of &#39;immediately-declared
+    constraint&#39; and fix all cross-references.
+
+commit 7e4a9fb3da65dbd04843c865e3ae6728063242a0
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Sun Nov 24 23:51:12 2019 +0100
+
+    [over.match.list] Acknowledge [over.ics.list] and clarify text.
+
+commit 782cad5e446a765aee1c674f4a316178185c5c19
+Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
+Date:   Fri Nov 15 22:02:32 2019 +0100
+
+    [basic.def.odr] Split long-winded bulleted sentence.</code></pre>
+</body>
+</html>

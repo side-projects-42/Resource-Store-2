@@ -1,35 +1,18 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/console-test.js"></script>
-    <script>
-      function onload() {
-        console.log("Message format number %i, %d and %f", 1, 2, 3.5);
-        console.log("Message %s for %s", "format", "string");
-        console.log("Object %o", { foo: "bar" });
-        console.log("Floating as integers: %d %i", 42.5, 42.5);
-        console.log("Floating as is: %f", 42.5);
-        console.log(
-          "Non-numbers as numbers: %d %i %f",
-          document,
-          null,
-          "document"
-        );
-        console.log("String as is: %s", "string");
-        console.log("Object as string: %s", document);
-
-        runTest();
-      }
-
-      function test() {
-        InspectorTest.expandConsoleMessages();
-        InspectorTest.dumpConsoleMessages();
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-
-  <body onload="onload()">
-    <p id="p">Tests that console logging uses proper message formatting.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>console-message-format</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests that console logging uses proper message formatting.</p>
+</body>
 </html>

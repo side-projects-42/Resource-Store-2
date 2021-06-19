@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>MAINTAINING</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="maintaining">Maintaining</h1>
+<h2 id="release-process">Release Process</h2>
+<p>Series of github actions are used to automate the library <a href="https://github.com/chartjs/chartjs-plugin-zoom/releases">releases</a>.</p>
+<h3 id="releasing-a-new-version">Releasing a New Version</h3>
+<p><code>release-drafter</code> action updates a draft of release notes after each push. Its based on labels and the commit messages, so its important to label pull requests and have clean commits. If the draft contains commits that do not fall under any heading, those commits should be labeled and the drafter re-run from <a href="https://github.com/chartjs/chartjs-plugin-zoom/actions">actions</a>.</p>
+<ol type="1">
+<li>update <code>master</code> <code>package.json</code> version using <a href="https://semver.org/">semver</a> semantic</li>
+<li>update the tag and version in the release draft to match <code>package.json</code>. Mark it as <code>pre-release</code> if you would like to publis with <code>next</code> tag on <a href="https://www.npmjs.com/package/chartjs-plugin-zoom">npmjs</a></li>
+<li>publish the release in GitHub. Publishing will trigger the <code>publish-npm</code> action. You can monitor the process in <a href="https://github.com/chartjs/chartjs-plugin-zoom/actions">actions</a></li>
+</ol>
+<h3 id="automated-tasks">Automated Tasks</h3>
+<h4 id="release-drafter">release-drafter</h4>
+<p>Triggered for each push to master. Creates or updates a draft of release notes for next release.</p>
+<h4 id="compressed-size">compressed-size</h4>
+<p>Triggered for each pull-request. Calculates the compressed size compared to master. Result can be seen in the action log.</p>
+<h4 id="npm-publish">npm-publish</h4>
+<p>Publishing a GitHub release off the automated release process:</p>
+<ul>
+<li>build of the <code>dist/*.js</code> files</li>
+<li><code>chartjs-plugin-zoom-{version}.tgz</code> package is generated, containing dist files and examples</li>
+<li><code>dist/*.js</code> and <code>chartjs-plugin-zoom-{version}.tgz</code> are attached to the GitHub release tag</li>
+<li>a new npm package is published on <a href="https://www.npmjs.com/package/chartjs-plugin-zoom">npmjs</a></li>
+</ul>
+<p>Finally, <a href="https://cdnjs.com/libraries/chartjs-plugin-zoom">cdnjs</a> is automatically updated from the npm release.</p>
+</body>
+</html>

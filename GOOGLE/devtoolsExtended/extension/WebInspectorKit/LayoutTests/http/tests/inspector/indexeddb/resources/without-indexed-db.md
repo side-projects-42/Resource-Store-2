@@ -1,0 +1,1 @@
+Page without Indexed DB.

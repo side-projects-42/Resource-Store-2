@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>august-07</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-meeting-agenda-2015-08-07">Ember Meeting Agenda 2015-08-07</h1>
+<h3 id="attendees">Attendees</h3>
+<p>Robert, Yehuda, Stefan, Peter, Matt, Martin, Kris, Erik, Trek, Leah</p>
+<h3 id="agenda">Agenda</h3>
+<ul>
+<li>Angle bracket update - <span class="citation" data-cites="wycats">@wycats</span></li>
+<li>1.13.7 Update / Blockers - <span class="citation" data-cites="rwjblue">@rwjblue</span></li>
+<li>Deprecations needed for 1.13.7</li>
+<li>Ship 2.0. Like now. - <span class="citation" data-cites="wycats">@wycats</span></li>
+</ul>
+<h3 id="release-plan">2.0 Release Plan</h3>
+<ul>
+<li>Blog Post</li>
+<li>What is left?</li>
+<li>Messaging 2.0-2.2 and the potential instability early in 2.x</li>
+</ul>
+<h3 id="deprecations-for-1.13.7">Deprecations for 1.13.7</h3>
+<ul>
+<li>[ ] Deprecate block usage of unbound in 1.13 (<a href="https://github.com/emberjs/ember.js/pull/11965">emberjs/ember.js#11965</a>). Should be PR’ed directly to stable.</li>
+<li>[ ] Deprecate multiple arguments being passed to unbound in 1.13 (<a href="https://github.com/emberjs/ember.js/pull/11965">emberjs/ember.js#11965</a>). Should be PR’ed directly to stable.</li>
+<li>[x] Deprecate using <code>@each</code> as a “leaf” (<a href="https://github.com/emberjs/ember.js/pull/11990">emberjs/ember.js#11990</a>)</li>
+<li>[ ] Should swap <code>@each</code> with <code>[]</code> when used as leaf on a declarative observer or dependency key</li>
+<li>[x] <code>{{with foo controller="bar" as |baz|}}</code> <a href="https://github.com/emberjs/ember.js/pull/12000">emberjs/ember.js#12000</a></li>
+<li>[x] Deprecate using Ember.TrackedArray https://github.com/emberjs/ember.js/pull/11993</li>
+<li>[x] Deprecate using Ember.SubArray https://github.com/emberjs/ember.js/pull/11993</li>
+<li>[ ] Deprecate using <code>.render</code> with a component or view <a href="https://github.com/emberjs/ember.js/issues/11515">emberjs/ember.js#11515</a></li>
+</ul>
+<h1 id="synchronous-observation-related-things">Synchronous Observation Related Things</h1>
+<ul>
+<li>[ ] addArrayObserver, removeArrayObserver (all that should remain is the <code>"[]:change"</code> event)</li>
+<li>[ ] willChange support in ember-runtime/mixins/array</li>
+<li>[ ] willChange support in ember-runtime/mixins/enumerable</li>
+<li>[ ] willChange support in ember-runtime/system/array_proxy</li>
+</ul>
+<h3 id="minutes">Minutes</h3>
+<p>SP: Much work has been going into performance with ember-cli. Some great changes at the caching-writer / sourcemap-concat stages.</p>
+<p>YK: Angle brackets is going well, we expect to be mergeable early next week. We have a checklist of seven items.</p>
+<p>YK: This work also opened up some new context for attrs/props. Basically the root of component can be the identity element, an element like a div, or another component. You don’t want element attrs to be shadowed like a component, but you want the semantics to be akin.</p>
+<p>KS: Could we explicitly bind reflection?</p>
+<p>YK: The problem with opt in is that the caller has no ability to change behavior for an attribute. They are stuck. Additionally we have an opt-in mechanism today (just a programmatic one) and we gets lots of issues about binding.</p>
+<p>SP: Does this mean the attribute bindings can become pay as you go?</p>
+<p>EF: Yeah attrmorph was really high up in my profiles this week</p>
+<p>YK: Absolutely. Yes.</p>
+<p>KS: Getting rid of the ember-view class would be good, to keep from the complexity of generating the class attrmorph and such</p>
+<p>KS: The event dispatcher should use ids instead of needing the class, and we can remove it</p>
+<p>YK: we already decided that none of the class name bindings stuff would be on angles. I think what you’e suggesting is that we add the ember-view manually in angles, then remove it later</p>
+<p>SP: it is unfortunate that it is called ember-view since we are getting rid of views</p>
+<p>YK: I just don’t want to block angles on something new. Angles will be in canary for six weeks and if someone want to pick up the work of fixing event dispatching to use ids then remove the class that seems fine.</p>
+<p>YK: ok so that is angle brackets, what is 2.0 robert</p>
+<p>RJ: There are a couple bugs and issues that need to be locked down. I’m focused on the next 1.13 (link in the agenda) and adding deprecations for the things removed in 2.0.</p>
+<p>RJ: This includes the render method. the timing of it has changes (it is not called on serenader)</p>
+<p>YK: I’m unsure we can make it work well, but we can deprecate it (and remove in 2.0).</p>
+<p>RJ: It was reported, but it not common so fixing the behavior is not that important.</p>
+<p>RJ: I should hopefully release beta.5 today if some regressions opened today are not too big.</p>
+<p>RJ: There will be a deprecation in 1.13 that says not to use <code>@each</code> as a leaf.</p>
+<p>YK: Could we just swap it to a bracket when declared?</p>
+<p>KS: In the declarative case yes.</p>
+<p>YK: It is trivial to do and seems like a good thing this late in the game.</p>
+<p>KS: A long time ago I made volatile remove the observer behavior and make it manual, but this has changed…</p>
+<p>YK: what you mean is you have to explicitly notify property change?</p>
+<p>KS: Right. I opened a PR against master but it should have been against beta.</p>
+<p>YK: I think any breakage would be breakage in undefined behavior cases</p>
+<p>YK: I think we just didn’t ever define the semantics of volatile. It seems reasonable to define them this way now.</p>
+<p>KS: …</p>
+<p>YK: the number of people using it is pretty low</p>
+<p>YK: one way to say it is that in ES5/6 a volatile property is literally just a getter</p>
+<p>YK: .set used to notify property change and now it will not?</p>
+<p>KS: yes.</p>
+<p>SP: it is important regardless of what it breaks, and the argument is that it simply aligns us better with the language</p>
+<p>SP: basically we could move CPs to be real getters and setters. we’re blocking on decorators.</p>
+<p>YK: I am very strongly in favor of installing getters, but in light of the react model .sets are very rare. Making people go through <code>.set</code> makes it clear a change may update the UI</p>
+<p>SP: yeah that seems easy to do</p>
+<p>KS: would it stomp without a setter</p>
+<p>YK: no it throws, but not with the error we would want, so we would need to install the one we want</p>
+<p>EF: I feel strongly we should use .set</p>
+<p>MM: agreed</p>
+<p>KS: What are we doing with unknownProperty</p>
+<p>YK: I think we’re inching in that direction</p>
+<p>EB: I really want to stop using <code>.get</code></p>
+<p>SP: proxies have allowed us to fix things in the short term</p>
+<p>SP: you could define a class for the attrs proxy on each invocation. it would cost nothing at runtime.</p>
+<p>KS: I thought we were moving toward adding an observer for any property on an object</p>
+<p>YK: I’m just talking about the specific case of the attrs proxy right now.</p>
+<p>KS: but you’re just talking about an alternative legacy component implementation</p>
+<p>KS: I’m very very anxious to just use defineProperty</p>
+<p>EF: I’m on a rampage to remove all lingering synchronous observation</p>
+<p>KS: There is so much I have been waiting to do that I can do after that is done</p>
+<p>YK: Ok 2.0</p>
+<p>RJ: So I got cut off at the volatile change. That is the last thing</p>
+<p>YK: So basically messaging and blog posts need to get done</p>
+<p>RJ: We need to make sure beta.5 is essentially the same semantics as 2.0 to people can test it</p>
+<p>YK: we’re basically cheating the train system.</p>
+<p>YK: so we need to talk about messaging the early 2.0 section. Basically the</p>
+<p>MB: We can message that 2.0 is the “garbage collection” release.</p>
+<p>RJ: Looking at file size charts across versions of Ember is error prone. Many versions released between 1.8 and 2.0.0 had various issues that make analysis hard.</p>
+<p>SP: I have a PR that may have the ability to make execution time much less, and JS execution time is much more important that actual file size.</p>
+<p>…meandering discussion of boot time performance and messaging improvements to it…</p>
+<p>YK: RJ, MB, anyone else who wants to attend, and I should meet to discuss the specifics of 2.0.0 messaging and prepare for the blog post.</p>
+<p>RJ: I can probably be ready by Monday for 2.0</p>
+<p>YK: I think the blog post will be set by Wednesday</p>
+<p>LS: EmberConf website launch discussion and timeline.</p>
+<p>LS: Toronto f2f discussion. Travel logistics and local events.</p>
+<p>LS: Project marketing update, identity design update.</p>
+</body>
+</html>

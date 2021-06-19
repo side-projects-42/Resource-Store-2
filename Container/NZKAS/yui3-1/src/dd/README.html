@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="drag-and-drop">Drag and Drop</h1>
+<p>The Drag and Drop Utility allows you to create a draggable interface efficiently, buffering you from browser-level abnormalities and enabling you to focus on the interesting logic surrounding your particular implementation. This component enables you to create a variety of standard draggable objects with just a few lines of code and then, using its extensive API, add your own specific implementation logic.</p>
+<pre><code>YUI().use(&#39;dd-drag&#39;, function(Y) {
+    var dd = new Y.DD.Drag({
+        node: &#39;#drag&#39;
+    });
+});</code></pre>
+<h3 id="file-structure-and-module-info">File Structure and Module Info</h3>
+<p>Source Files: ddm-base.js ==&gt; Base DragDrop Manager ddm.js ==&gt; Adds shim support ddm-drop.js ==&gt; Adds Drop support drag.js ==&gt; Main drag class proxy.js ==&gt; Adds proxy support to Drag constrain.js ==&gt; Adds constrain support to drag scroll.js ==&gt; Adds scroll support to drag drop.js ==&gt; Drop Support dd-plugin.js ==&gt; Node plugin for Drag dd-drop-plugin.js ==&gt; Node plugin for Drop</p>
+<p>Module Names: dd-ddm-base ==&gt; Base DragDrop Manager dd-ddm ==&gt; Adds shim support dd-ddm-drop ==&gt; Adds Drop support dd-drag ==&gt; Main drag class dd-proxy ==&gt; Adds proxy support to Drag dd-constrain ==&gt; Adds constrain support to drag dd-scroll ==&gt; Adds scroll support to drag dd-drop ==&gt; Drop Support dd-plugin ==&gt; Node plugin for Drag dd-drop-plugin ==&gt; Node plugin for Drop dd ==&gt; All Drag &amp; Drop related code</p>
+<p>Build Files: dd-ddm-base.js ==&gt; Base DragDrop Manager dd-ddm.js ==&gt; Adds shim support dd-ddm-drop.js ==&gt; Adds Drop support dd-drag.js ==&gt; Main drag class dd-proxy.js ==&gt; Adds proxy support to Drag dd-constrain.js ==&gt; Adds constrain support to drag dd-scroll.js ==&gt; Adds scroll support to drag dd-drop.js ==&gt; Drop Support dd-plugin.js ==&gt; Node plugin for Drag dd-drop-plugin.js ==&gt; Node plugin for Drop</p>
+<p>Rollup File: dd.js ==&gt; dd-ddm-base, dd-ddm, dd-ddm-drop, dd-drag, dd-proxy, dd-constrain, dd-scroll, dd-drop, dd-plugin, dd-drop-plugin</p>
+</body>
+</html>

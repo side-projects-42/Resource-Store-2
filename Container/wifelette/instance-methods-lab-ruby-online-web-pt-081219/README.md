@@ -1,17 +1,19 @@
-# Instance Methods Lab Ruby
+Instance Methods Lab Ruby
+=========================
 
-## Learning Goals
+Learning Goals
+--------------
 
-- Define a class.
-- Build instance methods for the class.
+-   Define a class.
+-   Build instance methods for the class.
 
-## Overview
+Overview
+--------
 
-In this lab, we will practice defining classes and building instance methods
-inside them. Specifically, you are going to be adding 2 instance methods to a
-`Dog` and `Person` class.
+In this lab, we will practice defining classes and building instance methods inside them. Specifically, you are going to be adding 2 instance methods to a `Dog` and `Person` class.
 
-## Instructions
+Instructions
+------------
 
 Open this lab with `learn open` and run your tests with `learn`.
 
@@ -25,8 +27,7 @@ Add an instance method `#bark` to your `Dog` class in `lib/dog.rb` that will put
 
 ### 3. Define `#sit` in `Dog`
 
-Add an instance method `#sit` to your `Dog` class in `lib/dog.rb` that will puts
-`"The Dog is sitting"`.
+Add an instance method `#sit` to your `Dog` class in `lib/dog.rb` that will puts `"The Dog is sitting"`.
 
 ### 4. Define a `Person` in `lib/person.rb`
 
@@ -34,43 +35,29 @@ Open `lib/person.rb` and add a class definition for a `Person` class.
 
 ### 5. Define `#talk` in `Person`
 
-Add an instance method `#talk` to your `Person` class in `lib/person.rb` that
-will puts `"Hello World!"`
+Add an instance method `#talk` to your `Person` class in `lib/person.rb` that will puts `"Hello World!"`
 
 ### 6. Define `#walk` in `Person`
 
-Add an instance method `#walk` to your `Person` class in `lib/person.rb` that
-will puts `"The Person is walking"`.
+Add an instance method `#walk` to your `Person` class in `lib/person.rb` that will puts `"The Person is walking"`.
 
-When you're done, submit the lab with `learn submit`.
+When you’re done, submit the lab with `learn submit`.
 
-## Conclusion
+Conclusion
+----------
 
-With all tests passing, you have successfully written multiple instance methods
-and _two_ different classes!
+With all tests passing, you have successfully written multiple instance methods and *two* different classes!
 
 ### Additional Note on Lab Testing
 
-In this lab, we asked that you code your two classes in separate `dog.rb` and
-`person.rb` files. You could, in theory, code both classes in the same file, or
-even _code them in opposite files_ and still pass all tests. Why do you think that is?
+In this lab, we asked that you code your two classes in separate `dog.rb` and `person.rb` files. You could, in theory, code both classes in the same file, or even *code them in opposite files* and still pass all tests. Why do you think that is?
 
-...
+…
 
-...
+…
 
-When the tests are run in this lab, RSpec loads both the `dog.rb` and
-`person.rb` files (this happens in the first to lines of `spec/spec_helper.rb`
-[using `require_relative`][]). As long as you place your classes in one of the
-files that RSpec loads, the tests will have access to them.
+When the tests are run in this lab, RSpec loads both the `dog.rb` and `person.rb` files (this happens in the first to lines of `spec/spec_helper.rb` [using `require_relative`](https://apidock.com/ruby/Kernel/require_relative)). As long as you place your classes in one of the files that RSpec loads, the tests will have access to them.
 
-[using `require_relative`]: https://apidock.com/ruby/Kernel/require_relative
+While it isn’t enforced, we do encourage you to separate classes into individual, accurately named files. In a larger application, you might not always need to load the `Dog` class when loading the `Person` class. As classes get larger, it also becomes easier to manage your code if you know each file contains *one* class. Keeping to these conventions makes it easier in the future to go back and read code you’ve previously written.
 
-While it isn't enforced, we do encourage you to separate classes into
-individual, accurately named files. In a larger application, you might not
-always need to load the `Dog` class when loading the `Person` class. As classes
-get larger, it also becomes easier to manage your code if you know each file
-contains _one_ class. Keeping to these conventions makes it easier in the future
-to go back and read code you've previously written.
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/instance-methods-lab-ruby' title='Instance Methods Lab Ruby'>Instance Methods Lab Ruby</a> on Learn.co and start learning to code for free.</p>
+View [Instance Methods Lab Ruby](https://learn.co/lessons/instance-methods-lab-ruby "Instance Methods Lab Ruby") on Learn.co and start learning to code for free.

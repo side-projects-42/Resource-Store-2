@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="crud-with-validations-lab">CRUD With Validations Lab</h1>
+<p>Your goal in this lab is to create a thorough CRUD interface for one model, the <code>Song</code>.</p>
+<h2 id="songs">Songs</h2>
+<p>Songs have the following attributes and limitations:</p>
+<ul>
+<li><code>title</code>, a <code>string</code>
+<ul>
+<li>Must not be blank</li>
+<li>Cannot be repeated by the same artist in the same year</li>
+</ul></li>
+<li><code>released</code>, a <code>boolean</code> describing whether the song was ever officially released.
+<ul>
+<li>Must be <code>true</code> or <code>false</code></li>
+</ul></li>
+<li><code>release_year</code>, an <code>integer</code>
+<ul>
+<li>Optional if <code>released</code> is <code>false</code></li>
+<li>Must not be blank if <code>released</code> is <code>true</code></li>
+<li>Must be less than or equal to the current year</li>
+</ul></li>
+<li><code>artist_name</code>, a <code>string</code>
+<ul>
+<li>Must not be blank</li>
+</ul></li>
+<li><code>genre</code>, a <code>string</code></li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>Use the <code>resource</code> generator, <strong>not</strong> the <code>scaffold</code> generator</p>
+<ol type="1">
+<li><p>Define a model with validations for <code>Song</code></p></li>
+<li><p>Define all RESTful routes for songs</p></li>
+<li><p>Render the list of songs in an HTML table.</p></li>
+<li><p>Build views that connect to each other using route helpers.</p></li>
+<li><p>Use <code>form_for</code> to build forms with pre-fill and error list features. (<em>Hint: Try using a partial to cut down on copy/pasting!</em>)</p></li>
+<li><p>Allow deleting songs with a link, using <code>link_to</code>. Check out the <a href="http://api.rubyonrails.org/classes/ActionView/Helpers/UrlHelper.html#method-i-link_to">official documentation</a> for additional info including setting the <code>method:</code> to <code>:delete</code>.</p></li>
+<li><p>Use strong parameters in your POST/PATCH controller actions.</p></li>
+<li><p>Set the root route to the song index.</p></li>
+</ol>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/crud-with-validations-lab' title='CRUD With Validations Lab'>CRUD With Validations Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

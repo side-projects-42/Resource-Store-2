@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      These tests are for determining the physical memory from the data returned
+      by /proc/meminfo on Linux hosts. The total physical memory of the linux
+      system is reported as part of the enviornment values. The key used by the
+      Python agent is ‘Total Physical Memory (MB)’.
+    </p>
+    <p>
+      The names of all test files should be of the form
+      <code>meminfo_nnnnMB.txt</code>. The value <code>nnnn</code> in the
+      filename is the physical memory of that system in MB.
+    </p>
+  </body>
+</html>

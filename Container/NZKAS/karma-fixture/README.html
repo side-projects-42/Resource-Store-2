@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="karma-fixture-build-status-npm-version">
+      karma-fixture
+      <a href="https://travis-ci.org/billtrik/karma-fixture"
+        ><img
+          src="https://travis-ci.org/billtrik/karma-fixture.svg?branch=master"
+          alt="Build Status"
+      /></a>
+      <a href="http://badge.fury.io/js/karma-fixture"
+        ><img
+          src="https://badge.fury.io/js/karma-fixture.svg"
+          alt="NPM version"
+      /></a>
+    </h1>
+    <p>
+      A plugin for the Karma test runner that loads <code>.html</code> and
+      <code>.json</code> fixtures.
+    </p>
+    <p>It provides the same API as the teaspoon fixture package.</p>
+    <h2 id="installation">Installation</h2>
+    <p>Install the plugin from npm:</p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="ex">npm</span> install karma-fixture --save-dev</a></code></pre>
+    </div>
+    <p>
+      Add <code>fixture</code> to the <code>frameworks</code> array in your
+      Karma configuration:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="kw">function</span>(config)<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="va">config</span>.<span class="at">set</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="dt">frameworks</span><span class="op">:</span> [<span class="st">&#39;mocha&#39;</span><span class="op">,</span> <span class="st">&#39;fixture&#39;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4"></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="co">// ...</span></a></code></pre>
+    </div>
+    <p>
+      You also have to register any/all fixtures inside your Karma configuration
+      file. If all your fixtures exist under a
+      <code>fixtures/base/path/</code> folder, then you should include all files
+      of interest under this base path.
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="kw">function</span>(config)<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="va">config</span>.<span class="at">set</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">files</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb3-4" title="4">      <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">        <span class="dt">pattern</span><span class="op">:</span> <span class="st">&#39;fixtures/base/path/**/*&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-6" title="6">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-7" title="7">      <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb3-8" title="8">    ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb3-11" title="11">]<span class="op">,</span></a></code></pre>
+    </div>
+    <p>Finally you have to add the html2js karma preprocessor:</p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1">$ <span class="ex">npm</span> install karma-html2js-preprocessor --save-dev</a></code></pre>
+    </div>
+    <p>and then configure Karma to load all html and JSON fixture files:</p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="kw">function</span>(config)<span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="va">config</span>.<span class="at">set</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb5-3" title="3">    <span class="dt">preprocessors</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-4" title="4">      <span class="st">&#39;**/*.html&#39;</span>   <span class="op">:</span> [<span class="st">&#39;html2js&#39;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-5" title="5">      <span class="st">&#39;**/*.json&#39;</span>   <span class="op">:</span> [<span class="st">&#39;html2js&#39;</span>]</a>
+<a class="sourceLine" id="cb5-6" title="6">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="co">// ...</span></a></code></pre>
+    </div>
+    <p>
+      <em>(optional)</em> If the plugin won’t get loaded by karma, you might
+      have to declare it inside the <code>plugins</code> array in your Karma
+      configuration
+      <em>(and maybe load <code>karma-html2js-preprocessor</code> as well)</em>:
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="va">module</span>.<span class="at">exports</span> <span class="op">=</span> <span class="kw">function</span>(config)<span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="va">config</span>.<span class="at">set</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb6-3" title="3">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb6-4" title="4">    <span class="dt">plugins</span><span class="op">:</span> [</a>
+<a class="sourceLine" id="cb6-5" title="5">      <span class="st">&#39;karma-fixture&#39;</span></a>
+<a class="sourceLine" id="cb6-6" title="6">      <span class="st">&#39;karma-html2js-preprocessor&#39;</span></a>
+<a class="sourceLine" id="cb6-7" title="7">      <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb6-8" title="8">    ]<span class="op">,</span></a>
+<a class="sourceLine" id="cb6-9" title="9"></a>
+<a class="sourceLine" id="cb6-10" title="10">    <span class="co">// ...</span></a></code></pre>
+    </div>
+    <h2 id="implementation-details">Implementation details</h2>
+    <p>
+      All fixture files are pre-loaded as strings and placed inside the
+      Karma-created <code>window.__html__</code> array.
+    </p>
+    <p>
+      The fixture plugin is exposed in the <code>window.fixture</code> object on
+      every test run. It loads fixture files from that array and appends the
+      created html inside the <code>window.fixture.el</code> element that gets
+      created on start-up.
+    </p>
+    <h2 id="usage">Usage</h2>
+    <p>Lets say you have the following fixture files:</p>
+    <ul>
+      <li>
+        <p><code>fixtures/base/path/test1.html</code></p>
+        <div class="sourceCode" id="cb7">
+          <pre
+            class="sourceCode html"
+          ><code class="sourceCode html"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">&lt;p&gt;</span>p<span class="kw">&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="kw">&lt;span&gt;</span>link<span class="kw">&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="kw">&lt;/a&gt;</span></a></code></pre>
+        </div>
+      </li>
+      <li>
+        <p><code>fixtures/base/path/json/test1.json</code></p>
+        <div class="sourceCode" id="cb8">
+          <pre
+            class="sourceCode javascript"
+          ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="st">&quot;{&quot;</span>test<span class="st">&quot;:true}&quot;</span></a></code></pre>
+        </div>
+      </li>
+    </ul>
+    <p>
+      You can use <code>fixture</code> inside your tests to handle the fixtures:
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="at">describe</span>(<span class="st">&quot;some test that needs a fixture&quot;</span><span class="op">,</span> <span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="co">// If base path is different from the default `spec/fixtures`</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="at">before</span>(<span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="va">fixture</span>.<span class="at">setBase</span>(<span class="st">&quot;fixtures/base/path&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7">  <span class="at">beforeEach</span>(<span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-8" title="8">    <span class="kw">this</span>.<span class="at">result</span> <span class="op">=</span> <span class="va">fixture</span>.<span class="at">load</span>(<span class="st">&quot;test1.html&quot;</span><span class="op">,</span> <span class="st">&quot;test1.json&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-9" title="9">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-10" title="10"></a>
+<a class="sourceLine" id="cb9-11" title="11">  <span class="at">afterEach</span>(<span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-12" title="12">    <span class="va">fixture</span>.<span class="at">cleanup</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-13" title="13">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-14" title="14"></a>
+<a class="sourceLine" id="cb9-15" title="15">  <span class="at">it</span>(<span class="st">&quot;plays with the html fixture&quot;</span><span class="op">,</span> <span class="kw">function</span> () <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-16" title="16">    <span class="at">expect</span>(<span class="va">fixture</span>.<span class="va">el</span>.<span class="at">firstChild</span>).<span class="va">to</span>.<span class="at">equal</span>(<span class="kw">this</span>.<span class="at">result</span>[<span class="dv">0</span>][<span class="dv">0</span>])<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-17" title="17">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-18" title="18"></a>
+<a class="sourceLine" id="cb9-19" title="19">  <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb9-20" title="20"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <h2 id="api">API</h2>
+    <ul>
+      <li>
+        <p><code>fixture.el</code></p>
+        <p>
+          Reference to the container element. Every html fixture loaded gets
+          appended inside this container.
+        </p>
+      </li>
+      <li>
+        <p><code>fixture.json</code></p>
+        <p>An array of all json objects imported from fixture templates.</p>
+      </li>
+      <li>
+        <p><code>fixture.load(files..., append = false)</code></p>
+        <p>
+          It takes multiple filenames as arguments. All filenames are loaded
+          from within the base path.
+        </p>
+        <p>
+          It loads and appends them inside the fixtures container element. It
+          returns an array with references to the newly created first level html
+          elements. When more than one are loaded, it returns an array of the
+          above described format, for each loaded fixture.
+        </p>
+        <p>
+          It takes an optional boolean argument which defaults to
+          <code>false</code>. If <code>false</code>, it empties the
+          <code>window.fixture.el</code> container element and clears the
+          <code>window.fixture.json</code> array. If <code>true</code>, it just
+          appends the requested fixture to the container.
+        </p>
+        <p>
+          If your fixtures exist in a base path other than the default
+          <code>spec/fixtures</code>, you should call
+          <code>fixture.setBase('fixtures/base/path')</code> in your specs, or
+          load them with their full, base included, filenames prefixed with a
+          ‘/’.
+        </p>
+        <p>
+          For example:
+          <code>fixture.load('/my/other/base/path/fixture1.html')</code>
+        </p>
+        <p>Scenarios:</p>
+        <p><strong>html fixture</strong></p>
+        <p>
+          It returns an array of all the first-level nodes created by the
+          fixture file:
+        </p>
+        <div class="sourceCode" id="cb10">
+          <pre
+            class="sourceCode javascript"
+          ><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1">html_fixture <span class="op">=</span> <span class="va">fixture</span>.<span class="at">load</span>(<span class="st">&quot;test1.html&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co">// then</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="at">expect</span>(html_fixture[<span class="dv">0</span>].<span class="at">innerHTML</span>).<span class="va">to</span>.<span class="at">equal</span>(<span class="st">&quot;&lt;p&gt;p&lt;/p&gt;&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co">// and</span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="at">expect</span>(html_fixture[<span class="dv">1</span>].<span class="at">innerHTML</span>).<span class="va">to</span>.<span class="at">equal</span>(</a>
+<a class="sourceLine" id="cb10-6" title="6">  <span class="st">&#39;&lt;a href=&quot;#&quot;&gt;&lt;span&gt;link&lt;/span&gt;&lt;/a&gt;&#39;</span></a>
+<a class="sourceLine" id="cb10-7" title="7">)<span class="op">;</span></a></code></pre>
+        </div>
+        <p><strong>JSON fixture</strong></p>
+        <p>
+          It returns a valid object by JSON.parsing the passed json fixture
+          file. Also all JSON files loaded get appended to the
+          <code>window.fixture.json</code> array:
+        </p>
+        <div class="sourceCode" id="cb11">
+          <pre
+            class="sourceCode javascript"
+          ><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1">json_fixture <span class="op">=</span> <span class="va">fixture</span>.<span class="at">load</span>(<span class="st">&quot;json/test1.json&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="co">// then</span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="at">expect</span>(json_fixture).<span class="va">to</span>.<span class="at">eql</span>(<span class="op">{</span> <span class="dt">test</span><span class="op">:</span> <span class="kw">true</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="co">// and</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="at">expect</span>(<span class="va">fixture</span>.<span class="at">json</span>[<span class="dv">0</span>]).<span class="va">to</span>.<span class="at">eql</span>(<span class="op">{</span> <span class="dt">test</span><span class="op">:</span> <span class="kw">true</span> <span class="op">}</span>)<span class="op">;</span></a></code></pre>
+        </div>
+        <p><strong>Multiple files</strong></p>
+        <p>
+          The result will be an array containing results of each loaded
+          template:
+        </p>
+        <div class="sourceCode" id="cb12">
+          <pre
+            class="sourceCode javascript"
+          ><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1">loaded_fixtures <span class="op">=</span> <span class="va">fixture</span>.<span class="at">load</span>(<span class="st">&quot;test1.html&quot;</span><span class="op">,</span> <span class="st">&quot;json/test1.json&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="co">// then</span></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="at">expect</span>(loaded_fixtures[<span class="dv">0</span>][<span class="dv">0</span>].<span class="at">innerHTML</span>).<span class="va">to</span>.<span class="at">equal</span>(<span class="st">&quot;&lt;p&gt;p&lt;/p&gt;&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="co">// and</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="at">expect</span>(loaded_fixtures[<span class="dv">0</span>][<span class="dv">1</span>].<span class="at">innerHTML</span>).<span class="va">to</span>.<span class="at">equal</span>(</a>
+<a class="sourceLine" id="cb12-6" title="6">  <span class="st">&#39;&lt;a href=&quot;#&quot;&gt;&lt;span&gt;link&lt;/span&gt;&lt;/a&gt;&#39;</span></a>
+<a class="sourceLine" id="cb12-7" title="7">)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-8" title="8"><span class="co">// and</span></a>
+<a class="sourceLine" id="cb12-9" title="9"><span class="at">expect</span>(loaded_fixtures[<span class="dv">1</span>]).<span class="va">to</span>.<span class="at">eql</span>(<span class="op">{</span> <span class="dt">test</span><span class="op">:</span> <span class="kw">true</span> <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb12-10" title="10"><span class="co">// and</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="at">expect</span>(<span class="va">fixture</span>.<span class="at">json</span>[<span class="dv">0</span>]).<span class="va">to</span>.<span class="at">eql</span>(<span class="op">{</span> <span class="dt">test</span><span class="op">:</span> <span class="kw">true</span> <span class="op">}</span>)<span class="op">;</span></a></code></pre>
+        </div>
+      </li>
+      <li>
+        <p><code>fixture.set(html_strings, append=false)</code></p>
+        <p>
+          It takes multiple html_strings as arguments and load them. It returns
+          the loaded result, or an array of more than one loaded results
+        </p>
+        <p>
+          It takes a boolean argument with default value <code>false</code>. If
+          <code>false</code>, it empties the
+          <code>window.fixture.el</code> container element and clears the
+          <code>window.fixture.json</code> array.
+        </p>
+        <div class="sourceCode" id="cb13">
+          <pre
+            class="sourceCode javascript"
+          ><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1">result <span class="op">=</span> <span class="va">fixture</span>.<span class="at">set</span>(<span class="st">&quot;&lt;h1&gt;test&lt;/h1&gt;&quot;</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="co">// then</span></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="at">expect</span>(result[<span class="dv">0</span>].<span class="at">innerHTML</span>).<span class="va">to</span>.<span class="at">equal</span>(<span class="st">&quot;&lt;h1&gt;test&lt;/h1&gt;&quot;</span>)<span class="op">;</span></a></code></pre>
+        </div>
+      </li>
+      <li>
+        <p><code>fixture.cleanup()</code></p>
+        <p>
+          It empties the <code>window.fixture.el</code> container element and
+          clears the <code>window.fixture.json</code> array.
+        </p>
+      </li>
+      <li>
+        <p><code>fixture.setBase(fixtureBasePath)</code></p>
+        <p>
+          It set the base path under which all forthcoming fixtures will be
+          loaded. This can be bypassed by loading a fixture with its full, base
+          included, filename prefixed with a ‘/’.
+        </p>
+      </li>
+    </ul>
+    <h2 id="license">License</h2>
+    <p>The MIT License (MIT)</p>
+  </body>
+</html>

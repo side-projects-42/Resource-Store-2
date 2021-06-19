@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HISTORY</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="scrollview-change-history">ScrollView Change History</h1>
+<h2 id="section">3.5.0</h2>
+<ul>
+<li>Allow scrollbar to work with non-px width scrollviews</li>
+</ul>
+<h2 id="section-1">3.4.1</h2>
+<ul>
+<li><p>Fixed incorrect scroll width/height calculations to account for translate (for real this time) on Chrome, and now Safari.</p>
+<p>translateZ applied for h/w acceleration was resulting in the incorrect scroll values.</p></li>
+<li><p>Removed fallback to cb.scrollWidth/Height, when determining scroll dimensions. This was masking the real problem with translate impacting boundingBox scroll width/height calcs mentioned above.</p></li>
+<li><p>Fixed scrollbar racing ahead of scroll position on FF 5+ with native transition support enabled.</p></li>
+<li><p>Added ability to disable scrollview completely, disable flick or disable drag</p>
+<p>// Stops SV from moving through flick/drag or the API. sv.set(“disabled”, true);</p>
+<p>// Stops SV from reacting to flick. Can still drag/scroll through API sv.set(“flick”, false);</p>
+<p>// Stops SV from reacting to drag. Can still flick, scroll through API sv.set(“drag”, false);</p></li>
+<li><p>Resync UI on scrollview-list class application.</p></li>
+</ul>
+<h2 id="section-2">3.4.0</h2>
+<ul>
+<li><p>Fixed _uiDimensionsChange code which was looking explicitly for the “width” attribute. Just plain wrong.</p></li>
+<li><p>Added vertical paging support.</p></li>
+<li><p>Removed DOMSubtreeModified event listening which was only really kicking in for Webkit and was too heavy handed. User now needs to call syncUI() manually on all browsers, if the content of the scrollview is changed, and may potentially result in dimension changes.</p></li>
+<li><p>Broke out use of transform3d into a seperate method, and added a protected flag, _forceHWTransforms, to allow for customization if required (H/W acceleration related glitches or changing the set of browsers for which we attempt to force it).</p></li>
+<li><p>Created Scrollview-List plugin to provide out-of-the-box handling of List (LI) content inside horizontal and vertical ScrollViews.</p></li>
+<li><p>Fixed incorrect scroll width/height calculations on Chrome 9+, FF when syncUI() [ or _uiDimensionsChange() ] was called when the ScrollView was scrolled over.</p></li>
+<li><p>Protected state flags are now reset if _uiDimensionsChange results in flipped orientation.</p></li>
+<li><p>Use the larger of bb.scrollWidth/Height or cb.scrollWidth/Height, to calculate scroll dimensions to account for FF (which clips cb.scrollWidth) and Chrome/MacOS (which clips bb.scrollWidth when translated even after incorrect scroll calcs above).</p></li>
+</ul>
+<h2 id="section-3">3.3.0</h2>
+<ul>
+<li><p>Fixed shared scrollbar node across multiple instances.</p></li>
+<li><p>Changed async call to _uiDimensionsChange after render, to a sync call.</p></li>
+<li><p>Corrected skin prefix to be yui3-skin-sam instead yui-skin-sam.</p></li>
+<li><p>Refactored for kweight, and broke out scrollview-base-ie conditional module.</p></li>
+<li><p>Don’t prevent default on gesturemoveend, so that click listeners on elements inside the scrollview respond reliably. Panning is still prevented by preventing gesturemousemove.</p></li>
+<li><p>Removed generic CSS in scrollview-base.css targeting UL/LI content. The rules were added to support the common use case, but were too broad, and in general, scrollview is content agnostic.</p></li>
+<li><p>The same support can be achieved by adding cssreset to the page (to remove LI bullets, padding, margin), and adding inline block rules, when providing horizontal scrollview content as a list. These rules are provided below:</p>
+<p>/* To layout horizontal LIs <em>/ #my-horiz-scrollview-content li { display: inline-block; </em>display: inline; *zoom:1; }</p>
+<p>/* For IE - needs a non-transparent background to pick up events <em>/ #my-scrollview-content li { </em>zoom:1; background-color:#fff; }</p></li>
+<li><p>Added prefix-less border radius scrollbar styles for IE9.</p></li>
+<li><p>Made scrollbar-paginator skinnable:false. It has no CSS which is applied, out of the box currently. The paginator CSS shipped in 3.2.0, was not actively applied.</p></li>
+</ul>
+<h2 id="section-4">3.2.0</h2>
+<ul>
+<li>New beta component</li>
+</ul>
+</body>
+</html>

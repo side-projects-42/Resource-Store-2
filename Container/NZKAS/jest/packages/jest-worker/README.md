@@ -2,17 +2,15 @@
 
 Module for executing heavy tasks under forked processes in parallel, by providing a `Promise` based interface, minimum overhead, and bound workers.
 
-The module works by providing an absolute path of the module to be loaded in all forked processes. Files relative to a node module are also accepted. All methods are exposed on the parent process as promises, so they can be `await`'ed. Child (worker) methods can either be synchronous or asynchronous.
+The module works by providing an absolute path of the module to be loaded in all forked processes. Files relative to a node module are also accepted. All methods are exposed on the parent process as promises, so they can be `await`’ed. Child (worker) methods can either be synchronous or asynchronous.
 
 The module also implements support for bound workers. Binding a worker means that, based on certain parameters, the same task will always be executed by the same worker. The way bound workers work is by using the returned string of the `computeWorkerKey` method. If the string was used before for a task, the call will be queued to the related worker that processed the task earlier; if not, it will be executed by the first available worker, then sticked to the worker that executed it; so the next time it will be processed by the same worker. If you have no preference on the worker executing the task, but you have defined a `computeWorkerKey` method because you want _some_ of the tasks to be sticked, you can return `null` from it.
 
-The list of exposed methods can be explicitly provided via the `exposedMethods` option. If it is not provided, it will be obtained by requiring the child module into the main process, and analyzed via reflection. Check the "minimal example" section for a valid one.
+The list of exposed methods can be explicitly provided via the `exposedMethods` option. If it is not provided, it will be obtained by requiring the child module into the main process, and analyzed via reflection. Check the “minimal example” section for a valid one.
 
 ## Install
 
-```sh
-$ yarn add jest-worker
-```
+    $ yarn add jest-worker
 
 ## Example
 
@@ -20,30 +18,26 @@ This example covers the minimal usage:
 
 ### File `parent.js`
 
-```javascript
-import Worker from 'jest-worker';
+    import Worker from 'jest-worker';
 
-async function main() {
-  const worker = new Worker(require.resolve('./Worker'));
-  const result = await worker.hello('Alice'); // "Hello, Alice"
-}
+    async function main() {
+      const worker = new Worker(require.resolve('./Worker'));
+      const result = await worker.hello('Alice'); // "Hello, Alice"
+    }
 
-main();
-```
+    main();
 
 ### File `worker.js`
 
-```javascript
-export function hello(param) {
-  return 'Hello, ' + param;
-}
-```
+    export function hello(param) {
+      return 'Hello, ' + param;
+    }
 
 ## Experimental worker
 
-Node 10 shipped with [worker-threads](https://nodejs.org/api/worker_threads.html), a "threading API" that uses SharedArrayBuffers to communicate between the main process and its child threads. This experimental Node feature can significantly improve the communication time between parent and child processes in `jest-worker`.
+Node 10 shipped with [worker-threads](https://nodejs.org/api/worker_threads.html), a “threading API” that uses SharedArrayBuffers to communicate between the main process and its child threads. This experimental Node feature can significantly improve the communication time between parent and child processes in `jest-worker`.
 
-Since `worker_threads` are considered experimental in Node, you have to opt-in to this behavior by passing `enableWorkerThreads: true` when instantiating the worker. While the feature was unflagged in Node 11.7.0, you'll need to run the Node process with the `--experimental-worker` flag for Node 10.
+Since `worker_threads` are considered experimental in Node, you have to opt-in to this behavior by passing `enableWorkerThreads: true` when instantiating the worker. While the feature was unflagged in Node 11.7.0, you’ll need to run the Node process with the `--experimental-worker` flag for Node 10.
 
 ## API
 
@@ -75,7 +69,7 @@ Allow customizing all options passed to `childProcess.fork`. By default, some va
 
 Every time a method exposed via the API is called, `computeWorkerKey` is also called in order to bound the call to a worker. This is useful for workers that are able to cache the result or part of it. You bound calls to a worker by making `computeWorkerKey` return the same identifier for all different calls. If you do not want to bind the call to any worker, return `null`.
 
-The callback you provide is called with the method name, plus all the rest of the arguments of the call. Thus, you have full control to decide what to return. Check a practical example on bound workers under the "bound worker usage" section.
+The callback you provide is called with the method name, plus all the rest of the arguments of the call. Thus, you have full control to decide what to return. Check a practical example on bound workers under the “bound worker usage” section.
 
 By default, no process is bound to any worker.
 
@@ -115,8 +109,8 @@ Finishes the workers by killing all workers. No further calls can be done to the
 
 The child process can define two special methods (both of them can be asynchronous):
 
-- `setup()`: If defined, it's executed before the first call to any method in the child.
-- `teardown()`: If defined, it's executed when the farm ends.
+- `setup()`: If defined, it’s executed before the first call to any method in the child.
+- `teardown()`: If defined, it’s executed when the farm ends.
 
 # More examples
 
@@ -126,40 +120,36 @@ This example covers the standard usage:
 
 ### File `parent.js`
 
-```javascript
-import Worker from 'jest-worker';
+    import Worker from 'jest-worker';
 
-async function main() {
-  const myWorker = new Worker(require.resolve('./Worker'), {
-    exposedMethods: ['foo', 'bar', 'getWorkerId'],
-    numWorkers: 4,
-  });
+    async function main() {
+      const myWorker = new Worker(require.resolve('./Worker'), {
+        exposedMethods: ['foo', 'bar', 'getWorkerId'],
+        numWorkers: 4,
+      });
 
-  console.log(await myWorker.foo('Alice')); // "Hello from foo: Alice"
-  console.log(await myWorker.bar('Bob')); // "Hello from bar: Bob"
-  console.log(await myWorker.getWorkerId()); // "3" -> this message has sent from the 3rd worker
+      console.log(await myWorker.foo('Alice')); // "Hello from foo: Alice"
+      console.log(await myWorker.bar('Bob')); // "Hello from bar: Bob"
+      console.log(await myWorker.getWorkerId()); // "3" -> this message has sent from the 3rd worker
 
-  myWorker.end();
-}
+      myWorker.end();
+    }
 
-main();
-```
+    main();
 
 ### File `worker.js`
 
-```javascript
-export function foo(param) {
-  return 'Hello from foo: ' + param;
-}
+    export function foo(param) {
+      return 'Hello from foo: ' + param;
+    }
 
-export function bar(param) {
-  return 'Hello from bar: ' + param;
-}
+    export function bar(param) {
+      return 'Hello from bar: ' + param;
+    }
 
-export function getWorkerId() {
-  return process.env.JEST_WORKER_ID;
-}
-```
+    export function getWorkerId() {
+      return process.env.JEST_WORKER_ID;
+    }
 
 ## Bound worker usage:
 
@@ -167,49 +157,45 @@ This example covers the usage with a `computeWorkerKey` method:
 
 ### File `parent.js`
 
-```javascript
-import Worker from 'jest-worker';
+    import Worker from 'jest-worker';
 
-async function main() {
-  const myWorker = new Worker(require.resolve('./Worker'), {
-    computeWorkerKey: (method, filename) => filename,
-  });
+    async function main() {
+      const myWorker = new Worker(require.resolve('./Worker'), {
+        computeWorkerKey: (method, filename) => filename,
+      });
 
-  // Transform the given file, within the first available worker.
-  console.log(await myWorker.transform('/tmp/foo.js'));
+      // Transform the given file, within the first available worker.
+      console.log(await myWorker.transform('/tmp/foo.js'));
 
-  // Wait a bit.
-  await sleep(10000);
+      // Wait a bit.
+      await sleep(10000);
 
-  // Transform the same file again. Will immediately return because the
-  // transformed file is cached in the worker, and `computeWorkerKey` ensures
-  // the same worker that processed the file the first time will process it now.
-  console.log(await myWorker.transform('/tmp/foo.js'));
+      // Transform the same file again. Will immediately return because the
+      // transformed file is cached in the worker, and `computeWorkerKey` ensures
+      // the same worker that processed the file the first time will process it now.
+      console.log(await myWorker.transform('/tmp/foo.js'));
 
-  myWorker.end();
-}
+      myWorker.end();
+    }
 
-main();
-```
+    main();
 
 ### File `worker.js`
 
-```javascript
-import babel from '@babel/core';
+    import babel from '@babel/core';
 
-const cache = Object.create(null);
+    const cache = Object.create(null);
 
-export function transform(filename) {
-  if (cache[filename]) {
-    return cache[filename];
-  }
+    export function transform(filename) {
+      if (cache[filename]) {
+        return cache[filename];
+      }
 
-  // jest-worker can handle both immediate results and thenables. If a
-  // thenable is returned, it will be await'ed until it resolves.
-  return babel.transformFileAsync(filename).then((result) => {
-    cache[filename] = result;
+      // jest-worker can handle both immediate results and thenables. If a
+      // thenable is returned, it will be await'ed until it resolves.
+      return babel.transformFileAsync(filename).then((result) => {
+        cache[filename] = result;
 
-    return result;
-  });
-}
-```
+        return result;
+      });
+    }

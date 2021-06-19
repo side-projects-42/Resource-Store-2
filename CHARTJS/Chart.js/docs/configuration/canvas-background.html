@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>canvas-background</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="canvas-background">Canvas background</h1>
+<p>In some use cases you would want a background image or color over the whole canvas. There is no built-in support for this, the way you can achieve this is by writing a custom plugin.</p>
+<p>In the two example plugins underneath here you can see how you can draw a color or image to the canvas as background. This way of giving the chart a background is only necessary if you want to export the chart with that specific background. For normal use you can set the background more easily with <a href="https://www.w3schools.com/cssref/css3_pr_background.asp">CSS</a>.</p>
+<div class="tabs">
+<p>::: tab Color</p>
+<p>```js chart-editor // <block:setup:1> const data = { labels: [“Red”, “Blue”, “Yellow”], datasets: [ { label: “My First Dataset”, data: [300, 50, 100], backgroundColor: [ “rgb(255, 99, 132)”, “rgb(54, 162, 235)”, “rgb(255, 205, 86)”, ], hoverOffset: 4, }, ], }; // </block:setup></p>
+<p>// <block:plugin:2> // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update(). const plugin = { id: “custom_canvas_background_color”, beforeDraw: (chart) =&gt; { const ctx = chart.canvas.getContext(“2d”); ctx.save(); ctx.globalCompositeOperation = “destination-over”; ctx.fillStyle = “lightGreen”; ctx.fillRect(0, 0, chart.width, chart.height); ctx.restore(); }, }; // </block:plugin></p>
+<p>// <block:config:0> const config = { type: “doughnut”, data: data, plugins: [plugin], }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+</div>
+<p>::: tab Image</p>
+<p>```js chart-editor // <block:setup:1> const data = { labels: [“Red”, “Blue”, “Yellow”], datasets: [ { label: “My First Dataset”, data: [300, 50, 100], backgroundColor: [ “rgb(255, 99, 132)”, “rgb(54, 162, 235)”, “rgb(255, 205, 86)”, ], hoverOffset: 4, }, ], }; // </block:setup></p>
+<p>// <block:plugin:2> // Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update(). const image = new Image(); image.src = “https://www.chartjs.org/img/chartjs-logo.svg”;</p>
+<p>const plugin = { id: “custom_canvas_background_image”, beforeDraw: (chart) =&gt; { if (image.complete) { const ctx = chart.ctx; const { top, left, width, height } = chart.chartArea; const x = left + width / 2 - image.width / 2; const y = top + height / 2 - image.height / 2; ctx.drawImage(image, x, y); } else { image.onload = () =&gt; chart.draw(); } }, }; // </block:plugin></p>
+<p>// <block:config:0> const config = { type: “doughnut”, data: data, plugins: [plugin], }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+<p>:::</p>
+<p>::::</p>
+</body>
+</html>

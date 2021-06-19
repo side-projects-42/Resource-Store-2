@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Build-and-Deploy</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <h1 id="overview">Overview</h1>
+    <p>
+      This site is deployed utilizing Github Actions for continuous integration
+      (CI) combined with AWS Amplify’s branch-based continuous deployment (CD).
+    </p>
+    <ul>
+      <li>
+        <a
+          href="https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#github-actions-ci"
+          >GitHub Actions (CI)</a
+        >
+        <ul>
+          <li>
+            <a
+              href="https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#project-stats-generation"
+              >Project Stats Generation</a
+            >
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a
+          href="https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#stagingproduction-deployment-cd"
+          >Staging/Production Deployment (CD)</a
+        >
+        <ul>
+          <li>
+            <a
+              href="https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#production-deployment"
+              >Production Deployment</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/newrelic/opensource-website/wiki/Build-and-Deploy#staging-deployment"
+              >Staging Deployment</a
+            >
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h2 id="github-actions-ci">Github Actions (CI)</h2>
+    <ul>
+      <li>
+        Generation of project-stats data
+        <ul>
+          <li>Triggered every 4 hours</li>
+        </ul>
+      </li>
+      <li>
+        Docs/Wiki Sync
+        <ul>
+          <li>
+            Triggered on pushes to <code>develop</code> branch when the
+            <code>docs</code> directory changes
+          </li>
+          <li>
+            Triggered when wiki is edited (though this is discouraged - all
+            changes <em>should</em> happen in the docs directory via pull
+            request)
+          </li>
+        </ul>
+      </li>
+      <li>
+        Pull Request build/test/lint checking
+        <ul>
+          <li>Triggered on pull requests being opened</li>
+        </ul>
+      </li>
+      <li>
+        Release management
+        <ul>
+          <li>
+            Triggered on pushes to <code>develop</code> following the
+            <a href="https://www.conventionalcommits.org/en/v1.0.0/"
+              >Conventional Commits</a
+            >
+            standard.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h3 id="project-stats-generation">Project-Stats Generation</h3>
+    <p>
+      Every 4 hours, the project-stats workflow kicks off. After running this
+      Action, it will commit and push to both the <code>develop</code> and
+      <code>main</code> branch. Then, this will trigger builds on Amplify.
+    </p>
+    <h2 id="stagingproduction-deployment-cd">
+      Staging/Production Deployment (CD)
+    </h2>
+    <p>
+      Amplify is connected to the <code>main</code> and
+      <code>deploy</code> branches, and has webhooks set on the repo that listen
+      for pushes to those branches. On push, an atomic deploy is triggered. If
+      the build/deploy fails, the site will continue to run with the existing
+      version.
+    </p>
+    <blockquote>
+      <p>
+        Note: Any commit with <code>[skip-cd]</code> will bypass the build
+        process in Amplify.
+      </p>
+    </blockquote>
+    <h3 id="production-deployment">Production Deployment</h3>
+    <p>
+      <strong>Production</strong> deployments are exclusively handled through
+      merging a Pull Request into the <code>main</code> branch. If an ad-hoc
+      deployment is required, please reach out to a project maintainer.
+    </p>
+    <p>
+      <strong>Opening a Pull Request</strong>: the direction should be
+      <code>develop</code> -&gt; <code>main</code>. Once all checks have passed,
+      merge via <code>Merge Pull Request</code> option (using
+      <code>Create a merge commit</code> as the strategy). This will merge the
+      commits in from develop (effectively “catching” <code>main</code> up with
+      <code>develop</code>), plus issue the merge commit on top.
+    </p>
+    <p>
+      <strong>Merging</strong>: use a
+      <a href="https://www.conventionalcommits.org/en/v1.0.0/"
+        >Conventional Commit</a
+      >
+      message indicating this is a release:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">chore</span>(release)<span class="bu">:</span> updating production to vX.X.X</a></code></pre>
+    </div>
+    <p>
+      The intent is: semantic-release issued a new tag/release on the
+      <code>develop</code> branch, so we are now promoting that to production.
+      If for whatever reason there wasn’t a release, include what the update is
+      and provide the release at the end of the message:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode sh"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">chore</span>(release)<span class="bu">:</span> content updates but no new site features [vX.X.X]</a></code></pre>
+    </div>
+    <blockquote>
+      <p>
+        Note: Since semantic-release is only running on the
+        <code>develop</code> branch, there won’t be a new tag/release cut from
+        the main branch. We might revisit this idea in the future if the tooling
+        evolves.
+      </p>
+    </blockquote>
+    <h3 id="staging-deployment">Staging Deployment</h3>
+    <p>
+      <strong>Staging</strong> deployments will happen frequently, and should be
+      used to QA changes prior to opening a Pull Request to <code>main</code>.
+    </p>
+    <p>
+      These deployments happen automagically every time a commit is made to
+      <code>develop</code>. This is handled via Amplify’s Git-based continuous
+      deployment.
+    </p>
+    <p>
+      If it seems like builds/deploys should be occurring but aren’t, please
+      contact a project maintainer.
+    </p>
+    <blockquote>
+      <p>
+        Final Note: PRs that are opened from a branch in this repo (not forks)
+        will generate preview links on Amplify automatically.
+      </p>
+    </blockquote>
+  </body>
+</html>

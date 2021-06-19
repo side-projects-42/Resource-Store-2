@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>category</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="category-scale">Category Scale</h1>
+<p>```js chart-editor // <block:data:1> const DATA_COUNT = 20; const NUMBER_CFG = { count: DATA_COUNT, min: -100, max: 100 }; const data = { labels: Utils.months({ count: DATA_COUNT }), datasets: [ { label: “Dataset 1”, borderColor: Utils.randomColor(0.7), backgroundColor: Utils.randomColor(0.5), data: Utils.numbers(NUMBER_CFG), }, { label: “Dataset 2”, borderColor: Utils.randomColor(0.7), backgroundColor: Utils.randomColor(0.5), data: Utils.numbers(NUMBER_CFG), }, { label: “Dataset 3”, borderColor: Utils.randomColor(0.7), backgroundColor: Utils.randomColor(0.5), data: Utils.numbers(NUMBER_CFG), }, ], }; // </block:data></p>
+<p>// <block:scales:2> const scaleOpts = { grid: { borderColor: Utils.randomColor(1), color: “rgba( 0, 0, 0, 0.1)”, }, title: { display: true, text: (ctx) =&gt; ctx.scale.axis + " axis“, }, }; const scales = { x: { type:”category“, min: 5, max: 11, }, y: { type:”linear", }, }; Object.keys(scales).forEach((scale) =&gt; Object.assign(scales[scale], scaleOpts)); // </block:scales></p>
+<p>// <block:config:0> const config = { type: “bar”, data: data, options: { scales: scales, plugins: { zoom: { pan: { enabled: true, mode: “xy”, threshold: 5, }, zoom: { wheel: { enabled: true, }, pinch: { enabled: true, }, mode: “xy”, }, }, }, }, }; // </block:config></p>
+<p>const actions = [ { name: “Reset zoom”, handler(chart) { chart.resetZoom(); }, },];</p>
+<p>module.exports = { actions, config, }; ```</p>
+</body>
+</html>

@@ -1,6 +1,8 @@
-# Firmata.py
+Firmata.py
+==========
 
-## Overview
+Overview
+--------
 
 Firmata.py presents an easy-to-use API for the firmata wire protocol commonly used with arduino boards. Firmata.py implements the entire protocol (including things like the Capabilities query and I2C).
 

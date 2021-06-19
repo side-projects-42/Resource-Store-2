@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h2 id="overview">Overview</h2>
+<p>You’re going to make a file that will print <a href="http://en.wikipedia.org/wiki/%22Hello,_World!%22_program">“Hello World!”</a> to your terminal.</p>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Create a new Ruby file.</li>
+<li>Write syntactically valid code to produce “Hello World!”</li>
+<li>Run a Ruby file.</li>
+<li>Run the Learn gem.</li>
+<li>Submit the lab.</li>
+</ol>
+<h2 id="video">Video</h2>
+<video controls width="100%">
+<source src="http://learn-co-videos.s3.amazonaws.com/ruby/hello-world-ruby.mp4" type="video/mp4" >
+<p>The video accompanying this lab is best enjoyed on Learn.co </video></p>
+<p><a href="http://learn-co-videos.s3.amazonaws.com/ruby/hello-world-ruby.mp4">MP4</a></p>
+<h2 id="instructions">Instructions</h2>
+<h3 id="step-1">Step 1</h3>
+<p>The first step is to create a text file called <code>hello_world.rb</code>. The <code>.rb</code> file extension is a common convention for specifying the language of the file, in this case, Ruby. You can create a file by making a new file in your favorite text editor and saving it into this labs directory. Or you can type <code>touch hello_world.rb</code> within your terminal once you’ve navigate into this labs directory with <code>cd</code>. If you have Sublime Text and the <a href="http://olivierlacan.com/posts/launch-sublime-text-3-from-the-command-line/">Sublime Text symlink</a> <code>subl</code> setup, you can also type <code>subl .</code> within this labs directory to open the entire directory in sublime (very useful).</p>
+<h3 id="step-2">Step 2</h3>
+<p>In the file <code>hello_world.rb</code> that you created, you need to write a single line of code that prints the string Hello World! to your terminal. Did you notice the method for printing in Ruby in another lab? It is short for “output string.” It’s the method <code>puts</code>. And remember how to make a string in Ruby? Just surround your text with <code>""</code>.</p>
+<p>File: <code>hello_world.rb</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb1-1" title="1">puts <span class="st">&quot;Hello World!&quot;</span></a></code></pre></div>
+<h3 id="step-3">Step 3</h3>
+<p>Execute this file by typing <code>ruby hello_world.rb</code> into your terminal and pressing <code>enter</code>. The <code>ruby</code> part of that command tells your computer to use the Ruby interpreter when reading and executing the code in your file. The second part of the command, <code>hello_world.rb</code> is the path to the file you want to run.</p>
+<p>You should see:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">$ <span class="ex">ruby</span> hello_world.rb</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">Hello</span> World!</a></code></pre></div>
+<h3 id="step-4">Step 4</h3>
+<p>Confirm everything is working by running the <code>learn</code> command.</p>
+<h3 id="step-5">Step 5</h3>
+<p>Add, Commit and Push your code to GitHub and open a pull request and this lab is done, but your adventure in Ruby has only just begun!</p>
+<h3 id="hello-world-history">Hello World History</h3>
+<figure>
+<img src="https://d32dm0rphc51dk.cloudfront.net/b6JQ66-0nHij79irJT-Pdg/large.jpg" alt="Hello World! Art" /><figcaption>Hello World! Art</figcaption>
+</figure>
+<p><em><a href="https://www.artsy.net/artwork/brian-kernighan-hello-world">Hello World! by Brian Kernighan, from Artsy’s Algorythm Auction</a> based on a 1974 Bell Laboratories internal memorandum by Brian Kernighan, Programming in C: A Tutorial, which contains the first known version.</em></p>
+</body>
+</html>

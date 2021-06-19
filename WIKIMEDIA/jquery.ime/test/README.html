@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="tests-in-jquery.ime">Tests in jquery.ime</h1>
+<p>jquery.ime has a simple, but powerful, QUnit-based testing framework.</p>
+<p>When you are developing a new layout or making changes in an existing one, begin by running the tests.</p>
+<p>Run <code>grunt --force</code> or open jquery.ime/test/index.html in your browser. Check that all the tests pass.</p>
+<p>When you are adding or changing rules, edit the jquery.ime.test.fixtures.js file and add a test for every rule that you are adding or changing, before you are actually programming the rules.</p>
+<p>Here’s an example test block for a layout:</p>
+<pre><code>{
+    description: &#39;Amharic Transliteration test&#39;,
+    tests: [
+        { input: &#39;k&#39;, output: &#39;ክ&#39;, description: &#39;Amharic k -&gt; ክ&#39; },
+        { input: &#39;dW&#39;, output: &#39;ዷ&#39;, description: &#39;Amharic dW -&gt; ዷ&#39; }
+    ],
+    inputmethod: &#39;am-transliteration&#39;
+}</code></pre>
+<p>Let’s analyze it:</p>
+<ul>
+<li><code>description</code>: This is the human-readable description of a block of tests that will appear when you run them in QUnit.</li>
+<li><code>tests</code>: These are the actual tests. Make sure to add a comma after each test except the last one, as it usually is with JavaScript. See below for more details about the tests.</li>
+<li><code>inputmethod</code>: This is the name of the scheme. It is the same as the id field in the scheme description. It must also appear in the id field in the $input line.</li>
+</ul>
+<p>Each test consists of:</p>
+<ul>
+<li><code>input</code>: The characters which are expected to be typed. This is either a string (for non-extended input) or an array of arrays (see below).</li>
+<li><code>output</code>: This is the expected result: the string that is supposed to appear after the input string is typed. In the first case, it is expected that typing ‘ka’ will yield the Amharic letter ‘ካ’ and in the second case it is expected that typing ‘dW’ will yield ‘ዷ’.</li>
+<li><code>description</code>: This is a description of the test that will appear in QUnit.</li>
+</ul>
+<p>For extended keys specify the characters like this:</p>
+<pre><code>{
+    description: &#39;Hebrew layout and extended keys test&#39;,
+    tests: [
+        { input: [ [ &#39;-&#39;, false ] ], output: &#39;-&#39;, description: &#39;Hebrew regular -&#39; },
+        { input: [ [ &#39;-&#39;, true ] ], output: &#39;־&#39;, description: &#39;Hebrew extended -&#39; }
+    ],
+    inputmethod: &#39;he-standard-2012-extonly&#39;
+}</code></pre>
+<p>In this example, the first test checks typing the ‘-’ character without pressing the key that makes it extended, and the second one checks the same character, extended.</p>
+<p>Some keyboard layouts have special treatment for end of line (<code>\n</code> and <code>\r</code>). For these, add the <code>multiline</code> option:</p>
+<pre><code>{
+    description: &#39;Hindi transliteration tests&#39;,
+    tests: [
+        { input: &#39;raam\r&#39;, output: &#39;राम\n&#39;, description: &#39;Hindi transliteration - raam&lt;line-break&gt; (\\r)&#39; }
+    ],
+    inputmethod: &#39;hi-transliteration&#39;,
+    multiline: true
+}</code></pre>
+<p>When you added the tests and the rules, run <code>grunt --force</code> or open jquery.ime/test/index.html in your browser again and check that your new test ran successfully and that existing tests didn’t fail.</p>
+</body>
+</html>

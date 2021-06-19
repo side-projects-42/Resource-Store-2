@@ -1,58 +1,32 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Turtle mode</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../../doc/docs.css" />
-
-<link rel="stylesheet" href="../../lib/codemirror.css" />
-<script src="../../lib/codemirror.js"></script>
-<script src="turtle.js"></script>
-<style>
-  .CodeMirror {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../../index.html">Home</a></li>
-    <li><a href="../../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a href="../index.html">Language modes</a></li>
-    <li><a class="active" href="#">Turtle</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Turtle mode</h2>
-  <form>
-    <textarea id="code" name="code">
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-
-<http://purl.org/net/bsletten> 
-    a foaf:Person;
-    foaf:interest <http://www.w3.org/2000/01/sw/>;
-    foaf:based_near [
-        geo:lat "34.0736111" ;
-        geo:lon "-118.3994444"
-   ]
-
-</textarea
-    >
-  </form>
-  <script>
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      mode: "text/turtle",
-      matchBrackets: true,
-    });
-  </script>
-
-  <p><strong>MIME types defined:</strong> <code>text/turtle</code>.</p>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Turtle mode</p>
+<p><a href="http://codemirror.net"><img src="../../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../../index.html">Home</a></li>
+<li><a href="../../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="../index.html">Language modes</a></li>
+<li><a href="#" class="active">Turtle</a></li>
+</ul>
+<h2 id="turtle-mode">Turtle mode</h2>
+<p><span class="citation" data-cites="prefix">@prefix</span> foaf: . <span class="citation" data-cites="prefix">@prefix</span> geo: . <span class="citation" data-cites="prefix">@prefix</span> rdf: . a foaf:Person; foaf:interest ; foaf:based_near [ geo:lat “34.0736111” ; geo:lon “-118.3994444” ]</p>
+<p><strong>MIME types defined:</strong> <code>text/turtle</code>.</p>
+</body>
+</html>

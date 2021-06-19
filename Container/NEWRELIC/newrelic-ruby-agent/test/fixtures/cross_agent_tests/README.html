@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="cross-agent-tests">Cross Agent Tests</h1>
+    <h3 id="data-policy">Data Policy</h3>
+    <p>
+      None of these tests should contain customer data such as SQL strings.
+      Please be careful when adding new tests from real world failures.
+    </p>
+    <h3 id="access">Access</h3>
+    <p>
+      Push access to this repository is granted via membership in the
+      cross-agent-team GHE group. Contact Belinda Runkle if you are on the agent
+      team but don’t have push access.
+    </p>
+    <h3 id="tests">Tests</h3>
+    <table>
+      <colgroup>
+        <col style="width: 19%" />
+        <col style="width: 80%" />
+      </colgroup>
+      <thead>
+        <tr class="header">
+          <th>Test Files</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="odd">
+          <td>
+            <a href="rum_loader_insertion_location"
+              >rum_loader_insertion_location</a
+            >
+          </td>
+          <td>
+            Describe where the RUM loader (formerly known as header) should be
+            inserted.
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <a href="rum_footer_insertion_location"
+              >rum_footer_insertion_location</a
+            >
+          </td>
+          <td>
+            Describe where the RUM footer (aka “client config”) should be
+            inserted. These tests do not apply to agents which insert the footer
+            directly after the loader.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><a href="rules.json">rules.json</a></td>
+          <td>Describe how url/metric/txn-name rules should be applied.</td>
+        </tr>
+        <tr class="even">
+          <td><a href="rum_client_config.json">rum_client_config.json</a></td>
+          <td>
+            These tests dictate the format and contents of the browser
+            monitoring client configuration. For more information see:
+            <a
+              href="https://newrelic.atlassian.net/wiki/display/eng/BAM+Agent+Auto-Instrumentation"
+              >SPEC</a
+            >
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><a href="sql_parsing.json">sql_parsing.json</a></td>
+          <td>
+            These tests show how an SQL string should be parsed for the
+            operation and table name.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><a href="url_clean.json">url_clean.json</a></td>
+          <td>
+            These tests show how URLs should be cleaned before putting them into
+            a trace segment’s parameter hash (under the key ‘uri’).
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <a href="url_domain_extraction.json">url_domain_extraction.json</a>
+          </td>
+          <td>
+            These tests show how the domain of a URL should be extracted (for
+            the purpose of creating external metrics).
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <a href="postgres_explain_obfuscation"
+              >postgres_explain_obfuscation</a
+            >
+          </td>
+          <td>
+            These tests show how plain-text explain plan output from PostgreSQL
+            should be obfuscated when SQL obfuscation is enabled.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><a href="sql_obfuscation">sql_obfuscation</a></td>
+          <td>
+            Describe how agents should obfuscate SQL queries before transmission
+            to the collector.
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <a href="attribute_configuration.json">attribute_configuration</a>
+          </td>
+          <td>
+            These tests show how agents should respond to the various attribute
+            configuration settings. For more information see:
+            <a
+              href="https://source.datanerd.us/agents/agent-specs/blob/master/Agent-Attributes-PORTED.md"
+              >Attributes SPEC</a
+            >
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><a href="cat">cat</a></td>
+          <td>
+            These tests cover the new Dirac attributes that are added for the
+            CAT Map project. See the
+            <a
+              href="https://source.datanerd.us/agents/agent-specs/blob/master/Cross-Application-Tracing-PORTED.md"
+              >CAT Spec</a
+            >
+            and the <a href="cat/README.md">README</a> for details.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><a href="labels.json">labels</a></td>
+          <td>
+            These tests cover the Labels for Language Agents project. See the
+            <a
+              href="https://newrelic.atlassian.net/wiki/display/eng/Labels+for+Language+Agents"
+              >Labels for Language Agents Spec</a
+            >
+            for details.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><a href="proc_cpuinfo">proc_cpuinfo</a></td>
+          <td>
+            These test correct processing of <code>/proc/cpuinfo</code> output
+            on Linux hosts.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><a href="proc_meminfo">proc_meminfo</a></td>
+          <td>
+            These test correct processing of <code>/proc/meminfo</code> output
+            on Linux hosts.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <a href="transaction_segment_terms.json"
+              >transaction_segment_terms.json</a
+            >
+          </td>
+          <td>
+            These tests cover agent implementations of the
+            <code>transaction_segment_terms</code> transaction renaming rules
+            introduced in collector protocol 14. See
+            <a
+              href="https://newrelic.atlassian.net/wiki/display/eng/Language+agent+transaction+segment+terms+rules"
+              >the spec</a
+            >
+            for details.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><a href="synthetics">synthetics</a></td>
+          <td>
+            These tests cover agent support for Synthetics. For details, see
+            <a
+              href="https://source.datanerd.us/agents/agent-specs/blob/master/Synthetics-PORTED.md"
+              >Agent Support for Synthetics: Forced Transaction Traces and
+              Analytic Events</a
+            >.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td><a href="docker_container_id">docker_container_id</a></td>
+          <td>
+            These tests cover parsing of Docker container IDs from
+            <code>/proc/*/cgroup</code> on Linux hosts.
+          </td>
+        </tr>
+        <tr class="even">
+          <td><a href="utilization">utilization</a></td>
+          <td>
+            These tests cover the collection and validation of metadata for
+            billing purposes as per the
+            <a
+              href="https://source.datanerd.us/agents/agent-specs/blob/master/Utilization.md"
+              >Utilization spec</a
+            >.
+          </td>
+        </tr>
+        <tr class="odd">
+          <td>
+            <a href="utilization_vendor_specific"
+              >utilization_vendor_specific</a
+            >
+          </td>
+          <td>
+            These tests cover the collection and validation of metadata for AWS,
+            Pivotal Cloud Foundry, Google Cloud Platform, and Azure as per the
+            <a
+              href="https://source.datanerd.us/agents/agent-specs/blob/master/Utilization.md"
+              >Utilization spec</a
+            >.
+          </td>
+        </tr>
+        <tr class="even">
+          <td>
+            <a href="data_transport/data_transport.json">data_transport</a>
+          </td>
+          <td>
+            These test correct JSON payload generation and handling collector
+            responses. See
+            <a
+              href="https://source.datanerd.us/agents/cross_agent_tests/blob/master/data_transport/data_transport.md"
+              >readme</a
+            >
+            for details.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

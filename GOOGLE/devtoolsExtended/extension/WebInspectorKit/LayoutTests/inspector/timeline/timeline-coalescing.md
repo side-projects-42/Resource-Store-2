@@ -1,0 +1,1 @@
+Test timeline records coalescing

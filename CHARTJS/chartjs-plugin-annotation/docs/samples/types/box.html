@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>box</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="box">Box</h1>
+<p>```js chart-editor // <block:setup:4> const DATA_COUNT = 8; const MIN = [0, 50]; const MAX = [50, 100];</p>
+<p>Utils.srand(8);</p>
+<p>const data = { datasets: [ { data: Utils.points({ count: DATA_COUNT, min: MIN[0], max: MAX[0] }), }, { data: Utils.points({ count: DATA_COUNT, min: MIN[1], max: MAX[1] }), }, ], }; // </block:setup></p>
+<p>// <block:annotation1:1> const annotation1 = { type: “box”, backgroundColor: “rgba(0,150,0,0.02)”, borderColor: “rgba(0,150,0,0.2)”, borderWidth: 1, cornerRadius: 4, xMin: (ctx) =&gt; min(ctx, 0, “x”) - 2, yMin: (ctx) =&gt; min(ctx, 0, “y”) - 2, xMax: (ctx) =&gt; max(ctx, 0, “x”) + 2, yMax: (ctx) =&gt; max(ctx, 0, “y”) + 2, }; // </block:annotation1></p>
+<p>// <block:annotation2:2> const annotation2 = { type: “box”, backgroundColor: “rgba(150,0,0,0.02)”, borderColor: “rgba(150,0,0,0.2)”, borderWidth: 1, cornerRadius: 4, xMin: (ctx) =&gt; min(ctx, 1, “x”) - 2, yMin: (ctx) =&gt; min(ctx, 1, “y”) - 2, xMax: (ctx) =&gt; max(ctx, 1, “x”) + 2, yMax: (ctx) =&gt; max(ctx, 1, “y”) + 2, }; // </block:annotation2></p>
+<p>/* <block:config:0> <em>/ const config = { type: “scatter”, data, options: { plugins: { annotation: { annotations: { annotation1, annotation2, }, }, }, }, }; /</em> </block:config> */</p>
+<p>// <block:utils:3> function min(ctx, datasetIndex, prop) { const dataset = ctx.chart.data.datasets[datasetIndex]; return dataset.data.reduce((v, point) =&gt; Math.min(point[prop], v), Infinity); }</p>
+<p>function max(ctx, datasetIndex, prop) { const dataset = ctx.chart.data.datasets[datasetIndex]; return dataset.data.reduce((v, point) =&gt; Math.max(point[prop], v), -Infinity); }</p>
+<p>// </block:utils></p>
+<p>var actions = [ { name: “Randomize”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.data.forEach((p) =&gt; { p.x = Utils.rand(MIN[i], MAX[i]); p.y = Utils.rand(MIN[i], MAX[i]); }); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, { name: “Add data”, handler: function (chart) { chart.data.datasets.forEach(function (dataset, i) { dataset.data.push({ x: Utils.rand(MIN[i], MAX[i]), y: Utils.rand(MIN[i], MAX[i]), }); }); chart.update(); }, }, { name: “Remove data”, handler: function (chart) { chart.data.labels.shift(); chart.data.datasets.forEach(function (dataset, i) { dataset.data.shift(); });</p>
+<pre><code>  chart.update();
+},</code></pre>
+<p>}, ];</p>
+<p>module.exports = { actions: actions, config: config, }; ```</p>
+</body>
+</html>

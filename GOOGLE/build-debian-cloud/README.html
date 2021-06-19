@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>#<em>This project has been superseeded by <a href="https://github.com/andsens/bootstrap-vz">bootstrap-vz</a> and is no longer maintained.</em>#</p>
+<h2 id="debian-bootstrapping-script-for-amazon-machine-images-and-google-compute-engine-images">Debian bootstrapping script for Amazon machine images and Google Compute Engine images</h2>
+<p>This script bootstraps a vanilla Debian installation to create either an Amazon machine image or a Google Compute Engine image. The image contains no latent logfiles no .bash_history or even the apt package cache.<br />
+The machine configuration this script creates has been thoroughly tested.</p>
+<p><em>This script has been tested on Debian squeeze and wheezy.</em> <em>To create an AMI this bootstrapper needs to be run on an Amazon EC2 instance.</em></p>
+<h2 id="official-amis-provided-by-the-debian-community-and-amazon">Official AMIs provided by the Debian community and Amazon</h2>
+<p>The Debian community and Amazon have together created AMIs using this bootstrapper and replicated them across AWS regions. The images have been tested for security and bugs. They are available on the <a href="https://aws.amazon.com/marketplace/pp/ref=csl_clsc_prd?sku=8fvdn95s5ev33cprr62nq3q7t">aws marketplace</a>.</p>
+<p>For each new official AMI a commit in this repository will be <a href="https://github.com/andsens/build-debian-cloud/tags">tagged</a>, marking the version the AMI was bootstrapped with.</p>
+<p>More information about these images and links to the gzipped volume images can be found on the <a href="http://wiki.debian.org/Cloud/AmazonEC2Image/Squeeze">Debian wiki page</a> dedicated to those images.</p>
+<h2 id="usage">Usage</h2>
+<p>The script is started with <code>./build-debian-cloud</code>. You can choose to either bootstrap a Debian AMI (<code>./build-debian-cloud ec2</code>) or a Google Compute Engine image (<code>./build-debian-cloud gce</code>). Both modes have sensible defaults and can be configured with options and plugins. To see a list of options use <code>--help</code>. When creating an AMI the script at least needs to know your AWS credentials.</p>
+<p>There are no interactive prompts, the bootstrapping can run entirely unattended from start till finish.</p>
+<p>Some plugins are included in the <a href="https://github.com/andsens/build-debian-cloud/tree/master/plugins">plugins directory</a>. A list of external plugins is also provided there. If none of those scratch your itch, you can of course <a href="https://github.com/andsens/build-debian-cloud/blob/master/plugins/HOWTO.md">write your own plugin</a>.</p>
+<h2 id="features">Features</h2>
+<h3 id="ami-features">AMI features</h3>
+<ul>
+<li>EBS booted</li>
+<li>Base installation uses only 289MB</li>
+<li>Base installation bootup time ~45s* (from AMI launch to SSH connectivity)</li>
+<li>Support for both ext* and xfs</li>
+<li>Uses standard Debian Xen kernel from apt</li>
+<li>update-grub creates an actual menu.lst which pvGrub can read</li>
+<li>ec2 system log is not cluttered by grub menu</li>
+<li>ec2 startup scripts:
+<ul>
+<li><code>ec2-get-credentials</code>: Copies the ec2 keypair to <code>~/.ssh/authorized_keys</code></li>
+<li><code>ec2-run-user-data</code>: If the userdata starts with <code>#!</code> it will be executed</li>
+<li><code>generate-ssh-hostkeys</code>: Generates hostkeys for sshd on first boot</li>
+<li><code>expand-volume</code>: Expands the root partition to the volume size</li>
+</ul></li>
+</ul>
+<p><em>*The bootup time was measured with <a href="https://gist.github.com/3813743">this script</a></em></p>
+<h3 id="bootstrapper-ami-features">Bootstrapper (AMI) features</h3>
+<ul>
+<li>EBS volume is automatically created, mounted, formatted, unmounted, “snapshotted” and deleted</li>
+<li>AMI is automatically registered with the right kernels for the current region of the host machine</li>
+<li>Supports Debian squeeze and wheezy</li>
+<li>Can create both 32-bit and 64-bit AMIs</li>
+<li>Plugin system to keep the bootstrapping process automated</li>
+<li>The process is divided into simple task based scripts</li>
+<li>Uses only free software in accordance with the <a href="http://www.debian.org/social_contract">Debian Social Contract</a>.<br />
+(In particular: The <a href="http://aws.amazon.com/developertools/351">EC2 API Tools</a> have been replaced with <a href="http://www.eucalyptus.com/download/euca2ools">euca2ools</a>)</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>interactions</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="interactions">Interactions</h1>
+<p>Namespace: <code>options.interaction</code>, the global interaction configuration is at <code>Chart.defaults.interaction</code>. To configure which events trigger chart interactions, see <a href="#events">events</a>.</p>
+<table>
+<colgroup>
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>mode</code></td>
+<td><code>string</code></td>
+<td><code>'nearest'</code></td>
+<td>Sets which elements appear in the interaction. See <a href="#modes">Interaction Modes</a> for details.</td>
+</tr>
+<tr class="even">
+<td><code>intersect</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>if true, the interaction mode only applies when the mouse position intersects an item on the chart.</td>
+</tr>
+<tr class="odd">
+<td><code>axis</code></td>
+<td><code>string</code></td>
+<td><code>'x'</code></td>
+<td>Can be set to <code>'x'</code>, <code>'y'</code>, or <code>'xy'</code> to define which directions are used in calculating distances. Defaults to <code>'x'</code> for <code>'index'</code> mode and <code>'xy'</code> in <code>dataset</code> and <code>'nearest'</code> modes.</td>
+</tr>
+</tbody>
+</table>
+<p>By default, these options apply to both the hover and tooltip interactions. The same options can be set in the <code>options.hover</code> namespace, in which case they will only affect the hover interaction. Similarly, the options can be set in the <code>options.plugins.tooltip</code> namespace to independently configure the tooltip interactions.</p>
+<h2 id="events">Events</h2>
+<p>The following properties define how the chart interacts with events. Namespace: <code>options</code></p>
+<table>
+<colgroup>
+<col style="width: 3%" />
+<col style="width: 3%" />
+<col style="width: 25%" />
+<col style="width: 67%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>events</code></td>
+<td><code>string[]</code></td>
+<td><code>['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove']</code></td>
+<td>The <code>events</code> option defines the browser events that the chart should listen to for. Each of these events trigger hover and are passed to plugins. <a href="#event-option">more…</a></td>
+</tr>
+<tr class="even">
+<td><code>onHover</code></td>
+<td><code>function</code></td>
+<td><code>null</code></td>
+<td>Called when any of the events fire over chartArea. Passed the event, an array of active elements (bars, points, etc), and the chart.</td>
+</tr>
+<tr class="odd">
+<td><code>onClick</code></td>
+<td><code>function</code></td>
+<td><code>null</code></td>
+<td>Called if the event is of type <code>'mouseup'</code>, <code>'click'</code> or ’<code>'contextmenu'</code> over chartArea. Passed the event, an array of active elements, and the chart.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="event-option">Event Option</h3>
+<p>For example, to have the chart only respond to click events, you could do:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-5" title="5">    <span class="co">// This chart will not respond to mousemove, etc</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    <span class="dt">events</span><span class="op">:</span> [<span class="st">&quot;click&quot;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb1-7" title="7">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>Events for each plugin can be further limited by defining (allowed) events array in plugin options:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-5" title="5">    <span class="co">// All of these (default) events trigger a hover and are passed to all plugins,</span></a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="co">// unless limited at plugin options</span></a>
+<a class="sourceLine" id="cb2-7" title="7">    <span class="dt">events</span><span class="op">:</span> [<span class="st">&quot;mousemove&quot;</span><span class="op">,</span> <span class="st">&quot;mouseout&quot;</span><span class="op">,</span> <span class="st">&quot;click&quot;</span><span class="op">,</span> <span class="st">&quot;touchstart&quot;</span><span class="op">,</span> <span class="st">&quot;touchmove&quot;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-8" title="8">    <span class="dt">plugins</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-9" title="9">      <span class="dt">tooltip</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb2-10" title="10">        <span class="co">// Tooltip will only receive click events</span></a>
+<a class="sourceLine" id="cb2-11" title="11">        <span class="dt">events</span><span class="op">:</span> [<span class="st">&quot;click&quot;</span>]<span class="op">,</span></a>
+<a class="sourceLine" id="cb2-12" title="12">      <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-13" title="13">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-14" title="14">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb2-15" title="15"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="converting-events-to-data-values">Converting Events to Data Values</h3>
+<p>A common occurrence is taking an event, such as a click, and finding the data coordinates on the chart where the event occurred. Chart.js provides helpers that make this a straightforward process.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">const</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">onClick</span><span class="op">:</span> (e) <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-6" title="6">      <span class="kw">const</span> canvasPosition <span class="op">=</span> <span class="va">Chart</span>.<span class="va">helpers</span>.<span class="at">getRelativePosition</span>(e<span class="op">,</span> chart)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8">      <span class="co">// Substitute the appropriate scale IDs</span></a>
+<a class="sourceLine" id="cb3-9" title="9">      <span class="kw">const</span> dataX <span class="op">=</span> <span class="va">chart</span>.<span class="va">scales</span>.<span class="va">x</span>.<span class="at">getValueForPixel</span>(<span class="va">canvasPosition</span>.<span class="at">x</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-10" title="10">      <span class="kw">const</span> dataY <span class="op">=</span> <span class="va">chart</span>.<span class="va">scales</span>.<span class="va">y</span>.<span class="at">getValueForPixel</span>(<span class="va">canvasPosition</span>.<span class="at">y</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-11" title="11">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-12" title="12">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb3-13" title="13"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h2 id="modes">Modes</h2>
+<p>When configuring the interaction with the graph via <code>interaction</code>, <code>hover</code> or <code>tooltips</code>, a number of different modes are available.</p>
+<p><code>options.hover</code> and <code>options.plugins.tooltip</code> extend from <code>options.interaction</code>. So if <code>mode</code>, <code>intersect</code> or any other common settings are configured only in <code>options.interaction</code>, both hover and tooltips obey that.</p>
+<p>The modes are detailed below and how they behave in conjunction with the <code>intersect</code> setting.</p>
+<h3 id="point">point</h3>
+<p>Finds all of the items that intersect the point.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb4-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;point&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb4-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="nearest">nearest</h3>
+<p>Gets the items that are at the nearest distance to the point. The nearest item is determined based on the distance to the center of the chart item (point, bar). You can use the <code>axis</code> setting to define which directions are used in distance calculation. If <code>intersect</code> is true, this is only triggered when the mouse position intersects an item in the graph. This is very useful for combo charts where points are hidden behind bars.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;nearest&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb5-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="index">index</h3>
+<p>Finds item at the same index. If the <code>intersect</code> setting is true, the first intersecting item is used to determine the index in the data. If <code>intersect</code> false the nearest item, in the x direction, is used to determine the index.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb6-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;index&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb6-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb6-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<p>To use index mode in a chart like the horizontal bar chart, where we search along the y direction, you can use the <code>axis</code> setting introduced in v2.7.0. By setting this value to <code>'y'</code> on the y direction is used.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;bar&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb7-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;index&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-7" title="7">      <span class="dt">axis</span><span class="op">:</span> <span class="st">&quot;y&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-8" title="8">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb7-9" title="9">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="dataset">dataset</h3>
+<p>Finds items in the same dataset. If the <code>intersect</code> setting is true, the first intersecting item is used to determine the index in the data. If <code>intersect</code> false the nearest item is used to determine the index.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb8-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;dataset&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb8-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="x">x</h3>
+<p>Returns all items that would intersect based on the <code>X</code> coordinate of the position only. Would be useful for a vertical cursor implementation. Note that this only applies to cartesian charts.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb9-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;x&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb9-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb9-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+<h3 id="y">y</h3>
+<p>Returns all items that would intersect based on the <code>Y</code> coordinate of the position. This would be useful for a horizontal cursor implementation. Note that this only applies to cartesian charts.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode javascript"><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">var</span> chart <span class="op">=</span> <span class="kw">new</span> <span class="at">Chart</span>(ctx<span class="op">,</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-2" title="2">  <span class="dt">type</span><span class="op">:</span> <span class="st">&quot;line&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-3" title="3">  <span class="dt">data</span><span class="op">:</span> data<span class="op">,</span></a>
+<a class="sourceLine" id="cb10-4" title="4">  <span class="dt">options</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-5" title="5">    <span class="dt">interaction</span><span class="op">:</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb10-6" title="6">      <span class="dt">mode</span><span class="op">:</span> <span class="st">&quot;y&quot;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb10-7" title="7">    <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-8" title="8">  <span class="op">},</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="op">}</span>)<span class="op">;</span></a></code></pre></div>
+</body>
+</html>

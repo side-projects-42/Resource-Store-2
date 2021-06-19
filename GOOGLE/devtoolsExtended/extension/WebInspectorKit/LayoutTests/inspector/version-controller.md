@@ -1,0 +1,1 @@
+Tests inspector version controller.

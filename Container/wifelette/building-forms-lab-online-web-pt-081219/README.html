@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="set-list-lab">Set List Lab</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Use forms to create new elements and update the store.</li>
+<li>Display a list of the new elements in a separate component.</li>
+</ol>
+<h2 id="overview">Overview</h2>
+<p>Guess what - the bands are back! What we want is an application that allows us to add band names, and then have those band names instantly rendered below. We need to be incorporating Redux by dispatching actions and updating the store each time someone submits a new band.</p>
+<p>So we will be creating two different React components, and each of them need to have access to our Redux store, either directly or through props. One of the components will be a form where we input our band name, and the other component will display the list of bands.</p>
+<p>The createStore method and some basic setup has already been implemented for you.</p>
+<h2 id="instructions">Instructions</h2>
+<ol type="1">
+<li><p>You will need to write the <code>BandsContainer</code> component. This component should act as your connection to the Redux store and should be a child of the App component. Any values we want to use from Redux as well as any actions we want to dispatch should be set up and available in <code>BandsContainer</code> so they can be passed down to other components.</p></li>
+<li><p>You will need to write the <code>BandInput</code> component as a child of <code>BandsContainer</code>. This component should have a form with a text input and submit button. We would like to update this <em>component’s</em> state each time the user types a new character in the input, stored as <code>this.state.name</code>. We will only update the <strong>Redux</strong> store’s state when the user hits the submit button. The dispatched action required to initiate this update should be set up in <code>BandsContainer</code> and passed down as the prop <code>addBand</code> to <code>BandInput</code>.</p></li>
+<li><p>You will also need to fill in the <code>manageBand</code> reducer located under <code>./src/reducers/manageBand.js</code>. It will need to respond to an action of <code>type 'ADD_BAND'</code> and correspondingly concatenate a new band each time the action is dispatched.</p></li>
+<li><p>Once you’ve got a form successfully dispatching actions and adding bands to your <strong>Redux</strong> store, write the necessary code to display each band name from the store. Band names should be listed in individual <code>li</code> elements.</p></li>
+</ol>
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Snapshot Testing</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+    <style type="text/css">
+      a.sourceLine {
+        display: inline-block;
+        line-height: 1.25;
+      }
+      a.sourceLine {
+        pointer-events: none;
+        color: inherit;
+        text-decoration: inherit;
+      }
+      a.sourceLine:empty {
+        height: 1.2em;
+      }
+      .sourceCode {
+        overflow: visible;
+      }
+      code.sourceCode {
+        white-space: pre;
+        position: relative;
+      }
+      div.sourceCode {
+        margin: 1em 0;
+      }
+      pre.sourceCode {
+        margin: 0;
+      }
+      @media screen {
+        div.sourceCode {
+          overflow: auto;
+        }
+      }
+      @media print {
+        code.sourceCode {
+          white-space: pre-wrap;
+        }
+        a.sourceLine {
+          text-indent: -1em;
+          padding-left: 1em;
+        }
+      }
+      pre.numberSource a.sourceLine {
+        position: relative;
+        left: -4em;
+      }
+      pre.numberSource a.sourceLine::before {
+        content: attr(title);
+        position: relative;
+        left: -1em;
+        text-align: right;
+        vertical-align: baseline;
+        border: none;
+        pointer-events: all;
+        display: inline-block;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        padding: 0 4px;
+        width: 4em;
+        color: #aaaaaa;
+      }
+      pre.numberSource {
+        margin-left: 3em;
+        border-left: 1px solid #aaaaaa;
+        padding-left: 4px;
+      }
+      div.sourceCode {
+      }
+      @media screen {
+        a.sourceLine::before {
+          text-decoration: underline;
+        }
+      }
+      code span.al {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Alert */
+      code span.an {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Annotation */
+      code span.at {
+        color: #7d9029;
+      } /* Attribute */
+      code span.bn {
+        color: #40a070;
+      } /* BaseN */
+      code span.bu {
+      } /* BuiltIn */
+      code span.cf {
+        color: #007020;
+        font-weight: bold;
+      } /* ControlFlow */
+      code span.ch {
+        color: #4070a0;
+      } /* Char */
+      code span.cn {
+        color: #880000;
+      } /* Constant */
+      code span.co {
+        color: #60a0b0;
+        font-style: italic;
+      } /* Comment */
+      code span.cv {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* CommentVar */
+      code span.do {
+        color: #ba2121;
+        font-style: italic;
+      } /* Documentation */
+      code span.dt {
+        color: #902000;
+      } /* DataType */
+      code span.dv {
+        color: #40a070;
+      } /* DecVal */
+      code span.er {
+        color: #ff0000;
+        font-weight: bold;
+      } /* Error */
+      code span.ex {
+      } /* Extension */
+      code span.fl {
+        color: #40a070;
+      } /* Float */
+      code span.fu {
+        color: #06287e;
+      } /* Function */
+      code span.im {
+      } /* Import */
+      code span.in {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Information */
+      code span.kw {
+        color: #007020;
+        font-weight: bold;
+      } /* Keyword */
+      code span.op {
+        color: #666666;
+      } /* Operator */
+      code span.ot {
+        color: #007020;
+      } /* Other */
+      code span.pp {
+        color: #bc7a00;
+      } /* Preprocessor */
+      code span.sc {
+        color: #4070a0;
+      } /* SpecialChar */
+      code span.ss {
+        color: #bb6688;
+      } /* SpecialString */
+      code span.st {
+        color: #4070a0;
+      } /* String */
+      code span.va {
+        color: #19177c;
+      } /* Variable */
+      code span.vs {
+        color: #4070a0;
+      } /* VerbatimString */
+      code span.wa {
+        color: #60a0b0;
+        font-weight: bold;
+        font-style: italic;
+      } /* Warning */
+    </style>
+  </head>
+  <body>
+    <header id="title-block-header">
+      <h1 class="title">Snapshot Testing</h1>
+    </header>
+    <p>
+      Snapshot tests are a very useful tool whenever you want to make sure your
+      UI does not change unexpectedly.
+    </p>
+    <p>
+      A typical snapshot test case for a mobile app renders a UI component,
+      takes a screenshot, then compares it to a reference image stored alongside
+      the test. The test will fail if the two images do not match: either the
+      change is unexpected, or the screenshot needs to be updated to the new
+      version of the UI component.
+    </p>
+    <h2 id="snapshot-testing-with-jest">Snapshot Testing with Jest</h2>
+    <p>
+      A similar approach can be taken when it comes to testing your React
+      components. Instead of rendering the graphical UI, which would require
+      building the entire app, you can use a test renderer to quickly generate a
+      serializable value for your React tree. Consider this
+      <a
+        href="https://github.com/facebook/jest/blob/master/examples/snapshot/__tests__/link.react.test.js"
+        >example test</a
+      >
+      for a simple
+      <a
+        href="https://github.com/facebook/jest/blob/master/examples/snapshot/Link.react.js"
+        >Link component</a
+      >:
+    </p>
+    <div class="sourceCode" id="cb1">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb1-1" title="1"><span class="im">import</span> React <span class="im">from</span> <span class="st">&#39;react&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="im">import</span> Link <span class="im">from</span> <span class="st">&#39;../Link.react&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="im">import</span> renderer <span class="im">from</span> <span class="st">&#39;react-test-renderer&#39;</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="at">it</span>(<span class="st">&#39;renders correctly&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="kw">const</span> tree <span class="op">=</span> renderer</a>
+<a class="sourceLine" id="cb1-7" title="7">    .<span class="at">create</span>(<span class="op">&lt;</span>Link page<span class="op">=</span><span class="st">&quot;http://www.facebook.com&quot;</span><span class="op">&gt;</span>Facebook&lt;/Link<span class="op">&gt;</span>)</a>
+<a class="sourceLine" id="cb1-8" title="8">    .<span class="at">toJSON</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-9" title="9">  <span class="at">expect</span>(tree).<span class="at">toMatchSnapshot</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      The first time this test is run, Jest creates a
+      <a
+        href="https://github.com/facebook/jest/blob/master/examples/snapshot/__tests__/__snapshots__/link.react.test.js.snap"
+        >snapshot file</a
+      >
+      that looks like this:
+    </p>
+    <div class="sourceCode" id="cb2">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb2-1" title="1">exports[<span class="vs">`renders correctly 1`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="vs">&lt;a</span></a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="vs">  className=&quot;normal&quot;</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="vs">  href=&quot;http://www.facebook.com&quot;</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="vs">  onMouseEnter={[Function]}</span></a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="vs">  onMouseLeave={[Function]}</span></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="vs">&gt;</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="vs">  Facebook</span></a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="vs">&lt;/a&gt;</span></a>
+<a class="sourceLine" id="cb2-10" title="10"><span class="vs">`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      The snapshot artifact should be committed alongside code changes, and
+      reviewed as part of your code review process. Jest uses
+      <a
+        href="https://github.com/facebook/jest/tree/master/packages/pretty-format"
+        >pretty-format</a
+      >
+      to make snapshots human-readable during code review. On subsequent test
+      runs Jest will simply compare the rendered output with the previous
+      snapshot. If they match, the test will pass. If they don’t match, either
+      the test runner found a bug in your code (in this case, it’s
+      <code>&lt;Link&gt;</code> component) that should be fixed, or the
+      implementation has changed and the snapshot needs to be updated.
+    </p>
+    <blockquote>
+      <p>
+        Note: The snapshot is directly scoped to the data you render – in our
+        example it’s <code>&lt;Link /&gt;</code> component with page prop passed
+        to it. This implies that even if any other file has missing props (Say,
+        <code>App.js</code>) in the <code>&lt;Link /&gt;</code> component, it
+        will still pass the test as the test doesn’t know the usage of
+        <code>&lt;Link /&gt;</code> component and it’s scoped only to the
+        <code>Link.react.js</code>. Also, Rendering the same component with
+        different props in other snapshot test will not affect the first one, as
+        the tests don’t know about each other.
+      </p>
+    </blockquote>
+    <p>
+      More information on how snapshot testing works and why we built it can be
+      found on the
+      <a href="https://jestjs.io/blog/2016/07/27/jest-14.html"
+        >release blog post</a
+      >. We recommend reading
+      <a
+        href="http://benmccormick.org/2016/09/19/testing-with-jest-snapshots-first-impressions/"
+        >this blog post</a
+      >
+      to get a good sense of when you should use snapshot testing. We also
+      recommend watching this
+      <a
+        href="https://egghead.io/lessons/javascript-use-jest-s-snapshot-testing-feature?pl=testing-javascript-with-jest-a36c4074"
+        >egghead video</a
+      >
+      on Snapshot Testing with Jest.
+    </p>
+    <h3 id="updating-snapshots">Updating Snapshots</h3>
+    <p>
+      It’s straightforward to spot when a snapshot test fails after a bug has
+      been introduced. When that happens, go ahead and fix the issue and make
+      sure your snapshot tests are passing again. Now, let’s talk about the case
+      when a snapshot test is failing due to an intentional implementation
+      change.
+    </p>
+    <p>
+      One such situation can arise if we intentionally change the address the
+      Link component in our example is pointing to.
+    </p>
+    <div class="sourceCode" id="cb3">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// Updated test case with a Link to a different address</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="at">it</span>(<span class="st">&#39;renders correctly&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="kw">const</span> tree <span class="op">=</span> renderer</a>
+<a class="sourceLine" id="cb3-4" title="4">    .<span class="at">create</span>(<span class="op">&lt;</span>Link page<span class="op">=</span><span class="st">&quot;http://www.instagram.com&quot;</span><span class="op">&gt;</span>Instagram&lt;/Link<span class="op">&gt;</span>)</a>
+<a class="sourceLine" id="cb3-5" title="5">    .<span class="at">toJSON</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="at">expect</span>(tree).<span class="at">toMatchSnapshot</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>In that case, Jest will print this output:</p>
+    <p><img src="/img/content/failedSnapshotTest.png" /></p>
+    <p>
+      Since we just updated our component to point to a different address, it’s
+      reasonable to expect changes in the snapshot for this component. Our
+      snapshot test case is failing because the snapshot for our updated
+      component no longer matches the snapshot artifact for this test case.
+    </p>
+    <p>
+      To resolve this, we will need to update our snapshot artifacts. You can
+      run Jest with a flag that will tell it to re-generate snapshots:
+    </p>
+    <div class="sourceCode" id="cb4">
+      <pre
+        class="sourceCode bash"
+      ><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">jest</span> --updateSnapshot</a></code></pre>
+    </div>
+    <p>
+      Go ahead and accept the changes by running the above command. You may also
+      use the equivalent single-character <code>-u</code> flag to re-generate
+      snapshots if you prefer. This will re-generate snapshot artifacts for all
+      failing snapshot tests. If we had any additional failing snapshot tests
+      due to an unintentional bug, we would need to fix the bug before
+      re-generating snapshots to avoid recording snapshots of the buggy
+      behavior.
+    </p>
+    <p>
+      If you’d like to limit which snapshot test cases get re-generated, you can
+      pass an additional <code>--testNamePattern</code> flag to re-record
+      snapshots only for those tests that match the pattern.
+    </p>
+    <p>
+      You can try out this functionality by cloning the
+      <a href="https://github.com/facebook/jest/tree/master/examples/snapshot"
+        >snapshot example</a
+      >, modifying the <code>Link</code> component, and running Jest.
+    </p>
+    <h3 id="interactive-snapshot-mode">Interactive Snapshot Mode</h3>
+    <p>Failed snapshots can also be updated interactively in watch mode:</p>
+    <p><img src="/img/content/interactiveSnapshot.png" /></p>
+    <p>
+      Once you enter Interactive Snapshot Mode, Jest will step you through the
+      failed snapshots one test at a time and give you the opportunity to review
+      the failed output.
+    </p>
+    <p>From here you can choose to update that snapshot or skip to the next:</p>
+    <p><img src="/img/content/interactiveSnapshotUpdate.gif" /></p>
+    <p>
+      Once you’re finished, Jest will give you a summary before returning back
+      to watch mode:
+    </p>
+    <p><img src="/img/content/interactiveSnapshotDone.png" /></p>
+    <h3 id="inline-snapshots">Inline Snapshots</h3>
+    <p>
+      Inline snapshots behave identically to external snapshots (<code
+        >.snap</code
+      >
+      files), except the snapshot values are written automatically back into the
+      source code. This means you can get the benefits of automatically
+      generated snapshots without having to switch to an external file to make
+      sure the correct value was written.
+    </p>
+    <blockquote>
+      <p>
+        Inline snapshots are powered by
+        <a href="https://prettier.io">Prettier</a>. To use inline snapshots you
+        must have <code>prettier</code> installed in your project. Your Prettier
+        configuration will be respected when writing to test files.
+      </p>
+      <p>
+        If you have <code>prettier</code> installed in a location where Jest
+        can’t find it, you can tell Jest how to find it using the
+        <a href="./Configuration.md#prettierpath-string"
+          ><code>"prettierPath"</code></a
+        >
+        configuration property.
+      </p>
+    </blockquote>
+    <p><strong>Example:</strong></p>
+    <p>
+      First, you write a test, calling
+      <code>.toMatchInlineSnapshot()</code> with no arguments:
+    </p>
+    <div class="sourceCode" id="cb5">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb5-1" title="1"><span class="at">it</span>(<span class="st">&#39;renders correctly&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="kw">const</span> tree <span class="op">=</span> renderer</a>
+<a class="sourceLine" id="cb5-3" title="3">    .<span class="at">create</span>(<span class="op">&lt;</span>Link page<span class="op">=</span><span class="st">&quot;https://prettier.io&quot;</span><span class="op">&gt;</span>Prettier&lt;/Link<span class="op">&gt;</span>)</a>
+<a class="sourceLine" id="cb5-4" title="4">    .<span class="at">toJSON</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-5" title="5">  <span class="at">expect</span>(tree).<span class="at">toMatchInlineSnapshot</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      The next time you run Jest, <code>tree</code> will be evaluated, and a
+      snapshot will be written as an argument to
+      <code>toMatchInlineSnapshot</code>:
+    </p>
+    <div class="sourceCode" id="cb6">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb6-1" title="1"><span class="at">it</span>(<span class="st">&#39;renders correctly&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="kw">const</span> tree <span class="op">=</span> renderer</a>
+<a class="sourceLine" id="cb6-3" title="3">    .<span class="at">create</span>(<span class="op">&lt;</span>Link page<span class="op">=</span><span class="st">&quot;https://prettier.io&quot;</span><span class="op">&gt;</span>Prettier&lt;/Link<span class="op">&gt;</span>)</a>
+<a class="sourceLine" id="cb6-4" title="4">    .<span class="at">toJSON</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-5" title="5">  <span class="at">expect</span>(tree).<span class="at">toMatchInlineSnapshot</span>(<span class="vs">`</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="vs">&lt;a</span></a>
+<a class="sourceLine" id="cb6-7" title="7"><span class="vs">  className=&quot;normal&quot;</span></a>
+<a class="sourceLine" id="cb6-8" title="8"><span class="vs">  href=&quot;https://prettier.io&quot;</span></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="vs">  onMouseEnter={[Function]}</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="vs">  onMouseLeave={[Function]}</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="vs">&gt;</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="vs">  Prettier</span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="vs">&lt;/a&gt;</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="vs">`</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="op">}</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      That’s all there is to it! You can even update the snapshots with
+      <code>--updateSnapshot</code> or using the <code>u</code> key in
+      <code>--watch</code> mode.
+    </p>
+    <h3 id="property-matchers">Property Matchers</h3>
+    <p>
+      Often there are fields in the object you want to snapshot which are
+      generated (like IDs and Dates). If you try to snapshot these objects, they
+      will force the snapshot to fail on every run:
+    </p>
+    <div class="sourceCode" id="cb7">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb7-1" title="1"><span class="at">it</span>(<span class="st">&#39;will fail every time&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="kw">const</span> user <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb7-3" title="3">    <span class="dt">createdAt</span><span class="op">:</span> <span class="kw">new</span> <span class="at">Date</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="dt">id</span><span class="op">:</span> <span class="va">Math</span>.<span class="at">floor</span>(<span class="va">Math</span>.<span class="at">random</span>() <span class="op">*</span> <span class="dv">20</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb7-5" title="5">    <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;LeBron James&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb7-6" title="6">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8">  <span class="at">expect</span>(user).<span class="at">toMatchSnapshot</span>()<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb7-10" title="10"></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co">// Snapshot</span></a>
+<a class="sourceLine" id="cb7-12" title="12">exports[<span class="vs">`will fail every time 1`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="vs">Object {</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="vs">  &quot;createdAt&quot;: 2018-05-19T23:36:09.816Z,</span></a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="vs">  &quot;id&quot;: 3,</span></a>
+<a class="sourceLine" id="cb7-16" title="16"><span class="vs">  &quot;name&quot;: &quot;LeBron James&quot;,</span></a>
+<a class="sourceLine" id="cb7-17" title="17"><span class="vs">}</span></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="vs">`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      For these cases, Jest allows providing an asymmetric matcher for any
+      property. These matchers are checked before the snapshot is written or
+      tested, and then saved to the snapshot file instead of the received value:
+    </p>
+    <div class="sourceCode" id="cb8">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb8-1" title="1"><span class="at">it</span>(<span class="st">&#39;will check the matchers and pass&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="kw">const</span> user <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb8-3" title="3">    <span class="dt">createdAt</span><span class="op">:</span> <span class="kw">new</span> <span class="at">Date</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb8-4" title="4">    <span class="dt">id</span><span class="op">:</span> <span class="va">Math</span>.<span class="at">floor</span>(<span class="va">Math</span>.<span class="at">random</span>() <span class="op">*</span> <span class="dv">20</span>)<span class="op">,</span></a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;LeBron James&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb8-6" title="6">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb8-7" title="7"></a>
+<a class="sourceLine" id="cb8-8" title="8">  <span class="at">expect</span>(user).<span class="at">toMatchSnapshot</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb8-9" title="9">    <span class="dt">createdAt</span><span class="op">:</span> <span class="va">expect</span>.<span class="at">any</span>(Date)<span class="op">,</span></a>
+<a class="sourceLine" id="cb8-10" title="10">    <span class="dt">id</span><span class="op">:</span> <span class="va">expect</span>.<span class="at">any</span>(Number)<span class="op">,</span></a>
+<a class="sourceLine" id="cb8-11" title="11">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb8-13" title="13"></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="co">// Snapshot</span></a>
+<a class="sourceLine" id="cb8-15" title="15">exports[<span class="vs">`will check the matchers and pass 1`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="vs">Object {</span></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="vs">  &quot;createdAt&quot;: Any&lt;Date&gt;,</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="vs">  &quot;id&quot;: Any&lt;Number&gt;,</span></a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="vs">  &quot;name&quot;: &quot;LeBron James&quot;,</span></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="vs">}</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="vs">`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Any given value that is not a matcher will be checked exactly and saved to
+      the snapshot:
+    </p>
+    <div class="sourceCode" id="cb9">
+      <pre
+        class="sourceCode javascript"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb9-1" title="1"><span class="at">it</span>(<span class="st">&#39;will check the values and pass&#39;</span><span class="op">,</span> () <span class="kw">=&gt;</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">  <span class="kw">const</span> user <span class="op">=</span> <span class="op">{</span></a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="dt">createdAt</span><span class="op">:</span> <span class="kw">new</span> <span class="at">Date</span>()<span class="op">,</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Bond... James Bond&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-5" title="5">  <span class="op">};</span></a>
+<a class="sourceLine" id="cb9-6" title="6"></a>
+<a class="sourceLine" id="cb9-7" title="7">  <span class="at">expect</span>(user).<span class="at">toMatchSnapshot</span>(<span class="op">{</span></a>
+<a class="sourceLine" id="cb9-8" title="8">    <span class="dt">createdAt</span><span class="op">:</span> <span class="va">expect</span>.<span class="at">any</span>(Date)<span class="op">,</span></a>
+<a class="sourceLine" id="cb9-9" title="9">    <span class="dt">name</span><span class="op">:</span> <span class="st">&#39;Bond... James Bond&#39;</span><span class="op">,</span></a>
+<a class="sourceLine" id="cb9-10" title="10">  <span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="op">}</span>)<span class="op">;</span></a>
+<a class="sourceLine" id="cb9-12" title="12"></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co">// Snapshot</span></a>
+<a class="sourceLine" id="cb9-14" title="14">exports[<span class="vs">`will check the values and pass 1`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="vs">Object {</span></a>
+<a class="sourceLine" id="cb9-16" title="16"><span class="vs">  &quot;createdAt&quot;: Any&lt;Date&gt;,</span></a>
+<a class="sourceLine" id="cb9-17" title="17"><span class="vs">  &quot;name&quot;: &#39;Bond... James Bond&#39;,</span></a>
+<a class="sourceLine" id="cb9-18" title="18"><span class="vs">}</span></a>
+<a class="sourceLine" id="cb9-19" title="19"><span class="vs">`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <h2 id="best-practices">Best Practices</h2>
+    <p>
+      Snapshots are a fantastic tool for identifying unexpected interface
+      changes within your application – whether that interface is an API
+      response, UI, logs, or error messages. As with any testing strategy, there
+      are some best-practices you should be aware of, and guidelines you should
+      follow, in order to use them effectively.
+    </p>
+    <h3 id="treat-snapshots-as-code">1. Treat snapshots as code</h3>
+    <p>
+      Commit snapshots and review them as part of your regular code review
+      process. This means treating snapshots as you would any other type of test
+      or code in your project.
+    </p>
+    <p>
+      Ensure that your snapshots are readable by keeping them focused, short,
+      and by using tools that enforce these stylistic conventions.
+    </p>
+    <p>
+      As mentioned previously, Jest uses
+      <a href="https://yarnpkg.com/en/package/pretty-format"
+        ><code>pretty-format</code></a
+      >
+      to make snapshots human-readable, but you may find it useful to introduce
+      additional tools, like
+      <a href="https://yarnpkg.com/en/package/eslint-plugin-jest"
+        ><code>eslint-plugin-jest</code></a
+      >
+      with its
+      <a
+        href="https://github.com/jest-community/eslint-plugin-jest/blob/master/docs/rules/no-large-snapshots.md"
+        ><code>no-large-snapshots</code></a
+      >
+      option, or
+      <a href="https://yarnpkg.com/en/package/snapshot-diff"
+        ><code>snapshot-diff</code></a
+      >
+      with its component snapshot comparison feature, to promote committing
+      short, focused assertions.
+    </p>
+    <p>
+      The goal is to make it easy to review snapshots in pull requests, and
+      fight against the habit of simply regenerating snapshots when test suites
+      fail instead of examining the root causes of their failure.
+    </p>
+    <h3 id="tests-should-be-deterministic">2. Tests should be deterministic</h3>
+    <p>
+      Your tests should be deterministic. Running the same tests multiple times
+      on a component that has not changed should produce the same results every
+      time. You’re responsible for making sure your generated snapshots do not
+      include platform specific or other non-deterministic data.
+    </p>
+    <p>
+      For example, if you have a
+      <a
+        href="https://github.com/facebook/jest/blob/master/examples/snapshot/Clock.react.js"
+        >Clock</a
+      >
+      component that uses <code>Date.now()</code>, the snapshot generated from
+      this component will be different every time the test case is run. In this
+      case we can <a href="MockFunctions.md">mock the Date.now() method</a> to
+      return a consistent value every time the test is run:
+    </p>
+    <div class="sourceCode" id="cb10">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb10-1" title="1"><span class="va">Date</span>.<span class="at">now</span> <span class="op">=</span> <span class="va">jest</span>.<span class="at">fn</span>(() <span class="kw">=&gt;</span> <span class="dv">1482363367071</span>)<span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Now, every time the snapshot test case runs, <code>Date.now()</code> will
+      return <code>1482363367071</code> consistently. This will result in the
+      same snapshot being generated for this component regardless of when the
+      test is run.
+    </p>
+    <h3 id="use-descriptive-snapshot-names">
+      3. Use descriptive snapshot names
+    </h3>
+    <p>
+      Always strive to use descriptive test and/or snapshot names for snapshots.
+      The best names describe the expected snapshot content. This makes it
+      easier for reviewers to verify the snapshots during review, and for anyone
+      to know whether or not an outdated snapshot is the correct behavior before
+      updating.
+    </p>
+    <p>For example, compare:</p>
+    <div class="sourceCode" id="cb11">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb11-1" title="1">exports[<span class="vs">`&lt;UserName /&gt; should handle some test case`</span>] <span class="op">=</span> <span class="vs">`null`</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3">exports[<span class="vs">`&lt;UserName /&gt; should handle some other test case`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="vs">&lt;div&gt;</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="vs">  Alan Turing</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="vs">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="vs">`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>To:</p>
+    <div class="sourceCode" id="cb12">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb12-1" title="1">exports[<span class="vs">`&lt;UserName /&gt; should render null`</span>] <span class="op">=</span> <span class="vs">`null`</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3">exports[<span class="vs">`&lt;UserName /&gt; should render Alan Turing`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="vs">&lt;div&gt;</span></a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="vs">  Alan Turing</span></a>
+<a class="sourceLine" id="cb12-6" title="6"><span class="vs">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="vs">`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <p>
+      Since the later describes exactly what’s expected in the output, it’s easy
+      to see when it’s wrong:
+    </p>
+    <div class="sourceCode" id="cb13">
+      <pre
+        class="sourceCode js"
+      ><code class="sourceCode javascript"><a class="sourceLine" id="cb13-1" title="1">exports[<span class="vs">`&lt;UserName /&gt; should render null`</span>] <span class="op">=</span> <span class="vs">`</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="vs">&lt;div&gt;</span></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="vs">  Alan Turing</span></a>
+<a class="sourceLine" id="cb13-4" title="4"><span class="vs">&lt;/div&gt;</span></a>
+<a class="sourceLine" id="cb13-5" title="5"><span class="vs">`</span><span class="op">;</span></a>
+<a class="sourceLine" id="cb13-6" title="6"></a>
+<a class="sourceLine" id="cb13-7" title="7">exports[<span class="vs">`&lt;UserName /&gt; should render Alan Turing`</span>] <span class="op">=</span> <span class="vs">`null`</span><span class="op">;</span></a></code></pre>
+    </div>
+    <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+    <h3
+      id="are-snapshots-written-automatically-on-continuous-integration-ci-systems"
+    >
+      Are snapshots written automatically on Continuous Integration (CI)
+      systems?
+    </h3>
+    <p>
+      No, as of Jest 20, snapshots in Jest are not automatically written when
+      Jest is run in a CI system without explicitly passing
+      <code>--updateSnapshot</code>. It is expected that all snapshots are part
+      of the code that is run on CI and since new snapshots automatically pass,
+      they should not pass a test run on a CI system. It is recommended to
+      always commit all snapshots and to keep them in version control.
+    </p>
+    <h3 id="should-snapshot-files-be-committed">
+      Should snapshot files be committed?
+    </h3>
+    <p>
+      Yes, all snapshot files should be committed alongside the modules they are
+      covering and their tests. They should be considered part of a test,
+      similar to the value of any other assertion in Jest. In fact, snapshots
+      represent the state of the source modules at any given point in time. In
+      this way, when the source modules are modified, Jest can tell what changed
+      from the previous version. It can also provide a lot of additional context
+      during code review in which reviewers can study your changes better.
+    </p>
+    <h3 id="does-snapshot-testing-only-work-with-react-components">
+      Does snapshot testing only work with React components?
+    </h3>
+    <p>
+      <a href="TutorialReact.md">React</a> and
+      <a href="TutorialReactNative.md">React Native</a> components are a good
+      use case for snapshot testing. However, snapshots can capture any
+      serializable value and should be used anytime the goal is testing whether
+      the output is correct. The Jest repository contains many examples of
+      testing the output of Jest itself, the output of Jest’s assertion library
+      as well as log messages from various parts of the Jest codebase. See an
+      example of
+      <a
+        href="https://github.com/facebook/jest/blob/master/e2e/__tests__/console.test.js"
+        >snapshotting CLI output</a
+      >
+      in the Jest repo.
+    </p>
+    <h3
+      id="whats-the-difference-between-snapshot-testing-and-visual-regression-testing"
+    >
+      What’s the difference between snapshot testing and visual regression
+      testing?
+    </h3>
+    <p>
+      Snapshot testing and visual regression testing are two distinct ways of
+      testing UIs, and they serve different purposes. Visual regression testing
+      tools take screenshots of web pages and compare the resulting images pixel
+      by pixel. With Snapshot testing values are serialized, stored within text
+      files, and compared using a diff algorithm. There are different trade-offs
+      to consider and we listed the reasons why snapshot testing was built in
+      the
+      <a
+        href="https://jestjs.io/blog/2016/07/27/jest-14.html#why-snapshot-testing"
+        >Jest blog</a
+      >.
+    </p>
+    <h3 id="does-snapshot-testing-replace-unit-testing">
+      Does snapshot testing replace unit testing?
+    </h3>
+    <p>
+      Snapshot testing is only one of more than 20 assertions that ship with
+      Jest. The aim of snapshot testing is not to replace existing unit tests,
+      but to provide additional value and make testing painless. In some
+      scenarios, snapshot testing can potentially remove the need for unit
+      testing for a particular set of functionalities (e.g. React components),
+      but they can work together as well.
+    </p>
+    <h3
+      id="what-is-the-performance-of-snapshot-testing-regarding-speed-and-size-of-the-generated-files"
+    >
+      What is the performance of snapshot testing regarding speed and size of
+      the generated files?
+    </h3>
+    <p>
+      Jest has been rewritten with performance in mind, and snapshot testing is
+      not an exception. Since snapshots are stored within text files, this way
+      of testing is fast and reliable. Jest generates a new file for each test
+      file that invokes the <code>toMatchSnapshot</code> matcher. The size of
+      the snapshots is pretty small: For reference, the size of all snapshot
+      files in the Jest codebase itself is less than 300 KB.
+    </p>
+    <h3 id="how-do-i-resolve-conflicts-within-snapshot-files">
+      How do I resolve conflicts within snapshot files?
+    </h3>
+    <p>
+      Snapshot files must always represent the current state of the modules they
+      are covering. Therefore, if you are merging two branches and encounter a
+      conflict in the snapshot files, you can either resolve the conflict
+      manually or to update the snapshot file by running Jest and inspecting the
+      result.
+    </p>
+    <h3
+      id="is-it-possible-to-apply-test-driven-development-principles-with-snapshot-testing"
+    >
+      Is it possible to apply test-driven development principles with snapshot
+      testing?
+    </h3>
+    <p>
+      Although it is possible to write snapshot files manually, that is usually
+      not approachable. Snapshots help figuring out whether the output of the
+      modules covered by tests is changed, rather than giving guidance to design
+      the code in the first place.
+    </p>
+    <h3 id="does-code-coverage-work-with-snapshot-testing">
+      Does code coverage work with snapshot testing?
+    </h3>
+    <p>Yes, just like with any other test.</p>
+  </body>
+</html>

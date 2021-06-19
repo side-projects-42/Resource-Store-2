@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      These test cases cover obfuscation (more properly, masking) of literal
+      values from SQL statements captured by agents. SQL statements may be
+      captured and attached to transaction trace nodes, or to slow SQL traces.
+    </p>
+    <p>
+      <code>sql_obfuscation.json</code> contains an array of test cases. The
+      inputs for each test case are in the <code>sql</code> property of each
+      object. Each test case also has an <code>obfuscated</code> property which
+      is an array containing at least one valid output.
+    </p>
+    <p>
+      Test cases also have a <code>dialects</code> property, which is an array
+      of strings which specify which sql dialects the test should apply to. See
+      “SQL Syntax Documentation” list below. This is relevant because for
+      example, PostgreSQL uses different identifier and string quoting rules
+      than MySQL (most notably, double-quoted string literals are not allowed in
+      PostgreSQL, where double-quotes are instead used around identifiers).
+    </p>
+    <p>Test cases may also contain the following properties:</p>
+    <ul>
+      <li>
+        <code>malformed</code>: (boolean) tests who’s SQL queries are not valid
+        SQL in any quoting mode. Some agents may choose to attempt to obfuscate
+        these cases, and others may instead just replace the query entirely with
+        a placeholder message.
+      </li>
+      <li>
+        <code>pathological</code>: (boolean) tests which are designed
+        specifically to break specific methods of obfuscation, or contain
+        patterns that are known to be difficult to handle correctly
+      </li>
+      <li>
+        <code>comments</code>: an array of strings that could be usefult for
+        understanding the test.
+      </li>
+    </ul>
+    <p>
+      The following database documentation may be helpful in understanding these
+      test cases:
+    </p>
+    <ul>
+      <li>
+        <a href="http://dev.mysql.com/doc/refman/5.5/en/string-literals.html"
+          >MySQL String Literals</a
+        >
+      </li>
+      <li>
+        <a
+          href="http://www.postgresql.org/docs/8.2/static/sql-syntax-lexical.html#SQL-SYNTAX-CONSTANTS"
+          >PostgreSQL String Constants</a
+        >
+      </li>
+    </ul>
+    <p>SQL Syntax Documentation:</p>
+    <ul>
+      <li>
+        <a href="http://dev.mysql.com/doc/refman/5.5/en/language-structure.html"
+          >MySQL</a
+        >
+      </li>
+      <li>
+        <a href="http://www.postgresql.org/docs/8.4/static/sql-syntax.html"
+          >PostgreSQL</a
+        >
+      </li>
+      <li>
+        <a
+          href="http://docs.datastax.com/en/cql/3.1/cql/cql_reference/cql_lexicon_c.html"
+          >Cassandra</a
+        >
+      </li>
+      <li>
+        <a
+          href="http://docs.oracle.com/cd/B28359_01/appdev.111/b28370/langelems.htm"
+          >Oracle</a
+        >
+      </li>
+      <li><a href="https://www.sqlite.org/lang.html">SQLite</a></li>
+    </ul>
+  </body>
+</html>

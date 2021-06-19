@@ -1,4 +1,5 @@
-# Ember Meeting Agenda 2015-07-17
+Ember Meeting Agenda 2015-07-17
+===============================
 
 ### Attendees
 
@@ -18,17 +19,13 @@ LS: Yup, lets doit by/during the next F2F
 
 TG: Docs sub-team has been meeting for a couple weeks, and the effort seems to be progressing well.
 
-TG: The docs team is trying to determine what to use for data persistence at the very early stages (use Ember Data, Something else, etc...). `$.ajax` is not good enough.
-
-<aside>
+TG: The docs team is trying to determine what to use for data persistence at the very early stages (use Ember Data, Something else, etc…). `$.ajax` is not good enough.
 
 EB: Is there an issue in ember-cli that requires python?
 
 RJ: Yes, node-gyp was used for compiling native extension for socket.io.
 
 RJ: Stef updated ember-cli in https://github.com/ember-cli/ember-cli/pull/4466 to prevent bundling optional dependencies.
-
-</aside>
 
 TG: Discussed the new folder structure
 
@@ -48,4 +45,4 @@ RJ: What about `this.currentModel`?
 
 MM: Folks should likely use `this.modelFor` or `this.get('controller.model')` to get the model instead of relying on `currentModel`.
 
-RJ will comment on issues and get PR's to update the documentation.
+RJ will comment on issues and get PR’s to update the documentation.

@@ -16,7 +16,7 @@
 
 **Latest release url**:
 
-**License type**: e.g. MIT, BSD, GPL, etc.
+**License type**: e.g. MIT, BSD, GPL, etc.
 
 **License url**: A copy of the license terms and conditions for your software.
 

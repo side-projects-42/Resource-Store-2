@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="wikimedia-internationalization-library">Wikimedia Internationalization Library</h1>
+<p>This library provides interfaces and value objects for internationalization (i18n) of applications in PHP.</p>
+<p>It is based on the i18n code used in MediaWiki, and is also intended to be compatible with <a href="https://github.com/wikimedia/jquery.i18n">jQuery.i18n</a>, a JavaScript i18n library.</p>
+<h2 id="concepts">Concepts</h2>
+<p>Any text string that is needed in an application is a <strong>message</strong>. This might be something like a button label, a sentence, or a longer text. Each message is assigned a <strong>message key</strong>, which is used as the identifier in code.</p>
+<p>Each message is translated into various languages, each represented by a <strong>language code</strong>. The message’s text (as translated into each language) can contain <strong>placeholders</strong>, which represents a place in the message where a <strong>parameter</strong> is to be inserted, and <strong>formatting commands</strong>. It might be plain text other than these placeholders and formatting commands, or it might be in a <strong>markup language</strong> such as wikitext or Markdown.</p>
+<p>A <strong>formatter</strong> is used to convert the message key and parameters into a text representation in a particular language and <strong>output format</strong>.</p>
+<p>The library itself imposes few restrictions on all of these concepts; this document contains recommendations to help various implementations operate in compatible ways.</p>
+<h2 id="usage">Usage</h2>
+<pre lang="php">
+use Wikimedia\Message\MessageValue;
+use Wikimedia\Message\MessageParam;
+use Wikimedia\Message\ParamType;
+
+// Constructor interface
+$message = new MessageValue( 'message-key', [
+    'parameter',
+    new MessageValue( 'another-message' ),
+    new MessageParam( ParamType::NUM, 12345 ),
+] );
+
+// Fluent interface
+$message = ( new MessageValue( 'message-key' ) )
+    ->params( 'parameter', new MessageValue( 'another-message' ) )
+    ->numParams( 12345 );
+
+// Formatting
+$messageFormatter = $serviceContainter->get( 'MessageFormatterFactory' )->getTextFormatter( 'de' );
+$output = $messageFormatter->format( $message );
+</pre>
+<h2 id="class-overview">Class Overview</h2>
+<h3 id="messages">Messages</h3>
+<p>Messages and their parameters are represented by newable value objects.</p>
+<p><strong>MessageValue</strong> represents an instance of a message, holding the key and any parameters. It is mutable in that parameters can be added to the object after creation.</p>
+<p><strong>MessageParam</strong> is an abstract value class representing a parameter to a message. It has a type (using constants defined in the <strong>ParamType</strong> class) and a value. It has two implementations:</p>
+<ul>
+<li><strong>ScalarParam</strong> represents a single-valued parameter, such as a text string, a number, or another message.</li>
+<li><strong>ListParam</strong> represents a list of values, which will be joined together with appropriate separators. It has a “list type” (using constants defined in the <strong>ListType</strong> class) defining the desired separators.</li>
+</ul>
+<h4 id="machine-readable-messages">Machine-readable messages</h4>
+<p><strong>DataMessageValue</strong> represents a message with additional machine-readable data. In addition to the key and message parameters, it holds a “code” and structured data that would be a useful representation of the message in an API response or the like.</p>
+<p>For example, a message for an “integer out of range” error might have one of three different keys depending on whether the range has a minimum, maximum, or both. But all should have the same code (representing the concept of “integer out of range”) and should likely have structured data representing the range directly as <code>[ 'min' =&gt; 1, 'max' =&gt; 10 ]</code> rather than as a flat array of MessageParam objects.</p>
+<h3 id="formatters">Formatters</h3>
+<p>A formatter for a particular language is obtained from an implementation of <strong>IMessageFormatterFactory</strong>. No implementation of this interface is provided by this library. If an environment needs its formatters to vary behavior on things other than the language code, for example selecting among multiple sources of messages or markup language used for processing message texts, it should define a MessageFormatterFactoryFactory of some sort to provide appropriate IMessageFormatterFactory implementations.</p>
+<p>There is no one base interface for all formatters; the intent is that type hinting will ensure that the formatter being used will produce output in the expected output format. The defined output formats are:</p>
+<ul>
+<li><strong>ITextFormatter</strong> produces plain text output.</li>
+</ul>
+<p>No implementation of these interfaces are provided by this library.</p>
+<p>Formatter implementations are expected to perform the following procedure to generate the output string:</p>
+<ol type="1">
+<li>Fetch the message’s translation in the formatter’s language. Details of this fetching are unspecified here.
+<ul>
+<li>If no translation is found in the formatter’s language, it should attempt to fall back to appropriate other languages. Details of the fallback are unspecified here.</li>
+<li>If no translation can be found in any fallback language, a string should be returned that indicates at minimum the message key that was unable to be found.</li>
+</ul></li>
+<li>Replace placeholders with parameter values.
+<ul>
+<li>Note that placeholders must not be replaced recursively. That is, if a parameter’s value contains text that looks like a placeholder, it must not be replaced as if it really were a placeholder.</li>
+<li>Certain types of parameters are not substituted directly at this stage. Instead their placeholders must be replaced with an opaque representation that will not be misinterpreted during later stages.
+<ul>
+<li>Parameters of type RAW or PLAINTEXT</li>
+<li>TEXT parameters with a MessageValue as the value</li>
+<li>LIST parameters with any late-substituted value as one of their values.</li>
+</ul></li>
+</ul></li>
+<li>Process any formatting commands.</li>
+<li>Process the source markup language to produce a string in the desired output format. This may be a no-op, and may be combined with the previous step if the markup language implements compatible formatting commands.</li>
+<li>Replace any opaque representations from step 2 with the actual values of the corresponding parameters.</li>
+</ol>
+<h2 id="guidelines-for-interoperability">Guidelines for Interoperability</h2>
+<p>Besides allowing for libraries to safely supply their own translations for every app using them, and apps to easily use libraries’ translations instead of having to retranslate everything, following these guidelines will also help open source projects use <a href="https://translatewiki.net/wiki/Translating:New_project">translatewiki.net</a> for crowdsourced volunteer translation into many languages.</p>
+<h3 id="language-codes">Language codes</h3>
+<p><a href="https://tools.ietf.org/rfc/bcp/bcp47.txt">BCP 47</a> language tags should be used for language codes. If a supplied language tag is not recognized, at minimum the corresponding tag with all optional subtags stripped should be tried as a fallback.</p>
+<p>All messages must have a translation in English (code “en”). All languages should fall back to English as a last resort.</p>
+<p>The English translations should use <code>{{PLURAL:...}}</code> and <code>{{GENDER:...}}</code> even when English doesn’t make a grammatical distinction, to signal to translators that plural/gender support is available.</p>
+<p>Language code “qqq” is reserved for documenting messages. Documentation should describe the context in which the message is used and the values of all parameters used with the message. Generally this is written in English. Attempting to obtain a message formatter for “qqq” should return one for “en” instead.</p>
+<p>Language code “qqx” is reserved for debugging. Rather than retrieving translations from some underlying storage, every key should act as if it were translated as something <code>(key-name: $1, $2, $3)</code> with the number of placeholders depending on how many parameters are included in the MessageValue.</p>
+<h3 id="message-keys">Message keys</h3>
+<p>Message keys intended for use with external implementations should follow certain guidelines for interoperability:</p>
+<ul>
+<li>Keys should be restricted to the regular expression <code>/^[a-z][a-z0-9-]*$/</code>. That is, it should consist of lowercase ASCII letters, numbers, and hyphen only, and should begin with a letter.</li>
+<li>Keys should be prefixed to help avoid collisions. For example, a library named “ApplePicker” should prefix its message keys with “applepicker-”.</li>
+<li>Common values needing translation, such as names of months and weekdays, should not be prefixed by each library. Libraries needing these should use keys from the <a href="http://cldr.unicode.org/">Common Locale Data Repository</a> and document this requirement, and environments should provide these messages.</li>
+</ul>
+<h3 id="message-format">Message format</h3>
+<p>Placeholders are represented by <code>$1</code>, <code>$2</code>, <code>$3</code>, and so on. Text like <code>$100</code> is interpreted as a placeholder for parameter 100 if 100 or more parameters were supplied, as a placeholder for parameter 10 followed by text “0” if between ten and 99 parameters were supplied, and as a placeholder for parameter 1 followed by text “00” if between one and nine parameters were supplied.</p>
+<p>All formatting commands look like <code>{{NAME:$value1|$value2|$value3|...}}</code>. Braces are to be balanced, e.g. <code>{{NAME:foo|{{bar|baz}}}}</code> has $value1 as “foo” and $value2 as “{{bar|baz}}”. The name is always case-insensitive.</p>
+<p>Anything syntactically resembling a placeholder or formatting command that does not correspond to an actual paramter or known command should be left unchanged for processing by the markup language processor.</p>
+<p>Libraries providing messages for use by externally-defined formatters should generally assume no markup language will be applied, and should avoid constructs used by common markup languages unless they also make sense when read as plain text.</p>
+<h3 id="formatting-commands">Formatting commands</h3>
+<p>The following formatting commands should be supported.</p>
+<h4 id="plural">PLURAL</h4>
+<p><code>{{PLURAL:$count|$formA|$formB|...}}</code> is used to produce plurals.</p>
+<p>$count is a number, which may have been formatted with ParamType::NUM.</p>
+<p>The number of forms and which count corresponds to which form depend on the language, for example English uses <code>{{PLURAL:$1|one|other}}</code> while Arabic uses <code>{{PLURAL:$1|zero|one|two|few|many|other}}</code>. Details are defined in <a href="https://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html">CLDR</a>.</p>
+<p>It is not possible to “skip” positions while still suppling later ones. If too few values are supplied, the final form is repeated for subsequent positions.</p>
+<p>If there is an explicit plural form to be given for a specific number, it may be specified with syntax like <code>{{PLURAL:$1|one egg|$1 eggs|12=a dozen eggs}}</code>.</p>
+<h4 id="gender">GENDER</h4>
+<p><code>{{GENDER:$name|$masculine|$feminine|$unspecified}}</code> is used to handle grammatical gender, typically when messages refer to user accounts.</p>
+<p>This supports three grammatical genders: “male”, “female”, and a third option for cases where the gender is unspecified, unknown, or neither male nor female. It does not attempt to handle animate-inanimate or <a href="https://en.wikipedia.org/wiki/T%E2%80%93V_distinction">T-V</a> distinctions.</p>
+<p>$name is a user account name or other similar identifier. If the name given does not correspond to any known user account, it should probably use the $unspecified gender.</p>
+<p>If $feminine and/or $unspecified is not specified, the value of $masculine is normally used in its place.</p>
+<h4 id="grammar">GRAMMAR</h4>
+<p><code>{{GRAMMAR:$form|$term}}</code> converts a term to an appropriate grammatical form.</p>
+<p>If no mapping for $term to $form exists, $term should be returned unchanged.</p>
+<p>See <a href="https://github.com/wikimedia/jquery.i18n#grammar">jQuery.i18n § Grammar</a> for details.</p>
+<h4 id="bidi">BIDI</h4>
+<p><code>{{BIDI:$text}}</code> applies directional isolation to the wrapped text, to attempt to avoid errors where directionally-neutral characters are wrongly displayed when between LTR and RTL content.</p>
+<p>This should output U+202A (left-to-right embedding) or U+202B (right-to-left embedding) before the text, depending on the directionality of the first strongly-directional character in $text, and U+202C (pop directional formatting) after, or do something equivalent for the target output format.</p>
+<h3 id="supplying-translations">Supplying translations</h3>
+<p>Code intending its messages to be used by externally-defined formatters should supply the translations as described by <a href="https://github.com/wikimedia/jquery.i18n#message-file-format">jQuery.i18n § Message File Format</a>.</p>
+<p>In brief, the base directory of the library should contain a directory named “i18n”. This directory should contain JSON files named by code such as “en.json”, “de.json”, “qqq.json”, each with contents like:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">&quot;@metadata&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="dt">&quot;authors&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="st">&quot;Alice&quot;</span><span class="ot">,</span> <span class="st">&quot;Bob&quot;</span><span class="ot">,</span> <span class="st">&quot;Carol&quot;</span><span class="ot">,</span> <span class="st">&quot;David&quot;</span><span class="ot">]</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">&quot;last-updated&quot;</span><span class="fu">:</span> <span class="st">&quot;2012-09-21&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5">  <span class="fu">},</span></a>
+<a class="sourceLine" id="cb1-6" title="6">  <span class="dt">&quot;appname-title&quot;</span><span class="fu">:</span> <span class="st">&quot;Example Application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-7" title="7">  <span class="dt">&quot;appname-sub-title&quot;</span><span class="fu">:</span> <span class="st">&quot;An example application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-8" title="8">  <span class="dt">&quot;appname-header-introduction&quot;</span><span class="fu">:</span> <span class="st">&quot;Introduction&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-9" title="9">  <span class="dt">&quot;appname-about&quot;</span><span class="fu">:</span> <span class="st">&quot;About this application&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-10" title="10">  <span class="dt">&quot;appname-footer&quot;</span><span class="fu">:</span> <span class="st">&quot;Footer text&quot;</span></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="fu">}</span></a></code></pre></div>
+<p>Formatter implementations should be able to consume message data supplied in this format, either directly via registration of i18n directories to check or by providing tooling to incorporate it during a build step.</p>
+<h3 id="machine-readable-data">Machine-readable data</h3>
+<p>Libraries producing MessageValues as error messages should generally produce DataMessageValues instead. Codes should be similar to message keys but need not be prefixed. Data should be restricted to values that will produce valid output when passed to <code>json_encode()</code>.</p>
+<p>Libraries producing MessageValues in other contexts should consider whether the same applies to those contexts.</p>
+<hr />
+</body>
+</html>

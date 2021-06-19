@@ -1,21 +1,8 @@
----
-:layout: post
-:title: "Report: Intro to Jenkins meet-up in Copenhagen"
-:nodeid: 391
-:created: 1345480310
-:tags:
-  - general
-  - meetup
-  - jenkinsci
-:author: rtyler
----
-
 We have hosted two informal meetups introducing Jenkins Continuous Integration Server.
 
 The first in end of June (announced here on this blog) and the second on the 7th of August. The first meet-up in June was only announced 8 days before, but had very good attendance - the second was completely booked (15 seats).
 
-The agenda is a short presentation of continuous integration and software validation to inspire the use of Jenkins, then a few words and terms about Jenkins and finally a live demo.
-The live demo starts from scratch by downloaded the latest Jenkins java web archive, starts it, define a job on one of our Maven based java projects on Github. We add two easy plugins (Warnings and Task Scanner). Second part of the demo is about unit testing and coverage and we show how easy it is to enable a JUnit report and add a Cobertura coverage report if there is already unit tests for the project.
+The agenda is a short presentation of continuous integration and software validation to inspire the use of Jenkins, then a few words and terms about Jenkins and finally a live demo. The live demo starts from scratch by downloaded the latest Jenkins java web archive, starts it, define a job on one of our Maven based java projects on Github. We add two easy plugins (Warnings and Task Scanner). Second part of the demo is about unit testing and coverage and we show how easy it is to enable a JUnit report and add a Cobertura coverage report if there is already unit tests for the project.
 
 The meetups have about 90 minutes scheduled, including questions and the discussion session after the demo, where we serve pizza, beer and cola. The theoretical presentation and live demo is typically finished within one hour, even though we encourage our guests to ask questions and discuss whatever comes into their mind on the way. The relatively short time used for the introduction demonstrates how easy it is to get started with continuous integration and software validation using Jenkins.
 
@@ -27,8 +14,6 @@ These informal discussions are one of the main gains for us in Praqma, as it is 
 
 Because these first meet-ups have been so popular and interesting we have decided to arrange them regularly in the future. Not just the Jenkins introduction, which will be repeated as long as there is an interest, but we are also making plans for meetups about Git, Mercurial and other topics.
 
-If you're interested in more Jenkins and CI related meet-ups in the Copenhagen area, visit [our homepage](http://www.praqma.net) or follow the `#pragma` hashtag on Twitter.
+If you’re interested in more Jenkins and CI related meet-ups in the Copenhagen area, visit [our homepage](http://www.praqma.net) or follow the `#pragma` hashtag on Twitter.
 
 We also have a [Jenkins User Event in Copenhagen](http://www.praqma.net/jciusrcph12) coming in September.
-
-<!--break-->

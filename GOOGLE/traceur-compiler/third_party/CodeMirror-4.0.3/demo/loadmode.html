@@ -1,60 +1,31 @@
 <!DOCTYPE html>
-
-<title>CodeMirror: Lazy Mode Loading Demo</title>
-<meta charset="utf-8" />
-<link rel="stylesheet" href="../doc/docs.css" />
-
-<link rel="stylesheet" href="../lib/codemirror.css" />
-<script src="../lib/codemirror.js"></script>
-<script src="../addon/mode/loadmode.js"></script>
-<style type="text/css">
-  .CodeMirror {
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-  }
-</style>
-<div id="nav">
-  <a href="http://codemirror.net"><img id="logo" src="../doc/logo.png" /></a>
-
-  <ul>
-    <li><a href="../index.html">Home</a></li>
-    <li><a href="../doc/manual.html">Manual</a></li>
-    <li><a href="https://github.com/marijnh/codemirror">Code</a></li>
-  </ul>
-
-  <ul>
-    <li><a class="active" href="#">Lazy Mode Loading</a></li>
-  </ul>
-</div>
-
-<article>
-  <h2>Lazy Mode Loading Demo</h2>
-  <form>
-    <textarea id="code" name="code">
-This is the editor.
-// It starts out in plain text mode,
-#  use the control below to load and apply a mode
-  "you'll see the highlighting of" this text /*change*/.
-</textarea
-    >
-  </form>
-  <p>
-    <input type="text" value="javascript" id="mode" />
-    <button type="button" onclick="change()">change mode</button>
-  </p>
-
-  <script>
-    CodeMirror.modeURL = "../mode/%N/%N.js";
-    var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-      lineNumbers: true,
-    });
-    var modeInput = document.getElementById("mode");
-    CodeMirror.on(modeInput, "keypress", function (e) {
-      if (e.keyCode == 13) change();
-    });
-    function change() {
-      editor.setOption("mode", modeInput.value);
-      CodeMirror.autoLoadMode(editor, modeInput.value);
-    }
-  </script>
-</article>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>loadmode</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>CodeMirror: Lazy Mode Loading Demo</p>
+<p><a href="http://codemirror.net"><img src="../doc/logo.png" id="logo" /></a></p>
+<ul>
+<li><a href="../index.html">Home</a></li>
+<li><a href="../doc/manual.html">Manual</a></li>
+<li><a href="https://github.com/marijnh/codemirror">Code</a></li>
+</ul>
+<!-- -->
+<ul>
+<li><a href="#" class="active">Lazy Mode Loading</a></li>
+</ul>
+<h2 id="lazy-mode-loading-demo">Lazy Mode Loading Demo</h2>
+<p>This is the editor. // It starts out in plain text mode, # use the control below to load and apply a mode “you’ll see the highlighting of” this text /*change*/.</p>
+<p>change mode</p>
+</body>
+</html>

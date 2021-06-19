@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>2010-07-06-security-fix-hudson-1-365-released</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      The Hudson team has released Hudson 1.365 which contains a critical
+      security fix! A security advisory
+      <a href="http://infradna.com/content/security-advisory-2010-07-05"
+        >released yesterday by InfraDNA</a
+      >
+      goes on to explain the hole with more detail:
+    </p>
+    <blockquote>
+      <p>
+        This vulnerability allows an attacker to read arbitrary files in the
+        server file system whose path names are known, by sending malicious HTTP
+        GET requests. While such access is still subject to the normal access
+        control enforced by the operating system, Hudson can still leak
+        “secrets” possessed by Hudson
+      </p>
+    </blockquote>
+    <p>
+      The vulnerability inside of Hudson affects Hudson instances running inside
+      the embedded Winstone container, instances behind Glasshfish or Jetty (for
+      example) are not subject to this vulnerability. Instances running behind a
+      reverse proxy such as mod_proxy or Nginx.
+    </p>
+    <p>
+      Hudson system administrators should subscribe to either the
+      <a href="http://feeds.feedburner.com/hudson-security-advisories"
+        >security advisories RSS feed</a
+      >
+      or the
+      <a href="advisories-subscribe@hudson.dev.java.net"
+        >advisories@ mailing list</a
+      >
+    </p>
+    <hr />
+    <p>
+      You can go grab the
+      <a href="http://ftp.osuosl.org/pub/hudson/war/1.363/hudson.war"
+        >latest .war file</a
+      >
+      straight from our <a href="http://www.osuosl.org">OSL mirror</a> or if
+      you’re using a native package, use your package manager to upgrade.
+    </p>
+  </body>
+</html>

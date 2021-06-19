@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<!--
+#
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#  KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+#
+-->
+<h2 id="updating-the-template-project">Updating the template project</h2>
+<ol type="1">
+<li>Generate the tagged JavaScript file from the <strong>cordova-js</strong> repo</li>
+<li>Delete the <strong>cordova-X.X.X.js</strong> file in <strong>templates/project/www</strong></li>
+<li>Copy the file from (1) into <strong>templates/project/www</strong></li>
+<li>Rename the file in (3) to <strong>cordova-X.X.X.js</strong> where X.X.X is the current Cordova version</li>
+<li>Update the <strong>&lt;script&gt;</strong> tag reference for the <strong>templates/project/www/index.html</strong> file to point to (4)</li>
+</ol>
+</body>
+</html>

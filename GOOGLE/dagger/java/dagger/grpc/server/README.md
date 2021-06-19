@@ -1,7 +1,7 @@
-# Dagger-gRPC on the Server
+Dagger-gRPC on the Server
+=========================
 
-This package contains the public types used to create gRPC server applications
-using https://dagger.dev.
+This package contains the public types used to create gRPC server applications using https://dagger.dev.
 
 It is maintained by the Dagger team.
 

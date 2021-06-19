@@ -1,352 +1,37 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      html {
-        font-size: 100%;
-        overflow-y: scroll;
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-
-      body {
-        color: #444;
-        font-family: Georgia, Palatino, "Palatino Linotype", Times,
-          "Times New Roman", "Hiragino Sans GB", "STXihei", "微软雅黑", serif;
-        font-size: 12px;
-        line-height: 1.5em;
-        background: #fefefe;
-        width: 45em;
-        margin: 10px auto;
-        padding: 1em;
-        outline: 1300px solid #fafafa;
-      }
-
-      a {
-        color: #0645ad;
-        text-decoration: none;
-      }
-      a:visited {
-        color: #0b0080;
-      }
-      a:hover {
-        color: #06e;
-      }
-      a:active {
-        color: #faa700;
-      }
-      a:focus {
-        outline: thin dotted;
-      }
-      a:hover,
-      a:active {
-        outline: 0;
-      }
-
-      span.backtick {
-        border: 1px solid #eaeaea;
-        border-radius: 3px;
-        background: #f8f8f8;
-        padding: 0 3px 0 3px;
-      }
-
-      ::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-      ::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #000;
-      }
-
-      a::-moz-selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-      a::selection {
-        background: rgba(255, 255, 0, 0.3);
-        color: #0645ad;
-      }
-
-      p {
-        margin: 1em 0;
-      }
-
-      img {
-        max-width: 100%;
-      }
-
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6 {
-        font-weight: normal;
-        color: #111;
-        line-height: 1em;
-      }
-      h4,
-      h5,
-      h6 {
-        font-weight: bold;
-      }
-      h1 {
-        font-size: 2.5em;
-      }
-      h2 {
-        font-size: 2em;
-        border-bottom: 1px solid silver;
-        padding-bottom: 5px;
-      }
-      h3 {
-        font-size: 1.5em;
-      }
-      h4 {
-        font-size: 1.2em;
-      }
-      h5 {
-        font-size: 1em;
-      }
-      h6 {
-        font-size: 0.9em;
-      }
-
-      blockquote {
-        color: #666666;
-        margin: 0;
-        padding-left: 3em;
-        border-left: 0.5em #eee solid;
-      }
-      hr {
-        display: block;
-        height: 2px;
-        border: 0;
-        border-top: 1px solid #aaa;
-        border-bottom: 1px solid #eee;
-        margin: 1em 0;
-        padding: 0;
-      }
-
-      pre,
-      code,
-      kbd,
-      samp {
-        color: #000;
-        font-family: monospace;
-        font-size: 0.88em;
-        border-radius: 3px;
-        background-color: #f8f8f8;
-        border: 1px solid #ccc;
-      }
-      pre {
-        white-space: pre;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-        padding: 5px 12px;
-      }
-      pre code {
-        border: 0px !important;
-        padding: 0;
-      }
-      code {
-        padding: 0 3px 0 3px;
-      }
-
-      b,
-      strong {
-        font-weight: bold;
-      }
-
-      dfn {
-        font-style: italic;
-      }
-
-      ins {
-        background: #ff9;
-        color: #000;
-        text-decoration: none;
-      }
-
-      mark {
-        background: #ff0;
-        color: #000;
-        font-style: italic;
-        font-weight: bold;
-      }
-
-      sub,
-      sup {
-        font-size: 75%;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-      }
-      sup {
-        top: -0.5em;
-      }
-      sub {
-        bottom: -0.25em;
-      }
-
-      ul,
-      ol {
-        margin: 1em 0;
-        padding: 0 0 0 2em;
-      }
-      li p:last-child {
-        margin: 0;
-      }
-      dd {
-        margin: 0 0 0 2em;
-      }
-
-      img {
-        border: 0;
-        -ms-interpolation-mode: bicubic;
-        vertical-align: middle;
-      }
-
-      table {
-        border-collapse: collapse;
-        border-spacing: 0;
-      }
-      td {
-        vertical-align: top;
-      }
-
-      @media only screen and (min-width: 480px) {
-        body {
-          font-size: 14px;
-        }
-      }
-
-      @media only screen and (min-width: 768px) {
-        body {
-          font-size: 16px;
-        }
-      }
-
-      @media print {
-        * {
-          background: transparent !important;
-          color: black !important;
-          filter: none !important;
-          -ms-filter: none !important;
-        }
-        body {
-          font-size: 12pt;
-          max-width: 100%;
-          outline: none;
-        }
-        a,
-        a:visited {
-          text-decoration: underline;
-        }
-        hr {
-          height: 1px;
-          border: 0;
-          border-bottom: 1px solid black;
-        }
-        a[href]:after {
-          content: " (" attr(href) ")";
-        }
-        abbr[title]:after {
-          content: " (" attr(title) ")";
-        }
-        .ir a:after,
-        a[href^="javascript:"]:after,
-        a[href^="#"]:after {
-          content: "";
-        }
-        pre,
-        blockquote {
-          border: 1px solid #999;
-          padding-right: 1em;
-          page-break-inside: avoid;
-        }
-        tr,
-        img {
-          page-break-inside: avoid;
-        }
-        img {
-          max-width: 100% !important;
-        }
-        @page :left {
-          margin: 15mm 20mm 15mm 10mm;
-        }
-        @page :right {
-          margin: 15mm 10mm 15mm 20mm;
-        }
-        p,
-        h2,
-        h3 {
-          orphans: 3;
-          widows: 3;
-        }
-        h2,
-        h3 {
-          page-break-after: avoid;
-        }
-      }
-    </style>
-    <title>N4749</title>
-  </head>
-  <body>
-    <h1>N4749 Editors' Report -- Programming Languages -- C++</h1>
-
-    <p>
-      2018-05-07 <br />
-      Richard Smith (editor) (Google Inc) <br />
-      Dawn Perchik (co-editor) (Embarcadero Technologies Inc) <br />
-      Thomas Köppe (co-editor) (Google DeepMind) <br />
-      <code>&lt;cxxeditor@gmail.com&gt;</code>
-    </p>
-
-    <h2>Acknowledgements</h2>
-
-    <p>
-      Special thanks to Jens Maurer for performing many of the editorial fixes
-      since N4741.
-    </p>
-
-    <p>
-      Thanks to all those who have
-      <a
-        href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue"
-        >submitted editorial issues</a
-      >
-      and to those who have provided pull requests with fixes.
-    </p>
-
-    <h2>New papers</h2>
-
-    <ul>
-      <li>
-        <a href="http://wg21.link/n4750">N4750</a> is the current C++ working
-        draft. It replaces <a href="http://wg21.link/n4741">N4741</a>.
-      </li>
-      <li>N4749 is this Editors' Report.</li>
-    </ul>
-
-    <h2>Motions incorporated into working draft</h2>
-
-    <p>This revision contains only editorial changes relative to N4741.</p>
-
-    <h2>Minor editorial fixes</h2>
-
-    <p>
-      A log of editorial fixes made to the working draft since N4741 is below.
-      This list excludes changes that do not affect the body text or only affect
-      whitespace or typeface. For a complete list including such changes (or for
-      the actual deltas applied by these changes), consult the
-      <a href="https://github.com/cplusplus/draft/compare/n4741...n4750"
-        >draft sources on github</a
-      >.
-    </p>
-
-    <pre><code>commit dc6d80a697df0843b72fca3e2d2555311d8e6b25
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>n4749</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="n4749-editors-report-programming-languages-c">N4749 Editors’ Report – Programming Languages – C++</h1>
+<p>2018-05-07<br />
+Richard Smith (editor) (Google Inc)<br />
+Dawn Perchik (co-editor) (Embarcadero Technologies Inc)<br />
+Thomas Köppe (co-editor) (Google DeepMind)<br />
+<code>&lt;cxxeditor@gmail.com&gt;</code></p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>Special thanks to Jens Maurer for performing many of the editorial fixes since N4741.</p>
+<p>Thanks to all those who have <a href="https://github.com/cplusplus/draft/wiki/How-to-submit-an-editorial-issue">submitted editorial issues</a> and to those who have provided pull requests with fixes.</p>
+<h2 id="new-papers">New papers</h2>
+<ul>
+<li><a href="http://wg21.link/n4750">N4750</a> is the current C++ working draft. It replaces <a href="http://wg21.link/n4741">N4741</a>.</li>
+<li>N4749 is this Editors’ Report.</li>
+</ul>
+<h2 id="motions-incorporated-into-working-draft">Motions incorporated into working draft</h2>
+<p>This revision contains only editorial changes relative to N4741.</p>
+<h2 id="minor-editorial-fixes">Minor editorial fixes</h2>
+<p>A log of editorial fixes made to the working draft since N4741 is below. This list excludes changes that do not affect the body text or only affect whitespace or typeface. For a complete list including such changes (or for the actual deltas applied by these changes), consult the <a href="https://github.com/cplusplus/draft/compare/n4741...n4750">draft sources on github</a>.</p>
+<pre><code>commit dc6d80a697df0843b72fca3e2d2555311d8e6b25
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Apr 17 00:03:47 2018 +0200
 
@@ -371,10 +56,10 @@ Date:   Tue Apr 17 00:12:55 2018 +0100
     [numerics] Remove some maths typesetting idiosyncrasies.
 
     * Remove several instances of manual spacing adjustments,
-      where LaTeX's default spacing works just fine and is more
+      where LaTeX&#39;s default spacing works just fine and is more
       consistent.
-    * Replace \mbox'es with more idiomatic \text.
-    * Improve grammar by adding commas before "where".
+    * Replace \mbox&#39;es with more idiomatic \text.
+    * Improve grammar by adding commas before &quot;where&quot;.
     * Improve source code by removing pointless newline-escapes
       and minor rearrangements.
 
@@ -388,7 +73,7 @@ commit 703381d5f9cdce46ca3532a66463066950bcd6c1
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Tue Apr 10 23:23:51 2018 +0200
 
-    [dcl.type.cv,expr.ass] Clarify the meaning of "modify" for an object.
+    [dcl.type.cv,expr.ass] Clarify the meaning of &quot;modify&quot; for an object.
 
 commit df1b2ba8c2035a68f1089c385c29edba64f5aec4
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -402,8 +87,8 @@ Date:   Sat May 5 22:31:16 2018 +0300
 
     Delete redundant and wrong example
 
-    1. Returning/casting to rvalue reference of *object type* is an xvalue. The example misses the "object type" part.
-    2. A complete and correct list of xvalue expressions is just 2 (or 3? I'm bad at counting) paragraph below. So, fixing the example is not rational, better to delete it.
+    1. Returning/casting to rvalue reference of *object type* is an xvalue. The example misses the &quot;object type&quot; part.
+    2. A complete and correct list of xvalue expressions is just 2 (or 3? I&#39;m bad at counting) paragraph below. So, fixing the example is not rational, better to delete it.
 
 commit 5706664ea6e38b14d00acec1cca9955b7f734b67
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -419,7 +104,7 @@ Date:   Mon May 7 06:15:46 2018 +0300
 
     [dcl.array]: delete note about non-modifiability of arrays (#2048)
 
-    This note doesn't mean anything and contradicts the fact that a non-const-qualified array lvalue is in fact a modifiable lvalue.
+    This note doesn&#39;t mean anything and contradicts the fact that a non-const-qualified array lvalue is in fact a modifiable lvalue.
 
 commit 78af2e2abed00a650013fca9819b40e3a134cff2
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
@@ -433,13 +118,13 @@ Date:   Thu Apr 26 12:59:00 2018 -0700
 
     Order library comparisons canonically
 
-    The order [==, !=, &lt;, &gt;, &lt;=, &gt;=] seems to be most common. Let's make it canonical and use it uniformly.
+    The order [==, !=, &lt;, &gt;, &lt;=, &gt;=] seems to be most common. Let&#39;s make it canonical and use it uniformly.
 
 commit 78a00260352f275cfe1323b55db1a3ebeb68e007
 Author: S. B. Tam &lt;cpplearner@outlook.com&gt;
 Date:   Mon Apr 30 13:51:33 2018 +0800
 
-    [basic.scope.pdecl] Change "type-id" to "defining-type-id"
+    [basic.scope.pdecl] Change &quot;type-id&quot; to &quot;defining-type-id&quot;
 
     ... now that _alias-declaration_ uses the _defining-type-id_ nonterminal.
 
@@ -501,7 +186,6 @@ commit 6d886642cd163af40ae8c5ec4f98f44acfe405f6
 Author: Jens Maurer &lt;Jens.Maurer@gmx.net&gt;
 Date:   Wed Apr 4 12:50:59 2018 +0200
 
-    [time.syn] Add comments pointing to specification of literal operators (#2018)
-</code></pre>
-  </body>
+    [time.syn] Add comments pointing to specification of literal operators (#2018)</code></pre>
+</body>
 </html>

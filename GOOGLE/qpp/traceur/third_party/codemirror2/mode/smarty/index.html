@@ -1,96 +1,22 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>CodeMirror: Smarty mode</title>
-    <link rel="stylesheet" href="../../lib/codemirror.css" />
-    <script src="../../lib/codemirror.js"></script>
-    <script src="smarty.js"></script>
-    <style type="text/css">
-      .CodeMirror {
-        border-top: 1px solid black;
-        border-bottom: 1px solid black;
-      }
-    </style>
-    <link rel="stylesheet" href="../../doc/docs.css" />
-  </head>
-  <body>
-    <h1>CodeMirror: Smarty mode</h1>
-
-    <form>
-      <textarea id="code" name="code">
-{extends file="parent.tpl"}
-{include file="template.tpl"}
-
-{* some example Smarty content *}
-{if isset($name) && $name == 'Blog'}
-  This is a {$var}.
-  {$integer = 451}, {$array[] = "a"}, {$stringvar = "string"}
-  {assign var='bob' value=$var.prop}
-{elseif $name == $foo}
-  {function name=menu level=0}
-    {foreach $data as $entry}
-      {if is_array($entry)}
-        - {$entry@key}
-        {menu data=$entry level=$level+1}
-      {else}
-        {$entry}
-      {/if}
-    {/foreach}
-  {/function}
-{/if}</textarea
-      >
-    </form>
-
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        mode: "smarty",
-      });
-    </script>
-
-    <br />
-
-    <form>
-      <textarea id="code2" name="code2">
-{--extends file="parent.tpl"--}
-{--include file="template.tpl"--}
-
-{--* some example Smarty content *--}
-{--if isset($name) && $name == 'Blog'--}
-  This is a {--$var--}.
-  {--$integer = 451--}, {--$array[] = "a"--}, {--$stringvar = "string"--}
-  {--assign var='bob' value=$var.prop--}
-{--elseif $name == $foo--}
-  {--function name=menu level=0--}
-    {--foreach $data as $entry--}
-      {--if is_array($entry)--}
-        - {--$entry@key--}
-        {--menu data=$entry level=$level+1--}
-      {--else--}
-        {--$entry--}
-      {--/if--}
-    {--/foreach--}
-  {--/function--}
-{--/if--}</textarea
-      >
-    </form>
-
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code2"), {
-        lineNumbers: true,
-        mode: {
-          name: "smarty",
-          leftDelimiter: "{--",
-          rightDelimiter: "--}",
-        },
-      });
-    </script>
-
-    <p>
-      A plain text/Smarty mode which allows for custom delimiter tags (defaults
-      to <b>{</b> and <b>}</b>).
-    </p>
-
-    <p><strong>MIME types defined:</strong> <code>text/x-smarty</code></p>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>index</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="codemirror-smarty-mode">CodeMirror: Smarty mode</h1>
+<p>{extends file=“parent.tpl”} {include file=“template.tpl”} {* some example Smarty content *} {if isset($name) &amp;&amp; <span class="math inline">$name == 'Blog'} This is a {$</span>var}. {<span class="math inline">$integer = 451}, {$</span>array[] = “a”}, {<span class="math inline">$stringvar = "string"} {assign var='bob' value=$</span>var.prop} {elseif $name == $foo} {function name=menu level=0} {foreach $data as <span class="math inline">$entry} {if is\_array($</span>entry)} - {<span class="math inline">$entry@key} {menu data=$</span>entry level=<span class="math inline">$level+1} {else} {$</span>entry} {/if} {/foreach} {/function} {/if}</p>
+<p>{–extends file=“parent.tpl”–} {–include file=“template.tpl”–} {–* some example Smarty content *–} {–if isset($name) &amp;&amp; <span class="math inline">$name == 'Blog'--} This is a {--$</span>var–}. {–<span class="math inline">$integer = 451--}, {--$</span>array[] = “a”–}, {–<span class="math inline">$stringvar = "string"--} {--assign var='bob' value=$</span>var.prop–} {–elseif $name == $foo–} {–function name=menu level=0–} {–foreach $data as <span class="math inline">$entry--} {--if is\_array($</span>entry)–} - {–<span class="math inline">$entry@key--} {--menu data=$</span>entry level=<span class="math inline">$level+1--} {--else--} {--$</span>entry–} {–/if–} {–/foreach–} {–/function–} {–/if–}</p>
+<p>A plain text/Smarty mode which allows for custom delimiter tags (defaults to <strong>{</strong> and <strong>}</strong>).</p>
+<p><strong>MIME types defined:</strong> <code>text/x-smarty</code></p>
+</body>
 </html>

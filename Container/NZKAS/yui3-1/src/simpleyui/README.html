@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="simple-yui">Simple YUI</h1>
+<p>The simpleyui.js file is a rollup of commonly used YUI modules delivered with a global <code>Y</code> instance to which all included functionality is attached.</p>
+<p>The intended usage of this file is to provide the simplest possible starting point for using YUI 3. It supports the following usage pattern:</p>
+<pre><code>&lt;script src=&quot;http://yui.yahooapis.com/3.4.0/build/simpleyui/simpleyui.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+    Y.one(&quot;#foo&quot;).on(&quot;click&quot;, function(e) {
+        //handle click
+    });
+&lt;/script&gt;</code></pre>
+<p>Simple YUI bundles the following modules:</p>
+<ul>
+<li><code>yui</code></li>
+<li><code>oop</code></li>
+<li><code>dom</code></li>
+<li><code>event-custom</code></li>
+<li><code>event-base</code></li>
+<li><code>pluginhost</code></li>
+<li><code>node</code></li>
+<li><code>event-delegate</code></li>
+<li><code>io-base</code></li>
+<li><code>json-parse</code></li>
+<li><code>transition</code></li>
+<li><code>selector-css3</code></li>
+<li><code>dom-style-ie</code></li>
+</ul>
+<p>You can add functionality to the global <code>Y</code> instance at any time, drawing from any module in the YUI 3, YUI 3 Gallery, or YUI 2-in-3 project:</p>
+<pre><code>&lt;script&gt;
+    Y.use(&quot;slider&quot;, function(Y) {
+        
+        // Create a horizontal Slider 300px wide and values from -100 to 100
+        var slider = new Y.Slider({
+            length : 300,
+            min    : -100,
+            max    : 100
+        });
+
+    })
+&lt;/script&gt;</code></pre>
+</body>
+</html>

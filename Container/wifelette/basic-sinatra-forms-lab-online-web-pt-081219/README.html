@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="sinatra-forms-lab">Sinatra Forms Lab</h1>
+<h2 id="overview">Overview</h2>
+<p>In this lab, you’ll practice building forms in Sinatra by creating a basketball team sign-up sheet. Your application will have a basic HTML form, and will display the data from the form after it has been submitted by the user.</p>
+<h2 id="instructions">Instructions</h2>
+<ol type="1">
+<li><p>Run <code>bundle install</code></p></li>
+<li><p>Run <code>shotgun</code></p></li>
+<li><p>Make a form</p>
+<p>Create a route that responds to a GET request at <code>/newteam</code>. Add a form to the <code>newteam.erb</code> template and render it in the GET <code>/newteam</code> route.</p>
+<p>The form should have fields for: Team name (‘name’) Coach (‘coach’) Point Guard (‘pg’) Shooting Guard (‘sg’) Power Forward (‘pf’) Small Forward (‘sf’) Center (‘c’)</p></li>
+</ol>
+<p>It should look something like this:</p>
+<figure>
+<img src="https://curriculum-content.s3.amazonaws.com/web-development/Sinatra/basketball-form.png" alt="form for basketball team" /><figcaption>form for basketball team</figcaption>
+</figure>
+<p>When creating your form, your “Submit” button will need to be identified by an <code>id</code> attribute with value of “Submit”. We’re telling this to you now because our test frame work, Capybara, requires buttons to be <a href="http://www.rubydoc.info/gems/capybara/Capybara%2FNode%2FActions%3Aclick_button">findable by an <code>id</code>, <code>title</code>, or <code>value</code> attribute</a>.</p>
+<ol start="4" type="1">
+<li><p>Handle form submission</p>
+<p>Create a route that responds to a POST request at <code>/team</code> Have the form send a POST request to this route. Upon submission, pass the submitted data to the <code>team.erb</code> template.</p></li>
+<li><p>Final Output</p>
+<p>Update the <code>team.erb</code> template so when you post to this form, it displays the name of the team and each member of the team.</p>
+<p>Your view should display something like this:</p>
+<figure>
+<img src="https://curriculum-content.s3.amazonaws.com/web-development/Sinatra/basketball-results.png" alt="completed form" /><figcaption>completed form</figcaption>
+</figure></li>
+<li><p>Deliverables</p></li>
+</ol>
+<p>Pass the tests! Make sure you read the test output carefully!</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><p><a href="https://github.com/ashleygwilliams/">Ashley William’s GitHub</a> - <a href="https://github.com/ashleygwilliams/sinatra-form-party">Sinatra Form Party</a></p></li>
+<li><p><a href="https://github.com/ashleygwilliams/">Ashley William’s GitHub</a> - <a href="https://github.com/ashleygwilliams/citibike-sinatra">Citibike Sinatra</a></p></li>
+</ul>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/basic-sinatra-forms-lab' title='Sinatara Forms Lab'>Sinatara Forms Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

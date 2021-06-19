@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<h1 id="active-record-costume-store">Active Record Costume Store</h1>
+<h2 id="contents">Contents</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Section</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#objectives">Objectives</a></td>
+</tr>
+<tr class="even">
+<td><a href="#active-record">Active Record</a></td>
+</tr>
+<tr class="odd">
+<td><a href="#example">Example</a></td>
+</tr>
+<tr class="even">
+<td><a href="#instructions">Instructions</a></td>
+</tr>
+<tr class="odd">
+<td><a href="#resources">Resources</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="objectives">Objectives</h2>
+<p>:jack_o_lantern: :ghost: :jack_o_lantern:</p>
+<p>In this lab, you’ll be creating the following tables: <code>costumes</code>, <code>costume_stores</code>, and <code>haunted_houses</code>. You’ll be creating the following classes: <code>Costume</code>, <code>CostumeStore</code>, and <code>HauntedHouse</code>.</p>
+<p>The <code>costumes</code> table will have four columns:</p>
+<ol type="1">
+<li>name</li>
+<li>price</li>
+<li>size</li>
+<li>image url</li>
+</ol>
+<p><em>as well as</em> the two “timestamp” columns: <code>created_at</code> and <code>updated_at</code>. This will provide a grand total of <em>six</em> columns.</p>
+<p>The <code>costume_stores</code> table will have seven columns:</p>
+<ol type="1">
+<li>name</li>
+<li>location</li>
+<li>number of costumes, or “costume inventory”</li>
+<li>number of employees</li>
+<li>whether or not it’s still in business</li>
+<li>opening time</li>
+<li>closing time</li>
+</ol>
+<p>The <code>haunted_houses</code> table will have eight columns:</p>
+<ol type="1">
+<li>name</li>
+<li>location</li>
+<li>theme</li>
+<li>price</li>
+<li>whether they’re family friendly or not</li>
+<li>opening date</li>
+<li>closing date</li>
+<li>long description</li>
+</ol>
+<p>Before coding out the creation of these tables, read about Active Record below:</p>
+<h2 id="active-record-review">Active Record Review</h2>
+<p>Active Record is magic. Well, not really. But it does build out a bunch of methods for you. For instance, when it’s used properly it will give you access to methods such as <code>create</code>, <code>save</code>, and <code>find_by</code>. Rejoice! Never again will you have to manually build out these methods!</p>
+<p>Active Record allows you to create a database that interacts with your class with only a few lines of code. These lines of code go to creating a model, which resides in the <code>app/models</code> folder, and a migration, which resides in the <code>db/migrate</code> folder.</p>
+<p>The model inherits from <code>ActiveRecord::Base</code> while the migration inherits from <code>ActiveRecord::Migration</code>. Many migrations these days have a <code>change</code> method, but you might also see migrations with an <code>up</code> and a <code>down</code> method instead. To use Active Record, you have to stick to some specific naming conventions: while the migrations are plural, the models are singular.</p>
+<h3 id="migrations">Migrations</h3>
+<p>When creating migrations, the class names in the migration files must match their file names. For instance, a class in the migration file called <code>20141013204115_create_candies.rb</code> must be named <code>CreateCandies</code> while a class in a migration file called <code>20130915204319_add_addresses_to_houses.rb</code> must be called AddAddressesToHouses.</p>
+<p>You might notice that in both the examples above, the numbers at the front of the file name were ignored. These numbers are in the form <code>YYYYMMDDHHMMSS</code>. Later on, these timestamps will become important as Rails uses them to determine which migration should be run and in what order. For instance, if you made a table called <code>dog_walkers</code> and then added a column to it called <code>rating</code>, that would be fine as the timestamp on the <code>dog_walkers</code> table creation would indicate it needs to be migrated before adding the <code>rating</code> column to it. However, if you did this in reverse order, that is adding a column to a table that doesn’t exist, then creating the table, you would get an error.</p>
+<p>Migrations, as it was mentioned before, inherit from <code>ActiveRecord::Migration</code> and usually have a method called <code>change</code>. In change, you can create a table with the <a href="http://guides.rubyonrails.org/migrations.html#creating-a-table">create_table</a> method. This method automatically will create a primary key column called <code>id</code>, but this default can be overridden if you’d like to customize it.</p>
+<p><strong><em>NOTE</em></strong>: As of Active Record 5.x, we can no longer inherit directly from <code>ActiveRecord::Migration</code> and must instead specify which version of Active Record / Rails the migration was written for. If we were writing a migration for Active Record 5.1, we would inherit from <code>ActiveRecord::Migration[5.1]</code>. Don’t worry too much about this until you get to the Rails section. Until then, if you encounter an error like this…</p>
+<pre class="text"><code>StandardError: Directly inheriting from ActiveRecord::Migration is not supported. Please specify the Rails release the migration was written for:
+
+  class CreateDogs &lt; ActiveRecord::Migration[4.2]</code></pre>
+<p>…simply add <code>[4.2]</code> to the end of <code>ActiveRecord::Migration</code>, exactly as the error message instructs.</p>
+<p>Here’s a simple example of the <code>create_table</code> method in action:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">class</span> <span class="dt">CreateDogs</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Migration</span>[<span class="fl">4.2</span>]</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">def</span> change</a>
+<a class="sourceLine" id="cb2-3" title="3">    create_table <span class="st">:dogs</span> <span class="kw">do</span> |t|</a>
+<a class="sourceLine" id="cb2-4" title="4">      t.string <span class="st">:name</span></a>
+<a class="sourceLine" id="cb2-5" title="5">      t.string <span class="st">:breed</span></a>
+<a class="sourceLine" id="cb2-6" title="6">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-7" title="7">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">end</span></a></code></pre></div>
+<p>The above code would create a table called <code>dogs</code> with three columns: <code>name</code>, <code>breed</code> (both explicitly created), and an implicitly created <code>id</code> column.</p>
+<p>Take a look at a few data types that Active Record supports below:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Data Type</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>boolean</td>
+<td>true, false</td>
+</tr>
+<tr class="even">
+<td>integer</td>
+<td>2, -13, 485</td>
+</tr>
+<tr class="odd">
+<td>string</td>
+<td>“Halloween”, “Boo!”, strings between 1-255 characters</td>
+</tr>
+<tr class="even">
+<td>datetime</td>
+<td>DateTime.now, DateTime.new(2014,10,31)</td>
+</tr>
+<tr class="odd">
+<td>float</td>
+<td>2.234, 32.2124, -6.342</td>
+</tr>
+<tr class="even">
+<td>text</td>
+<td>strings between 1 and 2 ^ 32 - 1 characters</td>
+</tr>
+</tbody>
+</table>
+<h3 id="models">Models</h3>
+<p>Like migrations, models also inherit, but they inherit from <code>ActiveRecord::Base</code>. A simple model would look like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">class</span> <span class="dt">Dog</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">end</span></a></code></pre></div>
+<p>Even though there are no explicit methods for retrieving <code>name</code> and <code>breed</code>, this <code>Dog</code> model is associated with the created <code>dogs</code> table above. Because of this integration, we can call <code>name</code>, <code>breed</code>, and <code>id</code> on any new instance of the Dog class. For example:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb4-1" title="1">shiloh = <span class="dt">Dog</span>.new</a>
+<a class="sourceLine" id="cb4-2" title="2">=&gt; <span class="co">#&lt;Dog id: 1, name: nil, breed: nil&gt;</span></a>
+<a class="sourceLine" id="cb4-3" title="3">shiloh.name = <span class="st">&quot;Shiloh&quot;</span></a>
+<a class="sourceLine" id="cb4-4" title="4">=&gt; <span class="st">&quot;Shiloh&quot;</span></a>
+<a class="sourceLine" id="cb4-5" title="5">shiloh.breed = <span class="st">&quot;Beagle&quot;</span></a>
+<a class="sourceLine" id="cb4-6" title="6">=&gt; <span class="st">&quot;Beagle&quot;</span></a>
+<a class="sourceLine" id="cb4-7" title="7">shiloh.save</a>
+<a class="sourceLine" id="cb4-8" title="8">=&gt; <span class="dv">true</span></a>
+<a class="sourceLine" id="cb4-9" title="9"></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="dt">Dog</span>.find_by(<span class="st">:name</span> =&gt; <span class="st">&quot;Shiloh&quot;</span>) == shiloh</a>
+<a class="sourceLine" id="cb4-11" title="11">=&gt; <span class="dv">true</span></a></code></pre></div>
+<p>Notice that you had access to reader and writer methods that cooperated with the database that you never had to actually code. You could set the name without ever writing <code>def name=()</code> and call the <code>self.find_by(attribute)</code> method without ever teaching your Dog class how to look up data in the database. It’s pretty awesome. Take a look at an example below.</p>
+<h4 id="example">Example</h4>
+<p>Let’s say you wanted to make a class called <code>Candy</code>. Candies should have two attributes, a name (string) and the number of calories (integer), you would write the migration as seen below:</p>
+<p><code>db/migrations/20130915204319_create_candies.rb</code></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">class</span> <span class="dt">CreateCandies</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Migration</span>[<span class="fl">4.2</span>]</a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="kw">def</span> change</a>
+<a class="sourceLine" id="cb5-3" title="3">    create_table <span class="st">:candies</span> <span class="kw">do</span> |t|</a>
+<a class="sourceLine" id="cb5-4" title="4">      t.string <span class="st">:name</span></a>
+<a class="sourceLine" id="cb5-5" title="5">      t.integer <span class="st">:calories</span></a>
+<a class="sourceLine" id="cb5-6" title="6">      t.timestamps</a>
+<a class="sourceLine" id="cb5-7" title="7">    <span class="kw">end</span></a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="kw">end</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="kw">end</span></a></code></pre></div>
+<blockquote>
+<p><strong>Note</strong>: You might be wondering what <code>t.timestamps</code> is doing here. Well, it creates two new columns, <code>created_at</code> and <code>updated_at</code>. These are handy columns to have around as sometimes you want to query based on the time of creation or update-tion instead of querying using attributes or ids. To read more about timestamps, go to Active Record’s <a href="http://api.rubyonrails.org/classes/ActiveRecord/Timestamp.html">docs on them</a>.</p>
+</blockquote>
+<p>While the migration was plural, the model would be singular:</p>
+<p><code>app/models/candy.rb</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">class</span> <span class="dt">Candy</span> &lt; <span class="dt">ActiveRecord</span>::<span class="dt">Base</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="kw">end</span></a></code></pre></div>
+<p>After saving the code above, running <code>rake db:migrate</code> will apply the desired changes to the database by running the change method. Then you can alter the database with simple Ruby statements.</p>
+<p>For instance, you could create three rows in the table easily:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb7-1" title="1"><span class="dt">Candy</span>.create(<span class="st">:name</span> =&gt; <span class="st">&quot;Milky Way Midnight&quot;</span>, <span class="st">:calories</span> =&gt; <span class="dv">220</span>)</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="dt">Candy</span>.create(<span class="st">:name</span> =&gt; <span class="st">&quot;Snickers&quot;</span>, <span class="st">:calories</span> =&gt; <span class="dv">550</span>)</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="dt">Candy</span>.create(<span class="st">:name</span> =&gt; <span class="st">&quot;Reese&#39;s Peanut Butter Cups&quot;</span>, <span class="st">:calories</span> =&gt; <span class="dv">210</span>)</a></code></pre></div>
+<p>Retrieving information is just as painless:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb8-1" title="1">reeses = <span class="dt">Candy</span>.find_by(<span class="st">:name</span> =&gt; <span class="st">&quot;Reese&#39;s Peanut Butter Cups&quot;</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co"># =&gt; #&lt;Candy id: 3, name: &quot;Reese&#39;s Peanut Butter Cups&quot;, calories: 210&gt;</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="dt">Candy</span>.first</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="co"># =&gt; #&lt;Candy id: 1, name: &quot;Milky Way Midnight&quot;, calories: 220&gt;</span></a>
+<a class="sourceLine" id="cb8-5" title="5">snickers = <span class="dt">Candy</span>.find(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="co"># =&gt; #&lt;Candy id: 2, name: &quot;Snickers&quot;, calories: 550&gt;</span></a></code></pre></div>
+<p>As is viewing attributes:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb9-1" title="1">reeses = <span class="dt">Candy</span>.find(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co"># =&gt; #&lt;Candy id: 3, name: &quot;Reese&#39;s Peanut Batter Cups&quot;, calories: 210&gt;</span></a>
+<a class="sourceLine" id="cb9-3" title="3">reeses.calories</a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co"># =&gt; 210</span></a>
+<a class="sourceLine" id="cb9-5" title="5">reeses.name</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="co"># =&gt; &quot;Reese&#39;s Peanut Batter Cups&quot;</span></a></code></pre></div>
+<p>Updating information and viewing table info is also quite simple:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb10-1" title="1">snickers = <span class="dt">Candy</span>.find(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="co"># =&gt; #&lt;Candy id: 2, name: &quot;Snickers&quot;, calories: 550&gt;</span></a>
+<a class="sourceLine" id="cb10-3" title="3">snickers.update(<span class="st">:calories</span> =&gt; <span class="dv">250</span>)</a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co"># =&gt; true</span></a>
+<a class="sourceLine" id="cb10-5" title="5"></a>
+<a class="sourceLine" id="cb10-6" title="6">reeses = <span class="dt">Candy</span>.last</a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co"># =&gt; #&lt;Candy id: 3, name: &quot;Reese&#39;s Peanut Batter Cups&quot;, calories: 210&gt;</span></a>
+<a class="sourceLine" id="cb10-8" title="8">reeses.update(<span class="st">:name</span> =&gt; <span class="st">&quot;Reeeese&#39;s Peanut Butter Cups&quot;</span>)</a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="co"># =&gt; true</span></a>
+<a class="sourceLine" id="cb10-10" title="10"></a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="dt">Candy</span>.find(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb10-12" title="12"><span class="co"># =&gt; #&lt;Candy id: 2, name: &quot;Snickers&quot;, calories: 250&gt;</span></a>
+<a class="sourceLine" id="cb10-13" title="13"><span class="dt">Candy</span>.last</a>
+<a class="sourceLine" id="cb10-14" title="14"><span class="co"># =&gt; #&lt;Candy id: 3, name: &quot;Reeeese&#39;s Peanut Butter Cups&quot;, calories: 210&gt;</span></a></code></pre></div>
+<p>Isn’t that amazing? Eleven lines of code allows you to create a table and a class that interact with each other elegantly and efficiently. It builds out methods like, <code>create</code>, <code>update</code>, <code>count</code>, <code>name</code>, <code>calories</code>, along with others such as <code>build</code> and <code>save</code>.</p>
+<h2 id="instructions">Instructions</h2>
+<h3 id="file-structure">File Structure</h3>
+<p>You will only be altering code in six files, the three files in the <code>models</code> folder and the three files in the <code>db/migrations</code> folder.</p>
+<pre class="text"><code>├── app
+│   └── models
+│       ├── costume.rb
+│       ├── costume_store.rb
+│       └── haunted_house.rb
+└──db
+    └── migrations
+        ├── 001_create_costumes.rb
+        ├── 002_create_costume_stores.rb
+        └── 003_create_haunted_houses.rb</code></pre>
+<h3 id="getting-started">Getting Started</h3>
+<p><strong>This is a test-driven lab so start with the first test and work your way down.</strong></p>
+<p><strong>Your models should be no longer than two lines of code.</strong></p>
+<ul>
+<li>The first step is to run <code>bundle install</code>.</li>
+<li>Create the Costume class in <code>app/models/</code>.</li>
+<li>Fill out the Active Record migration for costumes such that it passes the specs.</li>
+<li>Create the CostumeStore class in <code>app/models/</code>.</li>
+<li>Fill out the Active Record migration for <code>costume_stores</code> such that it passes the specs.</li>
+<li>Create the HauntedHouse class in <code>app/models/</code>.</li>
+<li>Fill out the Active Record migration for haunted_houses such that it passes the specs.</li>
+</ul>
+<p>Just like for any other lab, run <code>learn</code> to view your test progress. However, unlike some of the other labs in thie section, for this lab, when updating an existing migration, <strong>you will need to rollback your previous migrations for that table using the rake command <code>rake db:rollback</code></strong>. Otherwise, the schema will remain unchanged and the changes you make to your migrations will not be seen.</p>
+<p>For example, say you’ve run <code>rake db:migrate</code> and <code>learn</code> once to start, and see that you need to add an attribute to the <code>costume_stores</code> table. Since this table is the second migration of three, you will need to run <code>rake db:rollback</code> twice to remove the previous migration for this table, then run <code>rake db:migrate</code> again to update the schema.</p>
+<h2 id="resources">Resources</h2>
+<ul>
+<li><a href="http://guides.rubyonrails.org/migrations.html">Active Record Migrations</a>
+<ul>
+<li>Just look at the code for the example migrations</li>
+</ul></li>
+<li><a href="http://guides.rubyonrails.org/active_record_basics.html#creating-active-record-models">Creating Active Record Models</a></li>
+<li><a href="http://api.rubyonrails.org/classes/ActiveRecord/Timestamp.html">Timestamps</a></li>
+</ul>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/activerecord-costume-store-todo' title='Active Record Costume Store'>Active Record Costume Store</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>

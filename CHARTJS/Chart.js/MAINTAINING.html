@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>MAINTAINING</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="maintaining">Maintaining</h1>
+<h2 id="release-process">Release Process</h2>
+<p>Chart.js relies on <a href="https://travis-ci.org/">Travis CI</a> to automate the library <a href="https://github.com/chartjs/Chart.js/releases">releases</a>.</p>
+<h3 id="releasing-a-new-version">Releasing a New Version</h3>
+<ol type="1">
+<li>Update the release version on <a href="https://github.com/chartjs/Chart.js/releases/new">GitHub</a> for the release drafted by the <code>release-drafter</code> tool</li>
+<li>Publish the release</li>
+<li>follow the build process on <a href="https://github.com/chartjs/Chart.js/actions?query=workflow%3A%22Node.js+Package%22">GitHub Actions</a></li>
+</ol>
+<p>Creation of this tag triggers a new build:</p>
+<ul>
+<li><code>Chart.js.zip</code> package is generated, containing dist files and examples</li>
+<li><code>dist/*.js</code>, <code>types/*.ts</code>, and <code>Chart.js.zip</code> are attached to the GitHub release (downloads)</li>
+<li>A new npm package is published on <a href="https://www.npmjs.com/package/chart.js">npmjs</a></li>
+</ul>
+<p>Finally, <a href="https://cdnjs.com/libraries/Chart.js">cdnjs</a> is automatically updated from the npm release.</p>
+<h3 id="releasing-a-patch-version">Releasing a patch version</h3>
+<p>If there is a need to create a patch version for an older release:</p>
+<ol type="1">
+<li>Create a branch for the patch version (without the <code>v</code> prefix)</li>
+<li>Cherry pick the needed commit(s) to that new branch from master</li>
+<li>Trigger the release-drafter workflow on that branch from the actions.</li>
+<li>Follow the procedure for <a href="#releasing-a-new-version">Releasing a New Version</a></li>
+</ol>
+<h3 id="further-reading">Further Reading</h3>
+<ul>
+<li><a href="https://github.com/chartjs/Chart.js/pull/7891">GitHub Action releases</a></li>
+<li><a href="https://github.com/chartjs/Chart.js/issues/3033">dist/* files</a></li>
+<li><a href="https://github.com/cdnjs/cdnjs/pull/8401">cdnjs npm auto update</a></li>
+</ul>
+</body>
+</html>

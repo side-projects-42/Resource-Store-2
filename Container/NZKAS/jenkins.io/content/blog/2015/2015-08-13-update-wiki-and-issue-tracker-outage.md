@@ -1,13 +1,3 @@
----
-:layout: post
-:title: "Update: Wiki and issue tracker outage"
-:nodeid: 601
-:created: 1439455436
-:tags:
-  - infrastructure
-:author: daniel-beck
----
-
 [I recently wrote about the two day outage of our wiki and issue tracker](https://jenkins-ci.org/content/wiki-and-issue-tracker-outage-over-weekend):
 
 > While this was a rather lengthy outage, it could have been much worse. We lost none of the data, after all.
@@ -18,4 +8,4 @@
 
 For our issue tracker, that means that issues JENKINS-29432 to JENKINS-29468 were lost, as well as comments posted from about July 15 12:20 PM to July 17 2 AM (UTC). We know this thanks to the [jenkinsci-issues](http://groups.google.com/group/jenkinsci-issues/topics) mailing list where the lost issues and comments can be looked up for reposting.
 
-We unfortunately don't have such a record from our wiki.
+We unfortunately don’t have such a record from our wiki.

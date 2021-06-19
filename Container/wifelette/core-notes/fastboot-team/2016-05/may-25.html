@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>may-25</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="fastboot-meeting-notes-2016-05-25">FastBoot Meeting Notes 2016-05-25</h1>
+<h2 id="attendees">Attendees</h2>
+<p><em>Please add yourself.</em></p>
+<p>Tom Dale, Arjan Singh, Dan McClain, Hassan Abdel-Rahman, Patrick Fisher, Jason Mitchell</p>
+<h2 id="agenda">Agenda</h2>
+<ul>
+<li><p>[ ] Last Week’s Action Items</p>
+<ul>
+<li>[x] AS/RJ will investigate issues around <code>intermediateTransitionTo</code> to determine if it is a Ember or FastBoot issue</li>
+<li>[ ] RJ to write up proposal of path forward for ember-cli and ember-cli-head integration</li>
+</ul></li>
+<li>[x] Wrongly-serialized attributes</li>
+<li>[x] Gzip/deflate support in najax</li>
+<li>[x] ember fastboot –watch</li>
+<li><p>[x] npm requires do not have prototype extensions (e.g. Array.prototype.sortBy)</p></li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li><p>intermediateTransitionTo</p>
+<ul>
+<li><p>AS created an app that had the issue, ping <span class="citation" data-cites="rwjblue">@rwjblue</span> with it, hasn’t heard back from <span class="citation" data-cites="rwjblue">@rwjblue</span> - AS: Traced to tildeio/router issue - Semi-related: router.js may be moving to TypeScript, many errors in router.js seem to be type errors</p></li>
+<li><p>Next Steps: - Tildeio/router issue: is this generally broken (waiting for Rob to confirm)</p></li>
+</ul></li>
+<li><p>PSA: Action on dom element: Renders the function.toString into the html (<code></code>) - Fixed on Canary Ember, update to Canary if you see this issue - Gzip/deflate support in najax - najax does not support gzip/deflate (blows up Ember-Data when response is compressed) - AS: <a href="https://github.com/najaxjs/najax/pull/38">PR outstanding on najax</a></p>
+<pre><code> - ember fastboot --watch
+         - Needs team review: https://github.com/ember-fastboot/ember-cli-fastboot/pull/200
+         - Agreement on `ember fastboot` should watch by default
+
+- Ember-cli-fastboot should eventually hook into `ember serve`
+- Ember 2.6 just dropped, which means ember fastboot 1.0 has 6 weeks left before release
+- FastBoot got press at Google IO: https://www.youtube.com/watch?v=srdKq0DckXQ
+- Ember Prototype extensions weren&#39;t available in an array created by an najax response
+         - npm packages that are required are from the root node VM, which creates new realms and prevents requirements from being extended by Ember
+         - Potential fix: create your own require that is with a known realm
+         - This will bite people in the future (who are using prototype extensions)
+         - Looks like a heisenbug: Extensions will only be available some of the time, depending on the origination of the object/array</code></pre></li>
+</ul>
+<h2 id="action-items">Action Items</h2>
+<pre><code>- [ ]</code></pre>
+</body>
+</html>

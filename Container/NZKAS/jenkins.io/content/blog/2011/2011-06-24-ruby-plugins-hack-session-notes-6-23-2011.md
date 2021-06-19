@@ -1,17 +1,4 @@
----
-:layout: post
-:title: Ruby Plugins Hack Session Notes 6/23/2011
-:nodeid: 322
-:created: 1308928732
-:tags:
-  - development
-  - core
-  - ruby
-  - jruby
-:author: cowboyd
----
-
-You know that the night is going to be productive whenever @kohsukekawa shows up, and last night was no exception. We talked about problems on the horizon, potential solutions, and then I spent the last half hour ripping a bit of code.
+You know that the night is going to be productive whenever <span class="citation" data-cites="kohsukekawa">@kohsukekawa</span> shows up, and last night was no exception. We talked about problems on the horizon, potential solutions, and then I spent the last half hour ripping a bit of code.
 
 The truth of the matter is that most of the changes that have to be done to Jenkins core have already been made, so now the bulk of the heavy lifting falls to the Ruby side of things (right now, me).
 
@@ -19,28 +6,28 @@ Anyhow, on to the notes!
 
 ## Attendees
 
-@kohsukekawa, @cowboyd
+<span class="citation" data-cites="kohsukekawa">@kohsukekawa</span>, <span class="citation" data-cites="cowboyd">@cowboyd</span>
 
-### extract more stuff into the jenkins-plugins.rb support library (@cowboyd)
+### extract more stuff into the jenkins-plugins.rb support library (<span class="citation" data-cites="cowboyd">@cowboyd</span>)
 
-We're in the process of extracting, normalizing, documenting all the goop that's currently residing in the [ruby plugins playground](https://github.com/cowboyd/jenkins-ruby-plugins-playground) into a formal plugin support gem called jenkins-plugins [https://github.com/cowboyd/jenkins-plugins.rb](https://github.com/cowboyd/jenkins-plugins.rb)
+We’re in the process of extracting, normalizing, documenting all the goop that’s currently residing in the [ruby plugins playground](https://github.com/cowboyd/jenkins-ruby-plugins-playground) into a formal plugin support gem called jenkins-plugins <https://github.com/cowboyd/jenkins-plugins.rb>
 
-### recruit Rubyists to implement non-Jenkins specific code (@kohsukekawa)
+### recruit Rubyists to implement non-Jenkins specific code (<span class="citation" data-cites="kohsukekawa">@kohsukekawa</span>)
 
-If you know Ruby and would like to be able to write Jenkins plugins with it, but don't know the first thing about Jenkins and/or JRuby, that's OK. You can help by implementing some of the [cucumber features](https://github.com/cowboyd/jenkins-plugins.rb/tree/master/features) found in that repo
+If you know Ruby and would like to be able to write Jenkins plugins with it, but don’t know the first thing about Jenkins and/or JRuby, that’s OK. You can help by implementing some of the [cucumber features](https://github.com/cowboyd/jenkins-plugins.rb/tree/master/features) found in that repo
 
-@kohsukekawa is going to be knocking on your door to ask if you're ready to step up, so I hope you've been nice this year!
+<span class="citation" data-cites="kohsukekawa">@kohsukekawa</span> is going to be knocking on your door to ask if you’re ready to step up, so I hope you’ve been nice this year!
 
-### testing strategy (@cowboyd, @kohsukekawa)
+### testing strategy (<span class="citation" data-cites="cowboyd">@cowboyd</span>, <span class="citation" data-cites="kohsukekawa">@kohsukekawa</span>)
 
-Ruby folk love their tests, and a plugin develompent solution won't be complete unless testing is a breeze. That means that as we extract the plugin support library, we take make sure you can test plugin classes in isolation.
+Ruby folk love their tests, and a plugin develompent solution won’t be complete unless testing is a breeze. That means that as we extract the plugin support library, we take make sure you can test plugin classes in isolation.
 
 On the Jenkins side, KK will think about how to run tests that require a full Jenkins environment. A system like this exists currently for testing java plugins, but some thought might be required on how to do this for Ruby.
 
-### packaging reloaded (@kohsukekawa)
+### packaging reloaded (<span class="citation" data-cites="kohsukekawa">@kohsukekawa</span>)
 
-KK is going to jump in and write some rake tasks to take a ruby plugin structure and package it into a valid .hpi file, and with no maven involved. According to him, Ruby plugins aren't the only system that wants to run maven-free. There is desire to be able to do plugin development with Gradle (another Java build system), so this could be a double win.
+KK is going to jump in and write some rake tasks to take a ruby plugin structure and package it into a valid .hpi file, and with no maven involved. According to him, Ruby plugins aren’t the only system that wants to run maven-free. There is desire to be able to do plugin development with Gradle (another Java build system), so this could be a double win.
 
-### different schedule (@kohsukekawa)
+### different schedule (<span class="citation" data-cites="kohsukekawa">@kohsukekawa</span>)
 
-8:30pm Central in North America, doesn't seem to be a very good time. Especially for hackers in Asia Pacific. KK will investigate a new time that works for everybody and encourages more participation.
+8:30pm Central in North America, doesn’t seem to be a very good time. Especially for hackers in Asia Pacific. KK will investigate a new time that works for everybody and encourages more participation.

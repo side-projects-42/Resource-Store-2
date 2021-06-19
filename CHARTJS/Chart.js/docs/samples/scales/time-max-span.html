@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>time-max-span</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="time-scale---max-span">Time Scale - Max Span</h1>
+<p>```js chart-editor // <block:actions:2> const actions = [ { name: “Randomize”, handler(chart) { chart.data.datasets.forEach((dataset) =&gt; { dataset.data.forEach(function (dataObj, j) { const newVal = Utils.rand(0, 100);</p>
+<pre><code>      if (typeof dataObj === &quot;object&quot;) {
+        dataObj.y = newVal;
+      } else {
+        dataset.data[j] = newVal;
+      }
+    });
+  });
+  chart.update();
+},</code></pre>
+<p>}, ]; // </block:actions></p>
+<p>// <block:setup:1> const data = { datasets: [ { label: “Dataset with string point data”, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.red, 0.5), borderColor: Utils.CHART_COLORS.red, fill: false, data: [ { x: Utils.newDateString(0), y: Utils.rand(0, 100), }, { x: Utils.newDateString(2), y: Utils.rand(0, 100), }, { x: Utils.newDateString(4), y: Utils.rand(0, 100), }, { x: Utils.newDateString(6), y: Utils.rand(0, 100), }, ], }, { label: “Dataset with date object point data”, backgroundColor: Utils.transparentize(Utils.CHART_COLORS.blue, 0.5), borderColor: Utils.CHART_COLORS.blue, fill: false, data: [ { x: Utils.newDate(0), y: Utils.rand(0, 100), }, { x: Utils.newDate(2), y: Utils.rand(0, 100), }, { x: Utils.newDate(5), y: Utils.rand(0, 100), }, { x: Utils.newDate(6), y: Utils.rand(0, 100), }, ], }, ], }; // </block:setup></p>
+<p>// <block:config:0> const config = { type: “line”, data: data, options: { spanGaps: 1000 * 60 * 60 * 24 * 2, // 2 days responsive: true, interaction: { mode: “nearest”, }, plugins: { title: { display: true, text: “Chart.js Time - spanGaps: 172800000 (2 days in ms)”, }, }, scales: { x: { type: “time”, display: true, title: { display: true, text: “Date”, }, ticks: { autoSkip: false, maxRotation: 0, major: { enabled: true, }, // color: function(context) { // return context.tick &amp;&amp; context.tick.major ? ‘#FF0000’ : ‘rgba(0,0,0,0.1)’; // }, font: function (context) { if (context.tick &amp;&amp; context.tick.major) { return { weight: “bold”, }; } }, }, }, y: { display: true, title: { display: true, text: “value”, }, }, }, }, }; // </block:config></p>
+<p>module.exports = { actions: [], config: config, }; ```</p>
+</body>
+</html>

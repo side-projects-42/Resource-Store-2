@@ -1,71 +1,20 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>CodeMirror: Breakpoint Demo</title>
-    <link rel="stylesheet" href="../lib/codemirror.css" />
-    <script src="../lib/codemirror.js"></script>
-    <script src="../mode/javascript/javascript.js"></script>
-    <link rel="stylesheet" href="../doc/docs.css" />
-
-    <style type="text/css">
-      .breakpoints {
-        width: 0.8em;
-      }
-      .breakpoint {
-        color: #822;
-      }
-      .CodeMirror {
-        border: 1px solid #aaa;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>CodeMirror: Breakpoint demo</h1>
-
-    <form>
-      <textarea id="code" name="code">
-var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-  lineNumbers: true,
-  gutters: ["CodeMirror-linenumbers", "breakpoints"]
-});
-editor.on("gutterClick", function(cm, n) {
-  var info = cm.lineInfo(n);
-  cm.setGutterMarker(n, "breakpoints", info.markers ? null : makeMarker());
-});
-
-function makeMarker() {
-  var marker = document.createElement("div");
-  marker.innerHTML = "●";
-  marker.className = "breakpoint";
-  return marker;
-}
-</textarea
-      >
-    </form>
-
-    <p>Click the line-number gutter to add or remove 'breakpoints'.</p>
-
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        gutters: ["CodeMirror-linenumbers", "breakpoints"],
-      });
-      editor.on("gutterClick", function (cm, n) {
-        var info = cm.lineInfo(n);
-        cm.setGutterMarker(
-          n,
-          "breakpoints",
-          info.gutterMarkers ? null : makeMarker()
-        );
-      });
-
-      function makeMarker() {
-        var marker = document.createElement("div");
-        marker.style.color = "#822";
-        marker.innerHTML = "●";
-        return marker;
-      }
-    </script>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>marker</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="codemirror-breakpoint-demo">CodeMirror: Breakpoint demo</h1>
+<p>var editor = CodeMirror.fromTextArea(document.getElementById(“code”), { lineNumbers: true, gutters: [“CodeMirror-linenumbers”, “breakpoints”] }); editor.on(“gutterClick”, function(cm, n) { var info = cm.lineInfo(n); cm.setGutterMarker(n, “breakpoints”, info.markers ? null : makeMarker()); }); function makeMarker() { var marker = document.createElement(“div”); marker.innerHTML = “●”; marker.className = “breakpoint”; return marker; }</p>
+<p>Click the line-number gutter to add or remove ‘breakpoints’.</p>
+</body>
 </html>

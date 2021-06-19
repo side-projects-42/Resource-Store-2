@@ -1,23 +1,8 @@
----
-:layout: post
-:title: Pipeline-as-code with Multibranch Workflows in Jenkins
-:nodeid: 653
-:created: 1449160710
-:tags:
-  - general
-  - guest post
-  - tutorial
-  - pipeline
-  - workflow
-:author: rtyler
----
-
 _Note: This is a guest post by [Kishore Bhatia](https://github.com/kishorebhatia). [Kishore](https://twitter.com/BhatiaKishore) works for [CloudBees](https://www.cloudbees.com), building custom frameworks with Open Source software and helping customers solve engineering problems around continuous delivery and DevOps at scale._
 
 ---
 
-This year some great new Jenkins features came out of the butler’s goodie bag - amongst them, the most important one being the ability to realize [continuous delivery pipeline as code](https://www.voxxed.com/blog/2015/06/kohsuke-kawaguchi-the-main-challenge-for-jenkins-is-with-itself/)!
-The features like Workflow Multibranch, pipeline-as-code (with a marker file that Jenkins looks for in your application’s SCM repository/branch, aptly named Jenkinsfile) are the foundations to making Jenkins super intelligent to automagically create workflows (rather, a CI/CD pipeline) to build your code and orchestrate the work required to drive your application from concept to delivery!
+This year some great new Jenkins features came out of the butler’s goodie bag - amongst them, the most important one being the ability to realize [continuous delivery pipeline as code](https://www.voxxed.com/blog/2015/06/kohsuke-kawaguchi-the-main-challenge-for-jenkins-is-with-itself/)! The features like Workflow Multibranch, pipeline-as-code (with a marker file that Jenkins looks for in your application’s SCM repository/branch, aptly named Jenkinsfile) are the foundations to making Jenkins super intelligent to automagically create workflows (rather, a CI/CD pipeline) to build your code and orchestrate the work required to drive your application from concept to delivery!
 
 ### Overview
 
@@ -36,9 +21,9 @@ The Workflow script to build/test/deploy your code is always synchronized with t
 
 [This project](https://github.com/kishorebhatia/pipeline-as-code-demo) has a marker file for Jenkins in the repo - `Jenkinsfile`.
 
-<center><a href="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic1.png"><img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic1.png" width="600" border="0"/></a></center>
+[<img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic1.png" width="600" />](http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic1.png)
 
-**So, what's a Jenkinsfile?** The [Jenkinsfile](https://github.com/kishorebhatia/pipeline-as-code-demo/blob/master/Jenkinsfile) is essentially your Jenkins Workflow, a script, that defines the CI/CD pipeline logic for a project with steps to build/test/deploy etc. captured in various stages.
+**So, what’s a Jenkinsfile?** The [Jenkinsfile](https://github.com/kishorebhatia/pipeline-as-code-demo/blob/master/Jenkinsfile) is essentially your Jenkins Workflow, a script, that defines the CI/CD pipeline logic for a project with steps to build/test/deploy etc. captured in various stages.
 
 So for our sample Java web application, a basic Jenkinsfile could be something like -
 
@@ -73,7 +58,7 @@ _Note:_ there are various mechanisms to promote reuse of Workflow scripts, such 
 
 Make sure you’ve the latest [Workflow](https://github.com/jenkinsci/workflow-plugin) and (v1.11 as of writing this blog) Workflow Multibranch plugins installed on your Jenkins instance
 
-<center><a href="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic2.png"><img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic2.png" width="600" border="0"/></a></center>
+[<img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic2.png" width="600" />](http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic2.png)
 
 Also, ensure that other dependencies, like SCM plugins and build tools, are met:
 
@@ -81,8 +66,7 @@ Also, ensure that other dependencies, like SCM plugins and build tools, are met:
 - GitHub Branch Source Plugin (optimized to use the GitHub API and improve performance)
 - Maven build tool
 
-Finally, make sure you've created the required Webhook from your SCM (Github in this case) to Jenkins.
-Here's how to do that:
+Finally, make sure you’ve created the required Webhook from your SCM (Github in this case) to Jenkins. Here’s how to do that:
 
 - [Setting up GitHub Webhooks in Jenkins](https://thepracticalsysadmin.com/setting-up-a-github-webhook-in-jenkins/)
 - [Step-by-step guide to setting up Jenkins for GitHub projects](https://gist.github.com/misterbrownlee/3708738)
@@ -93,11 +77,11 @@ _Branch sources_ (Git) - `https://github.com/kishorebhatia/pipeline-as-code-demo
 
 Leave all other properties default and _Save_.
 
-<center><a href="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic3.png"><img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic3.png" width="600" border="0"/></a></center>
+[<img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic3.png" width="600" />](http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic3.png)
 
 You’ll observe that Jenkins would perform Branch Indexing on that “cd” job folder and start the workflow for the master branch, with an automatically created new job, named master, under the “cd” folder.
 
-The workflow does a dummy step for application deploys to the environments in this sequence _Staging_ -> Waits for manual approval -> _PROD_
+The workflow does a dummy step for application deploys to the environments in this sequence _Staging_ -&gt; Waits for manual approval -&gt; _PROD_
 
 Now, let’s create a new branch off of this master branch in your cloned git repo:
 
@@ -107,9 +91,9 @@ Now, let’s create a new branch off of this master branch in your cloned git re
 
 You’ll observe that your Jenkins instance automatically picks up this newBranch and starts running the workflow (with the Jenkinsfile in this newBranch) to build/test/deploy the code.
 
-<center><a href="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic4.png"><img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic4.png" width="600" border="0"/></a></center>
+[<img src="http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic4.png" width="600" />](http://agentdero.cachefly.net/continuousblog/pipeline-as-code-guest-blog/Pic4.png)
 
-Next, if you now delete this `newBranch` (`git branch -D newBranch`), Jenkins will automatically remove the orphan Workflow job for `newBranch`. You can retain these jobs even after the branches are deleted using the _Orphaned Item Strategy_ property in the main "cd" job’s configuration.
+Next, if you now delete this `newBranch` (`git branch -D newBranch`), Jenkins will automatically remove the orphan Workflow job for `newBranch`. You can retain these jobs even after the branches are deleted using the _Orphaned Item Strategy_ property in the main “cd” job’s configuration.
 
 So we observed the following benefits of this pipeline-as-code approach:
 
@@ -121,11 +105,11 @@ So we observed the following benefits of this pipeline-as-code approach:
 
 ### Dockerized Demo environment
 
-You can also use the following docker image to run this demo with a preconfigured Jenkins environment and the sample job: `jenkinsci/workflow-demo` (i.e. `docker pull jenkinsci/workflow-demo`)
+You can also use the following docker image to run this demo with a preconfigured Jenkins environment and the sample job: `jenkinsci/workflow-demo` (i.e. `docker pull jenkinsci/workflow-demo`)
 
 This docker container includes Jenkins with Workflow and Workflow Multibranch plugins, a local git repo with the aforementioned Java web application and Jetty to demonstrate a continuous delivery pipeline of this application deployed and tested across multiple environments in the pipeline with an approval gate before promoting to PROD (like QA, Staging and PROD).
 
-There's a "cd" job pre-configured as a multibranch Workflow job.
+There’s a “cd” job pre-configured as a multibranch Workflow job.
 
 Launch the docker demo as: `docker run -p 8080:8080 -p 8081:8081 -p 9418:9418 -ti jenkinsci/workflow-demo`
 

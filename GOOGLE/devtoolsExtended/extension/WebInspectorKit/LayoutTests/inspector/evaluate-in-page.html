@@ -1,24 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function sum(a, b) {
-        return a + b;
-      }
-
-      function test() {
-        function callback(result) {
-          InspectorTest.addResult("2 + 2 = " + result.description);
-          InspectorTest.completeTest();
-        }
-        InspectorTest.evaluateInPage("sum(2, 2)", callback);
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>
-      This tests that layout test can evaluate scripts in the inspected page.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>evaluate-in-page</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>This tests that layout test can evaluate scripts in the inspected page.</p>
+</body>
 </html>

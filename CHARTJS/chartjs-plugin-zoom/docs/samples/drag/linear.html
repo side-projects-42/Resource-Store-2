@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>linear</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="linear-scales">Linear Scales</h1>
+<p>Zooming is performed by clicking and selecting an area over the chart with the mouse. Pan is activated by keeping <code>ctrl</code> pressed.</p>
+<p>```js chart-editor // <block:data:1> const NUMBER_CFG = { count: 20, min: -100, max: 100 }; const data = { datasets: [ { label: “My First dataset”, borderColor: Utils.randomColor(0.4), backgroundColor: Utils.randomColor(0.1), pointBorderColor: Utils.randomColor(0.7), pointBackgroundColor: Utils.randomColor(0.5), pointBorderWidth: 1, data: Utils.points(NUMBER_CFG), }, { label: “My Second dataset”, borderColor: Utils.randomColor(0.4), backgroundColor: Utils.randomColor(0.1), pointBorderColor: Utils.randomColor(0.7), pointBackgroundColor: Utils.randomColor(0.5), pointBorderWidth: 1, data: Utils.points(NUMBER_CFG), }, ], }; // </block:data></p>
+<p>// <block:scales:2> const scaleOpts = { reverse: true, ticks: { callback: (val, index, ticks) =&gt; index === 0 || index === ticks.length - 1 ? null : val, }, grid: { borderColor: Utils.randomColor(1), color: “rgba( 0, 0, 0, 0.1)”, }, title: { display: true, text: (ctx) =&gt; ctx.scale.axis + " axis“, }, }; const scales = { x: { position:”top“, }, y: { position:”right", }, }; Object.keys(scales).forEach((scale) =&gt; Object.assign(scales[scale], scaleOpts)); // </block:scales></p>
+<p>// <block:zoom:0> const dragColor = Utils.randomColor(0.4); const zoomOptions = { pan: { enabled: true, mode: “xy”, modifierKey: “ctrl”, }, zoom: { mode: “xy”, drag: { enabled: true, borderColor: “rgb(54, 162, 235)”, borderWidth: 1, backgroundColor: “rgba(54, 162, 235, 0.3)”, }, }, }; // </block:zoom></p>
+<p>const zoomStatus = () =&gt; zoomOptions.zoom.drag.enabled ? “enabled” : “disabled”;</p>
+<p>// <block:config:1> const config = { type: “scatter”, data: data, options: { scales: scales, plugins: { zoom: zoomOptions, title: { display: true, position: “bottom”, text: (ctx) =&gt; “Zoom:” + zoomStatus(), }, }, }, }; // </block:config></p>
+<p>const actions = [ { name: “Toggle zoom”, handler(chart) { zoomOptions.zoom.drag.enabled = !zoomOptions.zoom.drag.enabled; chart.update(); }, }, { name: “Reset zoom”, handler(chart) { chart.resetZoom(); }, },];</p>
+<p>module.exports = { actions, config, }; ```</p>
+</body>
+</html>

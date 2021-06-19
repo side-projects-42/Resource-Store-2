@@ -1,0 +1,19 @@
+CodeMirror: VBScript mode
+
+[<img src="../../doc/logo.png" id="logo" />](http://codemirror.net)
+
+-   [Home](../../index.html)
+-   [Manual](../../doc/manual.html)
+-   [Code](https://github.com/marijnh/codemirror)
+
+<!-- -->
+
+-   [Language modes](../index.html)
+-   <a href="#" class="active">VBScript</a>
+
+VBScript mode
+-------------
+
+’ Pete Guhl ’ 03-04-2012 ’ ’ Basic VBScript support for codemirror2 Const ForReading = 1, ForWriting = 2, ForAppending = 8 Call Sub020\_PostBroadcastToUrbanAirship(strUserName, strPassword, intTransmitID, strResponse) If Not IsNull(strResponse) AND Len(strResponse) = 0 Then boolTransmitOkYN = False Else ’ WScript.Echo “Oh Happy Day! Oh Happy DAY!” boolTransmitOkYN = True End If
+
+**MIME types defined:** `text/vbscript`.

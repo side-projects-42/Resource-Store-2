@@ -1,36 +1,20 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script src="../../http/tests/inspector/elements-test.js"></script>
-    <script>
-      function test() {
-        WebInspector.ElementsTreeOutline.showShadowDOMForTest = true;
-
-        InspectorTest.expandElementsTree(function () {
-          var container = InspectorTest.expandedNodeWithId("container");
-          InspectorTest.dumpElementsTree(container);
-          InspectorTest.completeTest();
-        });
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p id="description">
-      This test verified #document-fragment is displayed when showShadowRoot is
-      enabled.
-    </p>
-
-    <div id="container">
-      <div id="test1"></div>
-      <div id="test2">only test</div>
-      <div id="test3">with <span>elements</span></div>
-    </div>
-
-    <script>
-      test1.createShadowRoot();
-      test2.createShadowRoot();
-      test3.createShadowRoot();
-    </script>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>shadow-root</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>This test verified #document-fragment is displayed when showShadowRoot is enabled.</p>
+<p>only test</p>
+<p>with elements</p>
+</body>
 </html>

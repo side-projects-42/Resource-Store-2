@@ -1,25 +1,14 @@
----
-:layout: post
-:title: "Summary Report: Git Repository Disruption Incident of Nov 10th"
-:nodeid: 448
-:created: 1385401054
-:tags:
-  - infrastructure
-  - news
-:author: kohsuke
----
-
 As [reported](https://news.ycombinator.com/item?id=6713742) in [various places](http://www.reddit.com/r/programming/comments/1qefox/jenkins_developers_accidentally_do_git_push_force/), there was an incident in early November where commits in our Git repositories have become misplaced temporarily by accident. By the mid next week we were able to resurrect all the commits and things are back to normal now.
 
 As there are many confusions and misunderstandings in people’s commentary, we wrote this post to clarify what exactly happened and what we are doing to prevent this.
 
 ## Timeline
 
-In the early morning of Nov 10th 2013, one of the 680 Jenkins developers had mistakenly launched [Gerrit](http://code.google.com/p/gerrit/) with a partially misconfigured [Gerrit replication plugin](http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/config-replication.html), while pointing Gerrit to his local directory that contains 186 Git repositories cloned from [the Github Jenkins organization](https://github.com/jenkinsci/). These repositories were checked out about 2 months ago and weren’t kept up to date. Gerrit replication plugin had then tried to “replicate” his local repositories back to GitHub, which it considers mirrors, by doing the equivalent of “[git push --force](https://www.kernel.org/pub/software/scm/git/docs/git-push.html)” instead of regular push. Unfortunately, Gerrit replication plugin defaults to a forced push, which is the opposite of what Git normally does. The replication also happens automatically, which is why this mistake has impacted so many repositories in such a short time.
+In the early morning of Nov 10th 2013, one of the 680 Jenkins developers had mistakenly launched [Gerrit](http://code.google.com/p/gerrit/) with a partially misconfigured [Gerrit replication plugin](http://gerrit-documentation.googlecode.com/svn/Documentation/2.3/config-replication.html), while pointing Gerrit to his local directory that contains 186 Git repositories cloned from [the Github Jenkins organization](https://github.com/jenkinsci/). These repositories were checked out about 2 months ago and weren’t kept up to date. Gerrit replication plugin had then tried to “replicate” his local repositories back to GitHub, which it considers mirrors, by doing the equivalent of “[git push –force](https://www.kernel.org/pub/software/scm/git/docs/git-push.html)” instead of regular push. Unfortunately, Gerrit replication plugin defaults to a forced push, which is the opposite of what Git normally does. The replication also happens automatically, which is why this mistake has impacted so many repositories in such a short time.
 
 As a result, these repositories have their branch heads rewinded to point to older commits, and in effect the newer commits were misplaced after the bad git-push.
 
-When we say commits were "misplaced", this is an interesting limbo state that's worth an explanation for people who don’t use Git. A Git commit is identified by its SHA1 hash, and these objects will never get overwritten. So the misplaced commits are actually very much on the server intact. What was gone was the pointer that associates a human-readable branch name (such as "rc") to the latest commit on the branch.
+When we say commits were “misplaced”, this is an interesting limbo state that’s worth an explanation for people who don’t use Git. A Git commit is identified by its SHA1 hash, and these objects will never get overwritten. So the misplaced commits are actually very much on the server intact. What was gone was the pointer that associates a human-readable branch name (such as “rc”) to the latest commit on the branch.
 
 By Nov 10th 12:54pm GMT, multiple developers had [noticed this](https://groups.google.com/d/msg/jenkinsci-dev/-myjRIPcVwU/qOAqXGaRioIJ), and within several hours, we [figured out](https://groups.google.com/d/msg/jenkinsci-dev/-myjRIPcVwU/t4nkXONp8qgJ) what happened. From Gerrit log files and with the help of GitHub technical support, he was able to figure out all the affected repositories, and later [an independent script](https://github.com/jenkinsci/backend-git-pushf-finder) was written to [verify the accuracy](https://groups.google.com/d/msg/jenkinsci-dev/Lj_mPb7jMmo/qf_pdQVBHZUJ) of this list.
 

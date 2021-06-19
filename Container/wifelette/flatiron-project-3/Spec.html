@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Spec</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="specifications-for-the-rails-assessment">Specifications for the Rails Assessment</h1>
+<h3 id="specs">Specs</h3>
+<ul>
+<li>[x] Using Ruby on Rails for the project</li>
+<li>[x] Include at least one <code>has_many</code> relationship
+<ul>
+<li><em>Events have many Packages</em></li>
+<li><em>Packages have many Specs and Perks</em></li>
+</ul></li>
+<li>[x] Include at least one <code>belongs_to</code> relationship
+<ul>
+<li><em>Packages belong to Events</em></li>
+<li><em>Specs belong to Packages</em></li>
+<li><em>Specs belong to Perks</em></li>
+</ul></li>
+<li>[x] Include at least two <code>has_many</code> <code>through</code> relationships
+<ul>
+<li><em>Packages have many Perks through Specs</em></li>
+<li><em>Perks have many Packages through Specs</em></li>
+</ul></li>
+<li>[x] Include at least one <code>many-to-many</code> relationship
+<ul>
+<li><em>Packages have many Perks</em></li>
+<li><em>Packages have many Specs</em></li>
+<li><em>Perks have many Packages</em></li>
+</ul></li>
+<li>[x] The “through” part of the <code>has_many</code> through includes at least one user submittable attribute, that is to say, some attribute other than its foreign keys that can be submitted by the app’s user
+<ul>
+<li><em><code>Qty</code> field on <code>Specs</code></em></li>
+</ul></li>
+<li>[x] Include reasonable validations for simple model objects
+<ul>
+<li><em>Events require names, and those names are required to be unique</em></li>
+<li><em>Perks require names</em></li>
+<li><em>Packages require names, and a price, and the price must be a number</em> if <em>it’s provided</em></li>
+<li><em>Users require emails (and uniqeness there comes from Devise)</em></li>
+</ul></li>
+<li>[x] Include a class level ActiveRecord scope method
+<ul>
+<li><em>Event timeline in Event Model and Controller (<code>not_yet_happened</code> and <code>already_happened</code>)</em> and <em>/events/current</em></li>
+</ul></li>
+<li>[x] Include signup
+<ul>
+<li>[x] <em>Via Devise</em></li>
+</ul></li>
+<li>[x] Include login
+<ul>
+<li>[x] <em>Via Devise</em></li>
+</ul></li>
+<li>[x] Include logout
+<ul>
+<li>[x] <em>Via Devise</em></li>
+</ul></li>
+<li>[x] Include third party signup/login
+<ul>
+<li>[x] <em>Via OmniAuth via Devise</em></li>
+</ul></li>
+<li>[x] Include nested resource show or index
+<ul>
+<li><em>/events/:id/packages</em> and <em>/events/:id/packages/:id</em></li>
+</ul></li>
+<li>[x] Include nested resource “new” form
+<ul>
+<li><em>events/1/packages/new</em></li>
+</ul></li>
+<li>[x] Include form display of validation errors; fields should be enclosed within a <code>fields_with_errors</code> class</li>
+</ul>
+<h4 id="confirm">Confirm:</h4>
+<ul>
+<li>[ ] The application is pretty DRY</li>
+<li>[ ] Limited logic in controllers</li>
+<li>[x] Views use helper methods if appropriate</li>
+<li>[x] Views use partials if appropriate</li>
+</ul>
+<h3 id="other-requirements-not-listed-in-spec-file">Other Requirements Not Listed in Spec file:</h3>
+<ul>
+<li>[x] Lots of small commits</li>
+<li>[x] Copy this checklist</li>
+<li>[x] Write a README.md</li>
+<li>[x] Submit a video of how a user would interact with your working web application.</li>
+<li>[x] <a href="https://wifelette.github.io/narrow_the_right_scope">Blog post</a></li>
+<li>[x] Github URL link via form</li>
+<li>[x] Check each box in your spec.md + explain how you’ve met the requirement</li>
+</ul>
+<h3 id="notes-for-me">Notes for Me</h3>
+<ul>
+<li><a href="https://startbootstrap.com/themes/sb-admin-2/">Bootstrap Theme</a></li>
+<li><a href="https://blackrockdigital.github.io/startbootstrap-sb-admin-2/index.html">Live Theme Example</a></li>
+<li><a href="https://github.com/BlackrockDigital/startbootstrap-sb-admin-2/blob/master/login.html">CSS File Direct Link</a></li>
+<li><a href="https://getbootstrap.com/docs/4.4/components/alerts/">Components Docs</a></li>
+<li><a href="https://app.quickdatabasediagrams.com/#/d/QFvCj4">QDB Database Schema</a></li>
+<li><a href="https://dbdiagram.io/d/5e4ad8009e76504e0ef18d5c">DBDiagram.io Database Schema</a></li>
+</ul>
+</body>
+</html>

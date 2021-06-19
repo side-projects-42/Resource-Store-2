@@ -1,73 +1,18 @@
-<html>
-  <head>
-    <script src="../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function test() {
-        var settingPrefix = "test";
-        var namePrefix = "Test snippet #";
-        var snippetStorage = new WebInspector.SnippetStorage(
-          settingPrefix,
-          namePrefix
-        );
-        snippetStorage.reset();
-
-        function dumpSnippets(snippets) {
-          for (var i = 0; i < snippets.length; ++i) {
-            var snippet = snippets[i];
-            InspectorTest.addResult(
-              "    Snippet: id = " +
-                snippet.id +
-                ", name = '" +
-                snippet.name +
-                "', content = '" +
-                snippet.content +
-                "'."
-            );
-          }
-        }
-
-        function dumpSavedSnippets() {
-          InspectorTest.addResult("Dumping saved snippets:");
-          dumpSnippets(snippetStorage._snippetsSetting.get());
-        }
-
-        function dumpStorageSnippets() {
-          InspectorTest.addResult("Dumping storage snippets:");
-          dumpSnippets(snippetStorage.snippets);
-        }
-
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-        var snippet = snippetStorage.createSnippet();
-        InspectorTest.addResult("Snippet created.");
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-        snippet.name = "New snippet name";
-        InspectorTest.addResult("Snippet renamed.");
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-        snippet.content = "New snippet content";
-        InspectorTest.addResult("Snippet content changed.");
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-        var anotherSnippet = snippetStorage.createSnippet();
-        InspectorTest.addResult("Another snippet created.");
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-        snippetStorage.deleteSnippet(snippet);
-        InspectorTest.addResult("Snippet deleted.");
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-        snippetStorage.deleteSnippet(anotherSnippet);
-        InspectorTest.addResult("Another snippet deleted.");
-        dumpSavedSnippets();
-        dumpStorageSnippets();
-
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-  <body onload="runTest()">
-    <p>Tests snippet storage.</p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>snippet-storage</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Tests snippet storage.</p>
+</body>
 </html>

@@ -1,21 +1,29 @@
-# AutoParse
+AutoParse
+=========
 
-<dl>
-  <dt>Homepage</dt><dd><a href="http://code.google.com/p/ruby-autoparse/">http://code.google.com/p/ruby-autoparse/</a></dd>
-  <dt>Author</dt><dd><a href="mailto:bobaman@google.com">Bob Aman</a></dd>
-  <dt>Copyright</dt><dd>Copyright © 2010 Google, Inc.</dd>
-  <dt>License</dt><dd>Apache 2.0</dd>
-</dl>
+Homepage  
+<http://code.google.com/p/ruby-autoparse/>
 
-# Description
+Author  
+[Bob Aman](mailto:bobaman@google.com)
 
-An implementation of the JSON Schema specification. Provides automatic parsing
-for a given JSON Schema.
+Copyright  
+Copyright © 2010 Google, Inc.
 
-# Requirements
+License  
+Apache 2.0
 
-- Either extlib or activesupport is required for inflection.
+Description
+===========
 
-# Install
+An implementation of the JSON Schema specification. Provides automatic parsing for a given JSON Schema.
 
-- sudo gem install autoparse
+Requirements
+============
+
+-   Either extlib or activesupport is required for inflection.
+
+Install
+=======
+
+-   sudo gem install autoparse

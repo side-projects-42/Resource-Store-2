@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="photo-inspector">Photo Inspector</h1>
+<p>Photo Inspector is an example application on how to capture and process high resolution photos (resolution depends on device hardware).</p>
+<p>Capture a photo and slide your finger on the preview to bring up a loupe to zoom right into pixel perfect details in the photo. Save a lower resolution copy of the photo to the main Photos gallery while retaining the original maximum resolution photo in application local storage for later use. Share photos as lower resolution copies to online services like Facebook and Twitter.</p>
+<p>The example has been developed with Silverlight for Windows Phone devices and tested to work on Nokia Lumia devices with Windows Phone 8.</p>
+<p>This example application is hosted in GitHub: https://github.com/Microsoft/photo-inspector</p>
+<p>For more information on implementation, visit Nokia Lumia Developer’s Library: http://developer.nokia.com/Resources/Library/Lumia/#!imaging/working-with-high-resolution-photos/photo-inspector.html</p>
+<h2 id="usage">1. Usage</h2>
+<p>This is a simple build-and-run solution. See section 5 for instructions on how to run the application on your Windows Phone 8 device.</p>
+<h2 id="prerequisites">2. Prerequisites</h2>
+<ul>
+<li>C# basics</li>
+<li>Windows 8</li>
+<li>Microsoft Visual Studio Express for Windows Phone 2012</li>
+</ul>
+<h2 id="project-structure-and-implementation">3. Project structure and implementation</h2>
+<h2 id="folders">3.1 Folders</h2>
+<ul>
+<li>The root folder contains the project file, the license information and this file.</li>
+<li><code>MagnifierApp</code>: Root folder for the implementation files.<br />
+</li>
+<li><code>Assets</code>: Graphic assets like icons and tiles.</li>
+<li><code>Pages</code>: Phone application pages.</li>
+<li><code>Models</code>: Photo load and save model.</li>
+<li><code>Properties</code>: Application property files.</li>
+<li><code>Resources</code>: Application resources.</li>
+<li><code>Utilities</code>: Utility classes.</li>
+</ul>
+<h2 id="important-files-and-classes">3.2 Important files and classes</h2>
+<table style="width:99%;">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 73%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>
+File
+</th>
+<th>
+Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>
+<code>Models/PhotoModel.cs</code>
+</td>
+<td>
+Saving and loading photos, current photo tombstoning, local storage handling.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>Pages/ViewfinderPage.xaml(.cs)</code>
+</td>
+<td>
+Simple viewfinder for capturing photos.
+</td>
+</tr>
+<tr class="odd">
+<td>
+<code>Pages/MagnifierPage.xaml(.cs)</code>
+</td>
+<td>
+Photo preview and touch-to-zoom photo detail inspection loupe.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>Pages/PhotosPage.xaml(.cs)</code>
+</td>
+<td>
+Shows locally saved high resolution photos on high resolution capable devices.
+</td>
+</tr>
+<tr class="odd">
+<td>
+<code>Pages/CropPage.xaml(.cs)</code>
+</td>
+<td>
+Allows user to crop the photo. Pan &amp; pinch zoom functionality.
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>Pages/InfoPage.xaml(.cs)</code>
+</td>
+<td>
+Displays selected EXIF records for current photo.
+</td>
+</tr>
+</tbody>
+</table>
+<h2 id="compatibility">4. Compatibility</h2>
+<p>Application works on Windows Phone 8.</p>
+<p>Tested to work on Nokia Lumia 1020, Nokia Lumia 925, Nokia Lumia 920, Nokia Lumia 620, Nokia Lumia 520.</p>
+<p>Developed with Microsoft Visual Studio Express for Windows Phone 2012.</p>
+<h2 id="known-issues">4.2 Known Issues</h2>
+<p>None.</p>
+<h2 id="building-installing-and-running-the-application">5. Building, installing, and running the application</h2>
+<h2 id="preparations">5.1 Preparations</h2>
+<p>Make sure you have the following installed:</p>
+<ul>
+<li>Windows 8</li>
+<li>Windows Phone SDK 8.0</li>
+</ul>
+<h2 id="using-the-windows-phone-8-sdk">5.2 Using the WINDOWS PHONE 8 SDK</h2>
+<ol type="1">
+<li>Open the SLN file: File &gt; Open Project, select the file MagnifierApp.sln</li>
+<li>Select the target ‘Device’ and ‘ARM’.</li>
+<li>Press F5 to build the project and run it on the device.</li>
+</ol>
+<h2 id="deploying-to-windows-phone-8">5.3 Deploying to Windows Phone 8</h2>
+<p>Please see official documentation for deploying and testing applications on Windows Phone devices: http://msdn.microsoft.com/library/windowsphone/develop/ff402565(v=vs.105).aspx</p>
+<h2 id="license">6. License</h2>
+<p>See the license text file delivered with this project: https://github.com/Microsoft/photo-inspector/blob/master/License.txt</p>
+<h2 id="related-documentation">7. Related documentation</h2>
+<p>See http://developer.nokia.com/Resources/Library/Lumia/#!imaging/working-with-high-resolution-photos/photo-inspector.html for more information on the project.</p>
+<p>See http://developer.nokia.com/Resources/Library/Lumia/#!imaging/working-with-high-resolution-photos.html for information on how to capture and handle high resolution photos for example on Nokia Lumia 1020.</p>
+<h2 id="version-history">8. Version history</h2>
+<ul>
+<li>1.3: Fourth public release of Photo Inspector
+<ul>
+<li>Updated to the latest Nokia Imaging SDK version 1.1.177</li>
+</ul></li>
+<li>1.2: Third public release of Photo Inspector
+<ul>
+<li>Updated to the latest Nokia Imaging SDK</li>
+<li>Now using Nuget Package Restore for external libraries</li>
+</ul></li>
+<li>1.1: Second public release of Photo Inspector
+<ul>
+<li>Photos can be cropped, and it’s possible to either change the framing again or to revert to the original uncropped photo</li>
+<li>New photo information page for displaying EXIF information</li>
+<li>Locally saved photos are displayed on all devices, not just high camera resolution devices</li>
+<li>Camera and locally saved photos can be accessed from the magnification page</li>
+<li>Fixed issue where pressing the camera HW button did not capture an image if camera was focusing at the same time</li>
+<li>Locally saved photos page shows a “reframed” indicator on photos that are crops</li>
+<li>Also included are a number of other minor changes</li>
+</ul></li>
+<li>1.0: First public release of Photo Inspector</li>
+</ul>
+</body>
+</html>

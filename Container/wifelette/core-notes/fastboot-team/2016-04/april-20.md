@@ -1,50 +1,42 @@
-# FastBoot Meeting Notes 2016-04-20
+FastBoot Meeting Notes 2016-04-20
+=================================
 
-## Attendees
+Attendees
+---------
 
-_Please add yourself._
+*Please add yourself.*
 
-Tom Dale, Dan McClain, Ron White, Patrick Fisher, Arjan Singh, Krati
-Ahuja
+Tom Dale, Dan McClain, Ron White, Patrick Fisher, Arjan Singh, Krati Ahuja
 
-## Agenda
+Agenda
+------
 
-- [x] Last Week's Action Items
+-   \[x\] Last Week’s Action Items
 
-  - [x] @tomdale to deprecate Node 0.10 support by removing from
-        Travis build matrix
-  - [x] @danmcclain will push PR for deferring rendering via promise
-        chain
-  - [x] @danmcclain will update FastBootRequest PR to implement get
-        for headers so users don't have to call `toLowerCase` on headers
-  - [x] @danmcclain will submit PR to update FastBoot service to
-        deprecate old access to request details
-  - [ ] @kratiahuja will add error handling via `Ember.onerror` and
-        other mechanisms to avoid crashing the process
-  - [ ] @tomdale will sync up with @fivetanley to merge in build
-        refactor
+    -   \[x\] <span class="citation" data-cites="tomdale">@tomdale</span> to deprecate Node 0.10 support by removing from Travis build matrix
+    -   \[x\] <span class="citation" data-cites="danmcclain">@danmcclain</span> will push PR for deferring rendering via promise chain
+    -   \[x\] <span class="citation" data-cites="danmcclain">@danmcclain</span> will update FastBootRequest PR to implement get for headers so users don’t have to call `toLowerCase` on headers
+    -   \[x\] <span class="citation" data-cites="danmcclain">@danmcclain</span> will submit PR to update FastBoot service to deprecate old access to request details
+    -   \[ \] <span class="citation" data-cites="kratiahuja">@kratiahuja</span> will add error handling via `Ember.onerror` and other mechanisms to avoid crashing the process
+    -   \[ \] <span class="citation" data-cites="tomdale">@tomdale</span> will sync up with <span class="citation" data-cites="fivetanley">@fivetanley</span> to merge in build refactor
 
-- [ ] FastBoot App Server:
-      [https://gist.github.com/tomdale/4b44d83172877c49747f2a5894dec05e](https://gist.github.com/tomdale/4b44d83172877c49747f2a5894dec05e)
-- [ ] FastBoot Server -> FastBoot Middleware
+-   \[ \] FastBoot App Server: <https://gist.github.com/tomdale/4b44d83172877c49747f2a5894dec05e>
+-   \[ \] FastBoot Server -&gt; FastBoot Middleware
 
-## Notes
+Notes
+-----
 
-- Amazon EBS server used to require application reboot to update assets,
-  @tomdale rewrote the server to abstract
-  downloading/notifying/reloading assets for FastBoot - S3Downloader and Notifier built right now
+-   Amazon EBS server used to require application reboot to update assets, <span class="citation" data-cites="tomdale">@tomdale</span> rewrote the server to abstract downloading/notifying/reloading assets for FastBoot - S3Downloader and Notifier built right now
 
-- @tomdale proposed converting the ember-fastboot-server ->
-  ember-fastboot-middleware
+-   <span class="citation" data-cites="tomdale">@tomdale</span> proposed converting the ember-fastboot-server -&gt; ember-fastboot-middleware
 
-  - Remove the server bits from ember-fastboot-server
+    -   Remove the server bits from ember-fastboot-server
 
-- @kratiahuja will submit a PR today with onerror fix
+-   <span class="citation" data-cites="kratiahuja">@kratiahuja</span> will submit a PR today with onerror fix
 
-## Action Items
+Action Items
+------------
 
-- [ ] @tomdale will review deferred rendering PR, @danmcclain will write tests to verify with
-      async component
-- [ ] @pwfisher will work on FastBoot watching
-- [ ] @arjansingh will work on adding the server response to the
-      FastBoot service
+-   \[ \] <span class="citation" data-cites="tomdale">@tomdale</span> will review deferred rendering PR, <span class="citation" data-cites="danmcclain">@danmcclain</span> will write tests to verify with async component
+-   \[ \] <span class="citation" data-cites="pwfisher">@pwfisher</span> will work on FastBoot watching
+-   \[ \] <span class="citation" data-cites="arjansingh">@arjansingh</span> will work on adding the server response to the FastBoot service

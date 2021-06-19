@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>options</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="options">Options</h1>
+<h2 id="color">Color</h2>
+<p>Any color supported by <a href="https://www.chartjs.org/docs/master/general/colors">chart.js</a> is supported by the annotation plugin.</p>
+<h2 id="font">Font</h2>
+<p>Fonts use the same format as <a href="https://www.chartjs.org/docs/master/general/fonts">chart.js</a>.</p>
+<h2 id="scriptable-options">Scriptable Options</h2>
+<p>As with most options in chart.js, the annotation plugin options are scriptable. This means that a function can be passed which returns the value as needed. In the example below, the annotation is hidden when the screen is less than 1000px wide. The function receives 2 arguments, first is the <a href="#option-context">option context</a> representing contextual information. An options resolver is passed as second argument, which can be used to access the options that were originally passed in to configure the annotation element.</p>
+<p>```js chart-editor /* <block:options:0> <em>/ const options = { plugins: { autocolors: false, annotation: { annotations: { box1: { drawTime: “afterDatasetsDraw”, display: (context, opts) =&gt; { const body = document.querySelector(“body”); const rect = body.getBoundingClientRect(); return rect.width &gt;= 1000; }, type: “box”, xMin: 1, xMax: 2, yMin: 50, yMax: 70, backgroundColor: “rgba(255, 99, 132, 0.5)”, }, }, }, }, }; /</em> </block:options> */</p>
+<p>/* <block:config:1> <em>/ const config = { type: “line”, data: { labels: [“January”, “February”, “March”, “April”, “May”, “June”, “July”], datasets: [ { label: “My First Dataset”, data: [65, 59, 80, 81, 56, 55, 40], fill: false, borderColor: “rgb(75, 192, 192)”, tension: 0.1, }, ], }, options, }; /</em> </block:config> */</p>
+<p>module.exports = { config, }; ```</p>
+<h2 id="draw-time">Draw Time</h2>
+<p>The <code>drawTime</code> option for an annotation determines where in the chart lifecycle the drawing occurs. Four potential options are available:</p>
+<table>
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Option</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>'beforeDraw'</code></td>
+<td>Occurs before any drawing takes place</td>
+</tr>
+<tr class="even">
+<td><code>'beforeDatasetsDraw'</code></td>
+<td>Occurs after drawing of axes, but before datasets</td>
+</tr>
+<tr class="odd">
+<td><code>'afterDatasetsDraw'</code></td>
+<td>Occurs after drawing of datasets but before items such as the tooltip</td>
+</tr>
+<tr class="even">
+<td><code>'afterDraw'</code></td>
+<td>After other drawing is completed.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="option-context">Option Context</h2>
+<p>The option context is used to give contextual information when resolving options and only applies to scriptable options. The object is preserved, so it can be used to store and pass information between calls / options.</p>
+<p>There are 2 levels of option context objects:</p>
+<ul>
+<li><code>chart</code>
+<ul>
+<li><code>annotation</code></li>
+</ul></li>
+</ul>
+<p>The context object contains the following properties:</p>
+<h3 id="chart">chart</h3>
+<ul>
+<li><code>chart</code>: the associated chart</li>
+<li><code>type</code>: <code>'chart'</code></li>
+</ul>
+<p>The <a href="#chart">chart</a> option context is provided by Chart.js. It is passed to scriptable options when resolving annotation <code>id</code>, <code>type</code> and <code>drawTime</code> or adjusting scale ranges in <code>afterDataLimits</code> hook. The options resolved at that time are <code>scaleID</code>, <code>xScaleID</code>, <code>yScaleID</code>, <code>value</code>, <code>endValue</code>, <code>xMin</code>, <code>xMax</code>, <code>yMin</code>, <code>yMax</code>, <code>xValue</code> and <code>yValue</code>.</p>
+<h3 id="annotation">annotation</h3>
+<p>In addition to <a href="#chart">chart</a></p>
+<ul>
+<li><code>id</code>: the annotation id</li>
+<li><code>element</code>: the annotation element</li>
+<li><code>type</code>: <code>'annotation'</code></li>
+</ul>
+<p>The <a href="#annotation">annotation</a> option context is passed to scriptable options in all other cases, except when resolving <code>id</code>, <code>type</code> or adjusting scale ranges. The same values resolved in <code>afterDataLimits</code> with <a href="#chart">chart</a> context are again evaluated in <code>afterUpdate</code> with <a href="#annotation">annotation</a> context.</p>
+<p>Note that the annotation element may be undefined or partially uninitialized, since scriptable options may be invoked during the initial chart display, before everything’s been resolved and initialized.</p>
+</body>
+</html>

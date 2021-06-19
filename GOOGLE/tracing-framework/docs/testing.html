@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>testing</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="testing">Testing</h1>
+<p>The framework currently uses <a href="http://visionmedia.github.com/mocha/">mocha</a> for its testing. This enables node.js-based super-fast unit tests as well as browser-based tests.</p>
+<h2 id="running-tests">Running Tests</h2>
+<p>Ensure your deps are up to date (only required when changing goog.requires):</p>
+<pre><code>anvil build :deps</code></pre>
+<p>To run from the command-line, use the <code>run-tests.sh</code> script in the root:</p>
+<pre><code># Run all tests
+./scripts/run-tests.sh
+
+# Run just wtf.io tests
+./scripts/run-tests.sh wtf.io</code></pre>
+<p>To run the tests in the browser, navigate to the main test runner page:</p>
+<pre><code>http://localhost:8080/src/wtf/testing/test.html</code></pre>
+<p>This will run all tests. You can click on a test suite to narrow down to running just those tests. You can also pass <code>?tests=some,tests</code> in the URL to run suites by test namespace name (for example <code>?tests=wtf.io</code> will run the <code>src/wtf/io/io_test.js</code> tests).</p>
+<h2 id="authoring-tests">Authoring Tests</h2>
+<p>Each piece of testable functionality (namespace, types, etc) should have a corresponding _test.js file. The test file should provide a namespace that is the name of the namespace or type being tested with a ‘_test’ suffix.</p>
+<h3 id="example">Example</h3>
+<pre><code>goog.provide(&#39;wtf.MyType_test&#39;);
+
+wtf.MyType_test = suite(&#39;wtf.MyType&#39;, function() {
+  setup(function() {
+    // Test suite setup code.
+  });
+  teardown(function() {
+    // Test suite teardown code.
+  });
+  suite(&#39;#someFunction&#39;, function() {
+    // Tests related to MyType.someFunction.
+    assert.isTrue(true);
+  });
+});</code></pre>
+<h3 id="assertions">Assertions</h3>
+<p>Currently the project is using the mocha TDD UI along with the assertions from the <a href="http://chaijs.com/api/assert/">Chai Assertion Library</a>. See the reference for more information.</p>
+<h3 id="note-on-side-effects">Note on Side-effects</h3>
+<p>Since many tests can run in the same context (unsandboxed) you should ensure that any changes made to global state are reverted when the tests are torn down.</p>
+</body>
+</html>

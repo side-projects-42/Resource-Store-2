@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="action-template">Action Template</h1>
+<p><a href="https://github.com/mysticatea-actions/template/actions"><img src="https://github.com/mysticatea-actions/template/workflows/CI/badge.svg" alt="Build Status" /></a> <a href="https://david-dm.org/mysticatea-actions/template"><img src="https://david-dm.org/mysticatea-actions/template.svg" alt="Dependency Status" /></a></p>
+<p>This is a template for GitHub Actions with TypeScript.</p>
+<h2 id="usage">Usage</h2>
+<ol type="1">
+<li>Click <code>"Use this template"</code> button on GitHub (https://github.com/mysticatea-actions/template).</li>
+<li>Input the information of your new reporsitory then click <code>"Create repository from template"</code> button.</li>
+<li>Update <code>package.json</code> file with the correct fields of name, description, repository, author, bugs, and homepage.</li>
+<li>Update <code>LICENSE</code> file with your license.</li>
+<li>Update <code>README.md</code> file.</li>
+<li>Start to develop.</li>
+</ol>
+<h2 id="file-structure">File Structure</h2>
+<pre><code>&lt;root&gt;
+├ dist    ... Built result.
+├ lib     ... Source code.
+├ scripts ... Development tools.
+└ test    ... Test code.</code></pre>
+<h2 id="development-tools">Development Tools</h2>
+<ul>
+<li><code>npm test</code> … Run tests.</li>
+<li><code>npm version &lt;how&gt;</code> … Bump a version and release it. The <code>&lt;how&gt;</code> is one of <code>patch</code>, <code>minor</code>, <code>major</code>, and etc. See https://docs.npmjs.com/cli/version for details. This will do the following steps:
+<ol type="1">
+<li>Check the code with ESLint and TypeScript compiler.</li>
+<li>Run tests.</li>
+<li>Bump version.</li>
+<li>Build the code.</li>
+<li>Release it with <a href="scripts/release.ts">scripts/release.ts</a> script.</li>
+</ol></li>
+<li><code>npm run build</code> … Build code then create <code>dist</code> directory.</li>
+</ul>
+</body>
+</html>

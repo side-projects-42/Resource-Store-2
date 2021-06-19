@@ -1,21 +1,19 @@
-<html>
-  <head>
-    <script src="../../http/tests/inspector/inspector-test.js"></script>
-    <script>
-      function test() {
-        WebInspector.showPanel("timeline");
-        InspectorTest.addObject(WebInspector.TimelineModel.RecordType);
-        InspectorTest.completeTest();
-      }
-    </script>
-  </head>
-
-  <body onload="runTest()">
-    <p>Check to see that TimelineAgent record types are stable.</p>
-
-    <p>
-      Applications outside of WebKit depend on the stability of the mapping of
-      these types to these specific values.
-    </p>
-  </body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>timeline-enum-stability</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Check to see that TimelineAgent record types are stable.</p>
+<p>Applications outside of WebKit depend on the stability of the mapping of these types to these specific values.</p>
+</body>
 </html>

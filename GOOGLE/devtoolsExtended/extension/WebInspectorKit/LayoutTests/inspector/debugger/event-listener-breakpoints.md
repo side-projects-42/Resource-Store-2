@@ -1,0 +1,1 @@
+Tests event listener breakpoints.

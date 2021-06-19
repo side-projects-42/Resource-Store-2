@@ -1,10 +1,4 @@
----
-id: version-23.x-more-resources
-title: More Resources
-original_id: more-resources
----
-
-By now you should have a good idea of how Jest can make it easy to test your applications. If you're interested in learning more, here's some related stuff you might want to check out.
+By now you should have a good idea of how Jest can make it easy to test your applications. If you’re interested in learning more, here’s some related stuff you might want to check out.
 
 ## Browse the docs
 
@@ -20,6 +14,6 @@ You will find a number of example test cases in the [`examples`](https://github.
 
 ## Join the community
 
-Ask questions and find answers from other Jest users like you. [Reactiflux](http://www.reactiflux.com/) is a Discord chat where a lot of Jest discussion happens. Check out the [#jest](https://discord.gg/MWRhKCj) channel.
+Ask questions and find answers from other Jest users like you. [Reactiflux](http://www.reactiflux.com/) is a Discord chat where a lot of Jest discussion happens. Check out the [\#jest](https://discord.gg/MWRhKCj) channel.
 
-Follow the [Jest Twitter account](https://twitter.com/fbjest) and [blog](/blog/) to find out what's happening in the world of Jest.
+Follow the [Jest Twitter account](https://twitter.com/fbjest) and [blog](/blog/) to find out what’s happening in the world of Jest.

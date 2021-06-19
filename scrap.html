@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>scrap</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>#!/bin/bash for i in <span class="math inline">$(curl "https://api.github.com/orgs/chartjs/repos" | grep -oP '"clone_url":\s*"\K[^"]+'); do  echo git clone "$</span>i" done</p>
+<p>#!/bin/bash for i in <span class="math inline">$(curl "https://api.github.com/orgs/wikimedia/repos" | grep -oP '"clone_url":\s*"\K[^"]+'); do  echo git clone "$</span>i" done</p>
+<p>nzakas</p>
+<p>CNTX={users}; NAME={wifelette}; PAGE=1 curl “https://api.github.com/<span class="math inline"><em>C</em><em>N</em><em>T</em><em>X</em>/</span>NAME/repos?page=$PAGE&amp;per_page=100” | grep -e ’git_url*’ | cut -d " -f 4 | xargs -L1 git clone</p>
+<p>find . -empty -type f -print -delete</p>
+<p>find . -empty -type d -print -delete</p>
+<p>find . ( -name “.git” -o -name “.gitignore” -o -name “.gitmodules” -o -name “.gitattributes” ) -exec rm -rf – {} +</p>
+<p>find . ( -name “<em>SECURITY.txt" -o -name "</em>RELEASE.txt” -o -name “<em>CHANGELOG.txt" -o -name "</em>LICENSE.txt” -o -name “<em>CONTRIBUTING.txt" -name "</em>HISTORY.md” -o -name “<em>LICENSE" -o -name "</em>SECURITY.md” -o -name “<em>RELEASE.md" -o -name "</em>CHANGELOG.md” -o -name “<em>LICENSE.md" -o -name "</em>CODE_OF_CONDUCT.md” -o -name "*CONTRIBUTING.md" ) -exec rm -rf – {} +</p>
+</body>
+</html>

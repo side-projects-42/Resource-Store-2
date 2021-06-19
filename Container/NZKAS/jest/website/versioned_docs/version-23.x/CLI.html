@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Jest CLI Options</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Jest CLI Options</h1>
+</header>
+<p>The <code>jest</code> command line runner has a number of useful options. You can run <code>jest --help</code> to view all available options. Many of the options shown below can also be used together to run tests exactly the way you want. Every one of Jest’s <a href="Configuration.md">Configuration</a> options can also be specified through the CLI.</p>
+<p>Here is a brief overview:</p>
+<h2 id="running-from-the-command-line">Running from the command line</h2>
+<p>Run all tests (default):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">jest</span></a></code></pre></div>
+<p>Run only the tests that were specified with a pattern or filename:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">jest</span> my-test <span class="co">#or</span></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">jest</span> path/to/my-test.js</a></code></pre></div>
+<p>Run tests related to changed files based on hg/git (uncommitted files):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">jest</span> -o</a></code></pre></div>
+<p>Run tests related to <code>path/to/fileA.js</code> and <code>path/to/fileB.js</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">jest</span> --findRelatedTests path/to/fileA.js path/to/fileB.js</a></code></pre></div>
+<p>Run tests that match this spec name (match against the name in <code>describe</code> or <code>test</code>, basically).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">jest</span> -t name-of-spec</a></code></pre></div>
+<p>Run watch mode:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">jest</span> --watch <span class="co">#runs jest -o by default</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="ex">jest</span> --watchAll <span class="co">#runs all tests</span></a></code></pre></div>
+<p>Watch mode also enables to specify the name or path to a file to focus on a specific set of tests.</p>
+<h2 id="using-with-yarn">Using with yarn</h2>
+<p>If you run Jest via <code>yarn test</code>, you can pass the command line arguments directly as Jest arguments.</p>
+<p>Instead of:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">jest</span> -u -t=<span class="st">&quot;ColorPicker&quot;</span></a></code></pre></div>
+<p>you can use:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">yarn</span> test -u -t=<span class="st">&quot;ColorPicker&quot;</span></a></code></pre></div>
+<h2 id="using-with-npm-scripts">Using with npm scripts</h2>
+<p>If you run Jest via <code>npm test</code>, you can still use the command line arguments by inserting a <code>--</code> between <code>npm test</code> and the Jest arguments.</p>
+<p>Instead of:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">jest</span> -u -t=<span class="st">&quot;ColorPicker&quot;</span></a></code></pre></div>
+<p>you can use:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">npm</span> test -- -u -t=<span class="st">&quot;ColorPicker&quot;</span></a></code></pre></div>
+<h2 id="options">Options</h2>
+<p><em>Note: CLI options take precedence over values from the <a href="Configuration.md">Configuration</a>.</em></p>
+<p><AUTOGENERATED_TABLE_OF_CONTENTS></p>
+<hr />
+<h2 id="reference">Reference</h2>
+<h3 id="jest-regexfortestfiles"><code>jest &lt;regexForTestFiles&gt;</code></h3>
+<p>When you run <code>jest</code> with an argument, that argument is treated as a regular expression to match against files in your project. It is possible to run test suites by providing a pattern. Only the files that the pattern matches will be picked up and executed. Depending on your terminal, you may need to quote this argument: <code>jest "my.*(complex)?pattern"</code>. On Windows, you will need to use <code>/</code> as a path separator or escape <code>\</code> as <code>\\</code>.</p>
+<h3 id="bail"><code>--bail</code></h3>
+<p>Alias: <code>-b</code>. Exit the test suite immediately upon the first failing test suite.</p>
+<h3 id="cache"><code>--cache</code></h3>
+<p>Whether to use the cache. Defaults to true. Disable the cache using <code>--no-cache</code>. <em>Note: the cache should only be disabled if you are experiencing caching related problems. On average, disabling the cache makes Jest at least two times slower.</em></p>
+<p>If you want to inspect the cache, use <code>--showConfig</code> and look at the <code>cacheDirectory</code> value. If you need to clear the cache, use <code>--clearCache</code>.</p>
+<h3 id="changedfileswithancestor"><code>--changedFilesWithAncestor</code></h3>
+<p>Runs tests related to the current changes and the changes made in the last commit. Behaves similarly to <code>--onlyChanged</code>.</p>
+<h3 id="changedsince"><code>--changedSince</code></h3>
+<p>Runs tests related to the changes since the provided branch. If the current branch has diverged from the given branch, then only changes made locally will be tested. Behaves similarly to <code>--onlyChanged</code>.</p>
+<h3 id="ci"><code>--ci</code></h3>
+<p>When this option is provided, Jest will assume it is running in a CI environment. This changes the behavior when a new snapshot is encountered. Instead of the regular behavior of storing a new snapshot automatically, it will fail the test and require Jest to be run with <code>--updateSnapshot</code>.</p>
+<h3 id="clearcache"><code>--clearCache</code></h3>
+<p>Deletes the Jest cache directory and then exits without running tests. Will delete <code>cacheDirectory</code> if the option is passed, or Jest’s default cache directory. The default cache directory can be found by calling <code>jest --showConfig</code>. <em>Note: clearing the cache will reduce performance.</em></p>
+<h3 id="collectcoveragefromglob"><code>--collectCoverageFrom=&lt;glob&gt;</code></h3>
+<p>A glob pattern relative to <rootDir> matching the files that coverage info needs to be collected from.</p>
+<h3 id="colors"><code>--colors</code></h3>
+<p>Forces test results output highlighting even if stdout is not a TTY.</p>
+<h3 id="configpath"><code>--config=&lt;path&gt;</code></h3>
+<p>Alias: <code>-c</code>. The path to a Jest config file specifying how to find and execute tests. If no <code>rootDir</code> is set in the config, the directory containing the config file is assumed to be the rootDir for the project. This can also be a JSON-encoded value which Jest will use as configuration.</p>
+<h3 id="coverage"><code>--coverage</code></h3>
+<p>Indicates that test coverage information should be collected and reported in the output. This option is also aliased by <code>--collectCoverage</code>.</p>
+<h3 id="debug"><code>--debug</code></h3>
+<p>Print debugging info about your Jest config.</p>
+<h3 id="detectopenhandles"><code>--detectOpenHandles</code></h3>
+<p>Attempt to collect and print open handles preventing Jest from exiting cleanly. Use this in cases where you need to use <code>--forceExit</code> in order for Jest to exit to potentially track down the reason. Implemented using <a href="https://nodejs.org/api/async_hooks.html"><code>async_hooks</code></a>, so it only works in Node 8 and newer.</p>
+<h3 id="envenvironment"><code>--env=&lt;environment&gt;</code></h3>
+<p>The test environment used for all tests. This can point to any file or node module. Examples: <code>jsdom</code>, <code>node</code> or <code>path/to/my-environment.js</code>.</p>
+<h3 id="errorondeprecated"><code>--errorOnDeprecated</code></h3>
+<p>Make calling deprecated APIs throw helpful error messages. Useful for easing the upgrade process.</p>
+<h3 id="expand"><code>--expand</code></h3>
+<p>Alias: <code>-e</code>. Use this flag to show full diffs and errors instead of a patch.</p>
+<h3 id="findrelatedtests-spaceseparatedlistofsourcefiles"><code>--findRelatedTests &lt;spaceSeparatedListOfSourceFiles&gt;</code></h3>
+<p>Find and run the tests that cover a space separated list of source files that were passed in as arguments. Useful for pre-commit hook integration to run the minimal amount of tests necessary. Can be used together with <code>--coverage</code> to include a test coverage for the source files, no duplicate <code>--collectCoverageFrom</code> arguments needed.</p>
+<h3 id="forceexit"><code>--forceExit</code></h3>
+<p>Force Jest to exit after all tests have completed running. This is useful when resources set up by test code cannot be adequately cleaned up. <em>Note: This feature is an escape-hatch. If Jest doesn’t exit at the end of a test run, it means external resources are still being held on to or timers are still pending in your code. It is advised to tear down external resources after each test to make sure Jest can shut down cleanly. You can use <code>--detectOpenHandles</code> to help track it down.</em></p>
+<h3 id="help"><code>--help</code></h3>
+<p>Show the help information, similar to this page.</p>
+<h3 id="init"><code>--init</code></h3>
+<p>Generate a basic configuration file. Based on your project, Jest will ask you a few questions that will help to generate a <code>jest.config.js</code> file with a short description for each option.</p>
+<h3 id="json"><code>--json</code></h3>
+<p>Prints the test results in JSON. This mode will send all other test output and user messages to stderr.</p>
+<h3 id="outputfilefilename"><code>--outputFile=&lt;filename&gt;</code></h3>
+<p>Write test results to a file when the <code>--json</code> option is also specified. The returned JSON structure is documented in <a href="Configuration.md#testResultsProcessor-string">testResultsProcessor</a>.</p>
+<h3 id="lastcommit"><code>--lastCommit</code></h3>
+<p>Run all tests affected by file changes in the last commit made. Behaves similarly to <code>--onlyChanged</code>.</p>
+<h3 id="listtests"><code>--listTests</code></h3>
+<p>Lists all tests as JSON that Jest will run given the arguments, and exits. This can be used together with <code>--findRelatedTests</code> to know which tests Jest will run.</p>
+<h3 id="logheapusage"><code>--logHeapUsage</code></h3>
+<p>Logs the heap usage after every test. Useful to debug memory leaks. Use together with <code>--runInBand</code> and <code>--expose-gc</code> in node.</p>
+<h3 id="maxworkersnum"><code>--maxWorkers=&lt;num&gt;</code></h3>
+<p>Alias: <code>-w</code>. Specifies the maximum number of workers the worker-pool will spawn for running tests. This defaults to the number of the cores available on your machine. It may be useful to adjust this in resource limited environments like CIs but the default should be adequate for most use-cases.</p>
+<h3 id="nostacktrace"><code>--noStackTrace</code></h3>
+<p>Disables stack trace in test results output.</p>
+<h3 id="notify"><code>--notify</code></h3>
+<p>Activates notifications for test results. Good for when you don’t want your consciousness to be able to focus on anything except JavaScript testing.</p>
+<h3 id="onlychanged"><code>--onlyChanged</code></h3>
+<p>Alias: <code>-o</code>. Attempts to identify which tests to run based on which files have changed in the current repository. Only works if you’re running tests in a git/hg repository at the moment and requires a static dependency graph (ie. no dynamic requires).</p>
+<h3 id="passwithnotests"><code>--passWithNoTests</code></h3>
+<p>Allows the test suite to pass when no files are found.</p>
+<h3 id="projects-path1-...-pathn"><code>--projects &lt;path1&gt; ... &lt;pathN&gt;</code></h3>
+<p>Run tests from one or more projects, found in the specified paths; also takes path globs. This option is the CLI equivalent of the <a href="configuration#projects-arraystring--projectconfig"><code>projects</code></a> configuration option. Note that if configuration files are found in the specified paths, <em>all</em> projects specified within those configuration files will be run.</p>
+<h3 id="reporters"><code>--reporters</code></h3>
+<p>Run tests with specified reporters. <a href="configuration#reporters-array-modulename-modulename-options">Reporter options</a> are not available via CLI. Example with multiple reporters:</p>
+<p><code>jest --reporters="default" --reporters="jest-junit"</code></p>
+<h3 id="runinband"><code>--runInBand</code></h3>
+<p>Alias: <code>-i</code>. Run all tests serially in the current process, rather than creating a worker pool of child processes that run tests. This can be useful for debugging.</p>
+<h3 id="runtestsbypath"><code>--runTestsByPath</code></h3>
+<p>Run only the tests that were specified with their exact paths.</p>
+<p><em>Note: The default regex matching works fine on small runs, but becomes slow if provided with multiple patterns and/or against a lot of tests. This option replaces the regex matching logic and by that optimizes the time it takes Jest to filter specific test files</em></p>
+<h3 id="setuptestframeworkscriptfilefile"><code>--setupTestFrameworkScriptFile=&lt;file&gt;</code></h3>
+<p>The path to a module that runs some code to configure or set up the testing framework before each test. Beware that files imported by the setup script will not be mocked during testing.</p>
+<h3 id="showconfig"><code>--showConfig</code></h3>
+<p>Print your Jest config and then exits.</p>
+<h3 id="silent"><code>--silent</code></h3>
+<p>Prevent tests from printing messages through the console.</p>
+<h3 id="testnamepatternregex"><code>--testNamePattern=&lt;regex&gt;</code></h3>
+<p>Alias: <code>-t</code>. Run only tests with a name that matches the regex. For example, suppose you want to run only tests related to authorization which will have names like <code>"GET /api/posts with auth"</code>, then you can use <code>jest -t=auth</code>.</p>
+<p><em>Note: The regex is matched against the full name, which is a combination of the test name and all its surrounding describe blocks.</em></p>
+<h3 id="testlocationinresults"><code>--testLocationInResults</code></h3>
+<p>Adds a <code>location</code> field to test results. Useful if you want to report the location of a test in a reporter.</p>
+<p>Note that <code>column</code> is 0-indexed while <code>line</code> is not.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb11-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb11-2" title="2">  <span class="dt">&quot;column&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb11-3" title="3">  <span class="dt">&quot;line&quot;</span><span class="fu">:</span> <span class="dv">5</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="fu">}</span></a></code></pre></div>
+<h3 id="testpathpatternregex"><code>--testPathPattern=&lt;regex&gt;</code></h3>
+<p>A regexp pattern string that is matched against all tests paths before executing the test. On Windows, you will need to use <code>/</code> as a path separator or escape <code>\</code> as <code>\\</code>.</p>
+<h3 id="testrunnerpath"><code>--testRunner=&lt;path&gt;</code></h3>
+<p>Lets you specify a custom test runner.</p>
+<h3 id="updatesnapshot"><code>--updateSnapshot</code></h3>
+<p>Alias: <code>-u</code>. Use this flag to re-record every snapshot that fails during this test run. Can be used together with a test suite pattern or with <code>--testNamePattern</code> to re-record snapshots.</p>
+<h3 id="usestderr"><code>--useStderr</code></h3>
+<p>Divert all output to stderr.</p>
+<h3 id="verbose"><code>--verbose</code></h3>
+<p>Display individual test results with the test suite hierarchy.</p>
+<h3 id="version"><code>--version</code></h3>
+<p>Alias: <code>-v</code>. Print the version and exit.</p>
+<h3 id="watch"><code>--watch</code></h3>
+<p>Watch files for changes and rerun tests related to changed files. If you want to re-run all tests when a file has changed, use the <code>--watchAll</code> option instead.</p>
+<h3 id="watchall"><code>--watchAll</code></h3>
+<p>Watch files for changes and rerun all tests when something changes. If you want to re-run only the tests that depend on the changed files, use the <code>--watch</code> option.</p>
+<h3 id="watchman"><code>--watchman</code></h3>
+<p>Whether to use watchman for file crawling. Defaults to true. Disable using <code>--no-watchman</code>.</p>
+</body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="generator" content="pandoc" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>README</title>
+    <style type="text/css">
+      code {
+        white-space: pre-wrap;
+      }
+      span.smallcaps {
+        font-variant: small-caps;
+      }
+      span.underline {
+        text-decoration: underline;
+      }
+      div.column {
+        display: inline-block;
+        vertical-align: top;
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 id="ruby-agent-performance-tests">Ruby Agent Performance Tests</h1>
+    <p>This is a performance testing framework for the Ruby Agent.</p>
+    <h2 id="motivation">Motivation</h2>
+    <p>There are two main goals driving the development of this framework:</p>
+    <ol type="1">
+      <li>
+        Add a way for automated performance tests to be run against the Ruby
+        Agent and ingested into a system for tracking these results over time.
+      </li>
+      <li>
+        Provide a tool for Ruby Agent engineers to use while working on
+        performance improvements.
+      </li>
+    </ol>
+    <h2 id="examples">Examples</h2>
+    <h3 id="invoking-via-the-runner-directly">
+      Invoking via the runner directly
+    </h3>
+    <p>
+      More advanced options can be specified by invoking the runner script
+      directly. See <code>./test/performance/script/runner -h</code> for a full
+      list of options.
+    </p>
+    <p>
+      All the examples below assume you have switched to the test/performance
+      folder under the repository’s root folder:
+    </p>
+    <pre><code>$ cd test/performance
+$ script/runner -l</code></pre>
+    <p>Run all tests, report detailed results in a human-readable form</p>
+    <pre><code>$ script/runner</code></pre>
+    <p>List all available test suites and names:</p>
+    <pre><code>$ script/runner -l</code></pre>
+    <p>Run a specific test (test name matching is via regex):</p>
+    <pre><code>$ script/runner -n short</code></pre>
+    <p>
+      To compare results for a specific test between two versions of the code,
+      use the <code>-B</code> (for Baseline) and <code>-C</code> for (for
+      Compare) switches:
+    </p>
+    <pre><code>$ script/runner -n short -B
+1 tests, 0 failures, 8.199975 s total
+Saved 1 results as baseline.
+
+... switch to another branch and run again with -C ...
+
+$ script/runner -n short -C
+1 tests, 0 failures, 8.220509 s total
++-----------------------------------------------------+-----------+-----------+-------+---------------+--------------+--------------+
+| name                                                | before    | after     | delta | allocs_before | allocs_after | allocs_delta |
+|-----------------------------------------------------+-----------+-----------+-------+---------------+--------------+--------------|
+| TransactionTracingPerfTests#test_short_transactions | 214.27 µs | 210.31 µs | -1.8% |            97 |           97 |         0.0% |
++-----------------------------------------------------+-----------+-----------+-------+---------------+--------------+--------------+</code></pre>
+    <p>
+      Run all the tests, produce machine readable JSON output (for eventual
+      ingestion into a storage system):
+    </p>
+    <pre><code>$ script/runner -j | json_reformat</code></pre>
+    <p>
+      Run a specific test under a profiler (either stackprof or perftools.rb,
+      depending on your Ruby version):
+    </p>
+    <pre><code>$ script/runner -n short --profile</code></pre>
+    <p>
+      Run with a set number of iterations, and do object allocation profiling
+      (again to a call-graph dot file):
+    </p>
+    <pre><code>$ script/runner -n short -a -N 1000</code></pre>
+    <h2 id="pointing-at-a-different-copy-of-the-agent">
+      Pointing at a different copy of the agent
+    </h2>
+    <p>
+      If you want to run performance tests against an older copy of the agent
+      that doesn’t have the performance test framework embedded within it, you
+      can do that by specifying the path to the agent you want to test against
+      by passing the <code>-A</code> flag to the <code>runner</code> script, or
+      by setting the <code>AGENT_PATH</code> environment variable when using the
+      rake task.
+    </p>
+    <h2 id="writing-tests">Writing tests</h2>
+    <p>
+      Performance tests are written in the style of <code>test/unit</code>:
+      create a <code>.rb</code> file under <code>test/performance/suites</code>,
+      subclass <code>Performance::TestCase</code>, and write test methods that
+      start with <code>test_</code>. You can also write <code>setup</code> and
+      <code>teardown</code> methods that will be run before/after each test.
+    </p>
+    <p>
+      Within your <code>test_</code> method, you must call
+      <code>measure</code> and pass it a block containing the code that you’d
+      like to actually measure the timing of. This allows you to do
+      test-specific setup that doesn’t get counted towards your test timing.
+    </p>
+    <p>
+      The block that you pass to <code>measure</code> will automatically be run
+      in a loop for a fixed amount of time by the performance runner harness (5s
+      by default), and the number of iterations performed will be recorded so
+      that measurements can be normalized to per-iteration values.
+    </p>
+    <p>You can look at the <a href="suites">existing tests</a> for examples.</p>
+    <h2 id="test-isolation">Test Isolation</h2>
+    <p>
+      Initial testing suggested that certain kinds of tests would have a large
+      impact on tests run later on in the same process (e.g. tests that create
+      lots of long-lived objects will slow down all future GC runs for as long
+      as those objects remain live).
+    </p>
+    <p>
+      In order to address this problem, the test runner will attempt to isolate
+      each test to its own process by re-spawning itself for each test
+      invocation. This is done using <code>IO.popen</code> rather than
+      <code>Process.fork</code> in order to maintain compatibility with JRuby.
+    </p>
+    <p>
+      Additionally, when operating in this mode, the
+      <code>newrelic_rpm</code> gem will not be loaded until <em>after</em> the
+      fork call. This means that your
+      <strong
+        >test cases must be loadable (though not necessarily runnable) without
+        the <code>newrelic_rpm</code> gem available</strong
+      >.
+    </p>
+    <p>
+      Not all command-line options to the runner work with this test isolation
+      yet. You can disable it by passing the <code>-I</code> or
+      <code>--inline</code> flag to the runner.
+    </p>
+    <h2 id="adding-instrumentation-layers">Adding instrumentation layers</h2>
+    <p>
+      The GC stats that are collected with each test run, and the perftools.rb
+      profiling are examples of Instrumentors which can be wrapped around each
+      test run.
+    </p>
+    <p>
+      The basic idea is that each instrumentor gets callbacks before and after
+      each test, and add information to the test results, or attach artifacts (a
+      fancy name for file paths, currently) to the result.
+    </p>
+    <p>
+      Instrumentors inherit from
+      <code>Performance::Instrumentation::Instrumentor</code>, and may constrain
+      themselves to running only on certain platforms (see
+      <code>instrumentor.rb</code> for a list) by calling the
+      <code>platforms</code> method in their class definitions. They may also
+      signal that they should be used by default by calling
+      <code>on_by_default</code>. They should implement the <code>before</code>,
+      <code>after</code> and <code>results</code> methods as follows:
+    </p>
+    <p>
+      The <code>before</code> method is called before each test is run. The test
+      class and test name are passed as arguments.
+    </p>
+    <p>
+      The <code>after</code> method is called after each test is run. The test
+      class, and test name are passed as arguments. Artifacts may be attached to
+      the result here by appending to the <code>@artifacts</code> array. You may
+      obtain paths to store artifacts at by calling
+      <code>Performance::Instrumentation::Instrumentor#artifact_path</code> (see
+      perf_tools.rb for an example).
+    </p>
+    <p>
+      The <code>results</code> method must return a Hash of key-value pairs to
+      be attached to the <code>Result</code> object produced by running each
+      test.
+    </p>
+    <p>
+      If your instrumentation layer needs to do one-time setup (requiring a gem,
+      for example), implement the <code>setup</code> class method to do this
+      setup.
+    </p>
+  </body>
+</html>

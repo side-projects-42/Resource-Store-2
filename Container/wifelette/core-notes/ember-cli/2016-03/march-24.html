@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>march-24</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="ember-cli-meeting-notes---2016-03-24">ember-cli Meeting Notes - 2016-03-24</h1>
+<h2 id="attendees">Attendees</h2>
+<ul>
+<li>Nathan Hammond</li>
+<li>Chad Hietala</li>
+<li>Kelly Selden</li>
+<li>Katie Gengler</li>
+<li>Tobias Bieniek</li>
+<li>Robert Jackson</li>
+<li>Stefan Penner</li>
+<li>Jake Bixby</li>
+</ul>
+<h2 id="actions">Actions</h2>
+<ul>
+<li>(Nathan) - Continue planning ember-cli team face-to-face.</li>
+<li>(Nathan) - Close <a href="https://github.com/ember-cli/ember-cli/pull/5591">#5591</a>.</li>
+<li>(Nathan) - Release 2.4.3.</li>
+<li>(Nathan) - Confirm apps work with new core-object</li>
+<li>(Stefan) Rebase core-object + update some <code>super</code> usage.</li>
+<li>(Nathan, Rob to review) - Release branch story.</li>
+<li>(Nathan) - Feedback on performance RFC.</li>
+<li>(Chad) Look at tests to make sure we’re doing enough, but not too much.</li>
+</ul>
+<h2 id="discussion-notes">Discussion Notes</h2>
+<h3 id="overridable-commands"><a href="https://github.com/ember-cli/rfcs/pull/40">Overridable Commands</a></h3>
+<ul>
+<li>Would be a breaking change.</li>
+<li>Make sure help function is working correctly for overridden commands.</li>
+<li>API decisions based on performance feels bad.</li>
+</ul>
+<h3 id="pnpm-npm-v3">pnpm &amp; <a href="https://github.com/ember-cli/ember-cli/pull/5677">npm v3</a></h3>
+<ul>
+<li>Works but tests don’t pass.</li>
+<li>We need to reduce our <code>npm install</code> hacks.</li>
+<li>Slow tests are important, but <em>SLOW</em>
+<ul>
+<li>Minimize and do more for sharing.</li>
+</ul></li>
+</ul>
+<h3 id="ember-conf-talk">ember-conf Talk</h3>
+<ul>
+<li>Elided from notes.</li>
+</ul>
+<h3 id="core-object">Core Object</h3>
+<ul>
+<li>Would love to see this land soonish, as rebases are hefty.</li>
+<li>Encourage not using naked <code>super</code>.</li>
+<li>Test in your apps!</li>
+</ul>
+<h3 id="next-release">Next Release</h3>
+<ul>
+<li><a href="https://github.com/ember-cli/ember-cli/pull/5591">Blocking bug.</a></li>
+<li>Addon template the same name as your app, app should win, missed <code>overwrite: true;</code></li>
+<li>We’ll release a 2.4.3</li>
+<li>Aim to release 2.5.0 in ~two weeks.</li>
+</ul>
+</body>
+</html>

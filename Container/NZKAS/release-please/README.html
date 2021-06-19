@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+</head>
+<body>
+<p><img src="https://avatars2.githubusercontent.com/u/2810941?v=3&s=96" alt="Google Cloud Platform logo" title="Google Cloud Platform" align="right" height="96" width="96"/></p>
+<h1 id="release-please"><a href="https://github.com/googleapis/release-please">Release Please</a></h1>
+<p><a href="https://www.npmjs.org/package/release-please"><img src="https://img.shields.io/npm/v/release-please.svg" alt="npm version" /></a> <a href="https://codecov.io/gh/googleapis/release-please"><img src="https://img.shields.io/codecov/c/github/googleapis/release-please/master.svg?style=flat" alt="codecov" /></a></p>
+<p>Release Please automates CHANGELOG generation, the creation of GitHub releases, and version bumps for your projects.</p>
+<p>It does so by parsing your git history, looking for <a href="https://www.conventionalcommits.org/">Conventional Commit messages</a>, and creating release PRs.</p>
+<h2 id="whats-a-release-pr">What’s a Release PR?</h2>
+<p>Rather than continuously releasing what’s landed to your default branch, release-please maintains Release PRs:</p>
+<p><img width="400" src="/screen.png"></p>
+<p>These Release PRs are kept up-to-date as additional work is merged. When you’re ready to tag a release, simply merge the release PR.</p>
+<h2 id="how-should-i-write-my-commits">How should I write my commits?</h2>
+<p>Release Please assumes you are using <a href="https://www.conventionalcommits.org/">Conventional Commit messages</a>.</p>
+<p>The most important prefixes you should have in mind are:</p>
+<ul>
+<li><code>fix:</code> which represents bug fixes, and correlates to a <a href="https://semver.org/">SemVer</a> patch.</li>
+<li><code>feat:</code> which represents a new feature, and correlates to a SemVer minor.</li>
+<li><code>feat!:</code>, or <code>fix!:</code>, <code>refactor!:</code>, etc., which represent a breaking change (indicated by the <code>!</code>) and will result in a SemVer major.</li>
+</ul>
+<h3 id="what-if-my-pr-contains-multiple-fixes-or-features">What if my PR contains multiple fixes or features?</h3>
+<p>Release Please allows you to represent multiple changes in a single commit, using footers:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode txt"><code class="sourceCode default"><a class="sourceLine" id="cb1-1" title="1">feat: adds v4 UUID to crypto</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3">This adds support for v4 UUIDs to the library.</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5">fix(utils): unicode no longer throws exception</a>
+<a class="sourceLine" id="cb1-6" title="6">  PiperOrigin-RevId: 345559154</a>
+<a class="sourceLine" id="cb1-7" title="7">  BREAKING-CHANGE: encode method no longer throws.</a>
+<a class="sourceLine" id="cb1-8" title="8">  Source-Link: googleapis/googleapis@5e0dcb2</a>
+<a class="sourceLine" id="cb1-9" title="9"></a>
+<a class="sourceLine" id="cb1-10" title="10">feat(utils): update encode to support unicode</a>
+<a class="sourceLine" id="cb1-11" title="11">  PiperOrigin-RevId: 345559182</a>
+<a class="sourceLine" id="cb1-12" title="12">  Source-Link: googleapis/googleapis@e5eef86</a></code></pre></div>
+<p>The above commit message will contain:</p>
+<ol type="1">
+<li>an entry for the <strong>“adds v4 UUID to crypto”</strong> feature.</li>
+<li>an entry for the fix <strong>“unicode no longer throws exception”</strong>, along with a note that it’s a breaking change.</li>
+<li>an entry for the feature <strong>“update encode to support unicode”</strong>.</li>
+</ol>
+<h2 id="how-do-i-change-the-version-number">How do I change the version number?</h2>
+<p>When a commit to the main branch has <code>Release-As: x.x.x</code>(case insensitive) in the <strong>commit body</strong>, Release Please will open a new pull request for the specified version.</p>
+<p><strong>Empty commit example:</strong></p>
+<p><code>git commit --allow-empty -m "chore: release 2.0.0" -m "Release-As: 2.0.0"</code> results in the following commit message:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode txt"><code class="sourceCode default"><a class="sourceLine" id="cb2-1" title="1">chore: release 2.0.0</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">Release-As: 2.0.0</a></code></pre></div>
+<h2 id="release-types-supported">Release types supported</h2>
+<p>Release Please automates releases for the following flavors of repositories:</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>release type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>node</td>
+<td><a href="https://github.com/yargs/yargs">A Node.js repository, with a package.json and CHANGELOG.md</a></td>
+</tr>
+<tr class="even">
+<td>python</td>
+<td><a href="https://github.com/googleapis/python-storage">A Python repository, with a setup.py, setup.cfg, and CHANGELOG.md</a></td>
+</tr>
+<tr class="odd">
+<td>terraform-module</td>
+<td><a href="https://github.com/terraform-google-modules/terraform-google-project-factory">A terraform module, with a version in the README.md, and a CHANGELOG.md</a></td>
+</tr>
+<tr class="even">
+<td>rust</td>
+<td>A Rust repository, with a Cargo.toml (either as a crate or workspace) and a CHANGELOG.md</td>
+</tr>
+<tr class="odd">
+<td>ocaml</td>
+<td><a href="https://github.com/grain-lang/binaryen.ml">An OCaml repository, containing 1 or more opam or esy files and a CHANGELOG.md</a></td>
+</tr>
+<tr class="even">
+<td>simple</td>
+<td><a href="https://github.com/googleapis/gapic-generator">A repository with a version.txt and a CHANGELOG.md</a></td>
+</tr>
+<tr class="odd">
+<td>helm</td>
+<td>A repository with a Chart.yaml and a CHANGELOG.md</td>
+</tr>
+</tbody>
+</table>
+<h2 id="adding-additional-release-types">Adding additional release types</h2>
+<p>To add a new release type, simply use the existing <a href="https://github.com/googleapis/release-please/tree/master/src/releasers">releasers</a> and <a href="https://github.com/googleapis/release-please/tree/master/src/updaters">updaters</a> as a starting point.</p>
+<p><strong>releasers</strong> describe the files that should be updated for a release.</p>
+<p><strong>updaters</strong> describe how to update the version in these files.</p>
+<h2 id="setting-up-release-please">Setting up Release Please</h2>
+<p>There are a variety of ways you can deploy release-please:</p>
+<h3 id="github-action-recommended">GitHub Action (recommended)</h3>
+<p>The easiest way to run release please is as a GitHub action:</p>
+<ol type="1">
+<li>If you haven’t already done so, create a <code>.github/workflows</code> folder in your repository (<em>this is where your actions will live</em>).</li>
+<li><p>Now create a <code>.github/workflows/release-please.yml</code> file with these contents:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb3-1" title="1"> <span class="fu">on:</span></a>
+<a class="sourceLine" id="cb3-2" title="2">   <span class="fu">push:</span></a>
+<a class="sourceLine" id="cb3-3" title="3">     <span class="fu">branches:</span></a>
+<a class="sourceLine" id="cb3-4" title="4">       <span class="kw">-</span> master</a>
+<a class="sourceLine" id="cb3-5" title="5"> <span class="fu">name:</span><span class="at"> release-please</span></a>
+<a class="sourceLine" id="cb3-6" title="6"> <span class="fu">jobs:</span></a>
+<a class="sourceLine" id="cb3-7" title="7">   <span class="fu">release-please:</span></a>
+<a class="sourceLine" id="cb3-8" title="8">     <span class="fu">runs-on:</span><span class="at"> ubuntu-latest</span></a>
+<a class="sourceLine" id="cb3-9" title="9">     <span class="fu">steps:</span></a>
+<a class="sourceLine" id="cb3-10" title="10">       <span class="kw">-</span> <span class="fu">uses:</span><span class="at"> GoogleCloudPlatform/release-please-action@v2</span></a>
+<a class="sourceLine" id="cb3-11" title="11">         <span class="fu">with:</span></a>
+<a class="sourceLine" id="cb3-12" title="12">           <span class="fu">token:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></a>
+<a class="sourceLine" id="cb3-13" title="13">           <span class="fu">release-type:</span><span class="at"> node</span></a>
+<a class="sourceLine" id="cb3-14" title="14">           <span class="fu">package-name:</span><span class="at"> release-please-action</span></a></code></pre></div></li>
+<li><p>Merge the above action into your repository and make sure new commits follow the <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> convention, <a href="https://github.com/googleapis/release-please">release-please</a> will start creating Release PRs for you.</p></li>
+</ol>
+<h4 id="automating-publication-to-npm">Automating publication to npm</h4>
+<p>With a few additions, the Release Please action can be made to publish to npm when a Release PR is merged:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">on:</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="fu">push:</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="fu">branches:</span></a>
+<a class="sourceLine" id="cb4-4" title="4">      <span class="kw">-</span> master</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="fu">name:</span><span class="at"> release-please</span></a>
+<a class="sourceLine" id="cb4-6" title="6"><span class="fu">jobs:</span></a>
+<a class="sourceLine" id="cb4-7" title="7">  <span class="fu">release-please:</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="fu">runs-on:</span><span class="at"> ubuntu-latest</span></a>
+<a class="sourceLine" id="cb4-9" title="9">    <span class="fu">steps:</span></a>
+<a class="sourceLine" id="cb4-10" title="10">      <span class="kw">-</span> <span class="fu">uses:</span><span class="at"> GoogleCloudPlatform/release-please-action@v2</span></a>
+<a class="sourceLine" id="cb4-11" title="11">        <span class="fu">id:</span><span class="at"> release</span></a>
+<a class="sourceLine" id="cb4-12" title="12">        <span class="fu">with:</span></a>
+<a class="sourceLine" id="cb4-13" title="13">          <span class="fu">token:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></a>
+<a class="sourceLine" id="cb4-14" title="14">          <span class="fu">release-type:</span><span class="at"> node</span></a>
+<a class="sourceLine" id="cb4-15" title="15">          <span class="fu">package-name:</span><span class="at"> test-release-please</span></a>
+<a class="sourceLine" id="cb4-16" title="16">      <span class="co"># The logic below handles the npm publication:</span></a>
+<a class="sourceLine" id="cb4-17" title="17">      <span class="kw">-</span> <span class="fu">uses:</span><span class="at"> actions/checkout@v2</span></a>
+<a class="sourceLine" id="cb4-18" title="18">        <span class="co"># these if statements ensure that a publication only occurs when</span></a>
+<a class="sourceLine" id="cb4-19" title="19">        <span class="co"># a new release is created:</span></a>
+<a class="sourceLine" id="cb4-20" title="20">        <span class="fu">if:</span><span class="at"> ${{ steps.release.outputs.release_created }}</span></a>
+<a class="sourceLine" id="cb4-21" title="21">      <span class="kw">-</span> <span class="fu">uses:</span><span class="at"> actions/setup-node@v1</span></a>
+<a class="sourceLine" id="cb4-22" title="22">        <span class="fu">with:</span></a>
+<a class="sourceLine" id="cb4-23" title="23">          <span class="fu">node-version:</span><span class="at"> </span><span class="dv">12</span></a>
+<a class="sourceLine" id="cb4-24" title="24">          <span class="fu">registry-url:</span><span class="at"> </span><span class="st">&#39;https://registry.npmjs.org&#39;</span></a>
+<a class="sourceLine" id="cb4-25" title="25">        <span class="fu">if:</span><span class="at"> ${{ steps.release.outputs.release_created }}</span></a>
+<a class="sourceLine" id="cb4-26" title="26">      <span class="co"># if you are using Yarn, substitute the command below with `yarn install --frozen-lockfile`</span></a>
+<a class="sourceLine" id="cb4-27" title="27">      <span class="kw">-</span> <span class="fu">run:</span><span class="at"> npm ci</span></a>
+<a class="sourceLine" id="cb4-28" title="28">        <span class="fu">if:</span><span class="at"> ${{ steps.release.outputs.release_created }}</span></a>
+<a class="sourceLine" id="cb4-29" title="29">      <span class="kw">-</span> <span class="fu">run:</span><span class="at"> npm publish</span></a>
+<a class="sourceLine" id="cb4-30" title="30">        <span class="fu">env:</span></a>
+<a class="sourceLine" id="cb4-31" title="31">          <span class="fu">NODE_AUTH_TOKEN:</span><span class="at"> ${{secrets.NPM_TOKEN}}</span></a>
+<a class="sourceLine" id="cb4-32" title="32">        <span class="fu">if:</span><span class="at"> ${{ steps.release.outputs.release_created }}</span></a></code></pre></div>
+<blockquote>
+<p>So that you can keep 2FA enabled for npm publications, we recommend setting <code>registry-url</code> to your own <a href="https://github.com/GoogleCloudPlatform/wombat-dressing-room">Wombat Dressing Room</a> deployment.</p>
+</blockquote>
+<h3 id="running-as-cli">Running as CLI</h3>
+<p>Install release-please globally:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">npm</span> i release-please -g</a></code></pre></div>
+<h3 id="creatingupdating-release-prs">Creating/updating release PRs</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">release-please</span> release-pr --package-name=@google-cloud/firestore<span class="st">&quot; \</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="st">  --repo-url=googleapis/nodejs-firestore \</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  --token=</span><span class="va">$GITHUB_TOKEN</span></a></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>option</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--package-name</code></td>
+<td>is the name of the package to publish to publish to an upstream registry such as npm.</td>
+</tr>
+<tr class="even">
+<td><code>--repo-url</code></td>
+<td>is the URL of the repository on GitHub.</td>
+</tr>
+<tr class="odd">
+<td><code>--token</code></td>
+<td>a token with write access to <code>--repo-url</code>.</td>
+</tr>
+<tr class="even">
+<td><code>--default-branch</code></td>
+<td>branch to open pull release PR against (detected by default).</td>
+</tr>
+<tr class="odd">
+<td><code>--path</code></td>
+<td>create a release from a path other than the repository’s root</td>
+</tr>
+<tr class="even">
+<td><code>--monorepo-tags</code></td>
+<td>add prefix to tags and branches, allowing multiple libraries to be released from the same repository.</td>
+</tr>
+<tr class="odd">
+<td><code>--pull-request-title-pattern</code></td>
+<td>add title pattern to make release PR, defaults to using <code>chore${scope}: release${component} ${version}</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="creating-a-release-on-github">Creating a release on GitHub</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">release-please</span> github-release --repo-url=googleapis/nodejs-firestore \</a>
+<a class="sourceLine" id="cb7-2" title="2">  --token=<span class="va">$GITHUB_TOKEN</span></a></code></pre></div>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 75%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>option</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>--package-name</code></td>
+<td>is the name of the package to publish to publish to an upstream registry such as npm.</td>
+</tr>
+<tr class="even">
+<td><code>--repo-url</code></td>
+<td>is the URL of the repository on GitHub.</td>
+</tr>
+<tr class="odd">
+<td><code>--token</code></td>
+<td>a token with write access to <code>--repo-url</code>.</td>
+</tr>
+<tr class="even">
+<td><code>--path</code></td>
+<td>create a release from a path other than the repository’s root</td>
+</tr>
+</tbody>
+</table>
+<h3 id="running-as-a-github-app">Running as a GitHub App</h3>
+<p>There is a probot application available, which allows you to deploy Release Please as a GitHub App:</p>
+<ul>
+<li><a href="https://github.com/googleapis/repo-automation-bots/tree/master/packages/release-please">github.com/googleapis/repo-automation-bots</a>.</li>
+</ul>
+<h2 id="supported-node.js-versions">Supported Node.js Versions</h2>
+<p>Our client libraries follow the <a href="https://nodejs.org/en/about/releases/">Node.js release schedule</a>. Libraries are compatible with all current <em>active</em> and <em>maintenance</em> versions of Node.js.</p>
+<p>Client libraries targeting some end-of-life versions of Node.js are available, and can be installed via npm <a href="https://docs.npmjs.com/cli/dist-tag">dist-tags</a>. The dist-tags follow the naming convention <code>legacy-(version)</code>.</p>
+<p><em>Legacy Node.js versions are supported as a best effort:</em></p>
+<ul>
+<li>Legacy versions will not be tested in continuous integration.</li>
+<li>Some security patches may not be able to be backported.</li>
+<li>Dependencies will not be kept up-to-date, and features will not be backported.</li>
+</ul>
+<h4 id="legacy-tags-available">Legacy tags available</h4>
+<ul>
+<li><code>legacy-8</code>: install client libraries from this dist-tag for versions compatible with Node.js 8.</li>
+</ul>
+<h2 id="versioning">Versioning</h2>
+<p>This library follows <a href="http://semver.org/">Semantic Versioning</a>.</p>
+<h2 id="contributing">Contributing</h2>
+<p>Contributions welcome! See the <a href="https://github.com/googleapis/release-please/blob/master/CONTRIBUTING.md">Contributing Guide</a>.</p>
+<p>Please note that this <code>README.md</code>, the <code>samples/README.md</code>, and a variety of configuration files in this repository (including <code>.nycrc</code> and <code>tsconfig.json</code>) are generated from a central template. To edit one of these files, make an edit to its template in this <a href="https://github.com/googleapis/synthtool/tree/master/synthtool/gcp/templates/node_library">directory</a>.</p>
+<h2 id="license">License</h2>
+<p>Apache Version 2.0</p>
+<p>See <a href="https://github.com/googleapis/release-please/blob/master/LICENSE">LICENSE</a></p>
+</body>
+</html>

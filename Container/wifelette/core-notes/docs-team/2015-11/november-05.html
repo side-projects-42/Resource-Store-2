@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>november-05</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<p>Attending:</p>
+<ul>
+<li>David Baker</li>
+<li>Michael Kaiser-Nyman</li>
+<li>Ricardo Mendes</li>
+</ul>
+<hr />
+<p>MKN: https://github.com/emberjs/guides/issues/853#issuecomment-153623259 - are action names dasherized or camel cased?</p>
+<p>DB: I just made a Twiddle showing that they are camel cased.</p>
+<p>MKN: I updated the issue to ask for this to get fixed.</p>
+<hr />
+<p>MKN: Good job on the redesign!</p>
+<p>RM: I made some color tweaks to improve the contrast. The background color is still a little weird. I don’t like the new header - too big and not enough contrast.</p>
+<p>DB: I agree about the contrast and size, but I like the new feel.</p>
+<p>MKN: Can you just make it smaller and higher contrast?</p>
+<p>DB: Yup. I will fix the header.</p>
+<p>RM: I really don’t like the new header.</p>
+<p>DB: I can make the header smaller and higher contrast.</p>
+<p>MKN: I don’t think we should ship with the old header, and I don’t think that we should let the header block the release.</p>
+<p>RM: Okay.</p>
+<p>DB: I’ll fix it and then we’ll ship it.</p>
+<p>MKN: Thanks both of you for making this happen.</p>
+<hr />
+<p>RM: Also syntax highlighting is terrible for the dark background and not ES6 compatible.</p>
+<p>MKN: We’re using CodeRay.</p>
+<p>DB: We’re using a fork that support Handlebars.</p>
+<p>MKN: There are very few recent commits. I’ll open an issue to find a new highlighter.</p>
+<p>DB: dgeb looked into this recently and couldn’t find much.</p>
+<p>MKN: I’ll open an issue for this.</p>
+<hr />
+<p>RM: I forgot about the tutorial. I’ll try again today or tomorrow.</p>
+<p>MKN: I’ll remind you.</p>
+<p>RM: In the tutorial, we’ll make Tomster introduce things.</p>
+<p>DB: I like that.</p>
+<p>RM: I’m thinking we should have the Tutorial separate from Getting Started.</p>
+<p>MKN: All of the Getting Started concepts will be covered by the Tutorial, so I’d say just subsume it.</p>
+<p>RM: I’m okay with repetition for the sake of people not wanting to dive into the Tutorial.</p>
+<p>MKN: What topics are in Getting Started?</p>
+<p>RM: Installing and Core Concepts.</p>
+<p>MKN: <em>If</em> we have both, I think Getting Started should have prerequisites, installing, ember new, core concepts, dev server, and building. But then duplication and getting out of sync.</p>
+<p>RM: People won’t look in the Tutorial if they aren’t brand new, and they won’t find the content they need.</p>
+<p>DB: We have two sets of users - brand new, and more experienced looking for specific info or Ember CLI stuff.</p>
+<p>MKN: What if we just had all of the Getting Started stuff in its own section, and then the tutorial picks up where it left off? That would DRY things up and make it easy to find stuff.</p>
+<p>RM: That works.</p>
+<hr />
+<p>RM: I wish we had separators like Trek proposed.</p>
+<p>MKN: After we release the tutorial, we can explore that more. Somebody should just open a PR so we have something concrete to talk about.</p>
+<p>DB: Also after we release the redesign.</p>
+</body>
+</html>

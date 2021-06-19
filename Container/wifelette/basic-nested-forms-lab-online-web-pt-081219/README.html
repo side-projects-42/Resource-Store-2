@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+</head>
+<body>
+<h1 id="basic-nested-forms-lab">Basic Nested Forms Lab</h1>
+<h2 id="objectives">Objectives</h2>
+<ol type="1">
+<li>Construct a nested params hash with data about the primary object and a belongs to and has many association.</li>
+<li>Name form inputs correctly to create a nested params hash with belongs to and has many associated data.</li>
+<li>Define a conventional association writer for the primary model to properly instantiate associations based on the nested params association data.</li>
+<li>Define a custom association writer for the primary model to properly instantiate associations with custom logic (like unique by name) on the nested params association data.</li>
+<li>Use fields_for to generate the association fields.</li>
+</ol>
+<h2 id="data-model-recipe-with-ingredients">Data Model: Recipe with ingredients</h2>
+<p>The first data model we’re going to be working with today is a recipe with ingredients.</p>
+<ul>
+<li>Recipe
+<ul>
+<li>has many ingredients</li>
+<li>title:string</li>
+</ul></li>
+<li>Ingredient
+<ul>
+<li>belongs to a recipe</li>
+<li>ingredient.name: string</li>
+<li>ingredient.quantity: string</li>
+</ul></li>
+</ul>
+<p>The models and show routes and associations have been set up for you.</p>
+<h3 id="instructions">Instructions</h3>
+<p>Build a recipe form that accepts two ingredients! It should automatically create the new <code>Ingredient</code> objects.</p>
+<p data-visibility="hidden">
+View <a href='https://learn.co/lessons/basic-nested-forms-lab' title='Basic Nested Forms Lab'>Basic Nested Forms Lab</a> on Learn.co and start learning to code for free.
+</p>
+</body>
+</html>
